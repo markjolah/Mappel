@@ -1,0 +1,86 @@
+/** @file ImageFormat2DBase.h
+ * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @date 04-2017
+ * @brief The class declaration and inline and templated functions for ImageFormat2DBase.
+ *
+ * The virtual base class for all point 2D image based emitter Models and Objectives
+ */
+
+#ifndef _IMAGEFORMAT2DBASE_H
+#define _IMAGEFORMAT2DBASE_H
+
+#include "util.h"
+
+namespace mappel {
+
+/** @brief A virtual base class for 2D image localization objectives
+ *
+ * This class should be inherited virtually by both the model and the objective so that
+ * the common image information and functions are available in both Model and Objective classes hierarchies
+ * 
+ */
+class ImageFormat2DBase {
+public:
+    using ImageT = arma::mat; /**< A type to represent image data*/
+    using ImageStackT = arma::cube; /**< A type to represent image data stacks */
+
+    /* Model parameters */
+    const IVecT size; /**< The number of pixels in the X and Y directions, given as [X,Y].  Note that images have shape [size(1),size(0)], Y is rows X is columns.   */
+
+    ImageFormat2DBase(const IVecT &size);
+    StatsT get_stats() const;
+
+    ImageT make_image() const;
+    ImageStackT make_image_stack(int n) const;
+    int size_image_stack(const ImageStackT &stack) const;
+    ImageT get_image_from_stack(const ImageStackT &stack, int n) const;
+};
+
+/* Inline Method Definitions */
+
+inline
+ImageFormat2DBase::ImageT
+ImageFormat2DBase::make_image() const
+{
+    return ImageT(size(1),size(0)); //Images are size [Y X]
+}
+
+inline
+ImageFormat2DBase::ImageStackT
+ImageFormat2DBase::make_image_stack(int n) const
+{
+    return ImageStackT(size(1),size(0),n);
+}
+
+inline
+int ImageFormat2DBase::size_image_stack(const ImageStackT &stack) const
+{
+    return static_cast<int>(stack.n_slices);
+}
+
+
+inline
+ImageFormat2DBase::ImageT
+ImageFormat2DBase::get_image_from_stack(const ImageStackT &stack,int n) const
+{
+    return stack.slice(n);
+}
+
+/* Templated Function Definitions */
+
+template<class Model>
+typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value,typename Model::ImageT>::type
+model_image(const Model &model, const typename Model::Stencil &s)
+{
+    auto im=model.make_image();
+    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=xposition=column; j=yposition=row
+        im(j,i)=model.pixel_model_value(i,j,s);
+        assert(im(j,i)>0.);//Model value must be positive for grad to be defined
+    }
+    return im;
+}
+
+
+} /* namespace mappel */
+
+#endif /* _IMAGEFORMAT2DBASE_H */
