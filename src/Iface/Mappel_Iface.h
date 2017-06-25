@@ -11,17 +11,18 @@
 #include <typeinfo>
 #include <type_traits>
 
-#include "Mex_Iface.h"
+#include "MexIFace.h"
 #include "Handle.h"
 #include "PointEmitterModel.h"
 
+using namespace mexiface;
 namespace mappel {
 
 using std::cout;
 using std::endl;
 
 template<class Model>
-class Mappel_Iface : public Mex_Iface{
+class Mappel_Iface : public MexIFace {
 public:
     typedef typename Model::Stencil Stencil;
     typedef typename Model::ParamT ParamT;
@@ -68,7 +69,7 @@ protected:
 
 template<class Model>
 Mappel_Iface<Model>::Mappel_Iface(std::string name) 
-    : Mex_Iface(name)
+    : MexIFace(name)
 {
     methodmap["getHyperparameters"]=boost::bind(&Mappel_Iface::objGetHyperparameters, this);
     methodmap["setHyperparameters"]=boost::bind(&Mappel_Iface::objSetHyperparameters, this);

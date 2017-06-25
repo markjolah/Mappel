@@ -1,25 +1,32 @@
-# Mappel -MAPPEL CMakeLists.txt
+# Mappel - Main CMakeLists.txt
 # Mark J. Olah [mjo@cs.unm.edu] (08/2014)
-#
+# Copyright 2013-2017 
+# Author: Mark J. Olah 
+# Email: (mjo@cs.unm DOT edu)
 
-cmake_minimum_required( VERSION 2.8 )
-project(MAPPEL CXX)
-set(LOCAL_CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake CACHE STRING "Local cmake library")
+cmake_minimum_required( VERSION 3.0 )
+project(Mappel VERSION 1.9.0 LANGUAGES CXX)
 
-#This controls addition of hyperspectral code
+# Hyperspectral code
 option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure.cmake)
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure-blas.cmake)
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure-lapack.cmake)
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure-boost.cmake)
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure-gtest.cmake)
-include(${LOCAL_CMAKE_DIR}/SMAToolbox-configure-trng.cmake)
-include(${LOCAL_CMAKE_DIR}/MexIface.cmake)
+#Modules
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake/Modules)
 
-include_directories(src/Iface src/libmappel src/test)
+#Enable build and install of MexIFace via ExternalProject_Add
+include(MexIFace-External)
 
-add_subdirectory(src/Iface)
-add_subdirectory(src/libmappel)
-add_subdirectory(src/test)
+#Configure MexIFace envrionment
+include(MexIFace)
+include(MexIFace-configure-boost) #Add support for boost
+include(MexIFace-configure-gtest) #Add support for googletest
+include(MexIFace-configure-trng)  #Add support for TRNG parallel random number generator
+include(MexIFace-Doxygen) #Add Doxygen documentation targets
+include(MexIFace-PackageConfig) #Configure Package Config and associated files for exports
+
+add_subdirectory(src/libmappel) #Main library
+add_subdirectory(src/Iface) #MATLAB Modules
+add_subdirectory(src/test) #Test executables
+
+
 
