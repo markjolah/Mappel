@@ -18,5 +18,5 @@ endif()
 #Create IFace target
 foreach(target ${IFACE_TARGETS})
     make_mex(${target})
-    target_link_libraries(${target} mappel)
+    target_link_libraries(${target} Mappel) #Link to Mappel
 endforeach()

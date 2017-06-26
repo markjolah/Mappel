@@ -1,9 +1,5 @@
 # MexIFace-External.cmake
 #
-# Mark J. Olah (mjo@cs.unm DOT edu)
-# Copyright 2017
-# see file: LICENCE
-#
 # This allows MexIFace to be automatically added as an cmake ExternalProject and built and installed
 # to CMAKE_INSTALL_PREFIX before configure time.
 #
@@ -20,12 +16,12 @@ if(NOT MexIFace_FOUND)
     configure_file(${CMAKE_SOURCE_DIR}/cmake/Templates/MexIFace-External.CMakeLists.txt.in 
                    ${CMAKE_BINARY_DIR}/MexIFace-External/CMakeLists.txt
                    @ONLY)
-    message(STATUS "[MexIFace] Configuring External Project")
+    message(STATUS "[MexIFace] Configuring External Project...")
     execute_process(
         COMMAND ${CMAKE_COMMAND} .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/MexIFace-External
     )
-    message(STATUS "[MexIFace] Dowloading and building and installing MexIFace. ")
+    message(STATUS "[MexIFace] Automatically downloading, configuring, building, and installing MexIFace...")
     execute_process(
         COMMAND ${CMAKE_COMMAND} --build .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/MexIFace-External

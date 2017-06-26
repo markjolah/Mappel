@@ -18,12 +18,12 @@ set(TEST_CORE_SRCS stats.cpp)
 set(GTEST_SRCS gtest.cpp)
 set(CTEST_SRCS test.cpp)
 
-set(GTEST_TARGET mappel.gtest${DEBUG_FILE_EXT})
-set(CTEST_TARGET mappel.ctest${DEBUG_FILE_EXT})
+set(GTEST_TARGET mappel.gtest)
+set(CTEST_TARGET mappel.ctest)
 
 
-add_library( test-core OBJECT ${TEST_CORE_SRCS})
-
+add_library(test-core OBJECT ${TEST_CORE_SRCS})
+target_include_directories(test-core PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../libmappel")
 # add_executable( ${GTEST_TARGET} ${GTEST_SRCS} $<TARGET_OBJECTS:test-core> )
 # if(UNIX)
 #     install(TARGETS ${GTEST_TARGET} RUNTIME DESTINATION bin COMPONENT Runtime )
@@ -33,23 +33,27 @@ add_library( test-core OBJECT ${TEST_CORE_SRCS})
 
 # target_link_libraries( ${GTEST_TARGET} mappel${DEBUG_FILE_EXT})
 # target_link_libraries( ${GTEST_TARGET} ${GTEST_LIBRARY} ${GTEST_MAIN_LIBRARY})
-
-set(CTEST_CMDS mappel.test_speed${DEBUG_FILE_EXT}
-               mappel.test_image${DEBUG_FILE_EXT}
-               mappel.test_compare_estimators${DEBUG_FILE_EXT}
-               mappel.test_image_compare_estimators${DEBUG_FILE_EXT}
-               mappel.test_point_evaluate_estimators${DEBUG_FILE_EXT}
-               mappel.test_evaluate_estimator${DEBUG_FILE_EXT})
+set(CTEST_CMDS mappel.test_speed${MexIFace_DEBUG_POSTFIX}
+               mappel.test_image${MexIFace_DEBUG_POSTFIX}
+               mappel.test_compare_estimators${MexIFace_DEBUG_POSTFIX}
+               mappel.test_image_compare_estimators${MexIFace_DEBUG_POSTFIX}
+               mappel.test_point_evaluate_estimators${MexIFace_DEBUG_POSTFIX}
+               mappel.test_evaluate_estimator${MexIFace_DEBUG_POSTFIX})
 set(ESTIMATORS Newton Huristic CGauss QuasiNewton NewtonRaphson)
 
+#Ctest is only availible on Unix as it uses symlinks
 if(UNIX)
-    add_executable( ${CTEST_TARGET} ${CTEST_SRCS} $<TARGET_OBJECTS:test-core>  )
+    add_executable(${CTEST_TARGET} ${CTEST_SRCS} $<TARGET_OBJECTS:test-core>)
+    target_link_libraries(${CTEST_TARGET} Mappel)
+    set_target_properties(${CTEST_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+    set_target_properties(${CTEST_TARGET} PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib")
+
     install(TARGETS ${CTEST_TARGET} RUNTIME DESTINATION bin COMPONENT Runtime )
-    target_link_libraries( ${CTEST_TARGET} mappel${DEBUG_FILE_EXT} )
     #symlinks to enable different test commands
+    set(CTEST_NAME ${CTEST_TARGET}${MexIFace_DEBUG_POSTFIX})
     foreach(cmd ${CTEST_CMDS})
-        add_custom_command( TARGET ${CTEST_TARGET} POST_BUILD COMMAND ln -sf ${CTEST_TARGET} ${cmd} )
-        install(CODE "execute_process(COMMAND ln -sf ${CTEST_TARGET} ${cmd} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}/bin)")
+        add_custom_command( TARGET ${CTEST_TARGET} POST_BUILD COMMAND ln -sf ${CTEST_NAME} ${cmd} )
+        install(CODE "execute_process(COMMAND ln -sf ${CTEST_NAME} ${cmd} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}/bin)")
     endforeach()
 
     #Tests can only be run automatically on Unix caus we are cross-compiling to w64
@@ -64,6 +68,6 @@ if(UNIX)
 #     endforeach()
 endif()
 
-set(FIXUP_BINARY mappel.gtest${DEBUG_FILE_EXT} CACHE STRING "Binary to fixup")
+# set(FIXUP_BINARY mappel.gtest${DEBUG_FILE_EXT} CACHE STRING "Binary to fixup")
 
 endif()

@@ -1,16 +1,9 @@
+# MappelConfig.cmake.in
+# Template for a Cmake package-config file.
 @PACKAGE_INIT@
 
-#Include targets file.  This will create IMPORTED target MexIFace
+#Include targets file.  This will create IMPORTED targets
 include("${CMAKE_CURRENT_LIST_DIR}/@EXPORT_TARGETS_NAME@.cmake")
 check_required_components("@PROJECT_NAME@")
 
-#Setup paths to CMAKE utilities
-set(MexIFace_CMAKE_DIR @PACKAGE_SHARED_CMAKE_INSTALL_DIR@) #Relative to this file's install location
-set(MexIFace_CMAKE_MODULES_DIR ${MexIFace_CMAKE_DIR}/Modules)
-set(MexIFace_CMAKE_TOOLCHAINS_DIR ${MexIFace_CMAKE_DIR}/Toolchains)
-set(MexIFace_CMAKE_BUILDCONFIG_DIR ${MexIFace_CMAKE_DIR}/BuildConfig)
-set(MexIFace_CMAKE_SCRIPTS_DIR ${MexIFace_CMAKE_DIR}/Scripts)
-set(MexIFace_CMAKE_TEMPLATES_DIR ${MexIFace_CMAKE_DIR}/Templates)
-#Add modules to path
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${MexIFace_CMAKE_MODULES_DIR})
 

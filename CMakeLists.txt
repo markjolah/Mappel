@@ -1,8 +1,13 @@
 # Mappel - Main CMakeLists.txt
-# Mark J. Olah [mjo@cs.unm.edu] (08/2014)
-# Copyright 2013-2017 
-# Author: Mark J. Olah 
-# Email: (mjo@cs.unm DOT edu)
+#
+# MAPPEL: [M]aximum [A] [P]osteriori [P]oint [E]mitter [L]ocalization 
+# High-performance, parallel, robust, cross-platform localization for EMCCD and SCMOS microscopy.
+#
+# Mark J. Olah (mjo@cs.unm DOT edu)
+# Copyright 2014-2017
+# Licensed under the Apache License, Version 2.0
+# https://www.apache.org/licenses/LICENSE-2.0
+# See: LICENCE file
 
 cmake_minimum_required( VERSION 3.0 )
 project(Mappel VERSION 1.9.0 LANGUAGES CXX)
@@ -27,6 +32,4 @@ include(MexIFace-PackageConfig) #Configure Package Config and associated files f
 add_subdirectory(src/libmappel) #Main library
 add_subdirectory(src/Iface) #MATLAB Modules
 add_subdirectory(src/test) #Test executables
-
-
 

@@ -26,21 +26,27 @@ if(OPT_HYPERSPECTRAL)
 endif()
 
 
-add_library( mappel-core OBJECT ${MAPPEL_SRCS} )
+add_library(mappel-core OBJECT ${MAPPEL_SRCS})
 set_target_properties(mappel-core PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
-set(LIB_TARGET mappel)
-add_library( ${LIB_TARGET} SHARED $<TARGET_OBJECTS:mappel-core> $<TARGET_OBJECTS:cGaussMLE>)
-target_link_libraries(${LIB_TARGET} ${Boost_THREAD_LIBRARY_RELEASE}  ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_CHRONO_LIBRARY_RELEASE})
+set(LIB_TARGET Mappel)
+add_library(${LIB_TARGET} SHARED $<TARGET_OBJECTS:mappel-core> $<TARGET_OBJECTS:cGaussMLE>)
 target_link_libraries(${LIB_TARGET} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
 target_link_libraries(${LIB_TARGET} ${TRNG_LIBRARY} ) #Parallel random number generation
 target_link_libraries(${LIB_TARGET} ${OPENMP_LIBRARY}) #OpenMP (non-empty for WIN32)
 target_link_libraries(${LIB_TARGET} ${PTHREAD_LIBRARY}) #Pthreads
-target_link_libraries(${LIB_TARGET} Boost::chrono Boost::thread Boost::system) 
-set_target_properties(${LIB_TARGET} PROPERTIES INCLUDE_DIRECTORIES ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(${LIB_TARGET} Boost::chrono Boost::thread) 
 set_target_properties(${LIB_TARGET} PROPERTIES PUBLIC_HEADER "${MAPPEL_HDRS}")
-target_include_directories(${LIB_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/cGaussMLE)
-target_include_directories(${LIB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}> $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+# set_target_properties(${LIB_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+target_include_directories(${LIB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+target_include_directories(${LIB_TARGET} INTERFACE $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+
+get_property(_VAR TARGET Mappel PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+message(STATUS "MAPPEL INTERFACE_INCLUDE_DIRECTORIES: ${_VAR}")
+get_property(_VAR TARGET Mappel PROPERTY INTERFACE_LINK_LIBRARIES)
+message(STATUS "MAPPEL INTERFACE_LINK_LIBRARIES: ${_VAR}")
+get_property(_VAR TARGET Mappel PROPERTY INCLUDE_DIRECTORIES)
+message(STATUS "MAPPEL INCLUDE_DIRECTORIES: ${_VAR}")
 
 if(UNIX)
     install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
