@@ -612,7 +612,7 @@ typename Model::Stencil
 IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    assert(theta_init_stencil.derivatives_computed);
+    if(!theta_init_stencil.derivatives_computed) throw std::logic_error("Stencil has no computed derivatives: compute_estimate");
     MaximizerData data(model, im, theta_init_stencil);
     maximize(data);
     record_run_statistics(data);
@@ -624,7 +624,7 @@ typename Model::Stencil
 IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    assert(theta_init_stencil.derivatives_computed);
+    if(!theta_init_stencil.derivatives_computed) throw std::logic_error("Stencil has no computed derivatives: compute_estimate_debug");
     MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
     maximize(data);
     sequence = data.get_theta_sequence();
@@ -706,8 +706,8 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         double nrllh = relative_log_likelihood(model,data.im,data.theta()+Cstep);
 //         std::cout<<"Rllh Curr: "<<data.rllh<<" CStep:"<<nrllh<<" Delta:"<<nrllh-data.rllh<<"\n";
         data.step = Cstep;
-        assert(data.step.is_finite());
-        assert(arma::dot(data.grad, data.step)>0);
+        if(!data.step.is_finite()) throw OptimizationError("Bad data_step!");
+        if(arma::dot(data.grad, data.step)<=0) throw OptimizationError("Not an asscent direction!");
         if(backtrack(data) || convergence_test(data))  return; //Backing up did not help.  Just quit.
     }
 }
@@ -766,7 +766,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
     VecT vec = model.make_param();
     VecT Dscale(N,arma::fill::zeros);
     double delta = 1.0;
-    for(int n=0; n<400; n++) { //Main optimization loop
+    for(int n=0; n<1000; n++) { //Main optimization loop
         model_hessian(model, data.im, data.stencil(), data.grad, hess);
 //         std::cout<<"{TR ITER:"<<n<<"}\n";
 //         std::cout<<"   Theta:"<<data.theta().t();
@@ -894,7 +894,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"   success:"<<success<<"\n";
 //         std::cout<<"   new TrustRadius:"<<delta<<"\n";
         //Test for convergence
-        if(delta < this->epsilon) {
+        if(delta < 8*this->epsilon) {
 //             std::cout<<"{{{Convergence[trsize]: "<<delta<<"}}}\n";
             return;
         }
@@ -912,6 +912,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
             }
         }
     }
+    
     throw OptimizationError("Max Iterations Exceeded");
 }
 
@@ -966,11 +967,12 @@ void TrustRegionMaximizer<Model>::compute_bound_scaling_vec(const VecT &theta, c
 {
     int N = static_cast<int>(theta.n_elem);
     v.set_size(N);
-    Jv = arma::sign(g);  //This is the default Jv case if all variables have lower and upper bounds
+    Jv.set_size(N);  //This is the default Jv case if all variables have lower and upper bounds
     for(int i=0; i<N; i++){
         if(g(i)>=0) {
             if(std::isfinite(lbound(i))){
                 v(i) = theta(i)-lbound(i);
+                Jv(i) = sgn(v(i));
             } else {
                 v(i) = 1;
                 Jv(i) = 0;
@@ -978,13 +980,13 @@ void TrustRegionMaximizer<Model>::compute_bound_scaling_vec(const VecT &theta, c
         } else {
             if(std::isfinite(ubound(i))){
                 v(i) = theta(i)-ubound(i);
+                Jv(i) = sgn(v(i));
             } else {
                 v(i) = -1;
                 Jv(i) = 0;
             }
         }
     }
-    if(!arma::all(arma::sign(g)==arma::sign(v))) throw OptimizationError("Bad bounding grad vector v"); 
 }
 
 /**
@@ -1010,8 +1012,8 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
     if(alpha>1){ //step is feasible.  accept it
 //         std::cout<<" (((alpha>1 ==> feasible)))\n";
         VecT full_step = theta + step;
-        assert(arma::all(full_step > lbound));
-        assert(arma::all(full_step < ubound));
+        if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
+        if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
         return step_hat;
     } else { //backtrack a little bit from alpha to remain feasible
         //Bellavia (2004); Coleman and Li (1996)
@@ -1093,22 +1095,24 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
         double g_min_norm = 0.;
         for(int i=0; i<Nmin;i++) g_min_norm += g_hat(i)*g_hat(i);
         g_min_norm = sqrt(g_min_norm);
-        std::cout<<" {{TR SUBPROBLEM}}\n";
-        std::cout<<" g:"<<g.t();
-        std::cout<<" H:\n"<<H;
-        std::cout<<" pos_def?:"<<pos_def<<"\n";
-        
-        std::cout<<"  lambdaH:"<<lambda_H.t();
-        std::cout<<"  lambda_min:"<<lambda_min<<"\n";
-        std::cout<<"  Nmin:"<<Nmin<<"\n";
-        std::cout<<"  g_min_norm:"<<g_min_norm<<"\n";
+//         std::cout<<" {{TR SUBPROBLEM}}\n";
+//         std::cout<<" g=["<<g.t()<<"]\n";
+//         std::cout<<" H=[\n"<<H<<"]\n";
+//         std::cout<<" delta="<<delta<<"\n";
+//         std::cout<<" pos_def="<<pos_def<<"\n";
+//         std::cout<<"  lambdaH="<<lambda_H.t();
+//         std::cout<<"  lambda_min="<<lambda_min<<"\n";
+//         std::cout<<"  Nmin="<<Nmin<<"\n";
+//         std::cout<<"  g_hat=["<<g_hat.t()<<"]\n";
+//         std::cout<<"  g_norm="<<g_norm<<"\n";
+//         std::cout<<"  g_min_norm="<<g_min_norm<<"\n";
         if(g_min_norm>0) {
             //[Case 3]: Indefinite hessian, general-position gradiant
             //The gradiant extends into the lambda min subspace, so there is a pole at s(lambda_min)=inf
             double lambda_lb = g_min_norm/delta - lambda_min;
             double lambda_ub = g_norm/delta - lambda_min;
-            std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
-            std::cout<<"  [lambda range: "<<lambda_lb<<"-"<<lambda_ub<<"]\n";
+//             std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
+//             std::cout<<"  lambda range=["<<lambda_lb<<","<<lambda_ub<<"]\n";
             return solve_restricted_step_length_newton(g,H,delta,lambda_lb, lambda_ub, epsilon);
         } else {
             //Compute s_perp_sq = ||P^perp_min s(lambda_min)||^2
@@ -1120,14 +1124,14 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
                 //[Case 4]: Indefinite hessian, degenerate gadient, sufficient perpendicular step
                 double lambda_lb = -lambda_min;
                 double lambda_ub = g_norm/delta - lambda_min;
-                std::cout<<" {{Case 4:  Indefinite hessian, degenerate gadient, sufficient perpendicular step}}";
+                std::cout<<" {{Case 4:  Indefinite hessian, degenerate gradient, sufficient perpendicular step}}";
                 std::cout<<"  [lambda range: "<<lambda_lb<<"-"<<lambda_ub<<"]\n";
                 return solve_restricted_step_length_newton(g,H,delta,lambda_lb, lambda_ub, epsilon);
             } else {
                 //[Case 5]: Indefinite hessian, degenerate gadient, insufficient perpendicular step
                 //(i.e., The hard-hard case)
                 double tau = sqrt(delta2 - s_perp_lmin_normsq);
-                std::cout<<" {{Case 5:  Indefinite hessian, degenerate gadient, insufficient perpendicular step}}";
+                std::cout<<" {{Case 5:  Indefinite hessian, degenerate gradient, insufficient perpendicular step}}";
                 std::cout<<" [tau: "<<tau<<" ] q1:"<<Q_H.col(0).t();
                 return s_perp_lmin + tau * Q_H.col(0);  // s_perp(lambda_min) + tau * q_min; q_min is vector from S_min subspoace
             }
@@ -1163,15 +1167,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
         VecT q = arma::solve(arma::trimatl(Rtri), p);
         double norm_p = arma::norm(p);
         double objective = 1/delta - 1/norm_p;
-//         std::cout<<" R:\n"<<R;
-//         std::cout<<" Rtri:\n"<<arma::trimatl(Rtri);
-//         std::cout<<" cond: "<<cond<<"\n";
-//         std::cout<<"* p:"<<p.t();
-//         std::cout<<"* q:"<<q.t();
-//         std::cout<<"* delta:"<<delta<<"\n";
-//         std::cout<<"* |p|:"<<arma::norm(p)<<"\n";
-//         std::cout<<"* |q|:"<<arma::norm(q)<<"\n";
-//         std::cout<<"* obj:"<<objective<<"\n";
+
         if(std::fabs(objective) < epsilon) return p;
         double lambda_delta = (norm_p/arma::norm(q)) * (norm_p/arma::norm(q)) * ((norm_p-delta)/delta);
         if(std::fabs(lambda_delta) < epsilon) return p;
@@ -1194,13 +1190,30 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
             std::cout<<" obj(lambda_lb="<<lambda_lb<<")=:"<<objective<<"\n";
             throw OptimizationError("Bad lambda lower bound??");
         }
-        if(lambda==lambda_ub && lambda_delta>0) throw OptimizationError("Bad lambda upper bound??");
+        if(lambda==lambda_ub && lambda_delta>0) {
+//             std::cout<<" R:\n"<<R;
+//             std::cout<<" Rtri:\n"<<arma::trimatl(Rtri);
+//             std::cout<<" cond: "<<cond<<"\n";
+//             std::cout<<"* p:"<<p.t();
+//             std::cout<<"* q:"<<q.t();
+//             std::cout<<"* delta:"<<delta<<"\n";
+//             std::cout<<"* |p|:"<<arma::norm(p)<<"\n";
+//             std::cout<<"* |q|:"<<arma::norm(q)<<"\n";
+//             std::cout<<"* obj:"<<objective<<"\n";
+            throw OptimizationError("Bad lambda upper bound??");
+        }
         lambda += lambda_delta;
         lambda = std::min(std::max(lambda,lambda_lb),lambda_ub);
 //         std::cout<<"* lam_delta:"<<lambda_delta<<"\n";
 //         std::cout<<"* new_lambda:"<<lambda<<"\n";
         
     }
+    std::cout<<"LAMBDA SEARCH EXCEEDED!!!\n";
+    std::cout<<" g:="<<g;
+    std::cout<<" H:=\n"<<H;
+    std::cout<<" delta:="<<delta<<"\n";
+    std::cout<<" lambda_bnds:= ["<<lambda_lb<<","<<lambda_ub<<"]\n";
+    std::cout<<" epsilon:="<<epsilon<<"\n";
     throw OptimizationError("Lambda search exceeded max_iter");
 }
 
@@ -1251,7 +1264,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(RNG &rng, const ModelDataT &im, Stenc
             continue;
         }
         double can_rllh=relative_log_likelihood(model, im, can_theta);
-        assert(std::isfinite(can_rllh));
+        if(!std::isfinite(can_rllh)) throw OptimizationError("Bad candiate relative llh.");
         double old_rllh=sequence_rllh(naccepted-1);
         if(can_rllh < old_rllh && u(rng)>exp((can_rllh-old_rllh)/T) ){
             continue;//Reject
@@ -1265,7 +1278,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(RNG &rng, const ModelDataT &im, Stenc
             max_idx=naccepted;
         }
         naccepted++;
-        assert(naccepted<niters+1);
+        if(naccepted>=niters+1) throw OptimizationError("Iteration error in simulated annealing");
     }
 
     //Run a NR maximization

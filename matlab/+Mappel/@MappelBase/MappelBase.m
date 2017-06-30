@@ -1,7 +1,7 @@
 % Mark J. Olah (mjo@cs.unm.edu)
 % 03-2014
 
-classdef MappelBase < IfaceMixin
+classdef MappelBase < MexIFace.IFaceMixin
     %
     %
     % Design decisions
@@ -51,7 +51,7 @@ classdef MappelBase < IfaceMixin
             % (in) imsize: int [2x1] - size of image in pixels on each side (min: obj.MinSize)
             % (in) psf_sigma: double [2x1] >0 - size of PSF in pixels
             % (out) obj - A new object
-            obj=obj@IfaceMixin(iface);
+            obj=obj@MexIFace.IFaceMixin(iface);
             if isscalar(imsize)
                 imsize=[imsize, imsize];
             end
@@ -462,7 +462,7 @@ classdef MappelBase < IfaceMixin
             % (out) candidate_llh: A (1 X nsmaples) array of log likelyhoods at each candidate theta
             if nargin==2
                 max_samples=int64(3000);
-            elseif max_samples<10;
+            elseif max_samples<10
                 error('MappelBase:estimatePosterior', 'Too few samples');
             else
                 max_samples=int64(max_samples);

@@ -36,6 +36,14 @@ inline double restrict_value_range(double val, double minval, double maxval)
     return (val<minval) ? minval : ((val>maxval) ? maxval : val);
 }
 
+/** @brief sign (signum) function: -1/0/1
+ * 
+ */
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
+
+
 class MappelException : public std::exception
 {
 protected:

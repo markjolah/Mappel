@@ -10,6 +10,7 @@
 #define _IMAGEFORMAT1DBASE_H
 
 #include "util.h"
+#include <sstream>
 
 namespace mappel {
 
@@ -24,6 +25,8 @@ public:
     using ImageT = arma::vec; /**< A type to represent image data*/
     using ImageStackT = arma::mat; /**< A type to represent image data stacks */
 
+    static const int constexpr num_dim=1;
+    static const int constexpr min_size=3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */
     /* Model parameters */
     int size; /**< The number of pixels >0 */
 
@@ -77,7 +80,12 @@ model_image(const Model &model, const typename Model::Stencil &s)
     auto im=model.make_image();
     for(int i=0;i<model.size;i++) {
         im(i)=model.pixel_model_value(i,s);
-        assert(im(i)>0.);//Model value must be positive for grad to be defined
+        if( im(i) <= 0.){
+            //Model value must be positive for grad to be defined
+            std::ostringstream os;
+            os<<"Non positive model value encountered: "<<im(i)<<" at i="<<i;
+            throw MappelException("model_image",os.str());
+        }
     }
     return im;
 }

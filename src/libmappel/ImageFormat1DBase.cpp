@@ -10,7 +10,11 @@ namespace mappel {
 ImageFormat1DBase::ImageFormat1DBase(int size_)
     : size(size_)
 {
-    assert(size > 1);
+    if(size <= min_size) {
+        std::ostringstream os;
+        os<<"Bad problem Size= "<<size_<<"< Min size="<<min_size;
+        throw MappelException("ImageFormat1DBase",os.str());
+    }
 }
 
 StatsT
