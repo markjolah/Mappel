@@ -6,6 +6,8 @@
 */
 
 #include "matinv.h"
+namespace mappel {
+namespace cgauss {
 
 void MatInvN(float * M, float * Minv, float * DiagMinv, int sz) {
     /*! 
@@ -66,4 +68,6 @@ void MatInvN(float * M, float * Minv, float * DiagMinv, int sz) {
     if (DiagMinv) for (ii=0;ii<sz;ii++) DiagMinv[ii]=Minv[ii*sz+ii];
 }
 
+} /* namespace cgauss */
+} /* namespace mappel */
 

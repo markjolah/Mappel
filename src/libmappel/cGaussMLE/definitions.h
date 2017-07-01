@@ -19,13 +19,14 @@
 #define NV_PZ 5			//!< not used (x,y,bg,I,z)
 #define NV_PS2 6		//!< number of fitting parameters for MLEFit_sigmaxy (x,y,bg,I,Sx,Sy)
 
-#ifndef max
-//! not defined in the C standard used by visual studio
-#define max(a,b) (((a) > (b)) ? (a) : (b))
-#endif
-#ifndef min
-//! not defined in the C standard used by visual studio
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-#endif
+// #ifndef max
+// //! not defined in the C standard used by visual studio
+// #define max(a,b) (((a) > (b)) ? (a) : (b))
+// #endif
+// 
+// #ifndef min
+// //! not defined in the C standard used by visual studio
+// #define min(a,b) (((a) < (b)) ? (a) : (b))
+// #endif
 
 #endif /* _DEFINITIONS_H */

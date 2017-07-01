@@ -1,5 +1,5 @@
 /*!
-* \file GaussLib.cuh
+* \file GaussLib.cpp
 * \author Keith Lidke
 * \date January 10, 2010
 * \brief Numerical functions for computing gauss MLE function and derivative values.
@@ -10,9 +10,12 @@
 * Modifications made to optimize for CPU performance.
 */
 #include <cmath>
-
+#include <algorithm>
 #include "definitions.h"
 #include "GaussLib.h"
+
+namespace mappel {
+namespace cgauss {
 
 char d_assert[1024];
 
@@ -264,12 +267,14 @@ void GaussFMaxMin2D( int sz,  float sigma,  const float * data, float *MaxN, flo
         }
         filteredpixel/=sum;
         
-        *MaxN=max(*MaxN, filteredpixel);
-        *MinBG=min(*MinBG, filteredpixel);
+        *MaxN=std::max(*MaxN, filteredpixel);
+        *MinBG=std::min(*MinBG, filteredpixel);
     }
 }
 
 
+} /* namespace cgauss */
+} /* namespace mappel */
 
 
 

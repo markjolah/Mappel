@@ -10,6 +10,7 @@
 #include "PointEmitterModel.h"
 #include "ImageFormat2DBase.h"
 #include "Gauss1DMAP.h"
+#include "cGaussMLE/cGaussMLE.h"
 
 namespace mappel {
 
@@ -215,6 +216,9 @@ Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
 {
     return seperable_initial_theta_estimate(im, theta_init,"Newton");
 }
+
+/* Templated Overloads */
+
 
 
 } /* namespace mappel */

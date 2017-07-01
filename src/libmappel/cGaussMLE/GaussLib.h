@@ -8,6 +8,8 @@
 
 #ifndef _GAUSSLIB_H
 #define _GAUSSLIB_H
+namespace mappel {
+namespace cgauss {
 
 float IntGauss1D(int i, float mu, float sigma);
 
@@ -36,5 +38,9 @@ void CenterofMass2D( int sz,  const float *data, float *x, float *y);
 
 void GaussFMaxMin2D( int sz,  float sigma,  const float * data,
                     float *MaxN, float *MinBG);
+
+} /* namespace cgauss */
+} /* namespace mappel */
+
 
 #endif /* _GAUSSLIB_H */

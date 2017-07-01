@@ -13,55 +13,82 @@ namespace mappel {
     
     /* Template Specializations */
     template<>
-    Gauss2DMLE::Stencil
+    typename Gauss2DMLE::Stencil
     CGaussHeuristicEstimator<Gauss2DMLE>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
     {
-        auto theta_est=model.make_param();
-        theta_est.zeros();
-        if(model.size(0)==model.size(1) && model.psf_sigma(0)==model.psf_sigma(1)){ //only works for square images and iso-tropic psf
-            float Nmax;
+        auto theta_est = model.make_param();
+        if(model.size(0) == model.size(1) && model.psf_sigma(0) == model.psf_sigma(1)){ //only works for square images and iso-tropic psf
             arma::fvec4 ftheta_est;
-            //Convert from double
-            arma::fmat fim=arma::conv_to<arma::fmat>::from(im);
-            //Compute
-            CenterofMass2D(model.size(0), fim.memptr(), &ftheta_est[0], &ftheta_est[1]);
-            GaussFMaxMin2D(model.size(0), model.psf_sigma(0), fim.memptr(), &Nmax, &ftheta_est[3]);
-            ftheta_est[2]=std::max(0., (Nmax-ftheta_est[3])*2*arma::datum::pi*model.psf_sigma(0)*model.psf_sigma(0));
-            //Back to double
-            theta_est=arma::conv_to<arma::mat>::from(ftheta_est);
+            arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
+            cgauss::MLEInit(fim.memptr(),model.psf_sigma(0),model.size(0),ftheta_est.memptr());
+            theta_est = arma::conv_to<arma::mat>::from(ftheta_est); //Convert theta back to double
             //Swap x/y and add .5 tp convert from CGauss to mappel coordinates
-            float temp=theta_est(0)+.5;
-            theta_est(0)=theta_est(1)+.5;
-            theta_est(1)=temp;
+            float temp = theta_est(0)+.5;
+            theta_est(0) = theta_est(1)+.5;
+            theta_est(1) = temp;
         } else {
             throw MaximizerNotImplementedException("CGaussMLE");
         }
         return model.make_stencil(theta_est);
     }
     
-    
     template<>
-    void
-    CGaussMLE<Gauss2DMLE>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, ParamT &crlb, double &llh)
+    typename Gauss2DMLE::Stencil
+    CGaussMLE<Gauss2DMLE>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
     {
-        if(model.size(0)==model.size(1) && model.psf_sigma(0)==model.psf_sigma(1)){//only works for square images and iso-tropic psf
-            float fllh;
-            arma::fvec4 fcrlb, ftheta;
-            //Convert from double
-            arma::fmat fim=arma::conv_to<arma::fmat>::from(im);
-            //Compute
-            MLEFit(fim.memptr(), model.psf_sigma(0), model.size(0), max_iterations, ftheta.memptr(), fcrlb.memptr(), &fllh);
-            //Back to double
-            theta=arma::conv_to<arma::vec>::from(ftheta);
-            crlb=arma::conv_to<arma::vec>::from(fcrlb);
+        auto theta_est=model.make_param();
+        if(model.size(0) == model.size(1) && model.psf_sigma(0) == model.psf_sigma(1)){//only works for square images and iso-tropic psf
+            arma::fvec ftheta_est(4);
+            arma::fmat fim = arma::conv_to<arma::fmat>::from(im); //Convert image to float from double
+            arma::fvec ftheta_init = arma::conv_to<arma::fvec>::from(theta_init);
+            if(!ftheta_init.is_empty()){
+                float temp = ftheta_init(0)-.5;
+                ftheta_init(0) = ftheta_init(1)-.5;
+                ftheta_init(1) = temp;
+            }
+            cgauss::MLEFit(fim.memptr(), model.psf_sigma(0), model.size(0), max_iterations, ftheta_init, ftheta_est.memptr());
+            theta_est = arma::conv_to<arma::vec>::from(ftheta_est); //Convert theta back to double
             //Swap x/y and add .5 tp convert from CGauss to mappel coordinates
-            float temp=theta(0)+.5;
-            theta(0)=theta(1)+.5;
-            theta(1)=temp;
-            llh=log_likelihood(model,im,model.make_stencil(theta));
+            float temp = theta_est(0)+.5;
+            theta_est(0) = theta_est(1)+.5;
+            theta_est(1) = temp;
         } else {
             throw MaximizerNotImplementedException("CGaussMLE");
         }
+        return model.make_stencil(theta_est);
+    }
+    
+    template<>
+    typename Gauss2DMLE::Stencil
+    CGaussMLE<Gauss2DMLE>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
+    {
+        auto theta_est=model.make_param();
+        if(model.size(0) == model.size(1) && model.psf_sigma(0) == model.psf_sigma(1)){//only works for square images and iso-tropic psf
+            arma::fvec ftheta_est(4);
+            arma::fmat fim = arma::conv_to<arma::fmat>::from(im); //Convert image to float from double
+            arma::fvec ftheta_init = arma::conv_to<arma::fvec>::from(theta_init);
+            if(!ftheta_init.is_empty()){
+                float temp = ftheta_init(0)-.5;
+                ftheta_init(0) = ftheta_init(1)-.5;
+                ftheta_init(1) = temp;
+            }
+            cgauss::MLEFit_debug(fim.memptr(), model.psf_sigma(0), model.size(0), max_iterations, ftheta_init, ftheta_est.memptr(),sequence);
+            theta_est = arma::conv_to<arma::vec>::from(ftheta_est); //Convert theta back to double
+            //Swap x/y and add .5 tp convert from CGauss to mappel coordinates
+            {
+                float temp = theta_est(0)+.5;
+                theta_est(0) = theta_est(1)+.5;
+                theta_est(1) = temp;
+            }
+            for(int n=0; n < static_cast<int>(sequence.n_cols); n++) {
+                float temp = sequence(0,n)+.5;
+                sequence(0,n) = sequence(1,n)+.5;
+                sequence(1,n) = temp;
+            }
+        } else {
+            throw MaximizerNotImplementedException("CGaussMLE");
+        }
+        return model.make_stencil(theta_est);
     }
     
 } /* namespace mappel */

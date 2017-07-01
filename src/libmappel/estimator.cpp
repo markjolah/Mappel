@@ -43,19 +43,7 @@
  */
 
 namespace mappel {
-//     const int DEFAULT_ITERATIONS=2000;
-//     const int DEFAULT_CGAUSS_ITERATIONS=20;
     
-    
-    
-template<class Model>
-Estimator<Model>::Estimator(Model &model)
-    : model(model)
-{}
-
-template<class Model>
-Estimator<Model>::~Estimator()
-{}
 
 /* Just a convenience wrapper that allows a call without a theta_init */
 template<class Model>
@@ -65,7 +53,7 @@ Estimator<Model>::estimate(const ModelDataT &im)
 {
     ParamT dummy_theta_init;
     dummy_theta_init.zeros();
-   return estimate(im, dummy_theta_init);
+    return estimate(im, dummy_theta_init);
 }
 
 
@@ -74,8 +62,8 @@ inline
 typename Model::Stencil
 Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init)
 {
-    auto start_walltime=ClockT::now();
-    Stencil est=compute_estimate(im, theta_init);
+    auto start_walltime = ClockT::now();
+    Stencil est = compute_estimate(im, theta_init);
     record_walltime(start_walltime, 1);
     return est;
 }
@@ -97,7 +85,7 @@ inline
 void Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init,
                                 ParamT &theta, ParamT &crlb, double &log_likelihood)
 {
-    auto start_walltime=ClockT::now();
+    auto start_walltime = ClockT::now();
     compute_estimate(im, theta_init, theta, crlb, log_likelihood);
     record_walltime(start_walltime, 1);
 }
@@ -119,14 +107,25 @@ void Estimator<Model>::estimate_debug(const ModelDataT &im, const ParamT &theta_
                                       ParamT &crlb, double &llh,
                                       MatT &sequence, VecT &sequence_llh)
 {
-    auto start_walltime=ClockT::now();
-    auto est=compute_estimate_debug(im, theta_init, sequence);
-    theta=est.theta;
-    crlb=cr_lower_bound(model,est);
-    llh=log_likelihood(model,im, est);
+    auto start_walltime = ClockT::now();
+    auto est = compute_estimate_debug(im, theta_init, sequence);
+    theta = est.theta;
+    crlb = cr_lower_bound(model,est);
+    llh = log_likelihood(model,im, est);
     sequence_llh.set_size(sequence.n_cols);
     log_likelihood_stack(model,im,sequence,sequence_llh);
     record_walltime(start_walltime, 1);
+}
+
+template<class Model>
+inline
+void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init,
+                                        ParamT &theta, ParamT &crlb, double &llh)
+{
+    auto est = compute_estimate(im,theta_init);
+    crlb = cr_lower_bound(model,est);
+    llh = log_likelihood(model,im, est);
+    theta = est.theta;
 }
 
 
@@ -142,17 +141,17 @@ template<class Model>
 StatsT Estimator<Model>::get_stats()
 {
     StatsT stats;
-    stats["num_estimations"]=num_estimations;
-    stats["total_walltime"]=total_walltime;
-    stats["mean_walltime"]=mean_walltime();
+    stats["num_estimations"] = num_estimations;
+    stats["total_walltime"] = total_walltime;
+    stats["mean_walltime"] = mean_walltime();
     return stats;
 }
 
 template<class Model>
 void Estimator<Model>::clear_stats()
 {
-    num_estimations=0;
-    total_walltime=0.;
+    num_estimations = 0;
+    total_walltime = 0.;
 }
 
 template<class Model>
@@ -165,16 +164,6 @@ std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
     return out;
 }
 
-template<class Model>
-inline
-void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init,
-                                   ParamT &theta, ParamT &crlb, double &llh)
-{
-    auto est = compute_estimate(im,theta_init);
-    crlb = cr_lower_bound(model,est);
-    llh = log_likelihood(model,im, est);
-    theta = est.theta;
-}
 
 /**
  *
@@ -186,27 +175,21 @@ inline
 typename Model::Stencil
 Estimator<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
 {
-    sequence=model.make_param_vec(1);
-    auto est=compute_estimate(im,theta_init);
-    sequence.col(0)=est.theta;
+    sequence = model.make_param_vec(1);
+    auto est = compute_estimate(im,theta_init);
+    sequence.col(0) = est.theta;
     return est;
 }
 
 template<class Model>
 void Estimator<Model>::record_walltime(ClockT::time_point start_walltime, int nimages)
 {
-    double walltime=duration_cast<duration<double>>(ClockT::now() - start_walltime).count();
-    total_walltime+=walltime;
-    num_estimations+=nimages;
+    double walltime = duration_cast<duration<double>>(ClockT::now() - start_walltime).count();
+    total_walltime += walltime;
+    num_estimations += nimages;
 }
 
-
-
-/*
- * 
- * Threaded Estimator
- *
- */ 
+/* Threaded Estimator */ 
 
 template<class Model>
 ThreadedEstimator<Model>::ThreadedEstimator(Model &model)
@@ -352,40 +335,26 @@ void ThreadedEstimator<Model>::thread_entry(int threadid, const ModelDataStackT 
 }
 
 
-template<class Model>
-typename Model::Stencil
-HeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
-{
-    return model.heuristic_initial_theta_estimate(im, ParamT());
-}
-
-template<class Model>
-typename Model::Stencil
-SeperableHeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
-{
-    return model.seperable_initial_theta_estimate(im, ParamT(), sub_estimator_name);
-}
-
+/* CGaussMLE */
 
 template<class Model>
 StatsT CGaussMLE<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
-    stats["max_iterations"] = max_iterations;
+    stats["mean_iterations"] = max_iterations;
+    stats["mean_backtracks"] = 0;
+    stats["mean_fun_evals"] = 0;
+    stats["mean_der_evals"] = max_iterations;
     return stats;
 }
 
 template<class Model>
-typename Model::Stencil
-CGaussMLE<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
+StatsT CGaussMLE<Model>::get_debug_stats()
 {
-    auto crlb = model.make_param();
-    auto theta = model.make_param();
-    double llh;
-    compute_estimate(im, theta_init, theta, crlb, llh);
-    return model.make_stencil(theta);
+    StatsT stats =  CGaussMLE<Model>::get_stats();
+    stats["debugIterative"] = 0; //No backtracks so no need to notate them
+    return stats;
 }
-
 
 
 /* Iterative Maximizer */
@@ -652,21 +621,21 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
         model_grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
         data.step = -data.grad/grad2;
         if(arma::any(grad2>0)){
-            std::cout<<"{NewtonDiagonal ITER:"<<n<<"} --- Correcting non-positive-definite\n";
-            std::cout<<"Theta:"<<data.theta().t();
-            std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
-            std::cout<<"Grad: "<<data.grad.t();
-            std::cout<<"Grad2:"<<grad2.t();
-            std::cout<<"Step:"<<data.step.t();
-            std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
+//             std::cout<<"{NewtonDiagonal ITER:"<<n<<"} --- Correcting non-positive-definite\n";
+//             std::cout<<"Theta:"<<data.theta().t();
+//             std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
+//             std::cout<<"Grad: "<<data.grad.t();
+//             std::cout<<"Grad2:"<<grad2.t();
+//             std::cout<<"Step:"<<data.step.t();
+//             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
             //Grad2 should be negative
             double max_val = arma::max(grad2);
             grad2 -= max_val + delta;
             data.step = -data.grad/grad2;
-            std::cout<<"max_val: "<<max_val<<"\n";
-            std::cout<<"Grad2Correct:"<<grad2.t();
-            std::cout<<"Step:"<<data.step.t();
-            std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
+//             std::cout<<"max_val: "<<max_val<<"\n";
+//             std::cout<<"Grad2Correct:"<<grad2.t();
+//             std::cout<<"Step:"<<data.step.t();
+//             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
             if(arma::dot(data.step,data.grad)<=epsilon) throw std::logic_error("Unable to correct grad2 in NewtonDiagonal");
         }
         if(backtrack(data) || convergence_test(data)) return;  //Converged or gave up trying
@@ -736,13 +705,17 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
             H=K*H*K.t()+rho*data.step*data.step.t();
         }
         data.step=-H*data.grad;
-        if(!is_positive_definite(-arma::inv(H))) {
+        if(!is_positive_definite(-H)) {
+            VecT lambda_H;
+            MatT Q_H;
+            arma::eig_sym(lambda_H,Q_H, arma::symmatu(H)); //Compute eigendecomposition of symmertic matrix H
             std::cout<<"{QuasiNewton ITER:"<<n<<"}\n";
             std::cout<<"Theta:"<<data.theta().t();
             std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
             std::cout<<"Grad: "<<data.grad.t();
-            std::cout<<"Hess:\n"<<inv(H);
+            std::cout<<"Hinv:\n"<<inv(H);
             std::cout<<"H:\n"<<H;
+            std::cout<<"Lambda(H):"<<lambda_H;
             throw std::logic_error("QuasiNewton: H not positive_definite");
         }
         if(!data.step.is_finite()) throw std::logic_error("QuasiNewton: step is non-finite");

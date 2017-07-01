@@ -60,8 +60,8 @@ public:
 
     Model &model;
 
-    Estimator(Model &model); //Why can't we make this const?
-    virtual ~Estimator();
+    Estimator(Model &_model) : model(_model) {}
+    virtual ~Estimator() {}
 
     virtual std::string name() const =0;
 
@@ -177,8 +177,10 @@ public:
 
     std::string name() const {return "HeuristicEstimator";}
 private:
-    using Estimator<Model>::model;
-    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
+    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init)
+    {
+        return Estimator<Model>::model.heuristic_initial_theta_estimate(im, ParamT());
+    }
 };
 
 template<class Model>
@@ -192,8 +194,10 @@ public:
     std::string name() const {return "SeperableHeuristicEstimator";}
     const std::string sub_estimator_name = "NewtonMaximizer"; //Controls the maximizer method to use in 1D
 private:
-    using Estimator<Model>::model;
-    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
+    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init)
+    {
+        return Estimator<Model>::model.seperable_initial_theta_estimate(im, ParamT(), sub_estimator_name);
+    }
 };
 
 
@@ -207,6 +211,7 @@ public:
     
     std::string name() const {return "CGaussHeuristicEstimator";}
 private:
+    using Estimator<Model>::model;
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
 };
 
@@ -215,19 +220,22 @@ class CGaussMLE : public ThreadedEstimator<Model> {
 public:
     using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
+    using ParamVecT = typename Model::ParamVecT;
     using ModelDataT = typename Model::ModelDataT;
     int max_iterations;
     CGaussMLE(Model &model, int max_iterations=DEFAULT_CGAUSS_ITERATIONS)
         : ThreadedEstimator<Model>(model), max_iterations(max_iterations) {}
 
     StatsT get_stats();
+    StatsT get_debug_stats();
+
     inline std::string name() const {return "CGaussMLE";}
 protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
 
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
-    void compute_estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, ParamT &crlb, double &log_likelihood);
+    Stencil compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
 };
 
 template<class Model>

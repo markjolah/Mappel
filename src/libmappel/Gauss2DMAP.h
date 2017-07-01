@@ -10,7 +10,6 @@
 
 #include "Gauss2DModel.h"
 #include "PoissonNoise2DObjective.h"
-
 namespace mappel {
 
 /** @brief A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective
@@ -80,6 +79,7 @@ void Gauss2DMAP::prior_hess_update(const ParamT &theta, ParamMatT &hess) const
     hess(2,2) += gamma_prior_grad2(kappa_I, theta(2));
     hess(3,3) += gamma_prior_grad2(kappa_bg, theta(3));
 }
+
 
 } /* namespace mappel */
 

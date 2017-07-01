@@ -4,6 +4,7 @@
 % method run on a single image with a single starting theta.
 
 function guiFig = maximizerInspectorGUI(obj)
+    import('MexIFace.GUIBuilder');
     gui_name = sprintf('[%s] Maximizer Trajectory Inspector',class(obj));
     
     uH = 25; % unit height for elements
@@ -85,6 +86,7 @@ function guiFig = maximizerInspectorGUI(obj)
     initializeTimers();
 
     function initializeAxes()
+        import('MexIFace.GUIBuilder');
         %Sim Position axes
         xlabel(ax.sim,'X (px)');
         ylabel(ax.sim,'Y (px)');
@@ -192,7 +194,7 @@ function guiFig = maximizerInspectorGUI(obj)
         labels={'Theta:','Theta Init:','Estimated Theta:', 'Theta SE:', 'Abs. theta Error:'};
         values={theta,theta_init,theta_est,sqrt(crlb), [] };
         CBs={@setThetaEdit_CB,@setThetaInitEdit_CB,[],[],[]};
-        handles.edits = GUIBuilder.labeledHEdits(guiFig, panel1_pos, uH, hNames, labels, values, CBs);
+        handles.edits = MexIFace.GUIBuilder.labeledHEdits(guiFig, panel1_pos, uH, hNames, labels, values, CBs);
     end
 
     function initializeTimers()
@@ -219,14 +221,14 @@ function guiFig = maximizerInspectorGUI(obj)
 
     function setTheta(new_theta)
         theta = new_theta;
-        handles.edits.theta.String = arr2str(theta(:)');
+        handles.edits.theta.String = MexIFace.arr2str(theta(:)');
         handles.pos_pt.setPosition(theta(1:2));
         generateImage();
     end
 
     function setThetaInit(new_theta)
         theta_init = new_theta;
-        handles.edits.thetaInit.String = arr2str(theta_init(:)');
+        handles.edits.thetaInit.String = MexIFace.arr2str(theta_init(:)');
         handles.init_pos_pt.setPosition(theta_init(1:2));
         runEstimator();
     end
@@ -299,9 +301,9 @@ function guiFig = maximizerInspectorGUI(obj)
     end
 
     function plotEstPhase1()
-        handles.edits.thetaEst.String = arr2str(theta_est);
-        handles.edits.thetaSE.String = arr2str(sqrt(crlb));
-        handles.edits.thetaErr.String = arr2str(abs(theta-theta_est));
+        handles.edits.thetaEst.String = MexIFace.arr2str(theta_est);
+        handles.edits.thetaSE.String = MexIFace.arr2str(sqrt(crlb));
+        handles.edits.thetaErr.String = MexIFace.arr2str(abs(theta-theta_est));
                
         axes(ax.est);
         hold('off');
@@ -418,7 +420,11 @@ function guiFig = maximizerInspectorGUI(obj)
             estimator_stats.total_fun_evals=count;
             estimator_stats.total_der_evals=0;
         else
-            [theta_est, crlb, emitter_llh, estimator_stats, theta_seq, llh_seq] = obj.estimateDebug(sim,method,theta_init);
+            if handles.fixToggle.Value
+                [theta_est, crlb, emitter_llh, estimator_stats, theta_seq, llh_seq] = obj.estimateDebug(sim,method,theta_init);
+            else
+                [theta_est, crlb, emitter_llh, estimator_stats, theta_seq, llh_seq] = obj.estimateDebug(sim,method);
+            end
         end
 %         theta_est_stack = obj.estimate(sim_stack,method,theta_init);
         if isfield(estimator_stats,'total_iterations')

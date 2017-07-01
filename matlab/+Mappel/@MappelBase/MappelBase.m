@@ -416,7 +416,7 @@ classdef MappelBase < MexIFace.IFaceMixin
                 otherwise
                     [theta, crlb, llh, stats, sample, sample_llh] = obj.call('estimateDebug',image, estimator_name, theta_init);
             end
-            stats = IfaceMixin.convertStatsToStructs(stats);
+            stats = MexIFace.IFaceMixin.convertStatsToStructs(stats);
         end    
 
         function [mean, cov]=estimatePosterior(obj, image, max_samples, theta_init)

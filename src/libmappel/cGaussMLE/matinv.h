@@ -8,6 +8,12 @@
 #ifndef _MATINV_H
 #define _MATINV_H
 
+namespace mappel {
+namespace cgauss {
+
 void MatInvN(float * M, float * Minv, float * DiagMinv, int sz);
+
+} /* namespace cgauss */
+} /* namespace mappel */
 
 #endif /* _MATINV_H */

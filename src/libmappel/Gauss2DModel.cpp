@@ -262,6 +262,4 @@ void Gauss2DModel::sample_mcmc_candidate_theta(int sample_index, RNG &rng, Param
     }
 }
 
-
-
 } /* namespace mappel */

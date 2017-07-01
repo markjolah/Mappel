@@ -30,11 +30,6 @@ void enable_all_cpus();
 bool istarts_with(const char* s, const char* pattern);
 const char * icontains(const char* s, const char* pattern);
 
-inline double restrict_value_range(double val, double minval, double maxval)
-{
-//     assert(std::isfinite(val));
-    return (val<minval) ? minval : ((val>maxval) ? maxval : val);
-}
 
 /** @brief sign (signum) function: -1/0/1
  * 
@@ -67,6 +62,20 @@ class BadInputException : public MappelException
 public:
     BadInputException(const std::string &message) : MappelException("BadInput",message) {}
 };
+
+class NumericalException : public MappelException 
+{
+public:
+    NumericalException(const std::string &message) : MappelException("Numerical",message) {}
+};
+
+
+inline double restrict_value_range(double val, double minval, double maxval)
+{
+    if(!std::isfinite(val)) throw NumericalException("Non-finite value in restrict_value_range.");
+    return (val<minval) ? minval : ((val>maxval) ? maxval : val);
+}
+
 
 class MaximizerNotImplementedException : public MappelException 
 {
