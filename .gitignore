@@ -4,6 +4,7 @@ _gh-pages
 _build
 #Local install dir
 _install
+_win64*
 
 # Prerequisites
 *.d

@@ -218,7 +218,52 @@ Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
 }
 
 /* Templated Overloads */
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value, typename Model::Stencil >::type
+cgauss_heuristic_compute_estimate(const Model &model, const typename Model::ModelDataT &im, const typename Model::ParamT &theta_init)
+{
+    int size = model.size(0);
+    int psf_sigma = model.psf_sigma(0);
+    if(size != model.size(1)) throw MaximizerNotImplementedException("CGaussHeuristicEstimator::Image size must be square.");
+    if(psf_sigma != model.psf_sigma(1)) throw MaximizerNotImplementedException("CGaussHeuristicEstimator::PSF Sigma not symmetric");
+    arma::fvec theta_est(4);
+    arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
+    cgauss::MLEInit(fim.memptr(),psf_sigma,size,theta_est.memptr());
+    return model.make_stencil(cgauss::convertFromCGaussCoords(theta_est));
+}
 
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value,typename Model::Stencil>::type
+cgauss_compute_estimate(Model &model, const typename Model::ModelDataT &im, const typename Model::ParamT &theta_init, int max_iterations)
+{
+    int size = model.size(0);
+    int psf_sigma =model.psf_sigma(0);
+    if(size != model.size(1)) throw MaximizerNotImplementedException("CGaussMLE::Image size must be square.");
+    if(psf_sigma != model.psf_sigma(1)) throw MaximizerNotImplementedException("CGaussMLE::PSF Sigma not symmetric");
+    arma::fvec theta_est(4);
+    arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
+    arma::fvec ftheta_init = cgauss::convertToCGaussCoords(theta_init);
+    cgauss::MLEFit(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr());
+    return model.make_stencil(cgauss::convertFromCGaussCoords(theta_est));
+}
+
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value,typename Model::Stencil>::type
+cgauss_compute_estimate_debug(const Model &model, const typename Model::ModelDataT &im, 
+                       const typename Model::ParamT &theta_init, int max_iterations,
+                       typename Model::ParamVecT &sequence)
+{
+    int size = model.size(0);
+    int psf_sigma = model.psf_sigma(0);
+    if(size != model.size(1)) throw MaximizerNotImplementedException("CGaussMLE::Image size must be square.");
+    if(psf_sigma != model.psf_sigma(1)) throw MaximizerNotImplementedException("CGaussMLE::PSF Sigma not symmetric");
+    arma::fvec theta_est(4);
+    arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
+    arma::fvec ftheta_init = cgauss::convertToCGaussCoords(theta_init);
+    cgauss::MLEFit_debug(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr(),sequence);
+    sequence = cgauss::convertFromCGaussCoords(sequence);
+    return model.make_stencil(cgauss::convertFromCGaussCoords(theta_est));
+}
 
 
 } /* namespace mappel */

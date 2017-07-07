@@ -7,7 +7,7 @@
 #ifndef _MAPPEL2D_IFACE
 #define _MAPPEL2D_IFACE
 
-#include "Mappel_Iface.h"
+#include "Mappel_IFace.h"
 
 namespace mappel {
 

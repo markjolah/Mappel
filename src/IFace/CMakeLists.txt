@@ -9,11 +9,11 @@
 
 ## Source Files ##
 # set(IFACE_TARGETS Gauss2DMLE_Iface Gauss2DMAP_Iface Gauss2DsMLE_Iface Gauss2DsMAP_Iface)
-set(IFACE_TARGETS Gauss2DMLE_Iface Gauss2DMAP_Iface)
+set(IFACE_TARGETS Gauss2DMLE_IFace Gauss2DMAP_IFace)
 
 if(OPT_HYPERSPECTRAL)
-    set(IFACE_TARGETS ${IFACE_TARGETS} hyperspectral/GaussHSMAP_Iface hyperspectral/GaussHSsMAP_Iface 
-                                       hyperspectral/Blink2DsMAP_Iface hyperspectral/BlinkHSsMAP_Iface)
+    set(IFACE_TARGETS ${IFACE_TARGETS} hyperspectral/GaussHSMAP_IFace hyperspectral/GaussHSsMAP_IFace 
+                                       hyperspectral/Blink2DsMAP_IFace hyperspectral/BlinkHSsMAP_IFace)
 endif()
 #Create IFace target
 foreach(target ${IFACE_TARGETS})

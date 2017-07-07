@@ -1,10 +1,10 @@
-/** @file Gauss2DsMLE_Iface.cpp
- *  @brief The entry point for Gauss2DMLE_Iface mex module.
+/** @file Gauss2DsMLE_IFace.cpp
+ *  @brief The entry point for Gauss2DMLE_IFace mex module.
  * 
- * Just calls the MappleMexIface.mexFunction which is the Iface entry point.
+ * Just calls the MappleMexIface.mexFunction which is the IFace entry point.
  * 
  */
-#include "Mappel2D_Iface.h"
+#include "Mappel2D_IFace.h"
 #include "Gauss2DsMLE.h"
 
 void mexFunction(int nlhs, mxArray *lhs[], int nrhs, const mxArray *rhs[])

@@ -14,7 +14,7 @@
 #include <memory>
 #include <map>
 #include "rng.h"
-
+#include "cGaussMLE/cGaussMLE.h"
 #include <boost/thread/mutex.hpp>
 
 
@@ -194,12 +194,21 @@ public:
     std::string name() const {return "SeperableHeuristicEstimator";}
     const std::string sub_estimator_name = "NewtonMaximizer"; //Controls the maximizer method to use in 1D
 private:
+    inline
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init)
     {
         return Estimator<Model>::model.seperable_initial_theta_estimate(im, ParamT(), sub_estimator_name);
     }
 };
 
+
+// template<class Model, template<class> class Estimator>
+// typename Model::Stencil
+// compute_estimate(const Estimator<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init);
+// 
+// template<class Model, template<class> class Estimator>
+// typename Model::Stencil
+// compute_estimate_debug(const Estimator<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init, typename Model::ParamVecT &sequence);
 
 template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {
@@ -212,8 +221,21 @@ public:
     std::string name() const {return "CGaussHeuristicEstimator";}
 private:
     using Estimator<Model>::model;
-    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
+    inline
+    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init) {return cgauss_heuristic_compute_estimate(model,im,theta_init);}
 };
+
+
+
+// template<class Model>
+// typename Model::Stencil
+// compute_estimate(const CGaussMLE<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init);
+// 
+// template<class Model>
+// typename Model::Stencil
+// compute_estimate_debug(const CGaussMLE<Model> &est, const typename Model::DataT &im, 
+//                        const typename Model::ParamT &theta_init,
+//                        typename Model::ParamVecT &sequence);
 
 template<class Model>
 class CGaussMLE : public ThreadedEstimator<Model> {
@@ -234,9 +256,14 @@ protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
 
-    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
-    Stencil compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
+    inline
+    Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init) {return cgauss_compute_estimate(model,im,theta_init,max_iterations);}
+    inline
+    Stencil compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence) {return cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);}
 };
+
+
+
 
 template<class Model>
 class SimulatedAnnealingMaximizer : public ThreadedEstimator<Model> {
@@ -260,7 +287,6 @@ protected:
     Stencil anneal(RNG &rng, const ModelDataT &im, Stencil &theta_init,
                    ParamVecT &sequence);
 };
-
 
 template<class Model>
 class IterativeMaximizer : public ThreadedEstimator<Model> {

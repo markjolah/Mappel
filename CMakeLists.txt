@@ -30,6 +30,5 @@ include(MexIFace-Doxygen) #Add Doxygen documentation targets
 include(MexIFace-PackageConfig) #Configure Package Config and associated files for exports
 
 add_subdirectory(src/libmappel) #Main library
-add_subdirectory(src/Iface) #MATLAB Modules
+add_subdirectory(src/IFace) #MATLAB Modules
 add_subdirectory(src/test) #Test executables
-

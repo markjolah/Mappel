@@ -13,7 +13,7 @@ set(MAPPEL_SRCS display.cpp stencil.cpp rng.cpp util.cpp mcmc.cpp numerical.cpp
                 ImageFormat1DBase.cpp ImageFormat2DBase.cpp
                 PoissonNoise1DObjective.cpp  PoissonNoise2DObjective.cpp
                 Gauss1DModel.cpp
-                Gauss2DModel.cpp Gauss2DMAP.cpp Gauss2DMLE.cpp
+                Gauss2DModel.cpp
                 )
 
 file(GLOB MAPPEL_HDRS *.h)
@@ -50,15 +50,14 @@ message(STATUS "MAPPEL INCLUDE_DIRECTORIES: ${_VAR}")
 
 if(UNIX)
     install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
-            RUNTIME DESTINATION bin COMPONENT Runtime
             LIBRARY DESTINATION lib COMPONENT Runtime
             PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 elseif(WIN32)
     install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
-            RUNTIME DESTINATION .  COMPONENT Runtime
-            LIBRARY DESTINATION .  COMPONENT Runtime
-            ARCHIVE DESTINATION .  COMPONENT Development
+            LIBRARY DESTINATION lib  COMPONENT Runtime
+            ARCHIVE DESTINATION lib  COMPONENT Development
             PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 endif()
 
+fixup_dependencies(${LIB_TARGET})
 

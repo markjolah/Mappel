@@ -26,7 +26,7 @@ if(NOT MexIFace_FOUND)
         COMMAND ${CMAKE_COMMAND} --build .
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/MexIFace-External
     )
-    find_package(MexIFace CONFIG PATHS ${CMAKE_INSTALL_PREFIX}/lib/cmake/MexIFace)
+    find_package(MexIFace CONFIG PATHS ${CMAKE_INSTALL_PREFIX}/lib/cmake/MexIFace NO_CMAKE_FIND_ROOT_PATH)
     if(NOT MexIFace_FOUND)
         message(FATAL_ERROR "Install of MexIFace failed.")
     endif()
