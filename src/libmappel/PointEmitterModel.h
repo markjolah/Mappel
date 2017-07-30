@@ -242,7 +242,15 @@ template<class Model>
 typename Model::ParamT
 cr_lower_bound(const Model &model, const typename Model::Stencil &s)
 {
-    return arma::pinv(fisher_information(model,s)).eval().diag();
+    auto FI = fisher_information(model,s);
+    try{
+        return arma::pinv(FI).eval().diag();
+    } catch ( std::runtime_error E) {
+        std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<"\n";
+        auto z = model.make_param();
+        z.zeros();
+        return z;
+    }
 }
 
 template<class Model>

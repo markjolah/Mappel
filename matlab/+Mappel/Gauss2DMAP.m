@@ -20,7 +20,7 @@ classdef Gauss2DMAP < Mappel.MappelBase
             % (in) imsize: scalar int - size of image in pixels on each side (min: obj.MinSize)
             % (in) psf_sigma: scalar double>0 - size of PSF in pixels
             % (out) obj - A new object
-            obj@Mappel.MappelBase(@Gauss2DMAP_Iface, imsize_, psf_sigma_);
+            obj@Mappel.MappelBase(@Mappel.Gauss2DMAP_IFace, imsize_, psf_sigma_);
         end
  
     end %public methods

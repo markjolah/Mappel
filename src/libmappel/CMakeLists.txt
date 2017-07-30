@@ -54,7 +54,7 @@ if(UNIX)
             PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 elseif(WIN32)
     install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
-            LIBRARY DESTINATION lib  COMPONENT Runtime
+            RUNTIME DESTINATION lib  COMPONENT Runtime
             ARCHIVE DESTINATION lib  COMPONENT Development
             PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 endif()
