@@ -233,15 +233,6 @@ Gauss2DModel::seperable_initial_theta_estimate(const ImageT &im, const ParamT &t
         if(y_pos<=0 || y_pos>size(1)) y_pos = y_est.theta(0);
         if(I<=0) I = std::max(x_est.theta(1), y_est.theta(1)); //max of X and Y est of I
         if(bg<=0) bg = .5*(x_est.theta(2)/size(1) + y_est.theta(2)/size(0)); //mean of X and Y est of bg corrected for 1D vs 2D interpretation of bg
-// //         std::cout<<"XModel:"<<x_model<<"\n";
-// //         std::cout<<"YModel:"<<y_model.get_stats()<<"\n";
-//         std::cout<<"XEstimator:"<<x_estimator;
-//         std::cout<<"YEstimator:"<<y_estimator;
-//         std::cout<<"XImage:"<<x_im.t();
-//         std::cout<<"YImage:"<<y_im.t();
-//         std::cout<<"XEstTheta:"<<x_est.theta.t();
-//         std::cout<<"YEstTheta:"<<y_est.theta.t();
-//         std::cout<<"2DThetaInit: ["<<x_pos<<","<<y_pos<<","<<I<<","<<bg<<"]\n";
     }
     return make_stencil(x_pos, y_pos, I, bg);
 }

@@ -5,6 +5,8 @@
 
 function guiFig = maximizerInspectorGUI(obj)
     import('MexIFace.GUIBuilder');
+    HasSigmaParam = obj.nParams > 4; % Boolean if this model has a free sigma parameter or not
+
     gui_name = sprintf('[%s] Maximizer Trajectory Inspector',class(obj));
     
     uH = 25; % unit height for elements
@@ -34,11 +36,10 @@ function guiFig = maximizerInspectorGUI(obj)
     background_bounds = [0.1,100];
     sigma_bounds = [0.5, 5];
     method = 'Newton';
-    theta = obj.samplePrior();
-    sim=[];
-    Nstack=1e4;
-    sim_stack=[];
-    theta_est_stack=[];
+    theta = obj.samplePrior(); %true theta
+    sim=[]; %simulated image
+    imageBounds = {[.5,obj.imsize(1)-.5],[.5,obj.imsize(2)-.5]};
+    
     theta_init=theta;
     theta_est=[];
     crlb=[];
@@ -62,28 +63,32 @@ function guiFig = maximizerInspectorGUI(obj)
     observedSE=[];
     estimatorMethodList = [obj.EstimationMethods, {'Posterior2000', 'Posterior10000'}];
         
-    status.plotPhase2=false;
 
-    handles=[];
+    %Timer to draw Phase2 (more time consuming) plots only when the estimated image is unchaneged for
+    plot_phase2_delay = 0.75; %secs to delay phase2 plotting after last update
+    handles.timers.runPhase2 = timer('ExecutionMode','singleShot','StartDelay',plot_phase2_delay,'TimerFcn',@(~,~) plotEstPhase2());
     
     ax.sim_intensity = axes('Units','pixels','Position',simIntensityAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
-    ax.sim_sigma = axes('Units','pixels','Position',simSigmaAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
+    if HasSigmaParam
+        ax.sim_sigma = axes('Units','pixels','Position',simSigmaAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
+    end
     ax.sim = axes('Units','pixels','Position',simFig_pos,'YDir','reverse','TickDir','out','Box','on','BoxStyle','full');
 
     ax.est_pos = axes('Units','pixels','Position',estPosAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
     ax.est_bg = axes('Units','pixels','Position',estBGAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
     ax.est_intensity = axes('Units','pixels','Position',estIntensityAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
-    ax.est_sigma = axes('Units','pixels','Position',estSigmaAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
+    if HasSigmaParam
+        ax.est_sigma = axes('Units','pixels','Position',estSigmaAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
+    end
     ax.est_llh = axes('Units','pixels','Position',estLLHAx_pos,'Box','on','BoxStyle','full','FontSize',smallFontSz);
-    ax.est = axes('Units','pixels','Position',estFig_pos,'YDir','reverse','TickDir','out','Box','on','BoxStyle','full');
-    imageBounds = {[.5,obj.imsize(2)-.5],[.5,obj.imsize(1)-.5]};
-
+        ax.est = axes('Units','pixels','Position',estFig_pos,'YDir','reverse','TickDir','out','Box','on','BoxStyle','full');
+    
 
     createControls();
     initializeAxes();
     generateImage();
     runEstimator();
-    initializeTimers();
+   
 
     function initializeAxes()
         import('MexIFace.GUIBuilder');
@@ -107,18 +112,18 @@ function guiFig = maximizerInspectorGUI(obj)
         ax.sim_intensity.YMinorGrid='on';
         GUIBuilder.positionAxes(ax.sim_intensity,simIntensityAx_pos,[20 20 0 0]);
 
-        %Sim Sigma axes
-        axes(ax.sim_sigma);
-        hold('on');
-        plot([sigma_bounds(1),sigma_bounds(2)],[sigma_bounds(1),sigma_bounds(2)],'r-');
-        xlabel(ax.sim_sigma,'sigmaX ratio','FontSize',smallFontSz);
-        ylabel(ax.sim_sigma,'sigmaY ratio','FontSize',smallFontSz);
-        xlim(ax.sim_sigma,sigma_bounds);
-        ylim(ax.sim_sigma,sigma_bounds);
-        grid(ax.sim_sigma,'on');
-%         axis(ax.sim_sigma,'square');
-        GUIBuilder.positionAxes(ax.sim_sigma,simSigmaAx_pos,[20 20 0 0]);
-
+        if HasSigmaParam
+            %Sim Sigma axes
+            axes(ax.sim_sigma);
+            hold('on');
+            plot([sigma_bounds(1),sigma_bounds(2)],[sigma_bounds(1),sigma_bounds(2)],'r-');
+            xlabel(ax.sim_sigma,'sigmaX ratio','FontSize',smallFontSz);
+            ylabel(ax.sim_sigma,'sigmaY ratio','FontSize',smallFontSz);
+            xlim(ax.sim_sigma,sigma_bounds);
+            ylim(ax.sim_sigma,sigma_bounds);
+            grid(ax.sim_sigma,'on');
+            GUIBuilder.positionAxes(ax.sim_sigma,simSigmaAx_pos,[20 20 0 0]);
+        end
 
         %Est Position
         xlabel(ax.est,'X (px)');
@@ -130,7 +135,7 @@ function guiFig = maximizerInspectorGUI(obj)
 
         %Est Position axes
         xlabel(ax.est_pos,'step','FontSize',smallFontSz);
-        ylabel(ax.est_pos,'Background','FontSize',smallFontSz);
+        ylabel(ax.est_pos,'position','FontSize',smallFontSz);
         GUIBuilder.positionAxes(ax.est_pos,estPosAx_pos,[20 20 0 0]);
 
         %Est BG axes
@@ -144,20 +149,21 @@ function guiFig = maximizerInspectorGUI(obj)
         GUIBuilder.positionAxes(ax.est_intensity,estIntensityAx_pos,[20 20 0 0]);
 
         %Est Sigma axes
-        xlabel(ax.est_sigma,'step','FontSize',smallFontSz);
-        ylabel(ax.est_sigma,'sigma ratio','FontSize',smallFontSz);
-        GUIBuilder.positionAxes(ax.est_sigma,estSigmaAx_pos,[20 20 0 0]);
+        if HasSigmaParam
+            xlabel(ax.est_sigma,'step','FontSize',smallFontSz);
+            ylabel(ax.est_sigma,'sigma ratio','FontSize',smallFontSz);
+            GUIBuilder.positionAxes(ax.est_sigma,estSigmaAx_pos,[20 20 0 0]);
+        end
 
         %LLH axes
         xlabel(ax.est_llh,'step','FontSize',smallFontSz);
         ylabel(ax.est_llh,'LLH','FontSize',smallFontSz);
         GUIBuilder.positionAxes(ax.est_llh,estLLHAx_pos,[20 20 0 0]);
 
-%         labels = {'SetPosition','SetInitPosition'};
-%         CBs = {@setPosition, @setInitPosition};
-%         handles.simMenu = GUIBuilder.makeContextMenu(labels,CBs);
+        labels = {'Set Theta Position','Set Theta Init Position'};
+        CBs = {@setThetaPosition_CB, @setThetaInitPosition_CB};
+        handles.simMenu = GUIBuilder.makeContextMenu(labels,CBs);
         
-
         handles.pos_pt = impoint(ax.sim,theta(1),theta(2));
         handles.pos_pt.addNewPositionCallback(@moveThetaPosition_CB);
         handles.pos_pt.setPositionConstraintFcn(makeConstrainToRectFcn('impoint',[0, obj.imsize(1)],[0, obj.imsize(2)]));
@@ -171,7 +177,7 @@ function guiFig = maximizerInspectorGUI(obj)
         handles.intensity_pt.addNewPositionCallback(@moveThetaIntensity_CB);
         handles.intensity_pt.setPositionConstraintFcn(makeConstrainToRectFcn('impoint',intensity_bounds, background_bounds));
 
-        if obj.nParams>4
+        if HasSigmaParam
             handles.sigma_pt = impoint(ax.sim_sigma,theta(5),theta(5));
             handles.sigma_pt.addNewPositionCallback(@moveThetaSigma_CB);
             handles.sigma_pt.setPositionConstraintFcn(@(new_pos) max(0.5,new_pos([1,1]))); 
@@ -197,16 +203,7 @@ function guiFig = maximizerInspectorGUI(obj)
         handles.edits = MexIFace.GUIBuilder.labeledHEdits(guiFig, panel1_pos, uH, hNames, labels, values, CBs);
     end
 
-    function initializeTimers()
-        handles.timers.runPhase2 = timer('BusyMode','drop','ExecutionMode','fixedSpacing','Period',1,...
-                                         'TimerFcn',@timerPhase2_CB);
-%         start(handles.timers.runPhase2);
-    end
-
-%     function setPosition(~,evt)
-%         ax.sim.CurrentPoint
-%     end
-
+    
     function methodSelect_CB(~,~)
         method = estimatorMethodList{handles.methodSelect.Value};
         runEstimator();
@@ -216,29 +213,66 @@ function guiFig = maximizerInspectorGUI(obj)
         generateImage();
     end
 
-%     function fixToggle_CB(~,~)
-%     end
-
     function setTheta(new_theta)
+        new_theta = new_theta(:)';
+        new_theta_str = MexIFace.arr2str(new_theta);
+        if ~strcmp(new_theta_str,handles.edits.theta.String)
+            handles.edits.theta.String = MexIFace.arr2str(new_theta);
+        end
+        if ~all(new_theta(1:2) == handles.pos_pt.getPosition())
+            handles.pos_pt.setPosition(new_theta(1:2));
+            return
+        end
         theta = new_theta;
-        handles.edits.theta.String = MexIFace.arr2str(theta(:)');
-        handles.pos_pt.setPosition(theta(1:2));
         generateImage();
     end
 
     function setThetaInit(new_theta)
+        new_theta = new_theta(:)';
+        new_theta_str = MexIFace.arr2str(new_theta);
+        if ~strcmp(new_theta_str,handles.edits.thetaInit.String)
+            handles.edits.thetaInit.String = MexIFace.arr2str(new_theta);
+        end
+        if ~all(new_theta(1:2) == handles.init_pos_pt.getPosition())
+            handles.init_pos_pt.setPosition(new_theta(1:2));    
+            return
+        end
         theta_init = new_theta;
-        handles.edits.thetaInit.String = MexIFace.arr2str(theta_init(:)');
-        handles.init_pos_pt.setPosition(theta_init(1:2));
         runEstimator();
     end
     
+    function setThetaPosition_CB(~,~)
+        new_theta = theta;
+        new_theta(1:2) = ax.sim.CurrentPoint(1,1:2);
+        setTheta(new_theta);
+    end
+
+    function setThetaInitPosition_CB(~,~)
+        new_theta = theta_init;
+        new_theta(1:2) = ax.sim.CurrentPoint(1,1:2);
+        setThetaInit(new_theta);
+    end
+
     function setThetaInitEdit_CB(~,~)
         setThetaInit(str2num(handles.edits.thetaInit.String)'); %#ok<ST2NM>
     end
 
     function setThetaEdit_CB(~,~)
         setTheta(str2num(handles.edits.theta.String)'); %#ok<ST2NM>
+    end
+
+    function moveThetaPosition_CB(hObj,~)
+        new_theta=theta;
+        new_theta(2) = hObj(2);
+        new_theta(1) = hObj(1);
+        setTheta(new_theta);
+    end
+
+    function moveThetaInitPosition_CB(hObj,~)
+        new_theta=theta_init;
+        new_theta(2) = hObj(2);
+        new_theta(1) = hObj(1);
+        setThetaInit(new_theta);
     end
 
     function generateImage()
@@ -259,27 +293,12 @@ function guiFig = maximizerInspectorGUI(obj)
         end
         handles.sim_imsc=imagesc(imageBounds{:},sim);
         colorbar(ax.sim);
-%         H.UIContextMenu=handles.simMenu;
+        handles.sim_imsc.UIContextMenu=handles.simMenu;
         xlabel(ax.sim,'X (px)');
         ylabel(ax.sim,'Y (px)');
         ax.sim.Children = ax.sim.Children(end:-1:1); %make impoint come first in draw order
 %         uistack(handles.pos_pt,'top');
     end
-
-    function moveThetaPosition_CB(hObj,~)
-        new_theta=theta;
-        new_theta(2) = hObj(2);
-        new_theta(1) = hObj(1);
-        setTheta(new_theta);
-    end
-
-    function moveThetaInitPosition_CB(hObj,~)
-        new_theta=theta_init;
-        new_theta(2) = hObj(2);
-        new_theta(1) = hObj(1);
-        setThetaInit(new_theta);
-    end
-
 
     function moveThetaIntensity_CB(hObj,~)
         new_theta=theta;
@@ -292,12 +311,6 @@ function guiFig = maximizerInspectorGUI(obj)
         new_theta=theta;
         new_theta(5) = hObj(1);
         setTheta(new_theta);
-    end
-
-    function plotEstFig()
-        plotEstPhase1()
-        status.runPhase2=true;
-        plotEstPhase2()
     end
 
     function plotEstPhase1()
@@ -313,19 +326,19 @@ function guiFig = maximizerInspectorGUI(obj)
         colorbar(ax.est);
         ax.est.CLim=[0,maxc];
         ax.sim.CLim=[0,maxc];
-    end
-
-    function timerPhase2_CB(~,~)
+%         stop(handles.timers.runPhase2);
+%         start(handles.timers.runPhase2);
         plotEstPhase2()
     end
 
     function plotEstPhase2()
-        if ~status.runPhase2
-            return
+        btrack_ms = 3; % backtrack marker size
+        %locations at which to plot backtracks
+        backtrackPlotIdxs = backtrack_theta_iter - .5 + (1/(2*(nBacktracks+1))) * (1:nBacktracks);
+        if ~isempty(backtrack_theta)
+            backtrackLLH = obj.LLH(sim,backtrack_theta);
         end
-        btrack_ms = 5; % backtrack marker size
-        delta = 1/(2*(nBacktracks+1));
-            
+        %Estimated Image Axes
         seq_len = size(theta_seq,2);
         xs=(1:seq_len)-1;       
         axes(ax.est);
@@ -335,35 +348,31 @@ function guiFig = maximizerInspectorGUI(obj)
         plot(theta(1),theta(2),'Marker','s','MarkerEdgeColor',[0 0 1]);
         plot(theta_seq(1,:), theta_seq(2,:),'LineWidth',2,'LineStyle','-','Color', [0 1 0]);
         plot(theta_est(1),theta_est(2),'Marker','o','MarkerEdgeColor',[0 0 1]);
-%         scatter(theta_est_stack(1,:),theta_est_stack(2,:),'k.');
         niter = max(1,size(theta_seq,2))-1;
         %plot backtracks
         if ~isempty(backtrack_idxs) 
             for n=1:nBacktracks
                 iter = backtrack_theta_iter(n);
                 plot([theta_seq(1,iter),backtrack_theta(1,n)],[theta_seq(2,iter),backtrack_theta(2,n)],...
-                     'LineWidth',2,'LineStyle','-','Color',[1,1,.3]);
+                     'LineWidth',1.5,'LineStyle','-','Color',[1,1,.3]);
             end
         end
         
         %Plot pos sequence
         axes(ax.est_pos);
         cla(ax.est_pos);
-        plot(xs,theta_seq(1,:),'r-','DisplayName','Est X');
+        plot(xs,theta_seq(1,:),'r-','DisplayName','Est x');
         hold('on');
-        plot(xs,theta_seq(2,:),'b-','DisplayName','Est Y');
+        plot(xs,theta_seq(2,:),'b-','DisplayName','Est y');
         yl = ylim();
         ylim([0 1.2*yl(2)]);
-        plot([0, seq_len-1],[theta(1) theta(1)], 'r--','DisplayName','True X');
-        plot([0, seq_len-1],[theta(2) theta(2)], 'b--','DisplayName','True Y');
+        plot([0, seq_len-1],[theta(1) theta(1)], 'r--','DisplayName','True x');
+        plot([0, seq_len-1],[theta(2) theta(2)], 'b--','DisplayName','True y');
         legend('location','best');
         %plot backtracks
-        for n=1:nBacktracks
-            iter = backtrack_theta_iter(n);
-            h=plot(iter-0.5+delta*n, backtrack_theta(1,n), '*','MarkerSize',btrack_ms,'Color',[1,.3,.3]);
-            h.Annotation.LegendInformation.IconDisplayStyle='off';
-            h=plot(iter-0.5+delta*n, backtrack_theta(2,n), '*','MarkerSize',btrack_ms,'Color',[.3,.3,1]);
-            h.Annotation.LegendInformation.IconDisplayStyle='off';
+        if ~isempty(backtrackPlotIdxs)
+            plot(backtrackPlotIdxs, backtrack_theta(1,:), 'o','MarkerSize',btrack_ms,'MarkerEdgeColor','k','MarkerFaceColor',[1,.3,.3],'DisplayName','Backtracks (x)');
+            plot(backtrackPlotIdxs, backtrack_theta(2,:), 'o','MarkerSize',btrack_ms,'MarkerEdgeColor','k','MarkerFaceColor',[.3,.3,1],'DisplayName','Backtracks (y)');
         end
         ylim([0,max(obj.imsize)]);
 
@@ -374,6 +383,9 @@ function guiFig = maximizerInspectorGUI(obj)
         yl = ylim();
         ylim([0 1.2*yl(2)]);
         plot([0, seq_len-1],[theta(4) theta(4)], 'm--','DisplayName','True BG');
+        if ~isempty(backtrackPlotIdxs)
+            plot(backtrackPlotIdxs, backtrack_theta(4,:), 'o','MarkerSize',btrack_ms,'MarkerEdgeColor','k','MarkerFaceColor',[1,.3,1],'DisplayName','Backtracks (bg)');
+        end
         legend('location','best');
         hold('off');
 
@@ -382,7 +394,9 @@ function guiFig = maximizerInspectorGUI(obj)
         plot(xs,theta_seq(3,:),'r-','DisplayName','Est Intensity sequence');
         hold('on');
         plot([0, niter],[theta(3) theta(3)], 'k--','DisplayName','True Intensity');
-        plot(niter,theta_est(3),'ro','DisplayName','Est Intensity');
+        if ~isempty(backtrackPlotIdxs)
+            plot(backtrackPlotIdxs, backtrack_theta(3,:), 'o','MarkerSize',btrack_ms,'MarkerEdgeColor','k','MarkerFaceColor',[1,0,0],'DisplayName','Backtracks (I)');
+        end
         yl = ylim();
         ylim([0 1.2*yl(2)]);
         legend('location','best');
@@ -396,18 +410,24 @@ function guiFig = maximizerInspectorGUI(obj)
             yl = ylim();
             ylim([0 1.2*yl(2)]);
             plot([0, seq_len-1],[theta(5) theta(5)], 'k--','DisplayName','True Sigma');
+            if ~isempty(backtrackPlotIdxs)
+                plot(backtrackPlotIdxs, backtrack_theta(5,:), '*','MarkerSize',btrack_ms,'MarkerEdgeColor',[0,0,0],'MarkerFaceColor',[0,0,1],'DisplayName','Backtracks (sigma)');
+            end
             legend('location','best');
             hold('off');
         end
 
         %Plot LLH sequence
         axes(ax.est_llh)
-        hold('off');
         plot(xs,llh_seq,'LineStyle','-','Color',[0.5, 0.5 ,0],'DisplayName','LLH');
+        hold('on');
+        if ~isempty(backtrackPlotIdxs)
+            plot(backtrackPlotIdxs, backtrackLLH, 'o','MarkerSize',btrack_ms,'Color',[0.5,0.5,0],'DisplayName','Backtracks');
+        end
+        hold('off');
         yl = ylim();
         ylim([1.2*yl(1) 0.9*yl(2)]);
         legend('location','best');
-        status.runPhase2=false;
     end
 
     function runEstimator()
@@ -475,7 +495,7 @@ function guiFig = maximizerInspectorGUI(obj)
         est_im = obj.modelImage(theta_est);
         noise_llh = obj.noiseBackgroundModelLLH(sim);
         theoreticalSE = sqrt(crlb);
-        plotEstFig();
+        plotEstPhase1();
     end
 
     function runSimulation()
