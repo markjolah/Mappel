@@ -8,52 +8,37 @@
  */
 #ifndef _RNG_H
 #define _RNG_H
-#include <cstdint>
-#include <cmath>
-
-#include <trng/uniform01_dist.hpp>
-#include <trng/uniform_dist.hpp>
-#include <trng/normal_dist.hpp>
-#include <trng/gamma_dist.hpp>
-#include <trng/powerlaw_dist.hpp>
-#include <trng/poisson_dist.hpp>
-#include <trng/lcg64_shift.hpp>
-#include <boost/math/distributions/beta.hpp>
-#include <boost/math/distributions/gamma.hpp>
-
-#include <armadillo>
 
 #include "util.h"
+#include <trng/uniform01_dist.hpp>
+#include <trng/normal_dist.hpp>
+#include <trng/lcg64_shift.hpp>
+#include "parallel_rng/ParallelRngManager.h"
 
-
-// namespace trng {
-//     template <typename RealType = double> class beta_dist;
-// }
-
-namespace trng {
-    
-    template <typename RealType> class beta_dist;
-}
+// #include <omp.h>
 
 namespace mappel {
 
-using RNG = trng::lcg64_shift;
-
-uint64_t make_seed();
-
-RNG make_parallel_rng_stream(uint64_t seed);
-
-
-using NormalRNG = trng::normal_dist<>;
-using PoissonRNG = trng::poisson_dist;
-using BetaRNG = trng::beta_dist<double>;
-using UniformRNG = trng::uniform_dist<>;
+using ParallelRngT = trng::lcg64_shift;
 using UnitRNG = trng::uniform01_dist<>;
-using GammaRNG = trng::gamma_dist<>;
-using ParetoRNG = trng::powerlaw_dist<>;
+using NormalRNG = trng::normal_dist<>;
 
-using BetaDist = boost::math::beta_distribution<>;
-using GammaDist = boost::math::gamma_distribution<>;
+/** @brief Global parallel RNG manager object
+ * 
+ */
+extern parallel_rng::ParallelRngManager<ParallelRngT> rng_manager;
+
+
+/*template<class RNG>
+RNG make_parallel_rng_stream(uint64_t seed)
+{
+    RNG rng(seed);
+    int size=omp_get_num_threads();
+    int rank=omp_get_thread_num();
+    rng.split(size,rank);
+    return rng;
+}*/
+
 
 /** @brief Genrates a single poisson disributed int from distribution with mean mu.
  * @param mu - mean of poisson distribution
@@ -71,8 +56,8 @@ int generate_poisson(rng_t &rng, double mu);
  * Uses the Marsaglia algorithm.  As described in Knuth AoCPv2 p122.
  * We use static varibles to count the numer of calls and use both u & v on alternate calls.
  */
-template<class rng_t>
-double generate_normal(rng_t &rng, double mu, double sigma);
+// template<class rng_t>
+// double generate_normal(rng_t &rng, double mu, double sigma);
 
 
 
@@ -115,34 +100,8 @@ int generate_poisson_large(rng_t &rng, double mu)
 }
 
 template<class rng_t>
-double generate_normal(rng_t &rng, double mu, double sigma){
-    static double q,r;
-    static unsigned long count=0;
-    double z,s=1;
-    UniformRNG u(-1,1);// ~U[-1,+1]
-    if(count++ % 2) return r*sigma+mu; //postincriment means every odd iteration returns r
-    while(s>=1) {
-        q=u(rng);
-        r=u(rng);
-        s=q*q+r*r;
-    }
-    if(s==0) {
-        q=0;
-        r=0;
-    } else {
-        z=sqrt(-2*log(s)/s);
-        q=q*z;
-        r=r*z;
-    }
-    return q*sigma+mu; //Even iterations compute q&r and return q
-}
-
-
-template<class rng_t>
 int generate_poisson(rng_t &rng, double lambda)
 {
-//     PoissonDist d(lambda);
-//     return d(rng);
     if (lambda<=0. || !std::isfinite(lambda)) {
         return 0;
     } else if (lambda < 30.) {
@@ -151,39 +110,64 @@ int generate_poisson(rng_t &rng, double lambda)
         return generate_poisson_large(rng,lambda);
     }
 }
-template<class rng_t>
-double generate_beta(rng_t &rng, const boost::math::beta_distribution<>  &dist)
-{
-    UnitRNG u;
-    return boost::math::quantile(dist,u(rng));
-}
 
-template<class rng_t>
-double generate_beta(rng_t &rng, double alpha, double beta)
-{
-    UnitRNG u;
-    boost::math::beta_distribution<> d(alpha,beta);
-    return boost::math::quantile(d,u(rng));
-}
+// template<class rng_t>
+// double generate_normal(rng_t &rng, double mu, double sigma){
+//     static double q,r;
+//     static unsigned long count=0;
+//     double z,s=1;
+//     UniformRNG u(-1,1);// ~U[-1,+1]
+//     if(count++ % 2) return r*sigma+mu; //postincriment means every odd iteration returns r
+//     while(s>=1) {
+//         q=u(rng);
+//         r=u(rng);
+//         s=q*q+r*r;
+//     }
+//     if(s==0) {
+//         q=0;
+//         r=0;
+//     } else {
+//         z=sqrt(-2*log(s)/s);
+//         q=q*z;
+//         r=r*z;
+//     }
+//     return q*sigma+mu; //Even iterations compute q&r and return q
+// }
 
-template<class rng_t>
-double generate_gamma(rng_t &rng, const boost::math::gamma_distribution<>  &dist)
-{
-    UnitRNG u;
-    return boost::math::quantile(dist,u(rng));
-}
 
-template<class rng_t>
-double generate_gamma(rng_t &rng, double shape, double scale)
-{
-    UnitRNG u;
-    boost::math::gamma_distribution<> d(shape,scale);
-    return boost::math::quantile(d,u(rng));
-}
+// template<class rng_t>
+// double generate_beta(rng_t &rng, const boost::math::beta_distribution<>  &dist)
+// {
+//     UnitRNG u;
+//     return boost::math::quantile(dist,u(rng));
+// }
+// 
+// template<class rng_t>
+// double generate_beta(rng_t &rng, double alpha, double beta)
+// {
+//     UnitRNG u;
+//     boost::math::beta_distribution<> d(alpha,beta);
+//     return boost::math::quantile(d,u(rng));
+// }
+// 
+// template<class rng_t>
+// double generate_gamma(rng_t &rng, const boost::math::gamma_distribution<>  &dist)
+// {
+//     UnitRNG u;
+//     return boost::math::quantile(dist,u(rng));
+// }
+// 
+// template<class rng_t>
+// double generate_gamma(rng_t &rng, double shape, double scale)
+// {
+//     UnitRNG u;
+//     boost::math::gamma_distribution<> d(shape,scale);
+//     return boost::math::quantile(d,u(rng));
+// }
 
 } /* namespace mappel */
 
-
+/*
 namespace trng {
     
     template <typename RealType>
@@ -262,8 +246,8 @@ namespace trng {
             if (x+y==0.) return 0.;
             else return x/(x+y);
         }
-    }; /* class beta_dist */
+    };*/
     
-} /* namespace trng */
+// } /* namespace trng */
 
 #endif /* _RNG_H */

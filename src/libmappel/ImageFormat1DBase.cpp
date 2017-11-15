@@ -4,21 +4,32 @@
  * @brief The class definition and template Specializations for ImageFormat1DBase
  */
 #include "ImageFormat1DBase.h"
+#include <sstream>
 
 namespace mappel {
 
-ImageFormat1DBase::ImageFormat1DBase(int size_)
+ImageFormat1DBase::ImageFormat1DBase(ImageSizeT size_)
     : size(size_)
 {
-    if(size <= min_size) {
-        std::ostringstream os;
-        os<<"Bad problem Size= "<<size_<<"< Min size="<<min_size;
-        throw MappelException("ImageFormat1DBase",os.str());
+    check_size(size);
+}
+
+ImageFormat1DBase::ImageFormat1DBase(const arma::Col<ImageSizeT> &size_)
+    : size(size_[0])
+{
+    check_size(size);
+}
+
+ImageFormat1DBase::check_size(ImageSizeT size_)
+{
+    if(size_ <= min_size) {
+        std::ostringstream msg;
+        msg<<"Got Size= "<<size_<<"< Min size="<<min_size;
+        throw MappelException("BadImageSize",msg.str());
     }
 }
 
-StatsT
-ImageFormat1DBase::get_stats() const
+StatsT ImageFormat1DBase::get_stats() const
 {
     StatsT stats;
     stats["imageDimensions"] = 1;

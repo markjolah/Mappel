@@ -6,15 +6,11 @@
 #include <memory>
 #include <utility>
 #include <armadillo>
-#include <stdexcept>
 #include <map>
+#include <BacktraceException/BacktraceException.h>
 
 namespace mappel {
-    
-// Do we need this still
-// extern const std::vector<std::string> model_names;
-
-    
+        
 using BoolT = uint16_t;
 using IVecT = arma::Col<int>; /**< A type to represent integer data arrays */
 using UVecT = arma::Col<unsigned>; /**< A type to represent unsigned integers and boolean data arrays */
@@ -29,33 +25,10 @@ void enable_all_cpus();
 
 bool istarts_with(const char* s, const char* pattern);
 const char * icontains(const char* s, const char* pattern);
+int maxidx(const VecT &v);
 
 
-/** @brief sign (signum) function: -1/0/1
- * 
- */
-template <typename T> int sgn(T val) {
-    return (T(0) < val) - (val < T(0));
-}
-
-
-class MappelException : public std::exception
-{
-protected:
-    std::string msg;
-public:
-    MappelException(const std::string brief, const std::string &message)
-    {
-        std::ostringstream stream;
-        stream<<"Mappel:"<<brief<<":"<<message;
-        msg = stream.str();
-    }
-    
-    const char* what() const throw()
-    {
-        return msg.c_str();
-    }
-};
+using MappelException = backtrace_exception::BacktraceException;
 
 class BadInputException : public MappelException 
 {
@@ -69,6 +42,19 @@ public:
     NumericalException(const std::string &message) : MappelException("Numerical",message) {}
 };
 
+class NotImplementedException : public MappelException 
+{
+public:
+    NotImplementedException(const std::string &message) : MappelException("NotImplemented",message) {}
+};
+
+
+/** @brief sign (signum) function: -1/0/1
+ * 
+ */
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+}
 
 inline double restrict_value_range(double val, double minval, double maxval)
 {
@@ -76,20 +62,12 @@ inline double restrict_value_range(double val, double minval, double maxval)
     return (val<minval) ? minval : ((val>maxval) ? maxval : val);
 }
 
-
-class MaximizerNotImplementedException : public MappelException 
-{
-public:
-    MaximizerNotImplementedException(const std::string &message) : MappelException("MaximizerNotImplemented",message) {}
-};
-
 template<typename T, typename ...Args>
 std::unique_ptr<T> make_unique( Args&& ...args )
 {
     return std::unique_ptr<T>( new T( std::forward<Args>(args)... ) );
 }
 
-int maxidx(const VecT &v);
 
 } /* namespace mappel */
 

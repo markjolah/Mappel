@@ -10,7 +10,6 @@
 #define _IMAGEFORMAT1DBASE_H
 
 #include "util.h"
-#include <sstream>
 
 namespace mappel {
 
@@ -22,21 +21,26 @@ namespace mappel {
  */
 class ImageFormat1DBase {
 public:
+    using ImageSizeT = uint32_t;
+    using ImageSizeVecT = arma::Col<ImageSizeT>;
     using ImageT = arma::vec; /**< A type to represent image data*/
     using ImageStackT = arma::mat; /**< A type to represent image data stacks */
 
-    static const int constexpr num_dim=1;
-    static const int constexpr min_size=3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */
+    constexpr static IdxT num_dim = 1;
+    constexpr static IdxT min_size = 3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */
     /* Model parameters */
-    int size; /**< The number of pixels >0 */
+    ImageSizeT size; /**< The number of pixels >0 */
 
-    ImageFormat1DBase(int size_);
+    ImageFormat1DBase(ImageSizeT size_);
+    ImageFormat1DBase(const ImageSizeVecT &size_);
     StatsT get_stats() const;
 
     ImageT make_image() const;
-    ImageStackT make_image_stack(int n) const;
-    int size_image_stack(const ImageStackT &stack) const;
-    ImageT get_image_from_stack(const ImageStackT &stack, int n) const;
+    ImageStackT make_image_stack(IdxT n) const;
+    IdxT size_image_stack(const ImageStackT &stack) const;
+    ImageT get_image_from_stack(const ImageStackT &stack, IdxT n) const;
+private:
+    static check_size(ImageSizeT size_);
 };
 
 /* Inline Method Definitions */
@@ -50,26 +54,23 @@ ImageFormat1DBase::make_image() const
 
 inline
 ImageFormat1DBase::ImageStackT
-ImageFormat1DBase::make_image_stack(int n) const
+ImageFormat1DBase::make_image_stack(IdxT n) const
 {
     return ImageStackT(size,n);
 }
 
 inline
-int ImageFormat1DBase::size_image_stack(const ImageStackT &stack) const
+IdxT ImageFormat1DBase::size_image_stack(const ImageStackT &stack) const
 {
-    return static_cast<int>(stack.n_cols);
+    return stack.n_cols;
 }
-
-
 
 inline
 ImageFormat1DBase::ImageT
-ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,int n) const
+ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,IdxT n) const
 {
     return stack.col(n);
 }
-
 
 /* Templated Function Definitions */
 
@@ -78,10 +79,9 @@ typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value,typename
 model_image(const Model &model, const typename Model::Stencil &s)
 {
     auto im=model.make_image();
-    for(int i=0;i<model.size;i++) {
-        im(i)=model.pixel_model_value(i,s);
-        if( im(i) <= 0.){
-            //Model value must be positive for grad to be defined
+    for(IdxT i=0;i<model.size;i++) {
+        im(i) = model.pixel_model_value(i,s);
+        if(im(i) <= 0.){ //Model value must be positive for grad to be defined
             std::ostringstream os;
             os<<"Non positive model value encountered: "<<im(i)<<" at i="<<i;
             throw MappelException("model_image",os.str());

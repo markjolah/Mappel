@@ -37,10 +37,8 @@ class PoissonNoise1DObjective : public virtual ImageFormat1DBase {
      */
 public:
     static const std::vector<std::string> estimator_names;
-    PoissonNoise1DObjective(int size_) : ImageFormat1DBase(size_) {};
-    
-    using ModelDataT = typename ImageFormat1DBase::ImageT; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
-    using ModelDataStackT = ImageFormat1DBase::ImageStackT; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
+    using ModelDataT = typename ImageFormat1DBase::ImageT; /**< Objective function data type: 1D double precision image, gain-corrected to approximate photons counts */
+    using ModelDataStackT = ImageFormat1DBase::ImageStackT; /**< Objective function data stack type: 1D double precision image stack, of images gain-corrected to approximate photons counts */
 };
 
 /* Inline Method Definitions */
@@ -61,7 +59,7 @@ simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
 
 template<class Model, class rng_t>
 typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::ImageT>::type
-simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
+simulate_image_from_model(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
 {
     auto sim_im=model.make_image();
     for(int i=0;i<model.size;i++) sim_im(i)=generate_poisson(rng,model_im(i));
@@ -194,10 +192,10 @@ make_estimator(Model &model, std::string ename)
         return make_shared<QuasiNewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"Newton")) {
         return make_shared<NewtonMaximizer<Model>>(model);
-//     } else if (istarts_with(name,"TrustRegion")) {
-//         return make_shared<TrustRegionMaximizer<Model>>(model);
+    } else if (istarts_with(name,"TrustRegion")) {
+        return make_shared<TrustRegionMaximizer<Model>>(model);
     } else {
-        return std::shared_ptr<Estimator<Model>>();
+        throw std::logic_error("Unknown estimator name");
     }
 }
 

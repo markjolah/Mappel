@@ -1,7 +1,7 @@
 
 /** @file Gauss1DMAP.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 04-2017
+ * @date 2017
  * @brief The class declaration and inline and templated functions for Gauss1DMAP.
  */
 
@@ -23,6 +23,8 @@ namespace mappel {
 
 class Gauss1DMAP : public Gauss1DModel, public PoissonNoise1DObjective {
 public:
+    using PriorDistT = CompositeDist<SymmetricBetaDist,GammaDist,GammaDist> 
+    
     /* Constructor/Destructor */
     Gauss1DMAP(int size, double psf_sigma): ImageFormat1DBase(size), Gauss1DModel(size,psf_sigma), PoissonNoise1DObjective(size) {};
 
@@ -57,8 +59,8 @@ inline
 void Gauss1DMAP::prior_grad_update(const ParamT &theta, ParamVecT &grad) const
 {
     grad(0) += beta_prior_grad(beta_pos, theta(0), size);
-    grad(1) += gamma_prior_grad(kappa_I, theta(1), theta(1));
-    grad(2) += gamma_prior_grad(kappa_bg, theta(2), theta(2));
+    grad(1) += gamma_prior_grad(kappa_I, mean_I, theta(1));
+    grad(2) += gamma_prior_grad(kappa_bg, mean_bg, theta(2));
 }
 
 inline

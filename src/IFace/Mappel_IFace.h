@@ -1,47 +1,40 @@
-/** @file Mappel_Iface.h
+/** @file Mappel_IFace.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
  * @date 04-01-2014
- * @brief The class declaration and inline and templated functions for Mappel_Iface.
+ * @brief The class declaration and inline and templated functions for Mappel_IFace.
  */
 
 #ifndef _MAPPEL_IFACE
 #define _MAPPEL_IFACE
+
 #include <sstream>
 #include <iostream>
-#include <typeinfo>
-#include <type_traits>
 
 #include "MexIFace.h"
-#include "Handle.h"
 #include "PointEmitterModel.h"
 
 using namespace mexiface;
 namespace mappel {
 
-using std::cout;
-using std::endl;
-
 template<class Model>
-class Mappel_Iface : public MexIFace {
+class Mappel_IFace :  public MexIFace, public MexIFaceHandler<Model> {
 public:
-    typedef typename Model::Stencil Stencil;
-    typedef typename Model::ParamT ParamT;
-    typedef typename Model::ParamVecT ParamVecT;
-    typedef typename Model::ParamMatT ParamMatT;
-    typedef typename Model::ImageT ImageT;
-    typedef typename Model::ImageStackT ImageStackT;
-    Mappel_Iface(std::string name);
+    using Stencil = typename Model::Stencil;
+    using ParamT = typename Model::ParamT;
+    using ParamVecT = typename Model::ParamVecT;
+    using ParamMatT = typename Model::ParamMatT;
+    using ImageT = typename Model::ImageT;
+    using ImageStackT = typename Model::ImageStackT;
 
-protected:
-    Model *obj;
+    Mappel_IFace();
 
-    virtual ImageT getImage()=0;
-    virtual ImageStackT getImageStack()=0;
-    virtual ImageStackT makeImageStack(int count)=0;
-
-    void objDestroy();
-    void objGetHyperparameters();
-    void objSetHyperparameters();
+protected:    
+    using MexIFaceHandler<Model>::obj;
+    void objGetHyperparams();
+    void objSetHyperparams();
+    void objGetStats();
+    void objBoundTheta();
+    void objThetaInBounds();
     void objSamplePrior();
     void objModelImage();
     void objSimulateImage();
@@ -56,94 +49,110 @@ protected:
     void objEstimateDebug();
     void objEstimatePosterior();
     void objEstimatePosteriorDebug();
-    
-    void objGetStats();
-    void objThetaInBounds();
-    void objBoundTheta();
-    void getObjectFromHandle(const mxArray *mxhandle);
-    
+        
+    /* Static methods */
     void objCholesky();
     void objModifiedCholesky();
     void objCholeskySolve();
 };
 
+
+
 template<class Model>
-Mappel_Iface<Model>::Mappel_Iface(std::string name) 
-    : MexIFace(name)
+class MappelFixedSigma_IFace : public Mappel_IFace<Model>
 {
-    methodmap["getHyperparameters"]=boost::bind(&Mappel_Iface::objGetHyperparameters, this);
-    methodmap["setHyperparameters"]=boost::bind(&Mappel_Iface::objSetHyperparameters, this);
-    methodmap["samplePrior"]=boost::bind(&Mappel_Iface::objSamplePrior, this);
-    methodmap["modelImage"]=boost::bind(&Mappel_Iface::objModelImage, this);
-    methodmap["simulateImage"]=boost::bind(&Mappel_Iface::objSimulateImage, this);
-    methodmap["LLH"]=boost::bind(&Mappel_Iface::objLLH, this);
-    methodmap["modelGrad"]=boost::bind(&Mappel_Iface::objModelGrad, this);
-    methodmap["modelHessian"]=boost::bind(&Mappel_Iface::objModelHessian, this);
-    methodmap["modelObjective"]=boost::bind(&Mappel_Iface::objModelObjective, this);
-    methodmap["modelPositiveHessian"]=boost::bind(&Mappel_Iface::objModelPositiveHessian, this);
-    methodmap["CRLB"]=boost::bind(&Mappel_Iface::objCRLB, this);
-    methodmap["fisherInformation"]=boost::bind(&Mappel_Iface::objFisherInformation, this);
-    methodmap["estimate"]=boost::bind(&Mappel_Iface::objEstimate, this);
-    methodmap["estimateDebug"]=boost::bind(&Mappel_Iface::objEstimateDebug, this);
-    methodmap["estimatePosterior"]=boost::bind(&Mappel_Iface::objEstimatePosterior, this);
-    methodmap["estimatePosteriorDebug"]=boost::bind(&Mappel_Iface::objEstimatePosteriorDebug, this);
-    methodmap["getStats"]=boost::bind(&Mappel_Iface::objGetStats, this);
-    methodmap["thetaInBounds"]=boost::bind(&Mappel_Iface::objThetaInBounds, this);
-    methodmap["boundTheta"]=boost::bind(&Mappel_Iface::objBoundTheta, this);
+public:
+    void objConstruct() override;
+};
+
+template<class Model>
+class MappelVarSigma_IFace : public Mappel_IFace<Model>
+{
+public:
+    void objConstruct() override;
+};
+
+
+template<class Model>
+void MappelFixedSigma_IFace<Model>::objConstruct()
+{
+    this->checkNumArgs(1,2);
+    auto size = MexIFace::getVec<typename Model::ImageSizeT>();
+    auto min_sigma = MexIFace::getVec();
+    this->outputHandle(new Model(size,min_sigma));
+}
+
+template<class Model>
+void MappelVarSigma_IFace<Model>::objConstruct()
+{
+    this->checkNumArgs(1,3);
+    auto size = MexIFace::getVec<Model::ImageSizeT>();
+    auto min_sigma = MexIFace::getVec();
+    auto max_sigma = MexIFace::getVec();
+    this->outputHandle(new Model(size,min_sigma,max_sigma));
+}
+
+
+template<class Model>
+Mappel_IFace<Model>::Mappel_IFace() 
+{
+    methodmap["getHyperparams"]=boost::bind(&Mappel_IFace::objGetHyperparams, this);
+    methodmap["setHyperparams"]=boost::bind(&Mappel_IFace::objSetHyperparams, this);
+    methodmap["samplePrior"]=boost::bind(&Mappel_IFace::objSamplePrior, this);
+    methodmap["modelImage"]=boost::bind(&Mappel_IFace::objModelImage, this);
+    methodmap["simulateImage"]=boost::bind(&Mappel_IFace::objSimulateImage, this);
+    methodmap["LLH"]=boost::bind(&Mappel_IFace::objLLH, this);
+    methodmap["modelGrad"]=boost::bind(&Mappel_IFace::objModelGrad, this);
+    methodmap["modelHessian"]=boost::bind(&Mappel_IFace::objModelHessian, this);
+    methodmap["modelObjective"]=boost::bind(&Mappel_IFace::objModelObjective, this);
+    methodmap["modelPositiveHessian"]=boost::bind(&Mappel_IFace::objModelPositiveHessian, this);
+    methodmap["CRLB"]=boost::bind(&Mappel_IFace::objCRLB, this);
+    methodmap["fisherInformation"]=boost::bind(&Mappel_IFace::objFisherInformation, this);
+    methodmap["estimate"]=boost::bind(&Mappel_IFace::objEstimate, this);
+    methodmap["estimateDebug"]=boost::bind(&Mappel_IFace::objEstimateDebug, this);
+    methodmap["estimatePosterior"]=boost::bind(&Mappel_IFace::objEstimatePosterior, this);
+    methodmap["estimatePosteriorDebug"]=boost::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
+    methodmap["getStats"]=boost::bind(&Mappel_IFace::objGetStats, this);
+    methodmap["thetaInBounds"]=boost::bind(&Mappel_IFace::objThetaInBounds, this);
+    methodmap["boundTheta"]=boost::bind(&Mappel_IFace::objBoundTheta, this);
     
-    staticmethodmap["cholesky"]=boost::bind(&Mappel_Iface::objCholesky, this);
-    staticmethodmap["modifiedCholesky"]=boost::bind(&Mappel_Iface::objModifiedCholesky, this);
-    staticmethodmap["choleskySolve"]=boost::bind(&Mappel_Iface::objCholeskySolve, this);
+    staticmethodmap["cholesky"]=boost::bind(&Mappel_IFace::objCholesky, this);
+    staticmethodmap["modifiedCholesky"]=boost::bind(&Mappel_IFace::objModifiedCholesky, this);
+    staticmethodmap["choleskySolve"]=boost::bind(&Mappel_IFace::objCholeskySolve, this);
 }
 
 template<class Model>
-inline
-void Mappel_Iface<Model>::getObjectFromHandle(const mxArray *mxhandle)
+void Mappel_IFace<Model>::objGetHyperparams()
 {
-    obj=Handle<Model>::getObject(mxhandle);
-}
-
-
-template<class Model>
-void Mappel_Iface<Model>::objDestroy()
-{
-    if(!nrhs) MappelError("BadInputArgs","Destructor: Bad object handle given");
-    Handle<Model>::destroyObject(rhs[0]);
-}
-
-
-template<class Model>
-void Mappel_Iface<Model>::objGetHyperparameters()
-{
-    // obj.SetHyperparameters(prior)
+    // obj.SetHyperparams(prior)
     //(in) prior: 1x4 double - [Imin, Imax, bgmin, bgmax]
     checkNumArgs(1,0);
-    outputDVec(obj->get_hyperparameters());
+    output(obj->get_hyperparams());
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objSetHyperparameters()
+void Mappel_IFace<Model>::objSetHyperparams()
 {
-    // obj.SetHyperparameters(prior)
+    // obj.SetHyperparams(prior)
     //(in) prior: 1x4 double - [Imin, Imax, bgmin, bgmax]
     checkNumArgs(0,1);
-    obj->set_hyperparameters(getVec());
+    obj->set_hyperparams(getVec());
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objSamplePrior()
+void Mappel_IFace<Model>::objSamplePrior()
 {
     // theta=obj.samplePrior(count)
-    // % (in) count: int (default 1) number of thetas to sample
+    // % (in) count: uint64 (default 1) number of thetas to sample
     // % (out) theta: A (nParams X n) double of theta values
     checkNumArgs(1,1);
-    int  count = getInt();
-    auto theta = makeOutputArray(obj->num_params, count);
+    auto count = getAsInt<IdxT>();
+    auto theta = makeOutputArray(obj->get_num_params(), count);
     sample_prior_stack(*obj, theta);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objModelImage()
+void Mappel_IFace<Model>::objModelImage()
 {
     // image=obj.modelImage(theta)
     // (in) theta: an (nParams X n) double of theta values
@@ -155,7 +164,7 @@ void Mappel_Iface<Model>::objModelImage()
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objSimulateImage()
+void Mappel_IFace<Model>::objSimulateImage()
 {
     // image=obj.simulateImage(theta, count)
     // If theta is size (nParams X 1) then count images with that theta are
@@ -165,15 +174,15 @@ void Mappel_Iface<Model>::objSimulateImage()
     // (in) count: the number of independant images to generate
     // (out) image: a double (size X size X n) image stack, all sampled with params theta
     checkNumArgs(1,2);
-    auto theta_stack=getDMat();
-    int  count=theta_stack.n_cols;
-    if (count==1) count=getInt();
-    auto image_stack=makeImageStack(count);
+    auto theta_stack = getMat();
+    IdxT count = theta_stack.n_cols;
+    if (count==1) count = getAsInt<IdxT>();
+    auto image_stack = obj->make_image_stack(count);
     simulate_image_stack(*obj, theta_stack, image_stack);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objLLH()
+void Mappel_IFace<Model>::objLLH()
 {
     // llh=obj.LLH(image, theta)
     // This takes in a N images and M thetas.  If M=N=1, 
@@ -185,15 +194,15 @@ void Mappel_Iface<Model>::objLLH()
     // (in) theta: an (nParams X M) double of theta values
     // (out) llh: a (1 X max(M,N)) double of log_likelihoods
     checkNumArgs(1,2);
-    auto image_stack=getImageStack();
-    auto theta_stack=getDMat();
-    int  count=std::max(static_cast<int>(theta_stack.n_cols), static_cast<int>(image_stack.n_slices));
-    auto llh_stack=makeDVec(count);
+    auto image_stack = MexIFace::get<ImageStackT,double>();
+    auto theta_stack = getMat();
+    auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
+    auto llh_stack = makeOutputArray(count);
     log_likelihood_stack(*obj, image_stack, theta_stack, llh_stack);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objModelGrad()
+void Mappel_IFace<Model>::objModelGrad()
 {
     // grad=obj.modelGrad(obj, image, theta) - Compute the model gradiant.
     // This takes in a N images and M thetas.  If M=N=1, 
@@ -205,15 +214,15 @@ void Mappel_Iface<Model>::objModelGrad()
     // (in) theta: an (nParams X M) double of theta values
     // (out) grad: a (nParams X max(M,N)) double of gradiant vectors
     checkNumArgs(1,2);
-    auto image_stack=getImageStack();
-    auto theta_stack=getDMat();
-    int  count=std::max(static_cast<int>(theta_stack.n_cols), static_cast<int>(image_stack.n_slices));
-    auto grad_stack=makeDMat(obj->num_params, count);
+    auto image_stack = get<ImageStackT>();
+    auto theta_stack = getMat();
+    auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
+    auto grad_stack = makeOutputArray(obj->get_num_params(), count);
     model_grad_stack(*obj, image_stack, theta_stack, grad_stack);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objModelHessian()
+void Mappel_IFace<Model>::objModelHessian()
 {
     // hess=obj.modelHessian(obj, image, theta) - Compute the model hessian
     // This takes in a N images and M thetas.  If M=N=1, 
@@ -225,16 +234,15 @@ void Mappel_Iface<Model>::objModelHessian()
     // (in) theta: an (nParams X M) double of theta values
     // (out) hess: a (nParams X nParams X max(M,N)) double of hessian matricies
     checkNumArgs(1,2);
-    auto image_stack=getImageStack();
-    auto theta_stack=getDMat();
-    int  count=std::max(static_cast<int>(theta_stack.n_cols), static_cast<int>(image_stack.n_slices));
-    auto hess_stack=makeDStack(obj->num_params,obj->num_params, count);
+    auto image_stack = get<ImageStackT>();
+    auto theta_stack = getMat();
+    auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
+    auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
     model_hessian_stack(*obj, image_stack, theta_stack, hess_stack);
 }
 
-
 template<class Model>
-void Mappel_Iface<Model>::objModelObjective()
+void Mappel_IFace<Model>::objModelObjective()
 {
     // hess=obj.modelObjective(obj, image, theta) - 
     // A convenience function for objective based optimization.  Works on a single image, theta and shares the
@@ -249,22 +257,22 @@ void Mappel_Iface<Model>::objModelObjective()
     // [out] (optional) Hess: hessian of log likelihood double size:[nParams,nParams] 
     checkMinNumArgs(1,3);
     checkMaxNumArgs(3,3);
-    auto image = getImage();
-    auto theta = getDVec();
-    bool negate = getBool();
+    auto image = get<ImageT>();
+    auto theta = getVec();
+    bool negate = getAsBool();
     auto stencil = obj->make_stencil(theta);
     double llh = log_likelihood(*obj, image, stencil);
     if(negate) llh = -llh;
-    outputDouble(llh);
+    output(llh);
     if(nlhs==2) {
         //nargout=2 Output grad also
-        auto grad=makeDVec(obj->num_params);
+        auto grad = makeOutputArray(obj->get_num_params());
         model_grad(*obj, image, stencil, grad);
         if(negate) grad = -grad;
     } else if(nlhs==3) {
         //nargout=3 Output both grad and hess which can be computed simultaneously!
-        auto grad=makeDVec(obj->num_params);
-        auto hess=makeDMat(obj->num_params,obj->num_params);
+        auto grad = makeOutputArray(obj->get_num_params());
+        auto hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
         model_hessian(*obj, image, stencil, grad, hess);
         copy_Usym_mat(hess);
         if(negate) grad = -grad;
@@ -272,9 +280,8 @@ void Mappel_Iface<Model>::objModelObjective()
     }
 }
 
-
 template<class Model>
-void Mappel_Iface<Model>::objModelPositiveHessian()
+void Mappel_IFace<Model>::objModelPositiveHessian()
 {
     // hess=obj.modelPositiveHessian(obj, image, theta) - Compute 
     //  the modified cholesky decomposition form of the negative hessian which
@@ -290,17 +297,15 @@ void Mappel_Iface<Model>::objModelPositiveHessian()
     // (in) theta: an (nParams X M) double of theta values
     // (out) hess: a (nParams X nParams X max(M,N)) double of positive hessian matricies
     checkNumArgs(1,2);
-    auto image_stack=getImageStack();
-    auto theta_stack=getDMat();
-    int  count=std::max(theta_stack.n_cols, image_stack.n_slices);
-    auto hess_stack=makeDStack(obj->num_params,obj->num_params, count);
+    auto image_stack = get<ImageStackT>();
+    auto theta_stack = getMat();
+    auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
+    auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
     model_positive_hessian_stack(*obj, image_stack, theta_stack, hess_stack);
 }
 
-
-
 template<class Model>
-void Mappel_Iface<Model>::objCRLB()
+void Mappel_IFace<Model>::objCRLB()
 {
     // crlb=obj.CRLB(obj, theta) - Compute the Cramer-Rao Lower Bound at theta
     // (in) theta: an (nParams X n) double of theta values
@@ -308,28 +313,26 @@ void Mappel_Iface<Model>::objCRLB()
     //             these are the lower bounds on the variance at theta 
     //             for any unbiased estimator.
     checkNumArgs(1,1);
-    auto theta_stack=getDMat();
-    auto crlb_stack=makeDMat(obj->num_params,theta_stack.n_cols);
+    auto theta_stack = getMat();
+    auto crlb_stack = makeDMat(obj->get_num_params(),theta_stack.n_cols);
     cr_lower_bound_stack(*obj, theta_stack, crlb_stack);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objFisherInformation()
+void Mappel_IFace<Model>::objFisherInformation()
 {
     // fisherI=obj.FisherInformation(obj, theta) - Compute the Fisher Information matrix
     //    at theta
     // (in) theta: an (nParams X n) double of theta values
     // (out) fisherI: a  (nParams X nParms) matrix of the fisher information at theta 
     checkNumArgs(1,1);
-    auto theta_stack=getDMat();
-    auto fisherI_stack=makeDStack(obj->num_params,obj->num_params,theta_stack.n_cols);
+    auto theta_stack = getMat();
+    auto fisherI_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(),theta_stack.n_cols);
     fisher_information_stack(*obj, theta_stack, fisherI_stack);
 }
 
-
-
 template<class Model>
-void Mappel_Iface<Model>::objEstimate()
+void Mappel_IFace<Model>::objEstimate()
 {
     // [theta, crlb, llh]=obj.estimate(image, name) - estimate theta's
     // crlb's and llh's for each image in stack.  
@@ -344,28 +347,28 @@ void Mappel_Iface<Model>::objEstimate()
     // (out) stats: A 1x1 struct of fitting statistics.
     checkMaxNumArgs(4,3);
     //Get input
-    auto image_stack=getImageStack();
-    std::string name=getString();
-    auto theta_init_stack = getDMat();
+    auto image_stack = get<ImageStackT>();
+    std::string name = getString();
+    auto theta_init_stack = getMat();
     ParamVecT theta_init;
-    int nimages=image_stack.n_slices;
+    int nimages = obj->size_image_stack(image_stack);
     //Make output
-    auto theta_stack=makeDMat(obj->num_params,nimages);
-    auto crlb_stack=makeDMat(obj->num_params,nimages);
-    auto llh_stack=makeDVec(nimages);
+    auto theta_stack = makeOutputArray(obj->get_num_params(),nimages);
+    auto crlb_stack = makeOutputArray(obj->get_num_params(),nimages);
+    auto llh_stack = makeOutputArray(nimages);
     //Call method
-    auto estimator=make_estimator(*obj, name);
+    auto estimator = make_estimator(*obj, name);
     if(!estimator) {
         std::ostringstream out;
         out<<"Bad estimator name: "<<name;
-        component_error("estimate","InputError",out.str());
+        throw BadInputError(out.str());
     }
     estimator->estimate_stack(image_stack, theta_init_stack, theta_stack, crlb_stack, llh_stack);
-    outputStatsToStruct(estimator->get_stats());
+    output(estimator->get_stats());
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objEstimateDebug()
+void Mappel_IFace<Model>::objEstimateDebug()
 {
     //  [theta, crlb, llh, stats, sample, sample_rllh]=estimatedebug(image, name) - estimate theta's
     //  crlb's and llh's for each image in stack.  
@@ -382,10 +385,10 @@ void Mappel_Iface<Model>::objEstimateDebug()
     //  (out) sample_llh: A (1 X n) array of relative log likelyhoods at each sample theta
     checkNumArgs(6,3);
     //Get input
-    auto image=getImage();
-    std::string name=getString();
-    auto theta_init = getDVec();
-    //Make temporaries (don't know sequence lenght ahead of call)
+    auto image = get<ImageT>();
+    auto name = getString();
+    auto theta_init = getVec();
+    //Make temporaries (don't know sequence length ahead of call)
     ParamT theta;
     ParamT crlb;
     double llh;
@@ -397,25 +400,24 @@ void Mappel_Iface<Model>::objEstimateDebug()
         theta_init_p = theta_init;
     }
     //Call method
-    auto estimator=make_estimator(*obj, name);
+    auto estimator = make_estimator(*obj, name);
     if(!estimator) {
         std::ostringstream out;
         out<<"Bad estimator name: "<<name;
-        component_error("estimateDebug","InputError",out.str());
+        throw BadInputError(out.str());
     }
     estimator->estimate_debug(image, theta_init_p, theta, crlb, llh, sequence, sequence_llh);
     //Write output
-    outputDVec(theta);
-    outputDVec(crlb);
-    outputDouble(llh);
-    outputStatsToStruct(estimator->get_debug_stats()); //Get the debug stats which might include more info like backtrack_idxs
-    outputDMat(sequence);
-    outputDVec(sequence_llh);
+    output(theta);
+    output(crlb);
+    output(llh);
+    output(estimator->get_debug_stats()); //Get the debug stats which might include more info like backtrack_idxs
+    output(sequence);
+    output(sequence_llh);
 }
 
-
 template<class Model>
-void Mappel_Iface<Model>::objEstimatePosterior()
+void Mappel_IFace<Model>::objEstimatePosterior()
 {
     // [mean, cov, stats]=estimatePosterior(obj, image, max_iterations)
     // (in) image: a double (imsize X imsize X n) image stack
@@ -425,21 +427,21 @@ void Mappel_Iface<Model>::objEstimatePosterior()
     // (out) cov: a (nParams X nParams X n) estimate of the posterior covarience.
     checkNumArgs(2,3);
     //Get input
-    auto ims=getImageStack();
-    int Nsamples=getInt();
-    auto theta_init_stack = getDMat();
+    auto ims = get<ImageStackT>();
+    auto Nsamples = getAsInt<IdxT>();
+    auto theta_init_stack = getMat();
 
-    int Nims=ims.n_slices;
-    int Np=obj->num_params;//number of model parameters
+    auto Nims = obj->size_image_stack(ims);
+    auto Np = obj->get_num_params();//number of model parameters
     //Make output
-    auto means=makeDMat(Np,Nims);
-    auto covs=makeDStack(Np,Np,Nims);
+    auto means = makeOutputArray(Np,Nims);
+    auto covs = makeOutputArray(Np,Np,Nims);
     //Call method
     evaluate_posterior_stack(*obj, ims, theta_init_stack, Nsamples, means, covs);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objEstimatePosteriorDebug()
+void Mappel_IFace<Model>::objEstimatePosteriorDebug()
 {
     // [mean, cov, stats]=estimatePosterior(obj, image, max_iterations)
     // (in) image: a double (imsize X imsize ) image stack
@@ -453,99 +455,98 @@ void Mappel_Iface<Model>::objEstimatePosteriorDebug()
     // (out) candidate_llh: A (1 X nsmaples) array of relative log likelyhoods at each candidate theta
     checkNumArgs(6,3);
     //Get input
-    auto im=getImage();
-    int Ns=getInt(); //number of samples
-    auto theta_init = getDVec();
-    int Np=obj->num_params;//number of model parameters
+    auto im = get<ImageT>();
+    auto Ns = getAsInt<IdxT>(); //number of samples
+    auto theta_init = getVec();
+    auto Np = obj->get_num_params();//number of model parameters
     //Make ouput
-    auto mean=makeDVec(Np);
-    auto cov=makeDMat(Np,Np);
-    auto sample=makeDMat(Np,Ns);
-    auto sample_llh=makeDVec(Ns);
-    auto candidates=makeDMat(Np,Ns);
-    auto candidate_llh=makeDVec(Ns);
+    auto mean = makeOutputArray(Np);
+    auto cov = makeOutputArray(Np,Np);
+    auto sample = makeOutputArray(Np,Ns);
+    auto sample_llh = makeOutputArray(Ns);
+    auto candidates = makeOutputArray(Np,Ns);
+    auto candidate_llh = makeOutputArray(Ns);
     //Call method
     evaluate_posterior_debug(*obj,im,theta_init,Ns,mean,cov,sample,sample_llh,candidates,candidate_llh);
 }
 
-
 template<class Model>
-void Mappel_Iface<Model>::objGetStats()
+void Mappel_IFace<Model>::objGetStats()
 {
     checkNumArgs(1,0);
-    outputStatsToStruct(obj->get_stats());
+    output(obj->get_stats());
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objThetaInBounds()
+void Mappel_IFace<Model>::objThetaInBounds()
 {
     checkNumArgs(1,1);
-    auto param=getDMat();
+    auto param = getMat();
     bool ok = true;
-    for(unsigned i=0; i<param.n_cols; i++) ok &= obj->theta_in_bounds(param.col(i));
-    outputBool(ok);
+    for(IdxT i=0; i<param.n_cols; i++) ok &= obj->theta_in_bounds(param.col(i));
+    output(ok);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objBoundTheta()
+void Mappel_IFace<Model>::objBoundTheta()
 {
     checkNumArgs(1,1);
-    auto param=getDMat();
-    auto bounded=makeDMat(param.n_rows, param.n_cols);
-    auto theta=obj->make_param();
-    for(unsigned i=0; i<param.n_cols; i++) {
-        theta=param.col(i);
+    auto param = getMat();
+    auto bounded = makeOutputArray(param.n_rows, param.n_cols);
+    auto theta = obj->make_param();
+    for(IdxT i=0; i<param.n_cols; i++) {
+        theta = param.col(i);
         obj->bound_theta(theta);
-        bounded.col(i)=theta;
+        bounded.col(i) = theta;
     }
 }
 
 //Static debugging for cholesky
 
 template<class Model>
-void Mappel_Iface<Model>::objCholesky()
+void Mappel_IFace<Model>::objCholesky()
 {
     checkNumArgs(3,1);
-    auto A=getDMat();
+    auto A = getMat();
     if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
-    arma::mat C = A;
+    auto C = A;
     bool valid = cholesky(C);
     //Seperate d from C so C is unit lower triangular
-    arma::vec d = C.diag();
+    auto d = C.diag();
     C.diag().fill(1.);
-    outputBool(valid);
-    outputDMat(C);
-    outputDVec(d);
+    output(valid);
+    output(C);
+    output(d);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objModifiedCholesky()
+void Mappel_IFace<Model>::objModifiedCholesky()
 {
     checkNumArgs(3,1);
-    auto A=getDMat();
+    auto A = getMat();
     if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
-    arma::mat C = A;
+    auto C = A;
     bool modified = modified_cholesky(C);
-    arma::vec d = C.diag();
+    auto d = C.diag();
     C.diag().fill(1.);
-    outputBool(modified);
-    outputDMat(C);
-    outputDVec(d);
+    output(modified);
+    output(C);
+    output(d);
 }
 
 template<class Model>
-void Mappel_Iface<Model>::objCholeskySolve()
+void Mappel_IFace<Model>::objCholeskySolve()
 {
     checkNumArgs(2,2);
-    auto A=getDMat();
-    auto b=getDVec();
+    auto A = getMat();
+    auto b = getVec();
     if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
     if(b.n_elem != A.n_rows) error("InvalidInput","Input sizes do not match");
-    arma::mat C = A;
+    auto C = A;
     bool modified = modified_cholesky(C);
-    arma::vec x= cholesky_solve(C,b);
-    outputBool(modified);
-    outputDVec(x);
+    auto x = cholesky_solve(C,b);
+    output(modified);
+    output(x);
 }
 
 } /* namespace mappel */
