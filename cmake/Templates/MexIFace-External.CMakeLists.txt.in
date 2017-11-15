@@ -11,47 +11,21 @@ project(MexIFace-External NONE)
 
 include(ExternalProject)
 
-set(MexIFace_GIT_URL https://github.com/markjolah/MexIFace.git)
-set(MexIFace_GIT_URL $ENV{HOME}/github/MexIFace)
-ExternalProject_Add(MexIFaceDebug
-    GIT_REPOSITORY ${MexIFace_GIT_URL}
-    GIT_TAG master
-    GIT_SHALLOW 1
-    GIT_PROGRESS 0
-    SOURCE_DIR @CMAKE_BINARY_DIR@/MexIFace-External/_source_debug
-    BINARY_DIR @CMAKE_BINARY_DIR@/MexIFace-External/_build_debug
-    INSTALL_DIR @CMAKE_INSTALL_PREFIX@
-    CMAKE_ARGS
-        -DCMAKE_BUILD_TYPE=Debug
-        -DCMAKE_CXX_COMPILER=@CMAKE_CXX_COMPILER@
-        -DCMAKE_INSTALL_PREFIX=@CMAKE_INSTALL_PREFIX@
-        -DCMAKE_TOOLCHAIN_FILE=@CMAKE_TOOLCHAIN_FILE@
-    INSTALL_COMMAND
-        @CMAKE_COMMAND@
-        --build .
-        --target install
-        --
-        -j4
-    )
+set(CMAKE_ARGS -DCMAKE_CXX_COMPILER=@CMAKE_CXX_COMPILER@
+               -DCMAKE_INSTALL_PREFIX=@CMAKE_INSTALL_PREFIX@
+               -DCMAKE_TOOLCHAIN_FILE=@CMAKE_TOOLCHAIN_FILE@)
+include(ProcessorCount)
+ProcessorCount(NUM_PROCS)
+set(INSTALL_COMMAND  @CMAKE_COMMAND@ --build . --target install -- -j${NUM_PROCS})
 
-ExternalProject_Add(MexIFaceRelease
-    GIT_REPOSITORY ${MexIFace_GIT_URL}
+ExternalProject_Add(@ExtProjectName@
+    GIT_REPOSITORY @ExtProjectURL@
     GIT_TAG master
     GIT_SHALLOW 1
     GIT_PROGRESS 0
-    SOURCE_DIR @CMAKE_BINARY_DIR@/MexIFace-External/_source_release
-    BINARY_DIR @CMAKE_BINARY_DIR@/MexIFace-External/_build_release
+    SOURCE_DIR @ExtProjectDir@/@CMAKE_BUILD_TYPE@/source
+    BINARY_DIR @ExtProjectDir@/@CMAKE_BUILD_TYPE@/build
     INSTALL_DIR @CMAKE_INSTALL_PREFIX@
-    CMAKE_ARGS
-        -DCMAKE_BUILD_TYPE=Release
-        -DCMAKE_CXX_COMPILER=@CMAKE_CXX_COMPILER@
-        -DCMAKE_INSTALL_PREFIX=@CMAKE_INSTALL_PREFIX@
-        -DCMAKE_TOOLCHAIN_FILE=@CMAKE_TOOLCHAIN_FILE@
-    INSTALL_COMMAND
-        @CMAKE_COMMAND@
-        --build .
-        --target install
-        --
-        -j4
+    CMAKE_ARGS ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@
+    INSTALL_COMMAND ${INSTALL_COMMAND}
     )
-add_dependencies(MexIFaceRelease MexIFaceDebug)

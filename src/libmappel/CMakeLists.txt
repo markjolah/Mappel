@@ -25,28 +25,21 @@ if(OPT_HYPERSPECTRAL)
     set(MAPPEL_HDRS ${MAPPEL_HDRS} ${HS_HDRS})
 endif()
 
-
-add_library(mappel-core OBJECT ${MAPPEL_SRCS})
-set_target_properties(mappel-core PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
-
-set(LIB_TARGET Mappel)
-add_library(${LIB_TARGET} SHARED $<TARGET_OBJECTS:mappel-core> $<TARGET_OBJECTS:cGaussMLE>)
-target_link_libraries(${LIB_TARGET} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
-target_link_libraries(${LIB_TARGET} ${TRNG_LIBRARY} ) #Parallel random number generation
-target_link_libraries(${LIB_TARGET} ${OPENMP_LIBRARY}) #OpenMP (non-empty for WIN32)
-target_link_libraries(${LIB_TARGET} ${PTHREAD_LIBRARY}) #Pthreads
-target_link_libraries(${LIB_TARGET} Boost::chrono Boost::thread) 
+set(LIB_TARGET Mappel) #Name for main Mappel library
+add_library(${LIB_TARGET} SHARED ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>)
+target_link_libraries(${LIB_TARGET} PUBLIC ${BacktraceException_LIBRARIES} )
+target_link_libraries(${LIB_TARGET} PUBLIC ${ParallelRngManager_LIBRARIES} )
+target_link_libraries(${LIB_TARGET} PUBLIC ${PriorHessian_LIBRARIES})
+# target_link_libraries(${LIB_TARGET} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
+# target_link_libraries(${LIB_TARGET} ${TRNG_LIBRARY} ) #Parallel random number generation
+# target_link_libraries(${LIB_TARGET} ${OPENMP_LIBRARY}) #OpenMP (non-empty for WIN32)
+target_link_libraries(${LIB_TARGET} PUBLIC ${PTHREAD_LIBRARY}) #Pthreads
+target_link_libraries(${LIB_TARGET} PUBLIC Boost::chrono Boost::thread) 
 set_target_properties(${LIB_TARGET} PROPERTIES PUBLIC_HEADER "${MAPPEL_HDRS}")
 # set_target_properties(${LIB_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 target_include_directories(${LIB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
 target_include_directories(${LIB_TARGET} INTERFACE $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
 
-get_property(_VAR TARGET Mappel PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
-message(STATUS "MAPPEL INTERFACE_INCLUDE_DIRECTORIES: ${_VAR}")
-get_property(_VAR TARGET Mappel PROPERTY INTERFACE_LINK_LIBRARIES)
-message(STATUS "MAPPEL INTERFACE_LINK_LIBRARIES: ${_VAR}")
-get_property(_VAR TARGET Mappel PROPERTY INCLUDE_DIRECTORIES)
-message(STATUS "MAPPEL INCLUDE_DIRECTORIES: ${_VAR}")
 
 if(UNIX)
     install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}

@@ -22,8 +22,7 @@ set(GTEST_TARGET mappel.gtest)
 set(CTEST_TARGET mappel.ctest)
 
 
-add_library(test-core OBJECT ${TEST_CORE_SRCS})
-target_include_directories(test-core PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../libmappel")
+
 # add_executable( ${GTEST_TARGET} ${GTEST_SRCS} $<TARGET_OBJECTS:test-core> )
 # if(UNIX)
 #     install(TARGETS ${GTEST_TARGET} RUNTIME DESTINATION bin COMPONENT Runtime )
@@ -43,7 +42,7 @@ set(ESTIMATORS Newton Huristic CGauss QuasiNewton NewtonRaphson)
 
 #Ctest is only availible on Unix as it uses symlinks
 if(UNIX)
-    add_executable(${CTEST_TARGET} ${CTEST_SRCS} $<TARGET_OBJECTS:test-core>)
+    add_executable(${CTEST_TARGET} ${CTEST_SRCS} ${TEST_CORE_SRCS})
     target_link_libraries(${CTEST_TARGET} Mappel)
     set_target_properties(${CTEST_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
     set_target_properties(${CTEST_TARGET} PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib")

@@ -16,7 +16,10 @@ project(Mappel VERSION 1.9.0 LANGUAGES CXX)
 option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
 #Modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake/Modules)
+set(${PROJECT_NAME}_CMAKE_DIR ${CMAKE_SOURCE_DIR}/cmake)
+set(${PROJECT_NAME}_CMAKE_MODULES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Modules)
+set(${PROJECT_NAME}_CMAKE_TEMPLATES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Templates)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_CMAKE_MODULES_DIR})
 
 #Enable build and install of MexIFace via ExternalProject_Add
 include(MexIFace-External)
@@ -28,6 +31,16 @@ include(MexIFace-configure-gtest) #Add support for googletest
 include(MexIFace-configure-trng)  #Add support for TRNG parallel random number generator
 include(MexIFace-Doxygen) #Add Doxygen documentation targets
 include(MexIFace-PackageConfig) #Configure Package Config and associated files for exports
+
+include(AddExternalDependency)
+
+#ParallelRngManager allows for management of parallel rng streams.
+set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
+AddExternalDependency(ParallelRngManager ${ParallelRngManagerURL} SHARED)
+
+#PriorHessian allows for hessians of prior distirbutions
+set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
+AddExternalDependency(PriorHessian ${PriorHessianURL} SHARED)
 
 add_subdirectory(src/libmappel) #Main library
 add_subdirectory(src/IFace) #MATLAB Modules

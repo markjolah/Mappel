@@ -107,7 +107,7 @@ void Mappel_Iface<Model>::getObjectFromHandle(const mxArray *mxhandle)
 template<class Model>
 void Mappel_Iface<Model>::objDestroy()
 {
-    if(!nrhs) component_error("Destructor","NumInputArgs","No object handle given");
+    if(!nrhs) MappelError("BadInputArgs","Destructor: Bad object handle given");
     Handle<Model>::destroyObject(rhs[0]);
 }
 
@@ -127,7 +127,7 @@ void Mappel_Iface<Model>::objSetHyperparameters()
     // obj.SetHyperparameters(prior)
     //(in) prior: 1x4 double - [Imin, Imax, bgmin, bgmax]
     checkNumArgs(0,1);
-    obj->set_hyperparameters(getDVec());
+    obj->set_hyperparameters(getVec());
 }
 
 template<class Model>
@@ -137,8 +137,8 @@ void Mappel_Iface<Model>::objSamplePrior()
     // % (in) count: int (default 1) number of thetas to sample
     // % (out) theta: A (nParams X n) double of theta values
     checkNumArgs(1,1);
-    int  count=getInt();
-    auto theta=makeDMat(obj->num_params, count);
+    int  count = getInt();
+    auto theta = makeOutputArray(obj->num_params, count);
     sample_prior_stack(*obj, theta);
 }
 
@@ -149,8 +149,8 @@ void Mappel_Iface<Model>::objModelImage()
     // (in) theta: an (nParams X n) double of theta values
     // (out) image: a (size X size X n) double image stack
     checkNumArgs(1,1);
-    auto theta_stack=getDMat();
-    auto image_stack=makeImageStack(theta_stack.n_cols);
+    auto theta_stack = getMat();
+    auto image_stack = obj->make_image_stack(theta_stack.n_cols);
     model_image_stack(*obj, theta_stack, image_stack);
 }
 
