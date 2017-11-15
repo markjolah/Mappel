@@ -10,10 +10,10 @@ add_subdirectory(cGaussMLE)
 
 set(MAPPEL_SRCS display.cpp stencil.cpp rng.cpp util.cpp mcmc.cpp numerical.cpp
                 PointEmitterModel.cpp 
-                ImageFormat1DBase.cpp ImageFormat2DBase.cpp
-                PoissonNoise1DObjective.cpp  PoissonNoise2DObjective.cpp
+                ImageFormat1DBase.cpp 
+                PoissonNoise1DObjective.cpp  
                 Gauss1DModel.cpp
-                Gauss2DModel.cpp
+                Gauss1DMLE.cpp
                 )
 
 file(GLOB MAPPEL_HDRS *.h)

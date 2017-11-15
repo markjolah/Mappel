@@ -8,9 +8,9 @@
 #ifndef _MAPPEL_GAUSS1DMLE_H
 #define _MAPPEL_GAUSS1DMLE_H
 
-#include "MLEstimator.h"
 #include "Gauss1DModel.h"
 #include "PoissonNoise1DObjective.h"
+#include "MLEstimator.h"
 
 namespace mappel {
 
@@ -23,26 +23,14 @@ namespace mappel {
 class Gauss1DMLE : public Gauss1DModel, public PoissonNoise1DObjective, public MLEstimator 
 {
 public:
-    Gauss1DMLE(ImageSizeVecT size, VecT psf_sigma) : 
-            PointEmitterModel(make_prior(size(0))), 
-            ImageFormat1DBase(size(0)),
-            Gauss1DModel(size(0), psf_sigma(0))
-    { }
-
-    Gauss1DMLE(int size, double psf_sigma) : 
-            PointEmitterModel(make_prior(size)), 
-            ImageFormat1DBase(size),
-            Gauss1DModel(size, psf_sigma)
-    { }
-    
-    Gauss1DMLE(int size, double psf_sigma, CompositeDist&& prior) : 
-            PointEmitterModel(std::move(prior)), 
-            ImageFormat1DBase(size),
-            Gauss1DModel(size, psf_sigma)
-    { }
-     
+    Gauss1DMLE(ImageSizeVecT size, VecT psf_sigma);
+    Gauss1DMLE(ImageSizeT size, double psf_sigma);
+    template<class PriorDistT>
+    Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
     
     static std::string name() {return "Gauss1DMLE";}
+
+    friend std::ostream& operator<<(std::ostream &out, Gauss1DMLE &model);
 };
  
 } /* namespace mappel */

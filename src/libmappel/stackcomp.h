@@ -1,7 +1,8 @@
 
 /** @file stackcomp.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @brief
+ * @date 2013-2017
+ * @brief Data-parallel versions of core computational functions using OpenMP.
  *
  * OpenMP computation for stacked Model operations on verctor data.
  *
@@ -23,15 +24,21 @@
 
 namespace mappel {
 
-/* Stack methods to move to base class */
+/** @brief Parallel sampling of the model prior.
+ * 
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
+ * 
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model, A PointEmitterModel object.
+ * @param[out] theta_stack, A sequence of sampled thetas.  Size: [model.num_params, nSamples]
+ */
 template<class Model>
 void sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
-    unsigned long seed=make_seed();
     #pragma omp parallel
     {
-        RNG rng=make_parallel_rng_stream(seed);
+        auto rng = rng_manager.generator();
         #pragma omp for
         for(int n=0; n<nthetas; n++){
             theta_stack.col(n) = model.sample_prior(rng);
@@ -39,6 +46,18 @@ void sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)
     }
 }
 
+/** @brief Parallel computation of the model image.
+ * 
+ * The model image is the expected photon count at each pixel under parameter theta.
+ *
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
+ * Use: model.make_image_stack() to make an image stack of appropriate dimensions for the model
+ * 
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model      A PointEmitterModel object.
+ * @param[in] theta_stack    Sequence of thetas for which to generate images.  Size: [model.num_params, nThetas]
+ * @param[out] image_stack   Sequence of model images generated.
+ */
 template<class Model>
 void model_image_stack(const Model &model,
                        const typename Model::ParamVecT &theta_stack,
@@ -47,52 +66,67 @@ void model_image_stack(const Model &model,
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        image_stack.slice(n) = model_image(model, theta_stack.col(n));
+        model.get_image_from_stack(image_stack,n) = model_image(model, theta_stack.col(n));
 }
 
 
 
-/**
- * @brief
+/** @brief Parallel simulation of images from one or more theta.
+ * 
  * This accepts either a single theta and a stack of images, or a stack of thetas
  * and a stack of images.
- *
+ * 
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
+ * Use: model.make_image_stack() to make an image stack of appropriate dimensions for the model
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model      A PointEmitterModel object.
+ * @param[in] theta_stack    Single theta or a sequence of thetas.  Size: [model.num_params, nThetas]
+ * @param[out] image_stack   Sequence of model images generated.
  */
 template<class Model>
 void simulate_image_stack(const Model &model,
-                          const typename Model::ParamVecT &theta_stack,
-                          typename Model::ImageStackT &image_stack)
+                    const typename Model::ParamVecT &theta_stack,
+                    typename Model::ImageStackT &image_stack)
 {
-    int nimages = static_cast<int>(image_stack.n_slices);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
-    unsigned long seed=make_seed();
     if (nimages==1 && nthetas==1) {
-        RNG rng=make_parallel_rng_stream(seed);
-        image_stack.slice(0)=simulate_image(model,model.make_param(theta_stack.col(0)),rng);
+        auto rng = rng_manager.generator();
+        model.get_image_from_stack(image_stack,0) = simulate_image(model,model.make_param(theta_stack.col(0)),rng);
     } else if (nthetas==1) {
         auto model_im=model_image(model, theta_stack.col(0));
         #pragma omp parallel
         {
-            RNG rng=make_parallel_rng_stream(seed);
+            auto rng = rng_manager.generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
-                image_stack.slice(n)=simulate_image(model, model_im,rng);
+                model.get_image_from_stack(image_stack,n) = simulate_image_from_model(model, model_im,rng);
         }
     } else {
         #pragma omp parallel
         {
-            RNG rng=make_parallel_rng_stream(seed);
+            auto rng = rng_manager.generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
-                image_stack.slice(n)=simulate_image(model,model.make_param(theta_stack.col(n)),rng);
+                model.get_image_from_stack(image_stack,n) = simulate_image(model,model.make_param(theta_stack.col(n)),rng);
         }
     }
 }
 
-/* This version works on a single image only */
+/** @brief Parallel log_likelihood calculations for a single image.
+ * 
+ * Compute log-likelihood for multiple thetas using the same image
+ * 
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model   A PointEmitterModel object.
+ * @param[in] image   An image.
+ * @param[in] theta_stack    Sequence of thetas.  Size: [model.num_params, nThetas]
+ * @param[out] llh_stack Sequence of llh values computed.
+ */
 template<class Model>
 void log_likelihood_stack(const Model &model,
-                          const typename Model::ImageT &image,
+                    const typename Model::ImageT &image,
                           const typename Model::ParamVecT &theta_stack,
                           VecT &llh_stack)
 {
@@ -102,43 +136,64 @@ void log_likelihood_stack(const Model &model,
         llh_stack(n) = log_likelihood(model, image, theta_stack.col(n));
 }
 
-/* This version works when both the images and thetas are of stack type */
+/** @brief Parallel log_likelihood calculations for a stack of images.
+ * 
+ * Compute log-likelihood for multiple image, theta pairs.
+ * 
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model   A PointEmitterModel object.
+ * @param[in] image_stack  Sequence of images.
+ * @param[in] theta_stack    Sequence of thetas.  Size: [model.num_params, nThetas]
+ * @param[out] llh_stack Sequence of llh values computed. Size: [n]
+ */
 template<class Model>
 void log_likelihood_stack(const Model &model,
-                          const typename Model::ImageStackT &image_stack,
-                          const typename Model::ParamVecT &theta_stack,
-                          VecT &llh_stack)
+                    const typename Model::ImageStackT &image_stack,
+                    const typename Model::ParamVecT &theta_stack,
+                    VecT &llh_stack)
 {
-    int nimages = static_cast<int>(image_stack.n_slices);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        llh_stack(0) = log_likelihood(model, image_stack.slice(0), theta_stack.col(0));
+        llh_stack(0) = log_likelihood(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) {
         auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
         for(int n=0; n<nimages; n++)
-            llh_stack(n) = log_likelihood(model, image_stack.slice(n), s);
+            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            llh_stack(n) = log_likelihood(model, image_stack.slice(0), theta_stack.col(n));
+            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nimages; n++)
-            llh_stack(n) = log_likelihood(model, image_stack.slice(n), theta_stack.col(n));
+            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
+/** @brief Parallel model gradient calculations for a stack of images.
+ * 
+ * Compute gradient of log-likelihood for multiple image, theta pairs.
+ * 
+ * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model gradients.
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model   A PointEmitterModel object.
+ * @param[in] image_stack  Sequence of images.
+ * @param[in] theta_stack  Sequence of thetas.  
+ * @param[out] grad_stack  Sequence of grad vectors values computed. Size: [model.num_params, n]
+ */
 template<class Model>
 void model_grad_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
                           typename Model::ParamVecT &grad_stack)
 {
-    int nimages = static_cast<int>(image_stack.n_slices);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        grad_stack.col(0) = model_grad(model, image_stack.slice(0), theta_stack.col(0));
+        grad_stack.col(0) = model_grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s = model.make_stencil(theta_stack.col(0));
         #pragma omp parallel
@@ -146,31 +201,42 @@ void model_grad_stack(const Model &model,
             auto grad = model.make_param();
             #pragma omp for
             for(int n=0; n<nimages; n++) {
-                model_grad(model, image_stack.slice(n), s, grad);
+                model_grad(model, model.get_image_from_stack(image_stack,n), s, grad);
                 grad_stack.col(n) = grad;
             }
         }
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            grad_stack.col(n) = model_grad(model, image_stack.slice(0), theta_stack.col(n));
+            grad_stack.col(n) = model_grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            grad_stack.col(n) = model_grad(model, image_stack.slice(n), theta_stack.col(n));
+            grad_stack.col(n) = model_grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
+/** @brief Parallel model Hessian calculations for a stack of images.
+ * 
+ * Compute Hessian of log-likelihood for multiple image, theta pairs.
+ * 
+ * Use: model.make_param_mat_stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian.
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model   A PointEmitterModel object.
+ * @param[in] image_stack  Sequence of images.
+ * @param[in] theta_stack  Sequence of thetas.  Size: [model.num_params, nThetas]
+ * @param[out] hess_stack  Sequence of Hessian matrices computed. Size: [model.num_params, model.num_params, n]
+ */
 template<class Model>
 void model_hessian_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
                           typename Model::ParamMatStackT &hessian_stack)
 {
-    int nimages = static_cast<int>(image_stack.n_slices);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        hessian_stack.slice(0)=model_hessian(model, image_stack.slice(0), theta_stack.col(0));
+        hessian_stack.slice(0)=model_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel
@@ -179,45 +245,57 @@ void model_hessian_stack(const Model &model,
             auto hess=model.make_param_mat();
             #pragma omp for
             for(int n=0; n<nimages; n++) {
-                model_hessian(model, image_stack.slice(n), s, grad, hess);
+                model_hessian(model, model.get_image_from_stack(image_stack,n), s, grad, hess);
                 hessian_stack.slice(n) = hess;
             }
         }
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_hessian(model, image_stack.slice(0), theta_stack.col(n));
+            hessian_stack.slice(n) = model_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_hessian(model, image_stack.slice(n), theta_stack.col(n));
+            hessian_stack.slice(n) = model_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
+/** @brief Parallel model positive-definite Hessian approximation calculations for a stack of images.
+ * 
+ * Compute Hessian a positive-definite Hessian using a modified cholesky decompositions. 
+ * Computes for multiple image, theta pairs.
+ * 
+ * Use: model.make_param_mat_stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian.
+ * @tparam Model  A concrete subclass of PointEmitterModel 
+ * @param[in] model   A PointEmitterModel object.
+ * @param[in] image_stack  Sequence of images.
+ * @param[in] theta_stack  Sequence of thetas.  Size: [model.num_params, nThetas]
+ * @param[out] hess_stack  Sequence of approximate Hessian matrices computed. Size: [model.num_params, model.num_params, n]
+ */
 template<class Model>
 void model_positive_hessian_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
                           typename Model::ParamMatStackT &hessian_stack)
 {
-    int nimages=image_stack.n_slices;
-    int nthetas=theta_stack.n_cols;
+    int nimages = model.get_size_image_stack(image_stack);
+    int nthetas = theta_stack.n_cols;
     if (nimages==1 && nthetas==1) {
-        hessian_stack.slice(0)=model_positive_hessian(model, image_stack.slice(0), theta_stack.col(0));
+        hessian_stack.slice(0) = model_positive_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         //Less efficient but this is mainly for debugging anyways
         #pragma omp parallel for
         for(int n=0; n<nimages; n++) {
-            hessian_stack.slice(n) = model_positive_hessian(model, image_stack.slice(n), theta_stack.col(0));
+            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(0));
         }
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_positive_hessian(model, image_stack.slice(0), theta_stack.col(n));
+            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_positive_hessian(model, image_stack.slice(n), theta_stack.col(n));
+            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 

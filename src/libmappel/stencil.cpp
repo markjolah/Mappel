@@ -23,7 +23,7 @@ void fill_gaussian_stencil(int size, double stencil[],  double sigma)
         stencil[k]=0.5*(val-old_val);
     }
 }
-
+/*
 MatT unit_model_image(const IVecT &size, int pos[], const VecT &sigma)
 {
     VecT dx=make_d_stencil(size(0), pos[0]+.5);
@@ -55,16 +55,10 @@ CubeT unit_model_HS_image(const IVecT &size, int pos[], double sigmaX, double si
     for(int k=0; k<size(2); k++) for(int j=0; j<size(1); j++) for(int i=0; i<size(0); i++) { //Col major ordering for armadillo
         im(k,j,i)=X(i)*Y(j)*Z(k);
     }
-//     print_image(std::cout,im);
-//     std::cout<<"Model im sum: "<<arma::accu(im)<<std::endl;
-//     std::cout<<"X sum: "<<arma::accu(X)<<std::endl;
-//     std::cout<<"Y sum: "<<arma::accu(Y)<<std::endl;
-//     std::cout<<"Z sum: "<<arma::accu(Z)<<std::endl;
-
     return im;
 }
-
-
+*/
+/*
 VecT estimate_duty_ratios(const MatT &im,const MatT &unit_model_im)
 {
     int N=im.n_cols;
@@ -102,7 +96,7 @@ VecT estimate_HS_duty_ratios(const CubeT &im, CubeT &unit_model_im)
         model_xslice*=duty(x);
     }
     return duty;
-}
+}*/
 
 
 double gaussian_convolution(int x, int y, const MatT &data, const VecT &Xstencil,const VecT &Ystencil)

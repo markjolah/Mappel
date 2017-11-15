@@ -36,7 +36,7 @@ public:
     double prior_relative_log_likelihood(const ParamT &theta) const;
     void prior_grad_update(const ParamT &theta, ParamVecT &grad) const;
     void prior_grad2_update(const ParamT &theta, ParamVecT &grad2) const;
-    void prior_hess_update(const ParamT &theta, ParamMatT &hess) const;
+    void prior_hess_update(const ParamT &theta, MatT &hess) const;
 };
 
 /* Inline Method Definitions */
@@ -76,7 +76,7 @@ void Gauss1DsMAP::prior_grad2_update(const ParamT &theta, ParamVecT &grad2) cons
 }
 
 inline
-void Gauss1DsMAP::prior_hess_update(const ParamT &theta, ParamMatT &hess) const
+void Gauss1DsMAP::prior_hess_update(const ParamT &theta, MatT &hess) const
 {
     hess(0,0) += beta_prior_grad2(beta_pos, theta(0), size);
     hess(1,1) += gamma_prior_grad2(kappa_I, theta(1));

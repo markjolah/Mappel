@@ -49,7 +49,7 @@ void evaluate_posterior_stack(Model &model,
 template <class Model>
 inline
 void evaluate_posterior(Model &model, const typename Model::ImageT &im,
-                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::ParamMatT &cov)
+                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::MatT &cov)
 {
     auto theta_init = model.make_param();
     theta_init.zeros();
@@ -58,7 +58,7 @@ void evaluate_posterior(Model &model, const typename Model::ImageT &im,
 
 template <class Model>
 void evaluate_posterior(Model &model, const typename Model::ImageT &im, const typename Model::ParamT &theta_init,
-                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::ParamMatT &cov)
+                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::MatT &cov)
 {
     auto rng = rng_manager.generator();
     IdxT burnin = Nsamples;

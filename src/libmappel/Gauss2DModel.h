@@ -85,9 +85,9 @@ public:
     double pixel_model_value(int i, int j, const Stencil &s) const;
     void pixel_grad(int i, int j, const Stencil &s, ParamT &pgrad) const;
     void pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const;
-    void pixel_hess(int i, int j, const Stencil &s, ParamMatT &hess) const;
+    void pixel_hess(int i, int j, const Stencil &s, MatT &hess) const;
     void pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, 
-                           double dmm_ratio, ParamT &grad, ParamMatT &hess) const;
+                           double dmm_ratio, ParamT &grad, MatT &hess) const;
 
     /* Prior values and derivatives */
     void set_hyperparameters(const VecT &hyperparameters);
@@ -199,7 +199,7 @@ Gauss2DModel::pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const
 
 inline
 void
-Gauss2DModel::pixel_hess(int i, int j, const Stencil &s, ParamMatT &hess) const
+Gauss2DModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
 {
     hess.zeros();
     double I = s.I();

@@ -18,9 +18,6 @@
 #include <boost/thread/mutex.hpp>
 
 
-// TODO fix this once is there is some progress in x-platform timing libraries
-// Std chrono works in linux, but boost chrono has a bug somewhere as of 1.52
-// Std chrono does not work well in linux and liekly will not cause of GCC
 #ifdef WIN32
     #include <boost/chrono.hpp>
     typedef boost::chrono::high_resolution_clock ClockT;
@@ -31,7 +28,6 @@
 
 #include "util.h"
 
-    
 namespace mappel {
     static const int DEFAULT_ITERATIONS=100;
     static const int DEFAULT_CGAUSS_ITERATIONS=50;
@@ -161,12 +157,6 @@ private:
                       ParamVecT &theta, ParamVecT &crlb, VecT &llh);
 };
 
-// template<class Mode>
-// class GPUEstimator<Model> : public Estimator<Model> {
-//
-//
-// }
-
 template<class Model>
 class HeuristicEstimator : public ThreadedEstimator<Model> {
 public:
@@ -201,15 +191,6 @@ private:
     }
 };
 
-
-// template<class Model, template<class> class Estimator>
-// typename Model::Stencil
-// compute_estimate(const Estimator<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init);
-// 
-// template<class Model, template<class> class Estimator>
-// typename Model::Stencil
-// compute_estimate_debug(const Estimator<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init, typename Model::ParamVecT &sequence);
-
 template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {
 public:
@@ -225,17 +206,6 @@ private:
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init) {return cgauss_heuristic_compute_estimate(model,im,theta_init);}
 };
 
-
-
-// template<class Model>
-// typename Model::Stencil
-// compute_estimate(const CGaussMLE<Model> &est, const typename Model::DataT &im, const typename Model::ParamT &theta_init);
-// 
-// template<class Model>
-// typename Model::Stencil
-// compute_estimate_debug(const CGaussMLE<Model> &est, const typename Model::DataT &im, 
-//                        const typename Model::ParamT &theta_init,
-//                        typename Model::ParamVecT &sequence);
 
 template<class Model>
 class CGaussMLE : public ThreadedEstimator<Model> {
@@ -263,8 +233,6 @@ protected:
 };
 
 
-
-
 template<class Model>
 class SimulatedAnnealingMaximizer : public ThreadedEstimator<Model> {
 public:
@@ -284,7 +252,7 @@ public:
 protected:
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init);
     Stencil compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
-    Stencil anneal(RNG &rng, const ModelDataT &im, Stencil &theta_init,
+    Stencil anneal(ParallelRngT &rng, const ModelDataT &im, Stencil &theta_init,
                    ParamVecT &sequence);
 };
 
@@ -329,7 +297,7 @@ protected:
     int total_fun_evals = 0;
     int total_der_evals = 0;
     /* Debug Statistics: Only active in debug mode when data.save_seq==true */
-    UVecT last_backtrack_idxs;
+    IdxVecT last_backtrack_idxs;
 
     class MaximizerData {
     public:
@@ -360,7 +328,7 @@ protected:
         
         /** @brief Return the saved theta sequence */
         ParamVecT get_theta_sequence() const {return theta_seq.head_cols(seq_len);}
-        UVecT get_backtrack_idxs() const {return backtrack_idxs.head(seq_len);}
+        IdxVecT get_backtrack_idxs() const {return backtrack_idxs.head(seq_len);}
         /** @brief Get the current stencil  */
         Stencil& stencil() {return current_stencil ? s0 : s1;}
         void set_stencil(const Stencil &s) {if(current_stencil) s0=s;  else s1=s; }
@@ -386,7 +354,7 @@ protected:
         bool current_stencil; //This alternates to indicated weather s0 or s1 is the current stencil
 
         ParamVecT theta_seq;
-        UVecT backtrack_idxs;
+        IdxVecT backtrack_idxs;
         int seq_len=0;
         const int max_seq_len;
     };
@@ -496,7 +464,7 @@ public:
     /* These improve readability, but are (unfortunately) not inherited. */
     using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
-    using ParamMatT = typename Model::ParamMatT;
+    using MatT = typename Model::MatT;
     using ModelDataT = typename Model::ModelDataT;
     using ParamVecT = typename Model::ParamVecT;
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;

@@ -150,7 +150,7 @@ Gauss2DModel::VecT Gauss2DModel::get_hyperparameters() const
 
 
 void
-Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, ParamMatT &hess) const
+Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
 {
     /* Caclulate pixel derivative */
     auto pgrad=make_param();

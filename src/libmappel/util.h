@@ -1,22 +1,29 @@
 
-#ifndef _UTIL_H
-#define _UTIL_H
+#ifndef _MAPPEL_UTIL_H
+#define _MAPPEL_UTIL_H
+
+#include <cstdint>
 #include <cmath>
-#include <cassert>
 #include <memory>
 #include <utility>
-#include <armadillo>
+#include <string>
 #include <map>
+#include <sstream>
+#include <armadillo>
 #include <BacktraceException/BacktraceException.h>
 
 namespace mappel {
-        
+    
+// Do we need this still
+// extern const std::vector<std::string> model_names;
+
+    
 using BoolT = uint16_t;
-using IVecT = arma::Col<int>; /**< A type to represent integer data arrays */
-using UVecT = arma::Col<unsigned>; /**< A type to represent unsigned integers and boolean data arrays */
+using IdxT = arma::uword;
+using IdxVecT = arma::Col<IdxT>; /**< A type to represent integer data arrays */
+using IdxMatT = arma::Mat<IdxT>; /**< A type to represent integer data arrays */
 using VecT = arma::vec; /**< A type to represent floating-point data arrays */
 using MatT = arma::mat; /**< A type to represent floating-point data matricies */
-using IMatT = arma::Mat<int>; /**< A type to represent floating-point data matricies */
 using CubeT = arma::cube; /**< A type to represent floating-point data cubes */
 using VecFieldT = arma::field<VecT>;
 using StatsT = std::map<std::string,double>;  /**< A convenient form for reporting dictionaries of named FP data to matlab */
@@ -28,25 +35,34 @@ const char * icontains(const char* s, const char* pattern);
 int maxidx(const VecT &v);
 
 
-using MappelException = backtrace_exception::BacktraceException;
 
-class BadInputException : public MappelException 
+using MappelError = backtrace_exception::BacktraceException;
+
+struct BadSizeError : public MappelError 
 {
-public:
-    BadInputException(const std::string &message) : MappelException("BadInput",message) {}
+    BadSizeError(std::string message) : MappelError("BadSize",message) {}
 };
 
-class NumericalException : public MappelException 
+struct BadShapeError : public MappelError 
 {
-public:
-    NumericalException(const std::string &message) : MappelException("Numerical",message) {}
+    BadShapeError(std::string message) : MappelError("BadShape",message) {}
 };
 
-class NotImplementedException : public MappelException 
+struct BoundsError : public MappelError 
 {
-public:
-    NotImplementedException(const std::string &message) : MappelException("NotImplemented",message) {}
+    BoundsError(std::string message) : MappelError("BoundsError",message) {}
 };
+
+struct NumericalError : public MappelError 
+{
+    NumericalError(std::string message) : MappelError("NumericalError",message) {}
+};
+
+struct NotImplementedError : public MappelError 
+{
+    NotImplementedError(std::string message) : MappelError("NotImplemented",message) {}
+};
+
 
 
 /** @brief sign (signum) function: -1/0/1
@@ -58,7 +74,7 @@ template <typename T> int sgn(T val) {
 
 inline double restrict_value_range(double val, double minval, double maxval)
 {
-    if(!std::isfinite(val)) throw NumericalException("Non-finite value in restrict_value_range.");
+    if(!std::isfinite(val)) throw NumericalError("Non-finite value in restrict_value_range.");
     return (val<minval) ? minval : ((val>maxval) ? maxval : val);
 }
 
@@ -75,4 +91,4 @@ std::unique_ptr<T> make_unique( Args&& ...args )
 
 
 
-#endif /* _UTIL_H */
+#endif /* _MAPPEL_UTIL_H */

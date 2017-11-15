@@ -150,7 +150,7 @@ template<class Model>
 typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value>::type
 model_hessian(const Model &model, const typename Model::ImageT &im, 
               const typename Model::Stencil &s, 
-              typename Model::ParamT &grad, typename Model::ParamMatT &hess) 
+              typename Model::ParamT &grad, typename Model::MatT &hess) 
 {
     /* Returns hess as an upper triangular matrix */
     grad.zeros();

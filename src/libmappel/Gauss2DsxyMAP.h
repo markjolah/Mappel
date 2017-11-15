@@ -18,7 +18,7 @@ class GaussHSMAP : public PointEmitterHSModel {
 public:
     /* Model matrix and vector types */
     typedef arma::vec::fixed<5> ParamT; /**< A type for the set of parameters estimated by the model */
-    typedef arma::mat::fixed<5,5> ParamMatT; /**< A matrix type for the Hessian used by the CRLB estimation */
+    typedef arma::mat::fixed<5,5> MatT; /**< A matrix type for the Hessian used by the CRLB estimation */
     static const std::vector<std::string> param_names; /**<The parameter names for this class */
     static const std::vector<std::string> hyperparameter_names; /**<The hyperparameter names for this class */
 
@@ -49,7 +49,7 @@ public:
     ParamT make_param() const;
     ParamT make_param(const ParamT &theta) const;
     ParamT make_param(double x, double y, double L, double I, double bg) const;
-    ParamMatT make_param_mat() const;
+    MatT make_param_mat() const;
     Stencil make_stencil(const ParamT &theta, bool compute_derivatives=true) const;
     Stencil make_stencil(double x, double y, double L, double I, double bg, bool compute_derivatives=true) const;
 
@@ -61,9 +61,9 @@ public:
     double model_value(int i, int j, int k, const Stencil &s) const;
     void pixel_grad(int i, int j, int k, const Stencil &s, ParamT &pgrad) const;
     void pixel_grad2(int i, int j, int k, const Stencil &s, ParamT &pgrad2) const;
-    void pixel_hess(int i, int j, int k, const Stencil &s, ParamMatT &hess) const;
+    void pixel_hess(int i, int j, int k, const Stencil &s, MatT &hess) const;
     void pixel_hess_update(int i, int j, int k, const Stencil &s, double dm_ratio_m1,
-                           double dmm_ratio, ParamT &grad, ParamMatT &hess) const;
+                           double dmm_ratio, ParamT &grad, MatT &hess) const;
 
     /* Prior sampling and derivatives */
     ParamT sample_prior(RNG &rng);
@@ -117,10 +117,10 @@ GaussHSMAP::make_param(double x, double y, double L, double I, double bg) const
 }
 
 inline
-GaussHSMAP::ParamMatT
+GaussHSMAP::MatT
 GaussHSMAP::make_param_mat() const
 {
-    return ParamMatT();
+    return MatT();
 }
 
 inline
@@ -205,7 +205,7 @@ GaussHSMAP::pixel_grad2(int i, int j, int k, const Stencil &s, ParamT &pgrad2) c
 
 inline
 void
-GaussHSMAP::pixel_hess(int i, int j, int k, const Stencil &s, ParamMatT &hess) const
+GaussHSMAP::pixel_hess(int i, int j, int k, const Stencil &s, MatT &hess) const
 {
     hess.zeros();
     double I=s.I();

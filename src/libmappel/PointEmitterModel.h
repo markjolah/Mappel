@@ -21,7 +21,7 @@
 #include "stackcomp.h"
 #include "estimator.h"
 #include "mcmc.h"
-#include "prior_hessian/CompositeDist.h"
+#include <PriorHessian/CompositeDist.h>
 
 namespace mappel {
 
@@ -42,29 +42,30 @@ public:
     constexpr static double default_kappa_bg = 2; /**< Default per-pixel background gamma distribution shape */
 
     /* Internal Types */
+    
+    /** @brief Priors are represented by the CompositeDist container class from the PriorHessian library */
     using CompositeDist = prior_hessian::CompositeDist<ParallelRngT>;
     
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
-    using ParamMatT = arma::mat; /**< Matrix type for the Hessian */
-    using ParamMatStackT = arma::cube; /**< A stack of hessian matrices */
     
     PointEmitterModel(CompositeDist&& prior_);    
     
     StatsT get_stats() const;
     
     IdxT get_num_params() const;
-    ParamVecT make_param_vec(int n=0) const;
     ParamT make_param() const;
-    ParamMatT make_param_mat() const;
+    ParamVecT make_param_vec(IdxT n) const;
+    MatT make_param_mat() const;
     
     CompositeDist& get_prior();
     const CompositeDist& get_prior() const;
     void set_prior(CompositeDist&& prior_);
+    
     IdxT get_num_hyperparams() const;
-    void set_hyperparams(const VecT &hyperparameters);
+    void set_hyperparams(const VecT &hyperparams);
     VecT get_hyperparams() const;
-
+    
     ParamT sample_prior(ParallelRngT &rng);
     
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
@@ -79,7 +80,6 @@ public:
     /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
     IdxT get_mcmc_num_candidate_sampling_phases() const;
     
-//     friend std::ostream& operator<<(std::ostream &out, PointEmitterModel &model);
 protected:
     /* Constant model parameter information */
     CompositeDist prior; /* Prior distribution represented using libPriorHessian */
@@ -93,23 +93,26 @@ protected:
     double mcmc_candidate_eta_x; /**< The standard deviation for the normally distributed pertebation to theta_I in the random walk MCMC sampling */
     double mcmc_candidate_eta_I; /**< The standard deviation for the normally distributed pertebation to theta_I in the random walk MCMC sampling */
     double mcmc_candidate_eta_bg; /**< The standard deviation for the normally distributed pertebation to theta_bg in the random walk MCMC sampling */
-private:
     double bounds_epsilon=1E-6; /**< The amount to keep away parameter values from the singularities of the prior distribtions */
 };
 
 /* Inline member function definitions */
 
 inline
+IdxT PointEmitterModel::get_num_params() const 
+{ return num_params; }
+
+inline
 PointEmitterModel::ParamT PointEmitterModel::make_param() const
 { return ParamT(num_params); }
 
 inline
-PointEmitterModel::ParamVecT PointEmitterModel::make_param_vec(int n) const
+PointEmitterModel::ParamVecT PointEmitterModel::make_param_vec(IdxT n) const
 { return ParamVecT(num_params, n); }
 
 inline
-IdxT PointEmitterModel::get_num_params() const 
-{ return num_params; }
+MatT PointEmitterModel::make_param_mat() const
+{ return MatT(num_params, num_params); }
 
 inline
 PointEmitterModel::CompositeDist& PointEmitterModel::get_prior() 
@@ -135,13 +138,10 @@ inline
 IdxT PointEmitterModel::get_mcmc_num_candidate_sampling_phases() const 
 { return mcmc_num_candidate_sampling_phases; }
 
-inline
-PointEmitterModel::ParamMatT PointEmitterModel::make_param_mat() const
-{ return ParamMatT(num_params, num_params); }
 
 inline
-void PointEmitterModel::set_hyperparams(const VecT &hyperparameters)
-{ prior.set_params(hyperparameters); }
+void PointEmitterModel::set_hyperparams(const VecT &hyperparams)
+{ prior.set_params(hyperparams); }
 
 inline
 PointEmitterModel::ParamT PointEmitterModel::get_hyperparams() const
@@ -204,7 +204,7 @@ model_grad(const Model &model, const typename Model::ImageT &data_im,
 
 template<class Model>
 inline
-typename Model::ParamMatT
+typename Model::MatT
 model_hessian(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::ParamT &theta)
 {
@@ -216,10 +216,10 @@ model_hessian(const Model &model, const typename Model::ImageT &data_im,
 }
 
 template<class Model>
-typename Model::ParamMatT
+typename Model::MatT
 model_objective(const Model &model, const typename Model::ImageT &data_im, 
                 const typename Model::ParamT &theta, 
-                double &rllh,  typename Model::ParamT &grad,  typename Model::ParamMatT &hess)
+                double &rllh,  typename Model::ParamT &grad,  typename Model::MatT &hess)
 {
     auto stencil = model.make_stencil(theta);
     rllh = relative_log_likelihood(model, data_im, stencil);
@@ -230,7 +230,7 @@ model_objective(const Model &model, const typename Model::ImageT &data_im,
 
 template<class Model>
 inline
-typename Model::ParamMatT
+typename Model::MatT
 model_positive_hessian(const Model &model, const typename Model::ImageT &data_im, 
               const typename Model::ParamT &theta)
 {
@@ -274,7 +274,7 @@ cr_lower_bound(const Model &model, const typename Model::ParamT &theta)
 
 template<class Model>
 inline
-typename Model::ParamMatT
+typename Model::MatT
 fisher_information(const Model &model, const typename Model::ParamT &theta) 
 {
     return fisher_information(model,model.make_stencil(theta));

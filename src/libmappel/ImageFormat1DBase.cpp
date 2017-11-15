@@ -20,12 +20,12 @@ ImageFormat1DBase::ImageFormat1DBase(const arma::Col<ImageSizeT> &size_)
     check_size(size);
 }
 
-ImageFormat1DBase::check_size(ImageSizeT size_)
+void ImageFormat1DBase::check_size(ImageSizeT size_)
 {
     if(size_ <= min_size) {
         std::ostringstream msg;
-        msg<<"Got Size= "<<size_<<"< Min size="<<min_size;
-        throw MappelException("BadImageSize",msg.str());
+        msg<<"ImageFormat1DBase: Got Size= "<<size_<<"< Min size="<<min_size;
+        throw BadSizeError(msg.str());
     }
 }
 

@@ -7,18 +7,25 @@
 #include "Gauss1DMLE.h"
 
 namespace mappel {
-Gauss1DMLE::Gauss1DMLE(int size, double psf_sigma); 
-        : PointEmitterModel(make_prior(size,psf_sigma)), 
-          ImageFormat1DBase(size),
-          Gauss1DModel(psf_sigma)
-    {}
-    
-constexpr CompositeDist Gauss1DMLE::make_prior(int size, double psf_sigma)
-{
-    return CompositeDist(SymmetricBetaDist(beta_x,0,size,"x"),
-                         GammaDist(mean_I,kappa_I,"I"),
-                         GammaDist(mean_bg*size,kappa_bg,"bg"));
-    
-}
+
+Gauss1DMLE::Gauss1DMLE(ImageSizeVecT size, VecT psf_sigma) : 
+            PointEmitterModel(make_prior(size(0))), 
+            ImageFormat1DBase(size(0)),
+            Gauss1DModel(size(0), psf_sigma(0))
+{ }
+
+Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma) : 
+            PointEmitterModel(make_prior(size)), 
+            ImageFormat1DBase(size),
+            Gauss1DModel(size, psf_sigma)
+{ }
+
+template<class PriorDistT>
+Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior) : 
+            PointEmitterModel(std::forward<PriorDistT>(prior)), 
+            ImageFormat1DBase(size),
+            Gauss1DModel(size, psf_sigma)
+{ }
+
 
 } /* namespace mappel */

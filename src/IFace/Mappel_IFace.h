@@ -22,7 +22,6 @@ public:
     using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
     using ParamVecT = typename Model::ParamVecT;
-    using ParamMatT = typename Model::ParamMatT;
     using ImageT = typename Model::ImageT;
     using ImageStackT = typename Model::ImageStackT;
 
@@ -194,7 +193,7 @@ void Mappel_IFace<Model>::objLLH()
     // (in) theta: an (nParams X M) double of theta values
     // (out) llh: a (1 X max(M,N)) double of log_likelihoods
     checkNumArgs(1,2);
-    auto image_stack = MexIFace::get<ImageStackT,double>();
+    auto image_stack = this->get<ImageStackT>();
     auto theta_stack = getMat();
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto llh_stack = makeOutputArray(count);
@@ -361,7 +360,7 @@ void Mappel_IFace<Model>::objEstimate()
     if(!estimator) {
         std::ostringstream out;
         out<<"Bad estimator name: "<<name;
-        throw BadInputError(out.str());
+        throw NotImplementedError(out.str());
     }
     estimator->estimate_stack(image_stack, theta_init_stack, theta_stack, crlb_stack, llh_stack);
     output(estimator->get_stats());
@@ -404,7 +403,7 @@ void Mappel_IFace<Model>::objEstimateDebug()
     if(!estimator) {
         std::ostringstream out;
         out<<"Bad estimator name: "<<name;
-        throw BadInputError(out.str());
+        throw NotImplementedError(out.str());
     }
     estimator->estimate_debug(image, theta_init_p, theta, crlb, llh, sequence, sequence_llh);
     //Write output

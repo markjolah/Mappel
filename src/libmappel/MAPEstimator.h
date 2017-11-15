@@ -25,9 +25,9 @@ public:
     double prior_relative_log_likelihood(const ParamT &theta) const { return prior.rllh(); }
     void prior_grad_accumulate(const ParamT &theta, ParamT &grad) const { prior.grad_accumulate(theta,grad);}
     void prior_grad2_accumulate(const ParamT &theta, ParamT &grad2) const { prior.grad2_accumulate(theta,grad2); }
-    void prior_hess_accumulate(const ParamT &theta, ParamMatT &hess) const { prior.hess_accumulate(theta,hess); }
+    void prior_hess_accumulate(const ParamT &theta, MatT &hess) const { prior.hess_accumulate(theta,hess); }
     void prior_grad_grad2_accumulate(const ParamT &theta, ParamT &grad, ParamT &grad2) const {  prior.grad_grad2_accumulate(theta,grad,grad2);}
-    void prior_grad_hess_accumulate(const ParamT &theta, ParamT &grad, ParamMatT &hess) const {  prior.grad_hess_accumulate(theta,grad,hess);}
+    void prior_grad_hess_accumulate(const ParamT &theta, ParamT &grad, MatT &hess) const {  prior.grad_hess_accumulate(theta,grad,hess);}
 };
 
 } /* namespace mappel */

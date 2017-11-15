@@ -59,9 +59,9 @@ public:
     double pixel_model_value(IdxT i,  const Stencil &s) const;
     void pixel_grad(IdxT i, const Stencil &s, ParamT &pgrad) const;
     void pixel_grad2(IdxT i, const Stencil &s, ParamT &pgrad2) const;
-    void pixel_hess(IdxT i, const Stencil &s, ParamMatT &hess) const;
+    void pixel_hess(IdxT i, const Stencil &s, MatT &hess) const;
     void pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, 
-                           double dmm_ratio, ParamT &grad, ParamMatT &hess) const;
+                           double dmm_ratio, ParamT &grad, MatT &hess) const;
                            
     /** @brief Fast, heuristic estimate of initial theta */
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
@@ -137,7 +137,7 @@ void Gauss1DModel::pixel_grad2(IdxT i, const Stencil &s, ParamT &pgrad2) const
 }
 
 inline
-void Gauss1DModel::pixel_hess(IdxT i, const Stencil &s, ParamMatT &hess) const
+void Gauss1DModel::pixel_hess(IdxT i, const Stencil &s, MatT &hess) const
 {
     hess.zeros();
     double I = s.I();

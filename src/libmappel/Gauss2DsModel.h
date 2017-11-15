@@ -23,7 +23,7 @@ class Gauss2DsModel : public PointEmitter2DModel {
 public:
     /* Model matrix and vector types */
     typedef arma::vec::fixed<5> ParamT; /**< A type for the set of parameters estimated by the model */
-    typedef arma::mat::fixed<5,5> ParamMatT; /**< A matrix type for the Hessian used by the CRLB estimation */
+    typedef arma::mat::fixed<5,5> MatT; /**< A matrix type for the Hessian used by the CRLB estimation */
     static const std::vector<std::string> param_names;
     
     class Stencil {
@@ -58,7 +58,7 @@ public:
     ParamT make_param() const;
     ParamT make_param(double x, double y, double I, double bg, double sigma) const;
     ParamT make_param(const ParamT &theta) const;
-    ParamMatT make_param_mat() const;
+    MatT make_param_mat() const;
     Stencil make_stencil(const ParamT &theta, bool compute_derivatives=true) const;
     Stencil make_stencil(double x, double y, double I, double bg, double sigma, bool compute_derivatives=true) const;
 
@@ -66,9 +66,9 @@ public:
     double model_value(int i, int j, const Stencil &s) const;
     void pixel_grad(int i, int j, const Stencil &s, ParamT &pgrad) const;
     void pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const;
-    void pixel_hess(int i, int j, const Stencil &s, ParamMatT &hess) const;
+    void pixel_hess(int i, int j, const Stencil &s, MatT &hess) const;
     void pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, 
-                           double dmm_ratio, ParamT &grad, ParamMatT &hess) const;
+                           double dmm_ratio, ParamT &grad, MatT &hess) const;
 
     ParamT bound_theta(const ParamT &theta) const;
     virtual void bound_theta(ParamT &theta) const=0;
@@ -118,10 +118,10 @@ Gauss2DsModel::make_param(double x, double y, double I, double bg, double sigma)
 
 
 inline
-Gauss2DsModel::ParamMatT
+Gauss2DsModel::MatT
 Gauss2DsModel::make_param_mat() const
 {
-    return ParamMatT();
+    return MatT();
 }
 
 inline
@@ -170,7 +170,7 @@ Gauss2DsModel::pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const
 
 inline
 void
-Gauss2DsModel::pixel_hess(int i, int j, const Stencil &s, ParamMatT &hess) const
+Gauss2DsModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
 {
     hess.zeros();
     double I=s.I();

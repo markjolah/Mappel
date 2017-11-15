@@ -227,7 +227,7 @@ ThreadedEstimator<Model>::estimate_stack(const ModelDataStackT &im, const ParamV
     using boost::thread;
     auto start_walltime=ClockT::now();
     int min_per_thread=4;
-    int nimages = model.size_image_stack(im);
+    int nimages = model.get_size_image_stack(im);
     //The number of threads we will actually run
     num_threads = std::max(std::min(max_threads, static_cast<int>(floor(nimages/min_per_thread))),1);
     std::vector<thread> threads(num_threads-1);
@@ -302,7 +302,7 @@ template<class Model>
 void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
                                         ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
 {
-    int nimages = model.size_image_stack(im);
+    int nimages = model.get_size_image_stack(im);
     int start = thread_start_idx(nimages, threadid);
     int stop = thread_stop_idx(nimages, threadid);
     auto theta_est = model.make_param();
@@ -470,10 +470,10 @@ StatsT IterativeMaximizer<Model>::get_stats()
 template<class Model>
 StatsT IterativeMaximizer<Model>::get_debug_stats()
 {
-    StatsT stats =  IterativeMaximizer<Model>::get_stats();
+    auto stats =  IterativeMaximizer<Model>::get_stats();
     stats["debugIterative"]=1;
     mtx.lock();
-    UVecT backtrack_idxs = last_backtrack_idxs;
+    auto backtrack_idxs = last_backtrack_idxs;
     mtx.unlock();
     for(unsigned n=0; n<backtrack_idxs.n_elem; n++) {
         std::ostringstream out;
@@ -974,16 +974,16 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
 {
     VecT step = step_hat / D;
     double alpha = arma::min(VecT(arma::max((lbound-theta)/step,(ubound-theta)/step)));
-//     std::cout<<"\n (((BoundStep))) alpha:"<<alpha<<"\n";
-//     std::cout<<"   step_hat: "<<step_hat.t();
-//     std::cout<<"   step: "<<step.t();
-//     std::cout<<"   D: "<<D.t();
-//     std::cout<<"   theta: "<<theta.t();
-//     std::cout<<"   lbound: "<<lbound.t();
-//     std::cout<<"   ubound: "<<ubound.t();
-//     std::cout<<"   full_step: "<<(theta+step).t();
+    std::cout<<"\n (((BoundStep))) alpha:"<<alpha<<"\n";
+    std::cout<<"   step_hat: "<<step_hat.t();
+    std::cout<<"   step: "<<step.t();
+    std::cout<<"   D: "<<D.t();
+    std::cout<<"   theta: "<<theta.t();
+    std::cout<<"   lbound: "<<lbound.t();
+    std::cout<<"   ubound: "<<ubound.t();
+    std::cout<<"   full_step: "<<(theta+step).t();
     if(alpha>1){ //step is feasible.  accept it
-//         std::cout<<" (((alpha>1 ==> feasible)))\n";
+        std::cout<<" (((alpha>1 ==> feasible)))\n";
         VecT full_step = theta + step;
         if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
         if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
@@ -991,10 +991,10 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
     } else { //backtrack a little bit from alpha to remain feasible
         //Bellavia (2004); Coleman and Li (1996)
         double kappa = boundary_stepback_min_kappa;
-//         std::cout<<" restricted_step: "<<(theta+alpha*step).t();
-//         std::cout<<" kappa: "<<kappa<<"\n";
-//         std::cout<<" kappa restricted_step: "<<(theta+alpha*step).t()<<"\n";
-//         std::cout<<" (((alpha<=1 ==> restricted-feasible)))\n";
+        std::cout<<" restricted_step: "<<(theta+alpha*step).t();
+        std::cout<<" kappa: "<<kappa<<"\n";
+        std::cout<<" kappa restricted_step: "<<(theta+kappa*alpha*step).t()<<"\n";
+        std::cout<<" (((alpha<=1 ==> restricted-feasible)))\n";
         VecT full_step = theta + kappa*alpha*step;
         if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
         if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
@@ -1197,7 +1197,7 @@ template<class Model>
 typename Model::Stencil
 SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
 {
-    auto rng = make_parallel_rng_stream(make_seed());
+    auto rng = rng_manager.generator();
     ParamVecT sequence;
     auto theta_init_stencil = model.initial_theta_estimate(im,theta_init);
     return anneal(rng, im, theta_init_stencil, sequence);
@@ -1207,7 +1207,7 @@ template<class Model>
 typename Model::Stencil
 SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
 {
-    auto rng = make_parallel_rng_stream(make_seed());
+    auto rng = rng_manager.generator();
     auto theta_init_stencil = model.initial_theta_estimate(im,theta_init);
     return anneal(rng, im, theta_init_stencil, sequence);
 }
@@ -1215,7 +1215,7 @@ SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im,
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::anneal(RNG &rng, const ModelDataT &im, Stencil &theta_init, ParamVecT &sequence)
+SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, Stencil &theta_init, ParamVecT &sequence)
 {
     NewtonDiagonalMaximizer<Model> nr(model);
     UnitRNG u;

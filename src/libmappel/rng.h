@@ -13,7 +13,7 @@
 #include <trng/uniform01_dist.hpp>
 #include <trng/normal_dist.hpp>
 #include <trng/lcg64_shift.hpp>
-#include "parallel_rng/ParallelRngManager.h"
+#include <ParallelRngManager/ParallelRngManager.h>
 
 // #include <omp.h>
 
@@ -110,6 +110,40 @@ int generate_poisson(rng_t &rng, double lambda)
         return generate_poisson_large(rng,lambda);
     }
 }
+
+/* Templated function definitions */
+/*
+template<class rng_t>
+double sample_beta_cand_dist(rng_t &rng, double &val, double min_val, double max_val, double eta)
+{
+    using boost::math::pdf;
+    double epsilon=1e-6;
+    double width=max_val-min_val;
+    double norm_val=(val-min_val)/width;
+    norm_val=restrict_value_range(norm_val, epsilon, 1. - epsilon);
+    BetaDist d(eta*norm_val, eta*(1.-norm_val));
+    double new_val=generate_beta(rng, d);
+    double new_norm_val=restrict_value_range(new_val, epsilon, 1. - epsilon);
+    BetaDist nd(eta*new_norm_val, eta*(1.-new_norm_val));
+    val=new_val*width+min_val;  //Modify val to new candidate val.
+    return pdf(nd, norm_val)/pdf(d, new_norm_val); //pratio=p(y,x)/p(x,y)
+}
+
+template<class rng_t>
+double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double eta)
+{
+    using boost::math::pdf;
+    double epsilon=1e-6;
+    double norm_val=val-min_val;
+    norm_val= std::max(epsilon,norm_val);
+    GammaDist d(eta, norm_val/eta);
+    double new_val=generate_gamma(rng, d);
+    double new_norm_val= std::max(epsilon,new_val);
+    GammaDist nd(eta, new_norm_val/eta);
+    val=new_val+min_val;//Modify val to new candidate val.
+    return pdf(nd, norm_val)/pdf(d, new_norm_val); //pratio=p(y,x)/p(x,y)
+}
+*/
 
 // template<class rng_t>
 // double generate_normal(rng_t &rng, double mu, double sigma){

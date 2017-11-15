@@ -44,9 +44,6 @@ StatsT PointEmitterModel::get_stats() const
     return stats;
 }
 
-
-
-
 void PointEmitterModel::set_prior(CompositeDist&& prior_)
 {
     prior = std::move(prior_);
@@ -63,15 +60,15 @@ void PointEmitterModel::set_prior(CompositeDist&& prior_)
  */
 void PointEmitterModel::set_bounds(const ParamT &lbound_, const ParamT &ubound_)
 {
-    if(lbound_.n_elem != num_params) throw BoundsException("Invalid lower bound size");
-    if(ubound_.n_elem != num_params) throw BoundsException("Invalid upper bound size");
+    if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
+    if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
     auto p_lbound = prior.lbound();
     auto p_ubound = prior.ubound();
     for(IdxT n=0; n<num_params; n++) {
-        if(lbound(n)>ubound(n)) throw BoundsException("Bounds inverted.");
-        if(std::fabs(lbound(n)-ubound(n))<10*bounds_epsilon) throw BoundsException("Bounds too close.");
-        if(lbound(n) < p_lbound(n)) throw BoundsException("Lower bound below prior lower bound");
-        if(ubound(n) > p_ubound(n)) throw BoundsException("Upper bound above prior lower bound");
+        if(lbound(n)>ubound(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound(n)-ubound(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+        if(lbound(n) < p_lbound(n)) throw BoundsError("Lower bound below prior lower bound");
+        if(ubound(n) > p_ubound(n)) throw BoundsError("Upper bound above prior lower bound");
     }
     lbound = lbound_;
     ubound = ubound_;

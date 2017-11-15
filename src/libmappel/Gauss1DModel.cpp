@@ -6,11 +6,10 @@
 
 #include "Gauss1DModel.h"
 #include "stencil.h"
-#include "prior_hessian/SymmetricBetaDist.h"
-#include "prior_hessian/GammaDist.h"
+#include <PriorHessian/SymmetricBetaDist.h>
+#include <PriorHessian/GammaDist.h>
 
 namespace mappel {
-// using prior_hessian::CompositeDist;
 using prior_hessian::SymmetricBetaDist;
 using prior_hessian::GammaDist;
 
@@ -94,7 +93,7 @@ StatsT Gauss1DModel::get_stats() const
 
 /** @brief pixel derivative inner loop calculations.
  */
-void Gauss1DModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, ParamMatT &hess) const
+void Gauss1DModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
 {
     auto pgrad=make_param();
     pixel_grad(i,s,pgrad);

@@ -11,6 +11,7 @@
 #include <climits>
 #include "util.h"
 #include "rng.h"
+// #include <boost/math/pdf.hpp>
 
 namespace mappel {
 
@@ -42,7 +43,7 @@ double gaussian_convolution(int x, int y, const MatT &data, const VecT &Xstencil
 void estimate_gaussian_3Dmax(const CubeT &data, const VecFieldT &stencils, int max_pos[], double &min_val);
 void refine_gaussian_3Dmax(const CubeT &data, const VecFieldT &stencils, int max_pos[]);
 double gaussian_3D_convolution(int x, int y, int z, const CubeT &data, const VecFieldT &stencils);
-
+/*
 double estimate_intensity(const MatT &im, const MatT &unit_model_im, double bg);
 double estimate_intensity(const CubeT &im, const CubeT &unit_model_im, double bg);
 double estimate_background(const MatT &im, const MatT &unit_model_im, double min_bg);
@@ -51,7 +52,7 @@ VecT estimate_duty_ratios(const MatT &im,const MatT &unit_model_im);
 VecT estimate_HS_duty_ratios(const CubeT &im,CubeT &unit_model_im);
 MatT unit_model_image(const IVecT &size, int pos[], const VecT &sigma);
 MatT unit_model_image(const IVecT &size, double pos_x, double pos_y, double sigma_x, double sigma_y);
-CubeT unit_model_HS_image(const IVecT &size, int pos[], double sigmaX, double sigmaY, double sigmaL);
+CubeT unit_model_HS_image(const IVecT &size, int pos[], double sigmaX, double sigmaY, double sigmaL);*/
 
 double poisson_log_likelihood(double model_val, double data_val);
 double relative_poisson_log_likelihood(double model_val, double data_val);
@@ -85,11 +86,11 @@ double gamma_prior_grad2(double kappa, double v);
 double pareto_prior_grad2(double alpha,  double v);
 double normal_prior_grad(double sigma);
 /* Functions to make candidate distributions */
-template<class rng_t>
-double sample_beta_cand_dist(rng_t &rng, double &val, double min_val, double max_val, double eta=10.);
-
-template<class rng_t>
-double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double eta=10.);
+// template<class rng_t>
+// double sample_beta_cand_dist(rng_t &rng, double &val, double min_val, double max_val, double eta=10.);
+// 
+// template<class rng_t>
+// double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double eta=10.);
 
 
 
@@ -247,7 +248,7 @@ inline double relative_poisson_log_likelihood(double model_val, double data_val)
     if(data_val==0.) return -model_val; //Skip multiplication by zero
     return data_val*log(model_val)-model_val;
 }
-
+/*
 inline
 double check_lower_bound_hyperparameter(const char *name, double value, double lower_bound)
 {
@@ -280,7 +281,7 @@ double check_unit_hyperparameter(const char *name, double value, double hyperpri
     }
     return value;
 }
-
+*/
 
 
 inline
@@ -416,7 +417,7 @@ double normal_prior_grad2(double sigma)
 }
 
 /* Templated function definitions */
-
+/*
 template<class rng_t>
 double sample_beta_cand_dist(rng_t &rng, double &val, double min_val, double max_val, double eta)
 {
@@ -446,7 +447,7 @@ double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double et
     GammaDist nd(eta, new_norm_val/eta);
     val=new_val+min_val;//Modify val to new candidate val.
     return pdf(nd, norm_val)/pdf(d, new_norm_val); //pratio=p(y,x)/p(x,y)
-}
+}*/
 
 } /* namespace mappel */
 

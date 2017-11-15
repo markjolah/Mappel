@@ -20,6 +20,8 @@ namespace mappel {
  * 
  */
 class ImageFormat1DBase {
+protected:
+    ImageFormat1DBase()=default; //For virtual inheritance simplification
 public:
     using ImageSizeT = uint32_t;
     using ImageSizeVecT = arma::Col<ImageSizeT>;
@@ -40,7 +42,7 @@ public:
     IdxT size_image_stack(const ImageStackT &stack) const;
     ImageT get_image_from_stack(const ImageStackT &stack, IdxT n) const;
 private:
-    static check_size(ImageSizeT size_);
+    static void check_size(ImageSizeT size_);
 };
 
 /* Inline Method Definitions */
@@ -83,8 +85,8 @@ model_image(const Model &model, const typename Model::Stencil &s)
         im(i) = model.pixel_model_value(i,s);
         if(im(i) <= 0.){ //Model value must be positive for grad to be defined
             std::ostringstream os;
-            os<<"Non positive model value encountered: "<<im(i)<<" at i="<<i;
-            throw MappelException("model_image",os.str());
+            os<<"model_image: Non positive model value encountered: "<<im(i)<<" at i="<<i;
+            throw NumericalError(os.str());
         }
     }
     return im;

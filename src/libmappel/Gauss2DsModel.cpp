@@ -83,7 +83,7 @@ std::ostream& operator<<(std::ostream &out, const Gauss2DsModel::Stencil &s)
 void
 Gauss2DsModel::pixel_hess_update(int i, int j, const Stencil &s, 
                                 double dm_ratio_m1, double dmm_ratio, 
-                                ParamT &grad, ParamMatT &hess) const
+                                ParamT &grad, MatT &hess) const
 {
     auto pgrad=make_param();
     pixel_grad(i,j,s,pgrad);

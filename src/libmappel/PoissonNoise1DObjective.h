@@ -139,7 +139,7 @@ template<class Model>
 typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value>::type
 model_hessian(const Model &model, const typename Model::ImageT &im, 
               const typename Model::Stencil &s, 
-              typename Model::ParamT &grad, typename Model::ParamMatT &hess) 
+              typename Model::ParamT &grad, typename Model::MatT &hess) 
 {
     /* Returns hessian as an upper triangular matrix */
     grad.zeros();
@@ -162,7 +162,7 @@ model_hessian(const Model &model, const typename Model::ImageT &im,
 
 /** @brief  */
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::ParamMatT>::type
+typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::MatT>::type
 fisher_information(const Model &model, const typename Model::Stencil &s)
 {
     auto fisherI=model.make_param_mat();
