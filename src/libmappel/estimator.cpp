@@ -227,7 +227,7 @@ ThreadedEstimator<Model>::estimate_stack(const ModelDataStackT &im, const ParamV
     using boost::thread;
     auto start_walltime=ClockT::now();
     int min_per_thread=4;
-    int nimages = model.get_size_image_stack(im);
+    int nimages = model.size_image_stack(im);
     //The number of threads we will actually run
     num_threads = std::max(std::min(max_threads, static_cast<int>(floor(nimages/min_per_thread))),1);
     std::vector<thread> threads(num_threads-1);
@@ -302,7 +302,7 @@ template<class Model>
 void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
                                         ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
 {
-    int nimages = model.get_size_image_stack(im);
+    int nimages = model.size_image_stack(im);
     int start = thread_start_idx(nimages, threadid);
     int stop = thread_stop_idx(nimages, threadid);
     auto theta_est = model.make_param();
@@ -693,7 +693,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
             if(is_positive_definite(-hess)) {
                 H=arma::inv(arma::symmatu(hess));
             } else {
-                H=-arma::eye(model.num_params,model.num_params);
+                H=-arma::eye(model.get_num_params(), model.get_num_params());
             }
         } else {
             //Approx H

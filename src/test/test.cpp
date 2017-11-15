@@ -4,8 +4,8 @@
 
 #include "display.h"
 #include "evaluate.h"
-#include "Gauss2DMAP.h"
-#include "Gauss2DMLE.h"
+#include "Gauss1DMLE.h"
+//#include "Gauss2DMLE.h"
 // #include "Gauss2DsMAP.h"
 // #include "Gauss2DsMLE.h"
 // #include "Blink2DsMAP.h"
@@ -24,10 +24,8 @@ using namespace mappel;
 #define DEFAULT_NUM_POINTS 50
 #define DEFAULT_NUM_IMAGES 256
 
-RNG rng(make_seed());
 
-
-std::vector<std::string> model_names= {"Gauss2DMAP","Gauss2DMLE"};
+std::vector<std::string> model_names= {"Gauss1DMLE"};
 std::vector<std::string> estimator_names= {"TrustRegionMaximizer", "HeuristicEstimator", "CGaussHeuristicEstimator", "CGaussMLE", "SimulatedAnnealingMaximizer"};
 
 template<class Model>
@@ -40,7 +38,7 @@ typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
     int I        = argc>=n-- ? atoi(argv[n])   : -1;
     double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-    auto theta=model.sample_prior(rng);
+    auto theta=model.sample_prior();
     if(x>=0) theta(0)=x;
     if(y>=0) theta(1)=y;
     if(I>=0) theta(2)=I;
@@ -61,7 +59,7 @@ typename Model::ParamT read_HS_theta(Model &model, int argc, const char *argv[])
     double L     = argc>=n-- ? strtod(argv[n],NULL) : -1;
     double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-    auto theta=model.sample_prior(rng);
+    auto theta=model.sample_prior();
     if(x>=0) theta(0)=x;
     if(y>=0) theta(1)=y;
     if(L>=0) theta(2)=L;
@@ -243,7 +241,7 @@ void compare_estimators_wrapper(int argc, const char *argv[])
     Model model(sizes,psf_sigma);
 
     auto theta=read_theta(model, argc, argv);
-    compare_estimators(model, theta,  count, rng);
+    compare_estimators(model, theta,  count);
 }
 
 template<class Model>
@@ -260,7 +258,7 @@ void compare_HS_estimators_wrapper(int argc, const char *argv[])
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
     Model model(sizes,sigma);
     auto theta=read_HS_theta(model, argc, argv);
-    compare_estimators(model, theta, count, rng);
+    compare_estimators(model, theta, count);
 }
 
 
@@ -305,7 +303,7 @@ void compare_estimators_single_wrapper(int argc, const char *argv[])
     Model model(sizes,psf_sigma);
 
     auto theta=read_theta(model, argc, argv);
-    compare_estimators_single(model, theta, rng);
+    compare_estimators_single(model, theta);
 }
 
 template<class Model>
@@ -319,7 +317,7 @@ void compare_HS_estimators_single_wrapper(int argc, const char *argv[])
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
     Model model(sizes,sigma);auto theta=read_HS_theta(model, argc, argv);
-    compare_estimators_single(model, theta, rng);
+    compare_estimators_single(model, theta);
 }
 
 void test_image_compare_estimators(int argc, const char *argv[])
@@ -366,7 +364,7 @@ void test_image_template(const char *estimator_name,int argc, const char *argv[]
     auto estimator=make_estimator(model, estimator_name);
     if(!estimator) return;
     auto theta=read_theta(model, argc, argv);
-    evaluate_single(*estimator, theta, rng);
+    evaluate_single(*estimator, theta);
 }
 
 template<class Model>
@@ -381,7 +379,7 @@ void test_HS_image_template(const char *estimator_name, int argc, const char *ar
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
     Model model(sizes,sigma);    auto estimator=make_estimator(model, estimator_name);
     auto theta=read_HS_theta(model, argc, argv);
-    evaluate_single(*estimator, theta, rng);
+    evaluate_single(*estimator, theta);
 }
 
 // 

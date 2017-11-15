@@ -22,9 +22,12 @@ public:
     using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
     using ParamVecT = typename Model::ParamVecT;
-    using ImageT = typename Model::ImageT;
-    using ImageStackT = typename Model::ImageStackT;
-
+//     using ImageT = typename Model::ImageT;
+//     using ImageStackT = typename Model::ImageStackT;
+    using ImagePixelT = typename Model::ImagePixelT;
+    template<class T> using ImageShapeT = typename Model::template ImageShapeT<T>;
+    template<class T> using ImageStackShapeT = typename Model::template ImageStackShapeT<T>;
+    
     Mappel_IFace();
 
 protected:    
@@ -193,7 +196,7 @@ void Mappel_IFace<Model>::objLLH()
     // (in) theta: an (nParams X M) double of theta values
     // (out) llh: a (1 X max(M,N)) double of log_likelihoods
     checkNumArgs(1,2);
-    auto image_stack = this->get<ImageStackT>();
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_stack = getMat();
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto llh_stack = makeOutputArray(count);
@@ -213,7 +216,7 @@ void Mappel_IFace<Model>::objModelGrad()
     // (in) theta: an (nParams X M) double of theta values
     // (out) grad: a (nParams X max(M,N)) double of gradiant vectors
     checkNumArgs(1,2);
-    auto image_stack = get<ImageStackT>();
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_stack = getMat();
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto grad_stack = makeOutputArray(obj->get_num_params(), count);
@@ -233,7 +236,7 @@ void Mappel_IFace<Model>::objModelHessian()
     // (in) theta: an (nParams X M) double of theta values
     // (out) hess: a (nParams X nParams X max(M,N)) double of hessian matricies
     checkNumArgs(1,2);
-    auto image_stack = get<ImageStackT>();
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_stack = getMat();
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
@@ -256,7 +259,7 @@ void Mappel_IFace<Model>::objModelObjective()
     // [out] (optional) Hess: hessian of log likelihood double size:[nParams,nParams] 
     checkMinNumArgs(1,3);
     checkMaxNumArgs(3,3);
-    auto image = get<ImageT>();
+    auto image = getNumeric<ImageShapeT,ImagePixelT>();
     auto theta = getVec();
     bool negate = getAsBool();
     auto stencil = obj->make_stencil(theta);
@@ -296,7 +299,7 @@ void Mappel_IFace<Model>::objModelPositiveHessian()
     // (in) theta: an (nParams X M) double of theta values
     // (out) hess: a (nParams X nParams X max(M,N)) double of positive hessian matricies
     checkNumArgs(1,2);
-    auto image_stack = get<ImageStackT>();
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_stack = getMat();
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
@@ -313,7 +316,7 @@ void Mappel_IFace<Model>::objCRLB()
     //             for any unbiased estimator.
     checkNumArgs(1,1);
     auto theta_stack = getMat();
-    auto crlb_stack = makeDMat(obj->get_num_params(),theta_stack.n_cols);
+    auto crlb_stack = makeOutputArray(obj->get_num_params(), theta_stack.n_cols);
     cr_lower_bound_stack(*obj, theta_stack, crlb_stack);
 }
 
@@ -346,7 +349,7 @@ void Mappel_IFace<Model>::objEstimate()
     // (out) stats: A 1x1 struct of fitting statistics.
     checkMaxNumArgs(4,3);
     //Get input
-    auto image_stack = get<ImageStackT>();
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     std::string name = getString();
     auto theta_init_stack = getMat();
     ParamVecT theta_init;
@@ -384,7 +387,7 @@ void Mappel_IFace<Model>::objEstimateDebug()
     //  (out) sample_llh: A (1 X n) array of relative log likelyhoods at each sample theta
     checkNumArgs(6,3);
     //Get input
-    auto image = get<ImageT>();
+    auto image = getNumeric<ImageShapeT,ImagePixelT>();
     auto name = getString();
     auto theta_init = getVec();
     //Make temporaries (don't know sequence length ahead of call)
@@ -426,7 +429,7 @@ void Mappel_IFace<Model>::objEstimatePosterior()
     // (out) cov: a (nParams X nParams X n) estimate of the posterior covarience.
     checkNumArgs(2,3);
     //Get input
-    auto ims = get<ImageStackT>();
+    auto ims = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto Nsamples = getAsInt<IdxT>();
     auto theta_init_stack = getMat();
 
@@ -454,7 +457,7 @@ void Mappel_IFace<Model>::objEstimatePosteriorDebug()
     // (out) candidate_llh: A (1 X nsmaples) array of relative log likelyhoods at each candidate theta
     checkNumArgs(6,3);
     //Get input
-    auto im = get<ImageT>();
+    auto im = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto Ns = getAsInt<IdxT>(); //number of samples
     auto theta_init = getVec();
     auto Np = obj->get_num_params();//number of model parameters
@@ -507,7 +510,7 @@ void Mappel_IFace<Model>::objCholesky()
 {
     checkNumArgs(3,1);
     auto A = getMat();
-    if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
+    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
     auto C = A;
     bool valid = cholesky(C);
     //Seperate d from C so C is unit lower triangular
@@ -523,7 +526,7 @@ void Mappel_IFace<Model>::objModifiedCholesky()
 {
     checkNumArgs(3,1);
     auto A = getMat();
-    if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
+    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
     auto C = A;
     bool modified = modified_cholesky(C);
     auto d = C.diag();
@@ -539,8 +542,8 @@ void Mappel_IFace<Model>::objCholeskySolve()
     checkNumArgs(2,2);
     auto A = getMat();
     auto b = getVec();
-    if(!is_symmetric(A)) error("InvalidInput","Matrix is not symmetric");
-    if(b.n_elem != A.n_rows) error("InvalidInput","Input sizes do not match");
+    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
+    if(b.n_elem != A.n_rows) throw BadShapeError("Input sizes do not match");
     auto C = A;
     bool modified = modified_cholesky(C);
     auto x = cholesky_solve(C,b);

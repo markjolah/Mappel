@@ -39,6 +39,7 @@ public:
     static const std::vector<std::string> estimator_names;
     using ModelDataT = typename ImageFormat1DBase::ImageT; /**< Objective function data type: 1D double precision image, gain-corrected to approximate photons counts */
     using ModelDataStackT = ImageFormat1DBase::ImageStackT; /**< Objective function data stack type: 1D double precision image stack, of images gain-corrected to approximate photons counts */
+    template<class T> using IsSubclassT = typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,T>::value>::type;
 };
 
 /* Inline Method Definitions */
@@ -47,12 +48,12 @@ public:
  * @param[in] theta The parameter values to us
  * @param[in,out] rng An initialized random number generator
  */
-template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::ImageT>::type
+template<class Model, class rng_t, typename=typename PoissonNoise1DObjective::IsSubclassT<Model> >
+typename Model::ImageT
 simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
 {
     auto sim_im=model.make_image();
-    for(int i=0;i<model.size;i++) 
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) 
         sim_im(i)=generate_poisson(rng,model.pixel_model_value(i,s));
     return sim_im;
 }
@@ -62,7 +63,7 @@ typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,ty
 simulate_image_from_model(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
 {
     auto sim_im=model.make_image();
-    for(int i=0;i<model.size;i++) sim_im(i)=generate_poisson(rng,model_im(i));
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) sim_im(i)=generate_poisson(rng,model_im(i));
     return sim_im;
 }
 
@@ -73,7 +74,7 @@ log_likelihood(const Model &model, const typename Model::ImageT &data_im,
                const typename Model::Stencil &s)
 {
     double llh=0.;
-    for(int i=0;i<model.size;i++) 
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) 
         llh+=poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
     double pllh=model.prior_log_likelihood(s.theta); /* MAP: Add log of prior for params theta */
     return llh+pllh;
@@ -86,7 +87,7 @@ relative_log_likelihood(const Model &model, const typename Model::ImageT &data_i
                         const typename Model::Stencil &s)
 {
     double rllh=0.;
-    for(int i=0;i<model.size;i++)
+    for(typename Model::ImageSizeT i=0;i<model.size;i++)
         rllh+=relative_poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
     double prllh=model.prior_relative_log_likelihood(s.theta); /* MAP: Add relative log of prior for params theta */
     return rllh+prllh;
@@ -99,14 +100,14 @@ model_grad(const Model &model, const typename Model::ImageT &im,
 {
     auto pgrad=model.make_param();
     grad.zeros();
-    for(int i=0;i<model.size;i++) {
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) {
         if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
         model.pixel_grad(i,s,pgrad);
         double model_val=model.pixel_model_value(i,s);
         double dm_ratio_m1=im(i)/model_val - 1.;
         grad+=dm_ratio_m1*pgrad;
     }
-    model.prior_grad_update(s.theta, grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
+    model.prior_grad_accumulate(s.theta, grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
 }
 
 template<class Model>
@@ -119,7 +120,7 @@ model_grad2(const Model &model, const typename Model::ImageT &im,
     grad2.zeros();
     auto pgrad=model.make_param();
     auto pgrad2=model.make_param();
-    for(int i=0;i<model.size;i++){
+    for(typename Model::ImageSizeT i=0;i<model.size;i++){
         if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
         /* Compute model value and ratios */
         double model_val = model.pixel_model_value(i,s);
@@ -131,51 +132,49 @@ model_grad2(const Model &model, const typename Model::ImageT &im,
         grad  += dm_ratio_m1*pgrad;
         grad2 += dm_ratio_m1*pgrad2 - dmm_ratio*pgrad%pgrad;
     }
-    model.prior_grad_update(s.theta,grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
-    model.prior_grad2_update(s.theta,grad2); /* As appropriate for MAP/MLE: Add grad2 of log of prior for params theta */
+    model.prior_grad_grad2_accumulate(s.theta,grad,grad2); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
 }
 
 template<class Model>
 typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value>::type
 model_hessian(const Model &model, const typename Model::ImageT &im, 
               const typename Model::Stencil &s, 
-              typename Model::ParamT &grad, typename Model::MatT &hess) 
+              typename Model::ParamT &grad, MatT &hess) 
 {
     /* Returns hessian as an upper triangular matrix */
     grad.zeros();
     hess.zeros();
-    for(int i=0;i<model.size;i++) { 
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) { 
         if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
         /* Compute model value and ratios */
-        double model_val=model.pixel_model_value(i,s);
-//         assert(model_val>0.);//Model value must be positive for grad to be defined
+        double model_val = model.pixel_model_value(i,s);
         double dm_ratio = im(i)/model_val;
         double dm_ratio_m1 = dm_ratio-1;
         double dmm_ratio = dm_ratio/model_val;
         model.pixel_hess_update(i,s,dm_ratio_m1,dmm_ratio,grad,hess);
     }
-    model.prior_grad_update(s.theta,grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
-    model.prior_hess_update(s.theta,hess); /* As appropriate for MAP/MLE: Add hessian of log of prior for params theta */
+    model.prior_grad_hess_accumulate(s.theta,grad,hess); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
 }
 
 
 
 /** @brief  */
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::MatT>::type
+typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,MatT>::type
 fisher_information(const Model &model, const typename Model::Stencil &s)
 {
     auto fisherI=model.make_param_mat();
     fisherI.zeros();
     auto pgrad=model.make_param();
-    for(int i=0;i<model.size;i++) {  
+    for(typename Model::ImageSizeT i=0;i<model.size;i++) {  
         double model_val=model.pixel_model_value(i,s);
         model.pixel_grad(i,s,pgrad);
-        for(int c=0; c<model.num_params; c++) for(int r=0; r<=c; r++) {
+        for(IdxT c=0; c<model.get_num_params(); c++) for(IdxT r=0; r<=c; r++) {
             fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
         }
     }
-    model.prior_hess_update(s.theta,fisherI); /* As appropriate for MAP/MLE: Add diagonal hession of log of prior for params theta */
+    //TODO Fix for prior
+//     model.prior.hess_accumulate(s.theta,fisherI); /* As appropriate for MAP/MLE: Add diagonal hession of log of prior for params theta */
     return fisherI;
 }
 

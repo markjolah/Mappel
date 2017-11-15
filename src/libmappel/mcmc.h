@@ -27,7 +27,7 @@ void evaluate_posterior_stack(Model &model,
                               const typename Model::ParamVecT &theta_init_stack,
                               IdxT Nsamples, MatT &mean_stack, CubeT &cov_stack)
 {
-    const IdxT count = model.get_size_image_stack(im_stack);
+    const IdxT count = model.size_image_stack(im_stack);
     #pragma omp parallel
     {
         auto init = model.make_param();

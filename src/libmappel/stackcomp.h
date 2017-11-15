@@ -88,11 +88,11 @@ void simulate_image_stack(const Model &model,
                     const typename Model::ParamVecT &theta_stack,
                     typename Model::ImageStackT &image_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
+    int nimages = model.size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         auto rng = rng_manager.generator();
-        model.get_image_from_stack(image_stack,0) = simulate_image(model,model.make_param(theta_stack.col(0)),rng);
+        model.get_image_from_stack(image_stack,0) = simulate_image(model,theta_stack.col(0),rng);
     } else if (nthetas==1) {
         auto model_im=model_image(model, theta_stack.col(0));
         #pragma omp parallel
@@ -108,7 +108,7 @@ void simulate_image_stack(const Model &model,
             auto rng = rng_manager.generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
-                model.get_image_from_stack(image_stack,n) = simulate_image(model,model.make_param(theta_stack.col(n)),rng);
+                model.get_image_from_stack(image_stack,n) = simulate_image(model,theta_stack.col(n),rng);
         }
     }
 }
@@ -153,7 +153,7 @@ void log_likelihood_stack(const Model &model,
                     const typename Model::ParamVecT &theta_stack,
                     VecT &llh_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
+    int nimages = model.size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         llh_stack(0) = log_likelihood(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -190,7 +190,7 @@ void model_grad_stack(const Model &model,
                           const typename Model::ParamVecT &theta_stack,
                           typename Model::ParamVecT &grad_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
+    int nimages = model.size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         grad_stack.col(0) = model_grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -231,9 +231,9 @@ template<class Model>
 void model_hessian_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
-                          typename Model::ParamMatStackT &hessian_stack)
+                          CubeT &hessian_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
+    int nimages = model.size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0)=model_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -276,9 +276,9 @@ template<class Model>
 void model_positive_hessian_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
-                          typename Model::ParamMatStackT &hessian_stack)
+                          CubeT &hessian_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
+    int nimages = model.size_image_stack(image_stack);
     int nthetas = theta_stack.n_cols;
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = model_positive_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -314,7 +314,7 @@ void cr_lower_bound_stack(const Model &model,
 template<class Model>
 void fisher_information_stack(const Model &model,
                           const typename Model::ParamVecT &theta_stack,
-                          typename Model::ParamMatStackT &fisherI_stack)
+                          CubeT &fisherI_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for

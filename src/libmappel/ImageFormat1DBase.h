@@ -25,8 +25,11 @@ protected:
 public:
     using ImageSizeT = uint32_t;
     using ImageSizeVecT = arma::Col<ImageSizeT>;
-    using ImageT = arma::vec; /**< A type to represent image data*/
-    using ImageStackT = arma::mat; /**< A type to represent image data stacks */
+    using ImagePixelT = double;
+    template<class T> using ImageShapeT = arma::Col<T>;
+    template<class T> using ImageStackShapeT = arma::Mat<T>;
+    using ImageT = ImageShapeT<ImagePixelT>; /**< A type to represent image data*/
+    using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< A type to represent image data stacks */
 
     constexpr static IdxT num_dim = 1;
     constexpr static IdxT min_size = 3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */

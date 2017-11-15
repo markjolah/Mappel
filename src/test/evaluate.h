@@ -17,7 +17,6 @@
 #include <iostream>
 #include <memory>
 #include "stats.h"
-#include "rng.h"
 #include "estimator.h"
 #include "mcmc.h"
 
@@ -88,7 +87,7 @@ void estimate_stack_posterior(Model &model, int count)
 
 
 template<template<class> class Estimator, class Model>
-void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &theta, RNG &rng)
+void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &theta)
 {
     using std::cout;
     using std::endl;
@@ -98,7 +97,7 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
     auto stencil=model.make_stencil(theta);
     cout<<"Stencil: "<<stencil<<endl;
     cout<<"Model: "<<model<<endl;
-    auto im=simulate_image(model, stencil,rng);
+    auto im=simulate_image(model, stencil);
     double llh=log_likelihood(model, im, stencil);
     auto crlb=cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
@@ -198,14 +197,14 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
 }*/
 
 template <class Model>
-void compare_estimators_single(Model &model, const typename Model::ParamT &theta, RNG &rng)
+void compare_estimators_single(Model &model, const typename Model::ParamT &theta)
 {
     using std::cout;
     using std::endl;
     int s=65;
     char str[100];
     auto stencil=model.make_stencil(theta);
-    auto im=simulate_image(model,stencil,rng);
+    auto im=simulate_image(model,stencil);
     double llh=log_likelihood(model,im,stencil);
     auto crlb=cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
@@ -255,7 +254,7 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
 }
 
 template <class Model>
-void compare_estimators(Model &model, const typename Model::ParamT &theta, int ntrials, RNG &rng)
+void compare_estimators(Model &model, const typename Model::ParamT &theta, int ntrials)
 {
     using std::cout;
     using std::endl;

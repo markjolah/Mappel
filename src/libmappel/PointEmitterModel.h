@@ -158,7 +158,6 @@ PointEmitterModel::ParamT PointEmitterModel::sample_prior(ParallelRngT &rng)
  * by converting param vector into stencil with make_stencil
  */
 template<class Model>
-inline
 typename Model::ImageT
 model_image(const Model &model, const typename Model::ParamT &theta) 
 {
@@ -166,7 +165,6 @@ model_image(const Model &model, const typename Model::ParamT &theta)
 }
 
 template<class Model, class rng_t>
-inline
 typename Model::ImageT
 simulate_image(const Model &model, const typename Model::ParamT &theta, rng_t &rng) 
 {
@@ -174,26 +172,21 @@ simulate_image(const Model &model, const typename Model::ParamT &theta, rng_t &r
 }
 
 template<class Model>
-inline
-double
-log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
+double log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::ParamT &theta)
 {
     return log_likelihood(model, data_im, model.make_stencil(theta,false));
 }
 
 template<class Model>
-inline
-double
-relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
+double relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::ParamT &theta)
 {
     return relative_log_likelihood(model, data_im, model.make_stencil(theta,false));
 }
 
 template<class Model>
-inline
-typename Model::ParamT
+typename Model::ParamT 
 model_grad(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::ParamT &theta)
 {
@@ -203,9 +196,7 @@ model_grad(const Model &model, const typename Model::ImageT &data_im,
 }
 
 template<class Model>
-inline
-typename Model::MatT
-model_hessian(const Model &model, const typename Model::ImageT &data_im, 
+MatT model_hessian(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::ParamT &theta)
 {
     auto grad = model.make_param();
@@ -216,10 +207,9 @@ model_hessian(const Model &model, const typename Model::ImageT &data_im,
 }
 
 template<class Model>
-typename Model::MatT
-model_objective(const Model &model, const typename Model::ImageT &data_im, 
+void model_objective(const Model &model, const typename Model::ImageT &data_im, 
                 const typename Model::ParamT &theta, 
-                double &rllh,  typename Model::ParamT &grad,  typename Model::MatT &hess)
+                double &rllh,  typename Model::ParamT &grad, MatT &hess)
 {
     auto stencil = model.make_stencil(theta);
     rllh = relative_log_likelihood(model, data_im, stencil);
@@ -229,9 +219,7 @@ model_objective(const Model &model, const typename Model::ImageT &data_im,
 
 
 template<class Model>
-inline
-typename Model::MatT
-model_positive_hessian(const Model &model, const typename Model::ImageT &data_im, 
+MatT model_positive_hessian(const Model &model, const typename Model::ImageT &data_im, 
               const typename Model::ParamT &theta)
 {
     auto grad = model.make_param();
@@ -265,7 +253,6 @@ cr_lower_bound(const Model &model, const typename Model::Stencil &s)
 }
 
 template<class Model>
-inline
 typename Model::ParamT
 cr_lower_bound(const Model &model, const typename Model::ParamT &theta) 
 {
@@ -273,9 +260,7 @@ cr_lower_bound(const Model &model, const typename Model::ParamT &theta)
 }
 
 template<class Model>
-inline
-typename Model::MatT
-fisher_information(const Model &model, const typename Model::ParamT &theta) 
+MatT fisher_information(const Model &model, const typename Model::ParamT &theta) 
 {
     return fisher_information(model,model.make_stencil(theta));
 }

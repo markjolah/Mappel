@@ -464,9 +464,8 @@ public:
     /* These improve readability, but are (unfortunately) not inherited. */
     using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
-    using MatT = typename Model::MatT;
-    using ModelDataT = typename Model::ModelDataT;
     using ParamVecT = typename Model::ParamVecT;
+    using ModelDataT = typename Model::ModelDataT;
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
     
     static constexpr double rho_cauchy_min = 0.1;  //Coleman beta | Bellavia beta_1
