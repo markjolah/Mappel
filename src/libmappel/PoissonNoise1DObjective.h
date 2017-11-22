@@ -9,6 +9,7 @@
 #ifndef _POISSONNOISE1DOBJECTIVE_H
 #define _POISSONNOISE1DOBJECTIVE_H
 
+#include <sstream>
 #include "ImageFormat1DBase.h"
 #include "estimator.h"
 
@@ -37,20 +38,18 @@ class PoissonNoise1DObjective : public virtual ImageFormat1DBase {
      */
 public:
     static const std::vector<std::string> estimator_names;
-    using ModelDataT = typename ImageFormat1DBase::ImageT; /**< Objective function data type: 1D double precision image, gain-corrected to approximate photons counts */
-    using ModelDataStackT = ImageFormat1DBase::ImageStackT; /**< Objective function data stack type: 1D double precision image stack, of images gain-corrected to approximate photons counts */
+    using ModelDataT = ImageT; /**< Objective function data type: 1D double precision image, gain-corrected to approximate photons counts */
+    using ModelDataStackT = ImageStackT; /**< Objective function data stack type: 1D double precision image stack, of images gain-corrected to approximate photons counts */
     template<class T> using IsSubclassT = typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,T>::value>::type;
 };
 
-/* Inline Method Definitions */
 /** @brief Simulate an image using the PSF model, by generating Poisson noise
  * @param[out] image An image to populate.
  * @param[in] theta The parameter values to us
  * @param[in,out] rng An initialized random number generator
  */
 template<class Model, class rng_t, typename=typename PoissonNoise1DObjective::IsSubclassT<Model> >
-typename Model::ImageT
-simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
+typename Model::ImageT simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
 {
     auto sim_im=model.make_image();
     for(typename Model::ImageSizeT i=0;i<model.size;i++) 
@@ -58,20 +57,30 @@ simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
     return sim_im;
 }
 
-template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,typename Model::ImageT>::type
-simulate_image_from_model(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
+template<class Model, class rng_t, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+typename Model::ImageT simulate_image_from_model(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
 {
     auto sim_im=model.make_image();
     for(typename Model::ImageSizeT i=0;i<model.size;i++) sim_im(i)=generate_poisson(rng,model_im(i));
     return sim_im;
 }
 
-/* Inline Method Definitions */
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,double>::type
-log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::Stencil &s)
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model> >
+typename Model::ImageT simulate_image(const Model &model, const typename Model::Stencil &s)
+{
+    return simulate_image(model,s,rng_manager.generator());
+}
+
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model> >
+typename Model::ImageT simulate_image_from_model(const Model &model, const typename Model::ImageT &model_im)
+{
+    return simulate_image_from_model(model,model_im,rng_manager.generator());
+}
+
+
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+double log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
+                      const typename Model::Stencil &s)
 {
     double llh=0.;
     for(typename Model::ImageSizeT i=0;i<model.size;i++) 
@@ -80,11 +89,9 @@ log_likelihood(const Model &model, const typename Model::ImageT &data_im,
     return llh+pllh;
 }
 
-template<class Model>
-inline
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,double>::type
-relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im,
-                        const typename Model::Stencil &s)
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+double relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im,
+                               const typename Model::Stencil &s)
 {
     double rllh=0.;
     for(typename Model::ImageSizeT i=0;i<model.size;i++)
@@ -93,10 +100,9 @@ relative_log_likelihood(const Model &model, const typename Model::ImageT &data_i
     return rllh+prllh;
 }
 
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value>::type
-model_grad(const Model &model, const typename Model::ImageT &im,
-           const typename Model::Stencil &s, typename Model::ParamT &grad) 
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+void model_grad(const Model &model, const typename Model::ImageT &im,
+                const typename Model::Stencil &s, typename Model::ParamT &grad) 
 {
     auto pgrad=model.make_param();
     grad.zeros();
@@ -110,16 +116,15 @@ model_grad(const Model &model, const typename Model::ImageT &im,
     model.prior_grad_accumulate(s.theta, grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
 }
 
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value>::type
-model_grad2(const Model &model, const typename Model::ImageT &im, 
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+void model_grad2(const Model &model, const typename Model::ImageT &im, 
             const typename Model::Stencil &s, 
             typename Model::ParamT &grad, typename Model::ParamT &grad2) 
 {
     grad.zeros();
     grad2.zeros();
-    auto pgrad=model.make_param();
-    auto pgrad2=model.make_param();
+    auto pgrad = model.make_param();
+    auto pgrad2 = model.make_param();
     for(typename Model::ImageSizeT i=0;i<model.size;i++){
         if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
         /* Compute model value and ratios */
@@ -135,9 +140,8 @@ model_grad2(const Model &model, const typename Model::ImageT &im,
     model.prior_grad_grad2_accumulate(s.theta,grad,grad2); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
 }
 
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value>::type
-model_hessian(const Model &model, const typename Model::ImageT &im, 
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+void model_hessian(const Model &model, const typename Model::ImageT &im, 
               const typename Model::Stencil &s, 
               typename Model::ParamT &grad, MatT &hess) 
 {
@@ -159,11 +163,10 @@ model_hessian(const Model &model, const typename Model::ImageT &im,
 
 
 /** @brief  */
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,MatT>::type
-fisher_information(const Model &model, const typename Model::Stencil &s)
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+MatT fisher_information(const Model &model, const typename Model::Stencil &s)
 {
-    auto fisherI=model.make_param_mat();
+    auto fisherI = model.make_param_mat();
     fisherI.zeros();
     auto pgrad=model.make_param();
     for(typename Model::ImageSizeT i=0;i<model.size;i++) {  
@@ -179,22 +182,26 @@ fisher_information(const Model &model, const typename Model::Stencil &s)
 }
 
 
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise1DObjective,Model>::value,std::shared_ptr<Estimator<Model>>>::type
+template<class Model, typename=typename PoissonNoise1DObjective::IsSubclassT<Model>>
+std::unique_ptr<Estimator<Model>>
 make_estimator(Model &model, std::string ename)
 {
     using std::make_shared;
     const char *name=ename.c_str();
-    if (istarts_with(name,"NewtonDiagonal")) {
-        return make_shared<NewtonDiagonalMaximizer<Model>>(model);
+    if (istarts_with(name,"Heuristic")) {
+        return make_shared<HeuristicEstimator<Model>>(model);
+    } else if (istarts_with(name,"NewtonDiagonal")) {
+        return make_unique<NewtonDiagonalMaximizer<Model>>(model);
     } else if (istarts_with(name,"QuasiNewton")) {
-        return make_shared<QuasiNewtonMaximizer<Model>>(model);
+        return make_unique<QuasiNewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"Newton")) {
-        return make_shared<NewtonMaximizer<Model>>(model);
+        return make_unique<NewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"TrustRegion")) {
-        return make_shared<TrustRegionMaximizer<Model>>(model);
+        return make_unique<TrustRegionMaximizer<Model>>(model);
     } else {
-        throw std::logic_error("Unknown estimator name");
+        std::ostringstream os;
+        os<<"Unknown estimator name: "<<name;
+        throw NotImplementedError(os.str());
     }
 }
 

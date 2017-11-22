@@ -195,8 +195,7 @@ make_estimator(Model &model, std::string ename)
 {
     using std::make_shared;
     const char *name=ename.c_str();
-    if (istarts_with(name,"Heuristic")) {
-        return make_shared<HeuristicEstimator<Model>>(model);
+    
     } else if (istarts_with(name,"Seperable")) {
         return  make_shared<SeperableHeuristicEstimator<Model>>(model);
     } else if (istarts_with(name,"CGaussHeuristic")) {

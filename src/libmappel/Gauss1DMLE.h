@@ -29,8 +29,6 @@ public:
     Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
     
     static std::string name() {return "Gauss1DMLE";}
-
-    friend std::ostream& operator<<(std::ostream &out, Gauss1DMLE &model);
 };
  
 } /* namespace mappel */

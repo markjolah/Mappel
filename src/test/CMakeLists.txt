@@ -32,12 +32,18 @@ set(CTEST_TARGET mappel.ctest)
 
 # target_link_libraries( ${GTEST_TARGET} mappel${DEBUG_FILE_EXT})
 # target_link_libraries( ${GTEST_TARGET} ${GTEST_LIBRARY} ${GTEST_MAIN_LIBRARY})
-set(CTEST_CMDS mappel.test_speed${MexIFace_DEBUG_POSTFIX}
-               mappel.test_image${MexIFace_DEBUG_POSTFIX}
-               mappel.test_compare_estimators${MexIFace_DEBUG_POSTFIX}
-               mappel.test_image_compare_estimators${MexIFace_DEBUG_POSTFIX}
-               mappel.test_point_evaluate_estimators${MexIFace_DEBUG_POSTFIX}
-               mappel.test_evaluate_estimator${MexIFace_DEBUG_POSTFIX})
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    set(EXE_POSTFIX ${CMAKE_DEBUG_POSTFIX})
+else()
+    set(EXE_POSTFIX)
+endif()
+
+message(STATUS "EXE_POSTFIX:${EXE_POSTFIX}")
+set(CTEST_CMDS mappel.test_speed${EXE_POSTFIX}
+               mappel.test_image${EXE_POSTFIX}
+               mappel.test_compare_estimators${EXE_POSTFIX}
+               mappel.test_image_compare_estimators${EXE_POSTFIX}
+               mappel.test_point_evaluate_estimators${EXE_POSTFIX})
 set(ESTIMATORS Newton Huristic CGauss QuasiNewton NewtonRaphson)
 
 #Ctest is only availible on Unix as it uses symlinks
@@ -49,7 +55,7 @@ if(UNIX)
 
     install(TARGETS ${CTEST_TARGET} RUNTIME DESTINATION bin COMPONENT Runtime )
     #symlinks to enable different test commands
-    set(CTEST_NAME ${CTEST_TARGET}${MexIFace_DEBUG_POSTFIX})
+    set(CTEST_NAME ${CTEST_TARGET}${EXE_POSTFIX})
     foreach(cmd ${CTEST_CMDS})
         add_custom_command( TARGET ${CTEST_TARGET} POST_BUILD COMMAND ln -sf ${CTEST_NAME} ${cmd} )
         install(CODE "execute_process(COMMAND ln -sf ${CTEST_NAME} ${cmd} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}/bin)")

@@ -40,7 +40,7 @@ public:
         inline double bg() const {return theta(2);}
         friend std::ostream& operator<<(std::ostream &out, const Gauss1DModel::Stencil &s);
     };
-   
+    using StencilVecT = std::vector<Stencil>;
     /* Non-static data Members */
     double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
     
@@ -71,46 +71,19 @@ public:
 };
 
 /* Function Declarations */
-
-
-
 /* Inline Method Definitions */
-/*
-inline
-Gauss1DModel::ParamT
-Gauss1DModel::make_param(double x, double I, double bg) const
-{
-    ParamT theta = {x,I,bg};
-    bound_theta(theta);
-    return theta;
-}
 
-inline
-Gauss1DModel::ParamT
-Gauss1DModel::make_param(const ParamT &theta) const
-{
-    ParamT ntheta(theta);
-    bound_theta(ntheta);
-    return ntheta;
-}*/
-
+/** @brief Make a new stencil for parameter theta and optionally compute derivatives
+ * Remove implicit bounding.  This allows for computations outside of the limited region
+ * And prevents false impression that LLH and grad and hessian do not change outside of boundaries
+ */
 inline
 Gauss1DModel::Stencil
 Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 {
-//    return Stencil(*this,make_param(theta),compute_derivatives);
-    //Remove implicit bounding.  This allows for computations outside of the limited region
-    //And prevents false impression that LLH and grad and hessian do not change outside of boundaries
     return Stencil(*this,theta,compute_derivatives);
 }
-/*
-inline
-Gauss1DModel::Stencil
-Gauss1DModel::make_stencil(double x, double I, double bg, bool compute_derivatives) const
-{
-    return Stencil(*this,make_param(x,I,bg),compute_derivatives);
-}
-*/
+
 
 inline
 double Gauss1DModel::pixel_model_value(IdxT i,  const Stencil &s) const

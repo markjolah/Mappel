@@ -26,7 +26,6 @@ include(MexIFace-External)
 
 #Configure MexIFace envrionment
 include(MexIFace)
-include(MexIFace-configure-boost) #Add support for boost
 include(MexIFace-configure-gtest) #Add support for googletest
 include(MexIFace-configure-trng)  #Add support for TRNG parallel random number generator
 include(MexIFace-Doxygen) #Add Doxygen documentation targets

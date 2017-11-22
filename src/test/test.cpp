@@ -28,24 +28,42 @@ using namespace mappel;
 std::vector<std::string> model_names= {"Gauss1DMLE"};
 std::vector<std::string> estimator_names= {"TrustRegionMaximizer", "HeuristicEstimator", "CGaussHeuristicEstimator", "CGaussMLE", "SimulatedAnnealingMaximizer"};
 
-template<class Model>
+
+
+template<class Model, typename= typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value>::type >
 typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
 {
-    // args: x y I bg sigma
-    int n=5;
-    double sigma = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    // args: x I bg
+    int n=3;
     double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
     int I        = argc>=n-- ? atoi(argv[n])   : -1;
-    double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-    auto theta=model.sample_prior();
+    auto theta = model.sample_prior();
     if(x>=0) theta(0)=x;
-    if(y>=0) theta(1)=y;
-    if(I>=0) theta(2)=I;
-    if(bg>=0) theta(3)=bg;
-    if(model.num_params>4 && sigma>=0) theta(4)=sigma;
+    if(I>=0) theta(1)=I;
+    if(bg>=0) theta(2)=bg;
     return theta;
 }
+
+
+// template<class Model, typename=std::enable_if<std::is_base_of<Gauss2DModel>::value>::type >
+// typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
+// {
+//     // args: x y I bg sigma
+//     int n=5;
+//     double sigma = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     int I        = argc>=n-- ? atoi(argv[n])   : -1;
+//     double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     auto theta=model.sample_prior();
+//     if(x>=0) theta(0)=x;
+//     if(y>=0) theta(1)=y;
+//     if(I>=0) theta(2)=I;
+//     if(bg>=0) theta(3)=bg;
+//     if(model.get_num_params()>4 && sigma>=0) theta(4)=sigma;
+//     return theta;
+// }
 
 template<class Model>
 typename Model::ParamT read_HS_theta(Model &model, int argc, const char *argv[])
@@ -70,20 +88,20 @@ typename Model::ParamT read_HS_theta(Model &model, int argc, const char *argv[])
 //     if(model.num_params>5 && sigma>=0) theta(4)=sigma;
     return theta;
 }
-
+/*
 template<class Model>
 void evaluate_estimator_wrapper(const char *estimator_name,int argc, const char *argv[] )
 {
     int n=3;
     int ntrials                = argc>=n-- ? atoi(argv[n]) : 256;
     int npoints                = argc>=n-- ? atoi(argv[n]) : 64;
-    int size                   = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     cout<<"Size: "<<size<<endl;
     cout<<"Ntrials: "<<ntrials<<endl;
     cout<<"Npoints: "<<npoints<<endl;
     argc-=3; argv+=3;
     
-    IVecT sizes={size,size};
+    typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -100,13 +118,13 @@ void evaluate_HS_estimator_wrapper(const char *estimator_name,int argc, const ch
     int n=3;
     int ntrials                = argc>=n-- ? atoi(argv[n]) : 256;
     int npoints                = argc>=n-- ? atoi(argv[n]) : 64;
-    int size                   = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     cout<<"Size: "<<size<<endl;
     cout<<"Ntrials: "<<ntrials<<endl;
     cout<<"Npoints: "<<npoints<<endl;
     argc-=3; argv+=3;
     
-    IVecT sizes={size,size,size};
+    typename Model::ImageSizeVecT sizes={size,size,size};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
@@ -116,9 +134,9 @@ void evaluate_HS_estimator_wrapper(const char *estimator_name,int argc, const ch
     auto eff=model.make_param_vec(npoints);
     auto pval=VecT(npoints);
     evaluate_estimator(*estimator, ntrials, npoints, eff, pval);
-}
+}*/
 
-
+/*
 void test_evaluate_estimator(int argc, const char *argv[])
 {
     //  input:  modelname estimatorname size npoints ntrials
@@ -128,10 +146,10 @@ void test_evaluate_estimator(int argc, const char *argv[])
     cout<<"Model Name: "<<model_name<<endl;
     cout<<"Estimator Name: "<<estimator_name<<endl;
     argc-=2; argv+=2;
-    if(istarts_with(model_name,"Gauss2DMLE")) {
-        evaluate_estimator_wrapper<Gauss2DMLE>(estimator_name, argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        evaluate_estimator_wrapper<Gauss2DMAP>(estimator_name, argc, argv);
+    if(istarts_with(model_name,"Gauss1DMLE")) {
+        evaluate_estimator_wrapper<Gauss1DMLE>(estimator_name, argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         evaluate_estimator_wrapper<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         evaluate_estimator_wrapper<Gauss2DsMLE>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -147,7 +165,7 @@ void test_evaluate_estimator(int argc, const char *argv[])
     } else {
         cout<<"Unknown model: "<<model_name<<endl;
     }
-}
+}*/
 
 
 
@@ -156,11 +174,11 @@ void point_evaluate_estimator_wrapper(const char *estimator_name, int argc, cons
 {
     int n=2;
     int count = argc>=n-- ? atoi(argv[n]) : 100;
-    int size  = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     cout<<"Size: "<<size<<endl;
     cout<<"Count: "<<count<<endl;
     argc-=2; argv+=2;
-    IVecT sizes={size,size};
+    typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -177,12 +195,12 @@ void point_evaluate_HS_estimator_wrapper(const char *estimator_name, int argc, c
 {
     int n=2;
     int count = argc>=n-- ? atoi(argv[n]) : 100;
-    int size  = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     cout<<"Size: "<<size<<endl;
     cout<<"Count: "<<count<<endl;
     argc-=2; argv+=2;
 
-    IVecT sizes={size,size,size};
+    typename Model::ImageSizeVecT sizes={size,size,size};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
@@ -206,10 +224,10 @@ void test_point_evaluate_estimator(int argc, const char *argv[])
     cout<<"Model Name: "<<model_name<<endl;
     cout<<"Estimator Name: "<<estimator_name<<endl;
     argc-=2; argv+=2;
-    if(istarts_with(model_name,"Gauss2DMLE")) {
-        point_evaluate_estimator_wrapper<Gauss2DMLE>(estimator_name, argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        point_evaluate_estimator_wrapper<Gauss2DMAP>(estimator_name, argc, argv);
+    if(istarts_with(model_name,"Gauss1DMLE")) {
+        point_evaluate_estimator_wrapper<Gauss1DMLE>(estimator_name, argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         point_evaluate_estimator_wrapper<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         point_evaluate_estimator_wrapper<Gauss2DsMLE>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -227,16 +245,16 @@ void test_point_evaluate_estimator(int argc, const char *argv[])
     }
 }
 
-template<class Model>
+template<class Model> 
 void compare_estimators_wrapper(int argc, const char *argv[])
 {
     int n=2;
     int count = argc>=n-- ? atoi(argv[n]) : 100;
-    int size  = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=2; argv+=2;
     cout<<"Count: "<<count<<endl;
     cout<<"Size: "<<size<<endl;
-    IVecT sizes={size,size};
+    typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -249,9 +267,9 @@ void compare_HS_estimators_wrapper(int argc, const char *argv[])
 {
     int n=2;
     int count = argc>=n-- ? atoi(argv[n]) : 100;
-    int size  = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=2; argv+=2;
-    IVecT sizes={size,size,size};
+    typename Model::ImageSizeVecT sizes={size,size,size};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Count: "<<count<<endl;
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
@@ -269,10 +287,10 @@ void test_compare_estimators(int argc, const char *argv[])
     const char *model_name = argc>=n-- ? argv[n] : "Gauss2DMLE";
     cout<<"Model Name: "<<model_name<<endl;
     argc-=1; argv+=1;
-    if(istarts_with(model_name,"Gauss2DMLE")) {
-        compare_estimators_wrapper<Gauss2DMLE>(argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        compare_estimators_wrapper<Gauss2DMAP>(argc, argv);
+    if(istarts_with(model_name,"Gauss1DMLE")) {
+        compare_estimators_wrapper<Gauss1DMLE>(argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         compare_estimators_wrapper<Gauss2DMAP>(argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         compare_estimators_wrapper<Gauss2DsMLE>(argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -295,10 +313,10 @@ template<class Model>
 void compare_estimators_single_wrapper(int argc, const char *argv[])
 {
     int n=1;
-    int size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
     cout<<"Size: "<<size<<endl;
-    IVecT sizes={size,2+size};
+    typename Model::ImageSizeVecT sizes={size,2+size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -310,9 +328,9 @@ template<class Model>
 void compare_HS_estimators_single_wrapper(int argc, const char *argv[])
 {
     int n=1;
-    int size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
-    IVecT sizes={size,2+size,4+size};
+    typename Model::ImageSizeVecT sizes={size,2+size,4+size};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
@@ -327,10 +345,10 @@ void test_image_compare_estimators(int argc, const char *argv[])
     const char *model_name     = argc>=n-- ? argv[n]       : "Gauss2DMLE";
     cout<<"Model name: "<<model_name<<endl;
     argc-=1; argv+=1;
-    if(istarts_with(model_name,"Gauss2DMLE")) {
-        compare_estimators_single_wrapper<Gauss2DMLE>(argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        compare_estimators_single_wrapper<Gauss2DMAP>(argc, argv);
+    if(istarts_with(model_name,"Gauss1DMLE")) {
+        compare_estimators_single_wrapper<Gauss1DMLE>(argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         compare_estimators_single_wrapper<Gauss2DMAP>(argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         compare_estimators_single_wrapper<Gauss2DsMLE>(argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -354,10 +372,10 @@ template<class Model>
 void test_image_template(const char *estimator_name,int argc, const char *argv[])
 {
     int n=1;
-    int size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
     cout<<"Size: "<<size<<endl;
-    IVecT sizes={size,size};
+    typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -371,9 +389,9 @@ template<class Model>
 void test_HS_image_template(const char *estimator_name, int argc, const char *argv[])
 {
     int n=1;
-    int size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
-    IVecT sizes={size,size+2,size+4};
+    typename Model::ImageSizeVecT sizes={size,size+2,size+4};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
@@ -402,10 +420,10 @@ void test_image(int argc, const char *argv[])
             test_image(std::max(2,argc), argv);
             cout<<endl;
         }
-    } else if(istarts_with(model_name,"Gauss2DMLE")) {
-        test_image_template<Gauss2DMLE>(estimator_name,  argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        test_image_template<Gauss2DMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DMLE")) {
+        test_image_template<Gauss1DMLE>(estimator_name,  argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         test_image_template<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         test_image_template<Gauss2DsMLE>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -428,10 +446,10 @@ template<class Model>
 void estimate_HS_stack_template(const char *estimator_name, int argc, const char *argv[])
 {
     int n=2;
-    int size                   = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     int count                  = argc>=n-- ? atoi(argv[n]) : 1000;
     argc-=2; argv+=2;
-    IVecT sizes={size,size,size};
+    typename Model::ImageSizeVecT sizes={size,size,size};
     VecT sigma={0.8,1.4,1.2};
     cout<<"Sizes: "<<sizes[0]<<", "<<sizes[1]<<", "<<sizes[2]<<endl;
     cout<<"PSFsigma: "<<sigma[0]<<", "<<sigma[1]<<", "<<sigma[2]<<endl;
@@ -450,12 +468,12 @@ template<class Model>
 void estimate_stack_template(const char *estimator_name, int argc, const char *argv[])
 {
     int n=2;
-    int size                   = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
     int count                  = argc>=n-- ? atoi(argv[n]) : 1000;
     argc-=2; argv+=2;
     cout<<"Size: "<<size<<endl;
     cout<<"Count: "<<count<<endl;
-    IVecT sizes={size,size};
+    typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
     if (istarts_with(estimator_name,"Post")){
@@ -486,10 +504,10 @@ void test_speed(int argc, const char *argv[])
             test_speed(std::max(2,argc), argv);
             cout<<endl;
         }
-    } else if(istarts_with(model_name,"Gauss2DMLE")) {
-        estimate_stack_template<Gauss2DMLE>(estimator_name, argc, argv);
-    } else if(istarts_with(model_name,"Gauss2DMAP")) {
-        estimate_stack_template<Gauss2DMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DMLE")) {
+        estimate_stack_template<Gauss1DMLE>(estimator_name, argc, argv);
+//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
+//         estimate_stack_template<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
 //         estimate_stack_template<Gauss2DsMLE>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
@@ -522,20 +540,32 @@ int main(int argc, const char *argv[]){
             main(std::max(2,argc+1), argv-1);
             cout<<endl;
         }
-    } else if(strstr(prog_name,"test_point_evaluate_estimator")) {
-        test_point_evaluate_estimator(argc, argv);
-    } else if (strstr(prog_name,"test_evaluate_estimator")){
-        test_evaluate_estimator(argc, argv);
-    } else if (strstr(prog_name,"test_image_compare_estimators")) {
-        test_image_compare_estimators(argc, argv);
-    } else if (strstr(prog_name,"test_compare_estimators")) {
-        test_compare_estimators(argc, argv);
-    } else if (strstr(prog_name,"test_image")) {
-        test_image(argc, argv);
-    } else if (strstr(prog_name,"test_speed")) {
-        test_speed(argc, argv);
     } else {
-        cout<<"Unknown test: "<<prog_name<<endl;
+        try{
+            if(strstr(prog_name,"test_point_evaluate_estimator")) {
+                test_point_evaluate_estimator(argc, argv);
+            } else if (strstr(prog_name,"test_image_compare_estimators")) {
+                test_image_compare_estimators(argc, argv);
+            } else if (strstr(prog_name,"test_compare_estimators")) {
+                test_compare_estimators(argc, argv);
+            } else if (strstr(prog_name,"test_image")) {
+                test_image(argc, argv);
+            } else if (strstr(prog_name,"test_speed")) {
+                test_speed(argc, argv);
+            } else {
+                cout<<"Unknown test: "<<prog_name<<endl;
+            }
+        } catch (MappelError &e) {
+            std::cout<<"Caught MappelError: Condition:"<<e.condition()
+                <<" What:"<<e.what()<<"\n"<<"Backtrace:\n"<<e.backtrace()<<"\n"; 
+            return -1;
+        } catch (std::exception &e) {
+            std::cout<<"Caught Unhandled std::exception What:"<<e.what()<<"\n";
+            return -2;
+        } catch (...) {
+            std::cout<<"Caught Mystery Excecption. \n";
+            return -3;
+        }
     }
     return 0;
 }

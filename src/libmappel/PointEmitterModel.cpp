@@ -87,7 +87,7 @@ void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 bool PointEmitterModel::theta_in_bounds(const ParamT &theta, double epsilon) const
 {
     for(IdxT n=0; n<num_params; n++) 
-        if(lbound(n)>=theta(n) || theta(n)>=ubound(n)) return false;
+        if(lbound(n)+epsilon >= theta(n) || theta(n) >= ubound(n)-epsilon) return false;
     return true;
 }
 
@@ -121,16 +121,5 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
     }
     return btheta;
 }
-
-
-
-// std::ostream& operator<<(std::ostream &out, PointEmitterModel &model)
-// {
-//     auto stats=model.get_stats();
-//     out<<"["<<model.name()<<":";
-//     for(auto it=stats.cbegin(); it!=stats.cend(); ++it) out<<" "<<it->first<<"="<<it->second;
-//     out<<"]";
-//     return out;
-// }
 
 } /* namespace mappel */

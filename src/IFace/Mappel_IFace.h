@@ -127,7 +127,7 @@ template<class Model>
 void Mappel_IFace<Model>::objGetHyperparams()
 {
     // obj.SetHyperparams(prior)
-    //(in) prior: 1x4 double - [Imin, Imax, bgmin, bgmax]
+    //(out) hyperparams: A (nHyperparams X n) double of theta values
     checkNumArgs(1,0);
     output(obj->get_hyperparams());
 }
@@ -514,7 +514,7 @@ void Mappel_IFace<Model>::objCholesky()
     auto C = A;
     bool valid = cholesky(C);
     //Seperate d from C so C is unit lower triangular
-    auto d = C.diag();
+    VecT d = C.diag();
     C.diag().fill(1.);
     output(valid);
     output(C);
@@ -529,7 +529,7 @@ void Mappel_IFace<Model>::objModifiedCholesky()
     if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
     auto C = A;
     bool modified = modified_cholesky(C);
-    auto d = C.diag();
+    VecT d = C.diag();
     C.diag().fill(1.);
     output(modified);
     output(C);

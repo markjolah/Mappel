@@ -30,9 +30,8 @@ add_library(${LIB_TARGET} SHARED ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>)
 target_link_libraries(${LIB_TARGET} PUBLIC ${BacktraceException_LIBRARIES} )
 target_link_libraries(${LIB_TARGET} PUBLIC ${ParallelRngManager_LIBRARIES} )
 target_link_libraries(${LIB_TARGET} PUBLIC ${PriorHessian_LIBRARIES})
-# target_link_libraries(${LIB_TARGET} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
-# target_link_libraries(${LIB_TARGET} ${TRNG_LIBRARY} ) #Parallel random number generation
-# target_link_libraries(${LIB_TARGET} ${OPENMP_LIBRARY}) #OpenMP (non-empty for WIN32)
+target_link_libraries(${LIB_TARGET} PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
+target_link_libraries(${LIB_TARGET} PUBLIC OpenMP::OpenMP_CXX) #OpenMP (non-empty for WIN32)
 target_link_libraries(${LIB_TARGET} PUBLIC ${PTHREAD_LIBRARY}) #Pthreads
 target_link_libraries(${LIB_TARGET} PUBLIC Boost::chrono Boost::thread) 
 set_target_properties(${LIB_TARGET} PROPERTIES PUBLIC_HEADER "${MAPPEL_HDRS}")

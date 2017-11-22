@@ -81,15 +81,12 @@ std::ostream& operator<<(std::ostream &out, const Gauss1DModel::Stencil &s)
 
 StatsT Gauss1DModel::get_stats() const
 {
-    StatsT stats = ImageFormat1DBase::get_stats();
-    StatsT poIdxT_emitter_stats = PointEmitterModel::get_stats();
-    stats.insert(poIdxT_emitter_stats.begin(), poIdxT_emitter_stats.end());
-    stats["mcmcparams.num_phases"]=mcmc_num_candidate_sampling_phases;
-    stats["mcmcparams.etaX"]=mcmc_candidate_eta_x;
-    stats["mcmcparams.etaI"]=mcmc_candidate_eta_I;
-    stats["mcmcparams.etabg"]=mcmc_candidate_eta_bg;
+    auto stats = PointEmitterModel::get_stats();
+    auto im_stats = ImageFormat1DBase::get_stats();
+    stats.insert(im_stats.begin(), im_stats.end());
     return stats;
 }
+
 
 /** @brief pixel derivative inner loop calculations.
  */

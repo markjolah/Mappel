@@ -1,13 +1,13 @@
-/** @file PoissonGaussianNoiseMAPObjective.h
+/** @file PoissonGaussianNoise2DObjective.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
  * @date 04-2017
- * @brief The class declaration and inline and templated functions for PoissonGaussianNoiseMAPObjective.
+ * @brief The class declaration and inline and templated functions for PoissonGaussianNoise2DObjective.
  *
  * 
  */
 
-#ifndef _POISSONGAUSSIANNOISEMAPOBJECTIVE_H
-#define _POISSONGAUSSIANNOISEMAPOBJECTIVE_H
+#ifndef _MAPPEL_POISSONGAUSSIANNOISE2DOBJECTIVE_H
+#define _MAPPEL_POISSONGAUSSIANNOISE2DOBJECTIVE_H
 
 #include "PoissonNoise2D.h"
 
@@ -20,37 +20,37 @@
  * 
  */
 template<typename ModelBase>
-class PoissonGaussianNoiseMAPObjective : public PointNoise2D {
+class PoissonGaussianNoise2DObjective : public virtual ImageFormat1DBase  {
 public:
-    typedef arma::mat ImageT; /**< A type to represent image data*/
-    typedef arma::cube ImageStackT; /**< A type to represent image data stacks */
+    static const StringVecT estimator_names;
+    using CoordIdxT = uint32_t;
+    using CoordT = arma::vec<uint32_t>;
+    using CoordStackT = arma::mat<uint32_t>;
+    using ModelDataT = std::pair<ImageT, CoordT>; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
+    using ModelDataStackT = std::pair<ImageStackT,CoordStackT>; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
+    template<class T> using IsSubclassT = typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,T>::value>::type;
 
-    static const std::vector<std::string> estimator_names;     /**< Estimator Names defined for this class */
 
     
     /* Model parameters */
-    const IVecT size; /**< The number of pixels in the X and Y directions, given as [X,Y].  Note that images have shape [size(1),size(0)], Y is rows X is columns.   */
-    const VecT psf_sigma; /**< The standard deviation of the stymmetric gaussian PSF in units of pixels for X and Y */
+    ImageT sensor_gain_map;
+    ImageT sensor_bg_map;
 
-    PoissonGaussianNoiseMAPObjective(int num_params, const IVecT &size, const VecT &psf_sigma);
-    StatsT get_stats() const;
-
-    ImageT make_image() const;
-    ImageStackT make_image_stack(int n) const;
+    PoissonGaussianNoise2DObjective(const ImageSizeVecT &size, const ImageT &sensor_gain_map, const ImageT &sensor_bg_map);
 };
 
 /* Inline Method Definitions */
 
 inline
-PoissonGaussianNoiseMAPObjective::ImageT
-PoissonGaussianNoiseMAPObjective::make_image() const
+PoissonGaussianNoise2DObjective::ImageT
+PoissonGaussianNoise2DObjective::make_image() const
 {
     return ImageT(size(1),size(0)); //Images are size [Y x]
 }
 
 inline
-PoissonGaussianNoiseMAPObjective::ImageStackT
-PoissonGaussianNoiseMAPObjective::make_image_stack(int n) const
+PoissonGaussianNoise2DObjective::ImageStackT
+PoissonGaussianNoise2DObjective::make_image_stack(int n) const
 {
     return ImageStackT(size(1),size(0),n);
 }
@@ -58,7 +58,7 @@ PoissonGaussianNoiseMAPObjective::make_image_stack(int n) const
 /* Templated Function Definitions */
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,typename Model::ImageT>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,typename Model::ImageT>::type
 model_image(const Model &model, const typename Model::Stencil &s)
 {
     auto im=model.make_image();
@@ -77,7 +77,7 @@ model_image(const Model &model, const typename Model::Stencil &s)
  * @param[in,out] rng An initialized random number generator
  */
 template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,typename Model::ImageT>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,typename Model::ImageT>::type
 simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
 {
     auto sim_im=model.make_image();
@@ -88,7 +88,7 @@ simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
 }
 
 template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,typename Model::ImageT>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,typename Model::ImageT>::type
 simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
 {
     auto sim_im=model.make_image();
@@ -100,7 +100,7 @@ simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t
 
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value>::type
 model_grad(const Model &model, const typename Model::ImageT &im,
            const typename Model::Stencil &s, typename Model::ParamT &grad) 
 {
@@ -118,7 +118,7 @@ model_grad(const Model &model, const typename Model::ImageT &im,
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value>::type
 model_grad2(const Model &model, const typename Model::ImageT &im, 
             const typename Model::Stencil &s, 
             typename Model::ParamT &grad, typename Model::ParamT &grad2) 
@@ -147,7 +147,7 @@ model_grad2(const Model &model, const typename Model::ImageT &im,
 
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value>::type
 model_hessian(const Model &model, const typename Model::ImageT &im, 
               const typename Model::Stencil &s, 
               typename Model::ParamT &grad, typename Model::MatT &hess) 
@@ -171,7 +171,7 @@ model_hessian(const Model &model, const typename Model::ImageT &im,
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,double>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,double>::type
 log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
                const typename Model::Stencil &s)
 {
@@ -184,7 +184,7 @@ log_likelihood(const Model &model, const typename Model::ImageT &data_im,
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,double>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,double>::type
 relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im,
                         const typename Model::Stencil &s)
 {
@@ -199,7 +199,7 @@ relative_log_likelihood(const Model &model, const typename Model::ImageT &data_i
 
 /** @brief  */
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,typename Model::MatT>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,typename Model::MatT>::type
 fisher_information(const Model &model, const typename Model::Stencil &s)
 {
     typename Model::MatT fisherI=model.make_param_mat();
@@ -216,7 +216,7 @@ fisher_information(const Model &model, const typename Model::Stencil &s)
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonGaussianNoiseMAPObjective,Model>::value,std::shared_ptr<Estimator<Model>>>::type
+typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,std::shared_ptr<Estimator<Model>>>::type
 make_estimator(Model &model, std::string ename)
 {
     using std::make_shared;
@@ -242,4 +242,4 @@ make_estimator(Model &model, std::string ename)
     }
 }
 
-#endif /* _POISSONGAUSSIANNOISEMAPOBJECTIVE_H */
+#endif /* _MAPPEL_POISSONGAUSSIANNOISE2DOBJECTIVE_H */

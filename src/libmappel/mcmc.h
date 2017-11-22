@@ -1,22 +1,26 @@
+/** @file mcmc.h
+ * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @date 05-22-2015
+ * @brief Templated MCMC methods for posterior estimation
+ */
 
-#ifndef _MCMC_H
-#define _MCMC_H
-#include<cmath>
-#include "stackcomp.h"
-#include "display.h"
-#include "estimator.h"
+
+#ifndef _MAPPEL_MCMC_H
+#define _MAPPEL_MCMC_H
+#include <cmath>
+#include "util.h"
+#include "rng.h"
 
 namespace mappel {
 
 MatT thin_sample(MatT &sample, IdxT burn_in, IdxT keep_every);
 
 template <class Model>
-inline
 void evaluate_posterior_stack(Model &model, 
                               const typename Model::ImageStackT &im_stack,
                               IdxT Nsamples, MatT &mean_stack, CubeT &cov_stack)
 {
-    auto theta_init_stack = model.make_param_vec();
+    auto theta_init_stack = model.make_param_vec(model.size_image_stack(im_stack));//Make an initial field of vectors
     theta_init_stack.zeros();
     evaluate_posterior_stack(model, im_stack, theta_init_stack, Nsamples,mean_stack, cov_stack);
 }
@@ -39,17 +43,13 @@ void evaluate_posterior_stack(Model &model,
             auto sample = sample_posterior(model, model.get_image_from_stack(im_stack,n),  Nsamples, stencil);
             mean_stack.col(n) = arma::mean(sample, 1);
             cov_stack.slice(n) = arma::cov(sample.t());
-//             auto subsample=sample.cols(burnin,sample.n_cols-1);
-//             mean_stack.col(n)=arma::mean(subsample, 1);
-//             cov_stack.slice(n)=arma::cov(subsample.t());
         }
     }
 }
 
 template <class Model>
-inline
 void evaluate_posterior(Model &model, const typename Model::ImageT &im,
-                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::MatT &cov)
+                        IdxT Nsamples, typename Model::ParamT &mean, MatT &cov)
 {
     auto theta_init = model.make_param();
     theta_init.zeros();
@@ -58,19 +58,17 @@ void evaluate_posterior(Model &model, const typename Model::ImageT &im,
 
 template <class Model>
 void evaluate_posterior(Model &model, const typename Model::ImageT &im, const typename Model::ParamT &theta_init,
-                        IdxT Nsamples, typename Model::ParamT &mean, typename Model::MatT &cov)
+                        IdxT Nsamples, typename Model::ParamT &mean, MatT &cov)
 {
-    auto rng = rng_manager.generator();
     IdxT burnin = Nsamples;
     auto stencil = model.initial_theta_estimate(im, theta_init);
-    auto sample = sample_posterior(model, im,  burnin+Nsamples, stencil, rng);
+    auto sample = sample_posterior(model, im,  burnin+Nsamples, stencil);
     auto subsample = sample.cols(burnin,sample.n_cols-1);
     mean = arma::mean(subsample, 1);
     cov = arma::cov(subsample.t());
 }
 
 template <class Model>
-inline
 void evaluate_posterior_debug(Model &model, const typename Model::ImageT &im,
                               IdxT Nsamples, VecT &mean, MatT &cov,
                               typename Model::ParamVecT &sample, VecT &sample_llh,
@@ -87,9 +85,8 @@ void evaluate_posterior_debug(Model &model, const typename Model::ImageT &im,  c
                               typename Model::ParamVecT &sample, VecT &sample_llh,
                               typename Model::ParamVecT &candidates, VecT &mcmc_candidate_llh)
 {
-    auto rng = rng_manager.generator();
     auto stencil = model.initial_theta_estimate(im, theta_init);
-    sample_posterior_debug(model, im, stencil, sample, candidates, rng);
+    sample_posterior_debug(model, im, stencil, sample, candidates);
 
     #pragma omp parallel for
     for(IdxT n=0; n<Nsamples; n++){
@@ -103,7 +100,7 @@ void evaluate_posterior_debug(Model &model, const typename Model::ImageT &im,  c
 template <class Model>
 typename Model::ParamVecT
 sample_posterior(Model &model, const typename Model::ImageT &im, IdxT Nsamples,
-                            typename Model::Stencil &theta_init)
+                 typename Model::Stencil &theta_init)
 {
     auto sample = model.make_param_vec(Nsamples);
     sample.col(0) = theta_init.theta;
@@ -116,7 +113,7 @@ sample_posterior(Model &model, const typename Model::ImageT &im, IdxT Nsamples,
             sample.col(n) = sample.col(n-1);
             continue;
         }
-        double can_rllh=relative_log_likelihood(model, im, can_theta);
+        double can_rllh = relative_log_likelihood(model, im, can_theta);
         phase++;
         double alpha = std::min(1.,exp(can_rllh-old_rllh));
         if(rng_manager.randu() < alpha) {
@@ -142,7 +139,7 @@ void sample_posterior_debug(Model &model, const typename Model::ImageT &im,
     double old_rllh = relative_log_likelihood(model, im, theta_init);
     IdxT phase = 0;
     for(IdxT n=1; n<Nsamples; n++){
-        auto can_theta = sample.col(n-1);
+        typename Model::ParamT can_theta = sample.col(n-1);
         model.sample_mcmc_candidate_theta(phase, can_theta);
         candidates.col(n) = can_theta;
         if(!model.theta_in_bounds(can_theta)) { //OOB so stay put
@@ -163,4 +160,4 @@ void sample_posterior_debug(Model &model, const typename Model::ImageT &im,
 
 } /* namespace mappel */
 
-#endif /* _MCMC_H */
+#endif /* _MAPPEL_MCMC_H */

@@ -3,14 +3,12 @@
  * @date 05-22-2015
  * @brief Numerical matrix operations
  */
-#ifndef _NUMERICAL_H
-#define _NUMERICAL_H
+#ifndef _MAPPEL_NUMERICAL_H
+#define _MAPPEL_NUMERICAL_H
 
 #include <cmath>
 #include <climits>
 #include <armadillo>
-
-
 
 namespace mappel {
     
@@ -85,4 +83,4 @@ arma::vec cholesky_solve(const arma::mat &C,const arma::vec &b);
 
 } /* namespace mappel */
 
-#endif /* _NUMERICAL_H*/
+#endif /* _MAPPEL_NUMERICAL_H*/

@@ -135,13 +135,50 @@ ostream& print_labeled_image(ostream &out, const arma::mat &im, const char *titl
     return out;
 }
 
+ostream& print_labeled_image(ostream &out, const arma::vec &im, const char *title,  const char *color)
+{
+    bool int_vals=not arma::any((arma::vectorise(im)<1) % (arma::vectorise(im)>0) );
+    int lmargin=10;
+    int cellw;
+    if(int_vals){
+        if (arma::any(arma::vectorise(im)>=1000)) {
+            cellw=5;
+        } else {
+            cellw=4;
+        }
+    } else {
+        cellw=7;
+    }
+    int imwidth=cellw*im.n_elem+2;
+    out<<setw(lmargin+20)<<"+x------->"<<endl;
+    out<<setw(lmargin)<<"";
+    for(unsigned j=0; j<im.n_elem; j++) out<<setw(cellw)<<j;
+    out<<endl;
+    out<<setw(lmargin-1)<<"";
+    print_centered_title(out,'=',imwidth,title)<<endl;
+    out<<setw(lmargin)<<"|";
+    for(unsigned j=0; j<im.n_elem; j++) {
+        if(color) out<<"\033["<<color<<"m";
+        if(int_vals){
+            out<<setw(cellw)<<(int)im(j);
+        } else {
+            printf("%*.*f",cellw,cellw-3,im(j));
+        }
+        if(color) out<<"\033[0m";
+    }
+    out<<'|'<<endl;
+    out<<setw(lmargin-1)<<"";
+    print_centered_title(out,'=',imwidth)<<endl;
+    return out;
+}
+
+
 template<>
 std::ostream& print_image(std::ostream &out, const arma::vec &im)
 {
     print_labeled_image(out, im, "IMAGE", TERM_WHITE);
     return out;
 }
-
 
 template<>
 std::ostream& print_image(std::ostream &out, const arma::mat &im)

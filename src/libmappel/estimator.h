@@ -169,10 +169,10 @@ public:
 private:
     Stencil compute_estimate(const ModelDataT &im, const ParamT &theta_init)
     {
-        return Estimator<Model>::model.heuristic_initial_theta_estimate(im, ParamT());
+        return Estimator<Model>::model.initial_theta_estimate(im, ParamT());
     }
 };
-
+/*
 template<class Model>
 class SeperableHeuristicEstimator : public ThreadedEstimator<Model> {
 public:
@@ -189,7 +189,7 @@ private:
     {
         return Estimator<Model>::model.seperable_initial_theta_estimate(im, ParamT(), sub_estimator_name);
     }
-};
+};*/
 
 template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {

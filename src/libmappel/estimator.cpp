@@ -158,9 +158,8 @@ template<class Model>
 std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
 {
     auto stats=estimator.get_stats();
-    out<<"["<<estimator.name()<<"<"<<estimator.model.name()<<">:";
-    for(auto stat: stats) out<<" "<<stat.first<<"="<<stat.second;
-    out<<"]";
+    out<<"[Estimator: "<<estimator.name()<<"<"<<estimator.model.name()<<">]\n";
+    for(auto& stat: stats) out<<"\t"<<stat.first<<"="<<stat.second<<"\n";
     return out;
 }
 
@@ -370,8 +369,8 @@ IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, cons
                                                 const Stencil &s, bool save_seq, int max_seq_len)
     : im(im), 
       grad(model.make_param()), 
-      lbound(model.lbound),
-      ubound(model.ubound),
+      lbound(model.get_lbound()),
+      ubound(model.get_ubound()),
       rllh(relative_log_likelihood(model,im,s)), 
       save_seq(save_seq), 
       s0(s), 

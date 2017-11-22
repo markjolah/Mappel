@@ -68,7 +68,7 @@ void estimate_stack_posterior(Model &model, int count)
     auto theta_est=model.make_param_vec(count);
     auto llh_est=VecT(count);
     auto llh=VecT(count);
-    arma::cube cov(model.num_params, model.num_params, count);
+    arma::cube cov(model.get_num_params(), model.get_num_params(), count);
     evaluate_posterior_stack(model, ims, iter, theta_est, cov);
     log_likelihood_stack(model, ims, theta_est, llh_est);
     log_likelihood_stack(model,ims,theta,llh);
@@ -112,7 +112,11 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
     auto dummy_theta = model.make_param();
     dummy_theta.zeros();
     auto theta_init=model.initial_theta_estimate(im,dummy_theta);
-    assert(model.theta_in_bounds(theta_init.theta));
+    if(!model.theta_in_bounds(theta_init.theta)){
+        std::ostringstream msg;
+        msg<<"Init Theta: "<<theta.t()<<" Out of bounds."<<" lbound:"<<model.get_lbound().t()<< " ubound:"<<model.get_ubound().t();
+        throw BoundsError(msg.str());
+    }
     assert(theta_init.derivatives_computed);
     snprintf(str, s, "LLH:%g ThetaInit:",log_likelihood(model,im,theta_init));
     print_vec_row(cout, theta_init.theta, str, s, TERM_CYAN);
@@ -234,7 +238,7 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
             print_vec_row(cout, abs(error), str, s, TERM_RED);
             snprintf(str, s, "CRLB[%s]:",name.c_str());
             print_vec_row(cout, crlb, str, s, TERM_BLUE);
-        } catch (const MaximizerNotImplementedException& e) {
+        } catch (const NotImplementedError& e) {
             continue;
         }
     }
@@ -254,7 +258,7 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
 }
 
 template <class Model>
-void compare_estimators(Model &model, const typename Model::ParamT &theta, int ntrials)
+void compare_estimators(Model &model, const typename Model::ParamT &theta, IdxT ntrials)
 {
     using std::cout;
     using std::endl;
@@ -295,13 +299,13 @@ void compare_estimators(Model &model, const typename Model::ParamT &theta, int n
             print_vec_row(cout, arma::sqrt(arma::mean(error%error,1)), str, s, TERM_MAGENTA);
             snprintf(str, s, "<CRLB[%s]>:",name.c_str());
             print_vec_row(cout, arma::mean(crlb_est,1), str, s, TERM_BLUE);
-        } catch (const MaximizerNotImplementedException& e) {
+        } catch (const NotImplementedError& e) {
             continue;
         }
         
     }
     auto mean=model.make_param_vec(ntrials);
-    arma::cube cov(model.num_params, model.num_params, ntrials);
+    arma::cube cov(model.get_num_params(), model.get_num_params(), ntrials);
     evaluate_posterior_stack(model, ims, 3000, mean, cov);
     auto llh_est=VecT(ntrials);
     log_likelihood_stack(model, ims, mean, llh_est);
@@ -315,14 +319,14 @@ void compare_estimators(Model &model, const typename Model::ParamT &theta, int n
     print_vec_row(cout, arma::mean(error,1), str, s, TERM_RED);
     print_vec_row(cout, arma::sqrt(arma::mean(error%error,1)), "RMSE[Posterior]:", s, TERM_MAGENTA);
     auto var=model.make_param_vec(ntrials);
-    for(int n=0; n<ntrials;n++) var.col(n)=cov.slice(n).diag();
+    for(IdxT n=0; n<ntrials;n++) var.col(n)=cov.slice(n).diag();
     print_vec_row(cout, arma::mean(var,1), "PosteriorVar:", s, TERM_BLUE);
     for (auto estimator: estimators) cout<<*estimator<<endl;
 }
 
 
 template<template<class> class Estimator, class Model>
-void point_evaluate_estimator(Estimator<Model> &estimator, int ntrials,
+void point_evaluate_estimator(Estimator<Model> &estimator, IdxT ntrials,
                               const typename Model::ParamT &theta,
                               typename Model::ParamT &efficiency,
                               double &unbiased_p_val)
@@ -343,7 +347,7 @@ void point_evaluate_estimator(Estimator<Model> &estimator, int ntrials,
     auto crlb_est=model.make_param_vec(ntrials);
     auto llh_est=VecT(ntrials);
     estimator.estimate_stack(ims, theta_est, crlb_est, llh_est);
-    for(int i=0;i<ntrials;i++) print_vec_row(cout, theta_est.col(i), "Theta_est:",15,TERM_BLUE);
+    for(IdxT i=0;i<ntrials;i++) print_vec_row(cout, theta_est.col(i), "Theta_est:",15,TERM_BLUE);
    
     auto error=theta_est;
     error.each_col()-=theta;
@@ -369,66 +373,5 @@ void point_evaluate_estimator(Estimator<Model> &estimator, int ntrials,
     cout<<"---------------------------------------------------------------"<<endl<<endl;
 }
 
-template<template<class> class Estimator, class Model>
-void evaluate_estimator(Estimator<Model> &estimator, int num_trials, int num_points,
-                        typename Model::ParamVecT &efficiencies,
-                        VecT &p_vals)
-{
-    using std::cout;
-    using std::endl;
-    Model &model=estimator.model;
-    int i,j, idx;
-    std::string pname;
-    auto thetas=model.make_param_vec(num_points);
-    sample_prior_stack(model, thetas);
-
-    auto eff=model.make_param();
-    for(int i=0; i<num_points; i++){
-        point_evaluate_estimator(estimator, num_trials, thetas.col(i), eff, p_vals(i));
-        efficiencies.col(i)=eff;
-    }
-    arma::uvec p_vals_sidx=sort_index(p_vals);
-    arma::umat efficiency_sidx(model.num_params, num_points);
-    for(i=0; i<model.num_params; i++){
-        efficiency_sidx.row(i) = sort_index(efficiencies.row(i)).t();
-    }
-
-    cout<<"=========================== Evaluating Estimator ==============================="<<endl;
-    cout<<"Model: "<<model<<endl;
-    cout<<"Estimator: "<<estimator<<endl;
-    cout<<"Number of point estimates: "<<num_points<<endl;
-    cout<<"Number of trials per estimate: "<<num_trials<<endl<<endl;
-    cout<<"+++ Is the estimator unbiased? +++"<<endl;
-    idx=p_vals_sidx(0);
-    cout<<"  [p_val] Min:"<<p_vals(idx)<<" @Theta:"<<thetas.col(idx).t();
-    idx=p_vals_sidx(num_points-1);
-    cout<<"  [p_val] Max:"<<p_vals(idx)<<" @Theta:"<<thetas.col(idx).t();
-    cout<<"  [p_val] Mean:"<<arma::mean(p_vals)<<" Var:"<<arma::var(p_vals,0,1)<<endl;
-    cout<<"  [p_val] Frac<0.01: "<<arma::sum(p_vals<0.01)/double(num_points)
-        <<" Frac<0.05: "<<arma::sum(p_vals<0.05)/(double)num_points<<endl;
-    cout<<"  [p_val] 10 Smallest "<<endl;
-    for(i=0;i<10;i++){
-        idx=p_vals_sidx(i);
-        cout<<"        #"<<i+1<<": "<<p_vals(idx)<<" @Theta:"<<thetas.col(idx).t();
-    }
-    cout<<endl;
-    cout<<"+++ Is the estimator efficient? +++"<<endl;
-    for(j=0; j<model.num_params; j++){
-        pname=model.param_names[j];
-        idx=efficiency_sidx(j,0);
-        cout<<"  [eff-"<<pname<<"] Min:"<<efficiencies(j,idx)<<" @Theta:"<<thetas.col(idx).t();
-        idx=efficiency_sidx(j,num_points-1);
-        cout<<"  [eff-"<<pname<<"] Max:"<<efficiencies(j,idx)<<" @Theta:"<<thetas.col(idx).t();
-        cout<<"  [eff-"<<pname<<"] Mean:"<<arma::mean(efficiencies.row(j))<<" Var:"<<arma::var(efficiencies.row(j),0,1)<<endl;
-        cout<<"  [eff-"<<pname<<"] Frac<0.90: "<<arma::sum(efficiencies.row(j)<0.90)/(double)num_points
-        <<" Frac<0.95: "<<arma::sum(efficiencies.row(j)<0.95)/double(num_points)<<endl;
-        cout<<"  [eff-"<<pname<<"] 10 Smallest "<<endl;
-        for(i=0;i<10;i++){
-            idx=efficiency_sidx(j,i);
-            cout<<"        #"<<i+1<<": "<<efficiencies(j,idx)<<" @Theta:"<<thetas.col(idx).t();
-        }
-    }
-    cout<<"=================================================================================="<<endl<<endl;
-}
 
 #endif /* _EVALUATE_H */

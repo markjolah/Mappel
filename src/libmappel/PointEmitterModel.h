@@ -9,7 +9,7 @@
 #ifndef _POINTEMITTERMODEL_H
 #define _POINTEMITTERMODEL_H
 
-#include <fstream>
+#include <iostream>
 #include <string>
 
 #include <armadillo>
@@ -44,11 +44,12 @@ public:
     /* Internal Types */
     
     /** @brief Priors are represented by the CompositeDist container class from the PriorHessian library */
+    template<class T> using IsPointEmitterModelT = typename std::enable_if<std::is_base_of<PointEmitterModel,T>::value>::type;
     using CompositeDist = prior_hessian::CompositeDist<ParallelRngT>;
     
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
-    
+    using StringVecT = prior_hessian::StringVecT;
     PointEmitterModel(CompositeDist&& prior_);    
     
     StatsT get_stats() const;
@@ -65,8 +66,14 @@ public:
     IdxT get_num_hyperparams() const;
     void set_hyperparams(const VecT &hyperparams);
     VecT get_hyperparams() const;
+
+    StringVecT get_params_desc() const;
+    void set_params_desc(const StringVecT &desc);
+    StringVecT get_hyperparams_desc() const;
+    void set_hyperparams_desc(const StringVecT &desc);
     
-    ParamT sample_prior(ParallelRngT &rng);
+    template<class RngT> ParamT sample_prior(RngT &rng);
+    ParamT sample_prior();
     
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
     const ParamT& get_lbound() const;
@@ -94,7 +101,12 @@ protected:
     double mcmc_candidate_eta_I; /**< The standard deviation for the normally distributed pertebation to theta_I in the random walk MCMC sampling */
     double mcmc_candidate_eta_bg; /**< The standard deviation for the normally distributed pertebation to theta_bg in the random walk MCMC sampling */
     double bounds_epsilon=1E-6; /**< The amount to keep away parameter values from the singularities of the prior distribtions */
+
+
 };
+
+template<class Model, typename=PointEmitterModel::IsPointEmitterModelT<Model>>
+std::ostream& operator<<(std::ostream &out,const Model &model);
 
 /* Inline member function definitions */
 
@@ -147,48 +159,77 @@ inline
 PointEmitterModel::ParamT PointEmitterModel::get_hyperparams() const
 { return prior.params(); }
 
+
 inline
-PointEmitterModel::ParamT PointEmitterModel::sample_prior(ParallelRngT &rng)
+PointEmitterModel::StringVecT PointEmitterModel::get_params_desc() const
+{ return prior.dim_variables(); }
+
+inline
+void PointEmitterModel::set_params_desc(const StringVecT &desc)
+{ prior.set_dim_variables(desc); }
+
+inline
+PointEmitterModel::StringVecT PointEmitterModel::get_hyperparams_desc() const
+{ return prior.params_desc(); }
+
+inline
+void PointEmitterModel::set_hyperparams_desc(const StringVecT &desc)
+{ prior.set_params_desc(desc); }
+
+
+template<class RngT>
+PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
 { return prior.sample(rng); }
+
+inline
+PointEmitterModel::ParamT PointEmitterModel::sample_prior()
+{ return prior.sample(rng_manager.generator()); }
 
 
 /* Template function definitions */
+
+template<class Model, typename>
+std::ostream& operator<<(std::ostream &out, const Model &model)
+{
+    auto stats = model.get_stats();
+    out<<"["<<model.name()<<"]:\n";
+    for(auto& stat: stats) out<<"\t"<<stat.first<<" = "<<stat.second<<"\n";
+    return out;
+}
+
 
 /* These are convenience functions for other templated functions that allow calling without stencils,
  * by converting param vector into stencil with make_stencil
  */
 template<class Model>
-typename Model::ImageT
-model_image(const Model &model, const typename Model::ParamT &theta) 
+typename Model::ImageT model_image(const Model &model, const typename Model::ParamT &theta) 
 {
     return model_image(model, model.make_stencil(theta,false));
 }
 
 template<class Model, class rng_t>
-typename Model::ImageT
-simulate_image(const Model &model, const typename Model::ParamT &theta, rng_t &rng) 
+typename Model::ImageT simulate_image(const Model &model, const typename Model::ParamT &theta, rng_t &rng) 
 {
     return simulate_image(model, model.make_stencil(theta,false), rng);
 }
 
 template<class Model>
 double log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::ParamT &theta)
+                      const typename Model::ParamT &theta)
 {
     return log_likelihood(model, data_im, model.make_stencil(theta,false));
 }
 
 template<class Model>
 double relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::ParamT &theta)
+                               const typename Model::ParamT &theta)
 {
     return relative_log_likelihood(model, data_im, model.make_stencil(theta,false));
 }
 
 template<class Model>
-typename Model::ParamT 
-model_grad(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::ParamT &theta)
+typename Model::ParamT model_grad(const Model &model, const typename Model::ImageT &data_im, 
+                                  const typename Model::ParamT &theta)
 {
     auto grad = model.make_param();
     model_grad(model, data_im, model.make_stencil(theta), grad);
@@ -197,7 +238,7 @@ model_grad(const Model &model, const typename Model::ImageT &data_im,
 
 template<class Model>
 MatT model_hessian(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::ParamT &theta)
+                   const typename Model::ParamT &theta)
 {
     auto grad = model.make_param();
     auto hess = model.make_param_mat();
@@ -207,9 +248,32 @@ MatT model_hessian(const Model &model, const typename Model::ImageT &data_im,
 }
 
 template<class Model>
-void model_objective(const Model &model, const typename Model::ImageT &data_im, 
-                const typename Model::ParamT &theta, 
-                double &rllh,  typename Model::ParamT &grad, MatT &hess)
+void aposteriori_objective(const Model &model, const typename Model::ImageT &data_im, 
+                           const typename Model::ParamT &theta, 
+                           double &rllh,  typename Model::ParamT &grad, MatT &hess)
+{
+    auto stencil = model.make_stencil(theta);
+    rllh = relative_log_likelihood(model, data_im, stencil);
+    model_hessian(model, data_im, stencil, grad, hess);
+    copy_Usym_mat(hess);
+}
+
+template<class Model>
+void prior_objective(const Model &model, const typename Model::ParamT &theta, 
+                     double &rllh, typename Model::ParamT &grad, MatT &hess)
+{
+    auto stencil = model.make_stencil(theta);
+    const auto& prior = model.get_prior();
+    rllh = prior.rllh(theta);
+    
+    relative_log_likelihood(model, data_im, stencil);
+    model_hessian(model, data_im, stencil, grad, hess);
+    copy_Usym_mat(hess);
+}
+
+template<class Model>
+void likelihood_objective(const Model &model, const typename Model::ImageT &data_im, const typename Model::ParamT &theta, 
+                          double &rllh,  typename Model::ParamT &grad, MatT &hess)
 {
     auto stencil = model.make_stencil(theta);
     rllh = relative_log_likelihood(model, data_im, stencil);
@@ -220,7 +284,7 @@ void model_objective(const Model &model, const typename Model::ImageT &data_im,
 
 template<class Model>
 MatT model_positive_hessian(const Model &model, const typename Model::ImageT &data_im, 
-              const typename Model::ParamT &theta)
+                            const typename Model::ParamT &theta)
 {
     auto grad = model.make_param();
     auto hess = model.make_param_mat();
@@ -238,14 +302,13 @@ MatT model_positive_hessian(const Model &model, const typename Model::ImageT &da
  * @param[out] crlb The calculated parameters
  */
 template<class Model>
-typename Model::ParamT
-cr_lower_bound(const Model &model, const typename Model::Stencil &s)
+typename Model::ParamT cr_lower_bound(const Model &model, const typename Model::Stencil &s)
 {
     auto FI = fisher_information(model,s);
     try{
         return arma::pinv(FI).eval().diag();
     } catch ( std::runtime_error E) {
-        std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<"\n";
+        std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<'\n';
         auto z = model.make_param();
         z.zeros();
         return z;
@@ -253,8 +316,7 @@ cr_lower_bound(const Model &model, const typename Model::Stencil &s)
 }
 
 template<class Model>
-typename Model::ParamT
-cr_lower_bound(const Model &model, const typename Model::ParamT &theta) 
+typename Model::ParamT cr_lower_bound(const Model &model, const typename Model::ParamT &theta) 
 {
     return cr_lower_bound(model,model.make_stencil(theta));
 }
