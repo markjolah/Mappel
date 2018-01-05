@@ -9,14 +9,17 @@
 
 ## Source Files ##
 # set(IFACE_TARGETS Gauss2DMLE_Iface Gauss2DMAP_Iface Gauss2DsMLE_Iface Gauss2DsMAP_Iface)
-set(IFACE_TARGETS Gauss1DMLE_IFace)
 
-if(OPT_HYPERSPECTRAL)
-    set(IFACE_TARGETS ${IFACE_TARGETS} hyperspectral/GaussHSMAP_IFace hyperspectral/GaussHSsMAP_IFace 
-                                       hyperspectral/Blink2DsMAP_IFace hyperspectral/BlinkHSsMAP_IFace)
+if(OPT_MATLAB)
+    set(IFACE_TARGETS Gauss1DMLE_IFace)
+
+    if(OPT_HYPERSPECTRAL)
+        set(IFACE_TARGETS ${IFACE_TARGETS} hyperspectral/GaussHSMAP_IFace hyperspectral/GaussHSsMAP_IFace 
+                                        hyperspectral/Blink2DsMAP_IFace hyperspectral/BlinkHSsMAP_IFace)
+    endif()
+    #Create IFace target
+    foreach(target ${IFACE_TARGETS})
+        make_mex(${target})
+        target_link_libraries(${target} Mappel) #Link to Mappel
+    endforeach()
 endif()
-#Create IFace target
-foreach(target ${IFACE_TARGETS})
-    make_mex(${target})
-    target_link_libraries(${target} Mappel) #Link to Mappel
-endforeach()

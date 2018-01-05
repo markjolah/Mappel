@@ -9,29 +9,40 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 # See: LICENCE file
 
-cmake_minimum_required( VERSION 3.0 )
-project(Mappel VERSION 1.9.0 LANGUAGES CXX)
+cmake_minimum_required( VERSION 3.5 )
+project(Mappel VERSION 0.0.2 LANGUAGES CXX)
+
+cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
+cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
+
+# Enable Matlab Support via MexIFace
+option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
+
+# Enable Support for Python via Boost::Python
+option(OPT_PYTHON "Add support for Python via boost::python" OFF)
 
 # Hyperspectral code
 option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
+option(OPT_DEBUG "Support debugging features")
+
 #Modules
 set(${PROJECT_NAME}_CMAKE_DIR ${CMAKE_SOURCE_DIR}/cmake)
 set(${PROJECT_NAME}_CMAKE_MODULES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Modules)
-set(${PROJECT_NAME}_CMAKE_TEMPLATES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Templates)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_CMAKE_MODULES_DIR})
+set(${PROJECT_NAME}_CMAKE_FUNCTIONS_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Functions)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_CMAKE_FUNCTIONS_DIR}) 
+set(${PROJECT_NAME}_CMAKE_TEMPLATES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Templates)
+set(${PROJECT_NAME}_CMAKE_TOOLCHAINS_DIR ${MexIFace_CMAKE_DIR}/Toolchains)
 
-#Enable build and install of MexIFace via ExternalProject_Add
-include(MexIFace-External)
-
-#Configure MexIFace envrionment
-include(MexIFace)
-include(MexIFace-configure-gtest) #Add support for googletest
-include(MexIFace-configure-trng)  #Add support for TRNG parallel random number generator
-include(MexIFace-Doxygen) #Add Doxygen documentation targets
-include(MexIFace-PackageConfig) #Configure Package Config and associated files for exports
-
+#Allow inclusion of external dependencies
 include(AddExternalDependency)
+
+if(OPT_DEBUG)
+    #BacktraceException provides backtraces for caught exceptions.
+    set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING URL of BacktraceException library dependency)
+    AddExternalDependency(BacktraceException ${BacktraceExceptionURL} SHARED)
+endif()
 
 #ParallelRngManager allows for management of parallel rng streams.
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
@@ -41,6 +52,20 @@ AddExternalDependency(ParallelRngManager ${ParallelRngManagerURL} SHARED)
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
 AddExternalDependency(PriorHessian ${PriorHessianURL} SHARED)
 
+include(Mappel-configure) #Main configuration module
+include(Mappel-Doxygen) #Add Doxygen documentation targets
+include(Mappel-PackageConfig) #Configure Package Config and associated files for exports
+
 add_subdirectory(src/libmappel) #Main library
-add_subdirectory(src/IFace) #MATLAB Modules
 add_subdirectory(src/test) #Test executables
+
+if(OPT_MATLAB)
+    #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX
+    set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING URL of MexIFace library dependency)
+    AddExternalDependency(MexIFace ${MexIFaceURL} SHARED)
+    #Configure MexIFace envrionment
+    include(MexIFace)
+    add_subdirectory(src/IFace) #MATLAB Modules
+endif()
+
+

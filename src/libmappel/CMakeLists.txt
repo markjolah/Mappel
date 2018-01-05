@@ -51,5 +51,6 @@ elseif(WIN32)
             PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
 endif()
 
-fixup_dependencies(${LIB_TARGET})
-
+if(OPT_MATLAB)
+    fixup_dependencies(${LIB_TARGET})
+endif()

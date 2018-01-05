@@ -88,6 +88,26 @@ model_image(const Model &model, const typename Model::Stencil &s)
     return im;
 }
 
+/** @brief  */
+template<class Model>
+typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,typename Model::MatT>::type
+fisher_information(const Model &model, const typename Model::Stencil &s)
+{
+    auto fisherI=model.make_param_mat();
+    fisherI.zeros();
+    auto pgrad=model.make_param();
+    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
+        double model_val=model.pixel_model_value(i,j,s);
+        model.pixel_grad(i,j,s,pgrad);
+        for(int c=0; c<model.num_params; c++) for(int r=0; r<=c; r++) {
+            fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
+        }
+    }
+    model.prior_hess_update(s.theta,fisherI); /* As appropriate for MAP/MLE: Add diagonal hession of log of prior for params theta */
+    return fisherI;
+}
+
+
 
 } /* namespace mappel */
 

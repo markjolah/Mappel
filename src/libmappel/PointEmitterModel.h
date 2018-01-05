@@ -18,7 +18,7 @@
 #include "numerical.h"
 #include "stencil.h"
 #include "display.h"
-#include "stackcomp.h"
+#include "openmp_methods.h"
 #include "estimator.h"
 #include "mcmc.h"
 #include <PriorHessian/CompositeDist.h>
@@ -26,7 +26,13 @@
 namespace mappel {
 
 /** @brief A virtual Base type for point emitter localization models.
- * We don't assume much here, so that it is possible to have a wide range of 2D and 3D models.
+ * 
+ * Initialized with a prior as a PriorHessian::CompositeDist object, this sets the dimensionality (num_params) and num_hyperparams,
+ * and the associated descriptions.
+ * 
+ * Box-type bounding constraints are controlled with the set_bounds() method.
+ * 
+ * 
  * 
  * Of note some of the common MCMC variables are rooted here in the inheritance tree.
  */
@@ -75,11 +81,13 @@ public:
     template<class RngT> ParamT sample_prior(RngT &rng);
     ParamT sample_prior();
     
+    /** Box-type parameter bounds */
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
     const ParamT& get_lbound() const;
     const ParamT& get_ubound() const;
     void bound_theta(ParamT &theta,double epsilon=-1) const;
     bool theta_in_bounds(const ParamT &theta,double epsilon=-1) const;
+    /* aids for bound-constrained optimization routines */
     ParamT bounded_theta(const ParamT &theta,double epsilon=-1) const;
     ParamT reflected_theta(const ParamT &theta,double epsilon=-1) const;
 
@@ -265,7 +273,9 @@ void prior_objective(const Model &model, const typename Model::ParamT &theta,
     auto stencil = model.make_stencil(theta);
     const auto& prior = model.get_prior();
     rllh = prior.rllh(theta);
-    
+    grad.zeros();
+    hess.zeros();
+    prior.grad_hess_accumulate(theta,grad,hess);
     relative_log_likelihood(model, data_im, stencil);
     model_hessian(model, data_im, stencil, grad, hess);
     copy_Usym_mat(hess);

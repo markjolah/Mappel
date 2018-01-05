@@ -23,45 +23,11 @@
 #define _MAPPEL_OPENMP_METHODS
 
 #include <omp.h>
-#include "model_methods.h"
 
 namespace mappel {
 
-    inline namespace openmp { 
-        /* model::llh - openmp vectorized */
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataT<Model> &data, const ParamVecT<Model> &thetas);
 
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataT<Model> &data, const StencilVecT<Model> &thetas);
-        
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataStackT<Model> &datas, const ParamT<Model> &theta);
 
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataStackT<Model> &datas, const StencilT<Model> &theta);
-
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataStackT<Model> &datas, const ParamVecT<Model> &thetas);
-
-        template<class Model>
-        VecT llh(const Model &model, const ModelDataStackT<Model> &datas, const StencilVecT<Model> &thetas);
-        
-    } /* namespace openmp */
-    
-    namespace likelihood_func {
-        inline namespace openmp { 
-
-            
-        } /* namespace openmp */                
-    } /* namespace likelihood_func */
-    namespace prior {
-        inline namespace openmp { 
-
-            
-        } /* namespace openmp */                
-    } /* namespace prior */
-} /* namespace mappel */
 /** @brief Parallel sampling of the model prior.
  * 
  * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model

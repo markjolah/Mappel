@@ -41,52 +41,62 @@ public:
     
     using ModelDataT = typename ImageFormat2DBase::ImageT; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
     using ModelDataStackT = ImageFormat2DBase::ImageStackT; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
+
+    /** A helper template for enabling member function */
+    template<class T> using IsPoissonNoise2DObjectiveT = typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,T>::value>::type;
+    
 };
 
-/* Inline Method Definitions */
-/** @brief Simulate an image using the PSF model, by generating Poisson noise
- * @param[out] image An image to populate.
- * @param[in] theta The parameter values to us
- * @param[in,out] rng An initialized random number generator
- */
-template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,typename Model::ImageT>::type
-simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
-{
-    auto sim_im=model.make_image();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        sim_im(j,i)=generate_poisson(rng,model.pixel_model_value(i,j,s));
-    }
-    return sim_im;
-}
+namespace methods {
 
-template<class Model, class rng_t>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,typename Model::ImageT>::type
-simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
-{
-    auto sim_im=model.make_image();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        sim_im(j,i)=generate_poisson(rng,model_im(j,i));
+    /** @brief Simulate an image at a given theta stencil under noise model
+    * @param[in] model Model object
+    * @param[in] s The stencil computed at theta.
+    * @param[in,out] rng A random number generator
+    * @returns A simulated image at theta under the noise model.
+    */
+    template<class Model, class rng_t, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
+    typename Model::ImageT 
+    simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
+    {
+        auto sim_im=model.make_image();
+        for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
+            sim_im(j,i)=generate_poisson(rng,model.pixel_model_value(i,j,s));
+        }
+        return sim_im;
     }
-    return sim_im;
-}
 
-/* Inline Method Definitions */
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,double>::type
-log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-               const typename Model::Stencil &s)
-{
-    double llh=0.;
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        llh+=poisson_log_likelihood(model.pixel_model_value(i,j,s), data_im(j,i));
+    /** @brief Simulate an image using model mean values provided by a "model image" at some theta
+    * @param[in] model Model object
+    * @param[in] model_im Image giving the model mean value at each pixel computed at some theta.
+    * @param[in,out] rng A random number generator.
+    * @returns A simulated image at theta under the noise model.
+    */
+    template<class Model, class rng_t, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
+    typename Model::ImageT 
+    simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
+    {
+        auto sim_im=model.make_image();
+        for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
+            sim_im(j,i)=generate_poisson(rng,model_im(j,i));
+        }
+        return sim_im;
     }
-    double pllh=model.prior_log_likelihood(s.theta); /* MAP: Add log of prior for params theta */
-    return llh+pllh;
-}
 
-template<class Model>
-inline
+    namespace likelihood_func {
+        template<class Model, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
+        double absolute_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
+                            const typename Model::Stencil &s)
+        {
+            double llh=0.;
+            for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
+                llh+=poisson_log_likelihood(model.pixel_model_value(i,j,s), data_im(j,i));
+            }
+//            double pllh=model.prior_log_likelihood(s.theta); /* MAP: Add log of prior for params theta */
+//            return llh+pllh;
+        }
+
+template<class Model, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
 typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,double>::type
 relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im,
                         const typename Model::Stencil &s)

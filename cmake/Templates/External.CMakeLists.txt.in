@@ -1,19 +1,22 @@
-# MexIFace-External/CMakeLists.txt.in
+# External.CMakeLists.txt.in
 #
 # Template to generate a CMAKE project in the build tree that will download config build and install
 # MexIFace to CMAKE_INSTALL_PREFIX using ExternalProject_Add
 #
-# This file must be at MexIFace-External/CMakeLists.txt.in relative to the source root.
+# This file is expanded and installed at  /External/CMakeLists.txt.in relative to the source root.
 #
 cmake_minimum_required(VERSION 2.8.2)
 
-project(MexIFace-External NONE)
+project(@ExtProjectName@-External NONE)
 
 include(ExternalProject)
 
 set(CMAKE_ARGS -DCMAKE_CXX_COMPILER=@CMAKE_CXX_COMPILER@
                -DCMAKE_INSTALL_PREFIX=@CMAKE_INSTALL_PREFIX@
-               -DCMAKE_TOOLCHAIN_FILE=@CMAKE_TOOLCHAIN_FILE@)
+               -DCMAKE_TOOLCHAIN_FILE=@CMAKE_TOOLCHAIN_FILE@
+               -DBUILD_SHARED_LIBS=@ExtProject_BUILD_SHARED_LIBS@
+               -DBUILD_STATIC_LIBS=@ExtProject_BUILD_STATIC_LIBS@)
+
 include(ProcessorCount)
 ProcessorCount(NUM_PROCS)
 set(INSTALL_COMMAND  @CMAKE_COMMAND@ --build . --target install -- -j${NUM_PROCS})
