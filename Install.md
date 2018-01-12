@@ -12,9 +12,9 @@ to maintain compatibility with gcc-4.9.4 and still use modern C++14 features we 
 Several standard numerical packages are required to build Mappel.  Most distributions should have development versions of these packages which provide the include files and
 other necessary development files for the packages.
 
-* [Armadillo] (http://arma.sourceforge.net/)
-* [Boost] (http://www.boost.org/)
-* [TRNG] (https://github.com/rabauke/trng4)
+* [Armadillo](http://arma.sourceforge.net/)
+* [Boost](http://www.boost.org/)
+* [TRNG](https://github.com/rabauke/trng4)
 * BLAS
     * Requires support for 64-bit integers.
     * [Netlib BLAS Reference](http://www.netlib.org/blas/)
@@ -49,11 +49,11 @@ emerge -av trng
 
 Mappel also depends on several small Github projects which for now are maintained in separate repositories.
 
-- [BacktraceException](https://github.com/markjolah/BacktraceException) A library to provide debugging output 
+- [BacktraceException](https://github.com/markjolah/BacktraceException) - A library to provide debugging output 
     on exception calls.  Important for Matlab debugging.
-- [ParallelRngManager](https://github.com/markjolah/ParallelRngManager)  A simple manager for easily deploying a set of RNG 
+- [ParallelRngManager](https://github.com/markjolah/ParallelRngManager) -  A simple manager for easily deploying a set of RNG 
    parallelized over a set number of threads, using the TRNG parallel RNG library.
-- [PriorHessian](https://github.com/markjolah/ParallelRngManager) The PriorHessian library allows fast 
+- [PriorHessian](https://github.com/markjolah/ParallelRngManager) - The PriorHessian library allows fast 
     computation of log-likelihood and derivatives for composite priors.
 
 If these libraries do not exist on the build system or at `CMAKE_INSTALL_PREFIX`, they are 
@@ -102,7 +102,7 @@ TO BE CONTINUED...
 
 
 Matlab support is enabled by setting the CMake option `MATLAB=on`.  This brings in an additional external dependency,
-* [MexIFace] (https://github.com/markjolah/MexIFace) - A cross-platform Matlab/C++ class-based interface wrapper for generating .mex files.
+* [MexIFace](https://github.com/markjolah/MexIFace) - A cross-platform Matlab/C++ class-based interface wrapper for generating .mex files.
 
 The following environment variables control the Matlab build process
 * `MexIFaceURL`: Local directory or git URL for the MexIface library (Matlab Support). [optional] Default to use the `HEAD` version from Github
