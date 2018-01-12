@@ -27,7 +27,9 @@
 namespace mappel {
 
 
+namespace methods {
 
+inline namespace openmp {
 /** @brief Parallel sampling of the model prior.
  * 
  * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
@@ -92,7 +94,7 @@ void simulate_image_stack(const Model &model,
                     const typename Model::ParamVecT &theta_stack,
                     typename Model::ImageStackT &image_stack)
 {
-    int nimages = model.size_image_stack(image_stack);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         auto rng = rng_manager.generator();
@@ -137,7 +139,7 @@ void log_likelihood_stack(const Model &model,
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        llh_stack(n) = log_likelihood(model, image, theta_stack.col(n));
+        llh_stack(n) = objective::llh(model, image, theta_stack.col(n));
 }
 
 /** @brief Parallel log_likelihood calculations for a stack of images.
@@ -157,23 +159,23 @@ void log_likelihood_stack(const Model &model,
                     const typename Model::ParamVecT &theta_stack,
                     VecT &llh_stack)
 {
-    int nimages = model.size_image_stack(image_stack);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        llh_stack(0) = log_likelihood(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
+        llh_stack(0) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) {
         auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
         for(int n=0; n<nimages; n++)
-            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,n), s);
+            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nimages; n++)
-            llh_stack(n) = log_likelihood(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
@@ -325,6 +327,10 @@ void fisher_information_stack(const Model &model,
     for(int n=0; n<nthetas; n++)
         fisherI_stack.slice(n) = fisher_information(model,theta_stack.col(n));
 }
+
+} /* namespace mappel::methods::openmp */
+
+} /* namespace mappel::methods */
 
 } /* namespace mappel */
 

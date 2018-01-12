@@ -5,11 +5,11 @@
  * @brief Class declaration and inline and templated functions for MAPEstimator.
  */
 
-#ifndef _MAPPEL_MLESTIMATOR_H
-#define _MAPPEL_MLESTIMATOR_H
+#ifndef _MAPPEL_MAPESTIMATOR_H
+#define _MAPPEL_MAPESTIMATOR_H
 
-#include "PointEmitterModel"
-
+#include "PointEmitterModel.h"
+#include "MLEstimator.h"
 namespace mappel {
 
 /** @brief A Mixin class to configure a for MLE estimation (null prior).
@@ -19,17 +19,86 @@ namespace mappel {
  * function into a pure likelihood function, and the estimator becomes an MLE estimator.
  * 
  */
-class MAPEstimator : public virtual PointEmitterModel {
-public:
-    double prior_log_likelihood(const ParamT &theta) const { return  prior.llh(); }
-    double prior_relative_log_likelihood(const ParamT &theta) const { return prior.rllh(); }
-    void prior_grad_accumulate(const ParamT &theta, ParamT &grad) const { prior.grad_accumulate(theta,grad);}
-    void prior_grad2_accumulate(const ParamT &theta, ParamT &grad2) const { prior.grad2_accumulate(theta,grad2); }
-    void prior_hess_accumulate(const ParamT &theta, MatT &hess) const { prior.hess_accumulate(theta,hess); }
-    void prior_grad_grad2_accumulate(const ParamT &theta, ParamT &grad, ParamT &grad2) const {  prior.grad_grad2_accumulate(theta,grad,grad2);}
-    void prior_grad_hess_accumulate(const ParamT &theta, ParamT &grad, MatT &hess) const {  prior.grad_hess_accumulate(theta,grad,hess);}
+class MAPEstimator  : public virtual PointEmitterModel {
+protected:
+    MAPEstimator() = default;
 };
+
+namespace methods{
+    /* Implements the MAP Estimation by defining the objective computations as including the prior. */
+    namespace objective {            
+        template<class Model>
+        ReturnIfSubclassT<double,Model,MAPEstimator>
+        llh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            return likelihood::llh(model, data_im, s) + model.get_prior().llh(s.theta);
+        }
+
+        template<class Model>
+        ReturnIfSubclassT<double,Model,MAPEstimator>
+        rllh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            return likelihood::rllh(model, data_im, s) + model.get_prior().rllh(s.theta);
+        }
+
+        template<class Model>
+        ReturnIfSubclassT<ParamT<Model>,Model,MAPEstimator>
+        grad(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            auto grad = likelihood::grad(model, data_im, s);
+            model.get_prior().grad_accumulate(s.theta,grad);
+            return grad;
+        }
+
+        template<class Model>
+        ReturnIfSubclassT<void,Model,MAPEstimator>
+        grad2(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, ParamT<Model> &grad, ParamT<Model> &grad2)
+        {
+            likelihood::grad2(model, data_im, s, grad, grad2);
+            model.get_prior().grad_grad2_accumulate(s.theta, grad, grad2);
+        }
+
+        template<class Model>
+        ReturnIfSubclassT<void,Model,MAPEstimator>
+        hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, ParamT<Model> &grad, MatT &hess)
+        {
+            likelihood::hessian(model, data_im, s, grad, hess);
+            model.get_prior().grad_hess_accumulate(s.theta, grad, hess);
+        }
+
+        /* objective per-pixel additive components to the overall model. */
+        inline namespace debug {
+            template<class Model>
+            ReturnIfSubclassT<VecT,Model,MAPEstimator>
+            llh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+            {
+                return arma::join_vert(likelihood::debug::llh_components(model, data_im, s),  model.get_prior().llh_components(s.theta));
+            }
+
+            template<class Model>
+            ReturnIfSubclassT<VecT,Model,MAPEstimator>
+            rllh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+            {
+                return arma::join_vert(likelihood::debug::rllh_components(model, data_im, s),  model.get_prior().rllh_components(s.theta));
+            }
+
+            template<class Model>
+            ReturnIfSubclassT<MatT,Model,MAPEstimator>
+            grad_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+            {
+                return arma::join_horiz(likelihood::debug::grad_components(model, data_im, s),  model.get_prior().grad(s.theta));
+            }
+
+            template<class Model>
+            ReturnIfSubclassT<CubeT,Model,MAPEstimator>
+            hessian_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+            {
+                return arma::join_slices(likelihood::debug::hessian_components(model, data_im, s),  model.get_prior().hess(s.theta));
+            }
+        } /* namespace mappel::methods::objective::debug */
+    } /* namespace mappel::methods::objective */
+} /* namespace mappel::methods */
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_MLESTIMATOR_H */
+#endif /* _MAPPEL_MAPESTIMATOR_H */

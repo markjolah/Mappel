@@ -23,27 +23,35 @@ class ImageFormat1DBase {
 protected:
     ImageFormat1DBase()=default; //For virtual inheritance simplification
 public:
-    using ImageSizeT = uint32_t;
-    using ImageSizeVecT = arma::Col<ImageSizeT>;
-    using ImagePixelT = double;
-    template<class T> using ImageShapeT = arma::Col<T>;
-    template<class T> using ImageStackShapeT = arma::Mat<T>;
-    using ImageT = ImageShapeT<ImagePixelT>; /**< A type to represent image data*/
-    using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< A type to represent image data stacks */
+    using ImageCoordT = uint32_t; /**< Image size coordinate storage type  */
+    using ImagePixelT = double; /**< Image pixel storage type */
+    
+    template<class CoordT> using ImageSizeShapeT = CoordT;  /**<Shape of the data type to store 1-image's coordinates */
+    template<class CoordT> using ImageSizeVecShapeT = arma::Col<CoordT>; /**<Shape of the data type to store a vector of image's coordinates */    
+    using ImageSizeT = ImageSizeShapeT<ImageCoordT>; /**< Data type for a single image size */ 
+    using ImageSizeVecT = ImageSizeVecShapeT<ImageCoordT>; /**< Data type for a sequence of image sizes */
 
-    constexpr static IdxT num_dim = 1;
-    constexpr static IdxT min_size = 3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */
+    template<class PixelT> using ImageShapeT = arma::Col<PixelT>; /**< Shape of the data type for a single image */
+    template<class PixelT> using ImageStackShapeT = arma::Mat<PixelT>; /**< Shape of the data type for a sequence of images */
+    using ImageT = ImageShapeT<ImagePixelT>; /**< Data type to represent single image*/
+    using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< Data type to represent a sequence of images */
+
+    constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
+    constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
+
     /* Model parameters */
-    ImageSizeT size; /**< The number of pixels >0 */
-
+    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
+    ImageCoordT num_pixels; /**< Total number of pixels in image */
+    
     ImageFormat1DBase(ImageSizeT size_);
-    ImageFormat1DBase(const ImageSizeVecT &size_);
+    ImageFormat1DBase(const arma::Col<ImageSizeT> &size_);
     StatsT get_stats() const;
 
     ImageT make_image() const;
-    ImageStackT make_image_stack(IdxT n) const;
-    IdxT size_image_stack(const ImageStackT &stack) const;
-    ImageT get_image_from_stack(const ImageStackT &stack, IdxT n) const;
+    ImageStackT make_image_stack(ImageCoordT n) const;
+    ImageCoordT get_size_image_stack(const ImageStackT &stack) const;
+    ImageT get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const;
+    
 private:
     static void check_size(ImageSizeT size_);
 };
@@ -59,42 +67,36 @@ ImageFormat1DBase::make_image() const
 
 inline
 ImageFormat1DBase::ImageStackT
-ImageFormat1DBase::make_image_stack(IdxT n) const
+ImageFormat1DBase::make_image_stack(ImageCoordT n) const
 {
     return ImageStackT(size,n);
 }
 
 inline
-IdxT ImageFormat1DBase::size_image_stack(const ImageStackT &stack) const
+ImageFormat1DBase::ImageCoordT 
+ImageFormat1DBase::get_size_image_stack(const ImageStackT &stack) const
 {
-    return stack.n_cols;
+    return static_cast<ImageSizeT>(stack.n_cols);
 }
 
 inline
 ImageFormat1DBase::ImageT
-ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,IdxT n) const
+ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,ImageCoordT n) const
 {
     return stack.col(n);
 }
 
-/* Templated Function Definitions */
-
-template<class Model>
-typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value,typename Model::ImageT>::type
-model_image(const Model &model, const typename Model::Stencil &s)
-{
-    auto im=model.make_image();
-    for(IdxT i=0;i<model.size;i++) {
-        im(i) = model.pixel_model_value(i,s);
-        if(im(i) <= 0.){ //Model value must be positive for grad to be defined
-            std::ostringstream os;
-            os<<"model_image: Non positive model value encountered: "<<im(i)<<" at i="<<i;
-            throw NumericalError(os.str());
-        }
+/* Templated Methods Definitions */
+namespace methods {
+    template<class Model, typename = IsSubclassT<Model,ImageFormat1DBase>>
+    ImageT<Model>
+    model_image(const Model &model, const StencilT<Model> &s)
+    {
+        auto im = model.make_image();
+        for(ImageCoordT<Model> i=0; i<model.size; i++)  im(i) = model.pixel_model_value(i,s);
+        return im;
     }
-    return im;
-}
-
+} /* namespace mappel::methods */
 
 } /* namespace mappel */
 

@@ -21,22 +21,36 @@ namespace mappel {
  * 
  */
 class ImageFormat2DBase {
+protected:
+    ImageFormat2DBase()=default; //For virtual inheritance simplification
 public:
-    using ImageT = arma::mat; /**< A type to represent image data*/
-    using ImageStackT = arma::cube; /**< A type to represent image data stacks */
+    using ImageCoordT = uint32_t; /**< Image size coordinate storage type  */
+    using ImagePixelT = double; /**< Image pixel storage type */
+    
+    template<class CoordT> using ImageSizeShapeT = arma::Col<CoordT>;  /**<Shape of the data type to store a single image's coordinates */
+    template<class CoordT> using ImageSizeVecShapeT = arma::Mat<CoordT>; /**<Shape of the data type to store a vector of image's coordinates */    
+    using ImageSizeT = ImageSizeShapeT<ImageCoordT>; /**< Data type for a single image size */ 
+    using ImageSizeVecT = ImageSizeVecShapeT<ImageCoordT>; /**< Data type for a sequence of image sizes */
 
-    static const int constexpr num_dim=2;
-    static const int constexpr min_size=3; /**< Minimum size along any dimension of the image.  Prevents "too small to be meaningfull" images. */
+    template<class PixelT> using ImageShapeT = arma::Mat<PiexlT>; /**< Shape of the data type for a single image */
+    template<class PixelT> using ImageStackShapeT = arma::Cube<PixelT>; /**< Shape of the data type for a sequence of images */
+    using ImageT = ImageShapeT<ImagePixelT>; /**< Data type to represent single image*/
+    using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< Data type to represent a sequence of images */
+
+    constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
+    constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
+
     /* Model parameters */
-    const IVecT size; /**< The number of pixels in the X and Y directions, given as [X,Y].  Note that images have shape [size(1),size(0)], Y is rows X is columns.   */
+    ImageSizeT size; /**< Number of pixels as [sizeY(#rows), sizeX(#cols)] Dimensions */
+    ImageCoordT num_pixels; /**< Total number of pixels in image */
 
-    ImageFormat2DBase(const IVecT &size);
+    ImageFormat2DBase(ImageSizeT size_);
     StatsT get_stats() const;
 
     ImageT make_image() const;
-    ImageStackT make_image_stack(int n) const;
-    int size_image_stack(const ImageStackT &stack) const;
-    ImageT get_image_from_stack(const ImageStackT &stack, int n) const;
+    ImageStackT make_image_stack(ImageCoordT n) const;
+    ImageCoordT get_size_image_stack(const ImageStackT &stack) const;
+    ImageT get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const;
 };
 
 /* Inline Method Definitions */
@@ -56,15 +70,16 @@ ImageFormat2DBase::make_image_stack(int n) const
 }
 
 inline
-int ImageFormat2DBase::size_image_stack(const ImageStackT &stack) const
+ImageFormat1DBase::ImageCoordT
+ImageFormat2DBase::size_image_stack(const ImageStackT &stack) const
 {
-    return static_cast<int>(stack.n_slices);
+    return static_cast<ImageSizeT>(stack.n_slices);
 }
 
 
 inline
 ImageFormat2DBase::ImageT
-ImageFormat2DBase::get_image_from_stack(const ImageStackT &stack,int n) const
+ImageFormat2DBase::get_image_from_stack(const ImageStackT &stack,ImageCoordT n) const
 {
     return stack.slice(n);
 }
@@ -76,7 +91,7 @@ typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value,typename
 model_image(const Model &model, const typename Model::Stencil &s)
 {
     auto im=model.make_image();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=xposition=column; j=yposition=row
+    for(ImageCoordT i=0;i<model.size(0);i++) for(ImageCoordT j=0;j<model.size(1);j++) {  // i=xposition=column; j=yposition=row
         im(j,i)=model.pixel_model_value(i,j,s);
         if( im(j,i) <= 0.){
             //Model value must be positive for grad to be defined
@@ -103,7 +118,6 @@ fisher_information(const Model &model, const typename Model::Stencil &s)
             fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
         }
     }
-    model.prior_hess_update(s.theta,fisherI); /* As appropriate for MAP/MLE: Add diagonal hession of log of prior for params theta */
     return fisherI;
 }
 

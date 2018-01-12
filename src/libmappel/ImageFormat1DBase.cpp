@@ -9,13 +9,13 @@
 namespace mappel {
 
 ImageFormat1DBase::ImageFormat1DBase(ImageSizeT size_)
-    : size(size_)
+    : size(size_), num_pixels(size)
 {
     check_size(size);
 }
 
 ImageFormat1DBase::ImageFormat1DBase(const arma::Col<ImageSizeT> &size_)
-    : size(size_[0])
+    : size(size_[0]), num_pixels(size)
 {
     check_size(size);
 }

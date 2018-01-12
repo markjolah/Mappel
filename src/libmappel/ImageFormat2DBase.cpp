@@ -7,16 +7,10 @@
 
 namespace mappel {
 
-ImageFormat2DBase::ImageFormat2DBase(const IVecT &size)
-    : size(size)
+ImageFormat2DBase::ImageFormat2DBase(ImageSizeT size_)
+    : size(size_), num_pixels(arma::prod(size))
 {
-    for(int n=0; n<num_dim;n++){
-        if(size(n) <= min_size) {
-            std::ostringstream os;
-            os<<"Bad problem Dim="<<n<<" Size= "<<size(n)<<"< Min size="<<min_size;
-            throw MappelException("ImageFormat1DBase",os.str());
-        }
-    }
+    check_size(size);
 }
 
 StatsT

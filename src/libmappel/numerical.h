@@ -44,6 +44,14 @@ void cholesky_convert_full_matrix(arma::mat &chol);
 bool is_positive_definite(const arma::mat &usym);
 
 /**
+ * Determine if C is negative definite (i.e., -C is positive definite)
+ * @param usym A symmetric matrix in upper triangular format.
+ * @return True if C is negative definite
+ */
+bool is_negative_definite(const arma::mat &usym);
+
+
+/**
  * Check that full 2D matrix A is symmetric and can thus be treated as either 
  * upper or lower triangular symmetric representation.  This will obviously not
  * work with matricies that are already implicitly stored as symmetric triangular format

@@ -14,6 +14,7 @@ set(MAPPEL_SRCS display.cpp stencil.cpp rng.cpp util.cpp mcmc.cpp numerical.cpp
                 PoissonNoise1DObjective.cpp  
                 Gauss1DModel.cpp
                 Gauss1DMLE.cpp
+                Gauss1DMAP.cpp
                 )
 
 file(GLOB MAPPEL_HDRS *.h)

@@ -1,10 +1,10 @@
-/** @file estimator.cpp
+/** @file estimator_impl.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
  * @date 01-15-2014
  * @brief 
  */
-#ifndef _ESTIMATOR_CPP
-#define _ESTIMATOR_CPP
+#ifndef _MAPPEL_ESTIMATOR_IMPL_H
+#define _MAPPEL_ESTIMATOR_IMPL_H
 
 #include <cmath>
 #include <functional>
@@ -47,7 +47,6 @@ namespace mappel {
 
 /* Just a convenience wrapper that allows a call without a theta_init */
 template<class Model>
-inline
 typename Model::Stencil
 Estimator<Model>::estimate(const ModelDataT &im)
 {
@@ -58,12 +57,11 @@ Estimator<Model>::estimate(const ModelDataT &im)
 
 
 template<class Model>
-inline
 typename Model::Stencil
 Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init)
 {
     auto start_walltime = ClockT::now();
-    Stencil est = compute_estimate(im, theta_init);
+    StencilT est = compute_estimate(im, theta_init);
     record_walltime(start_walltime, 1);
     return est;
 }
@@ -71,7 +69,6 @@ Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init)
 
 /* Just a convenience wrapper that allows a call without a theta_init */
 template<class Model>
-inline
 void Estimator<Model>::estimate(const ModelDataT &im,
                                 ParamT &theta, ParamT &crlb, double &log_likelihood)
 {
@@ -81,7 +78,6 @@ void Estimator<Model>::estimate(const ModelDataT &im,
 }
 
 template<class Model>
-inline
 void Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init,
                                 ParamT &theta, ParamT &crlb, double &log_likelihood)
 {
@@ -92,7 +88,6 @@ void Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init,
 
 /* Just a convenience wrapper that allows a call without a theta_init */
 template<class Model>
-inline
 void Estimator<Model>::estimate_debug(const ModelDataT &im, ParamT &theta, ParamT &crlb, double &llh,
                                       MatT &sequence, VecT &sequence_llh)
 {
@@ -102,7 +97,6 @@ void Estimator<Model>::estimate_debug(const ModelDataT &im, ParamT &theta, Param
 }
 
 template<class Model>
-inline
 void Estimator<Model>::estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamT &theta,
                                       ParamT &crlb, double &llh,
                                       MatT &sequence, VecT &sequence_llh)
@@ -110,27 +104,25 @@ void Estimator<Model>::estimate_debug(const ModelDataT &im, const ParamT &theta_
     auto start_walltime = ClockT::now();
     auto est = compute_estimate_debug(im, theta_init, sequence);
     theta = est.theta;
-    crlb = cr_lower_bound(model,est);
-    llh = log_likelihood(model,im, est);
+    crlb = methods::cr_lower_bound(model,est);
+    llh = methods::objective::llh(model,im, est);
     sequence_llh.set_size(sequence.n_cols);
-    log_likelihood_stack(model,im,sequence,sequence_llh);
+    methods::log_likelihood_stack(model,im,sequence,sequence_llh);
     record_walltime(start_walltime, 1);
 }
 
 template<class Model>
-inline
 void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init,
                                         ParamT &theta, ParamT &crlb, double &llh)
 {
     auto est = compute_estimate(im,theta_init);
-    crlb = cr_lower_bound(model,est);
-    llh = log_likelihood(model,im, est);
+    crlb = methods::cr_lower_bound(model,est);
+    llh = methods::objective::llh(model,im, est);
     theta = est.theta;
 }
 
 
 template<class Model>
-inline
 double Estimator<Model>::mean_walltime() const
 {
     return (num_estimations==0) ? 0. : total_walltime/(double)num_estimations;
@@ -226,7 +218,7 @@ ThreadedEstimator<Model>::estimate_stack(const ModelDataStackT &im, const ParamV
     using boost::thread;
     auto start_walltime=ClockT::now();
     int min_per_thread=4;
-    int nimages = model.size_image_stack(im);
+    int nimages = model.get_size_image_stack(im);
     //The number of threads we will actually run
     num_threads = std::max(std::min(max_threads, static_cast<int>(floor(nimages/min_per_thread))),1);
     std::vector<thread> threads(num_threads-1);
@@ -301,7 +293,7 @@ template<class Model>
 void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
                                         ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
 {
-    int nimages = model.size_image_stack(im);
+    int nimages = model.get_size_image_stack(im);
     int start = thread_start_idx(nimages, threadid);
     int stop = thread_stop_idx(nimages, threadid);
     auto theta_est = model.make_param();
@@ -366,12 +358,12 @@ IterativeMaximizer<Model>::IterativeMaximizer(Model &model, int max_iterations)
 
 template<class Model>
 IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, const ModelDataT &im,
-                                                const Stencil &s, bool save_seq, int max_seq_len)
+                                                const StencilT &s, bool save_seq, int max_seq_len)
     : im(im), 
       grad(model.make_param()), 
       lbound(model.get_lbound()),
       ubound(model.get_ubound()),
-      rllh(relative_log_likelihood(model,im,s)), 
+      rllh(methods::objective::rllh(model,im,s)), 
       save_seq(save_seq), 
       s0(s), 
       current_stencil(true),
@@ -524,7 +516,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         //Reflective boundary conditions
         ParamT new_theta = model.bounded_theta(model.reflected_theta(data.saved_theta() + lambda*data.step));
         data.set_stencil(model.make_stencil(new_theta,false));
-        double can_rllh = relative_log_likelihood(model, data.im, data.stencil()); //candidate points log-lh
+        double can_rllh = methods::objective::rllh(model, data.im, data.stencil()); //candidate points log-lh
         bool in_bounds = model.theta_in_bounds(new_theta);
 //         std::cout<<"\n [Backtrack:"<<n<<"]\n";
 //         std::cout<<" Current Theta: "<<data.saved_theta().t();
@@ -602,7 +594,7 @@ IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const Pa
 
 /* This is called to clean up simulated annealing */
 template<class Model>
-void IterativeMaximizer<Model>::local_maximize(const ModelDataT &im, const Stencil &theta_init, Stencil &stencil, double &rllh)
+void IterativeMaximizer<Model>::local_maximize(const ModelDataT &im, const StencilT &theta_init, StencilT &stencil, double &rllh)
 {
     MaximizerData data(model, im, theta_init);
     maximize(data);
@@ -617,12 +609,12 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
     double delta=0.1;
     auto grad2 = model.make_param();
     for(int n=0; n<max_iterations; n++) { //Main optimization loop
-        model_grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
+        methods::objective::grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
         data.step = -data.grad/grad2;
         if(arma::any(grad2>0)){
 //             std::cout<<"{NewtonDiagonal ITER:"<<n<<"} --- Correcting non-positive-definite\n";
 //             std::cout<<"Theta:"<<data.theta().t();
-//             std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
+//             std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
 //             std::cout<<"Grad: "<<data.grad.t();
 //             std::cout<<"Grad2:"<<grad2.t();
 //             std::cout<<"Step:"<<data.step.t();
@@ -649,13 +641,13 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
     auto C = model.make_param_mat();
     auto Cstep = model.make_param();
     for(int n=0; n<max_iterations; n++) { //Main optimization loop
-        model_hessian(model, data.im, data.stencil(), data.grad, hess);
+        methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
         data.step = arma::solve(arma::symmatu(hess), -data.grad);
         C=-hess;
         copy_Usym_mat(C);
 //         std::cout<<"{Newton ITER:"<<n<<"}\n";
 //         std::cout<<"Theta:"<<data.theta().t();
-//         std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
+//         std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
 //         std::cout<<"Grad: "<<data.grad.t();
 //         std::cout<<"GradDir: "<<arma::normalise(data.grad).t();
 //         std::cout<<"Hess:\n"<<arma::symmatu(hess);
@@ -671,7 +663,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"CholStep: "<<Cstep.t();
 //         std::cout<<"CholStepDir: "<<arma::normalise(Cstep).t();
 //         std::cout<<"CStepDotGrad: "<<(arma::dot(arma::normalise(Cstep),arma::normalise(data.grad)))<<"\n";
-//         double nrllh = relative_log_likelihood(model,data.im,data.theta()+Cstep);
+//         double nrllh = methods::objective::rllh(model,data.im,data.theta()+Cstep);
 //         std::cout<<"Rllh Curr: "<<data.rllh<<" CStep:"<<nrllh<<" Delta:"<<nrllh-data.rllh<<"\n";
         data.step = Cstep;
         if(!data.step.is_finite()) throw OptimizationError("Bad data_step!");
@@ -688,7 +680,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
     for(int n=0; n<max_iterations; n++) { //Main optimization loop
         if(n==0) {
             auto hess=model.make_param_mat();
-            model_hessian(model, data.im, data.stencil(), data.grad, hess);
+            methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
             if(is_positive_definite(-hess)) {
                 H=arma::inv(arma::symmatu(hess));
             } else {
@@ -696,7 +688,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
             }
         } else {
             //Approx H
-            model_grad(model, data.im, data.stencil(), data.grad);
+            data.grad = methods::objective::grad(model, data.im, data.stencil());
             ParamT delta_grad = data.grad-grad_old;
             double rho =1./arma::dot(delta_grad, data.step);
             MatT K=rho*data.step*delta_grad.t();//This is our approximate inverse hessian
@@ -710,7 +702,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
             arma::eig_sym(lambda_H,Q_H, arma::symmatu(H)); //Compute eigendecomposition of symmertic matrix H
             std::cout<<"{QuasiNewton ITER:"<<n<<"}\n";
             std::cout<<"Theta:"<<data.theta().t();
-            std::cout<<"RLLH: "<<relative_log_likelihood(model, data.im, data.stencil())<<"\n";
+            std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
             std::cout<<"Grad: "<<data.grad.t();
             std::cout<<"Hinv:\n"<<inv(H);
             std::cout<<"H:\n"<<H;
@@ -739,7 +731,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
     VecT Dscale(N,arma::fill::zeros);
     double delta = 1.0;
     for(int n=0; n<1000; n++) { //Main optimization loop
-        model_hessian(model, data.im, data.stencil(), data.grad, hess);
+        methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
 //         std::cout<<"{TR ITER:"<<n<<"}\n";
 //         std::cout<<"   Theta:"<<data.theta().t();
 //         std::cout<<"   RLLH: "<<data.rllh<<"\n";
@@ -828,7 +820,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
         }
         data.set_stencil(model.make_stencil(data.saved_theta() + Dinv % s_hat));
         double old_rllh = data.rllh;
-        double can_rllh = relative_log_likelihood(model, data.im, data.stencil());
+        double can_rllh = methods::objective::rllh(model, data.im, data.stencil());
         double obj_improvement = can_rllh - old_rllh; // the "improvement" in the model.  should be positive
         double rho_obj =  obj_improvement / model_improvement;
         bool success;
@@ -973,16 +965,16 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
 {
     VecT step = step_hat / D;
     double alpha = arma::min(VecT(arma::max((lbound-theta)/step,(ubound-theta)/step)));
-    std::cout<<"\n (((BoundStep))) alpha:"<<alpha<<"\n";
-    std::cout<<"   step_hat: "<<step_hat.t();
-    std::cout<<"   step: "<<step.t();
-    std::cout<<"   D: "<<D.t();
-    std::cout<<"   theta: "<<theta.t();
-    std::cout<<"   lbound: "<<lbound.t();
-    std::cout<<"   ubound: "<<ubound.t();
-    std::cout<<"   full_step: "<<(theta+step).t();
+//     std::cout<<"\n (((BoundStep))) alpha:"<<alpha<<"\n";
+//     std::cout<<"   step_hat: "<<step_hat.t();
+//     std::cout<<"   step: "<<step.t();
+//     std::cout<<"   D: "<<D.t();
+//     std::cout<<"   theta: "<<theta.t();
+//     std::cout<<"   lbound: "<<lbound.t();
+//     std::cout<<"   ubound: "<<ubound.t();
+//     std::cout<<"   full_step: "<<(theta+step).t();
     if(alpha>1){ //step is feasible.  accept it
-        std::cout<<" (((alpha>1 ==> feasible)))\n";
+//         std::cout<<" (((alpha>1 ==> feasible)))\n";
         VecT full_step = theta + step;
         if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
         if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
@@ -990,10 +982,10 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
     } else { //backtrack a little bit from alpha to remain feasible
         //Bellavia (2004); Coleman and Li (1996)
         double kappa = boundary_stepback_min_kappa;
-        std::cout<<" restricted_step: "<<(theta+alpha*step).t();
-        std::cout<<" kappa: "<<kappa<<"\n";
-        std::cout<<" kappa restricted_step: "<<(theta+kappa*alpha*step).t()<<"\n";
-        std::cout<<" (((alpha<=1 ==> restricted-feasible)))\n";
+//         std::cout<<" restricted_step: "<<(theta+alpha*step).t();
+//         std::cout<<" kappa: "<<kappa<<"\n";
+//         std::cout<<" kappa restricted_step: "<<(theta+kappa*alpha*step).t()<<"\n";
+//         std::cout<<" (((alpha<=1 ==> restricted-feasible)))\n";
         VecT full_step = theta + kappa*alpha*step;
         if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
         if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
@@ -1214,7 +1206,7 @@ SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im,
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, Stencil &theta_init, ParamVecT &sequence)
+SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, StencilT &theta_init, ParamVecT &sequence)
 {
     NewtonDiagonalMaximizer<Model> nr(model);
     UnitRNG u;
@@ -1222,10 +1214,10 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
     sequence=model.make_param_vec(niters+1);
     VecT sequence_rllh(niters+1);
     sequence.col(0)=theta_init.theta;
-    sequence_rllh(0)=relative_log_likelihood(model, im, theta_init);
+    sequence_rllh(0)=methods::objective::rllh(model, im, theta_init);
     double max_rllh=sequence_rllh(0);
     int max_idx=0;
-    Stencil max_s;
+    StencilT max_s;
     double T=T_init;
     int naccepted=1;
     for(int n=1; n<niters; n++){
@@ -1235,7 +1227,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
             n--;
             continue;
         }
-        double can_rllh=relative_log_likelihood(model, im, can_theta);
+        double can_rllh=methods::objective::rllh(model, im, can_theta);
         if(!std::isfinite(can_rllh)) throw OptimizationError("Bad candiate relative llh.");
         double old_rllh=sequence_rllh(naccepted-1);
         if(can_rllh < old_rllh && u(rng)>exp((can_rllh-old_rllh)/T) ){
@@ -1263,4 +1255,4 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
 
 } /* namespace mappel */
 
-#endif /* _ESTIMATOR_CPP */
+#endif /* _MAPPEL_ESTIMATOR_IMPL_H */

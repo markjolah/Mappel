@@ -16,13 +16,30 @@
 
 #include <iostream>
 #include <memory>
-#include "stats.h"
-#include "estimator.h"
-#include "mcmc.h"
 
 using std::cout;
 using std::endl;
 using namespace mappel;
+
+
+
+template<class Model, typename= typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value>::type >
+typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
+{
+    // args: x I bg
+    int n=3;
+    double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    int I        = argc>=n-- ? atoi(argv[n])   : -1;
+    double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    auto theta = model.sample_prior();
+    if(x>=0) theta(0)=x;
+    if(I>=0) theta(1)=I;
+    if(bg>=0) theta(2)=bg;
+    return theta;
+}
+
+
+
 template<class Model>
 void estimate_stack(Estimator<Model> &estimator, int count)
 {
@@ -31,15 +48,15 @@ void estimate_stack(Estimator<Model> &estimator, int count)
     Model &model=estimator.model;
     cout<<"Model: "<<model<<endl;
     auto theta=model.make_param_vec(count);
-    sample_prior_stack(model,theta);
+    methods::sample_prior_stack(model,theta);
     auto ims=model.make_image_stack(count);
-    simulate_image_stack(model,theta,ims);
+    methods::simulate_image_stack(model,theta,ims);
     auto theta_est=model.make_param_vec(count);
     auto crlb=model.make_param_vec(count);
     auto llh_est=VecT(count);
     auto llh=VecT(count);
     estimator.estimate_stack(ims,theta_est, crlb,llh_est);
-    log_likelihood_stack(model,ims,theta,llh);
+    methods::log_likelihood_stack(model,ims,theta,llh);
     arma::mat error=theta-theta_est;
     cout<<std::setw(64)<<""<<"\033["<<TERM_WHITE<<"m"<<"Model:"<<model.name()
         <<" Estimator:"<<estimator.name()<<"\033[0m"<<endl;
@@ -62,16 +79,16 @@ void estimate_stack_posterior(Model &model, int count)
     int iter=1000;
     cout<<"Model: "<<model<<endl;
     auto theta=model.make_param_vec(count);
-    sample_prior_stack(model,theta);
+    methods::sample_prior_stack(model,theta);
     auto ims=model.make_image_stack(count);
-    simulate_image_stack(model,theta,ims);
+    methods::simulate_image_stack(model,theta,ims);
     auto theta_est=model.make_param_vec(count);
     auto llh_est=VecT(count);
     auto llh=VecT(count);
     arma::cube cov(model.get_num_params(), model.get_num_params(), count);
     evaluate_posterior_stack(model, ims, iter, theta_est, cov);
-    log_likelihood_stack(model, ims, theta_est, llh_est);
-    log_likelihood_stack(model,ims,theta,llh);
+    methods::log_likelihood_stack(model, ims, theta_est, llh_est);
+    methods::log_likelihood_stack(model,ims,theta,llh);
     arma::mat error=theta-theta_est;
     cout<<std::setw(64)<<""<<"\033["<<TERM_WHITE<<"m"<<"Model:"<<model.name()
         <<" Estimator:Posterior\033[0m"<<endl;
@@ -97,9 +114,9 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
     auto stencil=model.make_stencil(theta);
     cout<<"Stencil: "<<stencil<<endl;
     cout<<"Model: "<<model<<endl;
-    auto im=simulate_image(model, stencil);
-    double llh=log_likelihood(model, im, stencil);
-    auto crlb=cr_lower_bound(model,stencil);
+    auto im=methods::simulate_image(model, stencil);
+    double llh=methods::objective::llh(model, im, stencil);
+    auto crlb=methods::cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
 //     auto model_im=model_image(model, stencil);
 //     print_image(cout, model_im);
@@ -118,7 +135,7 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
         throw BoundsError(msg.str());
     }
     assert(theta_init.derivatives_computed);
-    snprintf(str, s, "LLH:%g ThetaInit:",log_likelihood(model,im,theta_init));
+    snprintf(str, s, "LLH:%g ThetaInit:",methods::objective::llh(model,im,theta_init));
     print_vec_row(cout, theta_init.theta, str, s, TERM_CYAN);
     auto theta_est=model.make_param();
     VecT theta_bad_init = theta_init.theta;
@@ -145,7 +162,7 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
 
     evaluate_posterior_debug(model, im, max_samples, posterior_mean, posterior_cov,
                              post_sequence, post_sequence_rllh,candidates,candidate_rllh);
-    auto posterior_mean_llh=log_likelihood(model, im, posterior_mean);
+    auto posterior_mean_llh=methods::objective::llh(model, im, posterior_mean);
     snprintf(str, s, "LLH:%.9g EstPMean:",posterior_mean_llh);
     print_vec_row(cout, posterior_mean, str, s, TERM_DIM_YELLOW);
     print_vec_row(cout, theta-posterior_mean, "Error[PostMean]:", s, TERM_DIM_RED);
@@ -178,7 +195,7 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
     cout<<"Stencil: "<<stencil<<endl;
     cout<<"Model: "<<model<<endl;
     auto im=simulate_image(model, stencil,rng);
-    double llh=log_likelihood(model, im,stencil);
+    double llh=methods::objective::llh(model, im,stencil);
     auto crlb=cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
     //     auto model_im=model_image(model, stencil);
@@ -188,7 +205,7 @@ void evaluate_single(Estimator<Model> &estimator, const typename Model::ParamT &
     print_vec_row(cout, theta, str, s, TERM_MAGENTA);
     //     print_vec_row(cout, crlb, "CRLB:", s, TERM_BLUE);
     auto theta_init=model.initial_theta_estimate(im);
-    snprintf(str, s, "LLH:%g ThetaInit:",log_likelihood(model,im,theta_init));
+    snprintf(str, s, "LLH:%g ThetaInit:",methods::objective::llh(model,im,theta_init));
     print_vec_row(cout, theta_init.theta, str, s, TERM_CYAN);
     auto theta_est=model.make_param();
     estimator.estimate(im, theta_est, crlb, llh);
@@ -208,27 +225,20 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
     int s=65;
     char str[100];
     auto stencil=model.make_stencil(theta);
-    auto im=simulate_image(model,stencil);
-    double llh=log_likelihood(model,im,stencil);
-    auto crlb=cr_lower_bound(model,stencil);
+    auto im=methods::simulate_image(model,stencil);
+    double llh=methods::objective::llh(model,im,stencil);
+    auto crlb=methods::cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
     print_image(cout, im);
     snprintf(str, s, "LLH:%g Theta:",llh);
     print_vec_row(cout, theta, str, s, TERM_WHITE);
     print_vec_row(cout, crlb, "CRLB", s, TERM_CYAN);
-    std::vector<std::shared_ptr<Estimator<Model>>> estimators;
+    std::vector<std::unique_ptr<Estimator<Model>>> estimators;
     for(auto name: model.estimator_names) {
         try {
-            auto estimator=make_estimator(model, name);
-            if(!estimator){
-                cout<<"Bad estimator name: "<<name<<endl;
-                continue;
-            }
-            estimators.push_back(estimator);
-//             cout<<"Estimator Name: "<<name<<endl;
-//             cout<<"Estimator: "<<*estimator<<endl;
+            estimators.emplace_back(methods::make_estimator(model, name));
             auto theta_est=model.make_param();
-            estimator->estimate(im, theta_est, crlb, llh);
+            estimators.back()->estimate(im, theta_est, crlb, llh);
             snprintf(str, s, "LLH:%.9g Theta[%s]:",llh,name.c_str());
             print_vec_row(cout, theta_est, str, s, TERM_YELLOW);
             typename Model::ParamT error=theta-theta_est;
@@ -245,7 +255,7 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
     auto mean=model.make_param();
     auto cov=model.make_param_mat();
     evaluate_posterior(model, im, 2000, mean, cov);
-    llh=log_likelihood(model,im,mean);
+    llh=methods::objective::llh(model,im,mean);
     snprintf(str, s, "LLH:%.9g Est<Posterior>:",llh);
     print_vec_row(cout, mean, str, s, TERM_YELLOW);
     typename Model::ParamT error=theta-mean;
@@ -254,7 +264,6 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
     snprintf(str, s, "SE_pos:%.9g SE:%.9g |Error[Posterior]|:",pse, se);
     print_vec_row(cout, abs(error), str, s, TERM_RED);
     print_vec_row(cout, cov.diag().eval(), "VAR[Posterior]:", s, TERM_BLUE);
-    for (auto estimator: estimators) cout<<*estimator<<endl;
 }
 
 template <class Model>
@@ -262,31 +271,26 @@ void compare_estimators(Model &model, const typename Model::ParamT &theta, IdxT 
 {
     using std::cout;
     using std::endl;
-    int s=65;
-    char str[100];
+    int s=70;
+    char str[200];
     auto stencil=model.make_stencil(theta);
     auto ims=model.make_image_stack(ntrials);
-    simulate_image_stack(model,theta,ims);
+    methods::simulate_image_stack(model,theta,ims);
     auto llh=VecT(ntrials);
-    log_likelihood_stack(model, ims, theta, llh);
-    auto crlb=cr_lower_bound(model,stencil);
+    methods::log_likelihood_stack(model, ims, theta, llh);
+    auto crlb=methods::cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
     snprintf(str, s, "True <LLH>:%.9g Theta:",arma::mean(llh));
     print_vec_row(cout, theta, str, s, TERM_WHITE);
     print_vec_row(cout, crlb, "CRLB", s, TERM_BLUE);
-    std::vector<std::shared_ptr<Estimator<Model>>> estimators;
+    std::vector<std::unique_ptr<Estimator<Model>>> estimators;
     for(auto name: model.estimator_names) {
         try {
-            auto estimator=make_estimator(model, name);
-            estimators.push_back(estimator);
-            if(!estimator){
-                cout<<"Bad estimator name: "<<name<<endl;
-                continue;
-            }
+            estimators.emplace_back(methods::make_estimator(model, name));
             auto theta_est=model.make_param_vec(ntrials);
             auto crlb_est=model.make_param_vec(ntrials);
             auto llh_est=VecT(ntrials);
-            estimator->estimate_stack(ims, theta_est, crlb_est, llh_est);
+            estimators.back()->estimate_stack(ims, theta_est, crlb_est, llh_est);
             snprintf(str, s, "<LLH>:%.9g <Theta[%s]>:",arma::mean(llh_est),name.c_str());
             print_vec_row(cout, arma::mean(theta_est,1), str, s, TERM_YELLOW);
             auto error=theta_est;
@@ -308,7 +312,7 @@ void compare_estimators(Model &model, const typename Model::ParamT &theta, IdxT 
     arma::cube cov(model.get_num_params(), model.get_num_params(), ntrials);
     evaluate_posterior_stack(model, ims, 3000, mean, cov);
     auto llh_est=VecT(ntrials);
-    log_likelihood_stack(model, ims, mean, llh_est);
+    methods::log_likelihood_stack(model, ims, mean, llh_est);
     snprintf(str, s, "LLH:%.9g Est<Posterior>:",arma::mean(llh_est));
     print_vec_row(cout, arma::mean(mean,1), str, s, TERM_YELLOW);
     auto error=mean;
@@ -321,7 +325,6 @@ void compare_estimators(Model &model, const typename Model::ParamT &theta, IdxT 
     auto var=model.make_param_vec(ntrials);
     for(IdxT n=0; n<ntrials;n++) var.col(n)=cov.slice(n).diag();
     print_vec_row(cout, arma::mean(var,1), "PosteriorVar:", s, TERM_BLUE);
-    for (auto estimator: estimators) cout<<*estimator<<endl;
 }
 
 
@@ -338,8 +341,8 @@ void point_evaluate_estimator(Estimator<Model> &estimator, IdxT ntrials,
     Model &model=estimator.model;
     auto stencil=model.make_stencil(theta);
     auto ims=model.make_image_stack(ntrials);
-    simulate_image_stack(model,theta,ims);
-    auto crlb=cr_lower_bound(model,stencil);
+    methods::simulate_image_stack(model,theta,ims);
+    auto crlb=methods::cr_lower_bound(model,stencil);
     cout<<std::setw(2*s)<<std::setfill('=')<<""<<endl<<std::setfill(' ');
     print_vec_row(cout, crlb, "CRLB", s, "1;34");
 
@@ -357,7 +360,7 @@ void point_evaluate_estimator(Estimator<Model> &estimator, IdxT ntrials,
     cout<<"Number of trials: "<<ntrials<<endl;
     cout<<"Estimator: "<<estimator.name()<<endl;
     auto llhs_true=VecT(ntrials);
-    log_likelihood_stack(model, ims, theta, llhs_true);
+    methods::log_likelihood_stack(model, ims, theta, llhs_true);
     snprintf(str, s, "True <LLH:%.9g> Theta:",arma::mean(llhs_true));
     print_vec_row(cout, theta, str, s, TERM_WHITE);
     snprintf(str, s, "<LLH>:%.9g <Theta[%s]>:",arma::mean(llh_est),estimator.name().c_str());
@@ -367,9 +370,6 @@ void point_evaluate_estimator(Estimator<Model> &estimator, IdxT ntrials,
     print_vec_row(cout, crlb, "CRLB(Theta):", s, TERM_BLUE);
     print_vec_row(cout, efficiency, "Efficiency(Theta):", s,TERM_CYAN);
     cout<<"Cov matrix: "<< arma::cov(theta_est.t())<<endl;
-    unbiased_p_val=test_mean_nD_one_sided(ntrials, arma::mean(theta_est,1),
-                                          arma::cov(theta_est.t()), theta);
-    cout<<"Unbiased Estimator p-val (chance we would be this far off): "<<unbiased_p_val<<endl; //small is good
     cout<<"---------------------------------------------------------------"<<endl<<endl;
 }
 

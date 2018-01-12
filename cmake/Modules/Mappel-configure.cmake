@@ -57,7 +57,9 @@ endif()
 add_compile_options(-W -Wall -Wextra -Werror -Wno-unused-parameter)
 if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     add_definitions(-DDEBUG)
-    add_compile_options(-fmax-errors=5) #Limit number of reported errors
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        add_compile_options(-fmax-errors=5) #Limit number of reported errors
+    endif()
 elseif()
     add_definitions(-DNDEBUG)
 endif()

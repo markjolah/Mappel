@@ -27,6 +27,24 @@ using MatT = arma::mat; /**< A type to represent floating-point data matricies *
 using CubeT = arma::cube; /**< A type to represent floating-point data cubes */
 using VecFieldT = arma::field<VecT>;
 using StatsT = std::map<std::string,double>;  /**< A convenient form for reporting dictionaries of named FP data to matlab */
+
+/* Allow easier enabale_if compilation for subclasses */
+template<class ModelT,class ModelBaseT> using IsSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,int>::type;
+template<class ReturnT, class ModelT,class ModelBaseT> using ReturnIfSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,ReturnT>::type;
+
+template<class Model> using ImageCoordT = typename Model::ImageCoordT; /* Model's image coordinate type */
+template<class Model> using ImagePixelT = typename Model::ImagePixelT; /* Image's pixel data type */
+
+template<class Model> using ParamT = typename Model::ParamT; /* The Model's paramter type (e.g., theta) */
+template<class Model> using ImageT = typename Model::ImageT; /* The Model's image type  */
+template<class Model> using ModelDataT = typename Model::ModelDataT; /* Model's data type (for EMCCD same as Model::ImageT) */
+template<class Model> using StencilT = typename Model::Stencil;  /* The Model's theta stencil  */
+
+template<class Model> using ImageStackT = typename Model::ImageStackT; /* Model's image type  */
+template<class Model> using ModelDataStackT = typename Model::ModelDataStackT; /* Model's data stack type (for EMCCD same as Model::ImageStackT) */
+template<class Model> using StencilVecT = typename Model::StencilVecT;  /* The Model's Vector of stencils type */
+
+
 void enable_all_cpus();
 
 bool istarts_with(const char* s, const char* pattern);

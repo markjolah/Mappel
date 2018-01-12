@@ -8,7 +8,7 @@
 
 namespace mappel {
 
-Gauss1DMLE::Gauss1DMLE(ImageSizeVecT size, VecT psf_sigma) : 
+Gauss1DMLE::Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma) : 
             PointEmitterModel(make_prior(size(0))), 
             ImageFormat1DBase(size(0)),
             Gauss1DModel(size(0), psf_sigma(0))

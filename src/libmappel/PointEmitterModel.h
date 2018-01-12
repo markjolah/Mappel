@@ -14,14 +14,11 @@
 
 #include <armadillo>
 
+#include <PriorHessian/CompositeDist.h>
+
 #include "util.h"
-#include "numerical.h"
 #include "stencil.h"
 #include "display.h"
-#include "openmp_methods.h"
-#include "estimator.h"
-#include "mcmc.h"
-#include <PriorHessian/CompositeDist.h>
 
 namespace mappel {
 
@@ -112,6 +109,8 @@ protected:
 
 
 };
+
+
 
 template<class Model, typename=PointEmitterModel::IsPointEmitterModelT<Model>>
 std::ostream& operator<<(std::ostream &out,const Model &model);
@@ -205,137 +204,6 @@ std::ostream& operator<<(std::ostream &out, const Model &model)
     return out;
 }
 
-
-/* These are convenience functions for other templated functions that allow calling without stencils,
- * by converting param vector into stencil with make_stencil
- */
-template<class Model>
-typename Model::ImageT model_image(const Model &model, const typename Model::ParamT &theta) 
-{
-    return model_image(model, model.make_stencil(theta,false));
-}
-
-template<class Model, class rng_t>
-typename Model::ImageT simulate_image(const Model &model, const typename Model::ParamT &theta, rng_t &rng) 
-{
-    return simulate_image(model, model.make_stencil(theta,false), rng);
-}
-
-template<class Model>
-double log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-                      const typename Model::ParamT &theta)
-{
-    return log_likelihood(model, data_im, model.make_stencil(theta,false));
-}
-
-template<class Model>
-double relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-                               const typename Model::ParamT &theta)
-{
-    return relative_log_likelihood(model, data_im, model.make_stencil(theta,false));
-}
-
-template<class Model>
-typename Model::ParamT model_grad(const Model &model, const typename Model::ImageT &data_im, 
-                                  const typename Model::ParamT &theta)
-{
-    auto grad = model.make_param();
-    model_grad(model, data_im, model.make_stencil(theta), grad);
-    return grad;
-}
-
-template<class Model>
-MatT model_hessian(const Model &model, const typename Model::ImageT &data_im, 
-                   const typename Model::ParamT &theta)
-{
-    auto grad = model.make_param();
-    auto hess = model.make_param_mat();
-    model_hessian(model, data_im, model.make_stencil(theta), grad, hess);
-    copy_Usym_mat(hess);
-    return hess;
-}
-
-template<class Model>
-void aposteriori_objective(const Model &model, const typename Model::ImageT &data_im, 
-                           const typename Model::ParamT &theta, 
-                           double &rllh,  typename Model::ParamT &grad, MatT &hess)
-{
-    auto stencil = model.make_stencil(theta);
-    rllh = relative_log_likelihood(model, data_im, stencil);
-    model_hessian(model, data_im, stencil, grad, hess);
-    copy_Usym_mat(hess);
-}
-
-template<class Model>
-void prior_objective(const Model &model, const typename Model::ParamT &theta, 
-                     double &rllh, typename Model::ParamT &grad, MatT &hess)
-{
-    auto stencil = model.make_stencil(theta);
-    const auto& prior = model.get_prior();
-    rllh = prior.rllh(theta);
-    grad.zeros();
-    hess.zeros();
-    prior.grad_hess_accumulate(theta,grad,hess);
-    relative_log_likelihood(model, data_im, stencil);
-    model_hessian(model, data_im, stencil, grad, hess);
-    copy_Usym_mat(hess);
-}
-
-template<class Model>
-void likelihood_objective(const Model &model, const typename Model::ImageT &data_im, const typename Model::ParamT &theta, 
-                          double &rllh,  typename Model::ParamT &grad, MatT &hess)
-{
-    auto stencil = model.make_stencil(theta);
-    rllh = relative_log_likelihood(model, data_im, stencil);
-    model_hessian(model, data_im, stencil, grad, hess);
-    copy_Usym_mat(hess);
-}
-
-
-template<class Model>
-MatT model_positive_hessian(const Model &model, const typename Model::ImageT &data_im, 
-                            const typename Model::ParamT &theta)
-{
-    auto grad = model.make_param();
-    auto hess = model.make_param_mat();
-    model_hessian(model, data_im, model.make_stencil(theta), grad, hess);
-    hess = -hess;
-    copy_Usym_mat(hess);
-    modified_cholesky(hess);
-    cholesky_convert_full_matrix(hess); //convert from internal format to a full (poitive definite) matrix
-    return hess;
-}
-
-
-/** @brief Calculate the Cramer-Rao lower bound at the given paramters
- * @param[in] theta The parameters to evaluate the CRLB at
- * @param[out] crlb The calculated parameters
- */
-template<class Model>
-typename Model::ParamT cr_lower_bound(const Model &model, const typename Model::Stencil &s)
-{
-    auto FI = fisher_information(model,s);
-    try{
-        return arma::pinv(FI).eval().diag();
-    } catch ( std::runtime_error E) {
-        std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<'\n';
-        auto z = model.make_param();
-        z.zeros();
-        return z;
-    }
-}
-
-template<class Model>
-typename Model::ParamT cr_lower_bound(const Model &model, const typename Model::ParamT &theta) 
-{
-    return cr_lower_bound(model,model.make_stencil(theta));
-}
-
-template<class Model>
-MatT fisher_information(const Model &model, const typename Model::ParamT &theta) 
-{
-    return fisher_information(model,model.make_stencil(theta));
-}
 
 } /* namespace mappel */
 

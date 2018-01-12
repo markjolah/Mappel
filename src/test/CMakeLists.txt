@@ -41,6 +41,7 @@ endif()
 message(STATUS "EXE_POSTFIX:${EXE_POSTFIX}")
 set(CTEST_CMDS mappel.test_speed${EXE_POSTFIX}
                mappel.test_image${EXE_POSTFIX}
+               mappel.test_prior${EXE_POSTFIX}
                mappel.test_compare_estimators${EXE_POSTFIX}
                mappel.test_image_compare_estimators${EXE_POSTFIX}
                mappel.test_point_evaluate_estimators${EXE_POSTFIX})

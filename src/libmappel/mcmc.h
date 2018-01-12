@@ -12,7 +12,6 @@
 #include "rng.h"
 
 namespace mappel {
-
 MatT thin_sample(MatT &sample, IdxT burn_in, IdxT keep_every);
 
 template <class Model>
@@ -20,7 +19,7 @@ void evaluate_posterior_stack(Model &model,
                               const typename Model::ImageStackT &im_stack,
                               IdxT Nsamples, MatT &mean_stack, CubeT &cov_stack)
 {
-    auto theta_init_stack = model.make_param_vec(model.size_image_stack(im_stack));//Make an initial field of vectors
+    auto theta_init_stack = model.make_param_vec(model.get_size_image_stack(im_stack));//Make an initial field of vectors
     theta_init_stack.zeros();
     evaluate_posterior_stack(model, im_stack, theta_init_stack, Nsamples,mean_stack, cov_stack);
 }
@@ -31,7 +30,7 @@ void evaluate_posterior_stack(Model &model,
                               const typename Model::ParamVecT &theta_init_stack,
                               IdxT Nsamples, MatT &mean_stack, CubeT &cov_stack)
 {
-    const IdxT count = model.size_image_stack(im_stack);
+    const IdxT count = model.get_size_image_stack(im_stack);
     #pragma omp parallel
     {
         auto init = model.make_param();
@@ -90,8 +89,8 @@ void evaluate_posterior_debug(Model &model, const typename Model::ImageT &im,  c
 
     #pragma omp parallel for
     for(IdxT n=0; n<Nsamples; n++){
-        sample_llh(n) = relative_log_likelihood(model, im, sample.col(n));
-        mcmc_candidate_llh(n) = relative_log_likelihood(model, im, candidates.col(n));
+        sample_llh(n) = methods::objective::rllh(model, im, sample.col(n));
+        mcmc_candidate_llh(n) = methods::objective::rllh(model, im, candidates.col(n));
     }
     mean = arma::mean(sample, 1);
     cov = arma::cov(sample.t());
@@ -104,7 +103,7 @@ sample_posterior(Model &model, const typename Model::ImageT &im, IdxT Nsamples,
 {
     auto sample = model.make_param_vec(Nsamples);
     sample.col(0) = theta_init.theta;
-    double old_rllh = relative_log_likelihood(model, im, theta_init);
+    double old_rllh = methods::objective::rllh(model, im, theta_init);
     IdxT phase = 0;
     for(IdxT n=1;n<Nsamples;n++){
         typename Model::ParamT can_theta = sample.col(n-1);
@@ -113,7 +112,7 @@ sample_posterior(Model &model, const typename Model::ImageT &im, IdxT Nsamples,
             sample.col(n) = sample.col(n-1);
             continue;
         }
-        double can_rllh = relative_log_likelihood(model, im, can_theta);
+        double can_rllh = methods::objective::rllh(model, im, can_theta);
         phase++;
         double alpha = std::min(1.,exp(can_rllh-old_rllh));
         if(rng_manager.randu() < alpha) {
@@ -136,7 +135,7 @@ void sample_posterior_debug(Model &model, const typename Model::ImageT &im,
     IdxT Nsamples = sample.n_cols;
     sample.col(0) = theta_init.theta;
     candidates.col(0) = theta_init.theta;
-    double old_rllh = relative_log_likelihood(model, im, theta_init);
+    double old_rllh = methods::objective::rllh(model, im, theta_init);
     IdxT phase = 0;
     for(IdxT n=1; n<Nsamples; n++){
         typename Model::ParamT can_theta = sample.col(n-1);
@@ -146,7 +145,7 @@ void sample_posterior_debug(Model &model, const typename Model::ImageT &im,
             sample.col(n) = sample.col(n-1);
             continue;
         }
-        double can_rllh = relative_log_likelihood(model, im, can_theta);
+        double can_rllh = methods::objective::rllh(model, im, can_theta);
         phase++;
         double alpha = std::min(1.,exp(can_rllh-old_rllh));
         if(rng_manager.randu() < alpha) {

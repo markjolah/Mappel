@@ -8,7 +8,7 @@
 
 namespace mappel {
     
-const double CholeskyDelta = 1e-6; //Minimum we will let a diagonal element be in the modified cholesky algorithm
+//const double CholeskyDelta = 1e-6; //Minimum we will let a diagonal element be in the modified cholesky algorithm
 
 void copy_Usym_mat(arma::mat &usym)
 {
@@ -26,6 +26,10 @@ void copy_Lsym_mat(arma::mat &lsym)
         lsym(j,i) = lsym(i,j); //i>j
 }
 
+bool is_negative_definite(const arma::mat &usym)
+{
+    return is_positive_definite(-usym);
+}
 
 bool is_positive_definite(const arma::mat &usym)
 {

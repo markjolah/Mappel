@@ -38,11 +38,10 @@ set(${PROJECT_NAME}_CMAKE_TOOLCHAINS_DIR ${MexIFace_CMAKE_DIR}/Toolchains)
 #Allow inclusion of external dependencies
 include(AddExternalDependency)
 
-if(OPT_DEBUG)
-    #BacktraceException provides backtraces for caught exceptions.
-    set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING URL of BacktraceException library dependency)
-    AddExternalDependency(BacktraceException ${BacktraceExceptionURL} SHARED)
-endif()
+#BacktraceException provides backtraces for caught exceptions.
+set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
+# CACHE STRING URL of BacktraceException library dependency)
+AddExternalDependency(BacktraceException ${BacktraceExceptionURL} SHARED)
 
 #ParallelRngManager allows for management of parallel rng streams.
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
