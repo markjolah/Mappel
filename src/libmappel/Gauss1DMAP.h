@@ -5,8 +5,8 @@
  * @brief The class declaration and inline and templated functions for Gauss1DMAP.
  */
 
-#ifndef _GAUSS1DMAP_H
-#define _GAUSS1DMAP_H
+#ifndef _MAPPEL_GAUSS1DMAP_H
+#define _MAPPEL_GAUSS1DMAP_H
 
 #include "PoissonNoise1DObjective.h"
 #include "MAPEstimator.h"
@@ -38,4 +38,4 @@ public:
 
 } /* namespace mappel */
 
-#endif /* _GAUSS1DMAP_H */
+#endif /* _MAPPEL_GAUSS1DMAP_H */

@@ -51,6 +51,9 @@ public:
     ImageStackT make_image_stack(ImageCoordT n) const;
     ImageCoordT get_size_image_stack(const ImageStackT &stack) const;
     ImageT get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const;
+
+    template<class ImT>
+    void set_image_in_stack(ImageStackT &stack, ImageCoordT n, ImT&&im) const;
     
 private:
     static void check_size(ImageSizeT size_);
@@ -85,6 +88,13 @@ ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,ImageCoordT n) 
 {
     return stack.col(n);
 }
+
+template<class ImT>
+void ImageFormat1DBase::set_image_in_stack(ImageStackT &stack, ImageCoordT n, ImT&&im  ) const
+{
+    stack.col(n)=im;
+}
+
 
 /* Templated Methods Definitions */
 namespace methods {

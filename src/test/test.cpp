@@ -5,7 +5,8 @@
 #include "display.h"
 #include "Gauss1DMLE.h"
 #include "Gauss1DMAP.h"
-#include "MAPEstimator.h"
+#include "Gauss1DsMLE.h"
+#include "Gauss1DsMAP.h"
 
 #include "evaluate.h"
 //#include "Gauss2DMLE.h"
@@ -30,7 +31,7 @@ using namespace mappel;
 
 std::vector<std::string> model_names= {"Gauss1DMLE"};
 // std::vector<std::string> estimator_names= {"TrustRegionMaximizer", "HeuristicEstimator", "CGaussHeuristicEstimator", "CGaussMLE", "SimulatedAnnealingMaximizer"};
-std::vector<std::string> estimator_names= {"TrustRegionMaximizer", "HeuristicEstimator", "NewtonEstimator", "QuasiNewtonMLE", "SimulatedAnnealingMaximizer"};
+std::vector<std::string> estimator_names= {"TrustRegion", "Heuristic", "Newton", "NewtonDiagonal", "SimulatedAnnealing"};
 
 
 
@@ -427,10 +428,29 @@ void test_image_template(const char *estimator_name,int argc, const char *argv[]
     Model model(sizes,psf_sigma);
 
     auto estimator=methods::make_estimator(model, estimator_name);
-    if(!estimator) return;
     auto theta=read_theta(model, argc, argv);
     evaluate_single(*estimator, theta);
 }
+
+template<class Model>
+void test_image_template_sigma(const char *estimator_name,int argc, const char *argv[])
+{
+    int n=1;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    argc-=1; argv+=1;
+    cout<<"Size: "<<size<<endl;
+    typename Model::ImageSizeVecT sizes={size,size};
+    VecT min_sigma={1.0,1.0};
+    VecT max_sigma={3.0,3.0};
+    cout<<"MinSigma: "<<min_sigma.t();
+    cout<<"MaxSigma: "<<max_sigma.t();
+    Model model(sizes,min_sigma,max_sigma);
+
+    auto estimator=methods::make_estimator(model, estimator_name);
+    auto theta=read_theta(model, argc, argv);
+    evaluate_single(*estimator, theta);
+}
+
 
 // template<class Model>
 // void test_HS_image_template(const char *estimator_name, int argc, const char *argv[])
@@ -471,6 +491,11 @@ void test_image(int argc, const char *argv[])
         test_image_template<Gauss1DMLE>(estimator_name,  argc, argv);
     } else if(istarts_with(model_name,"Gauss1DMAP")) {
         test_image_template<Gauss1DMAP>(estimator_name,  argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DsMLE")) {
+        test_image_template_sigma<Gauss1DsMLE>(estimator_name,  argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DsMAP")) {
+        test_image_template_sigma<Gauss1DsMAP>(estimator_name,  argc, argv);
+
 //     } else if(istarts_with(model_name,"Gauss2DMAP")) {
 //         test_image_template<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
@@ -514,7 +539,7 @@ void test_image(int argc, const char *argv[])
 
 
 template<class Model>
-void estimate_stack_template(const char *estimator_name, int argc, const char *argv[])
+void estimate_stack_template(std::string estimator_name, int argc, const char *argv[])
 {
     int n=2;
     typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
@@ -525,14 +550,43 @@ void estimate_stack_template(const char *estimator_name, int argc, const char *a
     typename Model::ImageSizeVecT sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
-    if (istarts_with(estimator_name,"Post")){
-        estimate_stack_posterior(model, count);
+    if (istarts_with(estimator_name.c_str(),"Posterior")){
+        int nsamp = 1000;
+        if(estimator_name.length()>9) nsamp = stoi(estimator_name.c_str()+9); 
+        estimate_stack_posterior(model,count, nsamp);
     } else {
         auto estimator=methods::make_estimator(model, estimator_name);
         if(!estimator) return;
         estimate_stack(*estimator, count);
     }
 }
+
+template<class Model>
+void estimate_stack_template_sigma(std::string estimator_name, int argc, const char *argv[])
+{
+    int n=2;
+    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    int count                  = argc>=n-- ? atoi(argv[n]) : 1000;
+    argc-=2; argv+=2;
+    cout<<"Size: "<<size<<endl;
+    cout<<"Count: "<<count<<endl;
+    typename Model::ImageSizeVecT sizes={size,size};
+    VecT min_sigma={1.0,1.0};
+    VecT max_sigma={3.0,3.0};
+    cout<<"MinSigma: "<<min_sigma.t();
+    cout<<"MaxSigma: "<<max_sigma.t();
+    Model model(sizes,min_sigma,max_sigma);
+    if (istarts_with(estimator_name.c_str(),"Posterior")){
+        int nsamp = 1000;
+        if(estimator_name.length()>9) nsamp = stoi(estimator_name.c_str()+9); 
+        estimate_stack_posterior(model,count, nsamp);
+    } else {
+        auto estimator=methods::make_estimator(model, estimator_name);
+        if(!estimator) return;
+        estimate_stack(*estimator, count);
+    }
+}
+
 
 void test_speed(int argc, const char *argv[])
 {
@@ -557,6 +611,10 @@ void test_speed(int argc, const char *argv[])
         estimate_stack_template<Gauss1DMLE>(estimator_name, argc, argv);
     } else if(istarts_with(model_name,"Gauss1DMAP")) {
         estimate_stack_template<Gauss1DMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DsMLE")) {
+        estimate_stack_template_sigma<Gauss1DsMLE>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss1DsMAP")) {
+        estimate_stack_template_sigma<Gauss1DsMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DMAP")) {
 //         estimate_stack_template<Gauss2DMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Gauss2DsMLE")) {

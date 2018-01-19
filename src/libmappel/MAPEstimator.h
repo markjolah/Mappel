@@ -31,6 +31,11 @@ namespace methods{
         ReturnIfSubclassT<double,Model,MAPEstimator>
         llh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
         {
+//             std::cout<<"Stencil: "<<s;
+//             std::cout<<"Im: "<<data_im.t();
+//             std::cout<<"Prior: "<<model.get_prior();
+//             std::cout<<"Prior Theta LLH: "<<model.get_prior().llh_components(s.theta)<<std::endl;
+//             std::cout<<"Prior Theta RLLH: "<<model.get_prior().rllh_components(s.theta)<<std::endl;
             return likelihood::llh(model, data_im, s) + model.get_prior().llh(s.theta);
         }
 

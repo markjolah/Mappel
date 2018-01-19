@@ -9,45 +9,54 @@
 
 namespace mappel {
 
-const std::vector<std::string> Gauss1DsModel::param_names({ "x", "I", "bg", "sigma" });
-
-const std::vector<std::string> Gauss1DsModel::hyperparameter_names(
-    { "beta_pos", "mean_I", "kappa_I", "mean_bg", "kappa_bg", "alpha_sigma", "min_sigma", "max_sigma"});
-
-
-Gauss1DsModel::Gauss1DsModel(int size_, double min_sigma_, double max_sigma_)
-    : ImageFormat1DBase(size_),
-      PointEmitterModel(4),
-      min_sigma(min_sigma_),
-      max_sigma(max_sigma_),
-      pos_dist(BetaRNG(beta_pos,beta_pos)),
-      I_dist(GammaRNG(kappa_I,mean_I/kappa_I)),
-      bg_dist(GammaRNG(kappa_bg,mean_bg/kappa_bg)),
-      sigma_dist(ParetoRNG(min_sigma,alpha_sigma)),
-      log_prior_pos_const(log_prior_beta_const(beta_pos)),
-      log_prior_I_const(log_prior_gamma_const(kappa_I,mean_I)),
-      log_prior_bg_const(log_prior_gamma_const(kappa_bg,mean_bg)),
-      log_prior_sigma_const(log_prior_pareto_const(alpha_sigma,min_sigma))
+Gauss1DsModel::Gauss1DsModel(IdxT size_)
+    : ImageFormat1DBase(size_)
 {
     /* Initialize MCMC step sizes */
     mcmc_num_candidate_sampling_phases = 3;
     mcmc_candidate_eta_x = size*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_I = mean_I*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = mean_bg*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_sigma = 1.0*mcmc_candidate_sample_dist_ratio;
-    
-    /* Initialization stencils */
-    ParamT lb = {0,0,0,min_sigma};
-    ParamT ub = {static_cast<double>(size),INFINITY,INFINITY,max_sigma};
-    set_bounds(lb,ub);
+    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
+    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
+    mcmc_candidate_eta_sigma = 1.0*mcmc_candidate_sample_dist_ratio;    
 }
+
+Gauss1DsModel::CompositeDist Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
+{
+    return CompositeDist(make_prior_component_position_beta("x",size),
+                         make_prior_component_intensity("I"),
+                         make_prior_component_intensity("bg",default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                         make_prior_component_sigma("sigma",min_sigma,max_sigma));
+}
+
+Gauss1DsModel::CompositeDist 
+Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos, 
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg,
+                                       double min_sigma, double max_sigma)
+{
+    return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+}
+
+Gauss1DsModel::CompositeDist 
+Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos, 
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg,
+                                       double min_sigma, double max_sigma)
+{
+    return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+}
+
 
 Gauss1DsModel::Stencil::Stencil(const Gauss1DsModel &model_,
                                const Gauss1DsModel::ParamT &theta,
                                bool _compute_derivatives)
 : model(&model_),theta(theta)
 {
-    int szX = model->size;
+    IdxT szX = model->size;
     dx = make_d_stencil(szX, x());
     X = make_X_stencil(szX, dx,sigma());
     if(_compute_derivatives) compute_derivatives();
@@ -57,7 +66,7 @@ void Gauss1DsModel::Stencil::compute_derivatives()
 {
     if(derivatives_computed) return;
     derivatives_computed=true;
-    int szX = model->size;
+    IdxT szX = model->size;
     Gx = make_G_stencil(szX, dx, sigma());
     DX = make_DX_stencil(szX, Gx, sigma());
     DXS = make_DXS_stencil(szX, dx, Gx, sigma());
@@ -83,69 +92,15 @@ std::ostream& operator<<(std::ostream &out, const Gauss1DsModel::Stencil &s)
 
 StatsT Gauss1DsModel::get_stats() const
 {
-    StatsT stats = ImageFormat1DBase::get_stats();
-    stats["numParams"] = num_params;
-    stats["hyperparameters.Beta_pos"] = beta_pos;
-    stats["hyperparameters.Mean_I"] = mean_I;
-    stats["hyperparameters.Kappa_I"] = kappa_I;
-    stats["hyperparameters.Mean_bg"] = mean_bg;
-    stats["hyperparameters.Kappa_bg"] = kappa_bg;
-    stats["hyperparameters.alpha_sigma"] = alpha_sigma;
-    stats["hyperparameters.min_sigma"] = min_sigma;
-    stats["hyperparameters.max_sigma"] = max_sigma;
-    stats["mcmcparams.num_phases"] = mcmc_num_candidate_sampling_phases;
-    stats["mcmcparams.eta_X"] = mcmc_candidate_eta_x;
-    stats["mcmcparams.eta_I"] = mcmc_candidate_eta_I;
-    stats["mcmcparams.eta_bg"] = mcmc_candidate_eta_bg;
-    stats["mcmcparams.eta_sigma"] = mcmc_candidate_eta_bg;
-    for(int n=0;n<num_params;n++) {
-        std::ostringstream outl,outu;
-        outl<<"lbound."<<n+1;
-        stats[outl.str()] = lbound(n);
-        outu<<"ubound."<<n+1;
-        stats[outu.str()] = ubound(n);
-    }
+    auto stats = PointEmitterModel::get_stats();
+    auto im_stats = ImageFormat1DBase::get_stats();
+    stats.insert(im_stats.begin(), im_stats.end());
     return stats;
-}
-
-void Gauss1DsModel::set_hyperparameters(const VecT &hyperparameters)
-{
-    // Params are {beta_pos, mean_I, kappa_I, mean_bg, kappa_bg, alpha_sigma, min_sigma, max_sigma}
-    beta_pos=check_lower_bound_hyperparameter("beta position",hyperparameters(0),1);
-    mean_I=check_positive_hyperparameter("mean I",hyperparameters(1));
-    kappa_I=check_positive_hyperparameter("kappa I",hyperparameters(2));
-    mean_bg=check_positive_hyperparameter("mean bg",hyperparameters(3));
-    kappa_bg=check_positive_hyperparameter("kappa bg",hyperparameters(4));
-    alpha_sigma = check_lower_bound_hyperparameter("alpha sigma",hyperparameters(5),1);
-    
-    //Reset bounds on sigma as part of hyperparameters
-    min_sigma = check_positive_hyperparameter("min sigma",hyperparameters(6));
-    max_sigma = check_lower_bound_hyperparameter("max sigma",hyperparameters(7),min_sigma);
-
-    //Reset constants
-    log_prior_pos_const=log_prior_beta_const(beta_pos);
-    log_prior_I_const=log_prior_gamma_const(kappa_I,mean_I);
-    log_prior_bg_const=log_prior_gamma_const(kappa_bg,mean_bg);
-    log_prior_sigma_const = log_prior_pareto_const(alpha_sigma, min_sigma);
-    
-    //Reset distributions
-    pos_dist.set_params(beta_pos, beta_pos);
-    I_dist.kappa(kappa_I);
-    I_dist.theta(mean_I/kappa_I);
-    bg_dist.kappa(mean_bg);
-    bg_dist.theta(mean_bg/kappa_bg);
-    sigma_dist.theta(min_sigma);
-    sigma_dist.gamma(alpha_sigma);
-}
-
-Gauss1DsModel::VecT Gauss1DsModel::get_hyperparameters() const
-{
-    return VecT({beta_pos,mean_I, kappa_I, mean_bg, kappa_bg, alpha_sigma, min_sigma, max_sigma});
 }
 
 
 void
-Gauss1DsModel::pixel_hess_update(int i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
+Gauss1DsModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
 {
     /* Caclulate pixel derivative */
     auto pgrad=make_param();
@@ -160,7 +115,7 @@ Gauss1DsModel::pixel_hess_update(int i, const Stencil &s, double dm_ratio_m1, do
     hess(1,3) += dm_ratio_m1 * s.DXS(i);
     hess(3,3) += dm_ratio_m1 * I * s.DXS2(i);
     //This is the pixel-gradient dependent part of the hessian
-    for(int c=0; c<(int)hess.n_cols; c++) for(int r=0; r<=c; r++)
+    for(IdxT c=0; c<hess.n_cols; c++) for(IdxT r=0; r<=c; r++)
         hess(r,c) -= dmm_ratio * pgrad(r) * pgrad(c);
 }
 
@@ -181,6 +136,9 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
         //Estimate position as the brightest pixel
         x_pos = im.index_max()+0.5;
     }
+    
+    double min_sigma = lbound(3);
+    double max_sigma = lbound(3);
     if(sigma<min_sigma || sigma>max_sigma){
         //Pick an initial sigma in-between min and max for sigma
         //This is a rough approximation
@@ -191,24 +149,24 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
         bg = 0.75*im.min();
         I = arma::sum(im)-std::min(0.3,bg*size);
     }
-    return make_stencil(x_pos,  I, bg, sigma);
+    return make_stencil(ParamT{x_pos,  I, bg, sigma});
 }
 
 
-void Gauss1DsModel::sample_mcmc_candidate_theta(int sample_index, RNG &rng, ParamT &mcmc_candidate_theta, double scale) const
+void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale) const
 {
     int phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {
         case 0:  //change pos
-            mcmc_candidate_theta(0) += generate_normal(rng,0.0,mcmc_candidate_eta_x*scale);
+            mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
             break;
         case 1: //change I, sigma
-            mcmc_candidate_theta(1) += generate_normal(rng,0.0,mcmc_candidate_eta_I*scale);
-            mcmc_candidate_theta(3) += generate_normal(rng,0.0,mcmc_candidate_eta_sigma*scale);
+            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
+            mcmc_candidate_theta(3) += rng_manager.randn()*mcmc_candidate_eta_sigma*scale;
             break;
         case 2: //change I, bg
-            mcmc_candidate_theta(1) += generate_normal(rng,0.0,mcmc_candidate_eta_I*scale);
-            mcmc_candidate_theta(2) += generate_normal(rng,0.0,mcmc_candidate_eta_bg*scale);
+            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
+            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
     }
 }
 

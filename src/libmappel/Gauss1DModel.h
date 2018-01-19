@@ -4,8 +4,8 @@
  * @brief The class declaration and inline and templated functions for Gauss1DModel.
  */
 
-#ifndef _GAUSS1DMODEL_H
-#define _GAUSS1DMODEL_H
+#ifndef _MAPPEL_GAUSS1DMODEL_H
+#define _MAPPEL_GAUSS1DMODEL_H
 
 #include "PointEmitterModel.h"
 #include "ImageFormat1DBase.h"
@@ -14,6 +14,10 @@ namespace mappel {
 
 /** @brief A base class for 1D Gaussian PSF with a fixed sigma (standard dev.)
  *
+ * This base class defines the Stencil type for 1D Gaussian PSF as well as the prior shape and parameters.
+ * 
+ * Initialized by an integer, size, and double, psf_sigma.
+ * 
  */
 class Gauss1DModel : public virtual PointEmitterModel, public virtual ImageFormat1DBase 
 {   
@@ -22,7 +26,7 @@ public:
      */
     class Stencil {
     public:
-        bool derivatives_computed=false;
+        bool derivatives_computed = false;
         using ParamT = Gauss1DModel::ParamT;
         Gauss1DModel const *model;
 
@@ -47,9 +51,11 @@ public:
     Gauss1DModel(IdxT size_, double psf_sigma);
 
     /* Prior construction */
-    static CompositeDist make_prior(IdxT size);
-    static CompositeDist make_prior(IdxT size, double beta_x, double mean_I,
-                                    double kappa_I, double mean_bg, double kappa_bg);
+    static CompositeDist make_default_prior(IdxT size);
+    static CompositeDist make_prior_beta_position(IdxT size, double beta_x, double mean_I,
+                                             double kappa_I, double mean_bg, double kappa_bg);
+    static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
+                                               double kappa_I, double mean_bg, double kappa_bg);
     
     StatsT get_stats() const;
 

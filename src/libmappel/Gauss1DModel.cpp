@@ -6,12 +6,8 @@
 
 #include "Gauss1DModel.h"
 #include "stencil.h"
-#include <PriorHessian/SymmetricBetaDist.h>
-#include <PriorHessian/GammaDist.h>
 
 namespace mappel {
-using prior_hessian::SymmetricBetaDist;
-using prior_hessian::GammaDist;
 
 Gauss1DModel::Gauss1DModel(IdxT size_, double psf_sigma_)
     : ImageFormat1DBase(size_), //Virtual base class call ignored
@@ -20,27 +16,37 @@ Gauss1DModel::Gauss1DModel(IdxT size_, double psf_sigma_)
     /* Initialize MCMC step sizes */
     mcmc_num_candidate_sampling_phases=2;
     mcmc_candidate_eta_x = size*mcmc_candidate_sample_dist_ratio;
-    auto hyperparams = get_hyperparams(); // [beta_x, mean_I, kappa_I, mean_bg, kappa_bg]
-    double mean_I = hyperparams(1);
-    double mean_bg = hyperparams(3);
-    mcmc_candidate_eta_I = mean_I*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = mean_bg*mcmc_candidate_sample_dist_ratio;
+    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
+    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
 }
 
-Gauss1DModel::CompositeDist Gauss1DModel::make_prior(IdxT size)
+Gauss1DModel::CompositeDist Gauss1DModel::make_default_prior(IdxT size)
 {
-    return CompositeDist(SymmetricBetaDist(default_pos_beta,0,size,"x"),
-                         GammaDist(default_mean_I, default_kappa_I,"I"),
-                         GammaDist(default_pixel_mean_bg*size, default_kappa_bg,"bg"));                        
+    return CompositeDist(make_prior_component_position_beta("x",size),
+                         make_prior_component_intensity("I"),
+                         make_prior_component_intensity("bg",default_pixel_mean_bg*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
 }
 
-Gauss1DModel::CompositeDist Gauss1DModel::make_prior(IdxT size, double beta_x, double mean_I, double kappa_I, double mean_bg, double kappa_bg)
+Gauss1DModel::CompositeDist 
+Gauss1DModel::make_prior_beta_position(IdxT size, double beta_xpos, 
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg)
 {
-    return CompositeDist(SymmetricBetaDist(beta_x,0,size,"x"),
-                         GammaDist(mean_I,kappa_I,"I"),
-                         GammaDist(mean_bg,kappa_bg,"bg"));
-                         
+    return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
+
+Gauss1DModel::CompositeDist 
+Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos, 
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg)
+{
+    return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+}
+
 
 Gauss1DModel::Stencil::Stencil(const Gauss1DModel &model_,
                                const Gauss1DModel::ParamT &theta,

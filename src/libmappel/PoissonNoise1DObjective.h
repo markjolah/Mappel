@@ -107,6 +107,8 @@ namespace methods {
             return make_unique<NewtonMaximizer<Model>>(model);
         } else if (istarts_with(name,"TrustRegion")) {
             return make_unique<TrustRegionMaximizer<Model>>(model);
+        } else if (istarts_with(name,"SimulatedAnnealing")) {
+            return make_unique<SimulatedAnnealingMaximizer<Model>>(model);
         } else {
             std::ostringstream os;
             os<<"Unknown estimator name: "<<name;
