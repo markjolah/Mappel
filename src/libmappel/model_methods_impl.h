@@ -80,13 +80,21 @@ namespace methods {
         template<class Model>
         MatT 
         hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
+        { 
+            return hessian(model,data_im, model.make_stencil(theta)); 
+        }
+
+        template<class Model>
+        MatT 
+        hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
         {
             auto grad = model.make_param(); //Ignore un-requested value
             auto hess = model.make_param_mat();
-            hessian(model, data_im, model.make_stencil(theta), grad, hess);
+            hessian(model, data_im, s, grad, hess);
+            copy_Usym_mat(hess); //Make a full-symmetric matrix
             return hess;
         }
-
+        
         template<class Model>
         void 
         hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta,
@@ -96,22 +104,32 @@ namespace methods {
         }
         
 
+
+
+        template<class Model>
+        MatT 
+        negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
+        { 
+            return negative_definite_hessian(model, data_im, model.make_stencil(theta));
+        }
+
+        template<class Model>
+        MatT 
+        negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            auto grad = model.make_param(); //Ignore un-requested value
+            auto hess = model.make_param_mat();
+            negative_definite_hessian(model, data_im, s, grad, hess);
+            copy_Usym_mat(hess); //Make a full-symmetric matrix
+            return hess;
+        }
+        
         template<class Model>
         void
         negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta,
                                   ParamT<Model> &grad, MatT &hess)
         {
             negative_definite_hessian(model, data_im, model.make_stencil(theta), grad, hess);
-        }
-
-        template<class Model>
-        MatT 
-        negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
-        {
-            auto grad = model.make_param(); //Ignore un-requested value
-            auto hess = model.make_param_mat();
-            negative_definite_hessian(model, data_im, model.make_stencil(theta), grad, hess);
-            return hess;
         }
         
         template<class Model>
@@ -122,7 +140,7 @@ namespace methods {
             hessian(model, data_im, s, grad, hess);
             hess = -hess;
             modified_cholesky(hess);
-            cholesky_convert_full_matrix(hess); //convert from internal format to a full (poitive definite) matrix
+            cholesky_convert_full_matrix(hess); //convert from internal format to a full (negative definite) matrix
             hess = -hess;
         }
 

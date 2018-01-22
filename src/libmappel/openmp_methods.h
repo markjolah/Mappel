@@ -98,7 +98,7 @@ void simulate_image_stack(const Model &model,
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
         auto rng = rng_manager.generator();
-        model.get_image_from_stack(image_stack,0) = simulate_image(model,theta_stack.col(0),rng);
+        model.set_image_in_stack(image_stack,0,simulate_image(model,theta_stack.col(0),rng));
     } else if (nthetas==1) {
         auto model_im=model_image(model, theta_stack.col(0));
         #pragma omp parallel
@@ -106,7 +106,7 @@ void simulate_image_stack(const Model &model,
             auto rng = rng_manager.generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
-                model.get_image_from_stack(image_stack,n) = simulate_image_from_model(model, model_im,rng);
+                model.set_image_in_stack(image_stack,n,simulate_image_from_model(model, model_im,rng));
         }
     } else {
         #pragma omp parallel
@@ -114,7 +114,7 @@ void simulate_image_stack(const Model &model,
             auto rng = rng_manager.generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
-                model.get_image_from_stack(image_stack,n) = simulate_image(model,theta_stack.col(n),rng);
+                model.set_image_in_stack(image_stack,n,simulate_image(model,theta_stack.col(n),rng));
         }
     }
 }
@@ -196,29 +196,23 @@ void model_grad_stack(const Model &model,
                           const typename Model::ParamVecT &theta_stack,
                           typename Model::ParamVecT &grad_stack)
 {
-    int nimages = model.size_image_stack(image_stack);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        grad_stack.col(0) = model_grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
+        grad_stack.col(0) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s = model.make_stencil(theta_stack.col(0));
-        #pragma omp parallel
-        {
-            auto grad = model.make_param();
-            #pragma omp for
-            for(int n=0; n<nimages; n++) {
-                model_grad(model, model.get_image_from_stack(image_stack,n), s, grad);
-                grad_stack.col(n) = grad;
-            }
-        }
+        #pragma omp for
+        for(int n=0; n<nimages; n++) 
+            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            grad_stack.col(n) = model_grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            grad_stack.col(n) = model_grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
@@ -239,36 +233,29 @@ void model_hessian_stack(const Model &model,
                           const typename Model::ParamVecT &theta_stack,
                           CubeT &hessian_stack)
 {
-    int nimages = model.size_image_stack(image_stack);
+    int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        hessian_stack.slice(0)=model_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
+        hessian_stack.slice(0) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s=model.make_stencil(theta_stack.col(0));
-        #pragma omp parallel
-        {
-            auto grad=model.make_param();
-            auto hess=model.make_param_mat();
-            #pragma omp for
-            for(int n=0; n<nimages; n++) {
-                model_hessian(model, model.get_image_from_stack(image_stack,n), s, grad, hess);
-                hessian_stack.slice(n) = hess;
-            }
-        }
+        #pragma omp for
+        for(int n=0; n<nimages; n++) 
+            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
-/** @brief Parallel model positive-definite Hessian approximation calculations for a stack of images.
+/** @brief Parallel model negative_definite Hessian approximation calculations for a stack of images.
  * 
- * Compute Hessian a positive-definite Hessian using a modified cholesky decompositions. 
+ * Compute Hessian a negative_definite Hessian using a modified cholesky decompositions. 
  * Computes for multiple image, theta pairs.
  * 
  * Use: model.make_param_mat_stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian.
@@ -276,10 +263,10 @@ void model_hessian_stack(const Model &model,
  * @param[in] model   A PointEmitterModel object.
  * @param[in] image_stack  Sequence of images.
  * @param[in] theta_stack  Sequence of thetas.  Size: [model.num_params, nThetas]
- * @param[out] hess_stack  Sequence of approximate Hessian matrices computed. Size: [model.num_params, model.num_params, n]
+ * @param[out] hess_stack  Sequence of approximate Hessian negative definite matrices computed. Size: [model.num_params, model.num_params, n]
  */
 template<class Model>
-void model_positive_hessian_stack(const Model &model,
+void model_negative_definite_hessian_stack(const Model &model,
                           const typename Model::ImageStackT &image_stack,
                           const typename Model::ParamVecT &theta_stack,
                           CubeT &hessian_stack)
@@ -287,21 +274,20 @@ void model_positive_hessian_stack(const Model &model,
     int nimages = model.size_image_stack(image_stack);
     int nthetas = theta_stack.n_cols;
     if (nimages==1 && nthetas==1) {
-        hessian_stack.slice(0) = model_positive_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
+        hessian_stack.slice(0) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
-        //Less efficient but this is mainly for debugging anyways
+        auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++) {
-            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(0));
-        }
+        for(int n=0; n<nimages; n++)
+            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
         for(int n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = model_positive_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 

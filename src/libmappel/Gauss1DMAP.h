@@ -5,8 +5,8 @@
  * @brief The class declaration and inline and templated functions for Gauss1DMAP.
  */
 
-#ifndef _GAUSS1DMAP_H
-#define _GAUSS1DMAP_H
+#ifndef _MAPPEL_GAUSS1DMAP_H
+#define _MAPPEL_GAUSS1DMAP_H
 
 #include "PoissonNoise1DObjective.h"
 #include "MAPEstimator.h"
@@ -22,20 +22,18 @@ namespace mappel {
  *   ImageFormat: ImageFormat1DBase - Data format
  * 
  */
-
 class Gauss1DMAP : public Gauss1DModel, public PoissonNoise1DObjective, public MAPEstimator {
 public:    
-    /* Constructor/Destructor */
     Gauss1DMAP(arma::Col<ImageCoordT> size, VecT psf_sigma);
+    
     Gauss1DMAP(ImageSizeT size, double psf_sigma);
+    
     template<class PriorDistT>
     Gauss1DMAP(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
     
-    /* Model values setting and information */
     std::string name() const {return "Gauss1DMAP";}
-
 };
 
 } /* namespace mappel */
 
-#endif /* _GAUSS1DMAP_H */
+#endif /* _MAPPEL_GAUSS1DMAP_H */

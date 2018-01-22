@@ -23,8 +23,9 @@ using namespace mappel;
 
 
 
-template<class Model, typename= typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value>::type >
-typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value, typename Model::ParamT>::type
+read_theta(Model &model, int argc, const char *argv[])
 {
     // args: x I bg
     int n=3;
@@ -39,30 +40,59 @@ typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
 }
 
 
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss1DsModel,Model>::value, typename Model::ParamT>::type
+read_theta(Model &model, int argc, const char *argv[])
+{
+    // args: x I bg sigma
+    int n=4;
+    double sigma = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    int I        = argc>=n-- ? atoi(argv[n])   : -1;
+    double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    auto theta = model.sample_prior();
+    if(x>=0) theta(0)=x;
+    if(I>=0) theta(1)=I;
+    if(bg>=0) theta(2)=bg;
+    if(sigma>=0) theta(3)=sigma;
+    return theta;
+}
+
 
 template<class Model>
 void estimate_stack(Estimator<Model> &estimator, int count)
 {
     int s=64;
     char str[100];
-    Model &model=estimator.model;
+    auto &model=estimator.model;
     cout<<"Model: "<<model<<endl;
-    auto theta=model.make_param_vec(count);
-    methods::sample_prior_stack(model,theta);
+    auto theta=model.sample_prior();
+    cout<<"Theta: "<<theta.t()<<endl;
     auto ims=model.make_image_stack(count);
     methods::simulate_image_stack(model,theta,ims);
+//     for(int n=0; n<count;n++) print_image(cout, model.get_image_from_stack(ims,n));
+
     auto theta_est=model.make_param_vec(count);
     auto crlb=model.make_param_vec(count);
     auto llh_est=VecT(count);
     auto llh=VecT(count);
     estimator.estimate_stack(ims,theta_est, crlb,llh_est);
     methods::log_likelihood_stack(model,ims,theta,llh);
-    arma::mat error=theta-theta_est;
+//     cout<<"Theta: "<<theta.t()<<"LLH: "<<llh;
+//     auto grad_stack = model.make_param_vec(count);
+//     methods::model_grad_stack(model,ims,theta,grad_stack);
+//     cout<<"Grad: "<<grad_stack;
+//     CubeT hess_stack(model.get_num_params(),model.get_num_params(),count,arma::fill::zeros);
+//     methods::model_hessian_stack(model,ims,theta,hess_stack);
+//     cout<<"Hess: "<<hess_stack;
+    
+    arma::mat error=theta_est;
+    error.each_col() -= theta;
     cout<<std::setw(64)<<""<<"\033["<<TERM_WHITE<<"m"<<"Model:"<<model.name()
         <<" Estimator:"<<estimator.name()<<"\033[0m"<<endl;
     arma::vec rmserror=arma::sqrt(arma::mean(error%error,1));
     snprintf(str, s, "<LLH>:%g <Theta>:",arma::mean(llh));
-    print_vec_row(cout,arma::mean(theta,1),str,s,TERM_CYAN);
+    print_vec_row(cout,theta,str,s,TERM_CYAN);
     snprintf(str, s, "<LLHEst>:%g <ThetaEst>:",arma::mean(llh_est));
     print_vec_row(cout,arma::mean(theta_est,1),str,s,TERM_YELLOW);
     snprintf(str, s, "<LLHDelta>:%g <Error>:",arma::mean(llh_est-llh));
@@ -72,11 +102,11 @@ void estimate_stack(Estimator<Model> &estimator, int count)
 }
 
 template<class Model>
-void estimate_stack_posterior(Model &model, int count)
+void estimate_stack_posterior(Model &model, int count, int nsample)
 {
     int s=64;
     char str[100];
-    int iter=1000;
+    cout<<"Nsample: "<<nsample<<"\n";
     cout<<"Model: "<<model<<endl;
     auto theta=model.make_param_vec(count);
     methods::sample_prior_stack(model,theta);
@@ -86,7 +116,7 @@ void estimate_stack_posterior(Model &model, int count)
     auto llh_est=VecT(count);
     auto llh=VecT(count);
     arma::cube cov(model.get_num_params(), model.get_num_params(), count);
-    evaluate_posterior_stack(model, ims, iter, theta_est, cov);
+    evaluate_posterior_stack(model, ims, nsample, theta_est, cov);
     methods::log_likelihood_stack(model, ims, theta_est, llh_est);
     methods::log_likelihood_stack(model,ims,theta,llh);
     arma::mat error=theta-theta_est;

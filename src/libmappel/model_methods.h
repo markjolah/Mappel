@@ -66,16 +66,23 @@ namespace methods {
 
         template<class Model>
         MatT hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta);
+        
+        template<class Model>
+        MatT hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s);
 
         template<class Model>
         void hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, ParamT<Model> &grad, MatT &hess);
         
-        template<class Model>
-        void negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, ParamT<Model> &grad, MatT &hess);
-
+        
         template<class Model>
         MatT negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta);
         
+        template<class Model>
+        MatT negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s);
+
+        template<class Model>
+        void negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, ParamT<Model> &grad, MatT &hess);
+
         template<class Model>
         void negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, ParamT<Model> &grad, MatT &hess);
         

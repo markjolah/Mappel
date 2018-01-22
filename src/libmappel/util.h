@@ -27,6 +27,7 @@ using MatT = arma::mat; /**< A type to represent floating-point data matricies *
 using CubeT = arma::cube; /**< A type to represent floating-point data cubes */
 using VecFieldT = arma::field<VecT>;
 using StatsT = std::map<std::string,double>;  /**< A convenient form for reporting dictionaries of named FP data to matlab */
+using StringVecT = std::vector<std::string>;
 
 /* Allow easier enabale_if compilation for subclasses */
 template<class ModelT,class ModelBaseT> using IsSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,int>::type;

@@ -502,7 +502,7 @@ protected:
     static double quadratic_model_value(const VecT &step, const VecT &grad, const MatT &hess);
 
     static void compute_bound_scaling_vec(const VecT &theta, const VecT &grad, const VecT &lbound, const VecT &ubound, VecT &v, VecT &Jv);
-    static VecT bound_step(const VecT &step_hat, const VecT &D, const VecT &theta, const VecT &lbound, const VecT &ubound);
+     VecT bound_step(const VecT &step_hat, const VecT &D, const VecT &theta, const VecT &lbound, const VecT &ubound);
     static VecT compute_cauchy_point(const VecT &g, const MatT& H, double delta);
     static VecT solve_TR_subproblem(const VecT &g, const MatT &H, double delta, double epsilon);
     static VecT solve_restricted_step_length_newton(const VecT &g, const MatT &H, double delta, double lambda_lb, double lambda_ub, double epsilon);

@@ -9,18 +9,24 @@
 namespace mappel {
 
 ImageFormat1DBase::ImageFormat1DBase(ImageSizeT size_)
-    : size(size_), num_pixels(size)
+    : size(size_)
 {
     check_size(size);
 }
 
 ImageFormat1DBase::ImageFormat1DBase(const arma::Col<ImageSizeT> &size_)
-    : size(size_[0]), num_pixels(size)
+    : size(size_[0])
 {
     check_size(size);
 }
 
-void ImageFormat1DBase::check_size(ImageSizeT size_)
+void ImageFormat1DBase::set_size(const ImageSizeT &size_)
+{
+    check_size(size_);
+    size = size_;
+}
+
+void ImageFormat1DBase::check_size(const ImageSizeT &size_)
 {
     if(size_ <= min_size) {
         std::ostringstream msg;
@@ -33,9 +39,10 @@ StatsT ImageFormat1DBase::get_stats() const
 {
     StatsT stats;
     stats["imageDimensions"] = 1;
-    stats["imageSize.X"]=size;
+    stats["imageSize.X"]=get_size();
+    stats["imageNumPixels"]=get_num_pixels();
     stats["imageLimits.Xmin"]=0;
-    stats["imageLimits.Xmax"]=size;
+    stats["imageLimits.Xmax"]=get_size();
     return stats;
 }
 

@@ -3,6 +3,7 @@
  * @date 03-13-2014
  * @brief The class definition and template Specializations for PointEmitterModel
  */
+#include <algorithm>
 
 #include "PointEmitterModel.h"
 // #include "util.h"
@@ -20,6 +21,33 @@ PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
 {
 }
 
+prior_hessian::NormalDist        
+PointEmitterModel::make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma)
+{
+    std::vector<std::string> param_names = {var+"pos_mean", var+"pos_sigma"};
+    double pos_mean = size/2;
+    return prior_hessian::NormalDist(pos_mean,pos_sigma,0,size,var,std::move(param_names));
+}
+    
+prior_hessian::SymmetricBetaDist 
+PointEmitterModel::make_prior_component_position_beta(std::string var, IdxT size, double pos_beta)
+{
+    std::vector<std::string> param_names = {var+"pos_beta"};
+    return prior_hessian::SymmetricBetaDist(pos_beta,0,size,var,std::move(param_names));
+}
+
+prior_hessian::GammaDist         
+PointEmitterModel::make_prior_component_intensity(std::string var, double mean, double kappa)
+{
+    return prior_hessian::GammaDist(mean,kappa,var);
+}
+
+prior_hessian::ParetoDist        
+PointEmitterModel::make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha)
+{
+    return prior_hessian::ParetoDist(alpha,min_sigma,max_sigma,var);
+}
+
 
 StatsT PointEmitterModel::get_stats() const
 {
@@ -29,7 +57,7 @@ StatsT PointEmitterModel::get_stats() const
     auto hyperparams = prior.params();
     auto hyperparams_desc = prior.params_desc();
     std::string hp_str("hyperparameters.");
-    for(IdxT i=0; i<num_params; i++) stats[hp_str+hyperparams_desc[i]] = hyperparams[i];
+    for(IdxT i=0; i<num_hyperparams; i++) stats[hp_str+hyperparams_desc[i]] = hyperparams[i];
     stats["mcmcparams.num_phases"]=mcmc_num_candidate_sampling_phases;
     stats["mcmcparams.etaX"]=mcmc_candidate_eta_x;
     stats["mcmcparams.etaI"]=mcmc_candidate_eta_I;
@@ -52,32 +80,64 @@ void PointEmitterModel::set_prior(CompositeDist&& prior_)
     lbound = prior.lbound();
     ubound = prior.ubound();
 }
-
+/**
+ * @param param_name Exact name to search for
+ * @param default_val Optional.  defaults to NaN
+ * @return Hyperparam value. default_val if not found. NaN if not found and no default given.
+ */
+double PointEmitterModel::find_hyperparam(std::string param_name, double default_val=std::numeric_limits<double>::quiet_NaN()) const
+{
+    auto hp = get_hyperparams(); 
+    auto hp_desc = get_hyperparams_desc(); 
+    auto desc_idx = std::find(hp_desc.begin(), hp_desc.end(), param_name);
+    if(desc_idx != hp_desc.end()) {
+        return hp(std::distance(hp_desc.begin(),desc_idx));   
+    } else {
+        return default_val;
+    }
+}
 
 /**
- * 
- * Ensures (prior.lbound <= lbound) && (prior.ubound >= ubound) so that the prior constraints are not violated
+ *
+ * Modifies the prior bounds to prevent sampling outside the valid box-constraints.
  */
 void PointEmitterModel::set_bounds(const ParamT &lbound_, const ParamT &ubound_)
 {
     if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
     if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
-    auto p_lbound = prior.lbound();
-    auto p_ubound = prior.ubound();
     for(IdxT n=0; n<num_params; n++) {
-        if(lbound(n)>ubound(n)) throw BoundsError("Bounds inverted.");
-        if(std::fabs(lbound(n)-ubound(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
-        if(lbound(n) < p_lbound(n)) throw BoundsError("Lower bound below prior lower bound");
-        if(ubound(n) > p_ubound(n)) throw BoundsError("Upper bound above prior lower bound");
+        if(lbound_(n)>ubound_(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound_(n)-ubound_(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
     }
-    lbound = lbound_;
-    ubound = ubound_;
+    prior.set_bounds(lbound_,ubound_);
+    lbound = prior.lbound();
+    ubound = prior.ubound();
 }
 
+void PointEmitterModel::set_lbound(const ParamT &lbound_)
+{
+    if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
+    for(IdxT n=0; n<num_params; n++) {
+        if(lbound_(n)>ubound(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound_(n)-ubound(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+    }
+    prior.set_lbound(lbound_);
+    lbound = prior.lbound();
+}
+
+void PointEmitterModel::set_ubound(const ParamT &ubound_)
+{
+    if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
+    for(IdxT n=0; n<num_params; n++) {
+        if(lbound(n)>ubound_(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound(n)-ubound_(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+    }
+    prior.set_ubound(ubound_);
+    ubound = prior.ubound();    
+}
 
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
-    if(epsilon<0) epsilon = bounds_epsilon;
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) < lbound(n)+epsilon) theta(n)=lbound(n)+epsilon;
         if(theta(n) > ubound(n)-epsilon) theta(n)=ubound(n)-epsilon;
@@ -93,7 +153,6 @@ bool PointEmitterModel::theta_in_bounds(const ParamT &theta, double epsilon) con
 
 PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, double epsilon) const
 {
-    if(epsilon<0) epsilon=bounds_epsilon;
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) < lbound(n)+epsilon) btheta(n)=lbound(n)+epsilon;
@@ -104,7 +163,6 @@ PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, 
 
 PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta, double epsilon) const
 {
-    if(epsilon<0) epsilon=bounds_epsilon;
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(std::isfinite(lbound(n))) {

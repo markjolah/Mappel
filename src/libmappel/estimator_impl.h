@@ -507,10 +507,10 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
 //     if (~std::isfinite(data.step)) throw std::logic_error("Step is not finite");
     if(arma::dot(data.grad, data.step)<=0){
         //We are maximizing so we should be moving in direction of gradiant not away
-//         std::cout<<"****ERRRRORRRR: gradient negative.\n";
-//         std::cout<<"****grad: "<<data.grad.t()<<"\n";
-//         std::cout<<"****step: "<<data.step.t()<<"\n";
-//         std::cout<<"****<grad, step>: "<<arma::dot(data.grad, data.step)<<"\n";
+        std::cout<<"****ERRRRORRRR: gradient negative.\n";
+        std::cout<<"****grad: "<<data.grad.t()<<"\n";
+        std::cout<<"****step: "<<data.step.t()<<"\n";
+        std::cout<<"****<grad, step>: "<<arma::dot(data.grad, data.step)<<"\n";
     }
     for(int n=0; n<max_backtracks; n++){
         //Reflective boundary conditions
@@ -518,12 +518,15 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         data.set_stencil(model.make_stencil(new_theta,false));
         double can_rllh = methods::objective::rllh(model, data.im, data.stencil()); //candidate points log-lh
         bool in_bounds = model.theta_in_bounds(new_theta);
+
 //         std::cout<<"\n [Backtrack:"<<n<<"]\n";
-//         std::cout<<" Current Theta: "<<data.saved_theta().t();
+//         std::cout.precision(15);
+//         data.saved_theta().t().raw_print(std::cout," Current Theta:");
 //         std::cout<<" Step: "<<data.step.t();
 //         std::cout<<" Lambda:"<<lambda<<"\n Scaled Step:"<<(lambda*data.step).t();
 //         std::cout<<" Proposed Theta: "<<new_theta.t();
 //         printf(" CurrentRLLH:%.9g ProposedRLLH:%.9g Delta(prop-cur):%.9g\n",data.rllh,can_rllh,can_rllh-data.rllh);
+
         if(!in_bounds) throw std::logic_error("Not inbounds!");
         if(!std::isfinite(can_rllh)) throw std::logic_error("Candidate theta is inbounds but rllh is non-finite!");
 
@@ -612,6 +615,7 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
         methods::objective::grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
         data.step = -data.grad/grad2;
         if(arma::any(grad2>0)){
+
 //             std::cout<<"{NewtonDiagonal ITER:"<<n<<"} --- Correcting non-positive-definite\n";
 //             std::cout<<"Theta:"<<data.theta().t();
 //             std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
@@ -619,14 +623,17 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
 //             std::cout<<"Grad2:"<<grad2.t();
 //             std::cout<<"Step:"<<data.step.t();
 //             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
+
             //Grad2 should be negative
             double max_val = arma::max(grad2);
             grad2 -= max_val + delta;
             data.step = -data.grad/grad2;
+
 //             std::cout<<"max_val: "<<max_val<<"\n";
 //             std::cout<<"Grad2Correct:"<<grad2.t();
 //             std::cout<<"Step:"<<data.step.t();
 //             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
+
             if(arma::dot(data.step,data.grad)<=epsilon) throw std::logic_error("Unable to correct grad2 in NewtonDiagonal");
         }
         if(backtrack(data) || convergence_test(data)) return;  //Converged or gave up trying
@@ -645,17 +652,21 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
         data.step = arma::solve(arma::symmatu(hess), -data.grad);
         C=-hess;
         copy_Usym_mat(C);
+        
 //         std::cout<<"{Newton ITER:"<<n<<"}\n";
-//         std::cout<<"Theta:"<<data.theta().t();
+//         std::cout.precision(15);
+//         data.theta().t().raw_print(std::cout," Theta:");
 //         std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
 //         std::cout<<"Grad: "<<data.grad.t();
 //         std::cout<<"GradDir: "<<arma::normalise(data.grad).t();
 //         std::cout<<"Hess:\n"<<arma::symmatu(hess);
 //         std::cout<<"Positive-definite:"<<is_positive_definite(C)<<"\n";
+        
         modified_cholesky(C);
         Cstep = cholesky_solve(C,data.grad);//Drop - sign on grad since C=-hess
         auto Cfull = C;
         cholesky_convert_full_matrix(Cfull);
+        
 //         std::cout<<"C:\n"<<Cfull;
 //         std::cout<<"HessStep: "<<data.step.t();
 //         std::cout<<"HessStepDir: "<<arma::normalise(data.step).t();
@@ -665,6 +676,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"CStepDotGrad: "<<(arma::dot(arma::normalise(Cstep),arma::normalise(data.grad)))<<"\n";
 //         double nrllh = methods::objective::rllh(model,data.im,data.theta()+Cstep);
 //         std::cout<<"Rllh Curr: "<<data.rllh<<" CStep:"<<nrllh<<" Delta:"<<nrllh-data.rllh<<"\n";
+
         data.step = Cstep;
         if(!data.step.is_finite()) throw OptimizationError("Bad data_step!");
         if(arma::dot(data.grad, data.step)<=0) throw OptimizationError("Not an asscent direction!");
@@ -729,11 +741,12 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
     VecT Cvec = model.make_param();
     VecT vec = model.make_param();
     VecT Dscale(N,arma::fill::zeros);
-    double delta = 1.0;
+    double delta = 1.0; //Trust-radius
     for(int n=0; n<1000; n++) { //Main optimization loop
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
 //         std::cout<<"{TR ITER:"<<n<<"}\n";
-//         std::cout<<"   Theta:"<<data.theta().t();
+//         std::cout.precision(15);
+//         data.theta().t().raw_print(std::cout," Theta:");
 //         std::cout<<"   RLLH: "<<data.rllh<<"\n";
 //         std::cout<<"   Grad: "<<data.grad.t();
 //         std::cout<<"   Hessian:\n"<<hess;
@@ -760,6 +773,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
 //         MatT Hhat = arma::diagmat(Dinv) * -arma::symmatu(hess) * arma::diagmat(Dinv);
         VecT ghat = Dinv % -data.grad;
         
+//         std::cout<<"   delta:"<<delta<<"\n";
 //         std::cout<<"   v:"<<v.t();
 //         std::cout<<"   Jv:"<<Jv.t();
 //         std::cout<<"   Dscale:"<<Dscale.t();
@@ -965,16 +979,22 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
 {
     VecT step = step_hat / D;
     double alpha = arma::min(VecT(arma::max((lbound-theta)/step,(ubound-theta)/step)));
+//     std::cout.precision(15);
 //     std::cout<<"\n (((BoundStep))) alpha:"<<alpha<<"\n";
 //     std::cout<<"   step_hat: "<<step_hat.t();
-//     std::cout<<"   step: "<<step.t();
+//     std::cout.precision(15);
+//     step.t().raw_print(std::cout,"   step: ");
 //     std::cout<<"   D: "<<D.t();
-//     std::cout<<"   theta: "<<theta.t();
+//     std::cout.precision(15);
+//     theta.t().raw_print(std::cout,"  Theta:");
+//     std::cout<<"   theta in bounds?: "<<model.theta_in_bounds(theta)<<"\n";
 //     std::cout<<"   lbound: "<<lbound.t();
 //     std::cout<<"   ubound: "<<ubound.t();
-//     std::cout<<"   full_step: "<<(theta+step).t();
+//     std::cout.precision(15);
+//     (theta+step).t().raw_print(std::cout,"   full_step: ");
+    
     if(alpha>1){ //step is feasible.  accept it
-//         std::cout<<" (((alpha>1 ==> feasible)))\n";
+//         std::cout<<" (((alpha>1 ==> feasible))) alpha: "<<alpha<<"\n";
         VecT full_step = theta + step;
         if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
         if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
@@ -1075,8 +1095,8 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
             //The gradiant extends into the lambda min subspace, so there is a pole at s(lambda_min)=inf
             double lambda_lb = g_min_norm/delta - lambda_min;
             double lambda_ub = g_norm/delta - lambda_min;
-//             std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
-//             std::cout<<"  lambda range=["<<lambda_lb<<","<<lambda_ub<<"]\n";
+            std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
+            std::cout<<"  lambda range=["<<lambda_lb<<","<<lambda_ub<<"]\n";
             return solve_restricted_step_length_newton(g,H,delta,lambda_lb, lambda_ub, epsilon);
         } else {
             //Compute s_perp_sq = ||P^perp_min s(lambda_min)||^2
@@ -1172,12 +1192,12 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
 //         std::cout<<"* new_lambda:"<<lambda<<"\n";
         
     }
-    std::cout<<"LAMBDA SEARCH EXCEEDED!!!\n";
-    std::cout<<" g:="<<g;
-    std::cout<<" H:=\n"<<H;
-    std::cout<<" delta:="<<delta<<"\n";
-    std::cout<<" lambda_bnds:= ["<<lambda_lb<<","<<lambda_ub<<"]\n";
-    std::cout<<" epsilon:="<<epsilon<<"\n";
+//     std::cout<<"LAMBDA SEARCH EXCEEDED!!!\n";
+//     std::cout<<" g:="<<g;
+//     std::cout<<" H:=\n"<<H;
+//     std::cout<<" delta:="<<delta<<"\n";
+//     std::cout<<" lambda_bnds:= ["<<lambda_lb<<","<<lambda_ub<<"]\n";
+//     std::cout<<" epsilon:="<<epsilon<<"\n";
     throw OptimizationError("Lambda search exceeded max_iter");
 }
 
@@ -1209,20 +1229,19 @@ typename Model::Stencil
 SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, StencilT &theta_init, ParamVecT &sequence)
 {
     NewtonDiagonalMaximizer<Model> nr(model);
-    UnitRNG u;
-    int niters=max_iterations*model.mcmc_num_candidate_sampling_phases;
-    sequence=model.make_param_vec(niters+1);
+    int niters = max_iterations*model.get_mcmc_num_candidate_sampling_phases();
+    sequence = model.make_param_vec(niters+1);
     VecT sequence_rllh(niters+1);
     sequence.col(0)=theta_init.theta;
     sequence_rllh(0)=methods::objective::rllh(model, im, theta_init);
-    double max_rllh=sequence_rllh(0);
-    int max_idx=0;
+    double max_rllh = sequence_rllh(0);
+    int max_idx = 0;
     StencilT max_s;
-    double T=T_init;
+    double T = T_init; //Temperature
     int naccepted=1;
     for(int n=1; n<niters; n++){
-        ParamT can_theta=sequence.col(naccepted-1);
-        model.sample_mcmc_candidate_theta(n, rng, can_theta);
+        ParamT can_theta = sequence.col(naccepted-1);
+        model.sample_mcmc_candidate_theta(n, can_theta);
         if(!model.theta_in_bounds(can_theta)) { //OOB
             n--;
             continue;
@@ -1230,26 +1249,26 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
         double can_rllh=methods::objective::rllh(model, im, can_theta);
         if(!std::isfinite(can_rllh)) throw OptimizationError("Bad candiate relative llh.");
         double old_rllh=sequence_rllh(naccepted-1);
-        if(can_rllh < old_rllh && u(rng)>exp((can_rllh-old_rllh)/T) ){
+        if(can_rllh < old_rllh && rng_manager.randu() > exp((can_rllh-old_rllh)/T) ){
             continue;//Reject
         }
         //Accept
-        T/=cooling_rate;
-        sequence.col(naccepted)=can_theta;
-        sequence_rllh(naccepted)=can_rllh;
-        if(can_rllh>max_rllh){
-            max_rllh=can_rllh;
-            max_idx=naccepted;
+        T /= cooling_rate;
+        sequence.col(naccepted) = can_theta;
+        sequence_rllh(naccepted) = can_rllh;
+        if(can_rllh > max_rllh){
+            max_rllh = can_rllh;
+            max_idx = naccepted;
         }
         naccepted++;
-        if(naccepted>=niters+1) throw OptimizationError("Iteration error in simulated annealing");
+        if(naccepted >= niters+1) throw OptimizationError("Iteration error in simulated annealing");
     }
 
     //Run a NR maximization
     nr.local_maximize(im, model.make_stencil(sequence.col(max_idx)), max_s, max_rllh);
     //Fixup sequence to return
     sequence.resize(sequence.n_rows, naccepted+1);
-    sequence.col(naccepted)=max_s.theta;
+    sequence.col(naccepted) = max_s.theta;
     return max_s;
 }
 

@@ -12,9 +12,8 @@ set(MAPPEL_SRCS display.cpp stencil.cpp rng.cpp util.cpp mcmc.cpp numerical.cpp
                 PointEmitterModel.cpp 
                 ImageFormat1DBase.cpp 
                 PoissonNoise1DObjective.cpp  
-                Gauss1DModel.cpp
-                Gauss1DMLE.cpp
-                Gauss1DMAP.cpp
+                Gauss1DModel.cpp Gauss1DMLE.cpp Gauss1DMAP.cpp
+                Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
                 )
 
 file(GLOB MAPPEL_HDRS *.h)
@@ -38,7 +37,7 @@ target_link_libraries(${LIB_TARGET} PUBLIC Boost::chrono Boost::thread)
 set_target_properties(${LIB_TARGET} PROPERTIES PUBLIC_HEADER "${MAPPEL_HDRS}")
 # set_target_properties(${LIB_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
 target_include_directories(${LIB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
-target_include_directories(${LIB_TARGET} INTERFACE $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+#target_include_directories(${LIB_TARGET} PUBLIC $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
 
 
 if(UNIX)

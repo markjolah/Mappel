@@ -38,10 +38,6 @@ public:
 
     constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
     constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
-
-    /* Model parameters */
-    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
-    ImageCoordT num_pixels; /**< Total number of pixels in image */
     
     ImageFormat1DBase(ImageSizeT size_);
     ImageFormat1DBase(const arma::Col<ImageSizeT> &size_);
@@ -51,12 +47,30 @@ public:
     ImageStackT make_image_stack(ImageCoordT n) const;
     ImageCoordT get_size_image_stack(const ImageStackT &stack) const;
     ImageT get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const;
+
+    template<class ImT>
+    void set_image_in_stack(ImageStackT &stack, ImageCoordT n, ImT&&im) const;
     
-private:
-    static void check_size(ImageSizeT size_);
+    ImageSizeT get_size() const;
+    ImageCoordT get_num_pixels() const;
+    void set_size(const ImageSizeT &size_);
+protected:
+    /* Model parameters */
+    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
+
+    static void check_size(const ImageSizeT &size_);
 };
 
 /* Inline Method Definitions */
+inline
+ImageFormat1DBase::ImageSizeT  
+ImageFormat1DBase::get_size() const
+{ return size; }
+
+inline
+ImageFormat1DBase::ImageCoordT 
+ImageFormat1DBase::get_num_pixels() const
+{ return size; }
 
 inline
 ImageFormat1DBase::ImageT
@@ -86,6 +100,13 @@ ImageFormat1DBase::get_image_from_stack(const ImageStackT &stack,ImageCoordT n) 
     return stack.col(n);
 }
 
+template<class ImT>
+void ImageFormat1DBase::set_image_in_stack(ImageStackT &stack, ImageCoordT n, ImT&&im  ) const
+{
+    stack.col(n)=im;
+}
+
+
 /* Templated Methods Definitions */
 namespace methods {
     template<class Model, typename = IsSubclassT<Model,ImageFormat1DBase>>
@@ -93,7 +114,7 @@ namespace methods {
     model_image(const Model &model, const StencilT<Model> &s)
     {
         auto im = model.make_image();
-        for(ImageCoordT<Model> i=0; i<model.size; i++)  im(i) = model.pixel_model_value(i,s);
+        for(ImageCoordT<Model> i=0; i<model.get_size(); i++)  im(i) = model.pixel_model_value(i,s);
         return im;
     }
 } /* namespace mappel::methods */

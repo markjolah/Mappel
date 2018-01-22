@@ -60,11 +60,25 @@ add_subdirectory(src/test) #Test executables
 
 if(OPT_MATLAB)
     #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX
+    message(STATUS "*** Matlab Module Building Enabled ***")
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING URL of MexIFace library dependency)
     AddExternalDependency(MexIFace ${MexIFaceURL} SHARED)
     #Configure MexIFace envrionment
     include(MexIFace)
-    add_subdirectory(src/IFace) #MATLAB Modules
+    add_subdirectory(src/MexIFace) #MATLAB Modules
+endif()
+
+if(OPT_PYTHON)
+    message(STATUS "*** Python Module Building Enabled ***")
+    if(DEBUG)
+        set(Boost_USE_DEBUG_PYTHON "On")
+    endif()
+    find_package(PythonInterp)
+    find_package(PythonLibs)
+#     find_package(Boost REQUIRED COMPONENTS python)
+#     message(status "Boost::Python Found:${Boost_PYTHON_FOUND}")
+#     message(status "Boost::Python Lib:${Boost_PYTHON_LIBRARY}")
+    add_subdirectory(src/python)
 endif()
 
 
