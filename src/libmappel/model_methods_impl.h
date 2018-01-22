@@ -19,6 +19,12 @@ namespace methods {
         return model_image(model, model.make_stencil(theta,false)); //don't compute derivative stencils
     }
 
+    template<class Model>
+    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta) 
+    {
+        return simulate_image(model, model.make_stencil(theta,false), rng_manager.generator()); //don't compute derivative stencils
+    }
+    
     template<class Model, class rng_t>
     ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta, rng_t &rng) 
     {

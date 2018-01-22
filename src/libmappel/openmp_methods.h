@@ -72,7 +72,7 @@ void model_image_stack(const Model &model,
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        model.get_image_from_stack(image_stack,n) = model_image(model, theta_stack.col(n));
+        model.set_image_in_stack(image_stack,n, model_image(model, theta_stack.col(n)));
 }
 
 
@@ -118,6 +118,7 @@ void simulate_image_stack(const Model &model,
         }
     }
 }
+
 
 /** @brief Parallel log_likelihood calculations for a single image.
  * 

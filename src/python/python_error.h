@@ -17,13 +17,14 @@ public:
     /** @brief Create a PythonError with specified condition
     */
     PythonError(std::string message) :  _condition("C++ Interface Error"), _message(message) {};
-    PythonError(std::string condition, std::string message) :  _condition(condition), _message(message) {};
+    PythonError(std::string condition, std::string message) :  _condition(condition), _message(message), _what(condition+": "+message) {};
     const char* condition() const noexcept { return _condition.c_str(); };
     const char* message() const noexcept { return _message.c_str(); };
-    const char* what() const noexcept override { return (_condition+": "+_message).c_str(); };
+    const char* what() const noexcept override { return _what.c_str(); };
 protected:
     std::string _condition;
     std::string _message;
+    std::string _what;
 };
 
 #endif /*_PYTHON_ERROR_H */

@@ -39,6 +39,9 @@ namespace methods {
     typename Model::ImageT model_image(const Model &model, const ParamT<Model> &theta);
 
     template<class Model, class rng_t>
+    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta);
+
+    template<class Model, class rng_t>
     ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta, rng_t &rng);
 
     template<class Model>
