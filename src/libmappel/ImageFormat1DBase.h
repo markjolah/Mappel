@@ -38,10 +38,6 @@ public:
 
     constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
     constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
-
-    /* Model parameters */
-    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
-    ImageCoordT num_pixels; /**< Total number of pixels in image */
     
     ImageFormat1DBase(ImageSizeT size_);
     ImageFormat1DBase(const arma::Col<ImageSizeT> &size_);
@@ -55,11 +51,26 @@ public:
     template<class ImT>
     void set_image_in_stack(ImageStackT &stack, ImageCoordT n, ImT&&im) const;
     
-private:
-    static void check_size(ImageSizeT size_);
+    ImageSizeT get_size() const;
+    ImageCoordT get_num_pixels() const;
+    void set_size(const ImageSizeT &size_);
+protected:
+    /* Model parameters */
+    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
+
+    static void check_size(const ImageSizeT &size_);
 };
 
 /* Inline Method Definitions */
+inline
+ImageFormat1DBase::ImageSizeT  
+ImageFormat1DBase::get_size() const
+{ return size; }
+
+inline
+ImageFormat1DBase::ImageCoordT 
+ImageFormat1DBase::get_num_pixels() const
+{ return size; }
 
 inline
 ImageFormat1DBase::ImageT
@@ -103,7 +114,7 @@ namespace methods {
     model_image(const Model &model, const StencilT<Model> &s)
     {
         auto im = model.make_image();
-        for(ImageCoordT<Model> i=0; i<model.size; i++)  im(i) = model.pixel_model_value(i,s);
+        for(ImageCoordT<Model> i=0; i<model.get_size(); i++)  im(i) = model.pixel_model_value(i,s);
         return im;
     }
 } /* namespace mappel::methods */

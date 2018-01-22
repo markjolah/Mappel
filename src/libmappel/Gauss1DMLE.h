@@ -13,7 +13,6 @@
 #include "MLEstimator.h"
 #include "model_methods.h" //Declaration of methods
 
-
 namespace mappel {
 
 /** @brief A 1D Gaussian with fixed PSF under an Poisson noise assumption and maximum-likelihood estimator
@@ -26,7 +25,9 @@ class Gauss1DMLE : public Gauss1DModel, public PoissonNoise1DObjective, public M
 {
 public:
     Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma);
+
     Gauss1DMLE(ImageSizeT size, double psf_sigma);
+
     template<class PriorDistT>
     Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
     

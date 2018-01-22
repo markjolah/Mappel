@@ -21,19 +21,17 @@ namespace mappel {
  *   Objective Statistical Noise Model: PoissonNoise1DMAPObjective an MLE objective for Poisson noise
  *   ImageFormat: ImageFormat1DBase - Data format
  */
-
 class Gauss1DsMAP : public Gauss1DsModel, public PoissonNoise1DObjective, public MAPEstimator 
 {
 public:    
-    /* Constructor/Destructor */
     Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma);
+
     Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma);
+
     template<class PriorDistT>
     Gauss1DsMAP(ImageSizeT size, PriorDistT&& prior);     
     
-    /* Model values setting and information */
     std::string name() const {return "Gauss1DsMAP";}
-
 };
 
 } /* namespace mappel */

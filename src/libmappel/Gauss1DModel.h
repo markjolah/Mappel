@@ -45,8 +45,6 @@ public:
         friend std::ostream& operator<<(std::ostream &out, const Gauss1DModel::Stencil &s);
     };
     using StencilVecT = std::vector<Stencil>;
-    /* Non-static data Members */
-    double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
     
     Gauss1DModel(IdxT size_, double psf_sigma);
 
@@ -56,6 +54,9 @@ public:
                                              double kappa_I, double mean_bg, double kappa_bg);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg);
+
+    double get_psf_sigma() const;
+    void set_psf_sigma(double new_psf_sigma);
     
     StatsT get_stats() const;
 
@@ -74,9 +75,13 @@ public:
 
     /** @brief Posterior Sampling */
     void sample_mcmc_candidate_theta(IdxT sample_index, ParamT &canidate_theta, double scale=1.0) const;
+protected:
+    /* Non-static data Members */
+    double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
+
 };
 
-/* Function Declarations */
+
 /* Inline Method Definitions */
 
 /** @brief Make a new stencil for parameter theta and optionally compute derivatives
@@ -89,6 +94,10 @@ Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 {
     return Stencil(*this,theta,compute_derivatives);
 }
+
+inline
+double Gauss1DModel::get_psf_sigma() const
+{ return psf_sigma; }
 
 
 inline

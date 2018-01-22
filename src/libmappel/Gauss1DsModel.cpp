@@ -50,6 +50,35 @@ Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                          make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
 
+void Gauss1DsModel::set_min_sigma(double min_sigma)
+{
+    auto lb = prior.lbound();
+    lb(3) = min_sigma;
+    set_lbound(lb);
+}
+
+void Gauss1DsModel::set_max_sigma(double max_sigma)
+{
+    auto ub = prior.ubound();
+    ub(3) = max_sigma;
+    set_ubound(ub);
+}
+
+void Gauss1DsModel::set_min_sigma(const VecT &min_sigma)
+{
+    auto lb = prior.lbound();
+    lb(3) = min_sigma(0);
+    set_lbound(lb);
+}
+
+void Gauss1DsModel::set_max_sigma(const VecT &max_sigma)
+{
+    auto ub = prior.ubound();
+    ub(3) = max_sigma(0);
+    set_ubound(ub);
+}
+
+
 
 Gauss1DsModel::Stencil::Stencil(const Gauss1DsModel &model_,
                                const Gauss1DsModel::ParamT &theta,

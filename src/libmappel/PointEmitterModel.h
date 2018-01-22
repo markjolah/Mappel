@@ -101,6 +101,8 @@ public:
     
     /** Box-type parameter bounds */
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
+    void set_lbound(const ParamT &lbound);
+    void set_ubound(const ParamT &ubound);
     const ParamT& get_lbound() const;
     const ParamT& get_ubound() const;
     void bound_theta(ParamT &theta,double epsilon=bounds_epsilon) const;

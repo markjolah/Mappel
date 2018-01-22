@@ -55,6 +55,12 @@ public:
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
                                                double min_sigma, double max_sigma);
+    double get_min_sigma() const;
+    double get_max_sigma() const;
+    void set_min_sigma(double min_sigma);
+    void set_max_sigma(double max_sigma);
+    void set_min_sigma(const VecT &min_sigma);
+    void set_max_sigma(const VecT &max_sigma);
     
     StatsT get_stats() const;
 
@@ -77,6 +83,14 @@ protected:
     double mcmc_candidate_eta_sigma; /**< Std-dev for the normal perturbations to theta_sigma under MCMC sampling */
 
 };
+
+inline
+double Gauss1DsModel::get_min_sigma() const
+{ return prior.lbound()(3);}
+
+inline
+double Gauss1DsModel::get_max_sigma() const
+{ return prior.ubound()(3);}
 
 
 /* Inline Method Definitions */

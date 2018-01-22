@@ -25,7 +25,9 @@ class Gauss1DsMLE : public Gauss1DsModel, public PoissonNoise1DObjective, public
 {
 public:
     Gauss1DsMLE(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma);
+
     Gauss1DsMLE(ImageSizeT size, double min_sigma, double max_sigma);
+
     template<class PriorDistT>
     Gauss1DsMLE(ImageSizeT size, PriorDistT&& prior);     
     
@@ -34,5 +36,5 @@ public:
  
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS1DMLE_H */
+#endif /* _MAPPEL_GAUSS1DSMLE_H */
     

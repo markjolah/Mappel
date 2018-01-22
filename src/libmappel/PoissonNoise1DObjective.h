@@ -55,7 +55,7 @@ namespace methods {
     simulate_image(const Model &model, const StencilT<Model> &s, rng_t &rng)
     {
         auto sim_im = model.make_image();
-        for(ImageCoordT<Model> i=0; i<model.size; i++) sim_im(i) = generate_poisson(rng, model.pixel_model_value(i,s));
+        for(ImageCoordT<Model> i=0; i<model.get_size(); i++) sim_im(i) = generate_poisson(rng, model.pixel_model_value(i,s));
         return sim_im;
     }
 
@@ -64,7 +64,7 @@ namespace methods {
     simulate_image_from_model(const Model &model, const ImageT<Model> &model_im, rng_t &rng)
     {
         auto sim_im = model.make_image();
-        for(ImageCoordT<Model> i=0; i<model.size; i++) sim_im(i) = generate_poisson(rng,model_im(i));
+        for(ImageCoordT<Model> i=0; i<model.get_size(); i++) sim_im(i) = generate_poisson(rng,model_im(i));
         return sim_im;
     }
     
@@ -81,7 +81,7 @@ namespace methods {
         auto fisherI = model.make_param_mat();
         fisherI.zeros();
         auto pgrad = model.make_param();
-        for(ImageCoordT<Model> i=0; i<model.size; i++) {  
+        for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {  
             auto model_val = model.pixel_model_value(i,s);
             model.pixel_grad(i,s,pgrad);
             for(IdxT c=0; c<model.get_num_params(); c++) for(IdxT r=0; r<=c; r++) {
@@ -124,7 +124,7 @@ namespace methods {
         llh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
         {
             double llh_val = 0.;
-            for(ImageCoordT<Model> i=0; i<model.size; i++) {
+            for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                 if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                 llh_val += poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
             }
@@ -137,7 +137,7 @@ namespace methods {
         rllh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
         {
             double rllh_val = 0.;
-            for(ImageCoordT<Model> i=0; i<model.size; i++) {
+            for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                 if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                 rllh_val += relative_poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
             }
@@ -152,7 +152,7 @@ namespace methods {
             auto pixel_grad = model.make_param(); 
             auto grad_val = model.make_param(); //Accumulator for overall grad
             grad_val.zeros();
-            for(ImageCoordT<Model> i=0; i<model.size; i++) {
+            for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                 if(!std::isfinite(im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                 model.pixel_grad(i,s,pixel_grad);
                 double model_val = model.pixel_model_value(i,s);
@@ -171,7 +171,7 @@ namespace methods {
             auto pixel_grad2 = model.make_param();
             grad_val.zeros();
             grad2_val.zeros();
-            for(ImageCoordT<Model> i=0; i<model.size; i++){
+            for(ImageCoordT<Model> i=0; i<model.get_size(); i++){
                 if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
                 /* Compute model value and ratios */
                 double model_val = model.pixel_model_value(i,s);
@@ -193,7 +193,7 @@ namespace methods {
             /* Returns hessian as an upper triangular matrix */
             grad_val.zeros();
             hess_val.zeros();
-            for(typename Model::ImageSizeT i=0;i<model.size;i++) { 
+            for(typename Model::ImageSizeT i=0;i<model.get_size();i++) { 
                 if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
                 /* Compute model value and ratios */
                 double model_val = model.pixel_model_value(i,s);
@@ -211,7 +211,7 @@ namespace methods {
             llh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
             {
                 VecT llh_vec(model.num_pixels,arma::fill::zeros);
-                for(ImageCoordT<Model> i=0; i<model.size; i++) {
+                for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                     if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                     llh_vec += poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
                 }
@@ -223,7 +223,7 @@ namespace methods {
             rllh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
             {
                 VecT rllh_vec(model.num_pixels,arma::fill::zeros);
-                for(ImageCoordT<Model> i=0; i<model.size; i++) {
+                for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                     if(!std::isfinite(im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                     rllh_vec(i) += relative_poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
                 }
@@ -236,7 +236,7 @@ namespace methods {
             {
                 auto pixel_grad = model.make_param(); 
                 MatT grad_vec(model.num_params,model.num_pixels); //per-pixel grad contributions to objective
-                for(ImageCoordT<Model> i=0; i<model.size; i++) {
+                for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                     if(!std::isfinite(im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                     model.pixel_grad(i,s,pixel_grad);
                     double model_val = model.pixel_model_value(i,s);
@@ -256,7 +256,7 @@ namespace methods {
                 auto hess_val = model.make_param_mat();
                 grad_val.zeros();
                 hess_val.zeros();
-                for(typename Model::ImageSizeT i=0;i<model.size;i++) { 
+                for(typename Model::ImageSizeT i=0;i<model.get_size();i++) { 
                     if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
                     /* Compute model value and ratios */
                     double model_val = model.pixel_model_value(i,s);

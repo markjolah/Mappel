@@ -47,6 +47,16 @@ Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                          make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
 
+void Gauss1DModel::set_psf_sigma(double new_psf_sigma)
+{ 
+    if(new_psf_sigma<=0 || !std::isfinite(new_psf_sigma)) {
+        std::ostringstream msg;
+        msg<<"Bad psf_sigma: "<<psf_sigma;
+        throw MappelError("BadParameter",msg.str());
+    }
+    psf_sigma = new_psf_sigma;
+}
+
 
 Gauss1DModel::Stencil::Stencil(const Gauss1DModel &model_,
                                const Gauss1DModel::ParamT &theta,

@@ -5,20 +5,35 @@
  *
  * This is the core for the mappel::python interface
  */
+#include "py11_armadillo_iface.h"
+#include "py11_mappel_iface.h"
+
 #include "Gauss1DMLE.h"
-#include <boost/python.hpp>
 
-using namespace boost::python;
 
-template<class Model>
-void bind_MappelFixedSigmaModel()
+// namespace py = pybind11;
+// namespace py11_armadillo;
+
+
+
+// NDArrayDoubleT* test(NDArrayDoubleT array)
+// {
+//     
+//     
+//     auto *a2 = new NDArrayDoubleT(array);
+//     std::cout<<"Ndim:"<<a2->ndim()<<std::endl;
+//     std::cout<<"itemsize:"<<a2->itemsize()<<std::endl;
+//     std::cout<<"size:"<<a2->size()<<std::endl;
+//     arma::vec c = viewAsArmaCol<double>(array);
+//     std::cout<<"c:"<<c.t()<<std::endl;
+//     std::cout<<"c.n_elem:"<<c.n_elem<<std::endl;
+//     return a2;
+// }
+
+
+PYBIND11_MODULE(mappel, M)
 {
-    class_<Model, boost::noncopyable>(Model::name().c_str(), init<arma::Col<typename Model::ImageCoordT>, mappel::VecT>())
-        .def_readonly("psf_sigma",&Model::psf_sigma)
-        ;
-}  
-
-BOOST_PYTHON_MODULE(mappel)
-{
-    bind_MappelFixedSigmaModel<mappel::Gauss1DMLE>();
+    M.doc()="Mappel Python Interface!";
+    mappel::python::bindMappelModel<mappel::Gauss1DMLE>(M);
 }
+

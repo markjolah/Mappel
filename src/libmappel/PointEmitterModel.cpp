@@ -114,6 +114,27 @@ void PointEmitterModel::set_bounds(const ParamT &lbound_, const ParamT &ubound_)
     ubound = prior.ubound();
 }
 
+void PointEmitterModel::set_lbound(const ParamT &lbound_)
+{
+    if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
+    for(IdxT n=0; n<num_params; n++) {
+        if(lbound_(n)>ubound(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound_(n)-ubound(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+    }
+    prior.set_lbound(lbound_);
+    lbound = prior.lbound();
+}
+
+void PointEmitterModel::set_ubound(const ParamT &ubound_)
+{
+    if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
+    for(IdxT n=0; n<num_params; n++) {
+        if(lbound(n)>ubound_(n)) throw BoundsError("Bounds inverted.");
+        if(std::fabs(lbound(n)-ubound_(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+    }
+    prior.set_ubound(ubound_);
+    ubound = prior.ubound();    
+}
 
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
