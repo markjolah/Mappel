@@ -79,8 +79,12 @@ public:
     
     IdxT get_num_params() const;
     ParamT make_param() const;
-    ParamVecT make_param_vec(IdxT n) const;
+    ParamVecT make_param_stack(IdxT n) const;
     MatT make_param_mat() const;
+    CubeT make_param_mat_stack(IdxT n) const;
+    void check_param_shape(const ParamT &theta) const;
+    void check_param_shape(const ParamVecT &theta) const;
+    
     
     CompositeDist& get_prior();
     const CompositeDist& get_prior() const;
@@ -147,12 +151,16 @@ PointEmitterModel::ParamT PointEmitterModel::make_param() const
 { return ParamT(num_params); }
 
 inline
-PointEmitterModel::ParamVecT PointEmitterModel::make_param_vec(IdxT n) const
+PointEmitterModel::ParamVecT PointEmitterModel::make_param_stack(IdxT n) const
 { return ParamVecT(num_params, n); }
 
 inline
 MatT PointEmitterModel::make_param_mat() const
 { return MatT(num_params, num_params); }
+
+inline
+CubeT PointEmitterModel::make_param_mat_stack(IdxT n) const
+{ return CubeT(num_params, num_params, n); }
 
 inline
 PointEmitterModel::CompositeDist& PointEmitterModel::get_prior() 
@@ -220,7 +228,7 @@ template<class Model, typename>
 std::ostream& operator<<(std::ostream &out, const Model &model)
 {
     auto stats = model.get_stats();
-    out<<"["<<model.name()<<"]:\n";
+    out<<"["<<model.name<<"]:\n";
     for(auto& stat: stats) out<<"\t"<<stat.first<<" = "<<stat.second<<"\n";
     return out;
 }

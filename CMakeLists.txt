@@ -9,11 +9,11 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 # See: LICENCE file
 
-cmake_minimum_required( VERSION 3.5 )
+cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.2 LANGUAGES CXX)
 
-cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
-cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
+# cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
+# cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
 
 # Enable Matlab Support via MexIFace
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)

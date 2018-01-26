@@ -7,6 +7,16 @@
 ## Find and Configure Required Libraries ##
 message(STATUS "[Mappel]: Configure Libraries")
 
+#INTERPROCEDURAL_OPTIMIZATION
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_SUPPORTED_ERROR)
+
+if( IPO_SUPPORTED )
+    message(STATUS "IPO / LTO enabled")
+else()
+    message(STATUS "IPO / LTO not supported: <${IPO_SUPPORTED_ERROR}>")
+endif()
+
 # Armadillo
 find_package(Armadillo REQUIRED)
 add_definitions(-DARMA_USE_CXX11 -DARMA_DONT_USE_WRAPPER -DARMA_BLAS_LONG)

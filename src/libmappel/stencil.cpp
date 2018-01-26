@@ -4,6 +4,7 @@
  * @date 03-22-2014
  * @brief The stencils for pixel based computations
  */
+#include <sstream>
 #include "util.h"
 #include "stencil.h"
 #include "display.h"
@@ -11,6 +12,29 @@
 namespace mappel {
 
 static const double MIN_INTENSITY = 10.;
+static const double sqrt2 = sqrt(2);
+
+double normal_quantile_twosided(double confidence)
+{
+    if( confidence <=0 || confidence >=1) {
+        std::ostringstream msg;
+        msg<<"Got bad confidence:"<<confidence<<" should be in (0,1).";
+        throw BadValueError(msg.str());
+    }
+    double p = 1 - (1-confidence)/2.;
+    return sqrt2*erf(2*p-1);
+}
+
+double normal_quantile_onesided(double confidence)
+{
+    if( confidence <=0 || confidence >=1) {
+        std::ostringstream msg;
+        msg<<"Got bad confidence:"<<confidence<<" should be in (0,1).";
+        throw BadValueError(msg.str());
+    }
+    return sqrt2*erf(2*confidence-1);
+}
+
 
 void fill_gaussian_stencil(int size, double stencil[],  double sigma)
 {

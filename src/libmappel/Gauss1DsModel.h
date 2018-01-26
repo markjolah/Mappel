@@ -74,7 +74,8 @@ public:
     void pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, 
                            double dmm_ratio, ParamT &grad, MatT &hess) const;
                            
-        /** @brief Fast, heuristic estimate of initial theta */
+    /** @brief Fast, heuristic estimate of initial theta */
+    Stencil initial_theta_estimate(const ImageT &im) const;
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
 
     /** @brief Posterior Sampling */
@@ -138,6 +139,16 @@ void Gauss1DsModel::pixel_hess(IdxT i, const Stencil &s, MatT &hess) const
     hess(1,3) = s.DXS(i);
     hess(3,3) = I * s.DXS2(i);
 }
+
+inline
+Gauss1DsModel::Stencil 
+Gauss1DsModel::initial_theta_estimate(const ImageT &im) const
+{
+    auto theta = make_param();
+    theta.zeros();
+    return initial_theta_estimate(im,theta);
+}
+
 
 } /* namespace mappel */
 

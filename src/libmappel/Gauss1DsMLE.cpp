@@ -7,7 +7,8 @@
 #include "Gauss1DsMLE.h"
 
 namespace mappel {
-    
+const std::string Gauss1DsMLE::name("Gauss1DsMLE");
+
 Gauss1DsMLE::Gauss1DsMLE(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma) : 
             PointEmitterModel(make_default_prior(size(0),min_sigma(0),max_sigma(0))), 
             ImageFormat1DBase(size(0)),

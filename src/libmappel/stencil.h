@@ -92,7 +92,8 @@ double normal_prior_grad(double sigma);
 // template<class rng_t>
 // double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double eta=10.);
 
-
+double normal_quantile_twosided(double confidence);
+double normal_quantile_onesided(double confidence);
 
 
 /* inline function definitions */
@@ -233,7 +234,8 @@ VecT make_gaussian_stencil(int size, double sigma)
 
 
 
-inline double poisson_log_likelihood(double model_val, double data_val)
+inline 
+double poisson_log_likelihood(double model_val, double data_val)
 {
     if(!std::isfinite(data_val)) return 0.; //This is a masked pixel do not include in likelihood
     if(model_val==0.) return 0.;//Probability here is below machine epsilon
@@ -241,47 +243,14 @@ inline double poisson_log_likelihood(double model_val, double data_val)
     return data_val*log(model_val)-model_val-lgamma(data_val+1);
 }
 
-inline double relative_poisson_log_likelihood(double model_val, double data_val)
+inline 
+double relative_poisson_log_likelihood(double model_val, double data_val)
 {
     if(!std::isfinite(data_val)) return 0.; //This is a masked pixel do not include in likelihood
     if(model_val==0.) return 0.;//Probability here is below machine epsilon
     if(data_val==0.) return -model_val; //Skip multiplication by zero
     return data_val*log(model_val)-model_val;
 }
-/*
-inline
-double check_lower_bound_hyperparameter(const char *name, double value, double lower_bound)
-{
-    if (value<lower_bound) {
-        std::ostringstream out;
-        out << "Hyperparameter: "<<name<<" = "<<value<<". Should be positive.";
-        throw BadInputException(out.str());
-    }
-    return value;
-}
-
-inline
-double check_positive_hyperparameter(const char *name ,double value, double hyperprior_epsilon)
-{
-    if (value<hyperprior_epsilon) {
-        std::ostringstream out;
-        out << "Hyperparameter: "<<name<<" = "<<value<<". Should be positive.";
-        throw BadInputException(out.str());
-    }
-    return value;
-}
-
-inline
-double check_unit_hyperparameter(const char *name, double value, double hyperprior_epsilon)
-{
-    if (value<hyperprior_epsilon || value > 1.-hyperprior_epsilon){
-        std::ostringstream out;
-        out << "Hyperparameter: "<<name<<" = "<<value<<". Should be in open interval (0,1)";
-        throw BadInputException(out.str());
-    }
-    return value;
-}
-*/
 
 
 inline
@@ -416,38 +385,6 @@ double normal_prior_grad2(double sigma)
     return -1./sigma;
 }
 
-/* Templated function definitions */
-/*
-template<class rng_t>
-double sample_beta_cand_dist(rng_t &rng, double &val, double min_val, double max_val, double eta)
-{
-    using boost::math::pdf;
-    double epsilon=1e-6;
-    double width=max_val-min_val;
-    double norm_val=(val-min_val)/width;
-    norm_val=restrict_value_range(norm_val, epsilon, 1. - epsilon);
-    BetaDist d(eta*norm_val, eta*(1.-norm_val));
-    double new_val=generate_beta(rng, d);
-    double new_norm_val=restrict_value_range(new_val, epsilon, 1. - epsilon);
-    BetaDist nd(eta*new_norm_val, eta*(1.-new_norm_val));
-    val=new_val*width+min_val;  //Modify val to new candidate val.
-    return pdf(nd, norm_val)/pdf(d, new_norm_val); //pratio=p(y,x)/p(x,y)
-}
-
-template<class rng_t>
-double sample_gamma_cand_dist(rng_t &rng, double &val, double min_val, double eta)
-{
-    using boost::math::pdf;
-    double epsilon=1e-6;
-    double norm_val=val-min_val;
-    norm_val= std::max(epsilon,norm_val);
-    GammaDist d(eta, norm_val/eta);
-    double new_val=generate_gamma(rng, d);
-    double new_norm_val= std::max(epsilon,new_val);
-    GammaDist nd(eta, new_norm_val/eta);
-    val=new_val+min_val;//Modify val to new candidate val.
-    return pdf(nd, norm_val)/pdf(d, new_norm_val); //pratio=p(y,x)/p(x,y)
-}*/
 
 } /* namespace mappel */
 

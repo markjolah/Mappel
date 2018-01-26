@@ -9,8 +9,8 @@
 namespace mappel {
     
     const std::vector<std::string> PoissonGaussianNoise2DObjective::estimator_names(
-        { "HeuristicEstimator", "CGaussHeuristicEstimator", "CGaussMLE", 
-            "NewtonMaximizer", "NewtonDiagonalMaximizer", "QuasiNewtonMaximizer", "TrustRegionMaximizer"
-            "SimulatedAnnealingMaximizer"});
+        { "Heuristic", "CGaussHeuristic", "CGaussMLE", 
+            "Newton", "NewtonDiagonal", "QuasiNewton", "TrustRegion"
+            "SimulatedAnnealing"});
     
 } /* namespace mappel */
