@@ -1,11 +1,23 @@
 [metadata]
 name = @PROJECT_NAME@
-description = Fast parallel point emitter localization for fluorescence microscopy.
 version = @PROJECT_VERSION@
+description = 
+    Fast parallel point emitter localization for fluorescence microscopy.
+long_description_content_type = text
+long_description = 
+    Python bindings for the MAPPEL [Maximum A-Posteriori Point Emitter Localization] library.  MAPPEL is an open source, fast point emitter localization
+    algorithm for analysis of diffraction limited point emitters in super-resolution fluorescence microscopy images.  MAPPEL includes state of the art
+    optimization algorithms for Maximum likelihood, maximum a-Posteriori point emitter optimization, as well as Markov Chain Monte Carlo posterior density
+    estimates, and profile likelihood based inference.  Computations are performed in parallel using high-performance OpenMP C++ extension modules.
 url = https://github.com/markjolah/Mappel
 author = Mark J. Olah
 author_email = mjo AT cs.unm DOT edu
 license = Apache 2.0
+licence-file = LICENSE
+platforms =
+    Linux
+    Windows
+    MaxOS X
 keywords = 
     fluorescence microscopy
     emitter localization
@@ -24,17 +36,20 @@ classifiers =
     Operating System :: Microsoft :: Windows
     Operating System :: MacOS :: MacOS X
     Programming Language :: C++
-    Programming Language :: Python
-    Programming Language :: Python :: 2.7
+    Programming Language :: Python :: 3
     Programming Language :: Python :: 3.4
     Programming Language :: Python :: 3.5
     Programming Language :: Python :: 3.6
     Topic :: Scientific/Engineering
-
+    
 [options]
 zip_safe = False
 
 [aliases]
 localdevelop = develop --user -e -b .
+test = pytest
+
+[tool:pytest]
+addopts = --hypothesis-show-statistics
 
 
