@@ -70,6 +70,7 @@ endif()
 
 if(OPT_PYTHON)
     add_subdirectory(src/python)
+    add_subdirectory(python)
 endif()
 
 

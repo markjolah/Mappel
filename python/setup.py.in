@@ -1,0 +1,73 @@
+#!/usr/bin/env python
+#
+# setup.py - setuptools configuration for Mappel python
+# 
+# 
+#
+
+import os
+import re
+import sys
+import platform
+import subprocess
+
+from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext
+
+class CMakeExtension(Extension):
+    def __init__(self, name, sourcedir=''):
+        Extension.__init__(self, name, sources=[])
+        self.sourcedir = os.path.abspath(sourcedir)
+
+class CMakeBuild(build_ext):
+    def finalize_options(self):
+        #self.inplace=1;
+        super(CMakeBuild, self).finalize_options()
+        
+    def run(self):
+        #try:
+            #out = subprocess.check_output(['cmake', '--version'])
+        #except OSError:
+            #raise RuntimeError("CMake must be installed to build the following extensions: " +
+                               #", ".join(e.name for e in self.extensions))
+        print("Outputs: ", self.get_outputs())
+        print("Source: ", self.get_source_files())
+        print("Inplace: ", self.inplace);
+        for ext in self.extensions:
+            self.build_extension(ext)
+
+    def build_extension(self, ext):
+        full_path = self.get_ext_fullpath(ext.name)
+        file_name = self.get_ext_filename(ext.name)
+        build_dir = os.path.abspath(os.path.dirname(full_path))
+        package_dir = ext.sourcedir
+        cmake_binary_dir = "@CMAKE_BINARY_DIR@"
+        
+        print("BuildExtension: ", ext.name)
+        print("FullPath: ", full_path)
+        print("FullName: ", self.get_ext_fullname(ext.name))
+        print("FileName: ", file_name)
+        print("ExportSybols: ", self.get_export_symbols(ext))
+        print("Libraries: ", self.get_libraries(ext))
+        print("BuildLib: ", self.build_lib)
+        print("BuildDir: ", build_dir)
+        print("SourceDir: ", ext.sourcedir)
+        print("CmakeBinaryDir: ", cmake_binary_dir)
+        
+
+        if not os.path.exists(self.build_lib):
+           os.makedirs(self.build_lib)
+        subprocess.check_call(['cmake', '--build', 'src/python'], cwd=cmake_binary_dir)
+        if not os.path.normpath(package_dir) == os.path.normpath(build_dir) :
+            subprocess.check_call(['cp -v %s %s'%(file_name, full_path)], shell=True, cwd=package_dir)
+        
+        
+
+
+#shared_objects = glob("*.so");
+#print(shared_objects);
+setup(
+      packages=["mappel"],
+      ext_modules=[CMakeExtension('_Gauss1DMLE')],
+      cmdclass={"build_ext":CMakeBuild}
+     )

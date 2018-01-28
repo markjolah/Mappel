@@ -6,7 +6,6 @@
 message(STATUS "*** Python Module Building Enabled ***")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/pybind11/tools")
 
-add_subdirectory( pybind11 )
 
 #List of all Models to build a python module for.
 set(MAPPEL_PYTHON_MODELS Gauss1DMLE)
@@ -17,8 +16,12 @@ if(NOT MAPPEL_PYTHON_VERSIONS)
     message(STATUS "MAPPEL_PYTHON_VERSIONS unset. Using system python version.")
     if(MAPPEL_PYTHON_EXECUTABLE)
         set(PYTHON_EXECUTABLE ${MAPPEL_PYTHON_EXECUTABLE})
+#     elseif(NOT PYTHON_EXECUTABLE)
+#         set(PYTHON_EXECUTABLE python)
     endif()
+    message(STATUS "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}")
     find_package(PythonInterp)
+    find_package(PythonLibs)
     message(STATUS "Found python version:${PYTHON_VERSION_STRING}")
     string(REGEX MATCH "^[2-3]\.[0-9]+" FOUND_PYTHON_VERSION ${PYTHON_VERSION_STRING})
     set(MAPPEL_PYTHON_VERSIONS ${FOUND_PYTHON_VERSION} CACHE STRING "List of X.Y python version to build for.")
@@ -31,6 +34,8 @@ message(STATUS "MAPPEL_PYTHON_VERSIONS:${MAPPEL_PYTHON_VERSIONS}")
 if(NOT MAPPEL_PYTHON_VERSIONS)
     message(FATAL_ERROR "No valid python versions found")
 endif()
+ message(STATUS "PYTHON_EXECUTABLE:${PYTHON_EXECUTABLE}")
+add_subdirectory( pybind11 )
 
 foreach(vers ${MAPPEL_PYTHON_VERSIONS})
     string(REPLACE "\." "_" vers_ ${vers})  
@@ -74,13 +79,11 @@ foreach(vers ${MAPPEL_PYTHON_VERSIONS})
         target_link_libraries(${MODULE_NAME} PUBLIC ${PYTHON_LIBRARY})
         target_include_directories(${MODULE_NAME} PUBLIC ${PYTHON_INCLUDE_DIRS} )
         set_target_properties(${MODULE_NAME} PROPERTIES DEBUG_POSTFIX "")
-        set_target_properties(${MODULE_NAME} PROPERTIES INSTALL_RPATH "\$ORIGIN/..:\$ORIGIN/../..")
-
+#         set_target_properties(${MODULE_NAME} PROPERTIES INSTALL_RPATH "\$ORIGIN/..:\$ORIGIN/../..")
+        set_target_properties(${MODULE_NAME} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/python)
         install(TARGETS ${MODULE_NAME}
                 LIBRARY DESTINATION lib/Mappel/python COMPONENT Runtime)        
     endforeach()
 endforeach()
-
-
 
 
