@@ -210,10 +210,10 @@ namespace methods {
             ReturnIfSubclassT<VecT,Model,PoissonNoise1DObjective>
             llh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
             {
-                VecT llh_vec(model.num_pixels,arma::fill::zeros);
+                VecT llh_vec(model.get_num_pixels(),arma::fill::zeros);
                 for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
                     if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
-                    llh_vec += poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
+                    llh_vec(i) = poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
                 }
                 return llh_vec;
             }
@@ -222,25 +222,25 @@ namespace methods {
             ReturnIfSubclassT<VecT,Model,PoissonNoise1DObjective>
             rllh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
             {
-                VecT rllh_vec(model.num_pixels,arma::fill::zeros);
+                VecT rllh_vec(model.get_num_pixels(),arma::fill::zeros);
                 for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
-                    if(!std::isfinite(im(i))) continue; /* Masked pixels are marked infinite. Skip. */
-                    rllh_vec(i) += relative_poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
+                    if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
+                    rllh_vec(i) = relative_poisson_log_likelihood(model.pixel_model_value(i,s), data_im(i));
                 }
                 return rllh_vec;
             }
                     
             template<class Model>
             ReturnIfSubclassT<MatT,Model,PoissonNoise1DObjective>
-            grad_components(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &s) 
+            grad_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s) 
             {
                 auto pixel_grad = model.make_param(); 
-                MatT grad_vec(model.num_params,model.num_pixels); //per-pixel grad contributions to objective
+                MatT grad_vec(model.get_num_params(),model.get_num_pixels(),arma::fill::zeros); //per-pixel grad contributions to objective
                 for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {
-                    if(!std::isfinite(im(i))) continue; /* Masked pixels are marked infinite. Skip. */
+                    if(!std::isfinite(data_im(i))) continue; /* Masked pixels are marked infinite. Skip. */
                     model.pixel_grad(i,s,pixel_grad);
                     double model_val = model.pixel_model_value(i,s);
-                    double dm_ratio_m1 = im(i)/model_val - 1.;
+                    double dm_ratio_m1 = data_im(i)/model_val - 1.;
                     grad_vec.col(i) = dm_ratio_m1*pixel_grad;
                 }
                 return grad_vec;
@@ -249,23 +249,25 @@ namespace methods {
             
             template<class Model>
             ReturnIfSubclassT<CubeT,Model,PoissonNoise1DObjective>
-            hessian_components(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &s) 
+            hessian_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s) 
             {
                 /* Returns hessian as an upper triangular matrix */
                 auto grad_val = model.make_param();
                 auto hess_val = model.make_param_mat();
-                grad_val.zeros();
-                hess_val.zeros();
+                CubeT hess_vec(model.get_num_params(),model.get_num_params(),model.get_num_pixels(),arma::fill::zeros); //per-pixel grad contributions to objective
                 for(typename Model::ImageSizeT i=0;i<model.get_size();i++) { 
-                    if(!std::isfinite(im(i))) continue; /* Skip non-finite image values as they are assumed masked */
+                    if(!std::isfinite(data_im(i))) continue; /* Skip non-finite image values as they are assumed masked */
                     /* Compute model value and ratios */
                     double model_val = model.pixel_model_value(i,s);
-                    double dm_ratio = im(i)/model_val;
+                    double dm_ratio = data_im(i)/model_val;
                     double dm_ratio_m1 = dm_ratio-1;
                     double dmm_ratio = dm_ratio/model_val;
+                    grad_val.zeros();
+                    hess_val.zeros();
                     model.pixel_hess_update(i,s,dm_ratio_m1,dmm_ratio,grad_val,hess_val);
+                    hess_vec.slice(i) = hess_val;
                 }
-                return hess_val;
+                return hess_vec;
             }
         } /* namespace mappel::methods::likelihood::debug */
     } /* namespace mappel::methods::likelihood */

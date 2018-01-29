@@ -9,11 +9,11 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 # See: LICENCE file
 
-cmake_minimum_required( VERSION 3.5 )
+cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.2 LANGUAGES CXX)
 
-cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
-cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
+# cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
+# cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
 
 # Enable Matlab Support via MexIFace
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
@@ -69,16 +69,8 @@ if(OPT_MATLAB)
 endif()
 
 if(OPT_PYTHON)
-    message(STATUS "*** Python Module Building Enabled ***")
-    if(DEBUG)
-        set(Boost_USE_DEBUG_PYTHON "On")
-    endif()
-    find_package(PythonInterp)
-    find_package(PythonLibs)
-#     find_package(Boost REQUIRED COMPONENTS python)
-#     message(status "Boost::Python Found:${Boost_PYTHON_FOUND}")
-#     message(status "Boost::Python Lib:${Boost_PYTHON_LIBRARY}")
     add_subdirectory(src/python)
+    add_subdirectory(python)
 endif()
 
 

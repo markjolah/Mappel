@@ -275,7 +275,7 @@ TYPED_TEST(PointEmitterModelTest, SampleThetaPriorStack)
 {
     for(auto model_it=this->models.begin(); model_it!=this->models.end(); ++model_it) {
         auto model=*model_it;
-        auto theta=model->make_param_vec(this->num_tests);
+        auto theta=model->make_param_stack(this->num_tests);
         sample_prior_stack(*model, theta);
         for(int i=0;i<this->num_tests;i++) {
             check_bounds<TypeParam>(*model,theta.col(i));
@@ -294,7 +294,7 @@ TYPED_TEST(PointEmitterModelTest, ModelImageStack)
     for(auto model_it=this->models.begin(); model_it!=this->models.end(); ++model_it) {
         auto model=*model_it;
         auto im_stack=model->make_image_stack(this->num_tests);
-        auto theta_stack=model->make_param_vec(this->num_tests);
+        auto theta_stack=model->make_param_stack(this->num_tests);
         sample_prior_stack(*model, theta_stack);
         model_image_stack(*model, theta_stack,im_stack);
         for(int n=0;n<this->num_tests;n++){
@@ -327,7 +327,7 @@ TYPED_TEST(PointEmitterModelTest, SimulateImageStack)
         }
         // Test multiple thetas
         auto im_stack=model->make_image_stack(nimages);
-        auto theta_stack=model->make_param_vec(nimages);
+        auto theta_stack=model->make_param_stack(nimages);
         sample_prior_stack(*model, theta_stack);
         simulate_image_stack(*model,theta_stack,im_stack);
         for(int i=1;i<nimages;i++){
@@ -346,7 +346,7 @@ TYPED_TEST(PointEmitterModelTest, LLHStack)
         auto model=*model_it;
         auto llh_stack=VecT(this->num_tests);
         auto im_stack=model->make_image_stack(this->num_tests);
-        auto theta_stack=model->make_param_vec(this->num_tests);
+        auto theta_stack=model->make_param_stack(this->num_tests);
         sample_prior_stack(*model, theta_stack);
         simulate_image_stack(*model,theta_stack,im_stack);
         log_likelihood_stack(*model,im_stack,theta_stack,llh_stack);
@@ -390,7 +390,7 @@ TYPED_TEST(PointEmitterModelTest, LLHStackSingleImage)
         auto model=*model_it;
         auto llh_stack=VecT(this->num_tests);
         auto im=model->make_image_stack(1);
-        auto theta_stack=model->make_param_vec(this->num_tests);
+        auto theta_stack=model->make_param_stack(this->num_tests);
         sample_prior_stack(*model, theta_stack);
         simulate_image_stack(*model,theta_stack.col(0),im);
         log_likelihood_stack(*model,im,theta_stack,llh_stack);
@@ -412,8 +412,8 @@ TYPED_TEST(PointEmitterModelTest, CRLBStack)
 {
     for(auto model_it=this->models.begin(); model_it!=this->models.end(); ++model_it) {
         auto model=*model_it;
-        typename TypeParam::ParamVecT theta_stack=model->make_param_vec(this->num_tests);
-        typename TypeParam::ParamVecT crlb_stack=model->make_param_vec(this->num_tests);
+        typename TypeParam::ParamVecT theta_stack=model->make_param_stack(this->num_tests);
+        typename TypeParam::ParamVecT crlb_stack=model->make_param_stack(this->num_tests);
         sample_prior_stack(*model, theta_stack);
         cr_lower_bound_stack(*model, theta_stack, crlb_stack);
         for(int n=1;n<this->num_tests;n++){
@@ -437,9 +437,9 @@ TYPED_TEST(PointEmitterModelTest, EstimateStack)
 {
     for(auto model_it=this->models.begin(); model_it!=this->models.end(); ++model_it) {
         auto model=*model_it;
-        auto theta=model->make_param_vec(this->num_tests);
-        auto theta_est=model->make_param_vec(this->num_tests);
-        auto crlb=model->make_param_vec(this->num_tests);
+        auto theta=model->make_param_stack(this->num_tests);
+        auto theta_est=model->make_param_stack(this->num_tests);
+        auto crlb=model->make_param_stack(this->num_tests);
         auto ims=model->make_image_stack(this->num_tests);
         auto llh=VecT(this->num_tests);
         sample_prior_stack(*model, theta);
@@ -458,7 +458,7 @@ TYPED_TEST(PointEmitterModelTest, EstimateStack)
             if(name!="CGaussMLE") {
                 //CGauss does some crazy stuff here
                 //Check CRLB
-                typename TypeParam::ParamVecT crlb_alt=model->make_param_vec(this->num_tests);
+                typename TypeParam::ParamVecT crlb_alt=model->make_param_stack(this->num_tests);
                 cr_lower_bound_stack(*model, theta_est, crlb_alt);
                 EXPECT_PRED2(&::vec_near<typename TypeParam::ParamVecT>, crlb_alt, crlb)<<
                         "CRLB matches independent computation: Estimator:"<<name;

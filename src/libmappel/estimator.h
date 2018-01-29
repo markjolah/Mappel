@@ -29,20 +29,10 @@
 #include "util.h"
 
 namespace mappel {
-    static const int DEFAULT_ITERATIONS=100;
-    static const int DEFAULT_CGAUSS_ITERATIONS=50;
-    
-/***
- * @brief Exception type for estimators
- * 
- * 
- */
-class EstimatorValueError : public std::logic_error {};
-class EstimatorHessianError : public std::logic_error {};
-class OptimizationError : public std::logic_error {
-public:
-    OptimizationError(std::string e) : std::logic_error(e){};
-};
+
+static const int DEFAULT_ITERATIONS=100;
+static const int DEFAULT_CGAUSS_ITERATIONS=50;
+
 
 template<class Model>
 class Estimator{
@@ -54,9 +44,9 @@ public:
     using ModelDataT = typename Model::ModelDataT;
     using ModelDataStackT = typename Model::ModelDataStackT;
 
-    Model &model;
+    const Model &model;
 
-    Estimator(Model &_model) : model(_model) {}
+    Estimator(const Model &_model) : model(_model) {}
     virtual ~Estimator() {}
 
     virtual std::string name() const =0;
@@ -64,32 +54,34 @@ public:
     /* These are the main entrypoints for estimation
      * We provide three types of interfaces:
      */
-    /* Option 1: Single Image - Estimator returns a stencil at the optimium point.
+    /* Option 1: Single Image - Estimator returns a stencil at the optimum point.
+     * Variants with and without a theta_init or a rllh output parameter
+     */
+    StencilT estimate_max(const ModelDataT &im);
+    StencilT estimate_max(const ModelDataT &im, const ParamT &theta_init); //with theta_init
+    StencilT estimate_max(const ModelDataT &im, double &rllh); //with rllh out
+    StencilT estimate_max(const ModelDataT &im, const ParamT &theta_init, double &rllh); //with theta_init and rllh out
+
+    /* Option 2: Single Image - Estimator returns theta,  rllh and obsI  at the optimum point.
      * Variants with and without a theta_init.
      */
-    StencilT estimate(const ModelDataT &im);
-    StencilT estimate(const ModelDataT &im, const ParamT &theta_init); //with theta_init
+    void estimate_max(const ModelDataT &im, ParamT &theta, double &rllh, MatT &obsI);
+    void estimate_max(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, double &rllh, MatT &obsI);//with theta_init
 
-    /* Option 2: Single Image - Estimator returns theta, crlb and llh  at the optimium point.
+    /* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI   at the optimum point.
      * Variants with and without a theta_init.
      */
-    void estimate(const ModelDataT &im, ParamT &theta, ParamT &crlb, double &llh);
-    void estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, ParamT &crlb, double &llh);//with theta_init
+    void estimate_max_debug(const ModelDataT &im, const ParamT &theta_init, 
+                        ParamT &theta_est, MatT &obsI, MatT &sequence, VecT &sequence_rllh);
 
-    /* Option 3: Single Image Debug mode - Estimator returns theta, crlb and llh  at the optimium point.
-     * Variants with and without a theta_init.
-     */
-    void estimate_debug(const ModelDataT &im, ParamT &theta, ParamT &crlb, double &llh,
-                        MatT &sequence, VecT &sequence_llh);
-    void estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, ParamT &crlb, double &llh,
-                        MatT &sequence, VecT &sequence_llh);
-
-    /* Option 3: Parallel Image - Estimator returns theta_stack, crlb_stack and llh_stack at the optimium point
+    /* Option 4: Parallel Image - Estimator returns theta_stack, rllh_stack and obsI_stack at the optimum point
      * for each image in the stack.
      * Variants with and without a theta_init.
      */
-    virtual void estimate_stack(const ModelDataStackT &im, const ParamVecT &theta_init, ParamVecT &theta, ParamVecT &crlb, VecT &llh)=0;
-    virtual void estimate_stack(const ModelDataStackT &im, ParamVecT &theta, ParamVecT &crlb, VecT &llh)=0;
+    virtual void estimate_max_stack(const ModelDataStackT &im_stack, const ParamVecT &theta_init_stack, 
+                                ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)=0;
+    void estimate_max_stack(const ModelDataStackT &im_stack, 
+                                ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack);
 
     /* Statistics */
     double mean_walltime() const;
@@ -102,13 +94,14 @@ public:
     friend std::ostream& operator<<(std::ostream &out, Estimator<T> &estimator);
 
 protected:
-    virtual StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init)=0;
-    virtual StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
-    virtual void compute_estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, ParamT &crlb, double &llh);
+    virtual StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)=0;
+    virtual StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                            ParamVecT &sequence, VecT &sequence_rllh);
+    virtual void compute_estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta_est, double &rllh, MatT &obsI);
 
     /* statistics */
-    int num_estimations=0;
-    double total_walltime=0.;
+    int num_estimations = 0;
+    double total_walltime = 0.;
 
     void record_walltime(ClockT::time_point start_walltime, int nimages);
 };
@@ -131,9 +124,8 @@ public:
 
     ThreadedEstimator(Model &model);
 
-    void estimate_stack(const ModelDataStackT &im, const ParamVecT &theta_init,ParamVecT &theta, ParamVecT &crlb, VecT &llh);
-    void estimate_stack(const ModelDataStackT &im, ParamVecT &theta, ParamVecT &crlb, VecT &llh);
-
+    void estimate_max_stack(const ModelDataStackT &im, const ParamVecT &theta_init,ParamVecT &theta, VecT &rllh, CubeT &obsI);
+    
     double mean_thread_walltime();
     StatsT get_stats();
     StatsT get_debug_stats();
@@ -150,11 +142,11 @@ protected:
     int thread_stop_idx(int nimages, int threadid) const;
 
     virtual void thread_maximize_stack(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                                       ParamVecT &theta, ParamVecT &crlb, VecT &llh);
+                                       ParamVecT &theta, VecT &rllh, CubeT &obsI);
 
 private:
     void thread_entry(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                      ParamVecT &theta, ParamVecT &crlb, VecT &llh);
+                      ParamVecT &theta, VecT &rllh, CubeT &obsI);
 };
 
 template<class Model>
@@ -167,29 +159,8 @@ public:
 
     std::string name() const {return "HeuristicEstimator";}
 private:
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init)
-    {
-        return Estimator<Model>::model.initial_theta_estimate(im, ParamT());
-    }
+    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
 };
-/*
-template<class Model>
-class SeperableHeuristicEstimator : public ThreadedEstimator<Model> {
-public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ModelDataT = typename Model::ModelDataT;
-    SeperableHeuristicEstimator(Model &model) : ThreadedEstimator<Model>(model) {}
-    
-    std::string name() const {return "SeperableHeuristicEstimator";}
-    const std::string sub_estimator_name = "NewtonMaximizer"; //Controls the maximizer method to use in 1D
-private:
-    inline
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init)
-    {
-        return Estimator<Model>::model.seperable_initial_theta_estimate(im, ParamT(), sub_estimator_name);
-    }
-};*/
 
 template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {
@@ -203,7 +174,7 @@ public:
 private:
     using Estimator<Model>::model;
     inline
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init) {return cgauss_heuristic_compute_estimate(model,im,theta_init);}
+    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
 };
 
 
@@ -221,15 +192,14 @@ public:
     StatsT get_stats();
     StatsT get_debug_stats();
 
-    inline std::string name() const {return "CGaussMLE";}
+    std::string name() const {return "CGaussMLE";}
 protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
 
-    inline
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init) {return cgauss_compute_estimate(model,im,theta_init,max_iterations);}
-    inline
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence) {return cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);}
+    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
+    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                    ParamVecT &sequence, VecT &sequence_rllh);
 };
 
 
@@ -250,10 +220,11 @@ public:
     inline std::string name() const {return "SimulatedAnnealingMaximizer";}
     SimulatedAnnealingMaximizer(Model &model) : ThreadedEstimator<Model>(model) {}
 protected:
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init);
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
-    StencilT anneal(ParallelRngT &rng, const ModelDataT &im, StencilT &theta_init,
-                   ParamVecT &sequence);
+    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
+    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                    ParamVecT &sequence, VecT &sequence_rllh);
+    StencilT anneal(ParallelRngT &rng, const ModelDataT &im, const StencilT &theta_init,
+                    double &rllh, ParamVecT &sequence, VecT &sequence_rllh);
 };
 
 template<class Model>
@@ -329,6 +300,7 @@ protected:
         /** @brief Return the saved theta sequence */
         ParamVecT get_theta_sequence() const {return theta_seq.head_cols(seq_len);}
         IdxVecT get_backtrack_idxs() const {return backtrack_idxs.head(seq_len);}
+        VecT get_theta_sequence_rllh() const {return seq_rllh.head(seq_len);}
         /** @brief Get the current stencil  */
         StencilT& stencil() {return current_stencil ? s0 : s1;}
         void set_stencil(const StencilT &s) {if(current_stencil) s0=s;  else s1=s; }
@@ -354,6 +326,7 @@ protected:
         bool current_stencil; //This alternates to indicated weather s0 or s1 is the current stencil
 
         ParamVecT theta_seq;
+        VecT seq_rllh;
         IdxVecT backtrack_idxs;
         int seq_len=0;
         const int max_seq_len;
@@ -363,8 +336,9 @@ protected:
     
     void record_run_statistics(const MaximizerData &data);
 
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence);
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init);
+    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
+    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                    ParamVecT &sequence, VecT &sequence_rllh);
 
     virtual void maximize(MaximizerData &data)=0;
     inline bool backtrack(MaximizerData &data);

@@ -54,6 +54,8 @@ public:
     ImageSizeT get_size() const;
     ImageCoordT get_num_pixels() const;
     void set_size(const ImageSizeT &size_);
+    void check_image_shape(const ImageT &im) const;
+    void check_image_shape(const ImageStackT &ims) const;
 protected:
     /* Model parameters */
     ImageSizeT size; /**< Number of pixels in X dimension for 1D image */

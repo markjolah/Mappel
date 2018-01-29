@@ -31,7 +31,7 @@ public:
     template<class PriorDistT>
     Gauss1DsMAP(ImageSizeT size, PriorDistT&& prior);     
     
-    std::string name() const {return "Gauss1DsMAP";}
+    static const std::string name;
 };
 
 } /* namespace mappel */

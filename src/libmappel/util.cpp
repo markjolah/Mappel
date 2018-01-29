@@ -56,4 +56,11 @@ int maxidx(const VecT &v)
     return maxn;
 }
 
+std::ostream& operator<<(std::ostream &out,const StatsT &stats)
+{
+    for(auto& stat: stats) out<<"\t"<<stat.first<<" = "<<stat.second<<"\n";
+    return out;
+}
+
+
 } /* namespace mappel */

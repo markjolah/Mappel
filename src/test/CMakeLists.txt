@@ -14,7 +14,7 @@ if(UNIX) #Globally disabling this for windows as the test does not work
 include(CTest)
 
 
-set(TEST_CORE_SRCS stats.cpp)
+set(TEST_CORE_SRCS )
 set(GTEST_SRCS gtest.cpp)
 set(CTEST_SRCS test.cpp)
 
@@ -40,11 +40,11 @@ endif()
 
 message(STATUS "EXE_POSTFIX:${EXE_POSTFIX}")
 set(CTEST_CMDS mappel.test_speed${EXE_POSTFIX}
-               mappel.test_image${EXE_POSTFIX}
-               mappel.test_prior${EXE_POSTFIX}
-               mappel.test_compare_estimators${EXE_POSTFIX}
-               mappel.test_image_compare_estimators${EXE_POSTFIX}
-               mappel.test_point_evaluate_estimators${EXE_POSTFIX})
+               mappel.test_image${EXE_POSTFIX})
+#                mappel.test_prior${EXE_POSTFIX}
+#                mappel.test_compare_estimators${EXE_POSTFIX}
+#                mappel.test_image_compare_estimators${EXE_POSTFIX}
+#                mappel.test_point_evaluate_estimators${EXE_POSTFIX})
 set(ESTIMATORS Newton Huristic CGauss QuasiNewton NewtonRaphson)
 
 #Ctest is only availible on Unix as it uses symlinks
@@ -53,6 +53,9 @@ if(UNIX)
     target_link_libraries(${CTEST_TARGET} Mappel)
     set_target_properties(${CTEST_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
     set_target_properties(${CTEST_TARGET} PROPERTIES INSTALL_RPATH "\$ORIGIN/../lib")
+    if( IPO_SUPPORTED  )
+        set_property(TARGET ${LIB_TARGET} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    endif()
 
     install(TARGETS ${CTEST_TARGET} RUNTIME DESTINATION bin COMPONENT Runtime )
     #symlinks to enable different test commands

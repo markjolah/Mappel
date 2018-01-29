@@ -37,6 +37,7 @@ template<class Model> using ImageCoordT = typename Model::ImageCoordT; /* Model'
 template<class Model> using ImagePixelT = typename Model::ImagePixelT; /* Image's pixel data type */
 
 template<class Model> using ParamT = typename Model::ParamT; /* The Model's paramter type (e.g., theta) */
+template<class Model> using ParamVecT = typename Model::ParamVecT; /* The Model's paramter type (e.g., theta) */
 template<class Model> using ImageT = typename Model::ImageT; /* The Model's image type  */
 template<class Model> using ModelDataT = typename Model::ModelDataT; /* Model's data type (for EMCCD same as Model::ImageT) */
 template<class Model> using StencilT = typename Model::Stencil;  /* The Model's theta stencil  */
@@ -61,6 +62,11 @@ struct BadSizeError : public MappelError
     BadSizeError(std::string message) : MappelError("BadSize",message) {}
 };
 
+struct BadValueError : public MappelError 
+{
+    BadValueError(std::string message) : MappelError("BadValue",message) {}
+};
+
 struct BadShapeError : public MappelError 
 {
     BadShapeError(std::string message) : MappelError("BadShape",message) {}
@@ -82,7 +88,6 @@ struct NotImplementedError : public MappelError
 };
 
 
-
 /** @brief sign (signum) function: -1/0/1
  * 
  */
@@ -102,6 +107,19 @@ std::unique_ptr<T> make_unique( Args&& ...args )
     return std::unique_ptr<T>( new T( std::forward<Args>(args)... ) );
 }
 
+std::ostream& operator<<(std::ostream &out,const StatsT &stats);
+
+
+// MatT sliceView(const CubeT &cube, IdxT slice)
+// {
+//     if(slice >= cube.n_slices){
+//         std::ostringstream msg;
+//         msg<<"Got bad slice idx:"<<slice;
+//         throw BoundsError(msg.str());
+//     }
+//     IdxT slice_size = cube.n_rows * cube.n_cols;
+//     return { static_cast<const double *>(cube.memptr())+slice_size*slice, cube.n_rows, cube.n_cols, false, true };
+// }
 
 } /* namespace mappel */
 

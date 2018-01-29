@@ -8,7 +8,7 @@
 
 #include <cmath>
 #include <functional>
-// #include <thread>
+#include <thread>
 #include <boost/thread/thread.hpp>
 
 #include <armadillo>
@@ -43,91 +43,110 @@
  */
 
 namespace mappel {
-    
+struct OptimizationError : public MappelError 
+{
+    OptimizationError(std::string message) : MappelError("OptimizationError",message) {}
+};
 
-/* Just a convenience wrapper that allows a call without a theta_init */
+/* Option 1: Single Image - Estimator returns a stencil at the optimum point.
+ * Variants with and without a theta_init or a rllh output parameter
+ */
 template<class Model>
 typename Model::Stencil
-Estimator<Model>::estimate(const ModelDataT &im)
+Estimator<Model>::estimate_max(const ModelDataT &im)
 {
-    ParamT dummy_theta_init;
-    dummy_theta_init.zeros();
-    return estimate(im, dummy_theta_init);
+    ParamT theta_init = model.make_param();
+    theta_init.zeros();
+    return estimate_max(im, theta_init);
 }
 
+template<class Model>
+typename Model::Stencil
+Estimator<Model>::estimate_max(const ModelDataT &im, double &rllh)
+{
+    ParamT theta_init = model.make_param();
+    theta_init.zeros();
+    return estimate_max(im, theta_init,rllh);
+}
 
 template<class Model>
 typename Model::Stencil
-Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init)
+Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init)
+{
+    double rllh;
+    return estimate_max(im,theta_init,rllh);
+}
+
+template<class Model>
+typename Model::Stencil
+Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
     auto start_walltime = ClockT::now();
-    StencilT est = compute_estimate(im, theta_init);
+    StencilT est = compute_estimate(im, theta_init, rllh);
     record_walltime(start_walltime, 1);
     return est;
 }
 
-
-/* Just a convenience wrapper that allows a call without a theta_init */
+/* Option 2: Single Image - Estimator returns theta, crlb and llh  at the optimum point.
+ * Variants with and without a theta_init.
+ */
 template<class Model>
-void Estimator<Model>::estimate(const ModelDataT &im,
-                                ParamT &theta, ParamT &crlb, double &log_likelihood)
+void Estimator<Model>::estimate_max(const ModelDataT &im,
+                                ParamT &theta, double &rllh, MatT &obsI)
 {
-    ParamT dummy_theta_init;
-    dummy_theta_init.zeros();
-    estimate(im, dummy_theta_init, theta, crlb, log_likelihood);
+    ParamT theta_init = model.make_param();
+    theta_init.zeros();
+    estimate_max(im, theta, theta_init, rllh, obsI);
 }
 
 template<class Model>
-void Estimator<Model>::estimate(const ModelDataT &im, const ParamT &theta_init,
-                                ParamT &theta, ParamT &crlb, double &log_likelihood)
+void Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init,
+                                    ParamT &theta, double &rllh, MatT &obsI)
 {
     auto start_walltime = ClockT::now();
-    compute_estimate(im, theta_init, theta, crlb, log_likelihood);
+    compute_estimate(im, theta_init, theta, rllh, obsI);
     record_walltime(start_walltime, 1);
 }
 
-/* Just a convenience wrapper that allows a call without a theta_init */
+/* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI  at the optimum point.
+ */
 template<class Model>
-void Estimator<Model>::estimate_debug(const ModelDataT &im, ParamT &theta, ParamT &crlb, double &llh,
-                                      MatT &sequence, VecT &sequence_llh)
-{
-    ParamT dummy_theta_init;
-    dummy_theta_init.zeros();
-    estimate_debug(im, dummy_theta_init, theta, crlb, llh, sequence, sequence_llh);
-}
-
-template<class Model>
-void Estimator<Model>::estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamT &theta,
-                                      ParamT &crlb, double &llh,
-                                      MatT &sequence, VecT &sequence_llh)
+void Estimator<Model>::estimate_max_debug(const ModelDataT &im, const ParamT &theta_init, ParamT &theta,
+                                      MatT &obsI, MatT &sequence, VecT &sequence_rllh)
 {
     auto start_walltime = ClockT::now();
-    auto est = compute_estimate_debug(im, theta_init, sequence);
-    theta = est.theta;
-    crlb = methods::cr_lower_bound(model,est);
-    llh = methods::objective::llh(model,im, est);
-    sequence_llh.set_size(sequence.n_cols);
-    methods::log_likelihood_stack(model,im,sequence,sequence_llh);
+    auto est_max = compute_estimate_debug(im, theta_init, sequence, sequence_rllh);
+    theta = est_max.theta;
+    obsI = methods::observed_information(model,im,est_max);
     record_walltime(start_walltime, 1);
 }
 
+template<class Model>
+void Estimator<Model>::estimate_max_stack(const ModelDataStackT &im,
+                                         ParamVecT &theta_max_stack, VecT &rllh_stack, CubeT &obsI_stack)
+{
+    ParamVecT theta_init = model.make_param();
+    theta_init.zeros();
+    estimate_max_stack(im, theta_init, theta_max_stack, rllh_stack, obsI_stack);
+}
+
+/** @brief Default base class implementation computes rllh and obsI seperately from stencil 
+ * This should be overridden by Estimator subclasses that already have access to this information
+ */
 template<class Model>
 void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init,
-                                        ParamT &theta, ParamT &crlb, double &llh)
+                                        ParamT &theta_max, double &rllh, MatT &obsI)
 {
-    auto est = compute_estimate(im,theta_init);
-    crlb = methods::cr_lower_bound(model,est);
-    llh = methods::objective::llh(model,im, est);
-    theta = est.theta;
+    auto est_max = compute_estimate(im, theta_init, rllh);
+    obsI = methods::observed_information(model, im, est_max);
+    theta_max = est_max.theta;
 }
-
 
 template<class Model>
 double Estimator<Model>::mean_walltime() const
 {
     return (num_estimations==0) ? 0. : total_walltime/(double)num_estimations;
 }
-
 
 template<class Model>
 StatsT Estimator<Model>::get_stats()
@@ -150,7 +169,7 @@ template<class Model>
 std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
 {
     auto stats=estimator.get_stats();
-    out<<"[Estimator: "<<estimator.name()<<"<"<<estimator.model.name()<<">]\n";
+    out<<"[Estimator: "<<estimator.name()<<"<"<<estimator.model.name<<">]\n";
     for(auto& stat: stats) out<<"\t"<<stat.first<<"="<<stat.second<<"\n";
     return out;
 }
@@ -164,10 +183,12 @@ std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
 template<class Model>
 inline
 typename Model::Stencil
-Estimator<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
+Estimator<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                         ParamVecT &sequence, VecT &sequence_rllh)
 {
-    sequence = model.make_param_vec(1);
-    auto est = compute_estimate(im,theta_init);
+    sequence = model.make_param_stack(1);
+    sequence_rllh.set_size(1);
+    auto est = compute_estimate(im,theta_init,sequence_rllh(0));
     sequence.col(0) = est.theta;
     return est;
 }
@@ -189,65 +210,46 @@ ThreadedEstimator<Model>::ThreadedEstimator(Model &model)
       num_threads(0),
       thread_walltime(std::vector<double>(max_threads,0.))
 {
-    char *omp_num_threads_var=getenv("OMP_NUM_THREADS");
+    char *omp_num_threads_var = getenv("OMP_NUM_THREADS");
     if (omp_num_threads_var) {
-        int omp_num_threads=atoi(omp_num_threads_var);
+        int omp_num_threads = atoi(omp_num_threads_var);
         if (0<omp_num_threads && omp_num_threads<=max_threads) {
-            max_threads=omp_num_threads;
+            max_threads = omp_num_threads;
         }
     }
 }
 
-template<class Model>
-inline
-void 
-ThreadedEstimator<Model>::estimate_stack(const ModelDataStackT &im,
-                                         ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
-{
-    ParamVecT theta_init;
-    estimate_stack(im, theta_init, theta, crlb, log_likelihood);
-}
+
 
 template<class Model>
-void 
-ThreadedEstimator<Model>::estimate_stack(const ModelDataStackT &im, const ParamVecT &theta_init,
-                                         ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
+void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT &im, const ParamVecT &theta_init,
+                                              ParamVecT &theta, VecT &rllh, CubeT &obsI_stack)
 {
-    using std::ref;
-    using std::bind;
-    using boost::thread;
     auto start_walltime=ClockT::now();
     int min_per_thread=4;
     int nimages = model.get_size_image_stack(im);
     //The number of threads we will actually run
     num_threads = std::max(std::min(max_threads, static_cast<int>(floor(nimages/min_per_thread))),1);
-    std::vector<thread> threads(num_threads-1);
+    std::vector<std::thread> threads(num_threads-1);
     for(int i=0; i<num_threads-1; i++) {
-        threads[i]=thread(bind(&ThreadedEstimator::thread_entry, this, i,
-                               ref(im), ref(theta_init), ref(theta), ref(crlb), ref(log_likelihood)));
+        threads.emplace_back(std::bind(&ThreadedEstimator::thread_entry, this, i,
+                            std::ref(im), std::ref(theta_init), std::ref(theta), std::ref(rllh), std::ref(obsI_stack)) );
     }
     //The main thread assumes the role of num_threads-1
-    thread_entry(num_threads-1, im, theta_init, theta, crlb, log_likelihood);
+    thread_entry(num_threads-1, im, theta_init, theta, rllh, obsI_stack);
+    //Join all other threads.
     for(int i=0; i<num_threads-1; i++) threads[i].join();
 
     this->record_walltime(start_walltime, nimages);
 }
 
-
 template<class Model>
 double ThreadedEstimator<Model>::mean_thread_walltime()
 {
-    double total_thread_time=0.;
-    double mean;
-    if(num_threads==0)  return this->mean_walltime();
-
+    if(num_threads==0)  return this->mean_walltime();    
     mtx.lock();
-    if(this->num_estimations==0) {
-        mean=0;
-    } else {
-        for(int i=0;i<num_threads; i++) total_thread_time+=thread_walltime[i];
-        mean = total_thread_time/static_cast<double>(num_threads);
-    }
+    double mean = (this->num_estimations==0) ? 0 : 
+        std::accumulate(thread_walltime.begin(), thread_walltime.end(),0) / num_threads;
     mtx.unlock();
     return mean;
 }
@@ -255,11 +257,11 @@ double ThreadedEstimator<Model>::mean_thread_walltime()
 template<class Model>
 StatsT ThreadedEstimator<Model>::get_stats()
 {
-    auto stats=Estimator<Model>::get_stats();
-    double mtwalltime=mean_thread_walltime();
-    stats["num_threads"]=num_threads;
-    stats["mean_thread_walltime"]=mtwalltime;
-    stats["total_thread_walltime"]=mtwalltime*num_threads;
+    auto stats = Estimator<Model>::get_stats();
+    double mtwalltime = mean_thread_walltime();
+    stats["num_threads"] = num_threads;
+    stats["mean_thread_walltime"] = mtwalltime;
+    stats["total_thread_walltime"] = mtwalltime*num_threads;
     return stats;
 }
 
@@ -268,7 +270,6 @@ StatsT ThreadedEstimator<Model>::get_debug_stats()
 {
     return ThreadedEstimator<Model>::get_stats();
 }
-
 
 template<class Model>
 void ThreadedEstimator<Model>::clear_stats()
@@ -291,20 +292,20 @@ int ThreadedEstimator<Model>::thread_stop_idx(int nimages, int threadid) const
 
 template<class Model>
 void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
-                                        ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
+                                        ParamVecT &theta, VecT &rllh, CubeT &obsI_stack)
 {
     int nimages = model.get_size_image_stack(im);
     int start = thread_start_idx(nimages, threadid);
     int stop = thread_stop_idx(nimages, threadid);
     auto theta_est = model.make_param();
-    auto crlb_est = model.make_param();
+    auto obsI = model.make_param_mat();
     ParamT init;
     init.zeros();
     for(int n=start; n<stop; n++){
         if(!theta_init.is_empty()) init = theta_init.col(n);
-        this->compute_estimate(model.get_image_from_stack(im,n), init, theta_est, crlb_est, log_likelihood(n));
+        this->compute_estimate(model.get_image_from_stack(im,n), init, theta_est, rllh(n), obsI);
         theta.col(n) = theta_est;
-        crlb.col(n) = crlb_est;
+        obsI_stack.slice(n) = obsI;
     }
 }
 
@@ -315,19 +316,37 @@ void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDa
  */
 template<class Model>
 void ThreadedEstimator<Model>::thread_entry(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
-                               ParamVecT &theta, ParamVecT &crlb, VecT &log_likelihood)
+                               ParamVecT &theta, VecT &rllh, CubeT &obsI)
 {
-    auto start_walltime=ClockT::now();
-    thread_maximize_stack(threadid, im, theta_init, theta, crlb, log_likelihood);
-    double walltime=duration_cast<duration<double>>(ClockT::now() - start_walltime).count();
+    auto start_walltime = ClockT::now();
+    thread_maximize_stack(threadid, im, theta_init, theta, rllh, obsI);
+    double walltime = duration_cast<duration<double>>(ClockT::now() - start_walltime).count();
     mtx.lock();
-    thread_walltime[threadid]+=walltime;
+    thread_walltime[threadid] += walltime;
     mtx.unlock();
 }
 
+/* HeuristicEstimator */
+template<class Model>
+StencilT<Model> 
+HeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
+{
+    auto est = Estimator<Model>::model.initial_theta_estimate(im, ParamT());
+    rllh = methods::objective::rllh(this->model, im,est);
+    return est;
+}
+
+/* CGaussHeuristicEstimator */
+template<class Model>
+StencilT<Model> 
+CGaussHeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh) 
+{
+    auto est = cgauss_heuristic_compute_estimate(model,im,theta_init);
+    rllh = methods::objective::rllh(this->model, im,est);
+    return est;
+}
 
 /* CGaussMLE */
-
 template<class Model>
 StatsT CGaussMLE<Model>::get_stats()
 {
@@ -347,6 +366,26 @@ StatsT CGaussMLE<Model>::get_debug_stats()
     return stats;
 }
 
+
+template<class Model>
+StencilT<Model>
+CGaussMLE<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh) 
+{
+    auto est=cgauss_compute_estimate(model,im,theta_init,max_iterations);
+    rllh = methods::objective::rllh(im,est);
+    return est;
+}
+
+template<class Model>
+StencilT<Model>
+CGaussMLE<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                         ParamVecT &sequence, VecT &sequence_rllh) 
+{
+    auto est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
+    //Compute rrlh (which are not evaluated by CGauss) in parallel because debug is only ever called single threaded
+    methods::objective::rllh(im, sequence, sequence_rllh);
+    return est;
+}
 
 /* Iterative Maximizer */
 
@@ -370,26 +409,28 @@ IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, cons
       max_seq_len(max_seq_len)
 {
     if (save_seq){
-        theta_seq = model.make_param_vec(max_seq_len);
+        theta_seq = model.make_param_stack(max_seq_len);
         backtrack_idxs.set_size(max_seq_len);
         backtrack_idxs.zeros();
+        seq_rllh.set_size(max_seq_len);
+        seq_rllh.zeros();
         record_iteration(); //record this initial point
     }
 }
 
 template<class Model>
-inline
 void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT &accpeted_theta)
 {
     nIterations++;
     if(save_seq) {
         if(seq_len>=max_seq_len) throw std::logic_error("Exceeded MaximizerData sequence limit");
-        theta_seq.col(seq_len++) = accpeted_theta;
+        theta_seq.col(seq_len) = accpeted_theta;
+        seq_rllh(seq_len) = rllh;
+        seq_len++;
     }
 }
 
 template<class Model>
-inline
 void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &rejected_theta)
 {
     nBacktracks++;
@@ -397,13 +438,13 @@ void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &re
         if(seq_len>=max_seq_len) throw std::logic_error("Exceeded MaximizerData sequence limit");
         theta_seq.col(seq_len) = rejected_theta;
         backtrack_idxs(seq_len) = 1;
+        seq_rllh(seq_len) = rllh;
         seq_len++;
     }
 }
 
 
 template<class Model>
-inline
 double IterativeMaximizer<Model>::mean_iterations()
 {
     mtx.lock();
@@ -413,7 +454,6 @@ double IterativeMaximizer<Model>::mean_iterations()
 }
 
 template<class Model>
-inline
 double IterativeMaximizer<Model>::mean_backtracks()
 {
     mtx.lock();
@@ -423,7 +463,6 @@ double IterativeMaximizer<Model>::mean_backtracks()
 }
 
 template<class Model>
-inline
 double IterativeMaximizer<Model>::mean_fun_evals()
 {
     mtx.lock();
@@ -433,7 +472,6 @@ double IterativeMaximizer<Model>::mean_fun_evals()
 }
 
 template<class Model>
-inline
 double IterativeMaximizer<Model>::mean_der_evals()
 {
     mtx.lock();
@@ -476,7 +514,6 @@ StatsT IterativeMaximizer<Model>::get_debug_stats()
 
 
 template<class Model>
-inline
 void IterativeMaximizer<Model>::clear_stats()
 {
     ThreadedEstimator<Model>::clear_stats();
@@ -487,7 +524,6 @@ void IterativeMaximizer<Model>::clear_stats()
 }
 
 template<class Model>
-inline
 void IterativeMaximizer<Model>::record_run_statistics(const MaximizerData &data)
 {
     mtx.lock();
@@ -572,25 +608,28 @@ bool IterativeMaximizer<Model>::convergence_test(MaximizerData &data)
 
 template<class Model>
 typename Model::Stencil
-IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
+IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw std::logic_error("Stencil has no computed derivatives: compute_estimate");
+    if(!theta_init_stencil.derivatives_computed) throw OptimizationError("Stencil has no computed derivatives: compute_estimate");
     MaximizerData data(model, im, theta_init_stencil);
     maximize(data);
     record_run_statistics(data);
+    rllh = data.rllh;
     return data.stencil();
 }
 
 template<class Model>
 typename Model::Stencil
-IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
+IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                                  ParamVecT &sequence, VecT &sequence_rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw std::logic_error("Stencil has no computed derivatives: compute_estimate_debug");
+    if(!theta_init_stencil.derivatives_computed) throw OptimizationError("Stencil has no computed derivatives: compute_estimate_debug");
     MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
     maximize(data);
     sequence = data.get_theta_sequence();
+    sequence_rllh = data.get_theta_sequence_rllh();
     record_run_statistics(data);
     return data.stencil();
 }
@@ -1206,32 +1245,34 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init)
+SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
     auto rng = rng_manager.generator();
     ParamVecT sequence;
-    auto theta_init_stencil = model.initial_theta_estimate(im,theta_init);
-    return anneal(rng, im, theta_init_stencil, sequence);
+    VecT sequence_rllh;
+    return anneal(rng, im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, ParamVecT &sequence)
+SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
+                                                           ParamVecT &sequence, VecT &sequence_rllh)
 {
     auto rng = rng_manager.generator();
-    auto theta_init_stencil = model.initial_theta_estimate(im,theta_init);
-    return anneal(rng, im, theta_init_stencil, sequence);
+    double rllh;
+    return anneal(rng, im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, StencilT &theta_init, ParamVecT &sequence)
+SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, const StencilT &theta_init, 
+                                           double &theta_max_rllh, ParamVecT &sequence, VecT &sequence_rllh)
 {
     NewtonDiagonalMaximizer<Model> nr(model);
     int niters = max_iterations*model.get_mcmc_num_candidate_sampling_phases();
-    sequence = model.make_param_vec(niters+1);
-    VecT sequence_rllh(niters+1);
+    sequence = model.make_param_stack(niters+1);
+    sequence_rllh.set_size(niters+1);
     sequence.col(0)=theta_init.theta;
     sequence_rllh(0)=methods::objective::rllh(model, im, theta_init);
     double max_rllh = sequence_rllh(0);
@@ -1269,6 +1310,9 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
     //Fixup sequence to return
     sequence.resize(sequence.n_rows, naccepted+1);
     sequence.col(naccepted) = max_s.theta;
+    sequence_rllh.resize(naccepted+1);
+    sequence_rllh.col(naccepted) = max_rllh;
+    theta_max_rllh = max_rllh;
     return max_s;
 }
 

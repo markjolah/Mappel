@@ -172,7 +172,29 @@ Cube<ElemT> copyCube(ArrayT<ElemT, ColumnMajorOrder> &arr)
             throw PythonError("ConversionError",msg.str());
     }
 }
-    
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeArray(IdxT rows)
+{
+    return ArrayT<ElemT, ColumnMajorOrder>(rows);
+}
+
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeArray(IdxT rows, IdxT cols)
+{
+    return ArrayT<ElemT, ColumnMajorOrder>({rows,cols});
+}
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeArray(IdxT rows, IdxT cols, IdxT slices)
+{
+    return ArrayT<ElemT, ColumnMajorOrder>({rows,cols,slices});
+}
+
 } /* namespace py11_armadillo */
 
 #endif /*_PY11_ARMADILLO_IFACE_H */

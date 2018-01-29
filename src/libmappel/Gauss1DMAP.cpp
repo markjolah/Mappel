@@ -7,6 +7,7 @@
 #include "Gauss1DMAP.h"
 
 namespace mappel {
+const std::string Gauss1DMAP::name("Gauss1DMAP");
 
 Gauss1DMAP::Gauss1DMAP(arma::Col<ImageCoordT> size, VecT psf_sigma) : 
             PointEmitterModel(make_default_prior(size(0))), 

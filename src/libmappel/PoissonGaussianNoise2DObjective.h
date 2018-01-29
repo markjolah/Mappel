@@ -217,7 +217,7 @@ fisher_information(const Model &model, const typename Model::Stencil &s)
 
 template<class Model>
 typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,Model>::value,std::shared_ptr<Estimator<Model>>>::type
-make_estimator(Model &model, std::string ename)
+make_estimator(const Model &model, std::string ename)
 {
     using std::make_shared;
     const char *name=ename.c_str();
@@ -227,7 +227,7 @@ make_estimator(Model &model, std::string ename)
         return  make_shared<CGaussHeuristicEstimator<Model>>(model);
     } else if (istarts_with(name,"CGauss")) {
         return make_shared<CGaussMLE<Model>>(model);
-    } else if (istarts_with(name,"NewtonRaphson")) {
+    } else if (istarts_with(name,"NewtonDiagonal")) {
         return make_shared<NewtonDiagonalMaximizer<Model>>(model);
     } else if (istarts_with(name,"QuasiNewton")) {
         return make_shared<QuasiNewtonMaximizer<Model>>(model);

@@ -97,6 +97,25 @@ double PointEmitterModel::find_hyperparam(std::string param_name, double default
     }
 }
 
+
+void PointEmitterModel::check_param_shape(const ParamT &theta) const
+{
+    if(theta.n_elem != get_num_params()) {
+        std::ostringstream msg;
+        msg<<"Got bad parameter size:"<<theta.n_elem<<" expected size:"<<get_num_params();
+        throw BadShapeError(msg.str());
+    }
+}
+
+void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
+{
+    if(theta.n_rows != get_num_params()) {
+        std::ostringstream msg;
+        msg<<"Got bad parameter stack #rows:"<<theta.n_rows<<" expected #rows:"<<get_num_params();
+        throw BadShapeError(msg.str());
+    }
+}
+
 /**
  *
  * Modifies the prior bounds to prevent sampling outside the valid box-constraints.

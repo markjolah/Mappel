@@ -31,7 +31,7 @@ public:
     template<class PriorDistT>
     Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
     
-    static std::string name() {return "Gauss1DMLE";}
+    static const std::string name;
 };
  
 } /* namespace mappel */
