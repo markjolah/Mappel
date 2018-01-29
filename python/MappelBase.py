@@ -81,7 +81,9 @@ class MappelBase(Gauss1DMLE):
 #     def scoreFunction(im, theta):
 #        return
      
-     def estimate(self, image, estimator_name, theta_init):
+     def estimate(self, image, estimator_name='Newton', theta_init=None):
+        if theta_init is None:
+            theta_init = np.ones([3,image.shape[1]])
         return self.estimate_max(image, estimator_name, theta_init)
      
 #     def estimateDebug(image, estimator_name, theta_init):
