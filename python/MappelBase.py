@@ -58,14 +58,19 @@ class MappelBase(Gauss1DMLE):
 #     def simulatueDipImage():
 #          return
      
-#     def LLH(image, theta):
-#        return
+     def LLH(image, theta=None):
+         if theta is None:
+             print('function requires two arguments, image and parameter values')
+             pass
+        return self.objective_llh(image,theta)
      
-#     def modelGrad(image, theta):
-#        return
+     def modelGrad(image, theta):
+         # make general function for input checks.
+        return self.objective_grad(image,theta)
      
-#     def modelHessian(image, theta):
-#        return
+     def modelHessian(image, theta):
+         # make general function for input checks
+        return self.objective_hessian(image,theta)
      
 #     def modelObjective(image, theta, negate):
 #        return
@@ -82,8 +87,9 @@ class MappelBase(Gauss1DMLE):
 #     def fisherInformation(theta):
 #        return
      
-#     def observedInformation(im, theta):
-#        return
+     def observedInformation(image, theta):
+         # make general function for input checks
+        return self.observed_information(image, theta)
      
 #     def scoreFunction(im, theta):
 #        return
