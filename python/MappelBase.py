@@ -10,30 +10,39 @@ import numpy as np
 from _Gauss1DMLE import Gauss1DMLE
 
 class MappelBase(Gauss1DMLE):
-     
+    
+    # note to self, look into python over-loaded functions
      def __init__(self, imsize, psf_sigma):
         Gauss1DMLE.__init__(self, imsize, psf_sigma)
         self.imsize = imsize
         self.psf_sigma = psf_sigma
 
+#    Pybind11 is near perfect here (self.get_stats)
 #     def getStats(self):
 #        return
-     
+    
+    # Return a dictionary of keys hyperparam_desc and values hyperparams
 #     def getHyperParameters(self):
 #        return
      
 #     def setHyperParameters(hyperparams):
 #        return
      
-#     def samplePrior(count):
-#        return
-     
+      def samplePrior(count=1):
+         if count < 1 or is not instance(count, int):
+              print('Count needs to be an integer of 1 or greater.')
+              pass
+         return self.sample_prior(count)
+
+#    pybind11 => self.bounded_theta(theta), no errors triggered yet
 #     def boundedTheta(theta):
 #        return
-     
+
+#   pybind11 => self.theta_in_bounds(theta)
 #     def thetaInBounds(theta):
 #        return
-     
+
+#   pybind11 => self.modelImage(theta)
 #     def modelImage(theta):
 #        return
      
@@ -42,8 +51,6 @@ class MappelBase(Gauss1DMLE):
 #          return
      
      def simulateImage(self,count=1,theta=None):
-        if count is None: 
-             count = 1
         if theta is None:
              theta = self.sample_prior(count)
         return self.simulate_image(theta)
