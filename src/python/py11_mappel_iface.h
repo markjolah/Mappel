@@ -325,7 +325,7 @@ void bindMappelModel(py::module &M)
                 "Returns the Observed Fisher information matrix with respect to a single image, evaluated at the estimated mode theta_mode.");
 
     model.def("estimate_max",&ModelWrapper<Model>::estimate_max,  
-              py::arg("images"),  py::arg("method"),  py::arg("theta_init")=ArrayDoubleT(), py::arg("return_stats")=false,
+              py::arg("images"),  py::arg("method")="TrustRegion",  py::arg("theta_init")=ArrayDoubleT(), py::arg("return_stats")=false,
               "Returns (theta_max_stack,rllh_stack,observedI_stack). Estimates the maximum of the model objective.  This is Maximum likelihood estimation (MLE) or maximum-aposeteriori (MAP) estimation depending on the model.  fixed_theta is a vector of fixed values free values are indicated by inf or nan. [OpenMP]");
 //     model.deg("estimate_profile_max",&ModelWrapper<Model>::estimate_profile_max,  
 //               py::arg("image"),  py::arg("fixed_theta_stack"), py::arg("method"), py::arg("theta_mle"), py::arg("return_stats")=false,
