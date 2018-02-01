@@ -46,7 +46,7 @@ void sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel
     {
-        auto rng = rng_manager.generator();
+        auto &rng = model.get_rng_generator();
         #pragma omp for
         for(int n=0; n<nthetas; n++){
             theta_stack.col(n) = model.sample_prior(rng);
@@ -92,20 +92,20 @@ void model_image_stack(const Model &model,
  * @param[out] image_stack   Sequence of model images generated.
  */
 template<class Model>
-void simulate_image_stack(const Model &model,
+void simulate_image_stack(Model &model,
                     const typename Model::ParamVecT &theta_stack,
                     typename Model::ImageStackT &image_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
     if (nimages==1 && nthetas==1) {
-        auto rng = rng_manager.generator();
+        auto &rng = model.get_rng_generator();
         model.set_image_in_stack(image_stack,0,simulate_image(model,theta_stack.col(0),rng));
     } else if (nthetas==1) {
         auto model_im=model_image(model, theta_stack.col(0));
         #pragma omp parallel
         {
-            auto rng = rng_manager.generator();
+            auto &rng = model.get_rng_generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
                 model.set_image_in_stack(image_stack,n,simulate_image_from_model(model, model_im,rng));
@@ -113,7 +113,7 @@ void simulate_image_stack(const Model &model,
     } else {
         #pragma omp parallel
         {
-            auto rng = rng_manager.generator();
+            auto &rng = model.get_rng_generator();
             #pragma omp for
             for(int n=0; n<nimages; n++)
                 model.set_image_in_stack(image_stack,n,simulate_image(model,theta_stack.col(n),rng));
@@ -147,7 +147,7 @@ void expected_information_stack(const Model &model,
 
 
 template<class Model>
-void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
+void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
                         ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack)
 {
     auto estimator = make_estimator(model,method);
@@ -155,7 +155,7 @@ void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_s
 }
 
 template<class Model>
-void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
+void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
                         ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack, StatsT &stats)
 {
     auto estimator = make_estimator(model,method);
@@ -164,7 +164,7 @@ void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_s
 }
 
 template<class Model>
-void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
+void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
                         ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack)
 {
     auto estimator = make_estimator(model,method);
@@ -172,7 +172,7 @@ void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_s
 }
 
 template<class Model>
-void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
+void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
                         ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack, StatsT &stats)
 {
     auto estimator = make_estimator(model,method);
@@ -277,7 +277,7 @@ void error_bounds_observed_stack(const Model &model, const MatT &theta_est_stack
     if(obsI_stack.n_slices != count) {
         std::ostringstream msg;
         msg<<"Got inconsistent sizes.  Num theta_est:"<<count<<" #obsI:"<<obsI_stack.n_slices;
-        BadShapeError(msg.str());
+        ArrayShapeError(msg.str());
     }
     #pragma omp parallel
     {

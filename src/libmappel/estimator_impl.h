@@ -423,7 +423,7 @@ void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT &ac
 {
     nIterations++;
     if(save_seq) {
-        if(seq_len>=max_seq_len) throw std::logic_error("Exceeded MaximizerData sequence limit");
+        if(seq_len>=max_seq_len) throw LogicalError("Exceeded MaximizerData sequence limit");
         theta_seq.col(seq_len) = accpeted_theta;
         seq_rllh(seq_len) = rllh;
         seq_len++;
@@ -435,7 +435,7 @@ void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &re
 {
     nBacktracks++;
     if(save_seq) {
-        if(seq_len>=max_seq_len) throw std::logic_error("Exceeded MaximizerData sequence limit");
+        if(seq_len>=max_seq_len) throw LogicalError("Exceeded MaximizerData sequence limit");
         theta_seq.col(seq_len) = rejected_theta;
         backtrack_idxs(seq_len) = 1;
         seq_rllh(seq_len) = rllh;
@@ -563,8 +563,8 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
 //         std::cout<<" Proposed Theta: "<<new_theta.t();
 //         printf(" CurrentRLLH:%.9g ProposedRLLH:%.9g Delta(prop-cur):%.9g\n",data.rllh,can_rllh,can_rllh-data.rllh);
 
-        if(!in_bounds) throw std::logic_error("Not inbounds!");
-        if(!std::isfinite(can_rllh)) throw std::logic_error("Candidate theta is inbounds but rllh is non-finite!");
+        if(!in_bounds) throw LogicalError("Not inbounds!");
+        if(!std::isfinite(can_rllh)) throw LogicalError("Candidate theta is inbounds but rllh is non-finite!");
 
         double old_lambda = lambda; //save old lambda
         double linear_step = lambda*arma::dot(data.grad, data.step); //The amount we would go down if linear in grad
@@ -611,7 +611,7 @@ typename Model::Stencil
 IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw OptimizationError("Stencil has no computed derivatives: compute_estimate");
+    if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate");
     MaximizerData data(model, im, theta_init_stencil);
     maximize(data);
     record_run_statistics(data);
@@ -625,7 +625,7 @@ IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const Pa
                                                   ParamVecT &sequence, VecT &sequence_rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw OptimizationError("Stencil has no computed derivatives: compute_estimate_debug");
+    if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate_debug");
     MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
     maximize(data);
     sequence = data.get_theta_sequence();
@@ -673,7 +673,7 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
 //             std::cout<<"Step:"<<data.step.t();
 //             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
 
-            if(arma::dot(data.step,data.grad)<=epsilon) throw std::logic_error("Unable to correct grad2 in NewtonDiagonal");
+            if(arma::dot(data.step,data.grad)<=epsilon) throw NumericalError("Unable to correct grad2 in NewtonDiagonal");
         }
         if(backtrack(data) || convergence_test(data)) return;  //Converged or gave up trying
     }
@@ -690,8 +690,8 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
         data.step = arma::solve(arma::symmatu(hess), -data.grad);
         C=-hess;
-        copy_Usym_mat(C);
         
+//         copy_Usym_mat(C);
 //         std::cout<<"{Newton ITER:"<<n<<"}\n";
 //         std::cout.precision(15);
 //         data.theta().t().raw_print(std::cout," Theta:");
@@ -717,8 +717,8 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"Rllh Curr: "<<data.rllh<<" CStep:"<<nrllh<<" Delta:"<<nrllh-data.rllh<<"\n";
 
         data.step = Cstep;
-        if(!data.step.is_finite()) throw OptimizationError("Bad data_step!");
-        if(arma::dot(data.grad, data.step)<=0) throw OptimizationError("Not an asscent direction!");
+        if(!data.step.is_finite()) throw NumericalError("Bad data_step!");
+        if(arma::dot(data.grad, data.step)<=0) throw NumericalError("Not an asscent direction!");
         if(backtrack(data) || convergence_test(data))  return; //Backing up did not help.  Just quit.
     }
 }
@@ -758,10 +758,10 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
             std::cout<<"Hinv:\n"<<inv(H);
             std::cout<<"H:\n"<<H;
             std::cout<<"Lambda(H):"<<lambda_H;
-            throw std::logic_error("QuasiNewton: H not positive_definite");
+            throw NumericalError("QuasiNewton: H not positive_definite");
         }
-        if(!data.step.is_finite()) throw std::logic_error("QuasiNewton: step is non-finite");
-//         if(arma::dot(data.grad, data.step)<=0) throw std::logic_error("QuasiNewton: step is not a ascent direction");
+        if(!data.step.is_finite()) throw NumericalError("QuasiNewton: step is non-finite");
+//         if(arma::dot(data.grad, data.step)<=0) throw Numerical("QuasiNewton: step is not a ascent direction");
 
         grad_old=data.grad;
         if(backtrack(data) || convergence_test(data))  return; //Backing up did not help.  Just quit.
@@ -930,7 +930,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
         }
     }
     
-    throw OptimizationError("Max Iterations Exceeded");
+    throw LogicalError("Max Iterations Exceeded");
 }
 
 /**
@@ -1035,8 +1035,8 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
     if(alpha>1){ //step is feasible.  accept it
 //         std::cout<<" (((alpha>1 ==> feasible))) alpha: "<<alpha<<"\n";
         VecT full_step = theta + step;
-        if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
-        if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
+        if(!arma::all(full_step > lbound)) throw NumericalError("Feasible Bounding failed lower bounds");
+        if(!arma::all(full_step < ubound)) throw NumericalError("Feasible Bounding failed upper bounds");
         return step_hat;
     } else { //backtrack a little bit from alpha to remain feasible
         //Bellavia (2004); Coleman and Li (1996)
@@ -1046,8 +1046,8 @@ TrustRegionMaximizer<Model>::bound_step(const VecT &step_hat, const VecT &D, con
 //         std::cout<<" kappa restricted_step: "<<(theta+kappa*alpha*step).t()<<"\n";
 //         std::cout<<" (((alpha<=1 ==> restricted-feasible)))\n";
         VecT full_step = theta + kappa*alpha*step;
-        if(!arma::all(full_step > lbound)) throw OptimizationError("Bounding failed lower bounds");
-        if(!arma::all(full_step < ubound)) throw OptimizationError("Bounding failed upper bounds");
+        if(!arma::all(full_step > lbound)) throw NumericalError("Infeasible Bounding failed lower bounds");
+        if(!arma::all(full_step < ubound)) throw NumericalError("Infeasible Bounding failed upper bounds");
         return kappa*alpha*step_hat; //rescale back to hat space
     }
 }
@@ -1077,7 +1077,7 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
     int N = static_cast<int>(g.n_elem);
     double g_norm = arma::norm(g);
     MatT Hchol=H;
-    copy_Usym_mat(Hchol);
+//     copy_Usym_mat(Hchol);
     bool pos_def = cholesky(Hchol);
 
     if(pos_def) {
@@ -1106,7 +1106,7 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
         VecT lambda_H;
         MatT Q_H;
         bool decomp_success = arma::eig_sym(lambda_H,Q_H, arma::symmatu(H)); //Compute eigendecomposition of symmertic matrix H
-        if(!decomp_success) throw OptimizationError("Could not eigendecompose");
+        if(!decomp_success) throw NumericalError("Could not eigendecompose");
         VecT g_hat = Q_H.t() * g; // g in coordinates of H's eigensystem
         double delta2 = delta * delta; //delta^2
         double lambda_min = lambda_H(0); //Minimum eigenvalue.  lambda_H is gaurenteeded in decreaseing order
@@ -1173,7 +1173,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
     
     for(int i=0; i<max_iter;i++) {
         MatT R = H;
-        copy_Usym_mat(R);
+//         copy_Usym_mat(R);
         R.diag() += lambda;
         bool is_pos = cholesky(R);
 //         std::cout<<"* Lambda solve: iter:"<<i<<"\n";
@@ -1181,7 +1181,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
         if(!is_pos) {
             std::cout<<"H:"<<H;
             std::cout<<"lambda: "<<lambda<<"\n";
-            throw OptimizationError("Bad cholesky decomposition.  Lambda is too small??.");
+            throw NumericalError("Bad cholesky decomposition.  Lambda is too small??.");
         }
         VecT p = cholesky_solve(R,-g);
         MatT Rtri = R;
@@ -1200,7 +1200,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
             arma::eig_sym(lambda_H,Q_H, arma::symmatu(H)); //Compute eigendecomposition of symmertic matrix H
             double lambda_min = lambda_H(0); //Minimum eigenvalue.  lambda_H is gaurenteeded in decreaseing order
             R = H;
-            copy_Usym_mat(R);
+//             copy_Usym_mat(R);
             R.diag() += -lambda_min;
             cholesky(R);
             p = cholesky_solve(R,-g);
@@ -1211,7 +1211,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
             double objective_lam_min = 1/delta - 1/norm_p;
             std::cout<<" obj(-lambda_min="<<-lambda_min<<")=:"<<objective_lam_min<<"\n";
             std::cout<<" obj(lambda_lb="<<lambda_lb<<")=:"<<objective<<"\n";
-            throw OptimizationError("Bad lambda lower bound??");
+            throw NumericalError("Bad lambda lower bound??");
         }
         if(lambda==lambda_ub && lambda_delta>0) {
 //             std::cout<<" R:\n"<<R;
@@ -1223,7 +1223,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
 //             std::cout<<"* |p|:"<<arma::norm(p)<<"\n";
 //             std::cout<<"* |q|:"<<arma::norm(q)<<"\n";
 //             std::cout<<"* obj:"<<objective<<"\n";
-            throw OptimizationError("Bad lambda upper bound??");
+            throw NumericalError("Bad lambda upper bound??");
         }
         lambda += lambda_delta;
         lambda = std::min(std::max(lambda,lambda_lb),lambda_ub);
@@ -1237,7 +1237,7 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
 //     std::cout<<" delta:="<<delta<<"\n";
 //     std::cout<<" lambda_bnds:= ["<<lambda_lb<<","<<lambda_ub<<"]\n";
 //     std::cout<<" epsilon:="<<epsilon<<"\n";
-    throw OptimizationError("Lambda search exceeded max_iter");
+    throw NumericalError("Lambda search exceeded max_iter");
 }
 
 
@@ -1247,10 +1247,9 @@ template<class Model>
 typename Model::Stencil
 SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
-    auto rng = rng_manager.generator();
     ParamVecT sequence;
     VecT sequence_rllh;
-    return anneal(rng, im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
+    return anneal(im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
 template<class Model>
@@ -1258,18 +1257,19 @@ typename Model::Stencil
 SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
                                                            ParamVecT &sequence, VecT &sequence_rllh)
 {
-    auto rng = rng_manager.generator();
     double rllh;
-    return anneal(rng, im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
+    return anneal(im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
 
 template<class Model>
 typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &im, const StencilT &theta_init, 
+SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT &theta_init, 
                                            double &theta_max_rllh, ParamVecT &sequence, VecT &sequence_rllh)
 {
-    NewtonDiagonalMaximizer<Model> nr(model);
+    auto &rng = model.get_rng_generator();
+    UniformDistT uni;
+    TrustRegionMaximizer<Model> tr_max(model);
     int niters = max_iterations*model.get_mcmc_num_candidate_sampling_phases();
     sequence = model.make_param_stack(niters+1);
     sequence_rllh.set_size(niters+1);
@@ -1287,26 +1287,23 @@ SimulatedAnnealingMaximizer<Model>::anneal(ParallelRngT &rng, const ModelDataT &
             n--;
             continue;
         }
-        double can_rllh=methods::objective::rllh(model, im, can_theta);
-        if(!std::isfinite(can_rllh)) throw OptimizationError("Bad candiate relative llh.");
-        double old_rllh=sequence_rllh(naccepted-1);
-        if(can_rllh < old_rllh && rng_manager.randu() > exp((can_rllh-old_rllh)/T) ){
-            continue;//Reject
-        }
+        double can_rllh = methods::objective::rllh(model, im, can_theta);
+        double old_rllh = sequence_rllh(naccepted-1);
+        if(can_rllh < old_rllh && uni(rng) > exp((can_rllh-old_rllh)/T)) continue; //Reject
         //Accept
         T /= cooling_rate;
         sequence.col(naccepted) = can_theta;
         sequence_rllh(naccepted) = can_rllh;
-        if(can_rllh > max_rllh){
+        if(can_rllh > max_rllh) {
             max_rllh = can_rllh;
             max_idx = naccepted;
         }
         naccepted++;
-        if(naccepted >= niters+1) throw OptimizationError("Iteration error in simulated annealing");
+        if(naccepted >= niters+1) throw LogicalError("Iteration error in simulated annealing");
     }
 
-    //Run a NR maximization
-    nr.local_maximize(im, model.make_stencil(sequence.col(max_idx)), max_s, max_rllh);
+    //Run a  maximization
+    tr_max.local_maximize(im, model.make_stencil(sequence.col(max_idx)), max_s, max_rllh);
     //Fixup sequence to return
     sequence.resize(sequence.n_rows, naccepted+1);
     sequence.col(naccepted) = max_s.theta;

@@ -17,6 +17,8 @@
 #include "python_error.h"
 #include "py11_armadillo_iface.h"
 #include "Gauss1DMLE.h"
+#include <PriorHessian/BaseDist.h>
+#include <BacktraceException/BacktraceException.h>
 
 namespace mappel {
 namespace python {
@@ -27,20 +29,80 @@ using pyarma::IdxT;
 using pyarma::ArrayT;
 using pyarma::ArrayDoubleT;
 using pyarma::ColumnMajorOrder;
+using python_error::PythonError;
+using parallel_rng::SeedT; //RNG seed type from ParallelRng package
+
+
+inline
+VecT thetaAsArma(ArrayDoubleT &theta)
+{
+     switch(theta.ndim()) {
+        case 1:
+            return {static_cast<double*>(theta.mutable_data(0)), static_cast<IdxT>(theta.size()), false, true};
+        case 2:
+            if(theta.shape(1) != 1 ) {
+                std::ostringstream msg;
+                msg<<"Expected single theta. Got numpy ndarray dim="<<theta.ndim()<<" #columns:"<<theta.shape(1);
+                throw PythonError("ConversionError",msg.str());
+            }
+            return {static_cast<double*>(theta.mutable_data(0,0)), static_cast<IdxT>(theta.size()), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected single theta. Got numpy ndarray dim="<<theta.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
+}
+
+MatT thetaStackAsArma(ArrayDoubleT &theta)
+{
+     switch(theta.ndim()) {
+        case 1:
+            return {static_cast<double*>(theta.mutable_data(0)), static_cast<IdxT>(theta.size()), 1, false, true};
+        case 2:
+            return {static_cast<double*>(theta.mutable_data(0,0)), static_cast<IdxT>(theta.shape(0)), static_cast<IdxT>(theta.shape(1)), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected stack of 1 or more theta. Got numpy ndarray dim="<<theta.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
+}
 
 
 template<class Model>
 typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value, ImageT<Model>>::type
 imageAsArma(ArrayDoubleT &im)
 {
-    return {static_cast<double*>(im.mutable_data(0)), static_cast<IdxT>(im.size()), false, true};
+     switch(im.ndim()) {
+        case 1:
+            return {static_cast<double*>(im.mutable_data(0)), static_cast<IdxT>(im.size()), false, true};
+        case 2:
+            if(im.shape(Model::num_dim) != 1 ) {
+                std::ostringstream msg;
+                msg<<"Expected single image. Got numpy ndarray dim="<<im.ndim()<<" #images:"<<im.shape(Model::num_dim);
+                throw PythonError("ConversionError",msg.str());
+            }
+            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.size()), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected single image for model with num_dim:"<<Model::num_dim<<". Got numpy ndarray dim="<<im.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
 }
 
 template<class Model>
 typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value, ImageStackT<Model>>::type
 imageStackAsArma(ArrayDoubleT &im)
 {
-    return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), false, true};
+    switch(im.ndim()) {
+        case 1:
+            return {static_cast<double*>(im.mutable_data(0)), static_cast<IdxT>(im.shape(0)), 1, false, true};
+        case 2:
+            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected stack of 1 or more images each with num_dim:"<<Model::num_dim<<". Got numpy ndarray dim="<<im.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
 }
 
 
@@ -76,7 +138,8 @@ template<class ElemT=double>
 ArrayT<ElemT, ColumnMajorOrder> 
 makeImageStackArray(uint32_t shape, uint32_t count)
 {
-    return ArrayT<ElemT, ColumnMajorOrder>({shape,count});
+    if(count == 1)  return ArrayT<ElemT, ColumnMajorOrder>({shape});  //Squeeze out last dim
+    else            return ArrayT<ElemT, ColumnMajorOrder>({shape,count});
 }
 
 template<class ElemT=double, class IntT=uint32_t>
@@ -97,6 +160,21 @@ makeImageStackArray(arma::Col<IntT> shape, IntT count)
     }
 }
 
+inline
+void register_exceptions()
+{
+    py::register_exception_translator([](std::exception_ptr err_ptr) {
+        try { if(err_ptr) std::rethrow_exception(err_ptr); }
+        catch (const ParameterValueError &err) { PyErr_SetString(PyExc_ValueError, err.what()); }
+        catch (const ArrayShapeError &err)     { PyErr_SetString(PyExc_ValueError, err.what()); }
+        catch (const ArraySizeError &err)      { PyErr_SetString(PyExc_ValueError, err.what()); }
+        catch (const ModelBoundsError &err)    { PyErr_SetString(PyExc_RuntimeError, err.what()); }
+        catch (const NumericalError &err)      { PyErr_SetString(PyExc_RuntimeError, err.what()); }
+        catch (const LogicalError &err)        { PyErr_SetString(PyExc_RuntimeError, err.what()); }
+        catch (const NotImplementedError &err) { PyErr_SetString(PyExc_NotImplementedError, err.what()); }
+        });
+    python_error::register_exceptions();        
+}
 
 template<class Model>
 class ModelWrapper
@@ -111,7 +189,7 @@ public:
     static void set_ubound(Model &model, ArrayDoubleT &arr);
     static ArrayDoubleT bounded_theta(Model &model, ArrayDoubleT &arr);
     static ArrayDoubleT reflected_theta(Model &model, ArrayDoubleT &arr);
-    static bool theta_in_bounds(Model &model, ArrayDoubleT &arr);
+    static ArrayT<BoolT> theta_in_bounds(Model &model, ArrayDoubleT &arr);
     static double find_hyperparam(Model &model, std::string param_name, double default_val);
 
     static ArrayDoubleT sample_prior(Model &model); 
@@ -119,6 +197,7 @@ public:
 
     static ArrayDoubleT model_image_stack(Model &model, ArrayDoubleT &thetas);
     static ArrayDoubleT simulate_image_stack(Model &model, ArrayDoubleT &thetas, IdxT count);
+
     static ArrayDoubleT objective_llh_stack(Model &model, ArrayDoubleT &images, ArrayDoubleT &thetas);
     static ArrayDoubleT objective_rllh_stack(Model &model, ArrayDoubleT &images, ArrayDoubleT &thetas);
     static ArrayDoubleT objective_grad_stack(Model &model, ArrayDoubleT &images, ArrayDoubleT &thetas);
@@ -126,7 +205,7 @@ public:
     static ArrayDoubleT objective_negative_definite_hessian_stack(Model &model, ArrayDoubleT &images, ArrayDoubleT &thetas);
     static py::tuple objective(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta);
     static py::tuple likelihood_objective(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta);
-    static py::tuple prior_objective(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta);
+    static py::tuple prior_objective(Model &model, ArrayDoubleT &theta);
     static py::tuple aposteriori_objective(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta);
     
     static ArrayDoubleT cr_lower_bound(Model &model, ArrayDoubleT &thetas);
@@ -153,23 +232,36 @@ public:
     static py::tuple estimate_mcmc_debug(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta_init, IdxT Nsample);
 };
 
+
+
+
 template<class Model>
 void bindMappelModel(py::module &M)
 {
+    register_exceptions(); //Register Mappel exceptions
+    
     py::class_<Model> model(M, Model::name.c_str(), py::multiple_inheritance());
     if(std::is_base_of<Gauss1DModel,Model>::value) {
-        model.def(py::init<typename Model::ImageCoordT,double>());
+        model.def(py::init<typename Model::ImageCoordT,double>(), py::arg("size"), py::arg("psf_sigma"));
         model.def_property("size",[](Model &model) {return model.get_size();},[](Model &model,IdxT size) { model.set_size(size); },"1D-Image size in pixels." );
         model.def_property("psf_sigma",[](Model &model) {return model.get_psf_sigma();},[](Model &model,double sigma) { model.set_psf_sigma(sigma); },"Sigma of emitter (PSF) Gaussian approximation [pixels]." );
     }
-    model.def_property_readonly("name",[](Model &model) {return Model::name;},
+    model.def_property_readonly("num_dim",[](Model &model) { return Model::num_dim; },
+                                         "Number of image dimensions.");
+    model.def_property_readonly("name",[](Model &model) { return Model::name; },
                                          "Model name.");
+    model.def_property_readonly("min_size",[](Model &model) { return model.min_size; },
+                                  "Minimum size along any image dimension in pixels.");
+    model.def_property_readonly("num_pixels",[](Model &model) { return model.get_num_pixels(); },
+                                         "Total number of image pixels.");
     model.def_property_readonly("estimator_names",[](Model &model) {return Model::estimator_names;},
                                          "Available MLE/MAP estimator names.");
     model.def_property_readonly("num_params",[](Model &model) {return model.get_num_params();},
-                                  "Number of model parameters (dimensionality).");
+                                  "Number of model parameters.");
     model.def_property_readonly("num_hyperparams",[](Model &model) {return model.get_num_hyperparams();},
                                   "Number of prior distribution parameters." );
+    model.def_property_readonly("bounds_epsilon",[](Model &model) { return Model::bounds_epsilon; },
+                                         "Minimum distance away from the boundary for feasible theta.");
     model.def_property("params_desc",[](Model &model) {return model.get_params_desc();},[](Model &model,StringVecT &desc) { model.set_params_desc(desc); },
                          "Names of model parameters." );
     model.def_property("hyperparams_desc",[](Model &model) {return model.get_hyperparams_desc();}, [](Model &model,StringVecT &desc) { model.set_hyperparams_desc(desc); },
@@ -181,6 +273,8 @@ void bindMappelModel(py::module &M)
     model.def_property("ubound",&ModelWrapper<Model>::get_ubound, &ModelWrapper<Model>::set_ubound,
                          "Parameter box-constraints upper-bounds.");
  
+    model.def("set_rng_seed",[](Model &model, SeedT seed) { model.set_rng_seed(seed); }, py::arg("seed"),
+                "Re-seed the internal rng manager.");
     model.def("find_hyperparam",&ModelWrapper<Model>::find_hyperparam,py::arg("name"),py::arg("default_val")=-1,
                 "Find a hyperparameter value by name or return a default_val.");
     model.def("bounded_theta", &ModelWrapper<Model>::bounded_theta,py::arg("theta"),
@@ -218,8 +312,8 @@ void bindMappelModel(py::module &M)
                 "Returns the tuple (rllh, grad, hessian) of the model objective with respect to a single image, evaluated at a single theta.  The objective depends on the Estimator type (MLE) or (MAP).  This should be called as the objective function to maximize in optimization algorithms.");
     model.def("likelihood_objective",&ModelWrapper<Model>::likelihood_objective, py::arg("image"), py::arg("theta"),
                 "Returns the tuple (rllh, grad, hessian) of the pure log-likelihood function with respect to a single image, evaluated at a single theta.");
-    model.def("prior_objective",&ModelWrapper<Model>::prior_objective, py::arg("image"), py::arg("theta"),
-                "Returns the tuple (rllh, grad, hessian) of the prior log-likelihood with respect, evaluated at a single theta.");
+    model.def("prior_objective",&ModelWrapper<Model>::prior_objective, py::arg("theta"),
+                "Returns the tuple (rllh, grad, hessian) of the prior log-likelihood, evaluated at a single theta.");
     model.def("aposteriori_objective",&ModelWrapper<Model>::aposteriori_objective, py::arg("image"), py::arg("theta"),
                 "Returns the tuple (rllh, grad, hessian) of the log-aposteriori function  (the log_likelihood + log_prior) with respect to a single image , evaluated at a single theta.");
     
@@ -305,8 +399,8 @@ template<class Model>
 void
 ModelWrapper<Model>::set_hyperparams(Model &model,ArrayDoubleT &arr )
 {
-    auto theta = pyarma::asVec(arr);
-    model.set_hyperparams(theta);
+    auto params = pyarma::asVec(arr);
+    model.set_hyperparams(params);
 }
 
 template<class Model>
@@ -347,32 +441,35 @@ ModelWrapper<Model>::set_ubound(Model &model,ArrayDoubleT &arr )
 
 template<class Model>
 ArrayDoubleT 
-ModelWrapper<Model>::bounded_theta(Model &model, ArrayDoubleT &arr)
+ModelWrapper<Model>::bounded_theta(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto theta = pyarma::asVec(arr);
-    auto out = pyarma::makeArray(model.get_num_params());
-    auto bd_theta = pyarma::asVec(out);
-    bd_theta = model.bounded_theta(theta);    
+    auto thetas = thetaStackAsArma(thetas_arr);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), thetas.n_cols);
+    auto bd_theta = pyarma::asMat(out);
+    bd_theta = model.bounded_theta_stack(thetas);    
     return out;
 }
 
 template<class Model>
 ArrayDoubleT 
-ModelWrapper<Model>::reflected_theta(Model &model, ArrayDoubleT &arr)
+ModelWrapper<Model>::reflected_theta(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto theta = pyarma::asVec(arr);
-    auto out = pyarma::makeArray(model.get_num_params());
-    auto bd_theta = pyarma::asVec(out);
-    bd_theta = model.reflected_theta(theta);    
+    auto thetas =thetaStackAsArma(thetas_arr);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), thetas.n_cols);
+    auto bd_theta = pyarma::asMat(out);
+    bd_theta = model.reflected_theta_stack(thetas);    
     return out;
 }
 
 template<class Model>    
-bool 
-ModelWrapper<Model>::theta_in_bounds(Model &model, ArrayDoubleT &arr)
+ArrayT<BoolT>
+ModelWrapper<Model>::theta_in_bounds(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto theta = pyarma::asVec(arr);
-    return model.theta_in_bounds(theta);
+    auto thetas = thetaStackAsArma(thetas_arr);
+    auto out = pyarma::makeArray<BoolT>(thetas.n_cols);
+    auto im_bounds = pyarma::asVec<BoolT>(out);
+    im_bounds = model.theta_stack_in_bounds(thetas);
+    return out;
 }
 
 
@@ -390,7 +487,7 @@ template<class Model>
 ArrayDoubleT
 ModelWrapper<Model>::sample_prior_stack(Model &model, IdxT count)
 {
-    auto out = pyarma::makeArray(model.get_num_params(),count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(),count);
     auto theta = pyarma::asMat(out);
     methods::sample_prior_stack(model,theta);
     return out;
@@ -401,7 +498,7 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::model_image_stack(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto out = makeImageStackArray(model.get_size(), thetas.n_cols);
     auto ims = imageStackAsArma<Model>(out);
     methods::model_image_stack(model,thetas, ims);
@@ -412,7 +509,7 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::simulate_image_stack(Model &model, ArrayDoubleT &thetas_arr, IdxT count)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     if(count>1 && thetas.n_cols>1) {
         std::ostringstream msg;
         msg<<"Simulate image got N="<<thetas.n_cols<<" count="<<count;
@@ -429,10 +526,10 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::objective_llh_stack(Model &model, ArrayDoubleT &ims_arr, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto ims = imageStackAsArma<Model>(ims_arr);
     IdxT count = std::max(thetas.n_cols, static_cast<IdxT>(model.get_size_image_stack(ims))); 
-    auto out = pyarma::makeArray(count);
+    auto out = pyarma::makeSqueezedArray(count);
     auto llh = pyarma::asVec(out);
     methods::objective::llh_stack(model,ims, thetas, llh);
     return out;
@@ -442,10 +539,10 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::objective_rllh_stack(Model &model, ArrayDoubleT &ims_arr, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto ims = imageStackAsArma<Model>(ims_arr);
     IdxT count = std::max(thetas.n_cols, static_cast<IdxT>(model.get_size_image_stack(ims))); 
-    auto out = pyarma::makeArray(count);
+    auto out = pyarma::makeSqueezedArray(count);
     auto rllh = pyarma::asVec(out);
     methods::objective::rllh_stack(model,ims, thetas, rllh);
     return out;
@@ -455,10 +552,10 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::objective_grad_stack(Model &model, ArrayDoubleT &ims_arr, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto ims = imageStackAsArma<Model>(ims_arr);
     IdxT count = std::max(thetas.n_cols, static_cast<IdxT>(model.get_size_image_stack(ims))); 
-    auto out = pyarma::makeArray(model.get_num_params(), count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto grad = pyarma::asMat(out);
     methods::objective::grad_stack(model,ims, thetas, grad);
     return out;
@@ -468,12 +565,13 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::objective_hessian_stack(Model &model, ArrayDoubleT &ims_arr, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto ims = imageStackAsArma<Model>(ims_arr);
     IdxT count = std::max(thetas.n_cols, static_cast<IdxT>(model.get_size_image_stack(ims))); 
-    auto out = pyarma::makeArray(model.get_num_params(), model.get_num_params(), count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), model.get_num_params(), count);
     auto hess = pyarma::asCube(out);
     methods::objective::hessian_stack(model,ims, thetas, hess);
+    copy_Usym_mat_stack(hess); // Convert upper triangular symmetric representation to full-matrix for python
     return out;
 }
 
@@ -481,12 +579,13 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::objective_negative_definite_hessian_stack(Model &model, ArrayDoubleT &ims_arr, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     auto ims = imageStackAsArma<Model>(ims_arr);
     IdxT count = std::max(thetas.n_cols, static_cast<IdxT>(model.get_size_image_stack(ims))); 
-    auto out = pyarma::makeArray(model.get_num_params(), model.get_num_params(), count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), model.get_num_params(), count);
     auto hess = pyarma::asCube(out);
     methods::objective::negative_definite_hessian_stack(model,ims, thetas, hess);
+    //copy_Usym_mat_stack(hess);  Not needed here because modified cholesky provides full symmetric matrix for same price as upper triangular
     return out;
 }
 
@@ -494,7 +593,7 @@ template<class Model>
 py::tuple 
 ModelWrapper<Model>::objective(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto im = imageAsArma<Model>(im_arr);
     auto s = model.make_stencil(theta);
     double rllh = methods::objective::rllh(model, im, s);
@@ -505,6 +604,8 @@ ModelWrapper<Model>::objective(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT 
     auto hess_arr = pyarma::makeArray(N,N);
     auto hess = pyarma::asMat(hess_arr);
     hess = methods::objective::hessian(model, im, s);
+    copy_Usym_mat(hess); // Convert upper triangular symmetric representation to full-matrix for python
+
     py::tuple out(3);
     out[0] = rllh;
     out[1] = grad_arr;
@@ -516,7 +617,7 @@ template<class Model>
 py::tuple 
 ModelWrapper<Model>::likelihood_objective(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto im = imageAsArma<Model>(im_arr);
     double rllh;
     auto N = model.get_num_params();
@@ -525,7 +626,8 @@ ModelWrapper<Model>::likelihood_objective(Model &model, ArrayDoubleT &im_arr, Ar
     auto hess_arr = pyarma::makeArray(N,N);
     auto hess = pyarma::asMat(hess_arr);
     methods::likelihood_objective(model,im,theta,rllh,grad,hess);
-    
+    copy_Usym_mat(hess); // Convert upper triangular symmetric representation to full-matrix for python
+
     py::tuple out(3);
     out[0] = rllh;
     out[1] = grad_arr;
@@ -535,17 +637,17 @@ ModelWrapper<Model>::likelihood_objective(Model &model, ArrayDoubleT &im_arr, Ar
 
 template<class Model>
 py::tuple 
-ModelWrapper<Model>::prior_objective(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
+ModelWrapper<Model>::prior_objective(Model &model,  ArrayDoubleT &theta_arr)
 {
-    auto theta = pyarma::asVec(theta_arr);
-    auto im = imageAsArma<Model>(im_arr);
+    auto theta = thetaAsArma(theta_arr);
     double rllh;
     auto N = model.get_num_params();
     auto grad_arr = pyarma::makeArray(N);
     auto grad = pyarma::asVec(grad_arr);
     auto hess_arr = pyarma::makeArray(N,N);
     auto hess = pyarma::asMat(hess_arr);
-    methods::prior_objective(model,im,theta,rllh,grad,hess);
+    methods::prior_objective(model,theta,rllh,grad,hess);
+    copy_Usym_mat(hess); // Convert upper triangular symmetric representation to full-matrix for python
     
     py::tuple out(3);
     out[0] = rllh;
@@ -558,7 +660,7 @@ template<class Model>
 py::tuple 
 ModelWrapper<Model>::aposteriori_objective(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto im = imageAsArma<Model>(im_arr);
     double rllh;
     auto N = model.get_num_params();
@@ -567,6 +669,7 @@ ModelWrapper<Model>::aposteriori_objective(Model &model, ArrayDoubleT &im_arr, A
     auto hess_arr = pyarma::makeArray(N,N);
     auto hess = pyarma::asMat(hess_arr);
     methods::aposteriori_objective(model,im,theta,rllh,grad,hess);
+    copy_Usym_mat(hess); // Convert upper triangular symmetric representation to full-matrix for python
     
     py::tuple out(3);
     out[0] = rllh;
@@ -579,9 +682,9 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::cr_lower_bound(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     IdxT count = thetas.n_cols;
-    auto out = pyarma::makeArray(model.get_num_params(), count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto cr_vec = pyarma::asMat(out);
     methods::cr_lower_bound_stack(model, thetas, cr_vec);
     return out;
@@ -591,11 +694,12 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::expected_information(Model &model, ArrayDoubleT &thetas_arr)
 {
-    auto thetas = pyarma::asMat(thetas_arr);
+    auto thetas = thetaStackAsArma(thetas_arr);
     IdxT count = thetas.n_cols;
-    auto out = pyarma::makeArray(model.get_num_params(), model.get_num_params(), count);
+    auto out = pyarma::makeSqueezedArray(model.get_num_params(), model.get_num_params(), count);
     auto I_stack = pyarma::asCube(out);
     methods::expected_information_stack(model, thetas, I_stack);
+    copy_Usym_mat_stack(I_stack); // Convert upper triangular symmetric representation to full-matrix for python
     return out;
 }
 
@@ -603,11 +707,12 @@ template<class Model>
 ArrayDoubleT 
 ModelWrapper<Model>::observed_information(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_mode_arr)
 {
-    auto theta = pyarma::asVec(theta_mode_arr);
+    auto theta = thetaAsArma(theta_mode_arr);
     auto im = imageAsArma<Model>(im_arr);
     auto out = pyarma::makeArray(model.get_num_params(), model.get_num_params());
     auto hess = pyarma::asMat(out);
     methods::objective::hessian(model, im, theta, hess);
+    copy_Usym_mat(hess); // Convert upper triangular symmetric representation to full-matrix for python
     return out;
 }
 
@@ -624,26 +729,28 @@ ModelWrapper<Model>::estimate_max(Model &model, ArrayDoubleT &images_arr, std::s
         theta_init_stack.set_size(model.get_num_params(),count);
         theta_init_stack.zeros();
     } else {
-        theta_init_stack = pyarma::asMat(theta_init_arr);
+        theta_init_stack = thetaStackAsArma(theta_init_arr);
         model.check_param_shape(theta_init_stack);
         if(theta_init_stack.n_cols != count) {
             std::ostringstream msg;
             msg<<"Got inconsistent counts: #images="<<count<<" #theta_inits="<<theta_init_stack.n_cols;
-            throw PythonError(msg.str());
+            throw PythonError("ArrayShape",msg.str());
         }
     }
-    auto theta_max_arr = pyarma::makeArray(model.get_num_params(),count);
+    auto theta_max_arr = pyarma::makeSqueezedArray(model.get_num_params(),count);
     auto theta_max_stack = pyarma::asMat(theta_max_arr);
     
-    auto rllh_arr = pyarma::makeArray(count);
+    auto rllh_arr = pyarma::makeSqueezedArray(count);
     auto rllh_stack = pyarma::asVec(rllh_arr);
     
-    auto obsI_arr = pyarma::makeArray(model.get_num_params(),model.get_num_params(),count);
+    auto obsI_arr = pyarma::makeSqueezedArray(model.get_num_params(),model.get_num_params(),count);
     auto obsI_stack = pyarma::asCube(obsI_arr);
     
     if(return_stats){
         StatsT stats;
         methods::estimate_max_stack(model, image_stack, method, theta_init_stack, theta_max_stack, rllh_stack, obsI_stack, stats);
+        copy_Usym_mat_stack(obsI_stack); // Convert upper triangular symmetric representation to full-matrix for python
+
         py::tuple out(4);
         out[0] = theta_max_arr;
         out[1] = rllh_arr;
@@ -652,6 +759,8 @@ ModelWrapper<Model>::estimate_max(Model &model, ArrayDoubleT &images_arr, std::s
         return out; 
     } else {
         methods::estimate_max_stack(model, image_stack, method, theta_init_stack, theta_max_stack, rllh_stack, obsI_stack);
+        copy_Usym_mat_stack(obsI_stack); // Convert upper triangular symmetric representation to full-matrix for python
+
         py::tuple out(3);
         out[0] = theta_max_arr;
         out[1] = rllh_arr;
@@ -681,17 +790,17 @@ ModelWrapper<Model>::estimate_mcmc_sample(Model &model, ArrayDoubleT &images_arr
         theta_init_stack.set_size(model.get_num_params(),count);
         theta_init_stack.zeros();
     } else {
-        theta_init_stack = pyarma::asMat(theta_init_arr);
+        theta_init_stack = thetaStackAsArma(theta_init_arr);
         model.check_param_shape(theta_init_stack);
         if(theta_init_stack.n_cols != count) {
             std::ostringstream msg;
             msg<<"Got inconsistent counts: #images="<<count<<" #theta_inits="<<theta_init_stack.n_cols;
-            throw PythonError(msg.str());
+            throw PythonError("ArrayShape",msg.str());
         }
     }
-    auto sample_arr = pyarma::makeArray(model.get_num_params(), Nsample, count);
+    auto sample_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nsample, count);
     auto sample_stack = pyarma::asCube(sample_arr);
-    auto sample_rllh_arr = pyarma::makeArray(Nsample, count);
+    auto sample_rllh_arr = pyarma::makeSqueezedArray(Nsample, count);
     auto sample_rllh_stack = pyarma::asMat(sample_rllh_arr);
     methods::estimate_mcmc_sample_stack(model,image_stack,theta_init_stack, Nsample, Nburnin, thin, sample_stack, sample_rllh_stack);
     py::tuple out(2);
@@ -712,17 +821,17 @@ ModelWrapper<Model>::estimate_mcmc_posterior(Model &model, ArrayDoubleT &images_
         theta_init_stack.set_size(model.get_num_params(),count);
         theta_init_stack.zeros();
     } else {
-        theta_init_stack = pyarma::asMat(theta_init_arr);
+        theta_init_stack = thetaStackAsArma(theta_init_arr);
         model.check_param_shape(theta_init_stack);
         if(theta_init_stack.n_cols != count) {
             std::ostringstream msg;
             msg<<"Got inconsistent counts: #images="<<count<<" #theta_inits="<<theta_init_stack.n_cols;
-            throw PythonError(msg.str());
+            throw PythonError("ArrayShape",msg.str());
         }
     }
-    auto theta_mean_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_mean_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_mean_stack = pyarma::asMat(theta_mean_arr);
-    auto theta_cov_arr = pyarma::makeArray(model.get_num_params(), model.get_num_params(), count);
+    auto theta_cov_arr = pyarma::makeSqueezedArray(model.get_num_params(), model.get_num_params(), count);
     auto theta_cov_stack = pyarma::asCube(theta_cov_arr);
     methods::estimate_mcmc_posterior_stack(model,image_stack, theta_init_stack, Nsample, Nburnin, thin, 
                                            theta_mean_stack, theta_cov_stack);
@@ -737,11 +846,11 @@ template<class Model>
 py::tuple 
 ModelWrapper<Model>::error_bounds_expected(Model &model, ArrayDoubleT &theta_arr, double confidence)
 {
-    auto theta_stack = pyarma::asMat(theta_arr);
+    auto theta_stack = thetaStackAsArma(theta_arr);
     IdxT count = theta_stack.n_cols;
-    auto theta_lb_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_lb_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_lb_stack = pyarma::asMat(theta_lb_arr);
-    auto theta_ub_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_ub_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_ub_stack = pyarma::asMat(theta_ub_arr);
     methods::error_bounds_expected_stack(model, theta_stack, confidence, theta_lb_stack, theta_ub_stack);
     py::tuple out(2);
@@ -754,17 +863,17 @@ template<class Model>
 py::tuple 
 ModelWrapper<Model>::error_bounds_observed(Model &model, ArrayDoubleT &theta_arr, ArrayDoubleT &obsI_arr, double confidence)
 {
-    auto theta_stack = pyarma::asMat(theta_arr);
+    auto theta_stack = thetaStackAsArma(theta_arr);
     IdxT count = theta_stack.n_cols;
     auto obsI_stack = pyarma::asCube(obsI_arr);
     if(obsI_stack.n_slices != count) {
         std::ostringstream msg;
         msg<<"Got inconsistent counts: #theta="<<count<<" #obsI="<<obsI_stack.n_slices;
-        throw PythonError(msg.str());
+        throw PythonError("ArrayShape",msg.str());
     }
-    auto theta_lb_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_lb_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_lb_stack = pyarma::asMat(theta_lb_arr);
-    auto theta_ub_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_ub_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_ub_stack = pyarma::asMat(theta_ub_arr);
     methods::error_bounds_observed_stack(model, theta_stack, obsI_stack, confidence,  theta_lb_stack, theta_ub_stack);
     py::tuple out(2);
@@ -786,11 +895,11 @@ ModelWrapper<Model>::error_bounds_posterior_credible(Model &model, ArrayDoubleT 
 {
     auto sample_stack = pyarma::asCube(sample_arr);
     IdxT count = sample_stack.n_slices;
-    auto theta_mean_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_mean_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_mean_stack = pyarma::asMat(theta_mean_arr);
-    auto theta_lb_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_lb_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_lb_stack = pyarma::asMat(theta_lb_arr);
-    auto theta_ub_arr = pyarma::makeArray(model.get_num_params(), count);
+    auto theta_ub_arr = pyarma::makeSqueezedArray(model.get_num_params(), count);
     auto theta_ub_stack = pyarma::asMat(theta_ub_arr);
     methods::error_bounds_posterior_credible_stack(model, sample_stack, confidence, theta_mean_stack, theta_lb_stack, theta_ub_stack);
     py::tuple out(3);
@@ -805,10 +914,10 @@ ArrayDoubleT
 ModelWrapper<Model>::objective_llh_components(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
     auto im = imageAsArma<Model>(im_arr);
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto llh_comps = methods::objective::llh_components(model,im, theta);
     IdxT count = llh_comps.n_elem;
-    auto llh_arr = pyarma::makeArray(count);
+    auto llh_arr = pyarma::makeSqueezedArray(count);
     auto llh_stack = pyarma::asVec(llh_arr);
     llh_stack = llh_comps;
     return llh_arr;    
@@ -819,10 +928,10 @@ ArrayDoubleT
 ModelWrapper<Model>::objective_rllh_components(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
     auto im = imageAsArma<Model>(im_arr);
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto rllh_comps = methods::objective::rllh_components(model,im, theta);
     IdxT count = rllh_comps.n_elem;
-    auto rllh_arr = pyarma::makeArray(count);
+    auto rllh_arr = pyarma::makeSqueezedArray(count);
     auto rllh_stack = pyarma::asVec(rllh_arr);
     rllh_stack = rllh_comps;
     return rllh_arr;
@@ -833,10 +942,10 @@ ArrayDoubleT
 ModelWrapper<Model>::objective_grad_components(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
     auto im = imageAsArma<Model>(im_arr);
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto grad_comps = methods::objective::grad_components(model,im, theta);
     IdxT count = grad_comps.n_cols;
-    auto grad_arr = pyarma::makeArray(model.get_num_params(),count);
+    auto grad_arr = pyarma::makeSqueezedArray(model.get_num_params(),count);
     auto grad_stack = pyarma::asMat(grad_arr);
     grad_stack = grad_comps;
     return grad_arr;
@@ -847,10 +956,10 @@ ArrayDoubleT
 ModelWrapper<Model>::objective_hessian_components(Model &model, ArrayDoubleT &im_arr, ArrayDoubleT &theta_arr)
 {
     auto im = imageAsArma<Model>(im_arr);
-    auto theta = pyarma::asVec(theta_arr);
+    auto theta = thetaAsArma(theta_arr);
     auto hess_comps = methods::objective::hessian_components(model,im, theta);
     IdxT count = hess_comps.n_slices;
-    auto hess_arr = pyarma::makeArray(model.get_num_params(),model.get_num_params(),count);
+    auto hess_arr = pyarma::makeSqueezedArray(model.get_num_params(),model.get_num_params(),count);
     auto hess_stack = pyarma::asCube(hess_arr);
     hess_stack = hess_comps;
     return hess_arr;
@@ -861,7 +970,7 @@ py::tuple
 ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, std::string method, ArrayDoubleT &theta_init_arr)
 {
     auto image = imageAsArma<Model>(image_arr);
-    auto theta_init = pyarma::asVec(theta_init_arr);
+    auto theta_init = thetaAsArma(theta_init_arr);
     auto theta_est_arr = pyarma::makeArray(model.get_num_params());
     auto theta_est = pyarma::asVec(theta_est_arr);
     auto obsI_arr = pyarma::makeArray(model.get_num_params(),model.get_num_params());
@@ -871,13 +980,14 @@ ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, s
     VecT sequence_rllh;
     methods::estimate_max_debug(model, image, method, theta_init, theta_est, obsI, sequence, sequence_rllh, stats);
     IdxT Nseq = sequence.n_cols;
-    auto sequence_arr = pyarma::makeArray(model.get_num_params(), Nseq);
+    auto sequence_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nseq);
     auto sequence_out = pyarma::asMat(sequence_arr);
     sequence_out = sequence;
-    auto sequence_rllh_arr = pyarma::makeArray(Nseq);
+    auto sequence_rllh_arr = pyarma::makeSqueezedArray(Nseq);
     auto sequence_rllh_out = pyarma::asVec(sequence_rllh_arr);
     sequence_rllh_out = sequence_rllh;
-    
+    copy_Usym_mat(obsI); // Convert upper triangular symmetric representation to full-matrix for python
+
     py::tuple out(5);
     out[0] = theta_est_arr;
     out[1] = obsI_arr;
@@ -892,14 +1002,14 @@ py::tuple
 ModelWrapper<Model>::estimate_mcmc_debug(Model &model, ArrayDoubleT &image_arr, ArrayDoubleT &theta_init_arr, IdxT Nsample)
 {
     auto image = imageAsArma<Model>(image_arr);
-    auto theta_init = pyarma::asVec(theta_init_arr);
-    auto sample_arr = pyarma::makeArray(model.get_num_params(), Nsample);
+    auto theta_init = thetaAsArma(theta_init_arr);
+    auto sample_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nsample);
     auto sample = pyarma::asMat(sample_arr);
-    auto candidates_arr = pyarma::makeArray(model.get_num_params(), Nsample);
+    auto candidates_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nsample);
     auto candidates = pyarma::asMat(candidates_arr);
-    auto sample_rllh_arr = pyarma::makeArray(Nsample);
+    auto sample_rllh_arr = pyarma::makeSqueezedArray(Nsample);
     auto sample_rllh = pyarma::asVec(sample_rllh_arr);
-    auto candidates_rllh_arr = pyarma::makeArray(Nsample);
+    auto candidates_rllh_arr = pyarma::makeSqueezedArray(Nsample);
     auto candidates_rllh = pyarma::asVec(candidates_rllh_arr);
     
     methods::estimate_mcmc_sample_debug(model, image, theta_init, Nsample, 

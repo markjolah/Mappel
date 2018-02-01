@@ -52,7 +52,7 @@ void Gauss1DModel::set_psf_sigma(double new_psf_sigma)
     if(new_psf_sigma<=0 || !std::isfinite(new_psf_sigma)) {
         std::ostringstream msg;
         msg<<"Bad psf_sigma: "<<psf_sigma;
-        throw MappelError("BadParameter",msg.str());
+        throw ParameterValueError(msg.str());
     }
     psf_sigma = new_psf_sigma;
 }
@@ -141,7 +141,7 @@ Gauss1DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
 }
 
 void 
-Gauss1DModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale) const
+Gauss1DModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
 {
     IdxT phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {

@@ -43,12 +43,13 @@ protected:
 public:
     /* Internal Types */    
     template<class T> using IsPointEmitterModelT = typename std::enable_if<std::is_base_of<PointEmitterModel,T>::value>::type;
-    using CompositeDist = prior_hessian::CompositeDist<ParallelRngT>;
+    using CompositeDist = prior_hessian::CompositeDist<ParallelRngGeneratorT>;
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
 
     /* Static data members */
-    constexpr static double bounds_epsilon=1e-9; /**< The amount to keep away parameter values from the singularities of the prior distribtions */
+//     constexpr static double bounds_epsilon = std::numeric_limits<double>::epsilon(); /**< The amount to keep away parameter values from the singularities of the prior distribtions */
+    constexpr static double bounds_epsilon = 1.0E-9; /**< The amount to keep away parameter values from the singularities of the prior distribtions */
     
     constexpr static double default_pos_beta = 3; /**< Default position parameter in symmetric beta-distributions */
     constexpr static double default_pos_sigma = 1; /**< Default position parameter in symmetric beta-distributions */
@@ -74,6 +75,10 @@ public:
 
     /* Constructor */
     PointEmitterModel(CompositeDist&& prior_);    
+    
+    void set_rng_seed(RngSeedT seed);
+    ParallelRngManagerT& get_rng_manager();
+    ParallelRngGeneratorT& get_rng_generator();
     
     StatsT get_stats() const;
     
@@ -110,10 +115,16 @@ public:
     const ParamT& get_lbound() const;
     const ParamT& get_ubound() const;
     void bound_theta(ParamT &theta,double epsilon=bounds_epsilon) const;
+    
     bool theta_in_bounds(const ParamT &theta,double epsilon=bounds_epsilon) const;
     /* aids for bound-constrained optimization routines */
     ParamT bounded_theta(const ParamT &theta,double epsilon=bounds_epsilon) const;
     ParamT reflected_theta(const ParamT &theta,double epsilon=bounds_epsilon) const;
+
+    BoolVecT theta_stack_in_bounds(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
+    /* aids for bound-constrained optimization routines */
+    ParamVecT bounded_theta_stack(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
+    ParamVecT reflected_theta_stack(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
 
     /* MCMC related */
     /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
@@ -121,6 +132,7 @@ public:
     
 protected:
     /* Constant model parameter information */
+    ParallelRngManagerT rng_manager;
     CompositeDist prior; /* Prior distribution represented using libPriorHessian */
     IdxT num_params;
     IdxT num_hyperparams;
@@ -141,6 +153,18 @@ template<class Model, typename=PointEmitterModel::IsPointEmitterModelT<Model>>
 std::ostream& operator<<(std::ostream &out,const Model &model);
 
 /* Inline member function definitions */
+
+inline
+void PointEmitterModel::set_rng_seed(RngSeedT seed)
+{ rng_manager.seed(seed); }
+
+inline
+ParallelRngManagerT& PointEmitterModel::get_rng_manager()
+{ return rng_manager; }
+
+inline
+ParallelRngGeneratorT& PointEmitterModel::get_rng_generator()
+{ return rng_manager.generator(); }
 
 inline
 IdxT PointEmitterModel::get_num_params() const 
@@ -219,7 +243,7 @@ PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
 
 inline
 PointEmitterModel::ParamT PointEmitterModel::sample_prior()
-{ return prior.sample(rng_manager.generator()); }
+{ return prior.sample(get_rng_generator()); }
 
 
 /* Template function definitions */

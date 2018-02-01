@@ -182,7 +182,7 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
 }
 
 
-void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale) const
+void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
 {
     int phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {

@@ -9,6 +9,7 @@
 #include <cmath>
 #include <climits>
 #include <armadillo>
+#include "util.h"
 
 namespace mappel {
     
@@ -20,6 +21,7 @@ namespace mappel {
  */
 void copy_Usym_mat(arma::mat &usym);
 
+void copy_Usym_mat_stack(arma::cube &usym_stack);
 
 /** 
  * Convert symmetric matrix stored as lower triangular to full Matrix

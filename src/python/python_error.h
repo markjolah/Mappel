@@ -10,6 +10,9 @@
 #include <exception>
 #include <string>
 
+namespace python_error
+{
+
 class PythonError : public std::exception
 {
 public:
@@ -26,5 +29,19 @@ protected:
     std::string _message;
     std::string _what;
 };
+
+/**
+ * Probably should only be called once per module?
+ */ 
+inline
+void register_exceptions()
+{
+    pybind11::register_exception_translator([](std::exception_ptr err_ptr) {
+        try { if(err_ptr) std::rethrow_exception(err_ptr); }
+        catch (const PythonError &err) { PyErr_SetString(PyExc_ValueError, err.what()); }
+        });
+}
+
+} /* namespace python_error */
 
 #endif /*_PYTHON_ERROR_H */

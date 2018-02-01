@@ -39,16 +39,16 @@ namespace methods {
     typename Model::ImageT model_image(const Model &model, const ParamT<Model> &theta);
 
     template<class Model, class rng_t>
-    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta);
+    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta);
 
     template<class Model, class rng_t>
-    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta, rng_t &rng);
+    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta, rng_t &rng);
 
     template<class Model>
-    ModelDataT<Model> simulate_image(const Model &model, const StencilT<Model> &s);
+    ModelDataT<Model> simulate_image(Model &model, const StencilT<Model> &s);
 
     template<class Model>
-    ModelDataT<Model> simulate_image_from_model(const Model &model, const ImageT<Model> &model_im);
+    ModelDataT<Model> simulate_image_from_model(Model &model, const ImageT<Model> &model_im);
     
     namespace objective {            
         template<class Model>
@@ -118,12 +118,8 @@ namespace methods {
                           double &rllh,  ParamT<Model> &grad, MatT &hess);
 
     template<class Model>
-    void prior_objective(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
+    void prior_objective(const Model &model, const ParamT<Model> &theta, 
                          double &rllh, ParamT<Model> &grad, MatT &hess);
-
-    template<class Model>
-    void prior_objective(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, 
-                         double &rllh,  ParamT<Model> &grad, MatT &hess);
     
     template<class Model>
     void likelihood_objective(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
@@ -159,27 +155,27 @@ namespace methods {
     /* MAP/MLE Estimation */
     template<class Model>
     StencilT<Model>
-    estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method);
+    estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method);
 
     template<class Model>
     StencilT<Model>
-    estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
+    estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
                  double &rllh);
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, 
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI);
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, 
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats);
     
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI);
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats);
     
     /* MAP/MLE Profile likelihood computation */    
@@ -191,24 +187,24 @@ namespace methods {
 //     
 //     /* MCMC posterior sampling likelihood computation */    
     template<class Model>
-    MatT estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, 
+    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, 
                               IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0);
     
     template<class Model>
-    MatT estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                               IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0);
     
     template<class Model>
-    void estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    void estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                               IdxT Nsample, IdxT Nburnin, IdxT thin, MatT &sample, VecT &sample_rllh);
 
     template<class Model>
-    void estimate_mcmc_posterior(const Model &model, const ModelDataT<Model> &data, 
+    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, 
                                  IdxT Nsample, IdxT Nburnin, IdxT thin, 
                                  ParamT<Model> &posterior_mean, MatT &posterior_cov);
     
     template<class Model>
-    void estimate_mcmc_posterior(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                                  IdxT Nsample, IdxT Nburnin, IdxT thin, 
                                  ParamT<Model> &posterior_mean, MatT &posterior_cov);
 
@@ -231,21 +227,21 @@ namespace methods {
     inline namespace debug {
         /* model::xxx_components - per-pixel and per-prior-component contributions */
         template<class Model>
-        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,   
+        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method,   
                                 ParamT<Model> &theta_est, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
         template<class Model>
-        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,  
+        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,  
                                 ParamT<Model> &theta_est, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
         
 //         template<class Model>
 //         void estimate_profile_max_debug(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, const ParamT<Model> &fixed_theta, const std::string &method, 
 //                                         StencilT<Model> &theta_max, double &rllh, StatsT &stats, MatT &sequence, VecT &sequence_rllh);
         template <class Model>
-        void estimate_mcmc_sample_debug(const Model &model, const ModelDataT<Model> &data,
+        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data,
                                         IdxT Nsample, 
                                         MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh);
         template<class Model>
-        void estimate_mcmc_sample_debug(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                                         IdxT Nsample, 
                                         MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh);    
     }; /* namespace mappel::methods::debug */

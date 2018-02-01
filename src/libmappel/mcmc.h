@@ -11,15 +11,14 @@
 #include "util.h"
 #include "rng.h"
 
-/* Local methods - annonymous namespace */
-
 namespace mappel {
 
 namespace mcmc {
 
 IdxT num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin);
 MatT thin_sample(MatT &sample, IdxT Nburnin, IdxT thin);    
-void thin_sample(const MatT &sample, const VecT &sample_rllh, IdxT Nburnin, IdxT thin, MatT &subsample, VecT &subsample_rllh);
+void thin_sample(const MatT &sample, const VecT &sample_rllh, IdxT Nburnin, IdxT thin, 
+                 MatT &subsample, VecT &subsample_rllh);
 
 inline
 void estimate_sample_posterior(const MatT &sample, VecT &theta_posterior_mean, MatT &theta_posterior_cov)
@@ -29,11 +28,12 @@ void estimate_sample_posterior(const MatT &sample, VecT &theta_posterior_mean, M
 }
 
 
-
 template <class Model>
-void
-sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, MatT &sample, VecT &sample_rllh)
+void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
+                      MatT &sample, VecT &sample_rllh)
 {
+    auto &rng = model.get_rng_generator();
+    UniformDistT uniform;
     IdxT Nsamples = sample.n_cols;
     sample_rllh.set_size(Nsamples);
     sample.col(0) = theta_init.theta;
@@ -50,7 +50,7 @@ sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model
         double can_rllh = methods::objective::rllh(model, im, can_theta);
         phase++;
         double alpha = std::min(1., exp(can_rllh - sample_rllh(n-1)));
-        if(rng_manager.randu() < alpha) {
+        if(uniform(rng) < alpha) {
             //Accept
             sample.col(n) = can_theta;
             sample_rllh(n) = can_rllh;
@@ -63,10 +63,11 @@ sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model
 }
 
 template <class Model>
-void
-sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
-                 MatT &sample, VecT &sample_rllh, MatT &candidate, VecT &candidate_rllh)
+void sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
+                            MatT &sample, VecT &sample_rllh, MatT &candidate, VecT &candidate_rllh)
 {
+    auto &rng = model.get_rng_generator();
+    UniformDistT uniform;
     IdxT Nsamples = sample.n_cols;
     sample_rllh.set_size(Nsamples);
     candidate.set_size(model.get_num_params(), Nsamples);
@@ -90,7 +91,7 @@ sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const StencilT
         candidate_rllh(n) = can_rllh;
         phase++;
         double alpha = std::min(1., exp(can_rllh - sample_rllh(n-1)));
-        if(rng_manager.randu() < alpha) {
+        if(uniform(rng) < alpha) {
             //Accept
             sample.col(n) = can_theta;
             sample_rllh(n) = can_rllh;
@@ -103,7 +104,6 @@ sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const StencilT
 }
 
 } /* namespace mappel::mcmc */    
-    
 } /* namespace mappel */
 
 #endif /* _MAPPEL_MCMC_H */

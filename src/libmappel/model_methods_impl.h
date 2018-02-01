@@ -20,27 +20,28 @@ namespace methods {
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta) 
+    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta) 
     {
-        return simulate_image(model, model.make_stencil(theta,false), rng_manager.generator()); //don't compute derivative stencils
+        //don't compute stencils derivative 
+        return simulate_image(model, model.make_stencil(theta,false), model.get_rng_generator());
     }
     
-    template<class Model, class rng_t>
-    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta, rng_t &rng) 
+    template<class Model, class RngT>
+    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta, RngT &rng) 
     {
         return simulate_image(model, model.make_stencil(theta,false), rng); //don't compute derivative stencils
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image(const Model &model, const StencilT<Model> &s)
+    ModelDataT<Model> simulate_image(Model &model, const StencilT<Model> &s)
     {
-        return simulate_image(model,s,rng_manager.generator()); //Make new generator
+        return simulate_image(model,s,model.get_rng_generator()); //Make new generator
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image_from_model(const Model &model, const ImageT<Model> &model_im)
+    ModelDataT<Model> simulate_image_from_model(Model &model, const ImageT<Model> &model_im)
     {
-        return simulate_image_from_model(model,model_im,rng_manager.generator()); //Make new generator
+        return simulate_image_from_model(model,model_im,model.get_rng_generator()); //Make new generator
     }
     
     namespace objective {            
@@ -97,7 +98,6 @@ namespace methods {
             auto grad = model.make_param(); //Ignore un-requested value
             auto hess = model.make_param_mat();
             hessian(model, data_im, s, grad, hess);
-            copy_Usym_mat(hess); //Make a full-symmetric matrix
             return hess;
         }
         
@@ -130,7 +130,6 @@ namespace methods {
             auto grad = model.make_param(); //Ignore un-requested value
             auto hess = model.make_param_mat();
             negative_definite_hessian(model, data_im, s, grad, hess);
-            copy_Usym_mat(hess); //Make a full-symmetric matrix
             return hess;
         }
         
@@ -195,19 +194,18 @@ namespace methods {
         likelihood::hessian(model, data_im, s, grad, hess);
         rllh += model.get_prior().rllh(s.theta);
         model.get_prior().grad_hess_accumulate(s.theta,grad,hess);
-        copy_Usym_mat(hess);
     }
 
     template<class Model>
     void 
-    prior_objective(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
+    prior_objective(const Model &model, const ParamT<Model> &theta, 
                     double &rllh, ParamT<Model> &grad, MatT &hess)
     {
         grad.zeros();
         hess.zeros();
-        rllh = model.get_prior().rllh(s.theta);
-        model.get_prior().grad_hess_accumulate(s.theta,grad,hess);
-        copy_Usym_mat(hess);
+        auto &prior = model.get_prior();
+        rllh = prior.rllh(theta);
+        prior.grad_hess_accumulate(theta,grad,hess);
     }
 
     template<class Model>
@@ -217,7 +215,6 @@ namespace methods {
     {
         rllh = likelihood::rllh(model, data_im, s);
         likelihood::hessian(model, data_im, s, grad, hess);
-        copy_Usym_mat(hess); //Accumulate symmetric matrix in upper triangular form
     }
 
     template<class Model>
@@ -226,14 +223,6 @@ namespace methods {
                           double &rllh,  ParamT<Model> &grad, MatT &hess)
     {
         aposteriori_objective(model,data_im,model.make_stencil(theta),rllh,grad,hess);
-    }
-
-    template<class Model>
-    void 
-    prior_objective(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, 
-                          double &rllh,  ParamT<Model> &grad, MatT &hess)
-    {
-        prior_objective(model,data_im,model.make_stencil(theta),rllh,grad,hess);
     }
     
     template<class Model>
@@ -249,7 +238,7 @@ namespace methods {
     {
         auto FI = expected_information(model,s);
         try{
-            return arma::pinv(FI).eval().diag();
+            return arma::pinv(arma::symmatu(FI)).eval().diag();
         } catch ( std::runtime_error E) {
             std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<'\n';
             auto z = model.make_param();
@@ -275,7 +264,6 @@ namespace methods {
     {
         MatT obsI = - objective::hessian(model,data,theta_mode); //Observed information is defined for negative llh and so negative hessian should be positive definite
         if(!is_positive_definite(obsI)) throw NumericalError("Hessian is not positive definite");
-        copy_Usym_mat(obsI);
         return obsI;
     }
 
@@ -287,14 +275,14 @@ namespace methods {
 
     /* MAP/MLE Estimation */
     template<class Model>
-    StencilT<Model> estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method)
+    StencilT<Model> estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method)
     {
         auto estimator = make_estimator(model,method);
         return estimator.estimate_max(data);
     }
     
     template<class Model>
-    StencilT<Model> estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
+    StencilT<Model> estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
                                  double &theta_max_llh)
     {
         auto estimator = make_estimator(model,method);
@@ -302,7 +290,7 @@ namespace methods {
     }
     
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, 
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
     {
         auto estimator = make_estimator(model,method);
@@ -310,7 +298,7 @@ namespace methods {
     }
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, 
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
@@ -319,7 +307,7 @@ namespace methods {
     }
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
     {
         auto estimator = make_estimator(model,method);
@@ -327,7 +315,7 @@ namespace methods {
     }
 
     template<class Model>
-    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
+    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
@@ -350,7 +338,7 @@ namespace methods {
 //     
     /* MCMC posterior sampling likelihood computation */   
     template<class Model>
-    MatT estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, IdxT Nsample, IdxT Nburnin, IdxT thin)
+    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, IdxT Nsample, IdxT Nburnin, IdxT thin)
     {
         auto theta_init = model.make_param();
         theta_init.zeros();
@@ -358,7 +346,7 @@ namespace methods {
     }
 
     template<class Model>
-    MatT estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                               IdxT Nsample, IdxT Nburnin, IdxT thin)
     {
         if(thin<=0) thin = model.get_mcmc_num_candidate_sampling_phases();
@@ -370,7 +358,7 @@ namespace methods {
     }
     
     template<class Model>
-    void estimate_mcmc_sample(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    void estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                               IdxT Nsample, IdxT Nburnin, IdxT thin,
                               MatT &sample, VecT &sample_rllh)
     {
@@ -385,7 +373,7 @@ namespace methods {
     }
 
     template<class Model>
-    void estimate_mcmc_posterior(const Model &model, const ModelDataT<Model> &data, 
+    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, 
                                  IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT<Model> &posterior_mean, MatT &posterior_cov)
     {
         auto theta_init = model.make_param();
@@ -394,7 +382,7 @@ namespace methods {
     }
 
     template<class Model>
-    void estimate_mcmc_posterior(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                                  IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT<Model> &posterior_mean, MatT &posterior_cov)
     {
         auto sample = estimate_mcmc_posterior(model,data,theta_init, Nsample, Nburnin, thin);
@@ -447,7 +435,7 @@ namespace methods {
 
     inline namespace debug {
          template<class Model>
-        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method, 
+        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                                 ParamT<Model> &theta_max, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
         {
             auto theta_init = model.make_param();
@@ -456,7 +444,7 @@ namespace methods {
         }
         
         template<class Model>
-        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
+        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
                                 ParamT<Model> &theta_max, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
         {
             auto estimator = make_estimator(model,method);
@@ -469,7 +457,7 @@ namespace methods {
 //                                         StencilT<Model> &theta_max, double &rllh, StatsT &stats, MatT &sequence, VecT &sequence_rllh);
         
         template <class Model>
-        void estimate_mcmc_sample_debug(const Model &model, const ModelDataT<Model> &data,
+        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data,
                                         IdxT Nsample, 
                                         MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)
         {
@@ -479,7 +467,7 @@ namespace methods {
         }
         
         template <class Model>
-        void estimate_mcmc_sample_debug(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
+        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                                         IdxT Nsample, 
                                         MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)
         {

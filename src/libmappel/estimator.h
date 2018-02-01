@@ -44,9 +44,9 @@ public:
     using ModelDataT = typename Model::ModelDataT;
     using ModelDataStackT = typename Model::ModelDataStackT;
 
-    const Model &model;
+    Model &model;
 
-    Estimator(const Model &_model) : model(_model) {}
+    Estimator(Model &_model) : model(_model) {}
     virtual ~Estimator() {}
 
     virtual std::string name() const =0;
@@ -223,7 +223,7 @@ protected:
     StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
     StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
                                     ParamVecT &sequence, VecT &sequence_rllh);
-    StencilT anneal(ParallelRngT &rng, const ModelDataT &im, const StencilT &theta_init,
+    StencilT anneal(const ModelDataT &im, const StencilT &theta_init,
                     double &rllh, ParamVecT &sequence, VecT &sequence_rllh);
 };
 
@@ -245,7 +245,8 @@ public:
     StatsT get_stats();
     StatsT get_debug_stats();
     void clear_stats();
-
+    
+    /** @brief Perform a local maximization to finish off a simulated annealing run */
     void local_maximize(const ModelDataT &im, const StencilT &theta_init, StencilT &stencil, double &rllh); //This is used by SimulatedAnnealing to clean up max
 
 protected:
@@ -332,8 +333,6 @@ protected:
         const int max_seq_len;
     };
 
-    
-    
     void record_run_statistics(const MaximizerData &data);
 
     StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
@@ -371,8 +370,6 @@ protected:
     using IterativeMaximizer<Model>::convergence_test;
 
     void maximize(MaximizerData &data);
-
-//     friend class SimulatedAnnealingMaximizer<Model>;
 };
 
 template<class Model>
@@ -460,8 +457,6 @@ public:
     
     inline std::string name() const {return "TrustRegionMaximizer";}
     
-    
-    
 protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
@@ -483,12 +478,6 @@ protected:
 };
 
 
-/**
- * Makes a new estimator by name and returns a pointer and ownership.
- * 
- */
-// template<class Model>
-// std::shared_ptr<Estimator<Model>> make_estimator(Model &model, std::string ename);
 } /* namespace mappel */
 
 #endif /* _ESTIMATOR_H */

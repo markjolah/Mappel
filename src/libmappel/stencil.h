@@ -14,6 +14,8 @@
 // #include <boost/math/pdf.hpp>
 
 namespace mappel {
+static const double sqrt2= sqrt(2);
+static const double sqrt2pi= sqrt(2*arma::datum::pi);
 
 double gauss_norm(double sigma);
 
@@ -43,16 +45,6 @@ double gaussian_convolution(int x, int y, const MatT &data, const VecT &Xstencil
 void estimate_gaussian_3Dmax(const CubeT &data, const VecFieldT &stencils, int max_pos[], double &min_val);
 void refine_gaussian_3Dmax(const CubeT &data, const VecFieldT &stencils, int max_pos[]);
 double gaussian_3D_convolution(int x, int y, int z, const CubeT &data, const VecFieldT &stencils);
-/*
-double estimate_intensity(const MatT &im, const MatT &unit_model_im, double bg);
-double estimate_intensity(const CubeT &im, const CubeT &unit_model_im, double bg);
-double estimate_background(const MatT &im, const MatT &unit_model_im, double min_bg);
-double estimate_background(const CubeT &im, const CubeT &unit_model_im);
-VecT estimate_duty_ratios(const MatT &im,const MatT &unit_model_im);
-VecT estimate_HS_duty_ratios(const CubeT &im,CubeT &unit_model_im);
-MatT unit_model_image(const IVecT &size, int pos[], const VecT &sigma);
-MatT unit_model_image(const IVecT &size, double pos_x, double pos_y, double sigma_x, double sigma_y);
-CubeT unit_model_HS_image(const IVecT &size, int pos[], double sigmaX, double sigmaY, double sigmaL);*/
 
 double poisson_log_likelihood(double model_val, double data_val);
 double relative_poisson_log_likelihood(double model_val, double data_val);
@@ -99,7 +91,7 @@ double normal_quantile_onesided(double confidence);
 /* inline function definitions */
 inline double gauss_norm(double sigma)
 { 
-    return 1./(sigma*sqrt(2));
+    return 1./(sigma*sqrt2);
 }
 
 inline VecT make_d_stencil(int size, double theta_x)
@@ -164,45 +156,41 @@ void fill_d_stencil(int size, double stencil[], double theta_x)
 inline
 void fill_G_stencil(int size, double stencil[], const double dx[], double theta_sigma)
 {
-    double norm=-.5/(theta_sigma*theta_sigma);
-    for(int i=0;i<=size;i++) {
-        double d=dx[i];
-        stencil[i]=exp(norm*d*d);
-    }
+    double norm = -.5/square(theta_sigma);
+    for(int i=0;i<=size;i++)  stencil[i] = exp(norm*square(dx[i]));
 }
 
 inline
 void fill_X_stencil(int size, double stencil[], const double dx[], double theta_sigma)
 {
-    double norm=1./sqrt(2.)/theta_sigma;
-    double derf=erf(norm*(dx[0]));
+    double norm = 1./sqrt2/theta_sigma;
+    double derf = erf(norm*(dx[0]));
     for(int i=0;i<size;i++) {
-        double last_derf=derf;
-        derf=erf(norm*(dx[i+1]));
-        stencil[i]=0.5*(derf-last_derf);
+        double last_derf = derf;
+        derf = erf(norm*(dx[i+1]));
+        stencil[i] = 0.5*(derf-last_derf);
     }
 }
 
 inline
 void fill_DX_stencil(int size, double stencil[],const double Gx[], double theta_sigma)
 {
-    double norm=1./sqrt(2.*arma::datum::pi)/theta_sigma; /* 1/(sqrt(2*pi)*sigma) */
-    for(int i=0;i<size;i++) stencil[i]=norm*(Gx[i]-Gx[i+1]);
+    double norm = 1./sqrt2pi/theta_sigma; /* 1/(sqrt(2*pi)*sigma) */
+    for(int i=0;i<size;i++) stencil[i] = norm*(Gx[i]-Gx[i+1]);
 }
 
 inline
 void fill_DXS_stencil(int size, double stencil[], const double dx[], const double Gx[], double theta_sigma)
 {
-    double sigma2=theta_sigma*theta_sigma;
-    double norm=1./sqrt(2.*arma::datum::pi)/sigma2; /* 1/(sqrt(2*pi)*sigma^2) */
-    for(int i=0;i<size;i++) stencil[i]=norm*(dx[i]*Gx[i]-dx[i+1]*Gx[i+1]);
+    double norm = 1./sqrt2pi/square(theta_sigma); /* 1/(sqrt(2*pi)*sigma^2) */
+    for(int i=0;i<size;i++) stencil[i] = norm*(dx[i]*Gx[i]-dx[i+1]*Gx[i+1]);
 }
 
 inline
 void fill_DXS2_stencil(int size, double stencil[], const double dx[], const double Gx[], const double DXS[], double theta_sigma)
 {
     double sigma2=theta_sigma*theta_sigma;
-    double norm=1./sqrt(2.*arma::datum::pi)/(sigma2*sigma2*theta_sigma); /* 1/(sqrt(2*pi)*sigma^5) */
+    double norm=1./sqrt2pi/(sigma2*sigma2*theta_sigma); /* 1/(sqrt(2*pi)*sigma^5) */
     double recip=2./theta_sigma;
     for(int i=0;i<size;i++) {
         double d=dx[i];
@@ -215,7 +203,7 @@ inline
 void fill_DXSX_stencil(int size, double stencil[], const double dx[], const double Gx[], const double DX[], double theta_sigma)
 {
     double sigma2=theta_sigma*theta_sigma;
-    double norm=1./sqrt(2.*arma::datum::pi)/(sigma2*sigma2); /* 1/(sqrt(2*pi)*sigma^4) */
+    double norm=1./sqrt2pi/(sigma2*sigma2); /* 1/(sqrt(2*pi)*sigma^4) */
     double recip=1./theta_sigma;
     for(int i=0;i<size;i++) {
         double d=dx[i];
@@ -231,8 +219,6 @@ VecT make_gaussian_stencil(int size, double sigma)
     fill_gaussian_stencil(size, stencil.memptr(), sigma);
     return stencil;
 }
-
-
 
 inline 
 double poisson_log_likelihood(double model_val, double data_val)
@@ -251,7 +237,6 @@ double relative_poisson_log_likelihood(double model_val, double data_val)
     if(data_val==0.) return -model_val; //Skip multiplication by zero
     return data_val*log(model_val)-model_val;
 }
-
 
 inline
 double log_prior_beta_const(double beta)
