@@ -32,7 +32,6 @@ static const int DEFAULT_ITERATIONS=100;
 static const int DEFAULT_CGAUSS_ITERATIONS=50;
 
 
-
 template<class Model>
 class Estimator{
 public:
@@ -187,7 +186,16 @@ protected:
 
 template<class Model>
 class IterativeMaximizer : public ThreadedEstimator<Model> {
-public:    
+public:
+    static constexpr int NumExitCodes = 5;
+    enum class ExitCode : IdxT { Unassigned= 99, //Logical error if this is still set
+                          MaxIter = 4,        //Max iterations exceeded. Did not converge.
+                          MaxBacktracks = 3,  //Backtracking failed.  Likely converged successfully.
+                          FunctionChange = 2, //Function value change was less than epsilon.  Converged successfully.
+                          StepSize = 1,       //Step size was less than delta.  Converged successfully. 
+                          Error = 0           //A Numerical Error was caught.  Did not converge.
+                        }; 
+
     IterativeMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS);
 
     /* Statistics */
@@ -220,6 +228,7 @@ protected:
     int total_backtracks = 0;
     int total_fun_evals = 0;
     int total_der_evals = 0;
+    IdxVecT exit_counts;
     /* Debug Statistics: Only active in debug mode when data.save_seq==true */
     IdxVecT last_backtrack_idxs;
 
@@ -233,10 +242,11 @@ protected:
         int nBacktracks=0;
         int nIterations=0;
         bool save_seq;
-        int exitCode;
+        ExitCode exit_code=ExitCode::Unassigned;
         MaximizerData(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &s,
                       bool save_seq=false, int max_seq_len=0);
 
+        void record_exit(ExitCode code);
         /** @brief Record an iteration point (derivatives computed) Using the saved theta as the default. */
         void record_iteration() {record_iteration(theta());}
         /** @brief Record an iteration point (derivatives computed) */

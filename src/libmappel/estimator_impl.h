@@ -316,7 +316,8 @@ CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const Para
 template<class Model>
 IterativeMaximizer<Model>::IterativeMaximizer(Model &model, int max_iterations)
     : ThreadedEstimator<Model>(model), 
-      max_iterations(max_iterations)
+      max_iterations(max_iterations),
+      exit_counts(NumExitCodes,arma::fill::zeros)
 {}
 
 template<class Model>
@@ -367,12 +368,17 @@ void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT<Mod
     }
 }
 
-
+template<class Model>
+void IterativeMaximizer<Model>::MaximizerData::record_exit(ExitCode code)
+{
+    exit_code = code;
+}
 
 template<class Model>
 StatsT IterativeMaximizer<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
+    mtx.lock();
     double N = static_cast<double>(this->num_estimations);
     stats["total_iterations"] = total_iterations;
     stats["total_backtracks"] = total_backtracks;
@@ -382,6 +388,16 @@ StatsT IterativeMaximizer<Model>::get_stats()
     stats["mean_backtracks"] = total_backtracks/N;
     stats["mean_fun_evals"] = total_fun_evals/N;
     stats["mean_der_evals"] = total_der_evals/N;
+    stats["const_fval_epsilon"] = epsilon;
+    stats["const_step_size_delta"] = delta;
+    stats["const_max_iterations"] = max_iterations;
+    stats["const_max_backtracks"] = max_backtracks;
+    stats["num_exit_error"] = exit_counts(static_cast<IdxT>(ExitCode::Error));
+    stats["num_exit_max_iter"] = exit_counts(static_cast<IdxT>(ExitCode::MaxIter));
+    stats["num_exit_max_backtracks"] = exit_counts(static_cast<IdxT>(ExitCode::MaxBacktracks));
+    stats["num_exit_function_value_change"] = exit_counts(static_cast<IdxT>(ExitCode::FunctionChange));
+    stats["num_exit_step_size_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::StepSize));
+    mtx.unlock();
     return stats;
 }
 
@@ -389,6 +405,7 @@ template<class Model>
 StatsT IterativeMaximizer<Model>::get_debug_stats()
 {
     auto stats =  IterativeMaximizer<Model>::get_stats();
+    
     stats["debugIterative"]=1;
     auto backtrack_idxs = last_backtrack_idxs;
     for(unsigned n=0; n<backtrack_idxs.n_elem; n++) {
@@ -404,11 +421,13 @@ template<class Model>
 void IterativeMaximizer<Model>::clear_stats()
 {
     ThreadedEstimator<Model>::clear_stats();
+    mtx.lock();
     total_iterations = 0;
     total_backtracks = 0;
     total_fun_evals = 0;
     total_der_evals = 0;
-//     exit_count.zeros();
+    exit_counts.zeros();
+    mtx.unlock();
 }
 
 template<class Model>
@@ -419,6 +438,7 @@ void IterativeMaximizer<Model>::record_run_statistics(const MaximizerData &data)
     total_backtracks += data.nBacktracks;
     total_fun_evals += data.nIterations + data.nBacktracks;
     total_der_evals += data.nIterations;
+    exit_counts(static_cast<IdxT>(data.exit_code))++;  // Record exit code
     if(data.save_seq) last_backtrack_idxs = data.get_backtrack_idxs(); //Store the backtracks for debugging...
     mtx.unlock();
 }
@@ -427,14 +447,17 @@ template<class Model>
 bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
 {
     double lambda = 1.0;
-    data.save_stencil();
-//     if (~std::isfinite(data.step)) throw std::logic_error("Step is not finite");
+    data.save_stencil();  //Save current theta in case we cannot improve
+    if (!data.step.is_finite()) {
+        std::ostringstream msg;
+        msg<<"Step is not finite: "<<data.step.t();
+        throw NumericalError(msg.str());
+    }
     if(arma::dot(data.grad, data.step)<=0){
         //We are maximizing so we should be moving in direction of gradiant not away
-        std::cout<<"****ERRRRORRRR: gradient negative.\n";
-        std::cout<<"****grad: "<<data.grad.t()<<"\n";
-        std::cout<<"****step: "<<data.step.t()<<"\n";
-        std::cout<<"****<grad, step>: "<<arma::dot(data.grad, data.step)<<"\n";
+        std::ostringstream msg;
+        msg<<"Backtrack with Negative Gradient. grad:"<<data.grad.t()<<" step:"<<data.step.t()<<" <grad, step>: "<<arma::dot(data.grad, data.step);
+        throw NumericalError(msg.str());
     }
     for(int n=0; n<max_backtracks; n++){
         //Reflective boundary conditions
@@ -451,8 +474,17 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
 //         std::cout<<" Proposed Theta: "<<new_theta.t();
 //         printf(" CurrentRLLH:%.9g ProposedRLLH:%.9g Delta(prop-cur):%.9g\n",data.rllh,can_rllh,can_rllh-data.rllh);
 
-        if(!in_bounds) throw LogicalError("Not inbounds!");
-        if(!std::isfinite(can_rllh)) throw LogicalError("Candidate theta is inbounds but rllh is non-finite!");
+        if(!in_bounds) {
+            std::ostringstream msg;
+            msg<<"New theta is not inbounds. old_theta:"<<data.saved_theta().t()<<" step:"<<data.step.t()
+               <<" new_theta:"<<new_theta.t();
+            throw NumericalError(msg.str());
+        }
+        if(!std::isfinite(can_rllh)) {
+            std::ostringstream msg;
+            msg<<"Candidate theta is inbounds but rllh is non-finite. new_theta:"<<new_theta.t()<<" rllh:"<<can_rllh;
+            throw NumericalError(msg.str());
+        }
 
         double old_lambda = lambda; //save old lambda
         double linear_step = lambda*arma::dot(data.grad, data.step); //The amount we would go down if linear in grad
@@ -464,10 +496,13 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
             return false; //Tell caller to continue optimizing
         } else {
             data.record_backtrack(can_rllh); //Record a failed (backtracked) (unaccepted) point.
-            if (convergence_test(data)) break; //We converged at iteration point.  Unable to improve.
-            else {
-                //Candidate point is not good.  Need to backtrack.
-                //Standard backtracking step using a quadratic approximation
+            if (convergence_test(data)) {
+                //We converged at original iteration point.  Unable to improve by backtracking on step direction.
+                //Original step was too large to converge, after backtracking it (or fun-val) became small enough to converge
+                data.restore_stencil(); //Restore back to original point
+                return true; 
+            } else {
+                //Perform Backtrack using a quadratic approximation
                 double new_lambda = -.5*lambda*linear_step/(can_rllh - data.rllh - linear_step); //The minimum of a quad approx using cllh and linear_step
                 double rho = new_lambda/old_lambda;  //Relative decrease
                 rho = std::min(std::max(rho,0.02),0.25);  //Limit minimum and maximum relative decrease of rho
@@ -476,7 +511,9 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         }
     }
     //Backtracking failed to converge in max_backtracks steps.
+    //But we otherwise did not meet convergence criteria.
     data.restore_stencil();
+    data.record_exit(ExitCode::MaxBacktracks);
     return true; //Tell caller to stop and return the original theta. Backtracking failed to improve it.
 }
 
@@ -484,13 +521,19 @@ template<class Model>
 bool IterativeMaximizer<Model>::convergence_test(MaximizerData &data)
 {
     using arma::norm;
-    auto ntheta=data.theta();  //new theta
-    auto otheta=data.saved_theta(); //old theta
+    auto ntheta = data.theta();  //new theta
+    auto otheta = data.saved_theta(); //old theta
     double step_size_ratio = norm(otheta-ntheta,2)/std::max(norm(otheta,2),norm(ntheta,2));
     double function_change_ratio = norm(data.grad,2)/fabs(data.rllh);
-//     if(step_size_ratio<=delta) std::cout<<"$$$StepSizeRatioTestConvergence! - ratio:"<<step_size_ratio<<" delta:"<<delta<<"\n";
-//     if(function_change_ratio<=epsilon) std::cout<<"$$$FunctionChangeRatioTestConvergence! - ratio:"<<function_change_ratio<<" epslion:"<<epsilon<<"\n";
-    return step_size_ratio<=delta or function_change_ratio<=epsilon;
+    if(step_size_ratio <= delta){
+        data.record_exit(ExitCode::StepSize);
+        return true; //Tell caller to stop iterating we have converged
+    } else if(function_change_ratio <= epsilon) {
+        data.record_exit(ExitCode::FunctionChange);
+        return true; //Tell caller to stop iterating we have converged
+    } else {
+        return false; //Keep iterating
+    }
 }
 
 
@@ -499,9 +542,14 @@ StencilT<Model>
 IterativeMaximizer<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate");
+    if(!theta_init_stencil.derivatives_computed) 
+        throw LogicalError("Stencil has no computed derivatives");
     MaximizerData data(model, im, theta_init_stencil);
-    maximize(data);
+    try {
+        maximize(data);
+    } catch (NumericalError &err) {
+        data.record_exit(ExitCode::Error);
+    }
     record_run_statistics(data);
     rllh = data.rllh;
     return data.stencil();
@@ -513,9 +561,15 @@ IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT<Model> &im, c
                                                   ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate_debug");
+    if(!theta_init_stencil.derivatives_computed) 
+        throw LogicalError("Stencil has no computed derivatives");
     MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
-    maximize(data);
+    try {
+        maximize(data);
+    } catch (NumericalError &err) {
+        data.record_exit(ExitCode::Error);
+        std::cout<<"Caught NumericalError: "<<err.what()<<std::endl;
+    }
     sequence = data.get_theta_sequence();
     sequence_rllh = data.get_theta_sequence_rllh();
     record_run_statistics(data);
@@ -565,6 +619,7 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
         }
         if(this->backtrack(data) || this->convergence_test(data)) return;  //Converged or gave up trying
     }
+    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
 }
 
 
@@ -609,6 +664,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
         if(arma::dot(data.grad, data.step)<=0) throw NumericalError("Not an asscent direction!");
         if(this->backtrack(data) || this->convergence_test(data))  return; //Backing up did not help.  Just quit.
     }
+    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
 }
 
 template<class Model>
@@ -656,6 +712,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
 
         data.step = data.theta()-data.saved_theta();//If we backtracked then the step may have changed
     }
+    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
 }
 
 template<class Model>
@@ -817,8 +874,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
             }
         }
     }
-    
-    throw LogicalError("Max Iterations Exceeded");
+    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
 }
 
 /**
