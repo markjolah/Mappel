@@ -17,9 +17,8 @@ class MappelBase(Gauss1DMLE):
         self.imsize = imsize
         self.psf_sigma = psf_sigma
 
-#    Pybind11 is near perfect here (self.get_stats)
-#     def getStats(self):
-#        return
+    def getStats(self):
+        return self.get_stats
     
     # Return a dictionary of keys hyperparam_desc and values hyperparams
 #     def getHyperParameters(self):
@@ -29,25 +28,18 @@ class MappelBase(Gauss1DMLE):
 #        return
     
     def samplePrior(count=1):
-        #if count < 1 or not is instance(count, int):
-            #print('Count needs to be an integer of 1 or greater.')
-            #pass
         return self.sample_prior(count)
 
-#    pybind11 => self.bounded_theta(theta), no errors triggered yet
-#     def boundedTheta(theta):
-#        return
+    def boundedTheta(theta):
+        return self.bounded_theta(theta)
 
-#   pybind11 => self.theta_in_bounds(theta)
-#     def thetaInBounds(theta):
-#        return
+    def thetaInBounds(theta):
+        return self.theta_in_bounds(theta)
 
-#   pybind11 => self.modelImage(theta)
-#     def modelImage(theta):
-#        return
+    def modelImage(theta):
+        return self.modelImage(theta)
     
 #     def modelDipImage(theta):
-#          # This may be depricated for python
 #          return
     
     def simulateImage(self,count=1,theta=None):
@@ -136,6 +128,9 @@ class MappelBase(Gauss1DMLE):
 #        return
     
     ## These are protected methods but Python protects nothing!
+
+    def __check_image_theta(image,theta):
+        return
 #     def __estimate_GPUGaussMLE(image):
 #        return
     
