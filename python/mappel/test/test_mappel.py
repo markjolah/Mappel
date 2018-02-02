@@ -8,6 +8,7 @@
 import numpy as np
 import pytest
 
+from . common import check_stats
 
 def test_name(model):
     """Check model.name is same as python class name."""
@@ -64,5 +65,8 @@ def test_lbound(model):
         model.lbound = bd
         assert all(model.lbound == bd)
 
-
+def test_stats(model):
+    """Check model.get_stats() for sanity."""
+    stats = model.get_stats()
+    check_stats(stats)
 

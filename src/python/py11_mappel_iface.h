@@ -174,6 +174,9 @@ void register_exceptions()
         catch (const NotImplementedError &err) { PyErr_SetString(PyExc_NotImplementedError, err.what()); }
         });
     python_error::register_exceptions();        
+    //Exception backtraces are a problem with python and pdb
+    //Disable them globally here for any python code.
+    backtrace_exception::disable_backtraces(); 
 }
 
 template<class Model>
@@ -215,8 +218,8 @@ public:
     static py::tuple estimate_max(Model &model, ArrayDoubleT &image_stack, std::string method, ArrayDoubleT &theta_init_stack, bool return_stats );
 //     static py::tuple estimate_profile_max(Model &model, ArrayDoubleT &images, std::string method, 
 //                                           ArrayDoubleT &fixed_theta_stack, ArrayDoubleT &theta_init_stack, bool return_stats );
-    static py::tuple estimate_mcmc_posterior(Model &model, ArrayDoubleT &image_stack, ArrayDoubleT &theta_init_stack, IdxT Nsample, IdxT Nburnin, IdxT thin);
-    static py::tuple estimate_mcmc_sample(Model &model, ArrayDoubleT &image_stack, ArrayDoubleT &theta_init_stack, IdxT Nsample, IdxT Nburnin, IdxT thin);
+    static py::tuple estimate_mcmc_posterior(Model &model, ArrayDoubleT &image_stack, IdxT Nsample, ArrayDoubleT &theta_init_stack,  IdxT Nburnin, IdxT thin);
+    static py::tuple estimate_mcmc_sample(Model &model, ArrayDoubleT &image_stack, IdxT Nsample, ArrayDoubleT &theta_init_stack,  IdxT Nburnin, IdxT thin);
 
     static py::tuple error_bounds_expected(Model &model, ArrayDoubleT &thetas, double confidence);
     static py::tuple error_bounds_observed(Model &model, ArrayDoubleT &thetas, ArrayDoubleT &obsI_stack, double confidence);
@@ -229,7 +232,8 @@ public:
     static ArrayDoubleT objective_hessian_components(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta);
         
     static py::tuple estimate_max_debug(Model &model, ArrayDoubleT &image, std::string method, ArrayDoubleT &theta_init);
-    static py::tuple estimate_mcmc_debug(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta_init, IdxT Nsample);
+    static py::tuple estimate_mcmc_debug(Model &model, ArrayDoubleT &image, IdxT Nsample, ArrayDoubleT &theta_init);
+    static ArrayDoubleT initial_theta_estimate(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta_init);
 };
 
 
@@ -297,85 +301,142 @@ void bindMappelModel(py::module &M)
     model.def("simulate_image",&ModelWrapper<Model>::simulate_image_stack, py::arg("thetas"), py::arg("count")=1,
                 "Simulate a stack of images with noise using one or more parameters thetas. [OpenMP]");
     
-    model.def("objective_llh",&ModelWrapper<Model>::objective_llh_stack, py::arg("images"), py::arg("thetas"),
-                "Calculate the full log-likelihood for one or more images at one or more thetas under the  model objective. [OpenMP]");
-    model.def("objective_rllh",&ModelWrapper<Model>::objective_rllh_stack, py::arg("images"), py::arg("thetas"),
-                "Calculate the relative log-likelihood for one or more images at one or more thetas under the  model objective. [OpenMP]");
-    model.def("objective_grad",&ModelWrapper<Model>::objective_grad_stack, py::arg("images"), py::arg("thetas"),
-                "Calculate the gadiant of the relative log-likelihood for one or more images at one or more thetas under the  model objective. [OpenMP]");
-    model.def("objective_hessian",&ModelWrapper<Model>::objective_hessian_stack, py::arg("images"), py::arg("thetas"),
-                "Calculate the hessian of the relative log-likelihood for one or more images at one or more thetas under the  model objective. [OpenMP]");
-    model.def("objective_negative_definite_hessian",&ModelWrapper<Model>::objective_negative_definite_hessian_stack, py::arg("images"), py::arg("thetas"),
-                "Calculate the best negative-definite approximation to the hessian of the relative log-likelihood for one or more images at one or more thetas under the  model objective. [OpenMP]");
+    model.def("objective_llh",&ModelWrapper<Model>::objective_llh_stack, py::arg("images"), py::arg("thetas"), R"DOC(
+        Calculate the full log-likelihood under the model objective.
+        Operates on one or more images at one or more thetas in parallel using OpenMP.)DOC");
+    model.def("objective_rllh",&ModelWrapper<Model>::objective_rllh_stack, py::arg("images"), py::arg("thetas"), R"DOC(
+        Calculate the relative log-likelihood under the model objective.
+        Operates on one or more images at one or more thetas in parallel using OpenMP.)DOC");
+    model.def("objective_grad",&ModelWrapper<Model>::objective_grad_stack, py::arg("images"), py::arg("thetas"), R"DOC(
+        Calculate the gradient of the log-likelihood under the model objective.
+        Operates on one or more images at one or more thetas in parallel using OpenMP.)DOC");
+    model.def("objective_hessian",&ModelWrapper<Model>::objective_hessian_stack, py::arg("images"), py::arg("thetas"), R"DOC(
+        Calculate the Hessian of the log-likelihood under the model objective.
+        Operates on one or more images at one or more thetas in parallel using OpenMP.)DOC");
+    model.def("objective_negative_definite_hessian",&ModelWrapper<Model>::objective_negative_definite_hessian_stack, py::arg("images"), py::arg("thetas"), R"DOC(
+        Calculate the best negative-definite approximation to the hessian of the relative log-likelihood.
+        This uses a modified cholesky decomposition method to adjust the negative Hessian to be positive definite.
+        Operates on one or more images at one or more thetas in parallel using OpenMP.)DOC");
     
-    model.def("objective",&ModelWrapper<Model>::objective, py::arg("image"), py::arg("theta"),
-                "Returns the tuple (rllh, grad, hessian) of the model objective with respect to a single image, evaluated at a single theta.  The objective depends on the Estimator type (MLE) or (MAP).  This should be called as the objective function to maximize in optimization algorithms.");
-    model.def("likelihood_objective",&ModelWrapper<Model>::likelihood_objective, py::arg("image"), py::arg("theta"),
-                "Returns the tuple (rllh, grad, hessian) of the pure log-likelihood function with respect to a single image, evaluated at a single theta.");
-    model.def("prior_objective",&ModelWrapper<Model>::prior_objective, py::arg("theta"),
-                "Returns the tuple (rllh, grad, hessian) of the prior log-likelihood, evaluated at a single theta.");
-    model.def("aposteriori_objective",&ModelWrapper<Model>::aposteriori_objective, py::arg("image"), py::arg("theta"),
-                "Returns the tuple (rllh, grad, hessian) of the log-aposteriori function  (the log_likelihood + log_prior) with respect to a single image , evaluated at a single theta.");
+    model.def("objective",&ModelWrapper<Model>::objective, py::arg("image"), py::arg("theta"), R"DOC(
+        Returns the tuple (rllh, grad, hessian) of the model objective.
+        The objective depends on the Estimator type (MLE) or (MAP).  This should be called as the objective 
+        function to maximize in optimization algorithms.
+        Operates on a single image and theta.)DOC");
+
+    model.def("likelihood_objective",&ModelWrapper<Model>::likelihood_objective, py::arg("image"), py::arg("theta"), R"DOC(
+        Returns the tuple (rllh, grad, hessian) of the pure log-likelihood function.
+        This used as the objective for the MLE models.
+        Operates on a single image and theta.)DOC");
+
+    model.def("prior_objective",&ModelWrapper<Model>::prior_objective, py::arg("theta"), R"DOC(
+        Returns the tuple (rllh, grad, hessian) of the prior log-likelihood.
+        Operates on  a single theta.)DOC");
+    model.def("aposteriori_objective",&ModelWrapper<Model>::aposteriori_objective, py::arg("image"), py::arg("theta"), R"DOC(
+        Returns the tuple (rllh, grad, hessian) of the log-aposteriori function  
+        This is equivalent to log_likelihood + log_prior, and is the objective for the MAP models.
+        Operates on a single image and theta.)DOC");
     
     model.def("cr_lower_bound",&ModelWrapper<Model>::cr_lower_bound, py::arg("thetas"),
                 "Returns the Cramer-Rao lower-bound at one or more thetas.");
     model.def("expected_information",&ModelWrapper<Model>::expected_information, py::arg("thetas"),
                 "Returns the Expected Fisher information matrix at one or more thetas.");
-    model.def("observed_information",&ModelWrapper<Model>::observed_information, py::arg("image"), py::arg("theta_mode"),
-                "Returns the Observed Fisher information matrix with respect to a single image, evaluated at the estimated mode theta_mode.");
+    model.def("observed_information",&ModelWrapper<Model>::observed_information, py::arg("image"), py::arg("theta_mode"), R"DOC(
+        Returns the Observed Fisher information matrix with respect to a single image.
+        This only makes logical sense if theta_mode is the etimatated maximum (mode).  If the returned observed information
+        matrix is not positive definite, the reported point is not a true local maxima.)DOC");
 
     model.def("estimate_max",&ModelWrapper<Model>::estimate_max,  
-              py::arg("images"),  py::arg("method")="TrustRegion",  py::arg("theta_init")=ArrayDoubleT(), py::arg("return_stats")=false,
-              "Returns (theta_max_stack,rllh_stack,observedI_stack). Estimates the maximum of the model objective.  This is Maximum likelihood estimation (MLE) or maximum-aposeteriori (MAP) estimation depending on the model.  fixed_theta is a vector of fixed values free values are indicated by inf or nan. [OpenMP]");
+              py::arg("images"),  py::arg("method")="Newton",  py::arg("theta_init")=ArrayDoubleT(), py::arg("return_stats")=false, R"DOC(
+        Returns (theta_max_stack,rllh_stack,observedI_stack). Estimates the maximum of the model objective.  
+        
+        This is Maximum likelihood estimation (MLE) or maximum-aposeteriori (MAP) estimation depending on the model.  
+        fixed_theta is a vector of fixed values free values are indicated by inf or nan. [OpenMP])DOC");
+
 //     model.deg("estimate_profile_max",&ModelWrapper<Model>::estimate_profile_max,  
 //               py::arg("image"),  py::arg("fixed_theta_stack"), py::arg("method"), py::arg("theta_mle"), py::arg("return_stats")=false,
 //               "Returns (theta_profile_max_stack,rllh_stack,observedI_stack) estimating the maximum of the model objective for each image using given method and theta_init. [OpenMP]");
               
     
     model.def("estimate_mcmc_posterior",&ModelWrapper<Model>::estimate_mcmc_posterior, 
-              py::arg("images"), py::arg("theta_init")=ArrayDoubleT(), py::arg("Nsamples")=1000,  py::arg("Nburnin")=100, py::arg("thin")=0,
-              "Returns the summarized MCMC postrerior mean and covariance: (theta_mean_stack, theta_cov_stack) [OpenMP]");
-    model.def("estimate_mcmc_samples",&ModelWrapper<Model>::estimate_mcmc_sample, 
-              py::arg("images"), py::arg("Nsamples")=1000, py::arg("theta_init")=ArrayDoubleT(), py::arg("Nburnin")=100, py::arg("thin")=0,
-              "Returns the full MCMC sample: (sample_stack, sample_rllh_stack).  This can be used to estimate credible intervals. [OpenMP]");
+              py::arg("images"),  py::arg("Nsample")=1000, py::arg("theta_init")=ArrayDoubleT(),  
+              py::arg("Nburnin")=100, py::arg("thin")=0, R"DOC(
+        Returns the summarized MCMC posterior mean and covariance: (theta_mean_stack, theta_cov_stack) 
+        Operates on a single image or a stack of images in parallel using OpenMP.)DOC");
+    
+    model.def("estimate_mcmc_sample",&ModelWrapper<Model>::estimate_mcmc_sample, 
+              py::arg("images"), py::arg("Nsample")=1000, py::arg("theta_init")=ArrayDoubleT(), 
+              py::arg("Nburnin")=100, py::arg("thin")=0,  R"DOC(
+        Returns the full MCMC sample and relative log-likelihood: (sample_stack, sample_rllh_stack).  
+        The sample can be used to estimate posterior credible intervals. 
+        Operates on a single image or a stack of images in parallel using OpenMP.)DOC");
 
     model.def("error_bounds_expected",&ModelWrapper<Model>::error_bounds_expected,  
-              py::arg("theta_est"), py::arg("confidence")=0.95,
-              "Returns error bounds for each parameter (theta_lb, theta_ub) for one or more estimated theta values, using the Expected Fisher Information. Important: These bounds are only valid if the estimator errors are normally distributed (i.e., the objective function is regular near the maximum).  Additionally, the estimator must be unbiased and approach the CRLB in accuracy. [OpenMP]");
+              py::arg("theta_est"), py::arg("confidence")=0.95, R"DOC(
+        Returns error bounds for each parameter (theta_lb, theta_ub), using the Expected Fisher Information.
+        Operates on one or more estimated theta values in parallel using OpenMP.
+
+        These bounds are only valid if the estimator errors are normally distributed (i.e., the objective 
+        function is regular near the maximum).  Additionally, the estimator must be unbiased and approach the 
+        Cramer-Rao lower bound in accuracy.)DOC");
+    
+        
     model.def("error_bounds_observed",&ModelWrapper<Model>::error_bounds_observed,  
-              py::arg("theta_est"), py::arg("obsI"), py::arg("confidence")=0.95,
-              "Returns error bounds for each parameter (theta_lb, theta_ub) for one or more estimated theta values, using the Observed Fisher Information (negative hessian).  Important: These bounds are only valid if the estimator errors are normally distributed (i.e., the objective function is regular near the maximum). [OpenMP]");
+              py::arg("theta_est"), py::arg("obsI"), py::arg("confidence")=0.95, R"DOC(
+        Returns error bounds for each parameter (theta_lb, theta_ub) using the Observed Fisher Information.
+        Operates on one or more estimated theta values in parallel using OpenMP.
+        
+        The observed Fisher Information is the same as the negative hessian at the estimated maximum.  This should
+        be positive definte if theta_est is a true maximum.
+        
+        These bounds are only valid if the estimator errors are normally distributed (i.e., the objective 
+        function is regular near the maximum.)DOC");
+                
 //     model.deg("error_bounds_profile",&ModelWrapper<Model>::error_bounds_profile,  
 //               py::arg("images"),py::arg("theta_est"), py::arg("confidence")=0.95,
 //               " Returns error bounds for each parameter (theta_lb, theta_ub). Make no assumptions about the Normality of the errors or regularity of the objective and use a pure-likelihood based approach to find the estimated error bounds. [OpenMP]");
     model.def("error_bounds_posterior_credible",&ModelWrapper<Model>::error_bounds_posterior_credible,  
-              py::arg("samples"), py::arg("confidence")=0.95,
-              "Returns error bounds for each parameter (theta_mean, theta_lb, theta_ub) for one or more images, using an MCMC sample.  Assuming sufficient sample size and mcmc mixing, these bounds are valid even for non-regular posterior distributions. [OpenMP]");
+              py::arg("samples"), py::arg("confidence")=0.95, R"DOC(
+        Returns error bounds for each parameter (theta_mean, theta_lb, theta_ub).
 
+        Operates on one or more images, using an MCMC sample.  Assuming sufficient sample size and mcmc mixing, 
+        these bounds are valid even for non-regular posterior distributions. [OpenMP])DOC");
         
     /* Debugging methods (single threaded) */
     model.def("objective_llh_components",&ModelWrapper<Model>::objective_llh_components, 
-              py::arg("image"), py::arg("theta"),
-                "[DEBUGGING] Calculate for each component (each pixel and each prior parameter) the full log-likelihood contribution, for a single image and theta.");
+              py::arg("image"), py::arg("theta"), R"DOC(
+        [Debugging Usage] Calculate for each component (each pixel and each prior parameter) the full log-likelihood contribution.
+        Operates on a single image and theta.)DOC");
     model.def("objective_rllh_components",&ModelWrapper<Model>::objective_rllh_components, 
-              py::arg("image"), py::arg("theta"),
-                "[DEBUGGING] Calculate for each component (each pixel and each prior parameter) the relative log-likelihood contribution, for a single image and theta.");
+              py::arg("image"), py::arg("theta"), R"DOC(
+        [Debugging Usage] Calculate for each component (each pixel and each prior parameter) the relative log-likelihood contribution.
+        Operates on a single image and theta.)DOC");
     model.def("objective_grad_components",&ModelWrapper<Model>::objective_grad_components, 
-              py::arg("image"), py::arg("theta"),
-                "[DEBUGGING] Calculate for each component (each pixel and each prior parameter) the contribution to the gradient of the log-likelihood, for a single image and theta.");
+              py::arg("image"), py::arg("theta"), R"DOC(
+        [Debugging Usage] Calculate for each component (each pixel and each prior parameter) the contribution to the gradient of the log-likelihood.
+        Operates on a single image and theta.)DOC");
     model.def("objective_hessian_components",&ModelWrapper<Model>::objective_hessian_components, 
-              py::arg("image"), py::arg("theta"),
-                "[DEBUGGING] Calculate for each component (each pixel and each prior parameter) the contribution to the hessian of the log-likelihood, for a single image and theta.");
+              py::arg("image"), py::arg("theta"), R"DOC(
+        [Debugging Usage] Calculate for each component (each pixel and each prior parameter) the contribution to the hessian of the log-likelihood.
+        Operates on a single image and theta.)DOC");
     
     model.def("estimate_max_debug",&ModelWrapper<Model>::estimate_max_debug,
-              py::arg("image"),  py::arg("method"),  py::arg("theta_init")=ArrayDoubleT(),
-              "[DEBUGGING] Returns (theta_max, observedI, stats, sequence, sequence_rllh) For a single image.  The returned sequence is all evaluated points in sequence.");    
+              py::arg("image"),  py::arg("method"),  py::arg("theta_init")=ArrayDoubleT(), R"DOC(
+         [Debugging Usage] Returns (theta_max, observedI, stats, sequence, sequence_rllh) For a single image.  
+         The returned sequence is all evaluated points in sequence.)DOC");    
 //     model.def("estimate_profile_max_debug",&ModelWrapper<Model>::estimate_max_debug,
 //               py::arg("image"),  py::arg("fixed_theta"), py::arg("method"), py::arg("theta_mle"), py::arg("return_stats")=false,
 //               "[DEBUGGING] Returns (theta_profile_max, rllh_stack, stats, sequence, sequence_rllh) For a single image.  The returned sequence is all evaluated points in sequence.");    
     model.def("estimate_mcmc_debug",&ModelWrapper<Model>::estimate_mcmc_debug, 
-              py::arg("image"), py::arg("Nsamples"), py::arg("theta_init")=ArrayDoubleT(),
-              "[DEBUGGING] Returns (sample, sample_rllh, candidates, candidates_rllh).  Running MCMC for a single image.  No thinning or burnin is performed. Candidates are the condisdered candidates for each iteration");
+              py::arg("image"), py::arg("Nsample")=100, py::arg("theta_init")=ArrayDoubleT(), R"DOC(
+        [Debugging Usage] Returns (sample, sample_rllh, candidates, candidates_rllh).  
+        Running MCMC sampling for a single image.  No thinning or burnin is performed. Candidates are the 
+        proposed theta values at each iteration.)DOC");
+    model.def("initial_theta_estimate",&ModelWrapper<Model>::initial_theta_estimate,
+              py::arg("image"), py::arg("theta_init")=ArrayDoubleT(), R"DOC(
+        [Debugging Usage] Heuristic estimate of the image, with optional theta_init partially specified parameter vector.
+        This is to help debug interface issues, and is internally called to initialize estimation routines when theta_init is
+        not fully specified.)DOC");
 }
 
 template<class Model>
@@ -779,8 +840,8 @@ ModelWrapper<Model>::estimate_max(Model &model, ArrayDoubleT &images_arr, std::s
 
 template<class Model>
 py::tuple 
-ModelWrapper<Model>::estimate_mcmc_sample(Model &model, ArrayDoubleT &images_arr, ArrayDoubleT &theta_init_arr, 
-                                          IdxT Nsample, IdxT Nburnin, IdxT thin)
+ModelWrapper<Model>::estimate_mcmc_sample(Model &model, ArrayDoubleT &images_arr, IdxT Nsample, ArrayDoubleT &theta_init_arr, 
+                                          IdxT Nburnin, IdxT thin)
 {
     auto image_stack = imageStackAsArma<Model>(images_arr);
     IdxT count = model.get_size_image_stack(image_stack);
@@ -811,7 +872,7 @@ ModelWrapper<Model>::estimate_mcmc_sample(Model &model, ArrayDoubleT &images_arr
 
 template<class Model>
 py::tuple 
-ModelWrapper<Model>::estimate_mcmc_posterior(Model &model, ArrayDoubleT &images_arr, ArrayDoubleT &theta_init_arr, IdxT Nsample, IdxT Nburnin, IdxT thin)
+ModelWrapper<Model>::estimate_mcmc_posterior(Model &model, ArrayDoubleT &images_arr, IdxT Nsample, ArrayDoubleT &theta_init_arr,  IdxT Nburnin, IdxT thin)
 {
     auto image_stack = imageStackAsArma<Model>(images_arr);
     IdxT count = model.get_size_image_stack(image_stack);
@@ -980,10 +1041,10 @@ ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, s
     VecT sequence_rllh;
     methods::estimate_max_debug(model, image, method, theta_init, theta_est, obsI, sequence, sequence_rllh, stats);
     IdxT Nseq = sequence.n_cols;
-    auto sequence_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nseq);
+    auto sequence_arr = pyarma::makeArray(model.get_num_params(), Nseq);
     auto sequence_out = pyarma::asMat(sequence_arr);
     sequence_out = sequence;
-    auto sequence_rllh_arr = pyarma::makeSqueezedArray(Nseq);
+    auto sequence_rllh_arr = pyarma::makeArray(Nseq);
     auto sequence_rllh_out = pyarma::asVec(sequence_rllh_arr);
     sequence_rllh_out = sequence_rllh;
     copy_Usym_mat(obsI); // Convert upper triangular symmetric representation to full-matrix for python
@@ -999,17 +1060,17 @@ ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, s
 
 template<class Model>
 py::tuple 
-ModelWrapper<Model>::estimate_mcmc_debug(Model &model, ArrayDoubleT &image_arr, ArrayDoubleT &theta_init_arr, IdxT Nsample)
+ModelWrapper<Model>::estimate_mcmc_debug(Model &model, ArrayDoubleT &image_arr, IdxT Nsample, ArrayDoubleT &theta_init_arr)
 {
     auto image = imageAsArma<Model>(image_arr);
     auto theta_init = thetaAsArma(theta_init_arr);
-    auto sample_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nsample);
+    auto sample_arr = pyarma::makeArray(model.get_num_params(), Nsample);
     auto sample = pyarma::asMat(sample_arr);
-    auto candidates_arr = pyarma::makeSqueezedArray(model.get_num_params(), Nsample);
+    auto candidates_arr = pyarma::makeArray(model.get_num_params(), Nsample);
     auto candidates = pyarma::asMat(candidates_arr);
-    auto sample_rllh_arr = pyarma::makeSqueezedArray(Nsample);
+    auto sample_rllh_arr = pyarma::makeArray(Nsample);
     auto sample_rllh = pyarma::asVec(sample_rllh_arr);
-    auto candidates_rllh_arr = pyarma::makeSqueezedArray(Nsample);
+    auto candidates_rllh_arr = pyarma::makeArray(Nsample);
     auto candidates_rllh = pyarma::asVec(candidates_rllh_arr);
     
     methods::estimate_mcmc_sample_debug(model, image, theta_init, Nsample, 
@@ -1020,6 +1081,22 @@ ModelWrapper<Model>::estimate_mcmc_debug(Model &model, ArrayDoubleT &image_arr, 
     out[2] = candidates_arr;
     out[3] = candidates_rllh_arr;
     return out;    
+}
+
+template<class Model>
+ArrayDoubleT 
+ModelWrapper<Model>::initial_theta_estimate(Model &model, ArrayDoubleT &image_arr, ArrayDoubleT &theta_init_arr)
+{
+    auto image = imageAsArma<Model>(image_arr);
+    auto theta_est_arr = pyarma::makeArray(model.get_num_params());
+    auto theta_est = pyarma::asVec(theta_est_arr);
+    VecT theta_init;
+    if(theta_init_arr.size() == static_cast<ssize_t>(model.get_num_params())) {
+        theta_init = thetaAsArma(theta_init_arr);
+    }
+    auto s = model.initial_theta_estimate(image,theta_init);
+    theta_est = s.theta;
+    return theta_est_arr;
 }
 
     

@@ -7,14 +7,9 @@
 #define _MAPPEL_ESTIMATOR_IMPL_H
 
 #include <cmath>
-#include <functional>
-#include <thread>
-#include <boost/thread/thread.hpp>
-
 #include <armadillo>
 
 #include "estimator.h"
-#include "display.h"
 #include "rng.h"
 #include "numerical.h"
 
@@ -143,18 +138,11 @@ void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &thet
 }
 
 template<class Model>
-double Estimator<Model>::mean_walltime() const
-{
-    return (num_estimations==0) ? 0. : total_walltime/(double)num_estimations;
-}
-
-template<class Model>
 StatsT Estimator<Model>::get_stats()
 {
     StatsT stats;
     stats["num_estimations"] = num_estimations;
     stats["total_walltime"] = total_walltime;
-    stats["mean_walltime"] = mean_walltime();
     return stats;
 }
 
@@ -206,62 +194,40 @@ void Estimator<Model>::record_walltime(ClockT::time_point start_walltime, int ni
 template<class Model>
 ThreadedEstimator<Model>::ThreadedEstimator(Model &model)
     : Estimator<Model>(model),
-      max_threads(boost::thread::hardware_concurrency()),
-      num_threads(0),
-      thread_walltime(std::vector<double>(max_threads,0.))
-{
-    char *omp_num_threads_var = getenv("OMP_NUM_THREADS");
-    if (omp_num_threads_var) {
-        int omp_num_threads = atoi(omp_num_threads_var);
-        if (0<omp_num_threads && omp_num_threads<=max_threads) {
-            max_threads = omp_num_threads;
-        }
-    }
-}
+      max_threads(omp_get_max_threads()),
+      num_threads(1)
+{ }
 
 
 
 template<class Model>
-void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT &im, const ParamVecT &theta_init,
-                                              ParamVecT &theta, VecT &rllh, CubeT &obsI_stack)
+void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT &im_stack, const ParamVecT &theta_init_stack,
+                                              ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)
 {
     auto start_walltime=ClockT::now();
-    int min_per_thread=4;
-    int nimages = model.get_size_image_stack(im);
-    //The number of threads we will actually run
-    num_threads = std::max(std::min(max_threads, static_cast<int>(floor(nimages/min_per_thread))),1);
-    std::vector<std::thread> threads(num_threads-1);
-    for(int i=0; i<num_threads-1; i++) {
-        threads.emplace_back(std::bind(&ThreadedEstimator::thread_entry, this, i,
-                            std::ref(im), std::ref(theta_init), std::ref(theta), std::ref(rllh), std::ref(obsI_stack)) );
-    }
-    //The main thread assumes the role of num_threads-1
-    thread_entry(num_threads-1, im, theta_init, theta, rllh, obsI_stack);
-    //Join all other threads.
-    for(int i=0; i<num_threads-1; i++) threads[i].join();
-
-    this->record_walltime(start_walltime, nimages);
-}
-
-template<class Model>
-double ThreadedEstimator<Model>::mean_thread_walltime()
-{
-    if(num_threads==0)  return this->mean_walltime();    
-    mtx.lock();
-    double mean = (this->num_estimations==0) ? 0 : 
-        std::accumulate(thread_walltime.begin(), thread_walltime.end(),0) / num_threads;
-    mtx.unlock();
-    return mean;
+    IdxT Nimages = model.get_size_image_stack(im_stack);
+    #pragma omp parallel
+    {
+        if(omp_get_thread_num()==0) num_threads = omp_get_num_threads();
+        auto theta_est = model.make_param();
+        auto obsI = model.make_param_mat();
+        #pragma omp for
+        for(IdxT n=0; n<Nimages; n++) {
+            this->compute_estimate(model.get_image_from_stack(im_stack,n), theta_init_stack.col(n), theta_est, rllh_stack(n), obsI);
+            theta_est_stack.col(n) = theta_est;
+            obsI_stack.slice(n) = obsI;
+        }
+    } 
+    this->record_walltime(start_walltime, Nimages);
 }
 
 template<class Model>
 StatsT ThreadedEstimator<Model>::get_stats()
 {
     auto stats = Estimator<Model>::get_stats();
-    double mtwalltime = mean_thread_walltime();
     stats["num_threads"] = num_threads;
-    stats["mean_thread_walltime"] = mtwalltime;
-    stats["total_thread_walltime"] = mtwalltime*num_threads;
+    stats["total_thread_time"] = num_threads*this->total_walltime;
+    stats["mean_estimation_time"] =  num_threads*this->total_walltime / this->num_estimations;
     return stats;
 }
 
@@ -275,55 +241,7 @@ template<class Model>
 void ThreadedEstimator<Model>::clear_stats()
 {
     Estimator<Model>::clear_stats();
-    thread_walltime=std::vector<double>(max_threads, 0.0);
-}
-
-template<class Model>
-int ThreadedEstimator<Model>::thread_start_idx(int nimages, int threadid) const
-{
-    return ceil(nimages/(double)num_threads*threadid);
-}
-
-template<class Model>
-int ThreadedEstimator<Model>::thread_stop_idx(int nimages, int threadid) const
-{
-    return std::min(nimages, (int)std::ceil(nimages/(double)num_threads*(threadid+1)));
-}
-
-template<class Model>
-void ThreadedEstimator<Model>::thread_maximize_stack(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
-                                        ParamVecT &theta, VecT &rllh, CubeT &obsI_stack)
-{
-    int nimages = model.get_size_image_stack(im);
-    int start = thread_start_idx(nimages, threadid);
-    int stop = thread_stop_idx(nimages, threadid);
-    auto theta_est = model.make_param();
-    auto obsI = model.make_param_mat();
-    ParamT init;
-    init.zeros();
-    for(int n=start; n<stop; n++){
-        if(!theta_init.is_empty()) init = theta_init.col(n);
-        this->compute_estimate(model.get_image_from_stack(im,n), init, theta_est, rllh(n), obsI);
-        theta.col(n) = theta_est;
-        obsI_stack.slice(n) = obsI;
-    }
-}
-
-/**
- * This is a non-virtual entry point which then calls the virtual function which does the actual
- * maximization.
- *
- */
-template<class Model>
-void ThreadedEstimator<Model>::thread_entry(int threadid, const ModelDataStackT &im, const ParamVecT &theta_init,
-                               ParamVecT &theta, VecT &rllh, CubeT &obsI)
-{
-    auto start_walltime = ClockT::now();
-    thread_maximize_stack(threadid, im, theta_init, theta, rllh, obsI);
-    double walltime = duration_cast<duration<double>>(ClockT::now() - start_walltime).count();
-    mtx.lock();
-    thread_walltime[threadid] += walltime;
-    mtx.unlock();
+    num_threads=1;
 }
 
 /* HeuristicEstimator */
@@ -331,7 +249,7 @@ template<class Model>
 StencilT<Model> 
 HeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
 {
-    auto est = Estimator<Model>::model.initial_theta_estimate(im, ParamT());
+    auto est = Estimator<Model>::model.initial_theta_estimate(im,theta_init);
     rllh = methods::objective::rllh(this->model, im,est);
     return est;
 }
@@ -431,68 +349,33 @@ void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT &ac
 }
 
 template<class Model>
-void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &rejected_theta)
+void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &rejected_theta, double rejected_rllh)
 {
     nBacktracks++;
     if(save_seq) {
         if(seq_len>=max_seq_len) throw LogicalError("Exceeded MaximizerData sequence limit");
         theta_seq.col(seq_len) = rejected_theta;
         backtrack_idxs(seq_len) = 1;
-        seq_rllh(seq_len) = rllh;
+        seq_rllh(seq_len) = rejected_rllh;
         seq_len++;
     }
 }
 
 
-template<class Model>
-double IterativeMaximizer<Model>::mean_iterations()
-{
-    mtx.lock();
-    double mean =  num_estimations ? total_iterations/static_cast<double>(num_estimations) : 0;
-    mtx.unlock();
-    return mean;
-}
-
-template<class Model>
-double IterativeMaximizer<Model>::mean_backtracks()
-{
-    mtx.lock();
-    double mean =  num_estimations ? total_backtracks/static_cast<double>(num_estimations) : 0;
-    mtx.unlock();
-    return mean;
-}
-
-template<class Model>
-double IterativeMaximizer<Model>::mean_fun_evals()
-{
-    mtx.lock();
-    double mean =  num_estimations ? total_fun_evals/static_cast<double>(num_estimations) : 0;
-    mtx.unlock();
-    return mean;
-}
-
-template<class Model>
-double IterativeMaximizer<Model>::mean_der_evals()
-{
-    mtx.lock();
-    double mean =  num_estimations ? total_der_evals/static_cast<double>(num_estimations) : 0;
-    mtx.unlock();
-    return mean;
-}
 
 template<class Model>
 StatsT IterativeMaximizer<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
+    double N = static_cast<double>(num_estimations);
     stats["total_iterations"] = total_iterations;
     stats["total_backtracks"] = total_backtracks;
     stats["total_fun_evals"] = total_fun_evals;
     stats["total_der_evals"] = total_der_evals;
-    stats["mean_iterations"] = mean_iterations();
-    stats["mean_backtracks"] = mean_backtracks();
-    stats["mean_fun_evals"] = mean_fun_evals();
-    stats["mean_der_evals"] = mean_der_evals();
-    
+    stats["mean_iterations"] = total_iterations/N;
+    stats["mean_backtracks"] = total_backtracks/N;
+    stats["mean_fun_evals"] = total_fun_evals/N;
+    stats["mean_der_evals"] = total_der_evals/N;
     return stats;
 }
 
@@ -501,9 +384,7 @@ StatsT IterativeMaximizer<Model>::get_debug_stats()
 {
     auto stats =  IterativeMaximizer<Model>::get_stats();
     stats["debugIterative"]=1;
-    mtx.lock();
     auto backtrack_idxs = last_backtrack_idxs;
-    mtx.unlock();
     for(unsigned n=0; n<backtrack_idxs.n_elem; n++) {
         std::ostringstream out;
         out<<"backtrack_idxs."<<n+1;
@@ -575,7 +456,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
             data.record_iteration();  //Record a successful point
             return false; //Tell caller to continue optimizing
         } else {
-            data.record_backtrack(); //Record a failed (backtracked) (unaccepted) point.
+            data.record_backtrack(can_rllh); //Record a failed (backtracked) (unaccepted) point.
             if (convergence_test(data)) break; //We converged at iteration point.  Unable to improve.
             else {
                 //Candidate point is not good.  Need to backtrack.
@@ -885,7 +766,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
             } else {
                 delta = std::max(delta_decrease_min*delta, delta_decrease*arma::norm(s_hat));
             }
-            data.record_backtrack();
+            data.record_backtrack(can_rllh);
             data.restore_stencil(); //Do the backtrack so that theta_{n+1} = theta_n
         } else { //Success!
             success = true;
@@ -1268,8 +1149,9 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT 
                                            double &theta_max_rllh, ParamVecT &sequence, VecT &sequence_rllh)
 {
     auto &rng = model.get_rng_generator();
-    UniformDistT uni;
-    TrustRegionMaximizer<Model> tr_max(model);
+    UniformDistT uniform;
+    NewtonDiagonalMaximizer<Model> tr_max(model);
+//     TrustRegionMaximizer<Model> tr_max(model);
     int niters = max_iterations*model.get_mcmc_num_candidate_sampling_phases();
     sequence = model.make_param_stack(niters+1);
     sequence_rllh.set_size(niters+1);
@@ -1289,7 +1171,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT 
         }
         double can_rllh = methods::objective::rllh(model, im, can_theta);
         double old_rllh = sequence_rllh(naccepted-1);
-        if(can_rllh < old_rllh && uni(rng) > exp((can_rllh-old_rllh)/T)) continue; //Reject
+        if(can_rllh < old_rllh && uniform(rng) > exp((can_rllh-old_rllh)/T)) continue; //Reject
         //Accept
         T /= cooling_rate;
         sequence.col(naccepted) = can_theta;
@@ -1308,7 +1190,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT 
     sequence.resize(sequence.n_rows, naccepted+1);
     sequence.col(naccepted) = max_s.theta;
     sequence_rllh.resize(naccepted+1);
-    sequence_rllh.col(naccepted) = max_rllh;
+    sequence_rllh(naccepted) = max_rllh;
     theta_max_rllh = max_rllh;
     return max_s;
 }

@@ -17,6 +17,10 @@ MappelConstructorArgs = {
     #type(mappel.Gauss1DsMAP):{"size":12, "min_sigma":1.2, "max_sigma":3.8}
 }
 
+#MappelEstimatorTestMethods = ["heuristic","newton","newtondiagonal","quasinewton","simulatedannealing","trustregion"]
+#MappelEstimatorTestMethods = ["heuristic","newton","newtondiagonal","simulatedannealing"]
+MappelEstimatorTestMethods = ["heuristic","newton","newtondiagonal"]
+
 def model_id(model_class):
     return model_class.__name__
 

@@ -10,6 +10,7 @@
 #include <cmath>
 #include "util.h"
 #include "rng.h"
+#include <trng/uniform01_dist.hpp>
 
 namespace mappel {
 

@@ -263,7 +263,7 @@ namespace methods {
     MatT observed_information(const Model &model, const ModelDataT<Model> &data, const StencilT<Model> &theta_mode)
     {
         MatT obsI = - objective::hessian(model,data,theta_mode); //Observed information is defined for negative llh and so negative hessian should be positive definite
-        if(!is_positive_definite(obsI)) throw NumericalError("Hessian is not positive definite");
+        //if(!is_positive_definite(obsI)) throw NumericalError("Hessian is not positive definite");
         return obsI;
     }
 
@@ -353,7 +353,8 @@ namespace methods {
         IdxT Noversample = mcmc::num_oversample(Nsample,Nburnin,thin);
         auto sample = model.make_param_stack(Noversample);
         VecT sample_rllh(Noversample);
-        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init), sample, sample_rllh);
+        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init), 
+                               sample, sample_rllh);
         return mcmc::thin_sample(sample, Nburnin, thin);
     }
     
@@ -368,7 +369,8 @@ namespace methods {
         sample_rllh.set_size(Nsample);
         auto oversample = model.make_param_stack(Noversample);
         VecT oversample_rllh(Noversample);
-        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init), oversample, oversample_rllh);
+        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init),
+                               oversample, oversample_rllh);
         mcmc::thin_sample(oversample, oversample_rllh, Nburnin, thin, sample, sample_rllh);
     }
 

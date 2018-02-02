@@ -69,6 +69,8 @@ StatsT PointEmitterModel::get_stats() const
         outu<<"ubound."<<n+1;
         stats[outu.str()]= ubound(n);
     }
+    stats["prarallelrng.seed"]=rng_manager.get_init_seed();
+    stats["prarallelrng.num_threads"]=rng_manager.get_num_threads();
     return stats;
 }
 

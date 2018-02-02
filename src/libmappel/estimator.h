@@ -15,8 +15,6 @@
 #include <map>
 #include "rng.h"
 #include "cGaussMLE/cGaussMLE.h"
-#include <boost/thread/mutex.hpp>
-
 
 #ifdef WIN32
     #include <boost/chrono.hpp>
@@ -84,7 +82,6 @@ public:
                                 ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack);
 
     /* Statistics */
-    double mean_walltime() const;
     virtual StatsT get_stats();
     virtual StatsT get_debug_stats()=0;
     virtual void clear_stats();
@@ -115,18 +112,13 @@ protected:
 template<class Model>
 class ThreadedEstimator : public Estimator<Model> {
 public:
-    /* These improve readabilit, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
     using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
     using ModelDataStackT = typename Model::ModelDataStackT;
 
     ThreadedEstimator(Model &model);
 
     void estimate_max_stack(const ModelDataStackT &im, const ParamVecT &theta_init,ParamVecT &theta, VecT &rllh, CubeT &obsI);
     
-    double mean_thread_walltime();
     StatsT get_stats();
     StatsT get_debug_stats();
     void clear_stats();
@@ -135,18 +127,7 @@ protected:
     using Estimator<Model>::model;
     int max_threads;
     int num_threads;
-    std::vector<double> thread_walltime;
     boost::mutex mtx;
-
-    int thread_start_idx(int nimages, int threadid) const;
-    int thread_stop_idx(int nimages, int threadid) const;
-
-    virtual void thread_maximize_stack(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                                       ParamVecT &theta, VecT &rllh, CubeT &obsI);
-
-private:
-    void thread_entry(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                      ParamVecT &theta, VecT &rllh, CubeT &obsI);
 };
 
 template<class Model>
@@ -294,9 +275,9 @@ protected:
         /** @brief Record an iteration point (derivatives computed) */
         void record_iteration(const ParamT &accepted_theta);
         /** @brief Record a backtracked point (no derivative computations performed) Using the saved theta as the default. */
-        void record_backtrack() {record_backtrack(theta());}
+        void record_backtrack(double rejected_rllh) {record_backtrack(theta(), rejected_rllh);}
         /** @brief Record a backtracked point (no derivative computations performed) */
-        void record_backtrack(const ParamT &rejected_theta);
+        void record_backtrack(const ParamT &rejected_theta, double rejected_rllh);
         
         /** @brief Return the saved theta sequence */
         ParamVecT get_theta_sequence() const {return theta_seq.head_cols(seq_len);}
