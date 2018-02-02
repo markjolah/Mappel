@@ -11,65 +11,55 @@ from _Gauss1DMLE import Gauss1DMLE
 
 class MappelBase(Gauss1DMLE):
     
-    # note to self, look into python over-loaded functions
     def __init__(self, imsize, psf_sigma):
         Gauss1DMLE.__init__(self, imsize, psf_sigma)
         self.imsize = imsize
         self.psf_sigma = psf_sigma
 
-#    Pybind11 is near perfect here (self.get_stats)
-#     def getStats(self):
-#        return
+    def getStats(self):
+        return self.get_stats()
     
-    # Return a dictionary of keys hyperparam_desc and values hyperparams
-#     def getHyperParameters(self):
-#        return
+    def getHyperParameters(self):
+         keys = self.hyperparams_desc
+         values = self.hyperparams
+         return dict(zip(keys, values))
     
-#     def setHyperParameters(hyperparams):
-#        return
+    def setHyperParameters(self,hyperparams_dictionary):
+        self.__checkinputs({"hyperparams":hyperparams_dictionary})
+        self.hyperparams = hyperparams_dictionary.values()
+        self.hyperparams_desc = hyperparams_dictionary.keys()
+        return
     
-    def samplePrior(count=1):
-        #if count < 1 or not is instance(count, int):
-            #print('Count needs to be an integer of 1 or greater.')
-            #pass
+    def samplePrior(self,count=1):
         return self.sample_prior(count)
 
-#    pybind11 => self.bounded_theta(theta), no errors triggered yet
-#     def boundedTheta(theta):
-#        return
+    def boundedTheta(self,theta):
+        self.__checkinputs({"theta":theta})
+        return self.bounded_theta(theta)
 
-#   pybind11 => self.theta_in_bounds(theta)
-#     def thetaInBounds(theta):
-#        return
+    def thetaInBounds(self,theta):
+        self.__checkinputs({"theta":theta})
+        return self.theta_in_bounds(theta)
 
-#   pybind11 => self.modelImage(theta)
-#     def modelImage(theta):
-#        return
-    
-#     def modelDipImage(theta):
-#          # This may be depricated for python
-#          return
+    def modelImage(self,theta):
+        self.__checkinputs({"theta":theta})
+        return self.modelImage(theta)
     
     def simulateImage(self,count=1,theta=None):
         if theta is None:
             theta = self.sample_prior(count)
         return self.simulate_image(theta)
     
-#     def simulatueDipImage():
-#          return
-    
-    def LLH(image, theta=None):
-        if theta is None:
-            print('function requires two arguments, image and parameter values')
-            pass
+    def LLH(self,image, theta):
+        self.__checkinputs({"image":image,"theta":theta})
         return self.objective_llh(image,theta)
     
-    def modelGrad(image, theta):
-        # make general function for input checks.
+    def modelGrad(self,image, theta):
+        self.__checkinputs({"image":image, "theta":theta})
         return self.objective_grad(image,theta)
     
-    def modelHessian(image, theta):
-        # make general function for input checks
+    def modelHessian(self,image, theta):
+        self.__checkinputs({"image":image, "theta":theta})
         return self.objective_hessian(image,theta)
     
 #     def modelObjective(image, theta, negate):
@@ -87,85 +77,38 @@ class MappelBase(Gauss1DMLE):
 #     def fisherInformation(theta):
 #        return
     
-    def observedInformation(image, theta):
-        # make general function for input checks
+    def observedInformation(self,image, theta):
+        self.__checkinputs({"image":image, "theta":theta})
         return self.observed_information(image, theta)
     
 #     def scoreFunction(im, theta):
 #        return
     
-    def estimate(self, image, estimator_name='Newton', theta_init=None):
-        if theta_init is None:
-            theta_init = np.ones([3,image.shape[1]])
+    def estimate(self, image, theta_init, estimator_name='Newton'):
+        self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_max(image, estimator_name, theta_init)
     
-#     def estimateDebug(image, estimator_name, theta_init):
-#        return
+    def estimateDebug(self,image, theta_init, estimator_name="Newton"):
+        self.__checkinputs({"image":image, "theta_init":theta_init})
+        return self.estimate_max_debug(image, estimator)
     
-#     def estimatePosterior(image, max_samples, theta_init):
-#        return
+    def estimatePosterior(self,image, theta_init, Nsample=1000, Nburning = 100, thin = 0):
+        self.__checkinputs({"image":image, "theta_init":theta_init})
+        return self.estimate_mcmc_posterior(image, Nsample, theta_init, Nburning, thin)
     
-#     def estimagePosteriorDebug(image, max_samples, theta_init):
-#        return
-    
-#     def uniformBackgroundModelLLH(ims):
-#        return
-    
-#     def modelComparisonUniform(alpha, ims, theta_mle):
-#        return
-    
-#     def noiseBackgroundModelLLH(ims):
-#        return
-    
-#     def modelComparisonNoise(alpha, ims, theta_mle):
-#        return
-    
-#     def evaluateEstimatorAt(estimator, theta, nTrials, theta_init):
-#        return
-    
-#     def evaluateEstimatorOn(estimator, images):
-#        return
-    
-#     def mapEstimatorAccuracy(estimator, sample_grid):
-#        return
-    
-#     def makeThetaGridSamples(theta, gridsize, nTrials):
-#        return
-    
+    def estimagePosteriorDebug(self,image, theta_init, Nsample=100):
+        self.__checkinputs({"image":image,"theta_init":theta_init})
+        return self.estimate_mcmc_debug(image, Nsample, theta_init)
+   
+      # important display function, move to display module 
 #     def superResolutionModel(theta, theta_err, res_factor):
 #        return
     
-    ## These are protected methods but Python protects nothing!
-#     def __estimate_GPUGaussMLE(image):
-#        return
-    
-#     def __estimateDebug_GPUGaussMLE(image):
-#        return
-    
-#     def __estimate_fminsearch(image, theta_init):
-#        return
-    
-#     def __estimateDebug_fminsearch(image, theta_init):
-#        return
-    
-#     def __estimate_toolbox(image, theta_init, algorithm):
-#        return
-    
-#     def __estimateDebug_toolbox(image, theta_init, algorithm):
-#        return
-    
-    ## these are static methods from the Matlab MappelBase class
-#     def __cholesky(A):
-#        return
-    
-#     def __modifiedCholesky(A):
-#        return
-    
-#     def __choleskySolve(A,b):
-#        return
-    
-#     def __viewDipImage(image, fig):
-#        return
+    # all input checks get routed through this function
+    def __checkinputs(self,input_dict):
+        for key, value in input_dict.items():
+            print(key)
+        return
     
 #     def __checkImage(image):
 #        return
