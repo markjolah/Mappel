@@ -24,21 +24,25 @@ class MappelBase(Gauss1DMLE):
          values = self.hyperparams
          return dict(zip(keys, values))
     
-    def setHyperParameters(hyperparams):
-        self.__checkinputs({"hyperparams":hyperparams})
-        self.hyperparams = hyperparams
+    def setHyperParameters(self,hyperparams_dictionary):
+        self.__checkinputs({"hyperparams":hyperparams_dictionary})
+        self.hyperparams = hyperparams_dictionary.values()
+        self.hyperparams_desc = hyperparams_dictionary.keys()
         return
     
-    def samplePrior(count=1):
+    def samplePrior(self,count=1):
         return self.sample_prior(count)
 
-    def boundedTheta(theta):
+    def boundedTheta(self,theta):
+        self.__checkinputs({"theta":theta})
         return self.bounded_theta(theta)
 
-    def thetaInBounds(theta):
+    def thetaInBounds(self,theta):
+        self.__checkinputs({"theta":theta})
         return self.theta_in_bounds(theta)
 
-    def modelImage(theta):
+    def modelImage(self,theta):
+        self.__checkinputs({"theta":theta})
         return self.modelImage(theta)
     
     def simulateImage(self,count=1,theta=None):
@@ -46,15 +50,15 @@ class MappelBase(Gauss1DMLE):
             theta = self.sample_prior(count)
         return self.simulate_image(theta)
     
-    def LLH(image, theta):
+    def LLH(self,image, theta):
         self.__checkinputs({"image":image,"theta":theta})
         return self.objective_llh(image,theta)
     
-    def modelGrad(image, theta):
+    def modelGrad(self,image, theta):
         self.__checkinputs({"image":image, "theta":theta})
         return self.objective_grad(image,theta)
     
-    def modelHessian(image, theta):
+    def modelHessian(self,image, theta):
         self.__checkinputs({"image":image, "theta":theta})
         return self.objective_hessian(image,theta)
     
@@ -73,7 +77,7 @@ class MappelBase(Gauss1DMLE):
 #     def fisherInformation(theta):
 #        return
     
-    def observedInformation(image, theta):
+    def observedInformation(self,image, theta):
         self.__checkinputs({"image":image, "theta":theta})
         return self.observed_information(image, theta)
     
@@ -84,16 +88,16 @@ class MappelBase(Gauss1DMLE):
         self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_max(image, estimator_name, theta_init)
     
-    def estimateDebug(image, theta_init, estimator_name="Newton"):
+    def estimateDebug(self,image, theta_init, estimator_name="Newton"):
         self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_max_debug(image, estimator)
     
-    def estimatePosterior(image, theta_init, Nsample=1000, Nburning = 100, thin = 0):
+    def estimatePosterior(self,image, theta_init, Nsample=1000, Nburning = 100, thin = 0):
         self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_mcmc_posterior(image, Nsample, theta_init, Nburning, thin)
     
-    def estimagePosteriorDebug(image, theta_init, Nsample=100):
-        self.__check_inputs({"image":image,"theta_init":theta_init})
+    def estimagePosteriorDebug(self,image, theta_init, Nsample=100):
+        self.__checkinputs({"image":image,"theta_init":theta_init})
         return self.estimate_mcmc_debug(image, Nsample, theta_init)
    
       # important display function, move to display module 
@@ -101,8 +105,8 @@ class MappelBase(Gauss1DMLE):
 #        return
     
     # all input checks get routed through this function
-    def __check_inputs(input_dict):
-        for key, value in input_dict:
+    def __checkinputs(self,input_dict):
+        for key, value in input_dict.items():
             print(key)
         return
     
