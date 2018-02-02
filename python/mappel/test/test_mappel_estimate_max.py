@@ -56,15 +56,26 @@ def test_estimate_max_debug(model,method,seed):
     theta_init = model.initial_theta_estimate(im)
     check_theta(model,theta_init,1)
     val = model.estimate_max_debug(im,method,theta_init)
-    assert len(val) == 5
-    (theta_est, obsI, stats, sequence, sequence_rllh) = val
+    assert len(val) == 6
+    (theta_est, rllh, obsI, stats, sequence, sequence_rllh) = val
     check_theta(model,theta_est,1)
+    check_llh(rllh,1)
     check_symmat(model,obsI,1)
     check_stats(stats)
     check_theta(model,sequence)
     check_llh(sequence_rllh)
     assert np.all(theta_init == sequence[:,0]), "theta_init should be first element in sequence"
-    assert np.all(theta_est == sequence[:,-1]), "theta_est should be last element in sequence"
+    if "backtrack_idxs" in stats:
+        #theta_est should be last non backtrack in sequence        
+        backtrack_idxs = stats["backtrack_idxs"]
+        assert backtrack_idxs.size == sequence.shape[1], "Backtrack indexs do not match sequence length"
+        non_backtrack_idxs = np.where(~backtrack_idxs)[0]
+        last_non_backtrack_idx = non_backtrack_idxs[-1]  #Last non-backtracking evaluation (last accepted)
+        assert np.all(theta_est == sequence[:,last_non_backtrack_idx]), "theta_est should be last non-backtrack theta in sequence"        
+        assert rllh == sequence_rllh[last_non_backtrack_idx], "rllh should match last non-backtrack rllh in sequence_rllh"
+    else:
+        #theta_est should be last in sequence        
+        assert np.all(theta_est == sequence[:,-1]), "theta_est should be last element in sequence"
     rllh2 = model.objective_rllh(im,sequence)
     assert np.all(rllh2 == sequence_rllh), "sequence_rllh does not match with separate computation"
     
@@ -74,7 +85,7 @@ def test_estimate_max_debug(model,method,seed):
     (theta_est2,rllh2,obsI2) = val2
     assert np.all(theta_est == theta_est2), "theta_est does not match non-debug"
     assert np.all(obsI == obsI2), "obsI does not match non-debug"
-    assert np.all(sequence_rllh[-1] == rllh2), "rllh does not match non-debug"
+    assert np.all(rllh == rllh2), "rllh does not match non-debug"
     
     
     

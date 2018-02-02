@@ -63,7 +63,7 @@ public:
      * Variants with and without a theta_init.
      */
     void estimate_max_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
-                        ParamT<Model> &theta_est, MatT &obsI, MatT &sequence, VecT &sequence_rllh);
+                        ParamT<Model> &theta_est, double &rllh,MatT &obsI, MatT &sequence, VecT &sequence_rllh);
 
     /* Option 4: Parallel Image - Estimator returns theta_stack, rllh_stack and obsI_stack at the optimum point
      * for each image in the stack.
@@ -187,10 +187,12 @@ protected:
 template<class Model>
 class IterativeMaximizer : public ThreadedEstimator<Model> {
 public:
-    static constexpr int NumExitCodes = 5;
+    static constexpr int NumExitCodes = 7;
     enum class ExitCode : IdxT { Unassigned= 99, //Logical error if this is still set
-                          MaxIter = 4,        //Max iterations exceeded. Did not converge.
-                          MaxBacktracks = 3,  //Backtracking failed.  Likely converged successfully.
+                          MaxIter = 6,        //Max iterations exceeded. Did not converge.
+                          MaxBacktracks = 5,  //Backtracking failed.  Likely converged successfully.
+                          TrustRegionRadius = 4,//Trust region size was less than epsilon.  Converged successfully.
+                          GradRatio = 3,      //Grad ratio was less than epsilon.  Converged successfully.
                           FunctionChange = 2, //Function value change was less than epsilon.  Converged successfully.
                           StepSize = 1,       //Step size was less than delta.  Converged successfully. 
                           Error = 0           //A Numerical Error was caught.  Did not converge.

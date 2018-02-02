@@ -69,7 +69,10 @@ StatsT PointEmitterModel::get_stats() const
         outu<<"ubound."<<n+1;
         stats[outu.str()]= ubound(n);
     }
-    stats["prarallelrng.seed"]=rng_manager.get_init_seed();
+    double Dseed;
+    uint64_t seed =rng_manager.get_init_seed();
+    memcpy(&Dseed, &seed, sizeof(seed));
+    stats["prarallelrng.seed"]=Dseed; //Extract bytes in pure form and fix in python
     stats["prarallelrng.num_threads"]=rng_manager.get_num_threads();
     return stats;
 }

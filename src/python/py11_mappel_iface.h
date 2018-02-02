@@ -42,6 +42,7 @@ using parallel_rng::SeedT; //RNG seed type from ParallelRng package
 inline
 VecT thetaAsArma(ArrayDoubleT &theta)
 {
+     if(theta.size()==0) return {0};
      switch(theta.ndim()) {
         case 1:
             return {static_cast<double*>(theta.mutable_data(0)), static_cast<IdxT>(theta.size()), false, true};
@@ -322,7 +323,7 @@ void bindMappelModel(py::module &M)
     model.def("theta_in_bounds",&ModelWrapper<Model>::theta_in_bounds,py::arg("theta"),
                 "True if parameter theta is within the box-constraints.");
     
-    model.def("get_stats",&Model::get_stats,
+    model.def("_get_stats",&Model::get_stats,
                 "Get Model description and settings.");
     
     model.def("sample_prior",&ModelWrapper<Model>::sample_prior,
@@ -380,7 +381,7 @@ void bindMappelModel(py::module &M)
         This only makes logical sense if theta_mode is the etimatated maximum (mode).  If the returned observed information
         matrix is not positive definite, the reported point is not a true local maxima.)DOC");
 
-    model.def("estimate_max",&ModelWrapper<Model>::estimate_max,  
+    model.def("_estimate_max",&ModelWrapper<Model>::estimate_max,  
               py::arg("images"),  py::arg("method")="Newton",  py::arg("theta_init")=ArrayDoubleT(), py::arg("return_stats")=false, R"DOC(
         Returns (theta_max_stack,rllh_stack,observedI_stack). Estimates the maximum of the model objective.  
         
@@ -454,9 +455,9 @@ void bindMappelModel(py::module &M)
         [Debugging Usage] Calculate for each component (each pixel and each prior parameter) the contribution to the hessian of the log-likelihood.
         Operates on a single image and theta.)DOC");
     
-    model.def("estimate_max_debug",&ModelWrapper<Model>::estimate_max_debug,
+    model.def("_estimate_max_debug",&ModelWrapper<Model>::estimate_max_debug,
               py::arg("image"),  py::arg("method"),  py::arg("theta_init")=ArrayDoubleT(), R"DOC(
-         [Debugging Usage] Returns (theta_max, observedI, stats, sequence, sequence_rllh) For a single image.  
+         [Debugging Usage] Returns (theta_max, rllh, observedI, stats, sequence, sequence_rllh) For a single image.  
          The returned sequence is all evaluated points in sequence.)DOC");    
 //     model.def("estimate_profile_max_debug",&ModelWrapper<Model>::estimate_max_debug,
 //               py::arg("image"),  py::arg("fixed_theta"), py::arg("method"), py::arg("theta_mle"), py::arg("return_stats")=false,
@@ -1073,7 +1074,8 @@ ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, s
     StatsT stats;
     MatT sequence;
     VecT sequence_rllh;
-    methods::estimate_max_debug(model, image, method, theta_init, theta_est, obsI, sequence, sequence_rllh, stats);
+    double rllh;
+    methods::estimate_max_debug(model, image, method, theta_init, theta_est, rllh, obsI, sequence, sequence_rllh, stats);
     IdxT Nseq = sequence.n_cols;
     auto sequence_arr = pyarma::makeArray(model.get_num_params(), Nseq);
     auto sequence_out = pyarma::asMat(sequence_arr);
@@ -1083,12 +1085,13 @@ ModelWrapper<Model>::estimate_max_debug(Model &model, ArrayDoubleT &image_arr, s
     sequence_rllh_out = sequence_rllh;
     copy_Usym_mat(obsI); // Convert upper triangular symmetric representation to full-matrix for python
 
-    py::tuple out(5);
+    py::tuple out(6);
     out[0] = theta_est_arr;
-    out[1] = obsI_arr;
-    out[2] = stats;
-    out[3] = sequence_arr;
-    out[4] = sequence_rllh_arr;    
+    out[1] = rllh;
+    out[2] = obsI_arr;
+    out[3] = stats;
+    out[4] = sequence_arr;
+    out[5] = sequence_rllh_arr;    
     return out;    
 }
 

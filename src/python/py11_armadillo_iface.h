@@ -77,6 +77,7 @@ void checkHpercubeShape(ArrayT<ElemT, ColumnMajorOrder> &arr)
 template<class ElemT=double, int Layout=ColumnMajorOrder>
 Vec<ElemT> asVec(ArrayT<ElemT, Layout> &arr)
 {
+    if(arr.size()==0) return {0};
     switch(arr.ndim()) { //copy_aux_mem=false, strict=true
         case 1:
             return {static_cast<ElemT*>(arr.mutable_data(0)), static_cast<IdxT>(arr.size()), false, true};
@@ -96,6 +97,7 @@ Vec<ElemT> asVec(ArrayT<ElemT, Layout> &arr)
 template<class ElemT=double, int Layout=ColumnMajorOrder>
 Vec<ElemT> copyVec(ArrayT<ElemT, Layout> &arr)
 {
+    if(arr.size()==0) return {0};
     switch(arr.ndim()) { //copy_aux_mem=true
         case 1:
             return {static_cast<ElemT*>(arr.mutable_data(0)), static_cast<IdxT>(arr.size()), true};

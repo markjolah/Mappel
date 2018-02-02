@@ -12,7 +12,7 @@ set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 PointEmitterModel.cpp 
                 ImageFormat1DBase.cpp 
                 PoissonNoise1DObjective.cpp  
-                Gauss1DModel.cpp Gauss1DMLE.cpp) #Gauss1DMAP.cpp
+                Gauss1DModel.cpp Gauss1DMLE.cpp Gauss1DMAP.cpp)
 #                 Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
 #                 )
 

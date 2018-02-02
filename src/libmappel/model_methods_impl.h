@@ -438,20 +438,20 @@ namespace methods {
     inline namespace debug {
          template<class Model>
         void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, 
-                                ParamT<Model> &theta_max, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
+                                ParamT<Model> &theta_max, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
         {
             auto theta_init = model.make_param();
             theta_init.zeros();
-            estimate_max_debug(model, data, method, theta_init, theta_max, obsI, sequence, sequence_rllh, stats);
+            estimate_max_debug(model, data, method, theta_init, theta_max, rllh, obsI, sequence, sequence_rllh, stats);
         }
         
         template<class Model>
         void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
-                                ParamT<Model> &theta_max, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
+                                ParamT<Model> &theta_max, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
         {
             auto estimator = make_estimator(model,method);
-            estimator->estimate_max_debug(data,theta_init,theta_max,obsI,sequence,sequence_rllh);
-            stats = estimator->get_stats();
+            estimator->estimate_max_debug(data,theta_init,theta_max,rllh,obsI,sequence,sequence_rllh);
+            stats = estimator->get_debug_stats();
         }
         
 //         template<class Model>

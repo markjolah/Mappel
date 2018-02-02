@@ -112,12 +112,13 @@ void Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Mo
 /* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI  at the optimum point.
  */
 template<class Model>
-void Estimator<Model>::estimate_max_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, ParamT<Model> &theta,
-                                      MatT &obsI, MatT &sequence, VecT &sequence_rllh)
+void Estimator<Model>::estimate_max_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                          ParamT<Model> &theta_est, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh)
 {
     auto start_walltime = ClockT::now();
     auto est_max = compute_estimate_debug(im, theta_init, sequence, sequence_rllh);
-    theta = est_max.theta;
+    theta_est = est_max.theta;
+    rllh = methods::objective::rllh(model,im,est_max);
     obsI = methods::observed_information(model,im,est_max);
     record_walltime(start_walltime, 1);
 }
@@ -397,6 +398,8 @@ StatsT IterativeMaximizer<Model>::get_stats()
     stats["num_exit_max_backtracks"] = exit_counts(static_cast<IdxT>(ExitCode::MaxBacktracks));
     stats["num_exit_function_value_change"] = exit_counts(static_cast<IdxT>(ExitCode::FunctionChange));
     stats["num_exit_step_size_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::StepSize));
+    stats["num_exit_grad_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::GradRatio));
+    stats["num_exit_trust_region_radius"] = exit_counts(static_cast<IdxT>(ExitCode::TrustRegionRadius));
     mtx.unlock();
     return stats;
 }
@@ -857,19 +860,19 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"   new TrustRadius:"<<delta<<"\n";
         //Test for convergence
         if(delta < 8*this->epsilon) {
-//             std::cout<<"{{{Convergence[trsize]: "<<delta<<"}}}\n";
+            data.record_exit(IterativeMaximizer<Model>::ExitCode::TrustRegionRadius);
             return;
         }
         double grad_ratio = arma::norm(data.grad) / std::fabs(data.rllh);
         if( grad_ratio < this->epsilon) {
-//             std::cout<<"{{{Convergence[grad]: "<<grad_ratio<<"}}}\n";
+            data.record_exit(IterativeMaximizer<Model>::ExitCode::GradRatio);
             return;
         }
         if(success) {
             double step_size_ratio =  (arma::norm(data.theta() - data.saved_theta()) / 
                                         std::max(arma::norm(data.theta()),arma::norm(data.saved_theta())));
             if(step_size_ratio < this->epsilon){
-//                 std::cout<<"{{{Convergence[stepsize]: "<<step_size_ratio<<"}}}\n";
+                data.record_exit(IterativeMaximizer<Model>::ExitCode::StepSize);
                 return;
             }
         }

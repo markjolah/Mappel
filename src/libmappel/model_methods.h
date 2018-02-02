@@ -228,10 +228,10 @@ namespace methods {
         /* model::xxx_components - per-pixel and per-prior-component contributions */
         template<class Model>
         void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method,   
-                                ParamT<Model> &theta_est, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
+                                ParamT<Model> &theta_est, double &rllh, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
         template<class Model>
         void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,  
-                                ParamT<Model> &theta_est, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
+                                ParamT<Model> &theta_est, double &rllh, MatT &obsI,  MatT &sequence, VecT &sequence_rllh, StatsT &stats);
         
 //         template<class Model>
 //         void estimate_profile_max_debug(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, const ParamT<Model> &fixed_theta, const std::string &method, 
