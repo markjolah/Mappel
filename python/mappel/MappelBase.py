@@ -11,7 +11,6 @@ from _Gauss1DMLE import Gauss1DMLE
 
 class MappelBase(Gauss1DMLE):
     
-    # note to self, look into python over-loaded functions
     def __init__(self, imsize, psf_sigma):
         Gauss1DMLE.__init__(self, imsize, psf_sigma)
         self.imsize = imsize
@@ -20,14 +19,15 @@ class MappelBase(Gauss1DMLE):
     def getStats(self):
         return self.get_stats
     
-    # Return a dictionary of keys hyperparam_desc and values hyperparams
-     def getHyperParameters(self):
+    def getHyperParameters(self):
          keys = self.hyperparams_desc
          values = self.hyperparams
          return dict(zip(keys, values))
     
-#     def setHyperParameters(hyperparams):
-#        return
+    def setHyperParameters(hyperparams):
+        self.__checkinputs("hyperparams":hyperparams)
+        self.hyperparams = hyperparams
+        return
     
     def samplePrior(count=1):
         return self.sample_prior(count)
@@ -88,30 +88,23 @@ class MappelBase(Gauss1DMLE):
         self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_max_debug(image, estimator
     
-#     def estimatePosterior(image, max_samples, theta_init):
-#        return
+    def estimatePosterior(image, theta_init, Nsample=1000, Nburning = 100, thin = 0):
+    self.__checkinputs({"image":image, "theta_init":theta_init})
+        return self.estimate_mcmc_posterior(image, Nsample, theta_init, Nburning, thin)
     
-#     def estimagePosteriorDebug(image, max_samples, theta_init):
-#        return
-    
+    def estimagePosteriorDebug(image, Nsample=100, theta_init):
+        self.__check_inputs({"image":image,"theta_init":theta_init})
+        return self.estimate_mcmc_debug(image, Nsample=100, theta_init)
+   
+      # important display function, move to display module 
 #     def superResolutionModel(theta, theta_err, res_factor):
 #        return
-    
-    ## These are protected methods but Python protects nothing!
     
     # all input checks get routed through this function
     def __check_inputs(input_dict):
         for key, value in input_dict:
             print(key)
         return
-
-#     def __estimate_GPUGaussMLE(image):
-#        return
-    
-#     def __estimateDebug_GPUGaussMLE(image):
-#        return
-    
-    ## these are static methods from the Matlab MappelBase class
     
 #     def __checkImage(image):
 #        return
