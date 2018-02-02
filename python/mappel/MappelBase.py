@@ -17,7 +17,7 @@ class MappelBase(Gauss1DMLE):
         self.psf_sigma = psf_sigma
 
     def getStats(self):
-        return self.get_stats
+        return self.get_stats()
     
     def getHyperParameters(self):
          keys = self.hyperparams_desc
@@ -25,7 +25,7 @@ class MappelBase(Gauss1DMLE):
          return dict(zip(keys, values))
     
     def setHyperParameters(hyperparams):
-        self.__checkinputs("hyperparams":hyperparams)
+        self.__checkinputs({"hyperparams":hyperparams})
         self.hyperparams = hyperparams
         return
     
@@ -86,15 +86,15 @@ class MappelBase(Gauss1DMLE):
     
     def estimateDebug(image, theta_init, estimator_name="Newton"):
         self.__checkinputs({"image":image, "theta_init":theta_init})
-        return self.estimate_max_debug(image, estimator
+        return self.estimate_max_debug(image, estimator)
     
     def estimatePosterior(image, theta_init, Nsample=1000, Nburning = 100, thin = 0):
-    self.__checkinputs({"image":image, "theta_init":theta_init})
+        self.__checkinputs({"image":image, "theta_init":theta_init})
         return self.estimate_mcmc_posterior(image, Nsample, theta_init, Nburning, thin)
     
-    def estimagePosteriorDebug(image, Nsample=100, theta_init):
+    def estimagePosteriorDebug(image, theta_init, Nsample=100):
         self.__check_inputs({"image":image,"theta_init":theta_init})
-        return self.estimate_mcmc_debug(image, Nsample=100, theta_init)
+        return self.estimate_mcmc_debug(image, Nsample, theta_init)
    
       # important display function, move to display module 
 #     def superResolutionModel(theta, theta_err, res_factor):
