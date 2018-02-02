@@ -38,46 +38,52 @@
  */
 
 namespace mappel {
-struct OptimizationError : public MappelError 
-{
-    OptimizationError(std::string message) : MappelError("OptimizationError",message) {}
-};
+
+template<class Model>
+Model& Estimator<Model>::get_model()
+{ return model; }
+
+template<class Model>
+void Estimator<Model>::set_model(Model &new_model)
+{ 
+    model = new_model;
+}
 
 /* Option 1: Single Image - Estimator returns a stencil at the optimum point.
  * Variants with and without a theta_init or a rllh output parameter
  */
 template<class Model>
-typename Model::Stencil
-Estimator<Model>::estimate_max(const ModelDataT &im)
+StencilT<Model>
+Estimator<Model>::estimate_max(const ModelDataT<Model> &im)
 {
-    ParamT theta_init = model.make_param();
+    auto theta_init = model.make_param();
     theta_init.zeros();
     return estimate_max(im, theta_init);
 }
 
 template<class Model>
-typename Model::Stencil
-Estimator<Model>::estimate_max(const ModelDataT &im, double &rllh)
+StencilT<Model>
+Estimator<Model>::estimate_max(const ModelDataT<Model> &im, double &rllh)
 {
-    ParamT theta_init = model.make_param();
+    auto theta_init = model.make_param();
     theta_init.zeros();
     return estimate_max(im, theta_init,rllh);
 }
 
 template<class Model>
-typename Model::Stencil
-Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init)
+StencilT<Model>
+Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init)
 {
     double rllh;
     return estimate_max(im,theta_init,rllh);
 }
 
 template<class Model>
-typename Model::Stencil
-Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init, double &rllh)
+StencilT<Model>
+Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
     auto start_walltime = ClockT::now();
-    StencilT est = compute_estimate(im, theta_init, rllh);
+    StencilT<Model> est = compute_estimate(im, theta_init, rllh);
     record_walltime(start_walltime, 1);
     return est;
 }
@@ -86,17 +92,17 @@ Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init, d
  * Variants with and without a theta_init.
  */
 template<class Model>
-void Estimator<Model>::estimate_max(const ModelDataT &im,
-                                ParamT &theta, double &rllh, MatT &obsI)
+void Estimator<Model>::estimate_max(const ModelDataT<Model> &im,
+                                ParamT<Model> &theta, double &rllh, MatT &obsI)
 {
-    ParamT theta_init = model.make_param();
+    auto theta_init = model.make_param();
     theta_init.zeros();
     estimate_max(im, theta, theta_init, rllh, obsI);
 }
 
 template<class Model>
-void Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_init,
-                                    ParamT &theta, double &rllh, MatT &obsI)
+void Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init,
+                                    ParamT<Model> &theta, double &rllh, MatT &obsI)
 {
     auto start_walltime = ClockT::now();
     compute_estimate(im, theta_init, theta, rllh, obsI);
@@ -106,7 +112,7 @@ void Estimator<Model>::estimate_max(const ModelDataT &im, const ParamT &theta_in
 /* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI  at the optimum point.
  */
 template<class Model>
-void Estimator<Model>::estimate_max_debug(const ModelDataT &im, const ParamT &theta_init, ParamT &theta,
+void Estimator<Model>::estimate_max_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, ParamT<Model> &theta,
                                       MatT &obsI, MatT &sequence, VecT &sequence_rllh)
 {
     auto start_walltime = ClockT::now();
@@ -117,10 +123,10 @@ void Estimator<Model>::estimate_max_debug(const ModelDataT &im, const ParamT &th
 }
 
 template<class Model>
-void Estimator<Model>::estimate_max_stack(const ModelDataStackT &im,
-                                         ParamVecT &theta_max_stack, VecT &rllh_stack, CubeT &obsI_stack)
+void Estimator<Model>::estimate_max_stack(const ModelDataStackT<Model> &im,
+                                         ParamVecT<Model> &theta_max_stack, VecT &rllh_stack, CubeT &obsI_stack)
 {
-    ParamVecT theta_init = model.make_param();
+    ParamVecT<Model> theta_init = model.make_param();
     theta_init.zeros();
     estimate_max_stack(im, theta_init, theta_max_stack, rllh_stack, obsI_stack);
 }
@@ -129,8 +135,8 @@ void Estimator<Model>::estimate_max_stack(const ModelDataStackT &im,
  * This should be overridden by Estimator subclasses that already have access to this information
  */
 template<class Model>
-void Estimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init,
-                                        ParamT &theta_max, double &rllh, MatT &obsI)
+void Estimator<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init,
+                                        ParamT<Model> &theta_max, double &rllh, MatT &obsI)
 {
     auto est_max = compute_estimate(im, theta_init, rllh);
     obsI = methods::observed_information(model, im, est_max);
@@ -170,9 +176,9 @@ std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
  */
 template<class Model>
 inline
-typename Model::Stencil
-Estimator<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                         ParamVecT &sequence, VecT &sequence_rllh)
+StencilT<Model>
+Estimator<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                         ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
     sequence = model.make_param_stack(1);
     sequence_rllh.set_size(1);
@@ -201,8 +207,8 @@ ThreadedEstimator<Model>::ThreadedEstimator(Model &model)
 
 
 template<class Model>
-void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT &im_stack, const ParamVecT &theta_init_stack,
-                                              ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)
+void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT<Model> &im_stack, const ParamVecT<Model> &theta_init_stack,
+                                              ParamVecT<Model> &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)
 {
     auto start_walltime=ClockT::now();
     IdxT Nimages = model.get_size_image_stack(im_stack);
@@ -247,7 +253,7 @@ void ThreadedEstimator<Model>::clear_stats()
 /* HeuristicEstimator */
 template<class Model>
 StencilT<Model> 
-HeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
+HeuristicEstimator<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
     auto est = Estimator<Model>::model.initial_theta_estimate(im,theta_init);
     rllh = methods::objective::rllh(this->model, im,est);
@@ -257,7 +263,7 @@ HeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &
 /* CGaussHeuristicEstimator */
 template<class Model>
 StencilT<Model> 
-CGaussHeuristicEstimator<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh) 
+CGaussHeuristicEstimator<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 
 {
     auto est = cgauss_heuristic_compute_estimate(model,im,theta_init);
     rllh = methods::objective::rllh(this->model, im,est);
@@ -287,7 +293,7 @@ StatsT CGaussMLE<Model>::get_debug_stats()
 
 template<class Model>
 StencilT<Model>
-CGaussMLE<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh) 
+CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 
 {
     auto est=cgauss_compute_estimate(model,im,theta_init,max_iterations);
     rllh = methods::objective::rllh(im,est);
@@ -296,8 +302,8 @@ CGaussMLE<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_ini
 
 template<class Model>
 StencilT<Model>
-CGaussMLE<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                         ParamVecT &sequence, VecT &sequence_rllh) 
+CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                         ParamVecT<Model> &sequence, VecT &sequence_rllh) 
 {
     auto est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
     //Compute rrlh (which are not evaluated by CGauss) in parallel because debug is only ever called single threaded
@@ -314,8 +320,8 @@ IterativeMaximizer<Model>::IterativeMaximizer(Model &model, int max_iterations)
 {}
 
 template<class Model>
-IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, const ModelDataT &im,
-                                                const StencilT &s, bool save_seq, int max_seq_len)
+IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, const ModelDataT<Model> &im,
+                                                const StencilT<Model> &s, bool save_seq, int max_seq_len)
     : im(im), 
       grad(model.make_param()), 
       lbound(model.get_lbound()),
@@ -337,7 +343,7 @@ IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, cons
 }
 
 template<class Model>
-void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT &accpeted_theta)
+void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT<Model> &accpeted_theta)
 {
     nIterations++;
     if(save_seq) {
@@ -349,7 +355,7 @@ void IterativeMaximizer<Model>::MaximizerData::record_iteration(const ParamT &ac
 }
 
 template<class Model>
-void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT &rejected_theta, double rejected_rllh)
+void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT<Model> &rejected_theta, double rejected_rllh)
 {
     nBacktracks++;
     if(save_seq) {
@@ -367,7 +373,7 @@ template<class Model>
 StatsT IterativeMaximizer<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
-    double N = static_cast<double>(num_estimations);
+    double N = static_cast<double>(this->num_estimations);
     stats["total_iterations"] = total_iterations;
     stats["total_backtracks"] = total_backtracks;
     stats["total_fun_evals"] = total_fun_evals;
@@ -402,6 +408,7 @@ void IterativeMaximizer<Model>::clear_stats()
     total_backtracks = 0;
     total_fun_evals = 0;
     total_der_evals = 0;
+//     exit_count.zeros();
 }
 
 template<class Model>
@@ -431,7 +438,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
     }
     for(int n=0; n<max_backtracks; n++){
         //Reflective boundary conditions
-        ParamT new_theta = model.bounded_theta(model.reflected_theta(data.saved_theta() + lambda*data.step));
+        auto new_theta = model.bounded_theta(model.reflected_theta(data.saved_theta() + lambda*data.step));
         data.set_stencil(model.make_stencil(new_theta,false));
         double can_rllh = methods::objective::rllh(model, data.im, data.stencil()); //candidate points log-lh
         bool in_bounds = model.theta_in_bounds(new_theta);
@@ -488,8 +495,8 @@ bool IterativeMaximizer<Model>::convergence_test(MaximizerData &data)
 
 
 template<class Model>
-typename Model::Stencil
-IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
+StencilT<Model>
+IterativeMaximizer<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
     if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate");
@@ -501,9 +508,9 @@ IterativeMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &
 }
 
 template<class Model>
-typename Model::Stencil
-IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                                  ParamVecT &sequence, VecT &sequence_rllh)
+StencilT<Model>
+IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                                  ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
     auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
     if(!theta_init_stencil.derivatives_computed) throw LogicalError("Stencil has no computed derivatives: compute_estimate_debug");
@@ -517,7 +524,7 @@ IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const Pa
 
 /* This is called to clean up simulated annealing */
 template<class Model>
-void IterativeMaximizer<Model>::local_maximize(const ModelDataT &im, const StencilT &theta_init, StencilT &stencil, double &rllh)
+void IterativeMaximizer<Model>::local_maximize(const ModelDataT<Model> &im, const StencilT<Model> &theta_init, StencilT<Model> &stencil, double &rllh)
 {
     MaximizerData data(model, im, theta_init);
     maximize(data);
@@ -531,7 +538,7 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
     double epsilon=0;
     double delta=0.1;
     auto grad2 = model.make_param();
-    for(int n=0; n<max_iterations; n++) { //Main optimization loop
+    for(int n=0; n<this->max_iterations; n++) { //Main optimization loop
         methods::objective::grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
         data.step = -data.grad/grad2;
         if(arma::any(grad2>0)){
@@ -556,7 +563,7 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
 
             if(arma::dot(data.step,data.grad)<=epsilon) throw NumericalError("Unable to correct grad2 in NewtonDiagonal");
         }
-        if(backtrack(data) || convergence_test(data)) return;  //Converged or gave up trying
+        if(this->backtrack(data) || this->convergence_test(data)) return;  //Converged or gave up trying
     }
 }
 
@@ -567,7 +574,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
     auto hess = model.make_param_mat();
     auto C = model.make_param_mat();
     auto Cstep = model.make_param();
-    for(int n=0; n<max_iterations; n++) { //Main optimization loop
+    for(int n=0; n < this->max_iterations; n++) { //Main optimization loop
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
         data.step = arma::solve(arma::symmatu(hess), -data.grad);
         C=-hess;
@@ -600,7 +607,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
         data.step = Cstep;
         if(!data.step.is_finite()) throw NumericalError("Bad data_step!");
         if(arma::dot(data.grad, data.step)<=0) throw NumericalError("Not an asscent direction!");
-        if(backtrack(data) || convergence_test(data))  return; //Backing up did not help.  Just quit.
+        if(this->backtrack(data) || this->convergence_test(data))  return; //Backing up did not help.  Just quit.
     }
 }
 
@@ -609,7 +616,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
 {
     auto grad_old=model.make_param();
     auto H=model.make_param_mat(); //This is our approximate hessian
-    for(int n=0; n<max_iterations; n++) { //Main optimization loop
+    for(int n=0; n < this->max_iterations; n++) { //Main optimization loop
         if(n==0) {
             auto hess=model.make_param_mat();
             methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
@@ -621,7 +628,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
         } else {
             //Approx H
             data.grad = methods::objective::grad(model, data.im, data.stencil());
-            ParamT delta_grad = data.grad-grad_old;
+            auto delta_grad = data.grad-grad_old;
             double rho =1./arma::dot(delta_grad, data.step);
             MatT K=rho*data.step*delta_grad.t();//This is our approximate inverse hessian
             K.diag()-=1;
@@ -645,7 +652,7 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         if(arma::dot(data.grad, data.step)<=0) throw Numerical("QuasiNewton: step is not a ascent direction");
 
         grad_old=data.grad;
-        if(backtrack(data) || convergence_test(data))  return; //Backing up did not help.  Just quit.
+        if(this->backtrack(data) || this->convergence_test(data))  return; //Backing up did not help.  Just quit.
 
         data.step = data.theta()-data.saved_theta();//If we backtracked then the step may have changed
     }
@@ -1125,18 +1132,18 @@ TrustRegionMaximizer<Model>::solve_restricted_step_length_newton(const VecT &g, 
 /* =========== Simulated Annealing ========== */
 
 template<class Model>
-typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)
+StencilT<Model>
+SimulatedAnnealingMaximizer<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
-    ParamVecT sequence;
+    MatT sequence;
     VecT sequence_rllh;
     return anneal(im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
 template<class Model>
-typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                                           ParamVecT &sequence, VecT &sequence_rllh)
+StencilT<Model>
+SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                                           ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
     double rllh;
     return anneal(im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
@@ -1144,9 +1151,9 @@ SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT &im,
 
 
 template<class Model>
-typename Model::Stencil
-SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT &theta_init, 
-                                           double &theta_max_rllh, ParamVecT &sequence, VecT &sequence_rllh)
+StencilT<Model>
+SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
+                                           double &theta_max_rllh, MatT &sequence, VecT &sequence_rllh)
 {
     auto &rng = model.get_rng_generator();
     UniformDistT uniform;
@@ -1159,11 +1166,11 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT &im, const StencilT 
     sequence_rllh(0)=methods::objective::rllh(model, im, theta_init);
     double max_rllh = sequence_rllh(0);
     int max_idx = 0;
-    StencilT max_s;
+    StencilT<Model> max_s;
     double T = T_init; //Temperature
     int naccepted=1;
     for(int n=1; n<niters; n++){
-        ParamT can_theta = sequence.col(naccepted-1);
+        ParamT<Model> can_theta = sequence.col(naccepted-1);
         model.sample_mcmc_candidate_theta(n, can_theta);
         if(!model.theta_in_bounds(can_theta)) { //OOB
             n--;

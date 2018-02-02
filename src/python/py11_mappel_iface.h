@@ -14,11 +14,17 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <pybind11/stl.h>
-#include "python_error.h"
-#include "py11_armadillo_iface.h"
-#include "Gauss1DMLE.h"
+
 #include <PriorHessian/BaseDist.h>
 #include <BacktraceException/BacktraceException.h>
+
+#include "python_error.h"
+#include "py11_armadillo_iface.h"
+
+#include "Gauss1DMLE.h"
+#include "Gauss1DMAP.h"
+#include "Gauss1DsMLE.h"
+#include "Gauss1DsMAP.h"
 
 namespace mappel {
 namespace python {
@@ -236,8 +242,37 @@ public:
     static ArrayDoubleT initial_theta_estimate(Model &model, ArrayDoubleT &image, ArrayDoubleT &theta_init);
 };
 
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value>::type
+bindMappelModelBase(py::module &M, py::class_<Model> &model)
+{
+        model.def(py::init<typename Model::ImageCoordT,double>(), py::arg("size"), py::arg("psf_sigma"));
+        model.def_property("psf_sigma",[](Model &model) {return model.get_psf_sigma();},
+                                       [](Model &model,double sigma) { model.set_psf_sigma(sigma); },
+                           "Sigma of emitter (PSF) Gaussian approximation [pixels]." );
+}
 
+template<class Model>
+typename std::enable_if<std::is_base_of<Gauss1DsModel,Model>::value>::type
+bindMappelModelBase(py::module &M, py::class_<Model> &model)
+{
+        model.def(py::init<typename Model::ImageCoordT,double,double>(), py::arg("size"), py::arg("min_sigma"), py::arg("max_sigma"));
+        model.def_property("min_sigma",[](Model &model) {return model.get_min_sigma();},
+                                       [](Model &model,double sigma) { model.set_min_sigma(sigma); },
+                           "Minimum Gaussian sigma of emitter PSF [pixels]." );
+        model.def_property("max_sigma",[](Model &model) {return model.get_max_sigma();},
+                                       [](Model &model,double sigma) { model.set_max_sigma(sigma); },
+                           "Maximum Gaussian sigma of emitter PSF [pixels]." );
+}
 
+template<class Model>
+typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value>::type
+bindMappelModelImageBase(py::module &M, py::class_<Model> &model)
+{    
+        model.def_property("size",[](Model &model) {return model.get_size();},
+                                  [](Model &model,IdxT size) { model.set_size(size); },
+                           "1D-Image size in pixels." );
+}
 
 template<class Model>
 void bindMappelModel(py::module &M)
@@ -245,11 +280,10 @@ void bindMappelModel(py::module &M)
     register_exceptions(); //Register Mappel exceptions
     
     py::class_<Model> model(M, Model::name.c_str(), py::multiple_inheritance());
-    if(std::is_base_of<Gauss1DModel,Model>::value) {
-        model.def(py::init<typename Model::ImageCoordT,double>(), py::arg("size"), py::arg("psf_sigma"));
-        model.def_property("size",[](Model &model) {return model.get_size();},[](Model &model,IdxT size) { model.set_size(size); },"1D-Image size in pixels." );
-        model.def_property("psf_sigma",[](Model &model) {return model.get_psf_sigma();},[](Model &model,double sigma) { model.set_psf_sigma(sigma); },"Sigma of emitter (PSF) Gaussian approximation [pixels]." );
-    }
+    
+    bindMappelModelBase<Model>(M,model);
+    bindMappelModelImageBase(M,model);
+    
     model.def_property_readonly("num_dim",[](Model &model) { return Model::num_dim; },
                                          "Number of image dimensions.");
     model.def_property_readonly("name",[](Model &model) { return Model::name; },

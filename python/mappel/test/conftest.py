@@ -6,9 +6,12 @@ import numpy as np
 import mappel
 import pytest
 
+#MappelModels1DFixed = [mappel.Gauss1DMLE, mappel.Gauss1DMAP]
 MappelModels1DFixed = [mappel.Gauss1DMLE]
 MappelModels1D = MappelModels1DFixed
 MappelModels = MappelModels1D
+
+
 
 MappelConstructorArgs = {
     type(mappel.Gauss1DMLE):{"size":10, "psf_sigma":1.2},

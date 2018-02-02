@@ -64,7 +64,7 @@ def test_estimate_max_debug(model,method,seed):
     check_theta(model,sequence)
     check_llh(sequence_rllh)
     assert np.all(theta_init == sequence[:,0]), "theta_init should be first element in sequence"
-    assert np.all(theta_est == sequence[:,-1]), "theta_init should be last element in sequence"
+    assert np.all(theta_est == sequence[:,-1]), "theta_est should be last element in sequence"
     rllh2 = model.objective_rllh(im,sequence)
     assert np.all(rllh2 == sequence_rllh), "sequence_rllh does not match with separate computation"
     
