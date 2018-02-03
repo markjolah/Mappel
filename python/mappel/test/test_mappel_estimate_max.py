@@ -80,6 +80,7 @@ def test_estimate_max_debug(model,method,seed):
     assert np.all(rllh2 == sequence_rllh), "sequence_rllh does not match with separate computation"
     
     #check estimate is the same as in regular estimate_max()
+    model.set_rng_seed(seed) #re-seed for repeatability
     val2 = model.estimate_max(im,method,theta_init)
     assert len(val2) == 3
     (theta_est2,rllh2,obsI2) = val2

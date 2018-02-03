@@ -846,8 +846,8 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
                     //s_hat is cauchy point shrink 
                     delta = std::max(delta_decrease*delta, arma::norm(s_hat));
                 }
-                data.record_iteration();
             }
+            data.record_iteration();
         }
         
 //         std::cout<<"   x_{n+1}:"<<data.theta().t();
@@ -1081,8 +1081,8 @@ VecT TrustRegionMaximizer<Model>::solve_TR_subproblem(const VecT &g, const MatT 
             //The gradiant extends into the lambda min subspace, so there is a pole at s(lambda_min)=inf
             double lambda_lb = g_min_norm/delta - lambda_min;
             double lambda_ub = g_norm/delta - lambda_min;
-            std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
-            std::cout<<"  lambda range=["<<lambda_lb<<","<<lambda_ub<<"]\n";
+//             std::cout<<" {{Case 3:  Indefinite hessian, general-position gradiant}}";
+//             std::cout<<"  lambda range=["<<lambda_lb<<","<<lambda_ub<<"]\n";
             return solve_restricted_step_length_newton(g,H,delta,lambda_lb, lambda_ub, epsilon);
         } else {
             //Compute s_perp_sq = ||P^perp_min s(lambda_min)||^2

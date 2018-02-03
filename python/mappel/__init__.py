@@ -14,10 +14,12 @@ except ImportError:
 
 try:
     from _Gauss1DsMLE import Gauss1DsMLE
+    _WrapModelClass(Gauss1DsMLE)
 except ImportError:
     pass
 try:
     from _Gauss1DsMAP import Gauss1DsMAP
+    _WrapModelClass(Gauss1DsMAP)
 except ImportError:
     pass
 

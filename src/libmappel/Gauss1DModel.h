@@ -93,6 +93,11 @@ inline
 Gauss1DModel::Stencil
 Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 {
+    if(!theta_in_bounds(theta)) {
+        std::ostringstream msg;
+        msg<<"Theta is not in bounds: "<<theta.t();
+        throw ModelBoundsError(msg.str());
+    }
     return Stencil(*this,theta,compute_derivatives);
 }
 

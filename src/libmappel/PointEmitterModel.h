@@ -114,17 +114,14 @@ public:
     void set_ubound(const ParamT &ubound);
     const ParamT& get_lbound() const;
     const ParamT& get_ubound() const;
-    void bound_theta(ParamT &theta,double epsilon=bounds_epsilon) const;
     
-    bool theta_in_bounds(const ParamT &theta,double epsilon=bounds_epsilon) const;
-    /* aids for bound-constrained optimization routines */
+    bool theta_in_bounds(const ParamT &theta) const;
+    void bound_theta(ParamT &theta,double epsilon=bounds_epsilon) const;
     ParamT bounded_theta(const ParamT &theta,double epsilon=bounds_epsilon) const;
-    ParamT reflected_theta(const ParamT &theta,double epsilon=bounds_epsilon) const;
-
-    BoolVecT theta_stack_in_bounds(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
-    /* aids for bound-constrained optimization routines */
+    ParamT reflected_theta(const ParamT &theta) const;
+    BoolVecT theta_stack_in_bounds(const ParamVecT &theta) const;
     ParamVecT bounded_theta_stack(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
-    ParamVecT reflected_theta_stack(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
+    ParamVecT reflected_theta_stack(const ParamVecT &theta) const;
 
     /* MCMC related */
     /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/

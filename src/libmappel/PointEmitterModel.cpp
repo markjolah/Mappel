@@ -163,15 +163,15 @@ void PointEmitterModel::set_ubound(const ParamT &ubound_)
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
     for(IdxT n=0;n<num_params;n++) {
-        if(theta(n) < lbound(n)+epsilon) theta(n)=lbound(n)+epsilon;
-        if(theta(n) > ubound(n)-epsilon) theta(n)=ubound(n)-epsilon;
+        if(theta(n) <= lbound(n)) theta(n)=lbound(n)+epsilon;
+        if(theta(n) >= ubound(n)) theta(n)=ubound(n)-epsilon;
     }
 }
 
-bool PointEmitterModel::theta_in_bounds(const ParamT &theta, double epsilon) const
+bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 {
     for(IdxT n=0; n<num_params; n++) 
-        if(lbound(n)+epsilon >= theta(n) || theta(n) >= ubound(n)-epsilon) return false;
+        if(lbound(n) >= theta(n) || theta(n) >= ubound(n)) return false;
     return true;
 }
 
@@ -179,13 +179,13 @@ PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, 
 {
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
-        if(theta(n) < lbound(n)+epsilon) btheta(n)=lbound(n)+epsilon;
-        if(theta(n) > ubound(n)-epsilon) btheta(n)=ubound(n)-epsilon;
+        if(theta(n) <= lbound(n)) btheta(n)=lbound(n)+epsilon;
+        if(theta(n) >= ubound(n)) btheta(n)=ubound(n)-epsilon;
     }
     return btheta;
 }
 
-PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta, double epsilon) const
+PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta) const
 {
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
@@ -205,11 +205,11 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
 }
 
 
-BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta, double epsilon) const
+BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 {
     IdxT N = theta.n_cols;
     BoolVecT in_bounds(N);
-    for(IdxT n=0; n<N; n++) in_bounds(n) = theta_in_bounds(theta.col(n),epsilon);
+    for(IdxT n=0; n<N; n++) in_bounds(n) = theta_in_bounds(theta.col(n));
     return in_bounds;
 }
 
@@ -223,11 +223,11 @@ PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) c
 }
 
 PointEmitterModel::ParamVecT 
-PointEmitterModel::reflected_theta_stack(const ParamVecT &theta, double epsilon) const
+PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
 {
     IdxT N = theta.n_cols;
     ParamVecT new_theta;
-    for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n),epsilon);
+    for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
     return new_theta;
 
 }

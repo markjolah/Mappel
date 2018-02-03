@@ -125,15 +125,14 @@ Gauss1DModel::Stencil
 Gauss1DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
 {
     double x_pos=0, I=0, bg=0;
-    double im_sum = arma::sum(im);
     if(theta_init.n_elem == num_params) {
         x_pos = theta_init(0);
         I = theta_init(1);
         bg = theta_init(2);
     }
     if(x_pos <= 0 || x_pos > size) x_pos = im.index_max()+0.5;
-    if(bg <= 0) bg = std::max(std::min(0.01,0.01*im_sum)  ,0.75*im.min());
-    if(I <= 0)  I = im_sum - bg*size;
+    if(bg <= 0) bg = std::max(1.0, 0.75*im.min());
+    if(I <= 0)  I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg});
 }
 
