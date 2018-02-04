@@ -23,7 +23,4 @@ try:
 except ImportError:
     pass
 
-from . MappelBase import MappelBase
-
-
 
