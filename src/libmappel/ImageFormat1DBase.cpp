@@ -31,7 +31,7 @@ void ImageFormat1DBase::check_size(const ImageSizeT &size_)
     if(size_ <= min_size) {
         std::ostringstream msg;
         msg<<"ImageFormat1DBase: Got Size= "<<size_<<"< Min size="<<min_size;
-        throw BadSizeError(msg.str());
+        throw ArraySizeError(msg.str());
     }
 }
 
@@ -40,7 +40,7 @@ void ImageFormat1DBase::check_image_shape(const ImageT &im) const
     if(im.n_elem != size) {
         std::ostringstream msg;
         msg<<"ImageFormat1DBase: Got bad image Size= "<<im.n_elem<<" Expected size="<<size;
-        throw BadShapeError(msg.str());
+        throw ArrayShapeError(msg.str());
     }
 }
 
@@ -49,7 +49,7 @@ void ImageFormat1DBase::check_image_shape(const ImageStackT &ims) const
     if(ims.n_rows != size) {
         std::ostringstream msg;
         msg<<"ImageFormat1DBase: Got bad image stack #rows= "<<ims.n_rows<<" Expected #rows="<<size;
-        throw BadShapeError(msg.str());
+        throw ArrayShapeError(msg.str());
     }
 }
 

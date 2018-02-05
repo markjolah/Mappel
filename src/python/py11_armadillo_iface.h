@@ -18,6 +18,7 @@
 
 namespace py11_armadillo 
 {
+using python_error::PythonError;
 
 using IdxT = arma::uword; /**< A logical type for an IdxT integer index */    
 template<class ElemT> using Vec = arma::Col<ElemT>;
@@ -26,10 +27,12 @@ template<class ElemT> using Cube = arma::Cube<ElemT>;
 
 constexpr static int ColumnMajorOrder = pybind11::array::f_style;
 template<class ElemT, int Order=ColumnMajorOrder> using ArrayT = pybind11::array_t<ElemT,Order>;
+using ArrayBoolT = pybind11::array_t<bool, pybind11::array::f_style>;
 using ArrayDoubleT = pybind11::array_t<double, pybind11::array::f_style>;
 using ArrayUint64T = pybind11::array_t<IdxT, pybind11::array::f_style>;
 using ArrayUnsignedT = pybind11::array_t<IdxT, pybind11::array::f_style>;
 using ArraySignedT = pybind11::array_t<int64_t, pybind11::array::f_style>;
+
 
 template<class ElemT=double>
 void checkMatShape(ArrayT<ElemT, ColumnMajorOrder> &arr)
@@ -74,6 +77,7 @@ void checkHpercubeShape(ArrayT<ElemT, ColumnMajorOrder> &arr)
 template<class ElemT=double, int Layout=ColumnMajorOrder>
 Vec<ElemT> asVec(ArrayT<ElemT, Layout> &arr)
 {
+    if(arr.size()==0) return {0};
     switch(arr.ndim()) { //copy_aux_mem=false, strict=true
         case 1:
             return {static_cast<ElemT*>(arr.mutable_data(0)), static_cast<IdxT>(arr.size()), false, true};
@@ -93,6 +97,7 @@ Vec<ElemT> asVec(ArrayT<ElemT, Layout> &arr)
 template<class ElemT=double, int Layout=ColumnMajorOrder>
 Vec<ElemT> copyVec(ArrayT<ElemT, Layout> &arr)
 {
+    if(arr.size()==0) return {0};
     switch(arr.ndim()) { //copy_aux_mem=true
         case 1:
             return {static_cast<ElemT*>(arr.mutable_data(0)), static_cast<IdxT>(arr.size()), true};
@@ -194,6 +199,30 @@ makeArray(IdxT rows, IdxT cols, IdxT slices)
 {
     return ArrayT<ElemT, ColumnMajorOrder>({rows,cols,slices});
 }
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeSqueezedArray(IdxT rows)
+{
+    return ArrayT<ElemT, ColumnMajorOrder>(rows); //don't squeeze single element arrays as that would change type
+}
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeSqueezedArray(IdxT rows, IdxT cols)
+{
+    if(cols == 1) return ArrayT<ElemT, ColumnMajorOrder>({rows});  //squeeze out 2nd dim
+    else           return ArrayT<ElemT, ColumnMajorOrder>({rows,cols});
+}
+
+template<class ElemT=double>
+ArrayT<ElemT, ColumnMajorOrder> 
+makeSqueezedArray(IdxT rows, IdxT cols, IdxT slices)
+{
+    if(slices == 1) return ArrayT<ElemT, ColumnMajorOrder>({rows,cols});  //squeeze out 3rd dim
+    else            return ArrayT<ElemT, ColumnMajorOrder>({rows,cols,slices});
+}
+
 
 } /* namespace py11_armadillo */
 

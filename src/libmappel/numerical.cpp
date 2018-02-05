@@ -12,11 +12,20 @@ namespace mappel {
 
 void copy_Usym_mat(arma::mat &usym)
 {
-    assert(usym.is_square());
-    int size=static_cast<int>(usym.n_rows);
-    for(int j=0;j<size-1;j++) for(int i=j+1;i<size;i++) 
-        usym(i,j) = usym(j,i); //i>j
+    IdxT size = usym.n_rows;
+    if(size != usym.n_cols) ArraySizeError("Expected square matrix");
+    for(IdxT j=0;j<size-1;j++) for(IdxT i=j+1;i<size;i++) usym(i,j) = usym(j,i); //i>j
 }
+
+void copy_Usym_mat_stack(arma::cube &usym_stack)
+{
+    IdxT size = usym_stack.n_rows;
+    if(size != usym_stack.n_cols) ArraySizeError("Expected stack of square matricies");
+    IdxT count= usym_stack.n_slices;
+    for(IdxT k=0; k<count;k++) for(IdxT j=0;j<size-1;j++) for(IdxT i=j+1;i<size;i++) 
+        usym_stack(i,j,k) = usym_stack(j,i,k); //i>j
+}
+
 
 void copy_Lsym_mat(arma::mat &lsym)
 {

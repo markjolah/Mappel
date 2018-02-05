@@ -334,6 +334,7 @@ void Mappel_IFace<Model>::objModelHessian()
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
     methods::model_hessian_stack(*obj, image_stack, theta_stack, hess_stack);
+    copy_Usym_mat_stack(hess_stack);
 }
 
 template<class Model>
@@ -404,6 +405,7 @@ void Mappel_IFace<Model>::objModelNegativeDefiniteHessian()
     auto count = std::max(theta_stack.n_cols, obj->size_image_stack(image_stack));
     auto hess_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(), count);
     model::model_negative_definite_hessian_stack(*obj, image_stack, theta_stack, hess_stack);
+    copy_Usym_mat_stack(hess_stack);
 }
 
 template<class Model>
@@ -438,6 +440,7 @@ void Mappel_IFace<Model>::objExpectedInformation()
     auto theta_stack = getMat();
     auto fisherI_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(),theta_stack.n_cols);
     fisher_information_stack(*obj, theta_stack, fisherI_stack);
+    copy_Usym_mat_stack(fisherI_stack);
 }
 
 template<class Model>
@@ -597,7 +600,7 @@ void Mappel_IFace<Model>::objCholesky()
 {
     checkNumArgs(3,1);
     auto A = getMat();
-    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
+    if(!is_symmetric(A)) throw ArrayShapeError("Matrix is not symmetric");
     auto C = A;
     bool valid = cholesky(C);
     //Seperate d from C so C is unit lower triangular
@@ -613,7 +616,7 @@ void Mappel_IFace<Model>::objModifiedCholesky()
 {
     checkNumArgs(3,1);
     auto A = getMat();
-    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
+    if(!is_symmetric(A)) throw ArrayShapeError("Matrix is not symmetric");
     auto C = A;
     bool modified = modified_cholesky(C);
     VecT d = C.diag();
@@ -629,8 +632,8 @@ void Mappel_IFace<Model>::objCholeskySolve()
     checkNumArgs(2,2);
     auto A = getMat();
     auto b = getVec();
-    if(!is_symmetric(A)) throw BadShapeError("Matrix is not symmetric");
-    if(b.n_elem != A.n_rows) throw BadShapeError("Input sizes do not match");
+    if(!is_symmetric(A)) throw ArrayShapeError("Matrix is not symmetric");
+    if(b.n_elem != A.n_rows) throw ArrayShapeError("Input sizes do not match");
     auto C = A;
     bool modified = modified_cholesky(C);
     auto x = cholesky_solve(C,b);

@@ -4,6 +4,5 @@
 
 namespace mappel {
 
-    parallel_rng::ParallelRngManager<ParallelRngT> rng_manager; //Default RNG manager
 
 } /* namespace mappel */

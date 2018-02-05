@@ -56,7 +56,7 @@ include(Mappel-Doxygen) #Add Doxygen documentation targets
 include(Mappel-PackageConfig) #Configure Package Config and associated files for exports
 
 add_subdirectory(src/libmappel) #Main library
-add_subdirectory(src/test) #Test executables
+# add_subdirectory(src/test) #Test executables
 
 if(OPT_MATLAB)
     #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX

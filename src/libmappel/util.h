@@ -9,16 +9,15 @@
 #include <string>
 #include <map>
 #include <sstream>
+
 #include <armadillo>
+
 #include <BacktraceException/BacktraceException.h>
 
 namespace mappel {
-    
-// Do we need this still
-// extern const std::vector<std::string> model_names;
-
-    
+        
 using BoolT = uint16_t;
+using BoolVecT = arma::Col<uint16_t>;
 using IdxT = arma::uword;
 using IdxVecT = arma::Col<IdxT>; /**< A type to represent integer data arrays */
 using IdxMatT = arma::Mat<IdxT>; /**< A type to represent integer data arrays */
@@ -57,31 +56,51 @@ int maxidx(const VecT &v);
 
 using MappelError = backtrace_exception::BacktraceException;
 
-struct BadSizeError : public MappelError 
+
+/** @brief Parameter value is not valid.
+ */
+struct ParameterValueError : public MappelError 
 {
-    BadSizeError(std::string message) : MappelError("BadSize",message) {}
+    ParameterValueError(std::string message) : MappelError("ParameterValueError",message) {}
 };
 
-struct BadValueError : public MappelError 
+/** @brief Array is not of the right dimensionality
+ */
+struct ArrayShapeError : public MappelError 
 {
-    BadValueError(std::string message) : MappelError("BadValue",message) {}
+    ArrayShapeError(std::string message) : MappelError("ArrayShapeError",message) {}
 };
 
-struct BadShapeError : public MappelError 
+/** @brief Array is not of the right size
+ */
+struct ArraySizeError : public MappelError 
 {
-    BadShapeError(std::string message) : MappelError("BadShape",message) {}
+    ArraySizeError(std::string message) : MappelError("ArraySizeError",message) {}
 };
 
-struct BoundsError : public MappelError 
+/** @brief Access outside the model bounds is attempted
+ */
+struct ModelBoundsError : public MappelError 
 {
-    BoundsError(std::string message) : MappelError("BoundsError",message) {}
+    ModelBoundsError(std::string message) : MappelError("ModelBoundsError",message) {}
 };
 
+/** @brief Expected numerical condition does not hold. 
+ */
 struct NumericalError : public MappelError 
 {
     NumericalError(std::string message) : MappelError("NumericalError",message) {}
 };
 
+/** @brief Failure of code or algorithm logic.
+ */
+struct LogicalError : public MappelError 
+{
+    LogicalError(std::string message) : MappelError("LogicalError",message) {}
+};
+
+/** @brief Feature not yet implemented
+ */
 struct NotImplementedError : public MappelError 
 {
     NotImplementedError(std::string message) : MappelError("NotImplemented",message) {}
@@ -91,9 +110,12 @@ struct NotImplementedError : public MappelError
 /** @brief sign (signum) function: -1/0/1
  * 
  */
-template <typename T> int sgn(T val) {
+template <typename T> int sgn(T val) 
+{
     return (T(0) < val) - (val < T(0));
 }
+
+template <typename T> T square(T x) { return x*x; }
 
 inline double restrict_value_range(double val, double minval, double maxval)
 {
@@ -108,18 +130,6 @@ std::unique_ptr<T> make_unique( Args&& ...args )
 }
 
 std::ostream& operator<<(std::ostream &out,const StatsT &stats);
-
-
-// MatT sliceView(const CubeT &cube, IdxT slice)
-// {
-//     if(slice >= cube.n_slices){
-//         std::ostringstream msg;
-//         msg<<"Got bad slice idx:"<<slice;
-//         throw BoundsError(msg.str());
-//     }
-//     IdxT slice_size = cube.n_rows * cube.n_cols;
-//     return { static_cast<const double *>(cube.memptr())+slice_size*slice, cube.n_rows, cube.n_cols, false, true };
-// }
 
 } /* namespace mappel */
 

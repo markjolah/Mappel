@@ -153,7 +153,6 @@ Gauss1DsModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, d
 Gauss1DsModel::Stencil
 Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
 {
-    //TODO: Propose a more robust initialization
     double x_pos=0, I=0, bg=0, sigma=0;
     if (!theta_init.is_empty()) {
         x_pos = theta_init(0);
@@ -161,28 +160,23 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
         bg = theta_init(2);
         sigma = theta_init(3);
     }
-    if(x_pos<=0 || x_pos>size){
-        //Estimate position as the brightest pixel
-        x_pos = im.index_max()+0.5;
-    }
+    if(x_pos<=0 || x_pos>size)  x_pos = im.index_max()+0.5; //Estimate position as the brightest pixel    
     
     double min_sigma = lbound(3);
-    double max_sigma = lbound(3);
+    double max_sigma = ubound(3);
     if(sigma<min_sigma || sigma>max_sigma){
         //Pick an initial sigma in-between min and max for sigma
         //This is a rough approximation
         double eta=0.8; //Weight applies to min sigma in weighted average
         sigma = eta*min_sigma + (1-eta)*max_sigma;
-    }
-    if (I<=0 || bg<=0) {
-        bg = 0.75*im.min();
-        I = arma::sum(im)-std::min(0.3,bg*size);
-    }
+    }    
+    if(bg <= 0) bg = std::max(1.0, 0.75*im.min());
+    if(I <= 0)  I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg, sigma});
 }
 
 
-void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale) const
+void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
 {
     int phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {

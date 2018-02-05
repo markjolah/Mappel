@@ -12,14 +12,15 @@
 namespace mappel {
 
 static const double MIN_INTENSITY = 10.;
-static const double sqrt2 = sqrt(2);
+// static const double sqrt2 = sqrt(2);
+// static const double sqrt2pi = sqrt(2*arma::datum::pi);
 
 double normal_quantile_twosided(double confidence)
 {
     if( confidence <=0 || confidence >=1) {
         std::ostringstream msg;
         msg<<"Got bad confidence:"<<confidence<<" should be in (0,1).";
-        throw BadValueError(msg.str());
+        throw ParameterValueError(msg.str());
     }
     double p = 1 - (1-confidence)/2.;
     return sqrt2*erf(2*p-1);
@@ -30,7 +31,7 @@ double normal_quantile_onesided(double confidence)
     if( confidence <=0 || confidence >=1) {
         std::ostringstream msg;
         msg<<"Got bad confidence:"<<confidence<<" should be in (0,1).";
-        throw BadValueError(msg.str());
+        throw ParameterValueError(msg.str());
     }
     return sqrt2*erf(2*confidence-1);
 }

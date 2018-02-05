@@ -17,11 +17,7 @@ class CMakeExtension(Extension):
         Extension.__init__(self, name, sources=[])
         self.sourcedir = os.path.abspath(sourcedir)
 
-class CMakeBuild(build_ext):
-    def finalize_options(self):
-        #self.inplace=1;
-        super(CMakeBuild, self).finalize_options()
-        
+class CMakeBuild(build_ext):        
     def run(self):
         for ext in self.extensions:
             self.build_extension(ext)
@@ -33,15 +29,14 @@ class CMakeBuild(build_ext):
         package_dir = ext.sourcedir
         cmake_binary_dir = os.path.abspath(ext.sourcedir+"/..")
         
-        print("BuildExtension: ", ext.name)
-        print("FullPath: ", full_path)
-        print("FullName: ", self.get_ext_fullname(ext.name))
-        print("FileName: ", file_name)
-        print("BuildDir: ", build_dir)
-        print("SourceDir: ", ext.sourcedir)
-        print("CmakeBinaryDir: ", cmake_binary_dir)
+        #print("BuildExtension: ", ext.name)
+        #print("FullPath: ", full_path)
+        #print("FullName: ", self.get_ext_fullname(ext.name))
+        #print("FileName: ", file_name)
+        #print("BuildDir: ", build_dir)
+        #print("SourceDir: ", ext.sourcedir)
+        #print("CmakeBinaryDir: ", cmake_binary_dir)
         
-
         if not os.path.exists(self.build_lib):
            os.makedirs(self.build_lib)
         subprocess.check_call(['cmake', '--build', 'src/python'], cwd=cmake_binary_dir)
@@ -50,11 +45,11 @@ class CMakeBuild(build_ext):
         
         
 kwargs = dict(
-        packages=["mappel"],
-        ext_modules=[CMakeExtension('_Gauss1DMLE')],
-        cmdclass={"build_ext":CMakeBuild},
-        setup_requires=['pytest-runner'],
-        tests_require=['pytest','hypothesis']
-        )
+    packages=["mappel"],
+    ext_modules=[CMakeExtension('_Gauss1DMLE')],
+    cmdclass={"build_ext":CMakeBuild},
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest','hypothesis']
+)
 
 setup(**kwargs)

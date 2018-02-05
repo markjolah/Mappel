@@ -8,7 +8,7 @@
 #
 add_subdirectory(cGaussMLE)
 
-set(MAPPEL_SRCS display.cpp stencil.cpp rng.cpp util.cpp mcmc.cpp numerical.cpp
+set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 PointEmitterModel.cpp 
                 ImageFormat1DBase.cpp 
                 PoissonNoise1DObjective.cpp  

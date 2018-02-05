@@ -8,7 +8,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/pybind11/tools")
 
 
 #List of all Models to build a python module for.
-set(MAPPEL_PYTHON_MODELS Gauss1DMLE)
+set(MAPPEL_PYTHON_MODELS Gauss1DMLE Gauss1DMAP Gauss1DsMLE Gauss1DsMAP)
+#set(MAPPEL_PYTHON_MODELS Gauss1DMLE Gauss1DMAP)
 
 set(MAPPEL_PYTHON_EXECUTABLE "" CACHE STRING "Override python executable name")
 

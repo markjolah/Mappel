@@ -6,8 +6,8 @@ namespace mcmc {
 
 IdxT num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin)
 {
-    if(thin<=0) thin = 1;
-    return 1+(1-Nsample)*thin + Nburnin;
+    if(thin==0) thin = 1;
+    return 1+(Nsample-1)*thin + Nburnin;
 }
 
 MatT thin_sample(MatT &sample, IdxT Nburnin, IdxT thin)

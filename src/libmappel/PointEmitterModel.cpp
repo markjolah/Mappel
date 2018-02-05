@@ -69,6 +69,11 @@ StatsT PointEmitterModel::get_stats() const
         outu<<"ubound."<<n+1;
         stats[outu.str()]= ubound(n);
     }
+    double Dseed;
+    uint64_t seed =rng_manager.get_init_seed();
+    memcpy(&Dseed, &seed, sizeof(seed));
+    stats["prarallelrng.seed"]=Dseed; //Extract bytes in pure form and fix in python
+    stats["prarallelrng.num_threads"]=rng_manager.get_num_threads();
     return stats;
 }
 
@@ -103,7 +108,7 @@ void PointEmitterModel::check_param_shape(const ParamT &theta) const
     if(theta.n_elem != get_num_params()) {
         std::ostringstream msg;
         msg<<"Got bad parameter size:"<<theta.n_elem<<" expected size:"<<get_num_params();
-        throw BadShapeError(msg.str());
+        throw ArrayShapeError(msg.str());
     }
 }
 
@@ -112,7 +117,7 @@ void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
     if(theta.n_rows != get_num_params()) {
         std::ostringstream msg;
         msg<<"Got bad parameter stack #rows:"<<theta.n_rows<<" expected #rows:"<<get_num_params();
-        throw BadShapeError(msg.str());
+        throw ArrayShapeError(msg.str());
     }
 }
 
@@ -122,11 +127,11 @@ void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
  */
 void PointEmitterModel::set_bounds(const ParamT &lbound_, const ParamT &ubound_)
 {
-    if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
-    if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
+    if(lbound_.n_elem != num_params) throw ArraySizeError("Invalid lower bound size");
+    if(ubound_.n_elem != num_params) throw ArraySizeError("Invalid upper bound size");
     for(IdxT n=0; n<num_params; n++) {
-        if(lbound_(n)>ubound_(n)) throw BoundsError("Bounds inverted.");
-        if(std::fabs(lbound_(n)-ubound_(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+        if(lbound_(n)>ubound_(n)) throw ParameterValueError("Bounds inverted.");
+        if(std::fabs(lbound_(n)-ubound_(n))<10*bounds_epsilon) throw ParameterValueError("Bounds too close.");
     }
     prior.set_bounds(lbound_,ubound_);
     lbound = prior.lbound();
@@ -135,10 +140,10 @@ void PointEmitterModel::set_bounds(const ParamT &lbound_, const ParamT &ubound_)
 
 void PointEmitterModel::set_lbound(const ParamT &lbound_)
 {
-    if(lbound_.n_elem != num_params) throw BoundsError("Invalid lower bound size");
+    if(lbound_.n_elem != num_params) throw ArraySizeError("Invalid lower bound size");
     for(IdxT n=0; n<num_params; n++) {
-        if(lbound_(n)>ubound(n)) throw BoundsError("Bounds inverted.");
-        if(std::fabs(lbound_(n)-ubound(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+        if(lbound_(n)>ubound(n)) throw ParameterValueError("Bounds inverted.");
+        if(std::fabs(lbound_(n)-ubound(n))<10*bounds_epsilon) throw ParameterValueError("Bounds too close.");
     }
     prior.set_lbound(lbound_);
     lbound = prior.lbound();
@@ -146,10 +151,10 @@ void PointEmitterModel::set_lbound(const ParamT &lbound_)
 
 void PointEmitterModel::set_ubound(const ParamT &ubound_)
 {
-    if(ubound_.n_elem != num_params) throw BoundsError("Invalid upper bound size");
+    if(ubound_.n_elem != num_params) throw ArraySizeError("Invalid upper bound size");
     for(IdxT n=0; n<num_params; n++) {
-        if(lbound(n)>ubound_(n)) throw BoundsError("Bounds inverted.");
-        if(std::fabs(lbound(n)-ubound_(n))<10*bounds_epsilon) throw BoundsError("Bounds too close.");
+        if(lbound(n)>ubound_(n)) throw ParameterValueError("Bounds inverted.");
+        if(std::fabs(lbound(n)-ubound_(n))<10*bounds_epsilon) throw ParameterValueError("Bounds too close.");
     }
     prior.set_ubound(ubound_);
     ubound = prior.ubound();    
@@ -158,15 +163,15 @@ void PointEmitterModel::set_ubound(const ParamT &ubound_)
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
     for(IdxT n=0;n<num_params;n++) {
-        if(theta(n) < lbound(n)+epsilon) theta(n)=lbound(n)+epsilon;
-        if(theta(n) > ubound(n)-epsilon) theta(n)=ubound(n)-epsilon;
+        if(theta(n) <= lbound(n)) theta(n)=lbound(n)+epsilon;
+        if(theta(n) >= ubound(n)) theta(n)=ubound(n)-epsilon;
     }
 }
 
-bool PointEmitterModel::theta_in_bounds(const ParamT &theta, double epsilon) const
+bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 {
     for(IdxT n=0; n<num_params; n++) 
-        if(lbound(n)+epsilon >= theta(n) || theta(n) >= ubound(n)-epsilon) return false;
+        if(lbound(n) >= theta(n) || theta(n) >= ubound(n)) return false;
     return true;
 }
 
@@ -174,13 +179,13 @@ PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, 
 {
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
-        if(theta(n) < lbound(n)+epsilon) btheta(n)=lbound(n)+epsilon;
-        if(theta(n) > ubound(n)-epsilon) btheta(n)=ubound(n)-epsilon;
+        if(theta(n) <= lbound(n)) btheta(n)=lbound(n)+epsilon;
+        if(theta(n) >= ubound(n)) btheta(n)=ubound(n)-epsilon;
     }
     return btheta;
 }
 
-PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta, double epsilon) const
+PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta) const
 {
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
@@ -197,6 +202,34 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
         }
     }
     return btheta;
+}
+
+
+BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
+{
+    IdxT N = theta.n_cols;
+    BoolVecT in_bounds(N);
+    for(IdxT n=0; n<N; n++) in_bounds(n) = theta_in_bounds(theta.col(n));
+    return in_bounds;
+}
+
+PointEmitterModel::ParamVecT 
+PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) const
+{
+    IdxT N = theta.n_cols;
+    ParamVecT new_theta;
+    for(IdxT n=0; n<N; n++) new_theta.col(n) = bounded_theta(theta.col(n),epsilon);
+    return new_theta;
+}
+
+PointEmitterModel::ParamVecT 
+PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
+{
+    IdxT N = theta.n_cols;
+    ParamVecT new_theta;
+    for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
+    return new_theta;
+
 }
 
 } /* namespace mappel */

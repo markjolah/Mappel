@@ -9,7 +9,7 @@
 
 PYBIND11_MODULE(_Gauss1DMLE, M)
 {
-    M.doc()="1D Gaussian PSF model with fixed sigma and Poisson image noise";
+    M.doc()="1D Gaussian PSF model with fixed sigma and Poisson image noise, under a maximum likelihood objective";
     mappel::python::bindMappelModel<mappel::Gauss1DMLE>(M);
 }
 

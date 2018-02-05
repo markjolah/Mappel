@@ -15,8 +15,6 @@
 #include <map>
 #include "rng.h"
 #include "cGaussMLE/cGaussMLE.h"
-#include <boost/thread/mutex.hpp>
-
 
 #ifdef WIN32
     #include <boost/chrono.hpp>
@@ -37,19 +35,12 @@ static const int DEFAULT_CGAUSS_ITERATIONS=50;
 template<class Model>
 class Estimator{
 public:
-    /* These improve readability, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    using ModelDataStackT = typename Model::ModelDataStackT;
-
-    const Model &model;
-
-    Estimator(const Model &_model) : model(_model) {}
+    Estimator(Model &_model) : model(_model) {}
     virtual ~Estimator() {}
 
     virtual std::string name() const =0;
+    Model& get_model();
+    void set_model(Model &new_model);
 
     /* These are the main entrypoints for estimation
      * We provide three types of interfaces:
@@ -57,34 +48,33 @@ public:
     /* Option 1: Single Image - Estimator returns a stencil at the optimum point.
      * Variants with and without a theta_init or a rllh output parameter
      */
-    StencilT estimate_max(const ModelDataT &im);
-    StencilT estimate_max(const ModelDataT &im, const ParamT &theta_init); //with theta_init
-    StencilT estimate_max(const ModelDataT &im, double &rllh); //with rllh out
-    StencilT estimate_max(const ModelDataT &im, const ParamT &theta_init, double &rllh); //with theta_init and rllh out
+    StencilT<Model> estimate_max(const ModelDataT<Model> &im);
+    StencilT<Model> estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init); //with theta_init
+    StencilT<Model> estimate_max(const ModelDataT<Model> &im, double &rllh); //with rllh out
+    StencilT<Model> estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh); //with theta_init and rllh out
 
     /* Option 2: Single Image - Estimator returns theta,  rllh and obsI  at the optimum point.
      * Variants with and without a theta_init.
      */
-    void estimate_max(const ModelDataT &im, ParamT &theta, double &rllh, MatT &obsI);
-    void estimate_max(const ModelDataT &im, const ParamT &theta_init, ParamT &theta, double &rllh, MatT &obsI);//with theta_init
+    void estimate_max(const ModelDataT<Model> &im, ParamT<Model> &theta, double &rllh, MatT &obsI);
+    void estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, ParamT<Model> &theta, double &rllh, MatT &obsI);//with theta_init
 
     /* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI   at the optimum point.
      * Variants with and without a theta_init.
      */
-    void estimate_max_debug(const ModelDataT &im, const ParamT &theta_init, 
-                        ParamT &theta_est, MatT &obsI, MatT &sequence, VecT &sequence_rllh);
+    void estimate_max_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                        ParamT<Model> &theta_est, double &rllh,MatT &obsI, MatT &sequence, VecT &sequence_rllh);
 
     /* Option 4: Parallel Image - Estimator returns theta_stack, rllh_stack and obsI_stack at the optimum point
      * for each image in the stack.
      * Variants with and without a theta_init.
      */
-    virtual void estimate_max_stack(const ModelDataStackT &im_stack, const ParamVecT &theta_init_stack, 
-                                ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)=0;
-    void estimate_max_stack(const ModelDataStackT &im_stack, 
-                                ParamVecT &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack);
+    virtual void estimate_max_stack(const ModelDataStackT<Model> &im_stack, const ParamVecT<Model> &theta_init_stack, 
+                                ParamVecT<Model> &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack)=0;
+    void estimate_max_stack(const ModelDataStackT<Model> &im_stack, 
+                                ParamVecT<Model> &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack);
 
     /* Statistics */
-    double mean_walltime() const;
     virtual StatsT get_stats();
     virtual StatsT get_debug_stats()=0;
     virtual void clear_stats();
@@ -94,10 +84,12 @@ public:
     friend std::ostream& operator<<(std::ostream &out, Estimator<T> &estimator);
 
 protected:
-    virtual StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh)=0;
-    virtual StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                            ParamVecT &sequence, VecT &sequence_rllh);
-    virtual void compute_estimate(const ModelDataT &im, const ParamT &theta_init, ParamT &theta_est, double &rllh, MatT &obsI);
+    virtual StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)=0;
+    virtual StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                            ParamVecT<Model> &sequence, VecT &sequence_rllh);
+    virtual void compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, ParamT<Model> &theta_est, double &rllh, MatT &obsI);
+
+    Model &model;
 
     /* statistics */
     int num_estimations = 0;
@@ -115,18 +107,10 @@ protected:
 template<class Model>
 class ThreadedEstimator : public Estimator<Model> {
 public:
-    /* These improve readabilit, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    using ModelDataStackT = typename Model::ModelDataStackT;
-
     ThreadedEstimator(Model &model);
 
-    void estimate_max_stack(const ModelDataStackT &im, const ParamVecT &theta_init,ParamVecT &theta, VecT &rllh, CubeT &obsI);
+    void estimate_max_stack(const ModelDataStackT<Model> &im, const ParamVecT<Model> &theta_init,ParamVecT<Model> &theta, VecT &rllh, CubeT &obsI);
     
-    double mean_thread_walltime();
     StatsT get_stats();
     StatsT get_debug_stats();
     void clear_stats();
@@ -135,56 +119,34 @@ protected:
     using Estimator<Model>::model;
     int max_threads;
     int num_threads;
-    std::vector<double> thread_walltime;
     boost::mutex mtx;
-
-    int thread_start_idx(int nimages, int threadid) const;
-    int thread_stop_idx(int nimages, int threadid) const;
-
-    virtual void thread_maximize_stack(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                                       ParamVecT &theta, VecT &rllh, CubeT &obsI);
-
-private:
-    void thread_entry(int thread_id, const ModelDataStackT &im, const ParamVecT &theta_init,
-                      ParamVecT &theta, VecT &rllh, CubeT &obsI);
 };
 
 template<class Model>
 class HeuristicEstimator : public ThreadedEstimator<Model> {
 public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ModelDataT = typename Model::ModelDataT;
     HeuristicEstimator(Model &model) : ThreadedEstimator<Model>(model) {}
 
     std::string name() const {return "HeuristicEstimator";}
 private:
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
+    StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
 };
 
 template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {
 public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ModelDataT = typename Model::ModelDataT;
     CGaussHeuristicEstimator(Model &model) : ThreadedEstimator<Model>(model) {}
     
     std::string name() const {return "CGaussHeuristicEstimator";}
 private:
     using Estimator<Model>::model;
-    inline
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
+    StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
 };
 
 
 template<class Model>
 class CGaussMLE : public ThreadedEstimator<Model> {
 public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
     int max_iterations;
     CGaussMLE(Model &model, int max_iterations=DEFAULT_CGAUSS_ITERATIONS)
         : ThreadedEstimator<Model>(model), max_iterations(max_iterations) {}
@@ -197,44 +159,45 @@ protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
 
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                    ParamVecT &sequence, VecT &sequence_rllh);
+    StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
+    StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                    ParamVecT<Model> &sequence, VecT &sequence_rllh);
 };
 
 
 template<class Model>
 class SimulatedAnnealingMaximizer : public ThreadedEstimator<Model> {
-public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    
-    using Estimator<Model>::model;
-
+public:    
     double T_init=100.;
     double cooling_rate=1.02;
-    double max_iterations=500;
+    int max_iterations=500;
 
-    inline std::string name() const {return "SimulatedAnnealingMaximizer";}
+    std::string name() const {return "SimulatedAnnealingMaximizer";}
     SimulatedAnnealingMaximizer(Model &model) : ThreadedEstimator<Model>(model) {}
 protected:
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                    ParamVecT &sequence, VecT &sequence_rllh);
-    StencilT anneal(ParallelRngT &rng, const ModelDataT &im, const StencilT &theta_init,
-                    double &rllh, ParamVecT &sequence, VecT &sequence_rllh);
+    using Estimator<Model>::model;
+
+    StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
+    StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                    ParamVecT<Model> &sequence, VecT &sequence_rllh);
+    StencilT<Model> anneal(const ModelDataT<Model> &im, const StencilT<Model> &theta_init,
+                    double &rllh, MatT &sequence, VecT &sequence_rllh);
 };
 
 template<class Model>
 class IterativeMaximizer : public ThreadedEstimator<Model> {
 public:
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    
+    static constexpr int NumExitCodes = 7;
+    enum class ExitCode : IdxT { Unassigned= 99, //Logical error if this is still set
+                          MaxIter = 6,        //Max iterations exceeded. Did not converge.
+                          MaxBacktracks = 5,  //Backtracking failed.  Likely converged successfully.
+                          TrustRegionRadius = 4,//Trust region size was less than epsilon.  Converged successfully.
+                          GradRatio = 3,      //Grad ratio was less than epsilon.  Converged successfully.
+                          FunctionChange = 2, //Function value change was less than epsilon.  Converged successfully.
+                          StepSize = 1,       //Step size was less than delta.  Converged successfully. 
+                          Error = 0           //A Numerical Error was caught.  Did not converge.
+                        }; 
+
     IterativeMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS);
 
     /* Statistics */
@@ -245,12 +208,12 @@ public:
     StatsT get_stats();
     StatsT get_debug_stats();
     void clear_stats();
-
-    void local_maximize(const ModelDataT &im, const StencilT &theta_init, StencilT &stencil, double &rllh); //This is used by SimulatedAnnealing to clean up max
+    
+    /** @brief Perform a local maximization to finish off a simulated annealing run */
+    void local_maximize(const ModelDataT<Model> &im, const StencilT<Model> &theta_init, StencilT<Model> &stencil, double &rllh); //This is used by SimulatedAnnealing to clean up max
 
 protected:
     using Estimator<Model>::model;
-    using Estimator<Model>::num_estimations;
     using ThreadedEstimator<Model>::mtx;
     int max_iterations;
 
@@ -267,43 +230,41 @@ protected:
     int total_backtracks = 0;
     int total_fun_evals = 0;
     int total_der_evals = 0;
+    IdxVecT exit_counts;
     /* Debug Statistics: Only active in debug mode when data.save_seq==true */
     IdxVecT last_backtrack_idxs;
 
     class MaximizerData {
     public:
-        using StencilT = typename Model::Stencil;
-        using ParamT = typename Model::ParamT;
-        using ParamVecT = typename Model::ParamVecT;
-        using ModelDataT = typename Model::ModelDataT;
-        const ModelDataT &im;
-        ParamT grad;
-        ParamT step;
+        const ModelDataT<Model> &im;
+        ParamT<Model> grad;
+        ParamT<Model> step;
         VecT lbound, ubound;
         double rllh;
         int nBacktracks=0;
         int nIterations=0;
         bool save_seq;
-        
-        MaximizerData(const Model &model, const ModelDataT &im, const StencilT &s,
+        ExitCode exit_code=ExitCode::Unassigned;
+        MaximizerData(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &s,
                       bool save_seq=false, int max_seq_len=0);
 
+        void record_exit(ExitCode code);
         /** @brief Record an iteration point (derivatives computed) Using the saved theta as the default. */
         void record_iteration() {record_iteration(theta());}
         /** @brief Record an iteration point (derivatives computed) */
-        void record_iteration(const ParamT &accepted_theta);
+        void record_iteration(const ParamT<Model> &accepted_theta);
         /** @brief Record a backtracked point (no derivative computations performed) Using the saved theta as the default. */
-        void record_backtrack() {record_backtrack(theta());}
+        void record_backtrack(double rejected_rllh) {record_backtrack(theta(), rejected_rllh);}
         /** @brief Record a backtracked point (no derivative computations performed) */
-        void record_backtrack(const ParamT &rejected_theta);
+        void record_backtrack(const ParamT<Model> &rejected_theta, double rejected_rllh);
         
         /** @brief Return the saved theta sequence */
-        ParamVecT get_theta_sequence() const {return theta_seq.head_cols(seq_len);}
+        ParamVecT<Model> get_theta_sequence() const {return theta_seq.head_cols(seq_len);}
         IdxVecT get_backtrack_idxs() const {return backtrack_idxs.head(seq_len);}
         VecT get_theta_sequence_rllh() const {return seq_rllh.head(seq_len);}
         /** @brief Get the current stencil  */
-        StencilT& stencil() {return current_stencil ? s0 : s1;}
-        void set_stencil(const StencilT &s) {if(current_stencil) s0=s;  else s1=s; }
+        StencilT<Model>& stencil() {return current_stencil ? s0 : s1;}
+        void set_stencil(const StencilT<Model> &s) {if(current_stencil) s0=s;  else s1=s; }
         /** @brief Save the current stencil to the single reserve spot.  
          * Overwrites any previously saved stencil.
          * This is used  to save a stencil when backtracking.
@@ -315,34 +276,32 @@ protected:
          */
         void restore_stencil() {current_stencil = !current_stencil;}
         /** @brief Get the saved stencil  */
-        StencilT& saved_stencil() {return current_stencil ? s1 : s0;}
+        StencilT<Model>& saved_stencil() {return current_stencil ? s1 : s0;}
         /** @brief Get the current stencil's theta  */
-        ParamT& theta() {return current_stencil ? s0.theta : s1.theta;}
+        ParamT<Model>& theta() {return current_stencil ? s0.theta : s1.theta;}
         /** @brief Get the saved stencil's theta  */
-        ParamT& saved_theta() {return current_stencil ? s1.theta : s0.theta;}
+        ParamT<Model>& saved_theta() {return current_stencil ? s1.theta : s0.theta;}
         int getIteration() const {return seq_len;}
     protected:
-        StencilT s0,s1; //These two stencils will be alternated as the current and old stencil points
+        StencilT<Model> s0,s1; //These two stencils will be alternated as the current and old stencil points
         bool current_stencil; //This alternates to indicated weather s0 or s1 is the current stencil
 
-        ParamVecT theta_seq;
+        ParamVecT<Model> theta_seq;
         VecT seq_rllh;
         IdxVecT backtrack_idxs;
         int seq_len=0;
         const int max_seq_len;
     };
 
-    
-    
     void record_run_statistics(const MaximizerData &data);
 
-    StencilT compute_estimate(const ModelDataT &im, const ParamT &theta_init, double &rllh);
-    StencilT compute_estimate_debug(const ModelDataT &im, const ParamT &theta_init, 
-                                    ParamVecT &sequence, VecT &sequence_rllh);
+    StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
+    StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+                                    ParamVecT<Model> &sequence, VecT &sequence_rllh);
 
     virtual void maximize(MaximizerData &data)=0;
-    inline bool backtrack(MaximizerData &data);
-    inline bool convergence_test(MaximizerData &data);
+    bool backtrack(MaximizerData &data);
+    bool convergence_test(MaximizerData &data);
 };
 
 
@@ -350,96 +309,48 @@ protected:
 template<class Model>
 class NewtonDiagonalMaximizer : public IterativeMaximizer<Model> {
 public:
-     /* These improve readability, but are (unfortunately) not inherited. */
-     using StencilT = typename Model::Stencil;
-     using ParamT = typename Model::ParamT;
-     using ParamVecT = typename Model::ParamVecT;
-     using ModelDataT = typename Model::ModelDataT;
-    typedef typename IterativeMaximizer<Model>::MaximizerData MaximizerData;
+    using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
     
-
     NewtonDiagonalMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS)
         : IterativeMaximizer<Model>(model,max_iterations) {}
 
     inline std::string name() const {return "NewtonDiagonalMaximizer";}
 protected:
-    /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
-    using IterativeMaximizer<Model>::record_run_statistics;
-    using IterativeMaximizer<Model>::max_iterations;
-    using IterativeMaximizer<Model>::backtrack;
-    using IterativeMaximizer<Model>::convergence_test;
-
     void maximize(MaximizerData &data);
-
-//     friend class SimulatedAnnealingMaximizer<Model>;
 };
 
 template<class Model>
 class NewtonMaximizer : public IterativeMaximizer<Model> {
 public:
-     /* These improve readability, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    using ModelDataStackT = typename Model::ModelDataStackT;
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
-
 
     NewtonMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS)
         : IterativeMaximizer<Model>(model,max_iterations) {}
 
     inline std::string name() const {return "NewtonMaximizer";}
 protected:
-    /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
-    using IterativeMaximizer<Model>::record_run_statistics;
-    using IterativeMaximizer<Model>::max_iterations;
-    using IterativeMaximizer<Model>::backtrack;
-    using IterativeMaximizer<Model>::convergence_test;
-
-
     void maximize(MaximizerData &data);
 };
 
 template<class Model>
 class QuasiNewtonMaximizer : public IterativeMaximizer<Model> {
 public:
-     /* These improve readability, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
-    using ModelDataStackT = typename Model::ModelDataStackT;
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
-
-
 
     QuasiNewtonMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS)
         : IterativeMaximizer<Model>(model,max_iterations) {}
 
     inline std::string name() const {return "QuasiNewtonMaximizer";}
 protected:
-    /* These bring in non-depended names from base classes (only necessary because we are templated) */
     using Estimator<Model>::model;
-    using IterativeMaximizer<Model>::record_run_statistics;
-    using IterativeMaximizer<Model>::max_iterations;
-    using IterativeMaximizer<Model>::backtrack;
-    using IterativeMaximizer<Model>::convergence_test;
-
-
     void maximize(MaximizerData &data);
 };
 
 template<class Model>
 class TrustRegionMaximizer : public IterativeMaximizer<Model> {
 public:
-    /* These improve readability, but are (unfortunately) not inherited. */
-    using StencilT = typename Model::Stencil;
-    using ParamT = typename Model::ParamT;
-    using ParamVecT = typename Model::ParamVecT;
-    using ModelDataT = typename Model::ModelDataT;
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
     
     static constexpr double rho_cauchy_min = 0.1;  //Coleman beta | Bellavia beta_1
@@ -460,35 +371,22 @@ public:
     
     inline std::string name() const {return "TrustRegionMaximizer";}
     
-    
-    
-protected:
-    /* These bring in non-depended names from base classes (only necessary because we are templated) */
+protected:        
     using Estimator<Model>::model;
-    using IterativeMaximizer<Model>::record_run_statistics;
-    using IterativeMaximizer<Model>::max_iterations;
-    using IterativeMaximizer<Model>::convergence_test;
-    
     void maximize(MaximizerData &data);
+    VecT bound_step(const VecT &step_hat, const VecT &D, const VecT &theta, const VecT &lbound, const VecT &ubound);
     
     static VecT compute_D_scale(const VecT &oldDscale, const VecT &grad2);
     static double compute_initial_trust_radius(const VecT &ghat);
     static double quadratic_model_value(const VecT &step, const VecT &grad, const MatT &hess);
 
     static void compute_bound_scaling_vec(const VecT &theta, const VecT &grad, const VecT &lbound, const VecT &ubound, VecT &v, VecT &Jv);
-     VecT bound_step(const VecT &step_hat, const VecT &D, const VecT &theta, const VecT &lbound, const VecT &ubound);
     static VecT compute_cauchy_point(const VecT &g, const MatT& H, double delta);
     static VecT solve_TR_subproblem(const VecT &g, const MatT &H, double delta, double epsilon);
     static VecT solve_restricted_step_length_newton(const VecT &g, const MatT &H, double delta, double lambda_lb, double lambda_ub, double epsilon);
 };
 
 
-/**
- * Makes a new estimator by name and returns a pointer and ownership.
- * 
- */
-// template<class Model>
-// std::shared_ptr<Estimator<Model>> make_estimator(Model &model, std::string ename);
 } /* namespace mappel */
 
 #endif /* _ESTIMATOR_H */

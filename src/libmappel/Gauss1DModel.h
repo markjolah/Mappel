@@ -75,7 +75,7 @@ public:
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
 
     /** @brief Posterior Sampling */
-    void sample_mcmc_candidate_theta(IdxT sample_index, ParamT &canidate_theta, double scale=1.0) const;
+    void sample_mcmc_candidate_theta(IdxT sample_index, ParamT &canidate_theta, double scale=1.0);
 protected:
     /* Non-static data Members */
     double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
@@ -93,6 +93,11 @@ inline
 Gauss1DModel::Stencil
 Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 {
+    if(!theta_in_bounds(theta)) {
+        std::ostringstream msg;
+        msg<<"Theta is not in bounds: "<<theta.t();
+        throw ModelBoundsError(msg.str());
+    }
     return Stencil(*this,theta,compute_derivatives);
 }
 

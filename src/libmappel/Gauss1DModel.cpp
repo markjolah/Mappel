@@ -52,7 +52,7 @@ void Gauss1DModel::set_psf_sigma(double new_psf_sigma)
     if(new_psf_sigma<=0 || !std::isfinite(new_psf_sigma)) {
         std::ostringstream msg;
         msg<<"Bad psf_sigma: "<<psf_sigma;
-        throw MappelError("BadParameter",msg.str());
+        throw ParameterValueError(msg.str());
     }
     psf_sigma = new_psf_sigma;
 }
@@ -125,23 +125,19 @@ Gauss1DModel::Stencil
 Gauss1DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
 {
     double x_pos=0, I=0, bg=0;
-    if (!theta_init.is_empty()) {
+    if(theta_init.n_elem == num_params) {
         x_pos = theta_init(0);
         I = theta_init(1);
         bg = theta_init(2);
     }
-    if(x_pos<=0 || x_pos>size){ //Invalid position, estimate it as maximum column
-        x_pos = im.index_max()+0.5;
-    } 
-    if (I<=0 || bg<=0) {
-        bg = 0.75*im.min();
-        I = arma::sum(im)-std::min(0.3,bg*size);
-    }
+    if(x_pos <= 0 || x_pos > size) x_pos = im.index_max()+0.5;
+    if(bg <= 0) bg = std::max(1.0, 0.75*im.min());
+    if(I <= 0)  I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg});
 }
 
 void 
-Gauss1DModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale) const
+Gauss1DModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
 {
     IdxT phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {

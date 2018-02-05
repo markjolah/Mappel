@@ -50,6 +50,6 @@ localdevelop = develop --user -e -b .
 test = pytest
 
 [tool:pytest]
-addopts = --hypothesis-show-statistics
+addopts = --verbose
 
 
