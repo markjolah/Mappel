@@ -11,6 +11,8 @@
 
 namespace mappel {
 
+const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
+
 
 PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
     : prior(std::move(prior_)),
@@ -105,21 +107,22 @@ double PointEmitterModel::find_hyperparam(std::string param_name, double default
 
 void PointEmitterModel::check_param_shape(const ParamT &theta) const
 {
-    if(theta.n_elem != get_num_params()) {
+    if(theta.n_elem != num_params) {
         std::ostringstream msg;
-        msg<<"Got bad parameter size:"<<theta.n_elem<<" expected size:"<<get_num_params();
+        msg<<"check_theta: Got bad theta Size= "<<theta.n_elem<<" Expected size="<<num_params;
         throw ArrayShapeError(msg.str());
     }
 }
 
 void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
 {
-    if(theta.n_rows != get_num_params()) {
+    if(theta.n_rows != num_params) {
         std::ostringstream msg;
-        msg<<"Got bad parameter stack #rows:"<<theta.n_rows<<" expected #rows:"<<get_num_params();
+        msg<<"check_theta: Got bad theta Size= ["<<theta.n_rows<<","<<theta.n_cols<<"] Expected size=["<<num_params<<",...]";
         throw ArrayShapeError(msg.str());
     }
 }
+
 
 /**
  *

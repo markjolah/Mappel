@@ -1,30 +1,17 @@
 /** @file Gauss2DModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 03-13-2014
+ * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss2DModel
  */
-
+#include <typeindex>
 #include "Gauss2DModel.h"
 #include "stencil.h"
 
 namespace mappel {
 
-const std::vector<std::string> Gauss2DModel::param_names({ "x", "y", "I", "bg" });
-
-const std::vector<std::string> Gauss2DModel::hyperparameter_names(
-    { "beta_pos", "mean_I", "kappa_I", "mean_bg", "kappa_bg"});
-
-
-Gauss2DModel::Gauss2DModel(const IVecT &_size, const VecT &_psf_sigma)
-    : ImageFormat2DBase(_size),
-      PointEmitterModel(4),
-      pos_dist(BetaRNG(beta_pos,beta_pos)),
-      I_dist(GammaRNG(kappa_I,mean_I/kappa_I)),
-      bg_dist(GammaRNG(kappa_bg,mean_bg/kappa_bg)),
-      log_prior_pos_const(log_prior_beta_const(beta_pos)),
-      log_prior_I_const(log_prior_gamma_const(kappa_I,mean_I)),
-      log_prior_bg_const(log_prior_gamma_const(kappa_bg,mean_bg)),
-      psf_sigma(_psf_sigma),
+Gauss2DModel::Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma)
+    : ImageFormat2DBase(size),
+      psf_sigma(psf_sigma),
       x_model(size(0),psf_sigma(0)),
       y_model(size(1),psf_sigma(1))
 {
@@ -32,20 +19,95 @@ Gauss2DModel::Gauss2DModel(const IVecT &_size, const VecT &_psf_sigma)
     mcmc_num_candidate_sampling_phases=2;
     mcmc_candidate_eta_x = size(0)*mcmc_candidate_sample_dist_ratio;
     mcmc_candidate_eta_y = size(1)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_I = mean_I*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = mean_bg*mcmc_candidate_sample_dist_ratio;
-
-    /* Initialization stencils */
-    gaussian_Xstencil = make_gaussian_stencil(size(0),psf_sigma(0));
-    gaussian_Ystencil = make_gaussian_stencil(size(1),psf_sigma(1));
-    x_model.set_hyperparameters(get_hyperparameters());
-    y_model.set_hyperparameters(get_hyperparameters());
-    
-    
-    ParamT lb = {0,0,0,0};
-    ParamT ub = {static_cast<double>(size(0)),static_cast<double>(size(1)),INFINITY,INFINITY};
-    set_bounds(lb,ub);
+    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
+    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
+    update_internal_1D_estimators();
 }
+
+void Gauss2DModel::set_prior(CompositeDist&& prior_)
+{
+    PointEmitterModel::set_prior(std::move(prior_));
+    //Reset initializer hyperparams
+    update_internal_1D_estimators();
+}
+
+void Gauss2DModel::set_hyperparams(const VecT &hyperparams)
+{
+    PointEmitterModel::set_hyperparams(hyperparams);
+    //Reset initializer hyperparams
+    update_internal_1D_estimators();
+}
+
+void Gauss2DModel::set_size(const ImageSizeT &size_)
+{
+    ImageFormat2DBase::set_size(size_);
+    //Reset initializer model sizes
+    x_model.set_size(size(0));
+    y_model.set_size(size(1));
+}
+
+CompositeDist 
+Gauss2DModel::make_default_prior(const ImageSizeT &size)
+{
+    return CompositeDist(make_prior_component_position_beta("x",size(0)),
+                         make_prior_component_position_beta("y",size(1)),
+                         make_prior_component_intensity("I"),
+                         make_prior_component_intensity("bg",default_pixel_mean_bg));
+}
+
+CompositeDist 
+Gauss2DModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos,double beta_ypos,
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg)
+{
+    return CompositeDist(make_prior_component_position_beta("x",size(0),beta_xpos),
+                         make_prior_component_position_beta("y",size(1),beta_ypos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+}
+
+CompositeDist 
+Gauss2DModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xpos, double sigma_ypos,
+                                       double mean_I, double kappa_I, 
+                                       double mean_bg, double kappa_bg)
+{
+    return CompositeDist(make_prior_component_position_normal("x",size(0), sigma_xpos),
+                         make_prior_component_position_normal("y",size(1), sigma_ypos),
+                         make_prior_component_intensity("I",mean_I,kappa_I),
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+}
+
+void Gauss2DModel::set_psf_sigma(double new_psf_sigma)
+{
+    VecT new_psf_sigma_vec = {new_psf_sigma, new_psf_sigma};
+    set_psf_sigma(new_psf_sigma_vec);
+}
+
+void Gauss2DModel::set_psf_sigma(const VecT& new_psf_sigma)
+{ 
+    if(arma::any(new_psf_sigma<global_min_psf_sigma) || 
+        arma::any(new_psf_sigma>global_max_psf_sigma) || !new_psf_sigma.is_finite()) {
+        std::ostringstream msg;
+        msg<<"Invalid psf_sigma: "<<new_psf_sigma.t()<<"\b Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
+    psf_sigma = new_psf_sigma;
+    //Reset initializer model psf_sigma
+    x_model.set_psf_sigma(psf_sigma(0));
+    y_model.set_psf_sigma(psf_sigma(1));
+}
+
+double Gauss2DModel::get_psf_sigma(IdxT idx) const
+{
+    if(idx > 1) {
+        std::ostringstream msg;
+        msg<<"Gauss2DModel::get_psf_sigma() idx="<<idx<<" is invalid.";
+        throw ParameterValueError(msg.str());
+    }
+    return psf_sigma(idx); 
+}
+
 
 Gauss2DModel::Stencil::Stencil(const Gauss2DModel &model_,
                                const Gauss2DModel::ParamT &theta,
@@ -77,30 +139,6 @@ void Gauss2DModel::Stencil::compute_derivatives()
     DYS=make_DXS_stencil(szY, dy, Gy,sigmaY);
 }
 
-StatsT Gauss2DModel::get_stats() const
-{
-    StatsT stats = ImageFormat2DBase::get_stats();
-    stats["numParams"] = num_params;
-    stats["hyperparameters.Beta_pos"]=beta_pos;
-    stats["hyperparameters.Mean_I"]=mean_I;
-    stats["hyperparameters.Kappa_I"]=kappa_I;
-    stats["hyperparameters.Mean_bg"]=mean_bg;
-    stats["hyperparameters.Kappa_bg"]=kappa_bg;
-    stats["mcmcparams.num_phases"]=mcmc_num_candidate_sampling_phases;
-    stats["mcmcparams.etaX"]=mcmc_candidate_eta_x;
-    stats["mcmcparams.etaY"]=mcmc_candidate_eta_y;
-    stats["mcmcparams.etaI"]=mcmc_candidate_eta_I;
-    stats["mcmcparams.etabg"]=mcmc_candidate_eta_bg;
-    for(int n=0;n<num_params;n++) {
-        std::ostringstream outl,outu;
-        outl<<"lbound."<<n+1;
-        stats[outl.str()]= lbound(n);
-        outu<<"ubound."<<n+1;
-        stats[outu.str()]= ubound(n);
-    }
-    return stats;
-}
-
 
 std::ostream& operator<<(std::ostream &out, const Gauss2DModel::Stencil &s)
 {
@@ -122,135 +160,121 @@ std::ostream& operator<<(std::ostream &out, const Gauss2DModel::Stencil &s)
 }
 
 
-void Gauss2DModel::set_hyperparameters(const VecT &hyperparameters)
+StatsT Gauss2DModel::get_stats() const
 {
-    // Params are {beta_pos, mean_I, kappa_I, mean_bg, kappa_bg}
-    beta_pos=check_lower_bound_hyperparameter("beta position",hyperparameters(0),1);
-    mean_I=check_positive_hyperparameter("mean I",hyperparameters(1));
-    kappa_I=check_positive_hyperparameter("kappa I",hyperparameters(2));
-    mean_bg=check_positive_hyperparameter("mean bg",hyperparameters(3));
-    kappa_bg=check_positive_hyperparameter("kappa bg",hyperparameters(4));
-    log_prior_pos_const=log_prior_beta_const(beta_pos);
-    log_prior_I_const=log_prior_gamma_const(kappa_I,mean_I);
-    log_prior_bg_const=log_prior_gamma_const(kappa_bg,mean_bg);
-    //Reset distributions
-    pos_dist.set_params(beta_pos, beta_pos);
-    I_dist.kappa(kappa_I);
-    I_dist.theta(mean_I/kappa_I);
-    bg_dist.kappa(mean_bg);
-    bg_dist.theta(mean_bg/kappa_bg);
-    x_model.set_hyperparameters(get_hyperparameters());
-    y_model.set_hyperparameters(get_hyperparameters());
-}
-
-Gauss2DModel::VecT Gauss2DModel::get_hyperparameters() const
-{
-    return VecT({beta_pos,mean_I, kappa_I, mean_bg, kappa_bg});
+    auto stats = PointEmitterModel::get_stats();
+    auto im_stats = ImageFormat2DBase::get_stats();
+    stats.insert(im_stats.begin(), im_stats.end());
+    return stats;
 }
 
 
-void
-Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
+/** @brief pixel derivative inner loop calculations.
+ */
+void Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
 {
     /* Caclulate pixel derivative */
-    auto pgrad=make_param();
+    auto pgrad = make_param();
     pixel_grad(i,j,s,pgrad);
-    double I=s.I();
+    double I = s.I();
     /* Update grad */
-    grad+=dm_ratio_m1*pgrad;
+    grad += dm_ratio_m1*pgrad;
     /* Update hess */
-    hess(0,0)+=dm_ratio_m1 * I/psf_sigma(0) * s.DXS(i) * s.Y(j);
-    hess(0,1)+=dm_ratio_m1 * I * s.DX(i) * s.DY(j);
-    hess(1,1)+=dm_ratio_m1 * I/psf_sigma(1) * s.DYS(j) * s.X(i);
-    hess(0,2)+=dm_ratio_m1 * pgrad(0) / I; 
-    hess(1,2)+=dm_ratio_m1 * pgrad(1) / I; 
+    hess(0,0) += dm_ratio_m1 * I/psf_sigma(0) * s.DXS(i) * s.Y(j);
+    hess(0,1) += dm_ratio_m1 * I * s.DX(i) * s.DY(j);
+    hess(1,1) += dm_ratio_m1 * I/psf_sigma(1) * s.DYS(j) * s.X(i);
+    hess(0,2) += dm_ratio_m1 * pgrad(0) / I; 
+    hess(1,2) += dm_ratio_m1 * pgrad(1) / I; 
     //This is the pixel-gradient dependent part of the hessian
     for(int c=0; c<(int)hess.n_cols; c++) for(int r=0; r<=c; r++)
         hess(r,c) -= dmm_ratio * pgrad(r) * pgrad(c);
 }
 
 
-
 Gauss2DModel::Stencil
-Gauss2DModel::heuristic_initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
+Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init, 
+                                               const std::string &estimator_method)
 {
-    double x_pos=0, y_pos=0, I=0, bg=0;
-    double min_bg=1; //default minimum background.  Will be updated only if estimate_gaussian_2Dmax is called.
-//     std::cout<<"Theta_init: "<<theta_init.t()<<" -->";
-    if (!theta_init.is_empty()) {
-        x_pos = theta_init(0);
-        y_pos = theta_init(1);
-        I = theta_init(2);
-        bg = theta_init(3);
-    }
-    if(x_pos<=0 || x_pos>size(0) || y_pos<=0 || y_pos>size(1)){ //Invlaid positions, estimate them
-//         std::cout<<"Full init\n";
-        int px_pos[2];
-        estimate_gaussian_2Dmax(im, gaussian_Xstencil, gaussian_Ystencil, px_pos, min_bg);
-        refine_gaussian_2Dmax(im, gaussian_Xstencil, gaussian_Ystencil, px_pos);
-        x_pos = static_cast<double>(px_pos[0])+0.5;
-        y_pos = static_cast<double>(px_pos[1])+0.5;
-        auto unit_im = unit_model_image(size,px_pos,psf_sigma);
-        bg = estimate_background(im, unit_im, min_bg);
-        I = estimate_intensity(im, unit_im, bg);
-    } else if(I<=0 || bg<=0) {
-//         std::cout<<"Intenisty init\n";
-        int px_pos[2];
-        px_pos[0] = static_cast<int>(floor(x_pos));
-        px_pos[1] = static_cast<int>(floor(y_pos));
-        auto unit_im = unit_model_image(size,px_pos,psf_sigma);
-        bg = estimate_background(im, unit_im, min_bg);
-        I = estimate_intensity(im, unit_im, bg);
-    } /*else {
-        std::cout<<"Null init\n";
-    }*/
-    auto theta= make_stencil(x_pos, y_pos, I, bg);
-//     std::cout<<"ThetaFinal: "<<theta.theta.t()<<"\n";
-    return theta;
-}
-
-Gauss2DModel::Stencil
-Gauss2DModel::seperable_initial_theta_estimate(const ImageT &im, const ParamT &theta_init, 
-                                               const std::string &estimator) const
-{
-    double x_pos=0, y_pos=0, I=0, bg=0;
-    if (!theta_init.is_empty()) {
-        x_pos = theta_init(0);
-        y_pos = theta_init(1);
-        I = theta_init(2);
-        bg = theta_init(3);
-    }
-    if(x_pos<=0 || x_pos>size(0) || y_pos<=0 || y_pos>size(1) || I<=0 || bg<=0){ 
-        //Invlaid theta init.  Run sub-estimators
-        auto x_estimator = make_estimator(x_model, estimator);
-        auto y_estimator = make_estimator(y_model, estimator);
+    check_param_shape(theta_init);
+    double x_pos = theta_init(0);
+    double y_pos = theta_init(1);
+    double I = theta_init(2);
+    double bg = theta_init(3);
+    if(!theta_in_bounds(theta_init)) {
         Gauss1DModel::ImageT x_im = arma::sum(im,0).t();
         Gauss1DModel::ImageT y_im = arma::sum(im,1);
-        auto x_est = x_estimator->estimate(x_im);
-        auto y_est = y_estimator->estimate(y_im);
+        auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
+        auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
         
-        if(x_pos<=0 || x_pos>size(0)) x_pos = x_est.theta(0);
-        if(y_pos<=0 || y_pos>size(1)) y_pos = y_est.theta(0);
-        if(I<=0) I = std::max(x_est.theta(1), y_est.theta(1)); //max of X and Y est of I
-        if(bg<=0) bg = .5*(x_est.theta(2)/size(1) + y_est.theta(2)/size(0)); //mean of X and Y est of bg corrected for 1D vs 2D interpretation of bg
+        if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) 
+            x_pos = x_est.theta(0);
+        if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) 
+            y_pos = y_est.theta(0);
+        if(I <= lbound(2) || I >= ubound(2) || !std::isfinite(I)) 
+            I = std::max(x_est.theta(1), y_est.theta(1)); //max of X and Y est of I
+        if(bg <= lbound(3) || bg >= ubound(3) || !std::isfinite(bg)) 
+            bg = .5*(x_est.theta(2)/size(1) + y_est.theta(2)/size(0)); //mean of X and Y est of bg corrected for 1D vs 2D interpretation of bg
     }
-    return make_stencil(x_pos, y_pos, I, bg);
+    return make_stencil(ParamT{x_pos, y_pos, I, bg});
 }
 
 
 
-void Gauss2DModel::sample_mcmc_candidate_theta(int sample_index, RNG &rng, ParamT &mcmc_candidate_theta, double scale) const
+void Gauss2DModel::sample_mcmc_candidate_theta(int sample_index,ParamT &mcmc_candidate_theta, double scale)
 {
     int phase=sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {
         case 0:  //change x,y
-            mcmc_candidate_theta(0)+=generate_normal(rng,0.0,mcmc_candidate_eta_x*scale);
-            mcmc_candidate_theta(1)+=generate_normal(rng,0.0,mcmc_candidate_eta_y*scale);
+            mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
+            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_y*scale;
             break;
         case 1: //change I, bg
-            mcmc_candidate_theta(2)+=generate_normal(rng,0.0,mcmc_candidate_eta_I*scale);
-            mcmc_candidate_theta(3)+=generate_normal(rng,0.0,mcmc_candidate_eta_bg*scale);
+            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
+            mcmc_candidate_theta(3) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
     }
 }
+
+void Gauss2DModel::update_internal_1D_estimators()
+{
+    /* Initialization stencils */
+    std::type_index xpos_dist = prior.types()[0];
+    std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
+    std::type_index normal_dist(typeid(prior_hessian::NormalDist));
+    
+    std::cout<<"Got X dist:"<<xpos_dist.name()<<std::endl;
+    std::cout<<"Looking for SymmetricBetaDist dist:"<<beta_dist.name()<<std::endl;
+    std::cout<<"Looking for NormalDist dist:"<<normal_dist.name()<<std::endl;
+    
+    double mean_I = find_hyperparam("mean_I",default_mean_I);
+    double kappa_I = find_hyperparam("kappa_I",default_intensity_kappa);
+    double pixel_mean_bg = find_hyperparam("mean_bg",default_pixel_mean_bg);
+    double kappa_bg = find_hyperparam("kappa_bg",default_intensity_kappa);
+    double x_mean_bg = pixel_mean_bg * size(1);
+    double y_mean_bg = pixel_mean_bg * size(0);
+    
+    std::cout<<"mean_I:"<<mean_I<<" kappa_I:"<<kappa_I<<" pixel_mean_bg:"<<pixel_mean_bg<<" kappa_bg:"<<kappa_bg<<std::endl;
+    
+    if(xpos_dist == beta_dist){
+        double beta_x = find_hyperparam("beta_x",default_beta_pos);
+        double beta_y = find_hyperparam("beta_y",default_beta_pos);        
+        x_model.set_prior(x_model.make_prior_beta_position(
+                            size(0), beta_x, mean_I, kappa_I, x_mean_bg, kappa_bg));
+        y_model.set_prior(y_model.make_prior_beta_position(
+                            size(1), beta_y, mean_I, kappa_I, y_mean_bg, kappa_bg));
+    } else if(xpos_dist == normal_dist) {
+        double sigma_x = find_hyperparam("sigma_x",default_sigma_pos);
+        double sigma_y = find_hyperparam("sigma_y",default_sigma_pos);
+        x_model.set_prior(x_model.make_prior_normal_position(
+                            size(0), sigma_x, mean_I, kappa_I, x_mean_bg, kappa_bg));
+        y_model.set_prior(y_model.make_prior_normal_position(
+                            size(1), sigma_y, mean_I, kappa_I, y_mean_bg, kappa_bg));
+    } else {
+        std::ostringstream msg;
+        msg<<"Unknown Xposition distribution: "<<xpos_dist.name();
+        
+        throw ParameterValueError(msg.str());
+    }    
+}
+
 
 } /* namespace mappel */

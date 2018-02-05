@@ -19,7 +19,6 @@ namespace mappel {
  * 
  * 
  */
-
 class Gauss2DMAP : public Gauss2DModel, public PoissonNoise2DObjective {
 public:
     /* Constructor/Destructor */
@@ -79,7 +78,6 @@ void Gauss2DMAP::prior_hess_update(const ParamT &theta, MatT &hess) const
     hess(2,2) += gamma_prior_grad2(kappa_I, theta(2));
     hess(3,3) += gamma_prior_grad2(kappa_bg, theta(3));
 }
-
 
 } /* namespace mappel */
 

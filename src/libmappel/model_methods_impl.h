@@ -241,9 +241,7 @@ namespace methods {
             return arma::pinv(arma::symmatu(FI)).eval().diag();
         } catch ( std::runtime_error E) {
             std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<'\n';
-            auto z = model.make_param();
-            z.zeros();
-            return z;
+            return model.make_param(arma::fill::zeros);
         }
     }
 
@@ -278,7 +276,7 @@ namespace methods {
     StencilT<Model> estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method)
     {
         auto estimator = make_estimator(model,method);
-        return estimator.estimate_max(data);
+        return estimator->estimate_max(data);
     }
     
     template<class Model>
@@ -286,7 +284,7 @@ namespace methods {
                                  double &theta_max_llh)
     {
         auto estimator = make_estimator(model,method);
-        return estimator.estimate_max(data,theta_init,theta_max_llh);
+        return estimator->estimate_max(data,theta_init,theta_max_llh);
     }
     
     template<class Model>
@@ -294,7 +292,7 @@ namespace methods {
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
     {
         auto estimator = make_estimator(model,method);
-        estimator.estimate_max(data,theta_max,theta_max_llh, obsI);
+        estimator->estimate_max(data,theta_max,theta_max_llh, obsI);
     }
 
     template<class Model>
@@ -302,7 +300,7 @@ namespace methods {
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
-        estimator.estimate_max(data,theta_max,theta_max_llh, obsI);
+        estimator->estimate_max(data,theta_max,theta_max_llh, obsI);
         stats = estimator.get_stats();
     }
 
@@ -311,7 +309,7 @@ namespace methods {
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
     {
         auto estimator = make_estimator(model,method);
-        estimator.estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
+        estimator->estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
     }
 
     template<class Model>
@@ -319,8 +317,8 @@ namespace methods {
                       ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
-        estimator.estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
-        stats = estimator.get_stats();
+        estimator->estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
+        stats = estimator->get_stats();
     }
     
     
@@ -340,8 +338,7 @@ namespace methods {
     template<class Model>
     MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, IdxT Nsample, IdxT Nburnin, IdxT thin)
     {
-        auto theta_init = model.make_param();
-        theta_init.zeros();
+        auto theta_init = model.make_param(arma::fill::zeros);
         return estimate_mcmc_sample(model, data, theta_init, Nsample, Nburnin, thin);
     }
 
@@ -378,8 +375,7 @@ namespace methods {
     void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, 
                                  IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT<Model> &posterior_mean, MatT &posterior_cov)
     {
-        auto theta_init = model.make_param();
-        theta_init.zeros();
+        auto theta_init = model.make_param(arma::fill::zeros);
         estimate_mcmc_posterior(model,data,theta_init,Nsample, Nburnin, thin, posterior_mean, posterior_cov);
     }
 
@@ -440,8 +436,7 @@ namespace methods {
         void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, 
                                 ParamT<Model> &theta_max, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
         {
-            auto theta_init = model.make_param();
-            theta_init.zeros();
+            auto theta_init = model.make_param(arma::fill::zeros);
             estimate_max_debug(model, data, method, theta_init, theta_max, rllh, obsI, sequence, sequence_rllh, stats);
         }
         
@@ -463,8 +458,7 @@ namespace methods {
                                         IdxT Nsample, 
                                         MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)
         {
-            auto theta_init = model.make_param();
-            theta_init.zeros();
+            auto theta_init = model.make_param(arma::fill::zeros);
             estimate_mcmc_sample_debug(model, data, Nsample, sample, sample_rllh, candidates, candidates_rllh);
         }
         

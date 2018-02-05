@@ -9,9 +9,9 @@
 
 namespace mappel {
 
-Gauss1DModel::Gauss1DModel(IdxT size_, double psf_sigma_)
-    : ImageFormat1DBase(size_), //Virtual base class call ignored
-      psf_sigma(psf_sigma_)
+Gauss1DModel::Gauss1DModel(IdxT size, double psf_sigma)
+    : ImageFormat1DBase(size), //Virtual base class call ignored
+      psf_sigma(psf_sigma)
 {
     /* Initialize MCMC step sizes */
     mcmc_num_candidate_sampling_phases=2;
@@ -20,14 +20,15 @@ Gauss1DModel::Gauss1DModel(IdxT size_, double psf_sigma_)
     mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
 }
 
-Gauss1DModel::CompositeDist Gauss1DModel::make_default_prior(IdxT size)
+CompositeDist 
+Gauss1DModel::make_default_prior(IdxT size)
 {
     return CompositeDist(make_prior_component_position_beta("x",size),
                          make_prior_component_intensity("I"),
                          make_prior_component_intensity("bg",default_pixel_mean_bg*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
 }
 
-Gauss1DModel::CompositeDist 
+CompositeDist 
 Gauss1DModel::make_prior_beta_position(IdxT size, double beta_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
@@ -37,7 +38,7 @@ Gauss1DModel::make_prior_beta_position(IdxT size, double beta_xpos,
                          make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
 
-Gauss1DModel::CompositeDist 
+CompositeDist 
 Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
@@ -49,12 +50,24 @@ Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos,
 
 void Gauss1DModel::set_psf_sigma(double new_psf_sigma)
 { 
-    if(new_psf_sigma<=0 || !std::isfinite(new_psf_sigma)) {
+    if(new_psf_sigma<global_min_psf_sigma || 
+       new_psf_sigma>global_max_psf_sigma || !std::isfinite(new_psf_sigma)) {
         std::ostringstream msg;
-        msg<<"Bad psf_sigma: "<<psf_sigma;
+        msg<<"Invalid psf_sigma: "<<new_psf_sigma<<" Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
         throw ParameterValueError(msg.str());
     }
     psf_sigma = new_psf_sigma;
+}
+
+double Gauss1DModel::get_psf_sigma(IdxT idx) const
+{
+    if(idx > 0) {
+        std::ostringstream msg;
+        msg<<"Gauss1DModel::get_psf_sigma() idx="<<idx<<" is invalid.";
+        throw ParameterValueError(msg.str());
+    }
+    return psf_sigma; 
 }
 
 

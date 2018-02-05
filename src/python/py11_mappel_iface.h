@@ -26,6 +26,8 @@
 #include "Gauss1DsMLE.h"
 #include "Gauss1DsMAP.h"
 
+#include "Gauss2DMLE.h"
+
 namespace mappel {
 namespace python {
 
@@ -76,7 +78,7 @@ MatT thetaStackAsArma(ArrayDoubleT &theta)
 
 
 template<class Model>
-typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value, ImageT<Model>>::type
+ReturnIfSubclassT<ImageT<Model>, Model, ImageFormat1DBase>
 imageAsArma(ArrayDoubleT &im)
 {
      switch(im.ndim()) {
@@ -85,7 +87,7 @@ imageAsArma(ArrayDoubleT &im)
         case 2:
             if(im.shape(Model::num_dim) != 1 ) {
                 std::ostringstream msg;
-                msg<<"Expected single image. Got numpy ndarray dim="<<im.ndim()<<" #images:"<<im.shape(Model::num_dim);
+                msg<<"Expected single 1D image. Got numpy ndarray dim="<<im.ndim()<<" #images:"<<im.shape(Model::num_dim);
                 throw PythonError("ConversionError",msg.str());
             }
             return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.size()), false, true};
@@ -97,7 +99,29 @@ imageAsArma(ArrayDoubleT &im)
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value, ImageStackT<Model>>::type
+ReturnIfSubclassT<ImageT<Model>, Model, ImageFormat2DBase>
+imageAsArma(ArrayDoubleT &im)
+{
+    switch(im.ndim()) {
+        case 2:
+            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), false, true};
+        case 3:
+            if(im.shape(Model::num_dim) != 1 ) {
+                std::ostringstream msg;
+                msg<<"Expected single 2D image. Got numpy ndarray dim="<<im.ndim()<<" #images:"<<im.shape(Model::num_dim);
+                throw PythonError("ConversionError",msg.str());
+            }
+            return {static_cast<double*>(im.mutable_data(0,0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected single image for model with num_dim:"<<Model::num_dim<<". Got numpy ndarray dim="<<im.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
+}
+
+
+template<class Model>
+ReturnIfSubclassT<ImageStackT<Model>, Model, ImageFormat1DBase>
 imageStackAsArma(ArrayDoubleT &im)
 {
     switch(im.ndim()) {
@@ -107,7 +131,23 @@ imageStackAsArma(ArrayDoubleT &im)
             return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), false, true};
         default:
             std::ostringstream msg;
-            msg<<"Expected stack of 1 or more images each with num_dim:"<<Model::num_dim<<". Got numpy ndarray dim="<<im.ndim();
+            msg<<"Expected stack of 1 or more 1D images. Got numpy ndarray dim="<<im.ndim();
+            throw PythonError("ConversionError",msg.str());
+    }
+}
+
+template<class Model>
+ReturnIfSubclassT<ImageStackT<Model>, Model, ImageFormat2DBase>
+imageStackAsArma(ArrayDoubleT &im)
+{
+    switch(im.ndim()) {
+        case 2:
+            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), 1, false, true};
+        case 3:
+            return {static_cast<double*>(im.mutable_data(0,0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), static_cast<IdxT>(im.shape(2)), false, true};
+        default:
+            std::ostringstream msg;
+            msg<<"Expected stack of 1 or more 2D images. Got numpy ndarray dim="<<im.ndim();
             throw PythonError("ConversionError",msg.str());
     }
 }
@@ -151,15 +191,15 @@ makeImageStackArray(uint32_t shape, uint32_t count)
 
 template<class ElemT=double, class IntT=uint32_t>
 ArrayT<ElemT, ColumnMajorOrder> 
-makeImageStackArray(arma::Col<IntT> shape, IntT count)
+makeImageStackArray(arma::Col<IntT> shape, IdxT count)
 {
     switch(shape.n_elem) {
         case 1:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),count});
+            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),static_cast<IntT>(count)});
         case 2:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1),count});
+            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1),static_cast<IntT>(count)});
         case 3:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1), shape(2),count});
+            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1), shape(2),static_cast<IntT>(count)});
         default:
             std::ostringstream msg;
             msg<<"Unable to create array stack of size:"<<shape.n_elem<<" val:"<<shape.t();
@@ -191,6 +231,12 @@ class ModelWrapper
 {
     using ImageCoordT = typename Model::ImageCoordT;
 public:
+    static Model construct_fixed2D(ArrayT<ImageCoordT> &size, ArrayDoubleT &psf_sigma);
+    static ArrayT<ImageCoordT> get_size(Model &model);
+    static void set_size(Model &model, ArrayT<ImageCoordT> &size);
+    static ArrayDoubleT get_psf_sigma(Model &model);
+    static void set_psf_sigma(Model &model, ArrayDoubleT &psf_sigma);
+    
     static ArrayDoubleT get_hyperparams(Model &model);
     static void set_hyperparams(Model &model, ArrayDoubleT &arr);
     static ArrayDoubleT get_lbound(Model &model);
@@ -244,7 +290,7 @@ public:
 };
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value>::type
+EnableIfSubclassT<Model,Gauss1DModel>
 bindMappelModelBase(py::module &M, py::class_<Model> &model)
 {
         model.def(py::init<typename Model::ImageCoordT,double>(), py::arg("size"), py::arg("psf_sigma"));
@@ -254,25 +300,44 @@ bindMappelModelBase(py::module &M, py::class_<Model> &model)
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss1DsModel,Model>::value>::type
+EnableIfSubclassT<Model,Gauss1DsModel>
 bindMappelModelBase(py::module &M, py::class_<Model> &model)
 {
         model.def(py::init<typename Model::ImageCoordT,double,double>(), py::arg("size"), py::arg("min_sigma"), py::arg("max_sigma"));
         model.def_property("min_sigma",[](Model &model) {return model.get_min_sigma();},
                                        [](Model &model,double sigma) { model.set_min_sigma(sigma); },
-                           "Minimum Gaussian sigma of emitter PSF [pixels]." );
+                           "Minimum Gaussian sigma of emitter PSF in pixels." );
         model.def_property("max_sigma",[](Model &model) {return model.get_max_sigma();},
                                        [](Model &model,double sigma) { model.set_max_sigma(sigma); },
-                           "Maximum Gaussian sigma of emitter PSF [pixels]." );
+                           "Maximum Gaussian sigma of emitter PSF in pixels." );
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value>::type
+EnableIfSubclassT<Model,Gauss2DModel>
+bindMappelModelBase(py::module &M, py::class_<Model> &model)
+{
+        model.def(py::init(&ModelWrapper<Model>::construct_fixed2D), 
+                  py::arg("size"), py::arg("psf_sigma"));
+        model.def_property("psf_sigma",&ModelWrapper<Model>::get_psf_sigma,&ModelWrapper<Model>::set_psf_sigma,
+                           "2D Sigma of emitter (PSF) Gaussian approximation in pixels [X, Y]." );
+}
+
+
+template<class Model>
+EnableIfSubclassT<Model,ImageFormat1DBase>
 bindMappelModelImageBase(py::module &M, py::class_<Model> &model)
 {    
         model.def_property("size",[](Model &model) {return model.get_size();},
                                   [](Model &model,IdxT size) { model.set_size(size); },
                            "1D-Image size in pixels." );
+}
+
+template<class Model>
+EnableIfSubclassT<Model,ImageFormat2DBase>
+bindMappelModelImageBase(py::module &M, py::class_<Model> &model)
+{    
+        model.def_property("size",&ModelWrapper<Model>::get_size,&ModelWrapper<Model>::set_size,
+                           "2D-Image size in pixels [X, Y]." );
 }
 
 template<class Model>
@@ -472,6 +537,52 @@ void bindMappelModel(py::module &M)
         [Debugging Usage] Heuristic estimate of the image, with optional theta_init partially specified parameter vector.
         This is to help debug interface issues, and is internally called to initialize estimation routines when theta_init is
         not fully specified.)DOC");
+}
+
+
+template<class Model>
+Model 
+ModelWrapper<Model>::construct_fixed2D(ArrayT<ImageCoordT> &size_arr, ArrayDoubleT &psf_sigma_arr)
+{
+    auto size = pyarma::asVec<ImageCoordT>(size_arr);
+    auto psf_sigma = pyarma::asVec(psf_sigma_arr);
+    return {size,psf_sigma};
+}
+
+template<class Model>
+ArrayT<typename Model::ImageCoordT> 
+ModelWrapper<Model>::get_size(Model &model)
+{
+    auto out = pyarma::makeArray<ImageCoordT>(Model::num_dim);
+    auto size = pyarma::asVec<ImageCoordT>(out);
+    size = model.get_size();
+    return out;
+}
+
+template<class Model>
+void 
+ModelWrapper<Model>::set_size(Model &model, ArrayT<ImageCoordT> &size_arr)
+{
+    auto size = pyarma::asVec<ImageCoordT>(size_arr);
+    model.set_size(size);
+}
+
+template<class Model>
+ArrayDoubleT 
+ModelWrapper<Model>::get_psf_sigma(Model &model)
+{
+    auto out = pyarma::makeArray(Model::num_dim);
+    auto psf_sigma = pyarma::asVec(out);
+    psf_sigma = model.get_psf_sigma();
+    return out;
+}
+
+template<class Model>
+void 
+ModelWrapper<Model>::set_psf_sigma(Model &model, ArrayDoubleT &psf_sigma_arr)
+{
+    auto psf_sigma = pyarma::asVec(psf_sigma_arr);
+    model.set_psf_sigma(psf_sigma);
 }
 
 template<class Model>

@@ -29,8 +29,15 @@ using StatsT = std::map<std::string,double>;  /**< A convenient form for reporti
 using StringVecT = std::vector<std::string>;
 
 /* Allow easier enabale_if compilation for subclasses */
-template<class ModelT,class ModelBaseT> using IsSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,int>::type;
-template<class ReturnT, class ModelT,class ModelBaseT> using ReturnIfSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,ReturnT>::type;
+template<class ModelT,class ModelBaseT> 
+    using IsSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,int>::type;
+
+template<class ModelT,class ModelBaseT> 
+    using EnableIfSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,void>::type;
+
+template<class ReturnT, class ModelT,class ModelBaseT> 
+    using ReturnIfSubclassT = typename std::enable_if<std::is_base_of<ModelBaseT,ModelT>::value,ReturnT>::type;
+
 
 template<class Model> using ImageCoordT = typename Model::ImageCoordT; /* Model's image coordinate type */
 template<class Model> using ImagePixelT = typename Model::ImagePixelT; /* Image's pixel data type */
@@ -44,7 +51,6 @@ template<class Model> using StencilT = typename Model::Stencil;  /* The Model's 
 template<class Model> using ImageStackT = typename Model::ImageStackT; /* Model's image type  */
 template<class Model> using ModelDataStackT = typename Model::ModelDataStackT; /* Model's data stack type (for EMCCD same as Model::ImageStackT) */
 template<class Model> using StencilVecT = typename Model::StencilVecT;  /* The Model's Vector of stencils type */
-
 
 void enable_all_cpus();
 

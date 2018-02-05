@@ -23,7 +23,29 @@ try:
 except ImportError:
     pass
 
-from . MappelBase import MappelBase
+try:
+    from _Gauss2DMLE import Gauss2DMLE
+    _WrapModelClass(Gauss2DMLE)
+except ImportError:
+    pass
+
+try:
+    from _Gauss2DMAP import Gauss2DMAP
+    _WrapModelClass(Gauss2DMAP)
+except ImportError:
+    pass
+
+try:
+    from _Gauss2DsMLE import Gauss2DsMLE
+    _WrapModelClass(Gauss2DsMLE)
+except ImportError:
+    pass
+try:
+    from _Gauss2DsMAP import Gauss2DsMAP
+    _WrapModelClass(Gauss2DsMAP)
+except ImportError:
+    pass
+
 
 
 

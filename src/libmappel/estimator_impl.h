@@ -297,7 +297,7 @@ StencilT<Model>
 CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 
 {
     auto est=cgauss_compute_estimate(model,im,theta_init,max_iterations);
-    rllh = methods::objective::rllh(im,est);
+    rllh = methods::objective::rllh(model,im,est);
     return est;
 }
 
@@ -308,7 +308,7 @@ CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const Para
 {
     auto est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
     //Compute rrlh (which are not evaluated by CGauss) in parallel because debug is only ever called single threaded
-    methods::objective::rllh(im, sequence, sequence_rllh);
+    methods::objective::rllh_stack(model, im, sequence, sequence_rllh);
     return est;
 }
 

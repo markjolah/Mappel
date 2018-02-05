@@ -1,16 +1,15 @@
 /** @file ImageFormat2DBase.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 04-2017
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for ImageFormat2DBase.
  *
  * The virtual base class for all point 2D image based emitter Models and Objectives
  */
 
-#ifndef _IMAGEFORMAT2DBASE_H
-#define _IMAGEFORMAT2DBASE_H
+#ifndef _MAPPEL_IMAGEFORMAT2DBASE_H
+#define _MAPPEL_IMAGEFORMAT2DBASE_H
 
 #include "util.h"
-#include <sstream>
 
 namespace mappel {
 
@@ -32,28 +31,52 @@ public:
     using ImageSizeT = ImageSizeShapeT<ImageCoordT>; /**< Data type for a single image size */ 
     using ImageSizeVecT = ImageSizeVecShapeT<ImageCoordT>; /**< Data type for a sequence of image sizes */
 
-    template<class PixelT> using ImageShapeT = arma::Mat<PiexlT>; /**< Shape of the data type for a single image */
+    template<class PixelT> using ImageShapeT = arma::Mat<PixelT>; /**< Shape of the data type for a single image */
     template<class PixelT> using ImageStackShapeT = arma::Cube<PixelT>; /**< Shape of the data type for a sequence of images */
     using ImageT = ImageShapeT<ImagePixelT>; /**< Data type to represent single image*/
     using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< Data type to represent a sequence of images */
 
-    constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
+    constexpr static ImageCoordT num_dim = 2;  /**< Number of image dimensions. */
     constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
+    constexpr static ImageCoordT max_size = 4096; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
 
-    /* Model parameters */
-    ImageSizeT size; /**< Number of pixels as [sizeY(#rows), sizeX(#cols)] Dimensions */
-    ImageCoordT num_pixels; /**< Total number of pixels in image */
-
-    ImageFormat2DBase(ImageSizeT size_);
+    ImageFormat2DBase(const ImageSizeT &size);
+    
     StatsT get_stats() const;
 
     ImageT make_image() const;
     ImageStackT make_image_stack(ImageCoordT n) const;
     ImageCoordT get_size_image_stack(const ImageStackT &stack) const;
     ImageT get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const;
+
+    template<class ImT>
+    void set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const;
+    
+    ImageSizeT get_size() const;
+    ImageCoordT get_size(IdxT idx) const;
+    ImageCoordT get_num_pixels() const;
+    void set_size(const ImageSizeT &size_);
+    void check_image_shape(const ImageT &im) const;
+    void check_image_shape(const ImageStackT &ims) const;
+
+protected:
+    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
+
+    static void check_size(const ImageSizeT &size_);
 };
 
 /* Inline Method Definitions */
+
+inline
+ImageFormat2DBase::ImageSizeT  
+ImageFormat2DBase::get_size() const
+{ return size; }
+
+inline
+ImageFormat2DBase::ImageCoordT 
+ImageFormat2DBase::get_num_pixels() const
+{ return size(0)*size(1); }
+
 
 inline
 ImageFormat2DBase::ImageT
@@ -64,18 +87,17 @@ ImageFormat2DBase::make_image() const
 
 inline
 ImageFormat2DBase::ImageStackT
-ImageFormat2DBase::make_image_stack(int n) const
+ImageFormat2DBase::make_image_stack(ImageCoordT n) const
 {
     return ImageStackT(size(1),size(0),n);
 }
 
 inline
-ImageFormat1DBase::ImageCoordT
-ImageFormat2DBase::size_image_stack(const ImageStackT &stack) const
+ImageFormat2DBase::ImageCoordT
+ImageFormat2DBase::get_size_image_stack(const ImageStackT &stack) const
 {
-    return static_cast<ImageSizeT>(stack.n_slices);
+    return static_cast<ImageCoordT>(stack.n_slices);
 }
-
 
 inline
 ImageFormat2DBase::ImageT
@@ -84,45 +106,30 @@ ImageFormat2DBase::get_image_from_stack(const ImageStackT &stack,ImageCoordT n) 
     return stack.slice(n);
 }
 
-/* Templated Function Definitions */
-
-template<class Model>
-typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value,typename Model::ImageT>::type
-model_image(const Model &model, const typename Model::Stencil &s)
+template<class ImT>
+void 
+ImageFormat2DBase::set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const
 {
-    auto im=model.make_image();
-    for(ImageCoordT i=0;i<model.size(0);i++) for(ImageCoordT j=0;j<model.size(1);j++) {  // i=xposition=column; j=yposition=row
-        im(j,i)=model.pixel_model_value(i,j,s);
-        if( im(j,i) <= 0.){
-            //Model value must be positive for grad to be defined
-            std::ostringstream os;
-            os<<"Non positive model value encountered: "<<im(j,i)<<" at j,i=("<<j<<","<<i<<")";
-            throw MappelException("model_image",os.str());
-        }
-    }
-    return im;
+    stack.slice(n) = im;
 }
 
-/** @brief  */
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,typename Model::MatT>::type
-fisher_information(const Model &model, const typename Model::Stencil &s)
-{
-    auto fisherI=model.make_param_mat();
-    fisherI.zeros();
-    auto pgrad=model.make_param();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        double model_val=model.pixel_model_value(i,j,s);
-        model.pixel_grad(i,j,s,pgrad);
-        for(int c=0; c<model.num_params; c++) for(int r=0; r<=c; r++) {
-            fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
-        }
-    }
-    return fisherI;
-}
+namespace methods {
 
+    template<class Model>
+    typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value,typename Model::ImageT>::type
+    model_image(const Model &model, const typename Model::Stencil &s)
+    {
+        auto im = model.make_image();
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            im(j,i) = model.pixel_model_value(i,j,s);
+        }
+        return im;
+    }
+    
+} /* namespace mappel::methods */
 
 
 } /* namespace mappel */
 
-#endif /* _IMAGEFORMAT2DBASE_H */
+#endif /* _MAPPEL_IMAGEFORMAT2DBASE_H */
