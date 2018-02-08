@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-sampleGUI.py
-File to generate a pyqtgraph gui from the tutorials
-Created on Thu Jan 11 10:39:25 2018
+gui1D.py
+initial GUI structure for testing Gauss1DMLE
 
 @author: prelich
 """
-# Modifying PyQt example
 
 import sys
 import numpy as np
-# import mappel
+import mappel
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout, QLineEdit
 import pyqtgraph.console
 from pyqtgraph.Qt import QtGui
@@ -50,7 +48,8 @@ class MyTableWidget(QWidget):
         self.tab0.layout = QVBoxLayout(self)
         self.intensitybox = QLineEdit(self)
         self.tab0.layout.addWidget(self.intensitybox)
-        self.image = pg.ImageView()
+        self.image = pg.PlotWidget()
+        self.plot1 = pg.BarGraphItem()
         self.tab0.layout.addWidget(self.image)
         self.tab0.setLayout(self.tab0.layout)
 
@@ -67,28 +66,28 @@ class MyTableWidget(QWidget):
         self.show()
         
         # Set the image
-        #M = mappel.Gauss1DMLE(8,1.0)
-        #data = M.simulate_image(M.sample_prior(1))
-        data = np.random.randn(8,8)
+        self.estimator = mappel.Gauss1DMLE(8,1.0)
+        M = self.estimator
+        data = M.simulate_image(M.sample_prior(1))
         self.setImPanel(data)
 
         # mouse hover event
-        self.image.scene.sigMouseMoved.connect(self.mouseMoved)
+#        self.image.scene.sigMouseMoved.connect(self.mouseMoved)
 
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
 
-    def mouseMoved(self, pos):
-        x = self.image.getImageItem().mapFromScene(pos).x()
-        y = self.image.getImageItem().mapFromScene(pos).y()
-        pxx = np.floor(x)
-        pxy = np.floor(y)
-        if 0 < pxx < self.data.shape[0] and 0 < pxy < self.data.shape[1]:
-            i = self.data[pxx.astype(int),pxy.astype(int)]
-        else:
-            i = 0
-        self.intensitybox.setText("x pos:{0:.2f}, y pos:{1:.2f}, intensity:{2:.2f}".format(x, y, i))
+#    def mouseMoved(self, pos):
+#        x = self.image.getImageItem().mapFromScene(pos).x()
+#        y = self.image.getImageItem().mapFromScene(pos).y()
+#        pxx = np.floor(x)
+#        pxy = np.floor(y)
+#        if 0 < pxx < self.data.shape[0] and 0 < pxy < self.data.shape[1]:
+#            i = self.data[pxx.astype(int),pxy.astype(int)]
+#        else:
+#            i = 0
+#        self.intensitybox.setText("x pos:{0:.2f}, y pos:{1:.2f}, intensity:{2:.2f}".format(x, y, i))
 
     @pyqtSlot()
     def on_click(self):
@@ -99,7 +98,8 @@ class MyTableWidget(QWidget):
     def setImPanel(self,data):
         self.data = data
         # Display the image data
-        self.image.setImage(self.data)
+        self.plot1=pg.BarGraphItem(x=np.arange(data.shape[0]),height=data, width=0.75, brush=(100,200,255,150))
+        self.image.addItem(self.plot1)
 
 # Start Qt event loop unless running in interactive mode.
 if __name__ == '__main__':
