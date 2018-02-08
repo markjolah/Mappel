@@ -26,12 +26,15 @@ for ii in range(gauss_simulated.size):
 fig, ax = plt.subplots()
 fig_im = ax.bar(range(im.size),im,color='r',label='simulated')
 fig_md = ax.bar(range(md.size),md,color='b',alpha=0.4,label='model')
-fig_imgauss = ax.plot(np.arange(gauss_simulated.size)/sampling_freq,gauss_simulated,label='MLE Gaussian from Simulation')
-fig_mdgauss = ax.plot(np.arange(gauss_model.size)/sampling_freq,gauss_model,label='Gaussian from Prior Samples')
+fig_imgauss = ax.plot(np.arange(gauss_simulated.size)/sampling_freq-0.5,gauss_simulated,label='MLE Gaussian from Simulation')
+fig_mdgauss = ax.plot(np.arange(gauss_model.size)/sampling_freq-0.5,gauss_model,label='Gaussian from Prior Samples')
 fig_MLE = ax.plot(P_out[0]-0.5,P_out[1]*Normerf+P_out[2],'k+',markersize=12,label='MLE Estimate')
 ax.set_title('Simulated and Model histogram with MLE marker')
 ax.set_xlabel('pixel position')
 ax.set_ylabel('pixel count')
 ax.legend()
+
+#print(P_out)
+#print(P_samp)
 
 plt.show(fig)
