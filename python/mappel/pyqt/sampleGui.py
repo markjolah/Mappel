@@ -6,14 +6,11 @@ Created on Thu Jan 11 10:39:25 2018
 
 @author: prelich
 """
-# Start with the pyqtgraph example and hack from there
-## hacking the pyqtgraph examples
-## Add path to library (just for examples; you do not need this)
-#import initExample
+# Modifying PyQt example
 
 import sys
 import numpy as np
-import mappel
+#import mappel
 from PyQt5.QtWidgets import QPushButton
 import pyqtgraph.console
 from pyqtgraph.Qt import QtGui
@@ -34,45 +31,49 @@ class Example(QtGui.QMainWindow):
         
     def initUI(self):
 
-         self.resize(800,800)
-         self.setWindowTitle('GUI Alpha: SubRegion Viewer')
-         self.cw = QtGui.QWidget()
-         self.setCentralWidget(self.cw)
-         self.l = QtGui.QGridLayout()
-         self.cw.setLayout(self.l)
+        self.resize(800,800)
+        self.setWindowTitle('SubRegion Viewer')
+        self.cw = QtGui.QWidget()
+        self.setCentralWidget(self.cw)
+        self.l = QtGui.QGridLayout()
+        self.cw.setLayout(self.l)
          
-         # The image window
-         self.imv1 = pg.ImageView()
-         self.l.addWidget(self.imv1, 0, 0)
+        # The image window
+        self.imv1 = pg.ImageView()
+        self.l.addWidget(self.imv1, 0, 0)
          
-         # console
-         namespace = {'pg': pg, 'np': np, 'self':self, 'mappel':mappel}
-         text = """ Console!!! """
+        # console
+        namespace = {'pg': pg, 'np': np, 'self':self}
+        text = """ Change the figure by setting the self.data variable """
          
-         c = pyqtgraph.console.ConsoleWidget(namespace=namespace, text=text)
-         self.l.addWidget(c,1,0)
-         #c.show()
-         c.setWindowTitle('pyqtgraph example: ConsoleWidget')
+        c = pyqtgraph.console.ConsoleWidget(namespace=namespace, text=text)
+        self.l.addWidget(c,1,0)
+        c.setWindowTitle('pyqtgraph example: ConsoleWidget')
          
-         # buttons
-         self.fileButton = QPushButton('load File', self)
-         self.fileButton.move(200,200)
+        # buttons
+        # self.fileButton = QPushButton('load File', self)
+        # self.fileButton.move(200,200)
          
-         self.closeButton = QPushButton('close', self)
-         self.closeButton.move(300,200)
+        # self.closeButton = QPushButton('close', self)
+        # self.closeButton.move(300,200)
 
-         self.show()
-	 M = mappel.Gauss1DMLE(8,1.0)
-         self.data = M.simulate_image(M.sample_prior(1))
-         # Display the image data
-         self.imv1.setImage(self.data)
+        self.show()
+        
+        #M = mappel.Gauss1DMLE(8,1.0)
+        #data = M.simulate_image(M.sample_prior(1))
+        data = np.random.randn(8,8)
+        self.setImPanel(data)
+
+    def setImPanel(self,data):
+        self.data = data
+        # Display the image data
+        self.imv1.setImage(self.data)
 
 #update()
     def loadh5Data(self, h5file):
-         h5f = h5py.File(h5file,'r')
-         dispMovie = h5f.get('Movie')
-         return np.array(dispMovie)
-#
+        h5f = h5py.File(h5file,'r')
+        dispMovie = h5f.get('Movie')
+        return np.array(dispMovie)
 
 # Start Qt event loop unless running in interactive mode.
 if __name__ == '__main__':
