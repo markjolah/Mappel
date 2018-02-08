@@ -84,7 +84,13 @@ class MyTableWidget(QWidget):
     def mouseMoved(self, pos):
         x = self.image.getImageItem().mapFromScene(pos).x()
         y = self.image.getImageItem().mapFromScene(pos).y()
-        self.intensitybox.setText("x pos:{0:.2f}, y pos:{1:.2f}".format(x, y))
+        pxx = np.floor(x)
+        pxy = np.floor(y)
+        if 0 < pxx < self.data.shape[0] and 0 < pxy < self.data.shape[1]:
+            i = self.data[pxx.astype(int),pxy.astype(int)]
+        else:
+            i = 0
+        self.intensitybox.setText("x pos:{0:.2f}, y pos:{1:.2f}, intensity:{2:.2f}".format(x, y, i))
 
     @pyqtSlot()
     def on_click(self):
