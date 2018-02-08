@@ -18,7 +18,7 @@ Normerf = 0.5*(sp.erf( (np.ceil(P_out[0])-P_out[0])/2/psf_var ) - sp.erf( (np.fl
 fig, ax = plt.subplots()
 fig_im = ax.bar(range(im.size),im,color='r',label='simulated')
 fig_md = ax.bar(range(md.size),md,color='b',alpha=0.4,label='model')
-fig_MLE = ax.plot(P_out[0]-0.5,P_out[1]*Normerf+P_out[2],'k+',markersize=6,label='MLE Estimate')
+fig_MLE = ax.plot(P_out[0]-0.5,P_out[1]*Normerf+P_out[2],'k+',markersize=12,label='MLE Estimate')
 ax.set_title('Simulated and Model histogram with MLE marker')
 ax.set_xlabel('pixel position')
 ax.set_ylabel('pixel count')
