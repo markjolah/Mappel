@@ -11,7 +11,7 @@ Created on Thu Jan 11 10:39:25 2018
 import sys
 import numpy as np
 #import mappel
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout, QLineEdit
 import pyqtgraph.console
 from pyqtgraph.Qt import QtGui
 import pyqtgraph as pg
@@ -48,8 +48,11 @@ class MyTableWidget(QWidget):
 
         # image tab
         self.tab0.layout = QVBoxLayout(self)
-        self.imv1 = pg.ImageView()
-        self.tab0.layout.addWidget(self.imv1)
+        self.image = pg.ImageView()
+        self.tab0.layout.addWidget(self.image)
+        # add a box to update pixel coordinate and intensity
+        self.intensitybox = QLineEdit(self)
+        self.tab0.layout.addWidget(self.intensitybox)
         self.tab0.setLayout(self.tab0.layout)
          
         # console tab
@@ -71,9 +74,17 @@ class MyTableWidget(QWidget):
         data = np.random.randn(8,8)
         self.setImPanel(data)
 
+        # mouse hover event
+        self.image.scene.sigMouseMoved.connect(self.mouseMoved)
+
         # Add tabs to widget
         self.layout.addWidget(self.tabs)
         self.setLayout(self.layout)
+
+    def mouseMoved(self, pos):
+        x = self.image.getImageItem().mapFromScene(pos).x()
+        y = self.image.getImageItem().mapFromScene(pos).y()
+        self.intensitybox.setText("x pos:{0}, y pos:{1}".format(x, y))
 
     @pyqtSlot()
     def on_click(self):
@@ -84,7 +95,7 @@ class MyTableWidget(QWidget):
     def setImPanel(self,data):
         self.data = data
         # Display the image data
-        self.imv1.setImage(self.data)
+        self.image.setImage(self.data)
 
 # Start Qt event loop unless running in interactive mode.
 if __name__ == '__main__':
