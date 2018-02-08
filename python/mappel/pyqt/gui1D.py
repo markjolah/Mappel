@@ -55,7 +55,7 @@ class MyTableWidget(QWidget):
 
         # console tab
         self.tab1.layout = QVBoxLayout(self)
-        namespace = {'pg': pg, 'np': np, 'self':self}
+        namespace = {'pg': pg, 'np': np, 'self':self, 'mappel':mappel}
         text = """ Change the figure by calling self.setImPanel(data) """ 
         self.cons = pyqtgraph.console.ConsoleWidget(namespace=namespace, text=text)
         self.tab1.layout.addWidget(self.cons)
@@ -99,6 +99,7 @@ class MyTableWidget(QWidget):
         self.data = data
         # Display the image data
         self.plot1=pg.BarGraphItem(x=np.arange(data.shape[0]),height=data, width=0.75, brush=(100,200,255,150))
+        self.image.clear()
         self.image.addItem(self.plot1)
 
 # Start Qt event loop unless running in interactive mode.
