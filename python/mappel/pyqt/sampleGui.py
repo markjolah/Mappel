@@ -11,73 +11,84 @@ Created on Thu Jan 11 10:39:25 2018
 import sys
 import numpy as np
 #import mappel
-from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout
 import pyqtgraph.console
 from pyqtgraph.Qt import QtGui
 import pyqtgraph as pg
-import h5py
+from PyQt5.QtCore import pyqtSlot
 
-#app = QtGui.QApplication([])
-
-class Example(QtGui.QMainWindow):
-    # Import a movie (raw data enhancement for later)
-    tree = r''
-    h5file = tree+r''
+class App(QMainWindow):
      
     def __init__(self):
         super().__init__()
-        
-        self.initUI()
-        
-    def initUI(self):
+        self.title = 'MAPPEL EVAL GUI - ALPHA'
+        self.setWindowTitle(self.title)
+        self.setGeometry(100,100,800,800)
 
-        self.resize(800,800)
-        self.setWindowTitle('SubRegion Viewer')
-        self.cw = QtGui.QWidget()
-        self.setCentralWidget(self.cw)
-        self.l = QtGui.QGridLayout()
-        self.cw.setLayout(self.l)
-         
-        # The image window
+        self.table_widget = MyTableWidget(self)
+        self.setCentralWidget(self.table_widget)
+
+        self.show()
+
+class MyTableWidget(QWidget):
+        
+    def __init__(self, parent):
+        super(QWidget, self).__init__(parent)
+        self.layout = QVBoxLayout(self)
+        
+        # Initialize tab screen
+        self.tabs = QTabWidget()
+        self.tab0 = QWidget()
+        self.tab1 = QWidget()
+        self.tabs.resize(300,200)
+
+        # Add tabs
+        self.tabs.addTab(self.tab0,"Image Viewer")
+        self.tabs.addTab(self.tab1,"Interactive Console")
+
+        # image tab
+        self.tab0.layout = QVBoxLayout(self)
         self.imv1 = pg.ImageView()
-        self.l.addWidget(self.imv1, 0, 0)
+        self.tab0.layout.addWidget(self.imv1)
+        self.tab0.setLayout(self.tab0.layout)
          
-        # console
+        # console tab
+        self.tab1.layout = QVBoxLayout(self)
         namespace = {'pg': pg, 'np': np, 'self':self}
-        text = """ Change the figure by setting the self.data variable """
+        text = """ Change the figure by calling self.setImPanel(data) """
          
-        c = pyqtgraph.console.ConsoleWidget(namespace=namespace, text=text)
-        self.l.addWidget(c,1,0)
-        c.setWindowTitle('pyqtgraph example: ConsoleWidget')
+        self.cons = pyqtgraph.console.ConsoleWidget(namespace=namespace, text=text)
+        self.tab1.layout.addWidget(self.cons)
+        self.tab1.setLayout(self.tab1.layout)
          
-        # buttons
-        # self.fileButton = QPushButton('load File', self)
-        # self.fileButton.move(200,200)
-         
-        # self.closeButton = QPushButton('close', self)
-        # self.closeButton.move(300,200)
+        # buttons (later...)
 
         self.show()
         
+        # Set the image
         #M = mappel.Gauss1DMLE(8,1.0)
         #data = M.simulate_image(M.sample_prior(1))
         data = np.random.randn(8,8)
         self.setImPanel(data)
+
+        # Add tabs to widget
+        self.layout.addWidget(self.tabs)
+        self.setLayout(self.layout)
+
+    @pyqtSlot()
+    def on_click(self):
+        print("\n")
+        for currentQTableWidgetItem in self.tableWidget.selectedItems():
+            print(currentQTableWidgetItem.row(), currentQTableWidgetItem.column(), currentQTableWidgetItem.text())
 
     def setImPanel(self,data):
         self.data = data
         # Display the image data
         self.imv1.setImage(self.data)
 
-#update()
-    def loadh5Data(self, h5file):
-        h5f = h5py.File(h5file,'r')
-        dispMovie = h5f.get('Movie')
-        return np.array(dispMovie)
-
 # Start Qt event loop unless running in interactive mode.
 if __name__ == '__main__':
     
     app = QtGui.QApplication(sys.argv)
-    ex = Example()
+    ex = App()
     sys.exit(app.exec_())
