@@ -8,11 +8,11 @@ plt.style.use('seaborn-ticks')
 ## 1D histogram, sample data and model overlay
 M = mappel.Gauss1DMLE(8,1.0)
 P_samp = M.sample_prior(1)
-psf_var = M.psf_sigma**2
+psf_sig = M.psf_sigma
 im = M.simulate_image(P_samp)
 md = M.model_image(P_samp)
 P_out, LLH, Hess = M.estimate_max(im,'Newton',P_samp)
-Normerf = 0.5*(sp.erf( (np.ceil(P_out[0])-P_out[0])/2/psf_var ) - sp.erf( (np.floor(P_out[0])-P_out[0])/2/psf_var ) )
+Normerf = 0.5*(sp.erf( (np.ceil(P_out[0])-P_out[0])/np.sqrt(2)/psf_sig ) - sp.erf( (np.floor(P_out[0])-P_out[0])/np.sqrt(2)/psf_sig ) )
 
 # plot simulated data, expected model, and MLE estimate
 fig, ax = plt.subplots()
