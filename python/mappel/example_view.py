@@ -1,22 +1,21 @@
 import numpy as np
-import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore, QtGui
-
 import mappel
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+plt.style.use('seaborn-ticks')
 
+## 1D histogram, sample data and model overlay
 M = mappel.Gauss1DMLE(8,1.0)
-ims = M.simulate_image(M.sample_prior(100))
+P_samp = M.sample_prior(1)
+im = M.simulate_image(P_samp)
+md = M.model_image(P_samp)
+P_out, LLH, Hess = M.estimate_max(im,'Newton',P_samp)
 
-win = pg.plot()
-win.setWindowTitle('1D Data Set')
+# plot simulated data, expected model, and MLE estimate
+fig, ax = plt.subplots()
+fig_im = ax.bar(range(im.size),im,color='r')
+fig_md = ax.bar(range(md.size),md,color='b')
+MLE = ax.plot(P_out[0]-0.5,P_out[1],'k+')
+ax.set_title('Simulated and Model histogram with MLE marker')
 
-bg1 = pg.BarGraphItem(x=range(8), height=ims[0], width=0.3, brush='r')
-
-win.addItem(bg1)
-
-## Start Qt event loop unless running in interactive mode or using pyside.
-if __name__ == '__main__':
-    import sys
-    if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-        QtGui.QApplication.instance().exec_()
-
+plt.show(fig)
