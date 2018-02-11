@@ -32,19 +32,34 @@ class viewer1D:
         b1 = self.sim.min()
         [MLE,LLH,Hess] = self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
         psf_sig = self.engine.psf_sigma
-        Normerf = 0.5*(erf( (np.ceil(self.thetas[0])-self.thetas[0])/np.sqrt(2)/psf_sig ) - erf( (np.floor(self.thetas[0])-self.thetas[0])/np.sqrt(2)/psf_sig ) )
+        Normerf = 0.5*(erf( (np.ceil(self.thetas[0])-self.thetas[0])/np.sqrt(2)/psf_sig ) - erf( (np.ceil(self.thetas[0])-self.thetas[0]-1)/np.sqrt(2)/psf_sig ) )
         # perform plotting of histograms and estimators
+        pparams = self.plotParams()
+        font = pparams['font']
+        mpl.rc('font', **font)
+        
         fig, ax = plt.subplots()
-        fig_fig_im = ax.bar(range(self.sim.size),self.sim,color='r',label='simulated')
-        fig_md = ax.bar(range(self.model.size),self.model,color='b',alpha=0.4,label='model')
-        fig_centroid = ax.plot(centroid-0.5,self.sim.max(),'k+',markersize=15,label='Centroid')
-        fig_lsq = ax.plot(lsqE[0]-0.5,lsqE[1]*Normerf+lsqE[2],'rx',markersize=15,label='Least Squares')
-        fig_mle = ax.plot(MLE[0]-0.5,MLE[1]*Normerf+MLE[2],'bo',markersize=15,label='Maximum Likelihood')
+        fig_fig_im = ax.bar(np.arange(0.5,self.sim.size,1),self.sim,color='r',label='simulated')
+        fig_md = ax.bar(np.arange(0.5,self.model.size,1),self.model,color='b',alpha=0.4,label='model')
+        fig_truth = ax.plot(self.thetas[0],self.thetas[1]*Normerf+self.thetas[2],'k*',ms=25,mew=6,label='Simulation Truth')
+        fig_centroid = ax.plot(centroid+0.5,self.sim.max(),'c+',ms=25,mew=6,label='Centroid')
+        fig_lsq = ax.plot(lsqE[0],lsqE[1]*Normerf+lsqE[2],'mx',ms=25,mew=6,label='Least Squares')
+        fig_mle = ax.plot(MLE[0],MLE[1]*Normerf+MLE[2],'g.',ms=25,mew=6,label='Maximum Likelihood')
         ax.set_title('Simulated and Model Histograms with Point Estimates')
         ax.set_xlabel('pixel position')
         ax.set_ylabel('pixel count')
         ax.legend()
+        
+        sim_string = "truth: position={0:.2f}, intensity={1:.2f}, background={2:.2f}".format(self.thetas[0],self.thetas[1],self.thetas[2])
+        ax.text(0.95, 0.1, sim_string, verticalalignment='bottom', horizontalalignment='right',transform=ax.transAxes, fontsize=20, bbox={'facecolor':'cyan', 'alpha':0.5, 'pad':10}) 
+       
         plt.show(fig)
+
+    def plotParams(self):
+        font = {'family' : 'normal',
+                'weight' : 'bold',
+                'size' : 22}
+        return {'font':font}
 
     def calcCentroid(self,data):
         xpos = 0
