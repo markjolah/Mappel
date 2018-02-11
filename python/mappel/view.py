@@ -23,6 +23,38 @@ class viewer1D:
         self.sim = self.engine.simulate_image(thetas)
         self.model = self.engine.model_image(thetas)
 
+    def compareLikelihoodtoData(self,thetas=None):
+        self.genModelSimData(thetas)
+        centroid = self.calcCentroid(self.sim)
+        I1 = self.sim.sum()
+        b1 = self.sim.min()
+        [mle_vals, llh, Hess] = self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
+        # get sampling area
+        xs = np.arange(0.01,8,0.01)
+        # fix I and bg at MLE value at MLE of x for now
+        ism = mle_vals[1]*np.ones(xs.size)
+        bsm = mle_vals[2]*np.ones(xs.size)
+        thetas = (xs,ism,bsm)
+        # call objective_llh
+        llh = self.engine.objective_llh(self.sim,thetas)
+        # perform plotting
+        pparams = self.plotParams()
+        font = pparams['font']
+        mpl.rc('font', **font)
+        fig,(ax0,ax1) = plt.subplots(1,2)
+        fig_im = ax0.bar(range(self.sim.size),self.sim,color='r',label='simulated')
+        fig_llh = ax1.plot(xs,llh,linewidth=5.0)
+
+        ax0.set_title('Simulated Histogram')
+        ax0.set_xlabel('pixel position')
+        ax0.set_ylabel('pixel count')
+        
+        ax1.set_title('Log Likelihood of X given the Histogram')
+        ax1.set_ylabel('Log Likelihood')
+        ax1.set_xlabel('X position of PSF Model')
+
+        plt.show(fig)
+
     def overlayLeastSquares(self,thetas=None):
         self.genModelSimData(thetas)
         centroid = self.calcCentroid(self.sim)

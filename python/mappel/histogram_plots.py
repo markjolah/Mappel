@@ -17,4 +17,6 @@ A = mappel.view.viewer1D()
 #A.overlayModelSim([2,1000,100])
 #A.overlayModelSim([2,100,100])
 
-A.overlayLeastSquares([2,1000,200])
+#A.overlayLeastSquares([2,1000,200])
+
+A.compareLikelihoodtoData([3,200,50])
