@@ -13,7 +13,8 @@ import mappel.view
 #im = M.simulate_image(P_samp)
 
 A = mappel.view.viewer1D()
-A.overlayModelSim([2,10000,50])
-A.overlayModelSim([2,1000,100])
-A.overlayModelSim([2,100,100])
+#A.overlayModelSim([2,10000,50])
+#A.overlayModelSim([2,1000,100])
+#A.overlayModelSim([2,100,100])
 
+A.overlayLeastSquares([2,1000,200])

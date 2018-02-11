@@ -23,11 +23,35 @@ class viewer1D:
         self.sim = self.engine.simulate_image(thetas)
         self.model = self.engine.model_image(thetas)
 
+    def overlayLeastSquares(self,thetas=None):
+        self.genModelSimData(thetas)
+        centroid = self.calcCentroid(self.sim)
+        lsqE = self.leastSquares(self.sim)
+
+        sampling_freq = 100
+        gauss_simulated = np.zeros(self.sim.size*sampling_freq)
+        gauss_model = np.zeros(self.sim.size*sampling_freq)
+        normfunc = lambda x,x0,I0,bg0,sig: I0/np.sqrt(2*np.pi) * np.exp(-(x-x0)**2/2/sig**2) + bg0
+        for ii in range(gauss_simulated.size):
+             gauss_simulated[ii] = normfunc(ii/sampling_freq,lsqE[0],lsqE[1],lsqE[2],self.engine.psf_sigma)
+             gauss_model[ii] = normfunc(ii/sampling_freq,lsqE[0],lsqE[1],lsqE[2],self.engine.psf_sigma)
+        # perform plotting
+        pparams = self.plotParams()
+        font = pparams['font']
+        mpl.rc('font', **font)
+        fig, ax = plt.subplots()
+        fig_im = ax.bar(range(self.sim.size),self.sim,color='r',label='simulated')
+        fig_imgauss = ax.plot(np.arange(gauss_simulated.size)/sampling_freq-0.5,gauss_simulated,label='Gaussian Fit',linewidth=5.0)
+        ax.set_title('Least Squares Fit over Simulated Histogram')
+        ax.set_xlabel('pixel position')
+        ax.set_ylabel('pixel count')
+        ax.legend()
+        plt.show(fig)
+
     def overlayModelSim(self,thetas=None):
         self.genModelSimData(thetas)
         centroid = self.calcCentroid(self.sim)
         lsqE = self.leastSquares(self.sim)
-        #P_samp = self.engine.sample_prior(1)
         I1 = self.sim.sum()
         b1 = self.sim.min()
         [MLE,LLH,Hess] = self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
