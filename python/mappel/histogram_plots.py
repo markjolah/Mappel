@@ -19,4 +19,8 @@ A = mappel.view.viewer1D()
 
 #A.overlayLeastSquares([2,1000,200])
 
-A.compareLikelihoodtoData([3,200,50])
+#A.compareLikelihoodtoData([3,200,50])
+
+# plot X-Hessian Gaussian on Likelihood
+#A.overlayHessianLikelihood([4,200,50])
+A.overlayHessianLikelihood([4,2000,50])

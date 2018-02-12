@@ -22,13 +22,47 @@ class viewer1D:
         self.thetas = thetas
         self.sim = self.engine.simulate_image(thetas)
         self.model = self.engine.model_image(thetas)
-
-    def compareLikelihoodtoData(self,thetas=None):
-        self.genModelSimData(thetas)
+    
+    def genMLEstatistics(self,data):
         centroid = self.calcCentroid(self.sim)
         I1 = self.sim.sum()
         b1 = self.sim.min()
-        [mle_vals, llh, Hess] = self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
+        return self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
+
+    def overlayHessianLikelihood(self,thetas=None):
+        self.genModelSimData(thetas)
+        [mle_vals, llh_max, Hess] = self.genMLEstatistics(self.sim)
+        # generate log likelihood curve
+        xs = np.arange(mle_vals[0]-1,mle_vals[0]+1,0.01)
+        # fix I and bg at MLE value at MLE of x for now
+        ism = mle_vals[1]*np.ones(xs.size)
+        bsm = mle_vals[2]*np.ones(xs.size)
+        thetas = (xs,ism,bsm)
+        llh = self.engine.objective_llh(self.sim,thetas)
+        max_llh = self.engine.objective_llh(self.sim,mle_vals)
+        # generate hessian curve
+        hsc = -Hess[0,0]*(xs-mle_vals[0])**2+max_llh
+        # plot the curves
+        pparams = self.plotParams()
+        font = pparams['font']
+        mpl.rc('font', **font)
+        fig,ax = plt.subplots()
+        fig_llh = ax.plot(xs,llh,'r+',ms='8',mew='2',linewidth='5.0',label='log likelihood')
+        fig_hess = ax.plot(xs,hsc,'cv',ms='8',mew='2',linewidth='5.0',label='information parabola')
+
+        ax.set_title('Log Likelihood vs Information Parametric')
+        ax.set_xlabel('pixel position')
+        ax.set_ylabel('log likelihood')
+        ax.legend()
+
+        sim_string = "truth: position={0:.2f}, intensity={1:.2f}, background={2:.2f}".format(self.thetas[0],self.thetas[1],self.thetas[2])
+        ax.text(0.95, 0.1, sim_string, verticalalignment='bottom', horizontalalignment='right',transform=ax.transAxes, fontsize=20, bbox={'facecolor':'cyan', 'alpha':0.5, 'pad':10})
+
+        plt.show(fig)
+
+    def compareLikelihoodtoData(self,thetas=None):
+        self.genModelSimData(thetas)
+        [mle_vals, llh, Hess] = self.genMLEstatistics(self.sim)
         # get sampling area
         xs = np.arange(0.01,8,0.01)
         # fix I and bg at MLE value at MLE of x for now
@@ -84,9 +118,7 @@ class viewer1D:
         self.genModelSimData(thetas)
         centroid = self.calcCentroid(self.sim)
         lsqE = self.leastSquares(self.sim)
-        I1 = self.sim.sum()
-        b1 = self.sim.min()
-        [MLE,LLH,Hess] = self.engine.estimate_max(self.sim,'Newton',[centroid,I1,b1])
+        [MLE,LLH,Hess] = self.genMLEstatistics(self.sim)
         psf_sig = self.engine.psf_sigma
         Normerf = 0.5*(erf( (np.ceil(self.thetas[0])-self.thetas[0])/np.sqrt(2)/psf_sig ) - erf( (np.ceil(self.thetas[0])-self.thetas[0]-1)/np.sqrt(2)/psf_sig ) )
         # perform plotting of histograms and estimators
