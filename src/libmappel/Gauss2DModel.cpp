@@ -195,25 +195,31 @@ Gauss2DModel::Stencil
 Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init, 
                                                const std::string &estimator_method)
 {
-    check_param_shape(theta_init);
-    double x_pos = theta_init(0);
-    double y_pos = theta_init(1);
-    double I = theta_init(2);
-    double bg = theta_init(3);
-    if(!theta_in_bounds(theta_init)) {
-        Gauss1DModel::ImageT x_im = arma::sum(im,0).t();
-        Gauss1DModel::ImageT y_im = arma::sum(im,1);
-        auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
-        auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
-        
-        if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) 
-            x_pos = x_est.theta(0);
-        if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) 
-            y_pos = y_est.theta(0);
-        if(I <= lbound(2) || I >= ubound(2) || !std::isfinite(I)) 
-            I = std::max(x_est.theta(1), y_est.theta(1)); //max of X and Y est of I
-        if(bg <= lbound(3) || bg >= ubound(3) || !std::isfinite(bg)) 
-            bg = .5*(x_est.theta(2)/size(1) + y_est.theta(2)/size(0)); //mean of X and Y est of bg corrected for 1D vs 2D interpretation of bg
+    double x_pos = 0;
+    double y_pos = 0;
+    double I = 0;
+    double bg = 0;    
+    if(theta_init.n_elem == num_params){
+        if(theta_in_bounds(theta_init)) return make_stencil(theta_init);
+        x_pos = theta_init(0);
+        y_pos = theta_init(1);
+        I = theta_init(2);
+        bg = theta_init(3);
+    }
+    Gauss1DModel::ImageT x_im = arma::sum(im,0).t();
+    Gauss1DModel::ImageT y_im = arma::sum(im,1);
+    auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
+    auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
+    
+    if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) x_pos = x_est.theta(0);
+    if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) y_pos = y_est.theta(0);
+    if(I <= lbound(2) || I >= ubound(2) || !std::isfinite(I)) {
+        //max of X and Y est of I
+        I = std::max(x_est.theta(1), y_est.theta(1)); 
+    }
+    if(bg <= lbound(3) || bg >= ubound(3) || !std::isfinite(bg)) {
+        //mean of X and Y est of bg corrected for 1D vs 2D interpretation of bg
+        bg = .5*(x_est.theta(2)/size(1) + y_est.theta(2)/size(0));
     }
     return make_stencil(ParamT{x_pos, y_pos, I, bg});
 }

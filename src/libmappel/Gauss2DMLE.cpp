@@ -6,6 +6,7 @@
 #include "Gauss2DMLE.h"
 
 namespace mappel {
+
 const std::string Gauss2DMLE::name("Gauss2DMLE");
 
 Gauss2DMLE::Gauss2DMLE(ImageCoordT size, double psf_sigma) :

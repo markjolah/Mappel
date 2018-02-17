@@ -104,7 +104,7 @@ imageAsArma(ArrayDoubleT &im)
 {
     switch(im.ndim()) {
         case 2:
-            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), false, true};
+            return {static_cast<double*>(im.mutable_data(0,0)), static_cast<IdxT>(im.shape(0)), static_cast<IdxT>(im.shape(1)), false, true};
         case 3:
             if(im.shape(Model::num_dim) != 1 ) {
                 std::ostringstream msg;
@@ -189,22 +189,44 @@ makeImageStackArray(uint32_t shape, uint32_t count)
     else            return ArrayT<ElemT, ColumnMajorOrder>({shape,count});
 }
 
+
+/**
+ * 
+ * @param size The image size as returned by Model.get_size(). [sizeX, sizeY] for 2D models
+ */
 template<class ElemT=double, class IntT=uint32_t>
 ArrayT<ElemT, ColumnMajorOrder> 
-makeImageStackArray(arma::Col<IntT> shape, IdxT count)
+makeImageStackArray(arma::Col<IntT> size, IdxT count)
 {
-    switch(shape.n_elem) {
+    switch(count) {
+        case 0:
+            throw PythonError("ConversionError","Attempt to make image stack of count==0");
         case 1:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),static_cast<IntT>(count)});
-        case 2:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1),static_cast<IntT>(count)});
-        case 3:
-            return ArrayT<ElemT, ColumnMajorOrder>({shape(0),shape(1), shape(2),static_cast<IntT>(count)});
+            switch(size.n_elem) {
+                case 1:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(0)});
+                case 2:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(1),size(0)});
+                case 3:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(2),size(1), size(0)});
+                default:
+                    break;
+            }
         default:
-            std::ostringstream msg;
-            msg<<"Unable to create array stack of size:"<<shape.n_elem<<" val:"<<shape.t();
-            throw PythonError("ConversionError",msg.str());
+            switch(size.n_elem) {
+                case 1:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(0),static_cast<IntT>(count)});
+                case 2:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(1),size(0),static_cast<IntT>(count)});
+                case 3:
+                    return ArrayT<ElemT, ColumnMajorOrder>({size(2),size(1), size(0),static_cast<IntT>(count)});
+                default:
+                    break;
+            }
     }
+    std::ostringstream msg;
+    msg<<"Unable to create array stack for images of size:"<<size.t();
+    throw PythonError("ConversionError",msg.str());
 }
 
 inline

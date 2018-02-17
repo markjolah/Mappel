@@ -137,15 +137,21 @@ void Gauss1DModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m
 Gauss1DModel::Stencil 
 Gauss1DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
 {
-    double x_pos=0, I=0, bg=0;
-    if(theta_init.n_elem == num_params) {
+    double x_pos = 0;
+    double I = 0;
+    double bg = 0;    
+    if(theta_init.n_elem == num_params){
         x_pos = theta_init(0);
         I = theta_init(1);
         bg = theta_init(2);
     }
-    if(x_pos <= 0 || x_pos > size) x_pos = im.index_max()+0.5;
-    if(bg <= 0) bg = std::max(1.0, 0.75*im.min());
-    if(I <= 0)  I = std::max(1.0, arma::sum(im) - bg*size);
+    
+    if(x_pos <= 0 || x_pos > size || !std::isfinite(x_pos)) 
+        x_pos = im.index_max()+0.5;
+    if(bg <= 0 || !std::isfinite(bg)) 
+        bg = std::max(1.0, 0.75*im.min());
+    if(I <= 0 || !std::isfinite(I))  
+        I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg});
 }
 
