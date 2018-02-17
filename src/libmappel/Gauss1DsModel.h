@@ -49,7 +49,7 @@ public:
     
     /* Prior construction */
     static CompositeDist make_default_prior(IdxT size, double min_sigma, double max_sigma);
-    static CompositeDist make_prior_beta_position(IdxT size, double beta_x, double mean_I,
+    static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
                                                double min_sigma, double max_sigma);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,

@@ -1,6 +1,6 @@
 /** @file Gauss1DModel.h
  * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 2017
+ * @date 2017-2018
  * @brief The class declaration and inline and templated functions for Gauss1DModel.
  */
 
@@ -46,20 +46,20 @@ public:
     };
     using StencilVecT = std::vector<Stencil>;
     
-    Gauss1DModel(IdxT size_, double psf_sigma);
+    Gauss1DModel(IdxT size, double psf_sigma);
 
     /* Prior construction */
     static CompositeDist make_default_prior(IdxT size);
-    static CompositeDist make_prior_beta_position(IdxT size, double beta_x, double mean_I,
+    static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
                                              double kappa_I, double mean_bg, double kappa_bg);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg);
-
+    
     double get_psf_sigma() const;
+    double get_psf_sigma(IdxT idx) const;
     void set_psf_sigma(double new_psf_sigma);
     
     StatsT get_stats() const;
-
     Stencil make_stencil(const ParamT &theta, bool compute_derivatives=true) const;
 
     /* Model Pixel Value And Derivatives */
@@ -79,15 +79,26 @@ public:
 protected:
     /* Non-static data Members */
     double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
-
 };
 
 
 /* Inline Method Definitions */
 
-/** @brief Make a new stencil for parameter theta and optionally compute derivatives
- * Remove implicit bounding.  This allows for computations outside of the limited region
- * And prevents false impression that LLH and grad and hessian do not change outside of boundaries
+/** @brief Make a new Model::Stencil object at theta.
+ * 
+ * Stencils store all of the important calculations necessary for evaluating the log-likelihood and its derivatives at a
+ * particular theta (parameter) value.
+ * 
+ * This allows re-use of the most expensive computations.  Stencils can be easily passed around by reference, and most
+ * functions in the mappel::methods namespace accept a const Stencil reference in place of the model parameter.
+ * 
+ * Throws mappel::ModelBoundsError if not model.theta_in_bounds(theta).
+ * 
+ * If derivatives will not be computed with this stencil set compute_derivatives=false
+ * 
+ * @param theta Prameter to evaluate at
+ * @param compute_derivatives True to also prepare for derivative computations
+ * @return A new Stencil object ready to compute with
  */
 inline
 Gauss1DModel::Stencil
@@ -105,6 +116,8 @@ inline
 double Gauss1DModel::get_psf_sigma() const
 { return psf_sigma; }
 
+
+/* Model Pixel Value And Derivatives */
 
 inline
 double Gauss1DModel::pixel_model_value(IdxT i,  const Stencil &s) const
@@ -150,4 +163,4 @@ Gauss1DModel::initial_theta_estimate(const ImageT &im) const
 
 } /* namespace mappel */
 
-#endif /* _GAUSS1DMODEL_H */
+#endif /* _MAPPEL_GAUSS1DMODEL_H */

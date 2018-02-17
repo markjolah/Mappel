@@ -20,7 +20,8 @@ Gauss1DsModel::Gauss1DsModel(IdxT size_)
     mcmc_candidate_eta_sigma = 1.0*mcmc_candidate_sample_dist_ratio;    
 }
 
-Gauss1DsModel::CompositeDist Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
+CompositeDist 
+Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
 {
     return CompositeDist(make_prior_component_position_beta("x",size),
                          make_prior_component_intensity("I"),
@@ -28,7 +29,7 @@ Gauss1DsModel::CompositeDist Gauss1DsModel::make_default_prior(IdxT size, double
                          make_prior_component_sigma("sigma",min_sigma,max_sigma));
 }
 
-Gauss1DsModel::CompositeDist 
+CompositeDist 
 Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg,
@@ -36,10 +37,12 @@ Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos,
 {
     return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
                          make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                         make_prior_component_sigma("sigma",min_sigma,max_sigma)
+                        );
 }
 
-Gauss1DsModel::CompositeDist 
+CompositeDist 
 Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg,
@@ -47,35 +50,47 @@ Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos,
 {
     return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
                          make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                         make_prior_component_sigma("sigma",min_sigma,max_sigma)
+                        );
 }
 
-void Gauss1DsModel::set_min_sigma(double min_sigma)
+void Gauss1DsModel::set_min_sigma(double new_min_sigma)
 {
+    if(new_min_sigma<global_min_psf_sigma || 
+       new_min_sigma>global_max_psf_sigma || !std::isfinite(new_min_sigma)) {
+        std::ostringstream msg;
+        msg<<"Invalid min_psf_sigma: "<<new_min_sigma<<" Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
     auto lb = prior.lbound();
-    lb(3) = min_sigma;
+    lb(3) = new_min_sigma;
     set_lbound(lb);
 }
 
-void Gauss1DsModel::set_max_sigma(double max_sigma)
+void Gauss1DsModel::set_max_sigma(double new_max_sigma)
 {
+    if(new_max_sigma<global_min_psf_sigma || 
+       new_max_sigma>global_max_psf_sigma || !std::isfinite(new_max_sigma)) {
+        std::ostringstream msg;
+        msg<<"Invalid min_psf_sigma: "<<new_max_sigma<<" Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
     auto ub = prior.ubound();
-    ub(3) = max_sigma;
+    ub(3) = new_max_sigma;
     set_ubound(ub);
 }
 
 void Gauss1DsModel::set_min_sigma(const VecT &min_sigma)
 {
-    auto lb = prior.lbound();
-    lb(3) = min_sigma(0);
-    set_lbound(lb);
+    set_min_sigma(min_sigma(0));
 }
 
 void Gauss1DsModel::set_max_sigma(const VecT &max_sigma)
 {
-    auto ub = prior.ubound();
-    ub(3) = max_sigma(0);
-    set_ubound(ub);
+    set_max_sigma(max_sigma(0));
 }
 
 
