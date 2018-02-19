@@ -13,9 +13,9 @@ import hypothesis.extra.numpy as npst
 from .conftest import MappelEstimatorTestMethods
 from .common import *
 
-Nestimate = 64
-Nsample = 300
-Nburnin = 20
+Nestimate = 8
+Nsample = 5000
+Nburnin = 30
 thin = 0
 
 @hypothesis.given(seed=npst.arrays(shape=1,dtype="uint64"))
@@ -80,22 +80,21 @@ def test_estimate_mcmc_debug(model,seed):
     assert np.all(sample2 == sample), "Debug output does not match regular."
     assert np.all(sample_rllh2 == sample_rllh), "Debug output does not match regular."
 
-
-@hypothesis.given(seed=npst.arrays(shape=1,dtype="uint64"))
-def test_error_bounds_posterior_credible(model,seed):
-    """
-    Check model.error_bounds_posterior_credible()
-    """
-    theta = draw_prior_theta(model,seed, Nestimate)
-    im = model.simulate_image(theta)
-    (sample, sample_rllh) = model.estimate_mcmc_sample(im,Nsample=Nsample,Nburnin=Nburnin,thin=thin)
-    check_sample(model, sample, Nsample, Nestimate)
-    val = model.error_bounds_posterior_credible(sample)
-    assert len(val) == 3
-    (theta_mean,lbound,ubound) = val
-    check_theta(model,theta_mean,Nestimate,check_bounds=True)
-    check_theta(model,lbound,Nestimate,check_bounds=True)
-    check_theta(model,ubound,Nestimate,check_bounds=True)
-    assert np.all(lbound < theta_mean)
-    assert np.all(ubound > theta_mean)
+#@hypothesis.given(seed=npst.arrays(shape=1,dtype="uint64"))
+#def test_error_bounds_posterior_credible(model,seed):
+    #"""
+    #Check model.error_bounds_posterior_credible()
+    #"""
+    #theta = draw_prior_theta(model,seed, Nestimate)
+    #im = model.simulate_image(theta)
+    #(sample, sample_rllh) = model.estimate_mcmc_sample(im,Nsample=Nsample,Nburnin=Nburnin,thin=thin)
+    #check_sample(model, sample, Nsample, Nestimate)
+    #val = model.error_bounds_posterior_credible(sample)
+    #assert len(val) == 3
+    #(theta_mean,lbound,ubound) = val
+    #check_theta(model,theta_mean,Nestimate,check_bounds=True)
+    #check_theta(model,lbound,Nestimate,check_bounds=True)
+    #check_theta(model,ubound,Nestimate,check_bounds=True)
+    #assert np.all(lbound < theta_mean)
+    #assert np.all(ubound > theta_mean)
     

@@ -1,74 +1,38 @@
 
 /** @file Gauss2DsMLE.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 03-22-2014
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss2DsMLE.
  */
 
-#ifndef _GAUSS2DSMLE_H
-#define _GAUSS2DSMLE_H
+#ifndef _MAPPEL_GAUSS2DSMLE_H
+#define _MAPPEL_GAUSS2DSMLE_H
 
 #include "Gauss2DsModel.h"
+#include "PoissonNoise2DObjective.h"
+#include "MLEstimator.h"
+#include "model_methods.h"
 
+namespace mappel {
 
-/** @brief A 2D Likelyhood model for a point emitter localization with 
- * Symmetric Gaussian PSF and Poisson Noise, using a  Uniform Prior over the 
- * parameter vectors
- *
- * This model matches the model used in cGaussMLE.  
- * So we can use this as comparison.
+/** @brief A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum-likelihood objective
+ * 
+ *   Model: Gauss2DsModel - 2D Gaussian variable scalar PSF sigma
+ *   Objective: PoissonNoise2DObjective - Poisson noise model for 2D
+ *   Estimator: MLEstimator - Pure-likelihood estimator
  * 
  */
-class Gauss2DsMLE : public Gauss2DsModel {
-private:
-    /* Theta prior parameters */
-    double I_min=1e1; /**< The minimum intensity for our Uniform prior */
-    double I_max=1e5; /**< The maximum intensity for our Uniform prior */
-    double bg_min=1.0e-6; /**< The minimum bg for our Uniform prior (estimating bg=0 is bad for the numerics) */
-    double bg_max=1e2; /**< The maximum bg for our Uniform prior */
-    double sigma_min=0.5;
-    double sigma_max=3.0; /**< The maximum bg for our Uniform prior */
-    UniformRNG pos_dist;
-    UniformRNG I_dist;
-    UniformRNG bg_dist;
-    UniformRNG sigma_dist;
+class Gauss2DsMLE : public Gauss2DsModel, public PoissonNoise2DObjective, public MLEstimator 
+{
 public:
-    static const std::vector<std::string> hyperparameter_names;
-
     /* Constructor/Destructor */
-    Gauss2DsMLE(const IVecT &size, const VecT &psf_sigma);
+    Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio);
+    Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
+    Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, CompositeDist&& prior);     
 
-    /* Model values setting and information */
-    std::string name() const {return "Gauss2DsMLE";}
-    StatsT get_stats() const;
-
-    /* Sample from Theta Prior */
-    ParamT sample_prior(RNG &rng);
-    void set_hyperparameters(const VecT &hyperparameters);
-    void bound_theta(ParamT &theta) const;
-    bool theta_in_bounds(const ParamT &theta) const;
-
-    double prior_log_likelihood(const Stencil &s) const;
-    double prior_relative_log_likelihood(const Stencil &s) const;
-    ParamT prior_grad(const Stencil &s) const;
-    ParamT prior_grad2(const Stencil &s) const;
-    ParamT prior_cr_lower_bound(const Stencil &s) const;
+    static const std::string name;
 };
 
-/* Template Specialization Declarations */
+} /* namespace mappel */
 
-/* Inlined Methods */
-inline
-Gauss2DsMLE::ParamT
-Gauss2DsMLE::sample_prior(RNG &rng)
-{
-    ParamT theta;
-    theta(0)=pos_dist(rng); // Prior: Uniform on [0,size]
-    theta(1)=pos_dist(rng); // Prior: Uniform on [0,size]
-    theta(2)=I_dist(rng);   // Prior: Uniform on [I_min,I_max]
-    theta(3)=bg_dist(rng);  // Prior: Uniform on [bg_min,bg_max]
-    theta(4)=sigma_dist(rng);  // Prior: Uniform on [sigma_min,sigma_max]
-    return theta;
-}
-
-#endif /* _GAUSS2DSMLE_H */
+#endif /* _MAPPEL_GAUSS2DSMLE_H */

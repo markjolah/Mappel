@@ -1,5 +1,5 @@
 /** @file ImageFormat1DBase.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class declaration and inline and templated functions for ImageFormat1DBase.
  *
@@ -38,8 +38,8 @@ public:
     using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< Data type to represent a sequence of images */
 
     constexpr static ImageCoordT num_dim = 1;  /**< Number of image dimensions. */
-    constexpr static ImageCoordT min_size = 3; /**< Minimum size along any dimension of the image. */
-    constexpr static ImageCoordT max_size = 4096; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
+    constexpr static ImageCoordT global_min_size = 3; /**< Minimum size along any dimension of the image. */
+    constexpr static ImageCoordT global_max_size = 4096; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
     
     ImageFormat1DBase(ImageSizeT size_);
     StatsT get_stats() const;

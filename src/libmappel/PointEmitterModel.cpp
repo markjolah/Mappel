@@ -1,5 +1,5 @@
 /** @file PointEmitterModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-13-2014
  * @brief The class definition and template Specializations for PointEmitterModel
  */
@@ -123,6 +123,29 @@ void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
     }
 }
 
+void PointEmitterModel::check_psf_sigma(double psf_sigma) const
+{
+   if(psf_sigma < global_min_psf_sigma || 
+      psf_sigma > global_max_psf_sigma || 
+      !std::isfinite(psf_sigma)) {
+        std::ostringstream msg;
+        msg<<"Invalid psf_sigma: "<<psf_sigma<<"\b Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
+}
+
+void PointEmitterModel::check_psf_sigma(const VecT &psf_sigma) const
+{
+    if(arma::any(psf_sigma < global_min_psf_sigma) || 
+        arma::any(psf_sigma > global_max_psf_sigma) || 
+        !psf_sigma.is_finite()) {
+        std::ostringstream msg;
+        msg<<"Invalid psf_sigma: "<<psf_sigma.t()<<"\b Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
+}
 
 /**
  *

@@ -1,5 +1,5 @@
 /** @file Gauss1DModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief The class definition and template Specializations for Gauss1DModel
  */
@@ -48,16 +48,10 @@ Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                          make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
 
-void Gauss1DModel::set_psf_sigma(double new_psf_sigma)
+void Gauss1DModel::set_psf_sigma(double new_sigma)
 { 
-    if(new_psf_sigma<global_min_psf_sigma || 
-       new_psf_sigma>global_max_psf_sigma || !std::isfinite(new_psf_sigma)) {
-        std::ostringstream msg;
-        msg<<"Invalid psf_sigma: "<<new_psf_sigma<<" Valid psf_sigma range:["
-            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
-        throw ParameterValueError(msg.str());
-    }
-    psf_sigma = new_psf_sigma;
+    check_psf_sigma(new_sigma);
+    psf_sigma = new_sigma;
 }
 
 double Gauss1DModel::get_psf_sigma(IdxT idx) const
@@ -113,6 +107,7 @@ StatsT Gauss1DModel::get_stats() const
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat1DBase::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats["psf_sigma"] = get_psf_sigma();
     return stats;
 }
 
@@ -130,7 +125,7 @@ void Gauss1DModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m
     hess(0,0) += dm_ratio_m1 * I/psf_sigma * s.DXS(i);
     hess(0,1) += dm_ratio_m1 * pgrad(0) / I; 
     //This is the pixel-gradient dependent part of the hessian
-    for(IdxT c=0; c<(IdxT)hess.n_cols; c++) for(IdxT r=0; r<=c; r++)
+    for(IdxT c=0; c<hess.n_cols; c++) for(IdxT r=0; r<=c; r++)
         hess(r,c) -= dmm_ratio * pgrad(r) * pgrad(c);
 }
 

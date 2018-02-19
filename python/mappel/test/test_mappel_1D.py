@@ -12,7 +12,7 @@ def test_num_dim_1D(model1D):
 def test_size_1D(model1D):
     """check size get and set properties"""
     model = model1D
-    assert model.size >= model.min_size
+    assert model.size >= model.global_min_size
     size = model.size
     model.size += 1
     assert size+1 == model.size
@@ -20,7 +20,7 @@ def test_size_1D(model1D):
 def test_min_size_1D(model1D):
     """check size error conditions"""
     model = model1D
-    assert model.min_size > 0
-    with pytest.raises(ValueError, message="Expecting min_size to be respected"):
-        model.size = model.min_size-1
+    assert model.global_min_size > 0
+    with pytest.raises(ValueError, message="Expecting global_min_size to be respected"):
+        model.size = model.global_min_size-1
 

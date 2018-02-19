@@ -12,7 +12,7 @@ IdxT num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin)
 
 MatT thin_sample(MatT &sample, IdxT Nburnin, IdxT thin)
 {
-    if(thin<=0) thin = 1;
+    if(thin==0) thin = 1;
     IdxT Noversample = sample.n_cols;
     IdxT Nkeep = 1 + (Noversample-Nburnin-1)/thin;
     MatT subsample(sample.n_rows,Nkeep);
@@ -23,7 +23,7 @@ MatT thin_sample(MatT &sample, IdxT Nburnin, IdxT thin)
 
 void thin_sample(const MatT &sample, const VecT &sample_rllh, IdxT Nburnin, IdxT thin, MatT &subsample, VecT &subsample_rllh)
 {
-    if(thin<=0) thin = 1;
+    if(thin==0) thin = 1;
     IdxT Noversample = sample.n_cols;
     IdxT Nkeep = 1 + (Noversample-Nburnin-1)/thin;
     subsample.set_size(sample.n_rows,Nkeep);

@@ -1,5 +1,5 @@
 /** @file numerical.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 05-2015
  * @brief Numerical matrix operations
  */

@@ -1,5 +1,5 @@
 /** @file Gauss1DsMAP_module.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2018
  * @brief The instantiation of the mappel python module for Gauss1DsMAP
  */

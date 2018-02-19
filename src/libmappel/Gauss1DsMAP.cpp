@@ -1,5 +1,5 @@
 /** @file Gauss1DsMAP.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief The class definition and template Specializations for Gauss1DsMAP
  */
@@ -21,9 +21,8 @@ Gauss1DsMAP::Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma) :
             Gauss1DsModel(size)
 { }
 
-template<class PriorDistT>
-Gauss1DsMAP::Gauss1DsMAP(ImageSizeT size, PriorDistT&& prior) : 
-            PointEmitterModel(std::forward<PriorDistT>(prior)), 
+Gauss1DsMAP::Gauss1DsMAP(ImageSizeT size, CompositeDist&& prior) : 
+            PointEmitterModel(std::move(prior)), 
             ImageFormat1DBase(size),
             Gauss1DsModel(size)
 { }

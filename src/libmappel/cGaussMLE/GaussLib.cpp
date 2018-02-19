@@ -5,7 +5,7 @@
 * \brief Numerical functions for computing gauss MLE function and derivative values.
 * These functions are used for the MLE fitting of model data to the various MLE models.
 * 
-* Mark J. Olah (mjo@cs.unm.edu) 
+* Mark J. Olah (mjo@cs.unm DOT edu) 
 * 12-16-2013
 * Modifications made to optimize for CPU performance.
 */

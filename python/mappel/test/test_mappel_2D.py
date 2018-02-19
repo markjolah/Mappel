@@ -13,7 +13,7 @@ def test_num_dim_2D(model2D):
 def test_size_2D(model2D):
     """check size get and set properties"""
     model = model2D
-    assert np.all(model.size >= model.min_size)
+    assert np.all(model.size >= model.global_min_size)
     for n in range(model.num_dim):
         size = model.size;
         size[n] += 1
@@ -23,10 +23,10 @@ def test_size_2D(model2D):
 def test_min_size_2D(model2D):
     """check size error conditions"""
     model = model2D
-    assert model.min_size > 0
+    assert model.global_min_size > 0
     for n in range(model.num_dim):
         with pytest.raises(ValueError, message="Expecting min_size to be respected"):
             size = model.size 
-            size[n] = model.min_size-1
+            size[n] = model.global_min_size-1
             model.size = size
 

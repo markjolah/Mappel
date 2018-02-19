@@ -6,7 +6,7 @@
 def test_psf_sigma_1D(model1DFixedSigma):
     """Check psf_sigma get and set properties."""
     model = model1DFixedSigma
-    assert model.psf_sigma > 0
+    assert model.psf_sigma >= model.global_min_psf_sigma
     psf_sigma = model.psf_sigma
     model.psf_sigma = psf_sigma+0.2
     assert psf_sigma+0.2 == model.psf_sigma

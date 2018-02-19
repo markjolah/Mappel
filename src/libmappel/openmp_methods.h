@@ -1,6 +1,6 @@
 
 /** @file openmp_methods.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2013-2017
  * @brief Namespaces for OpenMP parallelized verions of the mappel::model namespace functions (external methods)
  *

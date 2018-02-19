@@ -1,6 +1,6 @@
 
 /** @file model_methoods_impl.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief Methods definitions for the model:: namespace which contains the major methods for computing with PointEmitterModels
  */
@@ -346,7 +346,7 @@ namespace methods {
     MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
                               IdxT Nsample, IdxT Nburnin, IdxT thin)
     {
-        if(thin<=0) thin = model.get_mcmc_num_candidate_sampling_phases();
+        if(thin == 0) thin = model.get_mcmc_num_candidate_sampling_phases();
         IdxT Noversample = mcmc::num_oversample(Nsample,Nburnin,thin);
         auto sample = model.make_param_stack(Noversample);
         VecT sample_rllh(Noversample);
@@ -360,8 +360,9 @@ namespace methods {
                               IdxT Nsample, IdxT Nburnin, IdxT thin,
                               MatT &sample, VecT &sample_rllh)
     {
-        if(thin<=0) thin = model.get_mcmc_num_candidate_sampling_phases();
+        if(thin == 0) thin = model.get_mcmc_num_candidate_sampling_phases();
         IdxT Noversample = mcmc::num_oversample(Nsample,Nburnin,thin);
+//         std::cout<<"Noversample: "<<Noversample<<" Nsample:"<<Nsample<<" Nburnin:"<<Nburnin<<" thin:"<<thin<<"\n";
         sample.set_size(model.get_num_params(), Nsample);
         sample_rllh.set_size(Nsample);
         auto oversample = model.make_param_stack(Noversample);

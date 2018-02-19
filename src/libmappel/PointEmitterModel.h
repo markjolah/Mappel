@@ -1,5 +1,5 @@
 /** @file PointEmitterModel.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-13-2014
  * @brief The class declaration and inline and templated functions for PointEmitterModel.
  *
@@ -87,6 +87,8 @@ public:
     IdxT get_num_params() const;
     void check_param_shape(const ParamT &theta) const;
     void check_param_shape(const ParamVecT &theta) const;
+    void check_psf_sigma(double psf_sigma) const;
+    void check_psf_sigma(const VecT &psf_sigma) const;
     
     ParamT make_param() const;
     ParamVecT make_param_stack(IdxT n) const;

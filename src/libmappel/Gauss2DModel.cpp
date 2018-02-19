@@ -1,9 +1,9 @@
 /** @file Gauss2DModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss2DModel
  */
-#include <typeindex>
+
 #include "Gauss2DModel.h"
 #include "stencil.h"
 
@@ -16,11 +16,12 @@ Gauss2DModel::Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma)
       y_model(size(1),psf_sigma(1))
 {
     /* Initialize MCMC step sizes */
-    mcmc_num_candidate_sampling_phases=2;
+    mcmc_num_candidate_sampling_phases = 2;
     mcmc_candidate_eta_x = size(0)*mcmc_candidate_sample_dist_ratio;
     mcmc_candidate_eta_y = size(1)*mcmc_candidate_sample_dist_ratio;
     mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
     mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
+
     update_internal_1D_estimators();
 }
 
@@ -44,6 +45,25 @@ void Gauss2DModel::set_size(const ImageSizeT &size_)
     //Reset initializer model sizes
     x_model.set_size(size(0));
     y_model.set_size(size(1));
+}
+
+void Gauss2DModel::set_psf_sigma(const VecT& new_sigma)
+{ 
+    check_psf_sigma(new_sigma);
+    psf_sigma = new_sigma;
+    //Reset initializer model psf_sigma
+    x_model.set_psf_sigma(psf_sigma(0));
+    y_model.set_psf_sigma(psf_sigma(1));
+}
+
+double Gauss2DModel::get_psf_sigma(IdxT dim) const
+{
+    if(dim > 1) {
+        std::ostringstream msg;
+        msg<<"Gauss2DModel::get_psf_sigma() dim="<<dim<<" is invalid.";
+        throw ParameterValueError(msg.str());
+    }
+    return psf_sigma(dim); 
 }
 
 CompositeDist 
@@ -77,49 +97,17 @@ Gauss2DModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xp
                          make_prior_component_intensity("bg",mean_bg, kappa_bg));
 }
 
-void Gauss2DModel::set_psf_sigma(double new_psf_sigma)
-{
-    VecT new_psf_sigma_vec = {new_psf_sigma, new_psf_sigma};
-    set_psf_sigma(new_psf_sigma_vec);
-}
-
-void Gauss2DModel::set_psf_sigma(const VecT& new_psf_sigma)
-{ 
-    if(arma::any(new_psf_sigma<global_min_psf_sigma) || 
-        arma::any(new_psf_sigma>global_max_psf_sigma) || !new_psf_sigma.is_finite()) {
-        std::ostringstream msg;
-        msg<<"Invalid psf_sigma: "<<new_psf_sigma.t()<<"\b Valid psf_sigma range:["
-            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
-        throw ParameterValueError(msg.str());
-    }
-    psf_sigma = new_psf_sigma;
-    //Reset initializer model psf_sigma
-    x_model.set_psf_sigma(psf_sigma(0));
-    y_model.set_psf_sigma(psf_sigma(1));
-}
-
-double Gauss2DModel::get_psf_sigma(IdxT idx) const
-{
-    if(idx > 1) {
-        std::ostringstream msg;
-        msg<<"Gauss2DModel::get_psf_sigma() idx="<<idx<<" is invalid.";
-        throw ParameterValueError(msg.str());
-    }
-    return psf_sigma(idx); 
-}
-
-
 Gauss2DModel::Stencil::Stencil(const Gauss2DModel &model_,
                                const Gauss2DModel::ParamT &theta,
                                bool _compute_derivatives)
 : model(&model_),theta(theta)
 {
-    int szX=model->size(0);
-    int szY=model->size(1);
-    dx=make_d_stencil(szX, x());
-    dy=make_d_stencil(szY, y());
-    X=make_X_stencil(szX, dx,model->psf_sigma(0));
-    Y=make_X_stencil(szY, dy,model->psf_sigma(1));
+    int szX = model->size(0);
+    int szY = model->size(1);
+    dx = make_d_stencil(szX, x());
+    dy = make_d_stencil(szY, y());
+    X = make_X_stencil(szX, dx,model->psf_sigma(0));
+    Y = make_X_stencil(szY, dy,model->psf_sigma(1));
     if(_compute_derivatives) compute_derivatives();
 }
 
@@ -127,16 +115,16 @@ void Gauss2DModel::Stencil::compute_derivatives()
 {
     if(derivatives_computed) return;
     derivatives_computed=true;
-    int szX=model->size(0);
-    int szY=model->size(1);
-    double sigmaX=model->psf_sigma(0);
-    double sigmaY=model->psf_sigma(1);
-    Gx=make_G_stencil(szX, dx,sigmaX);
-    Gy=make_G_stencil(szY, dy,sigmaY);
-    DX=make_DX_stencil(szX, Gx,sigmaX);
-    DY=make_DX_stencil(szY, Gy,sigmaY);
-    DXS=make_DXS_stencil(szX, dx, Gx,sigmaX);
-    DYS=make_DXS_stencil(szY, dy, Gy,sigmaY);
+    int szX = model->size(0);
+    int szY = model->size(1);
+    double sigmaX = model->psf_sigma(0);
+    double sigmaY = model->psf_sigma(1);
+    Gx = make_G_stencil(szX, dx,sigmaX);
+    Gy = make_G_stencil(szY, dy,sigmaY);
+    DX = make_DX_stencil(szX, Gx,sigmaX);
+    DY = make_DX_stencil(szY, Gy,sigmaY);
+    DXS = make_DXS_stencil(szX, dx, Gx,sigmaX);
+    DYS = make_DXS_stencil(szY, dy, Gy,sigmaY);
 }
 
 
@@ -165,13 +153,16 @@ StatsT Gauss2DModel::get_stats() const
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat2DBase::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats["psf_sigma.0"] = get_psf_sigma(0);
+    stats["psf_sigma.1"] = get_psf_sigma(1);
     return stats;
 }
 
 
 /** @brief pixel derivative inner loop calculations.
  */
-void Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
+void Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_ratio_m1, double dmm_ratio, 
+                                     ParamT &grad, MatT &hess) const
 {
     /* Caclulate pixel derivative */
     auto pgrad = make_param();
@@ -186,7 +177,7 @@ void Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_r
     hess(0,2) += dm_ratio_m1 * pgrad(0) / I; 
     hess(1,2) += dm_ratio_m1 * pgrad(1) / I; 
     //This is the pixel-gradient dependent part of the hessian
-    for(int c=0; c<(int)hess.n_cols; c++) for(int r=0; r<=c; r++)
+    for(IdxT c=0; c<hess.n_cols; c++) for(IdxT r=0; r<=c; r++)
         hess(r,c) -= dmm_ratio * pgrad(r) * pgrad(c);
 }
 
@@ -228,7 +219,7 @@ Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init,
 
 void Gauss2DModel::sample_mcmc_candidate_theta(int sample_index,ParamT &mcmc_candidate_theta, double scale)
 {
-    int phase=sample_index%mcmc_num_candidate_sampling_phases;
+    int phase = sample_index%mcmc_num_candidate_sampling_phases;
     switch(phase) {
         case 0:  //change x,y
             mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
@@ -277,7 +268,6 @@ void Gauss2DModel::update_internal_1D_estimators()
     } else {
         std::ostringstream msg;
         msg<<"Unknown Xposition distribution: "<<xpos_dist.name();
-        
         throw ParameterValueError(msg.str());
     }    
 }

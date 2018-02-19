@@ -1,5 +1,5 @@
 /** @file ImageFormat2DBase.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class definition and template Specializations for ImageFormat2DBase
  */
@@ -35,13 +35,13 @@ void ImageFormat2DBase::set_size(const ImageSizeT &size_)
  */
 void ImageFormat2DBase::check_size(const ImageSizeT &size_)
 {
-    if(arma::any(size_ < min_size)) {
+    if(arma::any(size_ < global_min_size)) {
         std::ostringstream msg;
-        msg<<"ImageFormat2DBase::check_size: Got Size= "<<size_<<"< Min size="<<min_size;
+        msg<<"ImageFormat2DBase::check_size: Got Size= "<<size_<<"< Min size="<<global_min_size;
         throw ParameterValueError(msg.str());
-    } else if(arma::any(size_ > max_size)) {
+    } else if(arma::any(size_ > global_max_size)) {
         std::ostringstream msg;
-        msg<<"ImageFormat2DBase::check_size: Got Size= "<<size_<<"> Max size="<<max_size;
+        msg<<"ImageFormat2DBase::check_size: Got Size= "<<size_<<"> Max size="<<global_max_size;
         throw ParameterValueError(msg.str());
     } else if(!size_.is_finite()) {
         std::ostringstream msg;

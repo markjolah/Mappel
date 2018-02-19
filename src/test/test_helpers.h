@@ -1,6 +1,6 @@
 
 /** @file test_helpers.h
- * @author Mark J. Olah (mjo@cs.unm.edu)
+ * @author Mark J. Olah (mjo@cs.unm DOT edu)
  * @date 01-15-2014
  * @brief Templated friend functions for evaulating model estimators
  *

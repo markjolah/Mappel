@@ -1,5 +1,5 @@
 /** @file Gauss2DMLE.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss2DMLE.
  */
@@ -28,9 +28,7 @@ public:
     Gauss2DMLE(ImageCoordT size, double psf_sigma);
     Gauss2DMLE(const ImageSizeT &size, double psf_sigma);
     Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma);
-
-    template<class PriorDistT>
-    Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma, PriorDistT&& prior);     
+    Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma, CompositeDist&& prior);     
 
     static const std::string name;
 };

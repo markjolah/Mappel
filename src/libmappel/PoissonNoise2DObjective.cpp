@@ -1,5 +1,5 @@
 /** @file PoissonNoise2DObjective.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class definition and template Specializations for PoissonNoise2DObjective
  */

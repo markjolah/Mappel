@@ -14,7 +14,7 @@ import hypothesis.extra.numpy as npst
 from .conftest import MappelEstimatorTestMethods
 from .common import *
 
-Nestimate = 64;
+Nestimate = 8;
 
 
 @hypothesis.given(seed=npst.arrays(shape=1,dtype="uint64"))

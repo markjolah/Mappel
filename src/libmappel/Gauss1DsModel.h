@@ -1,5 +1,5 @@
 /** @file Gauss1DsModel.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief The class declaration and inline and templated functions for Gauss1DsModel.
  */
@@ -51,10 +51,11 @@ public:
     static CompositeDist make_default_prior(IdxT size, double min_sigma, double max_sigma);
     static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
-                                               double min_sigma, double max_sigma);
+                                               double min_sigma, double max_sigma, double alpha_sigma);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
-                                               double min_sigma, double max_sigma);
+                                               double min_sigma, double max_sigma, double alpha_sigma);
+    /* min_sigma and max_sigma accessors */
     double get_min_sigma() const;
     double get_max_sigma() const;
     void set_min_sigma(double min_sigma);
@@ -85,16 +86,33 @@ protected:
 
 };
 
+
+/* Inline Method Definitions */
+
 inline
 double Gauss1DsModel::get_min_sigma() const
-{ return prior.lbound()(3);}
+{ return prior.lbound()(3); }
 
 inline
 double Gauss1DsModel::get_max_sigma() const
-{ return prior.ubound()(3);}
+{ return prior.ubound()(3); }
 
-
-/* Inline Method Definitions */
+/** @brief Make a new Model::Stencil object at theta.
+ * 
+ * Stencils store all of the important calculations necessary for evaluating the log-likelihood and its derivatives 
+ * at a particular theta (parameter) value.
+ * 
+ * This allows re-use of the most expensive computations.  Stencils can be easily passed around by reference, and most
+ * functions in the mappel::methods namespace accept a const Stencil reference in place of the model parameter.
+ * 
+ * Throws mappel::ModelBoundsError if not model.theta_in_bounds(theta).
+ * 
+ * If derivatives will not be computed with this stencil set compute_derivatives=false
+ * 
+ * @param theta Prameter to evaluate at
+ * @param compute_derivatives True to also prepare for derivative computations
+ * @return A new Stencil object ready to compute with
+ */
 inline
 Gauss1DsModel::Stencil
 Gauss1DsModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
@@ -149,9 +167,7 @@ inline
 Gauss1DsModel::Stencil 
 Gauss1DsModel::initial_theta_estimate(const ImageT &im) const
 {
-    auto theta = make_param();
-    theta.zeros();
-    return initial_theta_estimate(im,theta);
+    return initial_theta_estimate(im, make_param(arma::fill::zeros));
 }
 
 

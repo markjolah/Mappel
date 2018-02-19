@@ -1,5 +1,5 @@
 /** @file Gauss1DModel.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017-2018
  * @brief The class declaration and inline and templated functions for Gauss1DModel.
  */

@@ -12,6 +12,7 @@
 namespace mappel {
 namespace cgauss {
 using FVecT = arma::Col<float>;
+using VecT = arma::Col<double>;
 using MatT = arma::Mat<double>;
 
 template<class FType>
@@ -27,7 +28,7 @@ FVecT convertToCGaussCoords(const arma::Col<FType> &theta)
 }
 
 template<class FType>
-arma::Col<double> convertFromCGaussCoords(const arma::Col<FType> &theta)
+VecT convertFromCGaussCoords(const arma::Col<FType> &theta)
 {
     arma::Col<double> dtheta = arma::conv_to<arma::Col<double>>::from(theta);
     double temp = dtheta(0)+.5;
@@ -49,8 +50,31 @@ MatT convertFromCGaussCoords(const arma::Mat<FType> &theta)
     return dtheta;
 }
 
+template<class FType>
+FVecT convertToCGaussCoords_sigma(const arma::Col<FType> &theta, double min_sigma)
+{
+    auto ftheta = convertToCGaussCoords(theta);
+    ftheta(4) *= min_sigma;
+    return ftheta;
+}
 
+template<class FType>
+VecT convertFromCGaussCoords_sigma(const arma::Col<FType> &theta, double min_sigma)
+{
+    auto dtheta = convertFromCGaussCoords(theta);
+    dtheta(4) /= min_sigma;
+    return dtheta;
+}
 
+template<class FType>
+MatT convertFromCGaussCoords_sigma(const arma::Mat<FType> &theta, double min_sigma)
+{
+    auto dtheta = convertFromCGaussCoords(theta);
+    dtheta.row(4) /= min_sigma;
+    return dtheta;
+}
+
+/* 4-parameter fixed-sigma model where 5th parameter is sigma measured in pixels */
 void MLEInit(const float data[], float PSFSigma, int size, float theta_est[]);
 
 void MLEFit(const float data[], float PSFSigma, int size, int iterations, const FVecT &theta_init, 
@@ -65,9 +89,23 @@ void MLEFit_full(const float data[], const float PSFSigma, const int size,
                  const int iterations, const FVecT &theta_init, float theta_est[], float CRLB[],
                  float *LogLikelihood);
 
-// void MLEFit_sigma(const float data[], const float PSFSigma, const int sz,
-//                   const int iterations, float theta_est[], float CRLBs[],
-//                   float *d_LogLikelihood);
+
+/* 5-parameter sigma model where 5th parameter is sigma measured in pixels */
+void MLEInit_sigma(const float data[], float PSFSigma, int size, float theta_est[]);
+
+void MLEFit_sigma(const float data[], float PSFSigma, int size, int iterations, const FVecT &theta_init, 
+                  float theta_est[]);
+
+void MLEFit_sigma_debug(const float data[], float PSFSigma, int size, int iterations, const FVecT &theta_init, 
+                        float theta_est[], MatT &sequence);
+
+/** Original cGauss MLEFit_sigma code in full with adaptation to theta_init
+ */
+void MLEFit_sigma_full(const float data[], const float PSFSigma, const int size,
+                 const int iterations, const FVecT &theta_init, float theta_est[], float CRLB[],
+                 float *LogLikelihood);
+
+
 
 // void MLEFit_sigmaxy(const int subregion, const float *d_data, 
 //                     const float PSFSigma, const int sz, const int iterations, 
@@ -75,9 +113,7 @@ void MLEFit_full(const float data[], const float PSFSigma, const int size,
 //                     const int Nfits);
 
 
-// void MLEFit_sigma_debug(const float data[], const float PSFSigma, const int sz,
-//                   const int iterations, float Parameters[], float CRLBs[],
-//                   float *d_LogLikelihood, const MatT &sequence, const StatsT &stats);
+
 // void MLEFit_sigmaxy_debug(const int subregion, const float *d_data, 
 //                     const float PSFSigma, const int sz, const int iterations, 
 //                     float *d_Parameters, float *d_CRLBs, float *d_LogLikelihood,

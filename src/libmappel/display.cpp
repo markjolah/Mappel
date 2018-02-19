@@ -1,6 +1,6 @@
 
 /** @file display.cpp
- * @author Mark J. Olah (mjo@cs.unm.edu)
+ * @author Mark J. Olah (mjo@cs.unm DOT edu)
  * @date 03-23-2014
  * @brief 
  *

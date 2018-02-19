@@ -1,5 +1,5 @@
 /** @file PointEmitter2DModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-26-2014
  * @brief The class definition and template Specializations for PointEmitter2DModel
  */

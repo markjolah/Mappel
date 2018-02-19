@@ -1,4 +1,4 @@
-% Mark J. Olah (mjo@cs.unm.edu)
+% Mark J. Olah (mjo@cs.unm DOT edu)
 % 03-2014
 
 classdef MappelBase < MexIFace.IFaceMixin

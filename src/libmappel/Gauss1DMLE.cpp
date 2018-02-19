@@ -1,5 +1,5 @@
 /** @file Gauss1DMLE.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss1DMLE
  */
@@ -19,9 +19,8 @@ Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma) :
             Gauss1DModel(size, psf_sigma)
 { }
 
-template<class PriorDistT>
-Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior) : 
-            PointEmitterModel(std::forward<PriorDistT>(prior)), 
+Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma, CompositeDist&& prior) : 
+            PointEmitterModel(std::move(prior)), 
             ImageFormat1DBase(size),
             Gauss1DModel(size, psf_sigma)
 { }

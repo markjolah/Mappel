@@ -1,7 +1,7 @@
 /**
  * @file rng.h
  * 
- * @author Mark J. Olah (email mjo\@cs.unm.edu )
+ * @author Mark J. Olah (email mjo\@cs.unm DOT edu )
  * @date 12-12-2013
  * 
  * @brief Random number generation usign sfmt

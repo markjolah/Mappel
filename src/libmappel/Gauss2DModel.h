@@ -1,5 +1,5 @@
 /** @file Gauss2DModel.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss2DModel.
  */
@@ -10,7 +10,6 @@
 #include "PointEmitterModel.h"
 #include "ImageFormat2DBase.h"
 #include "Gauss1DMAP.h"
-
 
 namespace mappel {
 
@@ -59,6 +58,7 @@ public:
     void set_prior(CompositeDist&& prior_);
     void set_size(const ImageSizeT &size_);
 
+    /* psf_sigma accessors */
     const VecT& get_psf_sigma() const;
     double get_psf_sigma(IdxT idx) const;
     void set_psf_sigma(double new_psf_sigma);
@@ -95,10 +95,21 @@ protected:
 
 /* Inline Method Definitions */
 
+inline
+const VecT& Gauss2DModel::get_psf_sigma() const
+{ return psf_sigma; }
+
+inline
+void Gauss2DModel::set_psf_sigma(double new_sigma)
+{
+    set_psf_sigma(VecT{new_sigma,new_sigma});
+}
+
+
 /** @brief Make a new Model::Stencil object at theta.
  * 
- * Stencils store all of the important calculations necessary for evaluating the log-likelihood and its derivatives at a
- * particular theta (parameter) value.
+ * Stencils store all of the important calculations necessary for evaluating the log-likelihood and its derivatives 
+ * at a particular theta (parameter) value.
  * 
  * This allows re-use of the most expensive computations.  Stencils can be easily passed around by reference, and most
  * functions in the mappel::methods namespace accept a const Stencil reference in place of the model parameter.
@@ -123,9 +134,6 @@ Gauss2DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
     return Stencil(*this,theta,compute_derivatives);
 }
 
-inline
-const VecT& Gauss2DModel::get_psf_sigma() const
-{ return psf_sigma; }
 
 /* Model Pixel Value And Derivatives */
 
@@ -174,27 +182,25 @@ inline
 Gauss2DModel::Stencil 
 Gauss2DModel::initial_theta_estimate(const ImageT &im)
 {
-    auto theta_init = make_param();
-    theta_init.zeros();
-    return initial_theta_estimate(im,theta_init,DefaultSeperableInitEstimator);
+    return initial_theta_estimate(im, make_param(arma::fill::zeros), DefaultSeperableInitEstimator);
 }
 
 inline
 Gauss2DModel::Stencil 
 Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
 {
-    return initial_theta_estimate(im,theta_init,DefaultSeperableInitEstimator);
+    return initial_theta_estimate(im, theta_init, DefaultSeperableInitEstimator);
 }
 
 /* Templated Overloads */
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value, typename Model::Stencil >::type
-cgauss_heuristic_compute_estimate(const Model &model, const typename Model::ModelDataT &im, const typename Model::ParamT &theta_init)
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value, StencilT<Model> >::type
+cgauss_heuristic_compute_estimate(const Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init)
 {
     auto size = model.get_size(0);
     auto psf_sigma = model.get_psf_sigma(0);
     if(size != model.get_size(1)) throw NotImplementedError("CGaussHeuristicEstimator::Image size must be square.");
-    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussHeuristicEstimator::PSF Sigma not symmetric");
+    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussHeuristicEstimator::PSF Sigma must be symmetric");
     arma::fvec theta_est(4);
     arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
     cgauss::MLEInit(fim.memptr(),psf_sigma,size,theta_est.memptr());
@@ -202,13 +208,13 @@ cgauss_heuristic_compute_estimate(const Model &model, const typename Model::Mode
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value,typename Model::Stencil>::type
-cgauss_compute_estimate(Model &model, const typename Model::ModelDataT &im, const typename Model::ParamT &theta_init, int max_iterations)
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value, StencilT<Model>>::type
+cgauss_compute_estimate(Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init, int max_iterations)
 {
     auto size = model.get_size(0);
     auto psf_sigma = model.get_psf_sigma(0);
     if(size != model.get_size(1)) throw NotImplementedError("CGaussMLE::Image size must be square.");
-    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussMLE::PSF Sigma not symmetric");
+    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussMLE::PSF Sigma nmust be symmetric");
     arma::fvec theta_est(4);
     arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
     arma::fvec ftheta_init = cgauss::convertToCGaussCoords(theta_init);
@@ -217,23 +223,22 @@ cgauss_compute_estimate(Model &model, const typename Model::ModelDataT &im, cons
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value,typename Model::Stencil>::type
-cgauss_compute_estimate_debug(const Model &model, const typename Model::ModelDataT &im, 
-                       const typename Model::ParamT &theta_init, int max_iterations,
-                       typename Model::ParamVecT &sequence)
+typename std::enable_if<std::is_base_of<Gauss2DModel,Model>::value, StencilT<Model>>::type
+cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im, 
+                       const ParamT<Model> &theta_init, int max_iterations,
+                       ParamVecT<Model> &sequence)
 {
     auto size = model.get_size(0);
     auto psf_sigma = model.get_psf_sigma(0);
     if(size != model.get_size(1)) throw NotImplementedError("CGaussMLE::Image size must be square.");
-    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussMLE::PSF Sigma not symmetric");
+    if(psf_sigma != model.get_psf_sigma(1)) throw NotImplementedError("CGaussMLE::PSF Sigma must be symmetric");
     arma::fvec theta_est(4);
     arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
     arma::fvec ftheta_init = cgauss::convertToCGaussCoords(theta_init);
-    cgauss::MLEFit_debug(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr(),sequence);
+    cgauss::MLEFit_debug(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr(), sequence);
     sequence = cgauss::convertFromCGaussCoords(sequence);
     return model.make_stencil(cgauss::convertFromCGaussCoords(theta_est));
 }
-
 
 } /* namespace mappel */
 

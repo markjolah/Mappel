@@ -1,5 +1,5 @@
 /** @file py11_armadillo_iface.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 01-2018
  * @brief Definitions for the py11_armadillo namespace, numpy to armadillo conversions
  */

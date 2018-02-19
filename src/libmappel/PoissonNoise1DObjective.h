@@ -1,5 +1,5 @@
 /** @file PoissonNoise1DObjective.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class declaration and inline and templated functions for PoissonNoise1DObjective.
  */

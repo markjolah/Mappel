@@ -1,5 +1,5 @@
 /** @file Gauss1DMLE.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss1DMLE.
  */
@@ -25,9 +25,7 @@ class Gauss1DMLE : public Gauss1DModel, public PoissonNoise1DObjective, public M
 public:
     Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma);
     Gauss1DMLE(ImageSizeT size, double psf_sigma);
-
-    template<class PriorDistT>
-    Gauss1DMLE(ImageSizeT size, double psf_sigma, PriorDistT&& prior);     
+    Gauss1DMLE(ImageSizeT size, double psf_sigma, CompositeDist&& prior);     
     
     static const std::string name;
 };

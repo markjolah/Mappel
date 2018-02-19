@@ -1,5 +1,5 @@
 /** @file estimator.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 04-01-2014
  * @brief The class declaration and inline and templated functions for the 
  * Estimator class hierarchy.
