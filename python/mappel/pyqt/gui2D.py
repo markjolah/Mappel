@@ -36,16 +36,36 @@ class App(QMainWindow):
         exitAct = QAction(QtGui.QIcon('exit.png'), '&Exit', self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('Exit application')
-        exitAct.triggered.connect(qApp.quit)       
+        exitAct.triggered.connect(qApp.quit)
+
+        genModelAct = QAction('&Generate Model',self)
+
+        genSimAct = QAction('&Generate Simulation',self)
+
+        priorAct = QAction('&Model Parameters',self)
+
+        modelAct = QAction('&Estimator',self)
+        modelAct.setShortcut('Ctrl+M')
+        modelAct.setStatusTip('Estimator Selection')
+        #modelAct.triggered.connect()
         
+        helpAct = QAction('&Documentation',self)
+
         # add the menu
         mainMenu = self.menuBar()
         dataMenu = mainMenu.addMenu('&Data')
-        algoMenu = mainMenu.addMenu('Algorithm')
-        helpMenu = mainMenu.addMenu('Help')
+        algoMenu = mainMenu.addMenu('&Algorithm')
+        helpMenu = mainMenu.addMenu('&Help')
 
         # Add buttons to the menu
         dataMenu.addAction(exitAct)
+        dataMenu.addAction(genModelAct)
+        dataMenu.addAction(genSimAct)
+        dataMenu.addAction(priorAct)
+
+        algoMenu.addAction(modelAct)
+
+        helpMenu.addAction(helpAct)
 
 class MyTableWidget(QWidget):
         
