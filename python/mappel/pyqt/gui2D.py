@@ -11,7 +11,7 @@ Created on Thu Jan 11 10:39:25 2018
 import sys
 import numpy as np
 import mappel
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QTabWidget, QVBoxLayout, QLineEdit, QAction, qApp
 import pyqtgraph.console
 from pyqtgraph.Qt import QtGui
 import pyqtgraph as pg
@@ -32,11 +32,20 @@ class App(QMainWindow):
         self.show()
 
     def _setMenu(self):
-        # add a menu
+        # set buttons to add to the menu
+        exitAct = QAction(QtGui.QIcon('exit.png'), '&Exit', self)
+        exitAct.setShortcut('Ctrl+Q')
+        exitAct.setStatusTip('Exit application')
+        exitAct.triggered.connect(qApp.quit)       
+        
+        # add the menu
         mainMenu = self.menuBar()
-        dataMenu = mainMenu.addMenu('Data')
+        dataMenu = mainMenu.addMenu('&Data')
         algoMenu = mainMenu.addMenu('Algorithm')
         helpMenu = mainMenu.addMenu('Help')
+
+        # Add buttons to the menu
+        dataMenu.addAction(exitAct)
 
 class MyTableWidget(QWidget):
         
