@@ -33,28 +33,35 @@ class App(QMainWindow):
 
     def _setMenu(self):
         # set buttons to add to the menu
+        # Buttons for Data Menu
         exitAct = QAction(QtGui.QIcon('exit.png'), '&Exit', self)
         exitAct.setShortcut('Ctrl+Q')
         exitAct.setStatusTip('Exit application')
         exitAct.triggered.connect(qApp.quit)
 
         genModelAct = QAction('&Generate Model',self)
-
         genSimAct = QAction('&Generate Simulation',self)
-
         priorAct = QAction('&Model Parameters',self)
 
+        # Buttons for Algorithm Menu
         modelAct = QAction('&Estimator',self)
         modelAct.setShortcut('Ctrl+M')
         modelAct.setStatusTip('Estimator Selection')
         #modelAct.triggered.connect()
-        
+
+        # Buttons for Display Menu
+        dispModelAct = QAction('&Display Model',self)
+        dispDataAct = QAction('&Display Data',self)
+        dispEstAct = QAction('Display Estimate Point',self)
+
+        # Buttons for Help Menu
         helpAct = QAction('&Documentation',self)
 
         # add the menu
         mainMenu = self.menuBar()
         dataMenu = mainMenu.addMenu('&Data')
         algoMenu = mainMenu.addMenu('&Algorithm')
+        dispMenu = mainMenu.addMenu('&Display')
         helpMenu = mainMenu.addMenu('&Help')
 
         # Add buttons to the menu
@@ -64,6 +71,10 @@ class App(QMainWindow):
         dataMenu.addAction(priorAct)
 
         algoMenu.addAction(modelAct)
+
+        dispMenu.addAction(dispModelAct)
+        dispMenu.addAction(dispDataAct)
+        dispMenu.addAction(dispEstAct)
 
         helpMenu.addAction(helpAct)
 
