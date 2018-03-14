@@ -1,5 +1,5 @@
 /** @file PointEmitterModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-13-2014
  * @brief The class definition and template Specializations for PointEmitterModel
  */
@@ -10,6 +10,8 @@
 // #include <omp.h>
 
 namespace mappel {
+
+const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
 
 
 PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
@@ -105,19 +107,43 @@ double PointEmitterModel::find_hyperparam(std::string param_name, double default
 
 void PointEmitterModel::check_param_shape(const ParamT &theta) const
 {
-    if(theta.n_elem != get_num_params()) {
+    if(theta.n_elem != num_params) {
         std::ostringstream msg;
-        msg<<"Got bad parameter size:"<<theta.n_elem<<" expected size:"<<get_num_params();
+        msg<<"check_theta: Got bad theta Size= "<<theta.n_elem<<" Expected size="<<num_params;
         throw ArrayShapeError(msg.str());
     }
 }
 
 void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
 {
-    if(theta.n_rows != get_num_params()) {
+    if(theta.n_rows != num_params) {
         std::ostringstream msg;
-        msg<<"Got bad parameter stack #rows:"<<theta.n_rows<<" expected #rows:"<<get_num_params();
+        msg<<"check_theta: Got bad theta Size= ["<<theta.n_rows<<","<<theta.n_cols<<"] Expected size=["<<num_params<<",...]";
         throw ArrayShapeError(msg.str());
+    }
+}
+
+void PointEmitterModel::check_psf_sigma(double psf_sigma) const
+{
+   if(psf_sigma < global_min_psf_sigma || 
+      psf_sigma > global_max_psf_sigma || 
+      !std::isfinite(psf_sigma)) {
+        std::ostringstream msg;
+        msg<<"Invalid psf_sigma: "<<psf_sigma<<"\b Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
+    }
+}
+
+void PointEmitterModel::check_psf_sigma(const VecT &psf_sigma) const
+{
+    if(arma::any(psf_sigma < global_min_psf_sigma) || 
+        arma::any(psf_sigma > global_max_psf_sigma) || 
+        !psf_sigma.is_finite()) {
+        std::ostringstream msg;
+        msg<<"Invalid psf_sigma: "<<psf_sigma.t()<<"\b Valid psf_sigma range:["
+            <<global_min_psf_sigma<<","<<global_max_psf_sigma<<"]";
+        throw ParameterValueError(msg.str());
     }
 }
 
@@ -162,6 +188,7 @@ void PointEmitterModel::set_ubound(const ParamT &ubound_)
 
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
+    check_param_shape(theta);
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) <= lbound(n)) theta(n)=lbound(n)+epsilon;
         if(theta(n) >= ubound(n)) theta(n)=ubound(n)-epsilon;
@@ -170,6 +197,7 @@ void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 
 bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 {
+    check_param_shape(theta);
     for(IdxT n=0; n<num_params; n++) 
         if(lbound(n) >= theta(n) || theta(n) >= ubound(n)) return false;
     return true;
@@ -177,6 +205,7 @@ bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 
 PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, double epsilon) const
 {
+    check_param_shape(theta);
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) <= lbound(n)) btheta(n)=lbound(n)+epsilon;
@@ -187,6 +216,7 @@ PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, 
 
 PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta) const
 {
+    check_param_shape(theta);
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(std::isfinite(lbound(n))) {
@@ -207,6 +237,7 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
 
 BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 {
+    check_param_shape(theta);
     IdxT N = theta.n_cols;
     BoolVecT in_bounds(N);
     for(IdxT n=0; n<N; n++) in_bounds(n) = theta_in_bounds(theta.col(n));
@@ -216,6 +247,7 @@ BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 PointEmitterModel::ParamVecT 
 PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) const
 {
+    check_param_shape(theta);
     IdxT N = theta.n_cols;
     ParamVecT new_theta;
     for(IdxT n=0; n<N; n++) new_theta.col(n) = bounded_theta(theta.col(n),epsilon);
@@ -225,11 +257,11 @@ PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) c
 PointEmitterModel::ParamVecT 
 PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
 {
+    check_param_shape(theta);
     IdxT N = theta.n_cols;
     ParamVecT new_theta;
     for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
     return new_theta;
-
 }
 
 } /* namespace mappel */

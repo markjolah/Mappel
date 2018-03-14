@@ -1,6 +1,6 @@
 
 /** @file Gauss1DsMAP.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief The class declaration and inline and templated functions for Gauss1DsMAP.
  */
@@ -25,11 +25,8 @@ class Gauss1DsMAP : public Gauss1DsModel, public PoissonNoise1DObjective, public
 {
 public:    
     Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma);
-
     Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma);
-
-    template<class PriorDistT>
-    Gauss1DsMAP(ImageSizeT size, PriorDistT&& prior);     
+    Gauss1DsMAP(ImageSizeT size, CompositeDist&& prior);     
     
     static const std::string name;
 };

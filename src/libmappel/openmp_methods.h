@@ -1,6 +1,6 @@
 
 /** @file openmp_methods.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2013-2017
  * @brief Namespaces for OpenMP parallelized verions of the mappel::model namespace functions (external methods)
  *
@@ -41,7 +41,7 @@ inline namespace openmp {
  * @param[out] theta_stack, A sequence of sampled thetas.  Size: [model.num_params, nSamples]
  */
 template<class Model>
-void sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)
+void sample_prior_stack(Model &model, ParamVecT<Model> &theta_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel
@@ -68,8 +68,8 @@ void sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)
  */
 template<class Model>
 void model_image_stack(const Model &model,
-                       const typename Model::ParamVecT &theta_stack,
-                       typename Model::ImageStackT &image_stack)
+                       const ParamVecT<Model> &theta_stack,
+                       ImageStackT<Model> &image_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
@@ -93,8 +93,8 @@ void model_image_stack(const Model &model,
  */
 template<class Model>
 void simulate_image_stack(Model &model,
-                    const typename Model::ParamVecT &theta_stack,
-                    typename Model::ImageStackT &image_stack)
+                    const ParamVecT<Model> &theta_stack,
+                    ImageStackT<Model> &image_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
@@ -124,8 +124,8 @@ void simulate_image_stack(Model &model,
 
 template<class Model>
 void cr_lower_bound_stack(const Model &model,
-                          const typename Model::ParamVecT &theta_stack,
-                          typename Model::ParamVecT &crlb_stack)
+                          const ParamVecT<Model> &theta_stack,
+                          ParamVecT<Model> &crlb_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
@@ -135,7 +135,7 @@ void cr_lower_bound_stack(const Model &model,
 
 template<class Model>
 void expected_information_stack(const Model &model,
-                          const typename Model::ParamVecT &theta_stack,
+                          const ParamVecT<Model> &theta_stack,
                           CubeT &fisherI_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
@@ -209,8 +209,7 @@ void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data
                                 IdxT Nsamples, IdxT Nburnin, IdxT thin, CubeT &sample, MatT &sample_rllh)
 {
     IdxT count = model.get_size_image_stack(data_stack);
-    auto theta_init_stack = model.make_param_stack(count);
-    theta_init_stack.zeros();
+    auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
     estimate_mcmc_sample_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, sample, sample_rllh);
 }
 
@@ -245,8 +244,7 @@ void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &d
                          IdxT Nsamples, IdxT Nburnin, IdxT thin, MatT &theta_mean_stack, CubeT &theta_cov_stack)
 {
     IdxT count = model.get_size_image_stack(data_stack);
-    auto theta_init_stack = model.make_param_stack(count);
-    theta_init_stack.zeros();
+    auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
     estimate_mcmc_posterior_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, theta_mean_stack, theta_cov_stack);
 }
 
@@ -342,7 +340,7 @@ inline namespace openmp {
 template<class Model>
 void llh_stack(const Model &model,
                     const typename Model::ImageT &image,
-                          const typename Model::ParamVecT &theta_stack,
+                          const ParamVecT<Model> &theta_stack,
                           VecT &llh_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
@@ -363,10 +361,8 @@ void llh_stack(const Model &model,
  * @param[out] llh_stack Sequence of llh values computed. Size: [n]
  */
 template<class Model>
-void llh_stack(const Model &model,
-                    const typename Model::ImageStackT &image_stack,
-                    const typename Model::ParamVecT &theta_stack,
-                    VecT &llh_stack)
+void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack,
+               VecT &llh_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
@@ -402,13 +398,11 @@ void llh_stack(const Model &model,
  * @param[out] rllh_stack Sequence of rllh values computed. Size: [n]
  */
 template<class Model>
-void rllh_stack(const Model &model,
-                    const typename Model::ImageStackT &image_stack,
-                    const typename Model::ParamVecT &theta_stack,
-                    VecT &rllh_stack)
+void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack, 
+                VecT &rllh_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
-    int nthetas = static_cast<int>(theta_stack.n_cols);
+    IdxT nimages = model.get_size_image_stack(image_stack);
+    IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
     if (nimages==1 && nthetas==1) {
@@ -416,17 +410,29 @@ void rllh_stack(const Model &model,
     } else if (nthetas==1) {
         auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++)
+        for(IdxT n=0; n<nimages; n++)
             rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) {
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++)
+        for(IdxT n=0; n<nimages; n++)
             rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
+}
+
+template<class Model>
+void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<Model> &theta_stack, 
+                VecT &rllh_stack)
+{
+    IdxT nthetas = theta_stack.n_cols;
+    model.check_param_shape(theta_stack);
+    model.check_image_shape(image);
+    #pragma omp parallel for
+    for(IdxT n=0; n<nthetas; n++)
+        rllh_stack(n) = objective::rllh(model, image, theta_stack.col(n));
 }
 
 
@@ -442,10 +448,9 @@ void rllh_stack(const Model &model,
  * @param[out] grad_stack  Sequence of grad vectors values computed. Size: [model.num_params, n]
  */
 template<class Model>
-void grad_stack(const Model &model,
-                          const typename Model::ImageStackT &image_stack,
-                          const typename Model::ParamVecT &theta_stack,
-                          typename Model::ParamVecT &grad_stack)
+void grad_stack(const Model &model, const ImageStackT<Model> &image_stack,
+                          const ParamVecT<Model> &theta_stack,
+                          ParamVecT<Model> &grad_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);
     int nthetas = static_cast<int>(theta_stack.n_cols);
@@ -482,8 +487,8 @@ void grad_stack(const Model &model,
  */
 template<class Model>
 void hessian_stack(const Model &model,
-                          const typename Model::ImageStackT &image_stack,
-                          const typename Model::ParamVecT &theta_stack,
+                          const ImageStackT<Model> &image_stack,
+                          const ParamVecT<Model> &theta_stack,
                           CubeT &hessian_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);
@@ -522,8 +527,8 @@ void hessian_stack(const Model &model,
  */
 template<class Model>
 void negative_definite_hessian_stack(const Model &model,
-                          const typename Model::ImageStackT &image_stack,
-                          const typename Model::ParamVecT &theta_stack,
+                          const ImageStackT<Model> &image_stack,
+                          const ParamVecT<Model> &theta_stack,
                           CubeT &hessian_stack)
 {
     int nimages = model.get_size_image_stack(image_stack);

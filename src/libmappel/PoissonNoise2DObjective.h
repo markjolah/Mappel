@@ -1,13 +1,11 @@
 /** @file PoissonNoise2DObjective.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 03-26-2014
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for PoissonNoise2DObjective.
- *
- * The base class for all point emitter localization models
  */
 
-#ifndef _POISSONNOISE2DOBJECTIVE_H
-#define _POISSONNOISE2DOBJECTIVE_H
+#ifndef _MAPPEL_POISSONNOISE2DOBJECTIVE_H
+#define _MAPPEL_POISSONNOISE2DOBJECTIVE_H
 
 #include "ImageFormat2DBase.h"
 #include "estimator.h"
@@ -15,219 +13,288 @@
 namespace mappel {
 
 /** @brief A base class for 2D objectives with Poisson read noise.
- *
- * Only the simulate_image functions are defined here
+ * This objective function and its subclasses are for models where the only source of noise is the "shot" or 
+ * "counting" or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of 
+ * incidence on each pixel.
  * 
  */
 class PoissonNoise2DObjective : public virtual ImageFormat2DBase {
-    /**
-     * This objective function and its subclasses are for models where the only source of noise is the "shot" or 
-     * "counting" or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of 
-     * incidence on each pixel.
-     * 
-     * Subclasses: PoissonNoise2DObjective and PoissonNoise2DMLEObjective complete the objective specification and they
-     *  allow differentiation of models with (MAP) and without (MLE) a prior.
-     * 
-     * The objective for Poisson noise is just the (gain-corrected) image converted to give approximate photons counts 
-     * with purely Poisson noise.
-     * 
-     * The objective data type required for optimization (DataT) is simply a 2D double precision image with 
-     * approximate photon counts.
-     * 
-     */
 public:
     static const std::vector<std::string> estimator_names;
-    PoissonNoise2DObjective(const IVecT &size) : ImageFormat2DBase(size) {};
-    
-    using ModelDataT = typename ImageFormat2DBase::ImageT; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
-    using ModelDataStackT = ImageFormat2DBase::ImageStackT; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
-
-    /** A helper template for enabling member function */
-    template<class T> using IsPoissonNoise2DObjectiveT = typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,T>::value>::type;
-    
+    using ModelDataT = ImageT; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
+    using ModelDataStackT = ImageStackT; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
 };
 
 namespace methods {
 
-    /** @brief Simulate an image at a given theta stencil under noise model
+/** @brief Simulate an image at a given theta stencil, by generating Poisson noise
+    * Enabled for PoissonNoise2DObjective
     * @param[in] model Model object
     * @param[in] s The stencil computed at theta.
     * @param[in,out] rng A random number generator
     * @returns A simulated image at theta under the noise model.
     */
-    template<class Model, class rng_t, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
-    typename Model::ImageT 
-    simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)
-    {
-        auto sim_im=model.make_image();
-        for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-            sim_im(j,i)=generate_poisson(rng,model.pixel_model_value(i,j,s));
-        }
-        return sim_im;
+template<class Model, class rng_t>
+ReturnIfSubclassT<ImageT<Model>, Model, PoissonNoise2DObjective> 
+simulate_image(const Model &model, const StencilT<Model> &s, rng_t &rng)
+{
+    auto sim_im = model.make_image();
+    auto size = model.get_size();
+    for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+        sim_im(j,i) = generate_poisson(rng,model.pixel_model_value(i,j,s));
     }
+    return sim_im;
+}
 
-    /** @brief Simulate an image using model mean values provided by a "model image" at some theta
+/** @brief Simulate an image at a given theta stencil, by generating Poisson noise
+    * Enabled for PoissonNoise2DObjective
     * @param[in] model Model object
-    * @param[in] model_im Image giving the model mean value at each pixel computed at some theta.
-    * @param[in,out] rng A random number generator.
-    * @returns A simulated image at theta under the noise model.
+    * @param[in] model_im An image representing the expected (mean) at each pixel under the PSF model.
+    * @param[in,out] rng A random number generator
+    * @returns A simulated image corresponding to model_im under the noise model.
     */
-    template<class Model, class rng_t, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
-    typename Model::ImageT 
-    simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)
-    {
-        auto sim_im=model.make_image();
-        for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-            sim_im(j,i)=generate_poisson(rng,model_im(j,i));
-        }
-        return sim_im;
-    }
-
-    namespace likelihood_func {
-        template<class Model, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
-        double absolute_log_likelihood(const Model &model, const typename Model::ImageT &data_im, 
-                            const typename Model::Stencil &s)
-        {
-            double llh=0.;
-            for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-                llh+=poisson_log_likelihood(model.pixel_model_value(i,j,s), data_im(j,i));
-            }
-//            double pllh=model.prior_log_likelihood(s.theta); /* MAP: Add log of prior for params theta */
-//            return llh+pllh;
-        }
-
-template<class Model, typename=PoissonNoise2DObjective::IsPoissonNoise2DObjectiveT<Model>>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,double>::type
-relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im,
-                        const typename Model::Stencil &s)
+template<class Model, class rng_t>
+ReturnIfSubclassT<ImageT<Model>, Model, PoissonNoise2DObjective> 
+simulate_image_from_model(const Model &model, const ImageT<Model> &model_im, rng_t &rng)
 {
-    double rllh=0.;
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        rllh+=relative_poisson_log_likelihood(model.pixel_model_value(i,j,s), data_im(j,i));
+    auto sim_im=model.make_image();
+    auto size = model.get_size();
+    for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+        sim_im(j,i)=generate_poisson(rng,model_im(j,i));
     }
-    double prllh=model.prior_relative_log_likelihood(s.theta); /* MAP: Add relative log of prior for params theta */
-    return rllh+prllh;
+    return sim_im;
 }
 
+/** @brief Compute the expected information (Fisher information at theta).
+    * Note: Expected information is an average quantity and is independent of the data.
+    * Enabled for PoissonNoise2DObjective
+    * @param model PoImageCoordTEmitterModel
+    * @param s Stencil at desired theta
+    * @returns The fisher information matrix as an symmetric matrix in upper-triangular format
+    */
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value>::type
-model_grad(const Model &model, const typename Model::ImageT &im,
-           const typename Model::Stencil &s, typename Model::ParamT &grad) 
+ReturnIfSubclassT<MatT, Model, PoissonNoise2DObjective>
+expected_information(const Model &model, const StencilT<Model> &s)
 {
-    auto pgrad=model.make_param();
-    grad.zeros();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        if(!std::isfinite(im(j,i))) continue; /* Skip non-finite image values as they are assumed masked */
+    auto fisherI = model.make_param_mat(arma::fill::zeros);
+    auto pgrad = model.make_param();
+    auto size = model.get_size();
+    for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+        auto model_val = model.pixel_model_value(i,j,s);
         model.pixel_grad(i,j,s,pgrad);
-        double model_val=model.pixel_model_value(i,j,s);
-//         assert(model_val>0.);//Model value must be positive for grad to be defined
-        double dm_ratio_m1=im(j,i)/model_val - 1.;
-        grad+=dm_ratio_m1*pgrad;
-    }
-    model.prior_grad_update(s.theta, grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
-}
-
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value>::type
-model_grad2(const Model &model, const typename Model::ImageT &im, 
-            const typename Model::Stencil &s, 
-            typename Model::ParamT &grad, typename Model::ParamT &grad2) 
-{
-    grad.zeros();
-    grad2.zeros();
-    auto pgrad=model.make_param();
-    auto pgrad2=model.make_param();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        if(!std::isfinite(im(j,i))) continue; /* Skip non-finite image values as they are assumed masked */
-        /* Compute model value and ratios */
-        double model_val=model.pixel_model_value(i,j,s);
-//         assert(model_val>0.);//Model value must be positive for grad to be defined
-        double dm_ratio=im(j,i)/model_val;
-        double dm_ratio_m1=dm_ratio-1;
-        double dmm_ratio=dm_ratio/model_val;
-        model.pixel_grad(i,j,s,pgrad);
-        model.pixel_grad2(i,j,s,pgrad2);
-        grad +=dm_ratio_m1*pgrad;
-        grad2+=dm_ratio_m1*pgrad2 - dmm_ratio*pgrad%pgrad;
-    }
-    model.prior_grad_update(s.theta,grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
-    model.prior_grad2_update(s.theta,grad2); /* As appropriate for MAP/MLE: Add grad2 of log of prior for params theta */
-}
-
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value>::type
-model_hessian(const Model &model, const typename Model::ImageT &im, 
-              const typename Model::Stencil &s, 
-              typename Model::ParamT &grad, typename Model::MatT &hess) 
-{
-    /* Returns hessian as an upper triangular matrix */
-    grad.zeros();
-    hess.zeros();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        if(!std::isfinite(im(j,i))) continue; /* Skip non-finite image values as they are assumed masked */
-        /* Compute model value and ratios */
-        double model_val=model.pixel_model_value(i,j,s);
-//         assert(model_val>0.);//Model value must be positive for grad to be defined
-        double dm_ratio=im(j,i)/model_val;
-        double dm_ratio_m1=dm_ratio-1;
-        double dmm_ratio=dm_ratio/model_val;
-        model.pixel_hess_update(i,j,s,dm_ratio_m1,dmm_ratio,grad,hess);
-    }
-    model.prior_grad_update(s.theta,grad); /* As appropriate for MAP/MLE: Add grad of log of prior for params theta */
-    model.prior_hess_update(s.theta,hess); /* As appropriate for MAP/MLE: Add hessian of log of prior for params theta */
-}
-
-
-
-/** @brief  */
-template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,typename Model::MatT>::type
-fisher_information(const Model &model, const typename Model::Stencil &s)
-{
-    auto fisherI=model.make_param_mat();
-    fisherI.zeros();
-    auto pgrad=model.make_param();
-    for(int i=0;i<model.size(0);i++) for(int j=0;j<model.size(1);j++) {  // i=x position=column; j=yposition=row
-        double model_val=model.pixel_model_value(i,j,s);
-        model.pixel_grad(i,j,s,pgrad);
-        for(int c=0; c<model.num_params; c++) for(int r=0; r<=c; r++) {
+        for(IdxT c=0; c<model.get_num_params(); c++) for(IdxT r=0; r<=c; r++) {
             fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
         }
     }
-    model.prior_hess_update(s.theta,fisherI); /* As appropriate for MAP/MLE: Add diagonal hession of log of prior for params theta */
     return fisherI;
 }
 
-
 template<class Model>
-typename std::enable_if<std::is_base_of<PoissonNoise2DObjective,Model>::value,std::shared_ptr<Estimator<Model>>>::type
+ReturnIfSubclassT<std::unique_ptr<Estimator<Model>>, Model, PoissonNoise2DObjective>
 make_estimator(Model &model, std::string ename)
 {
-    using std::make_shared;
-    const char *name=ename.c_str();
-    
-    } else if (istarts_with(name,"Seperable")) {
-        return  make_shared<SeperableHeuristicEstimator<Model>>(model);
+    auto name = ename.c_str();
+    if (istarts_with(name,"Heuristic")) {
+        return make_unique<HeuristicEstimator<Model>>(model);
     } else if (istarts_with(name,"CGaussHeuristic")) {
-        return  make_shared<CGaussHeuristicEstimator<Model>>(model);
+        return make_unique<CGaussHeuristicEstimator<Model>>(model);
     } else if (istarts_with(name,"CGauss")) {
-        return make_shared<CGaussMLE<Model>>(model);
+        return make_unique<CGaussMLE<Model>>(model);
     } else if (istarts_with(name,"NewtonDiagonal")) {
-        return make_shared<NewtonDiagonalMaximizer<Model>>(model);
+        return make_unique<NewtonDiagonalMaximizer<Model>>(model);
     } else if (istarts_with(name,"QuasiNewton")) {
-        return make_shared<QuasiNewtonMaximizer<Model>>(model);
+        return make_unique<QuasiNewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"Newton")) {
-        return make_shared<NewtonMaximizer<Model>>(model);
+        return make_unique<NewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"TrustRegion")) {
-        return make_shared<TrustRegionMaximizer<Model>>(model);
+        return make_unique<TrustRegionMaximizer<Model>>(model);
     } else if (istarts_with(name,"SimulatedAnnealing")) {
-        return make_shared<SimulatedAnnealingMaximizer<Model>>(model);
-    } else {
-        return std::shared_ptr<Estimator<Model>>();
+        return make_unique<SimulatedAnnealingMaximizer<Model>>(model);
+    } else  {
+        std::ostringstream msg;
+        msg<<"PoissionNoise2DObjective: Unknown estimator name: "<<name;
+        throw NotImplementedError(msg.str());
     }
 }
 
+/* Core likelihood computations for PoissonNoise1DObjective Models.  No interaction with prior.
+    */
+namespace likelihood {
+    template<class Model>
+    ReturnIfSubclassT<double,Model,PoissonNoise2DObjective> 
+    llh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+    {
+        double llh_val = 0.;
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+            if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+            llh_val += poisson_log_likelihood(model.pixel_model_value(i,j,s), pixel_val);
+        }
+        return llh_val;
+    }
+    
+    template<class Model>
+    ReturnIfSubclassT<double,Model,PoissonNoise2DObjective> 
+    rllh(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+    {
+        double rllh_val = 0.;
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+            if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+            rllh_val += relative_poisson_log_likelihood(model.pixel_model_value(i,j,s), pixel_val);
+        }
+        return rllh_val;
+    }
+    
+    template<class Model>
+    ReturnIfSubclassT<ParamT<Model>,Model,PoissonNoise2DObjective> 
+    grad(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s) 
+    {
+        auto pixel_grad = model.make_param(); 
+        auto grad_val = model.make_param(arma::fill::zeros); //Accumulator for overall grad
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+            if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+            model.pixel_grad(i,j,s,pixel_grad);
+            double model_val = model.pixel_model_value(i,j,s);
+            double dm_ratio_m1 = pixel_val/model_val - 1.;
+            grad_val += dm_ratio_m1*pixel_grad;
+        }
+        return grad_val;
+    }
+
+    template<class Model>
+    ReturnIfSubclassT<void,Model,PoissonNoise2DObjective>
+    grad2(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
+                        ParamT<Model> &grad_val, ParamT<Model> &grad2_val) 
+    {
+        auto pixel_grad = model.make_param();
+        auto pixel_grad2 = model.make_param();
+        grad_val.zeros();
+        grad2_val.zeros();
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+            if(!std::isfinite(pixel_val)) continue; /* Skip non-finite image values as they are assumed masked */
+            /* Compute model value and ratios */
+            double model_val = model.pixel_model_value(i,j,s);
+            double dm_ratio = pixel_val/model_val;
+            double dm_ratio_m1 = dm_ratio-1;
+            double dmm_ratio = dm_ratio/model_val;
+            model.pixel_grad(i,j,s,pixel_grad);
+            model.pixel_grad2(i,j,s,pixel_grad2);
+            grad_val  += dm_ratio_m1*pixel_grad;
+            grad2_val += dm_ratio_m1*pixel_grad2 - dmm_ratio*pixel_grad%pixel_grad;
+        }
+    }
+
+    template<class Model>
+    ReturnIfSubclassT<void,Model,PoissonNoise2DObjective>
+    hessian(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
+                ParamT<Model> &grad_val, MatT &hess_val) 
+    {
+        /* Returns hessian as an upper triangular matrix */
+        grad_val.zeros();
+        hess_val.zeros();
+        auto size = model.get_size();
+        for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+            double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+            if(!std::isfinite(pixel_val)) continue; /* Skip non-finite image values as they are assumed masked */
+            /* Compute model value and ratios */
+            double model_val = model.pixel_model_value(i,j,s);
+            double dm_ratio = pixel_val/model_val;
+            double dm_ratio_m1 = dm_ratio-1;
+            double dmm_ratio = dm_ratio/model_val;
+            model.pixel_hess_update(i,j,s,dm_ratio_m1,dmm_ratio,grad_val,hess_val);
+        }
+    }
+    
+    
+    inline namespace debug {
+        template<class Model>
+        ReturnIfSubclassT<VecT,Model,PoissonNoise2DObjective>
+        llh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            VecT llh_vec(model.get_num_pixels(),arma::fill::zeros);
+            auto size = model.get_size();
+            ImageCoordT<Model> n = 0; //Pixel counter
+            for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+                double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+                if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+                llh_vec(n++) = poisson_log_likelihood(model.pixel_model_value(i,j,s), pixel_val);
+            }
+            return llh_vec;
+        }
+
+        template<class Model>
+        ReturnIfSubclassT<VecT,Model,PoissonNoise2DObjective>
+        rllh_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s)
+        {
+            VecT rllh_vec(model.get_num_pixels(),arma::fill::zeros);
+            auto size = model.get_size();
+            ImageCoordT<Model> n = 0; //Pixel counter
+            for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+                double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+                if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+                rllh_vec(n++) = relative_poisson_log_likelihood(model.pixel_model_value(i,j,s), pixel_val);
+            }
+            return rllh_vec;
+        }
+                
+        template<class Model>
+        ReturnIfSubclassT<MatT,Model,PoissonNoise2DObjective>
+        grad_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s) 
+        {
+            auto pixel_grad = model.make_param(); 
+            MatT grad_vec(model.get_num_params(),model.get_num_pixels(),arma::fill::zeros); //per-pixel grad contributions to objective
+            auto size = model.get_size();
+            ImageCoordT<Model> n = 0; //Pixel counter
+            for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+                double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+                if(!std::isfinite(pixel_val)) continue; /* Masked pixels are marked infinite. Skip. */
+                model.pixel_grad(i,j,s,pixel_grad);
+                double model_val = model.pixel_model_value(i,j,s);
+                double dm_ratio_m1 = pixel_val/model_val - 1.;
+                grad_vec.col(n++) = dm_ratio_m1*pixel_grad;
+            }
+            return grad_vec;
+        }
+        
+        template<class Model>
+        ReturnIfSubclassT<CubeT,Model,PoissonNoise2DObjective>
+        hessian_components(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s) 
+        {
+            /* Returns hessian as an upper triangular matrix */
+            auto grad_val = model.make_param();
+            auto hess_val = model.make_param_mat();
+            CubeT hess_vec(model.get_num_params(),model.get_num_params(),model.get_num_pixels(),arma::fill::zeros); //per-pixel grad contributions to objective
+            auto size = model.get_size();
+            ImageCoordT<Model> n = 0; //Pixel counter
+            for(ImageCoordT<Model> i=0;i<size(0);i++) for(ImageCoordT<Model> j=0;j<size(1);j++){//i=Xpos=col; j=Ypos=row
+                double pixel_val = data_im(j,i); //Access j=rows=y i=cols=X
+                if(!std::isfinite(pixel_val)) continue; /* Skip non-finite image values as they are assumed masked */
+                /* Compute model value and ratios */
+                double model_val = model.pixel_model_value(i,j,s);
+                double dm_ratio = pixel_val/model_val;
+                double dm_ratio_m1 = dm_ratio-1;
+                double dmm_ratio = dm_ratio/model_val;
+                grad_val.zeros();
+                hess_val.zeros();
+                model.pixel_hess_update(i,j,s,dm_ratio_m1,dmm_ratio,grad_val,hess_val);
+                hess_vec.slice(n++) = hess_val;
+            }
+            return hess_vec;
+        }
+
+    } /* namespace mappel::methods::likelihood::debug */
+
+} /* namespace mappel::methods::likelihood */
+    
+} /* namespace mappel::methods */
 
 } /* namespace mappel */
 
-#endif /* _POISSONNOISE2DOBJECTIVE_H */
+#endif /* _MAPPEL_POISSONNOISE2DOBJECTIVE_H */

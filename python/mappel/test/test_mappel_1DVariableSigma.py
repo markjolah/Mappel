@@ -7,8 +7,9 @@ import math
 def test_min_max_sigma_1D(model1DVariableSigma):
     """Check min_sigma and max_sigma get and set properties."""
     model = model1DVariableSigma
-    assert 0 < model.min_sigma 
+    assert model.global_min_psf_sigma <=model.min_sigma 
     assert model.min_sigma < model.max_sigma
+    assert model.max_sigma <= model.global_max_psf_sigma
     assert math.isfinite(model.min_sigma)
     assert math.isfinite(model.max_sigma)
     #check setter properties

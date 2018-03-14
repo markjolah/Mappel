@@ -105,7 +105,7 @@ def check_image(model,im, N=0):
     if model.num_dim == 1:
         assert im.shape[0] == model.size, "Image stack incorrect base size"
     else:        
-        assert np.all(im.shape[:-1] == model.size), "Image stack incorrect base size"
+        assert np.all(im.shape[1::-1] == model.size), "Image stack incorrect base size"
     if N == 1:
         assert im.ndim == model.num_dim or im.shape[-1] == 1
     elif N>1:

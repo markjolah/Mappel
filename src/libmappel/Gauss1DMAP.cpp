@@ -1,5 +1,5 @@
 /** @file Gauss1DMAP.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief The class definition and template Specializations for Gauss1DMAP
  */
@@ -9,10 +9,8 @@
 namespace mappel {
 const std::string Gauss1DMAP::name("Gauss1DMAP");
 
-Gauss1DMAP::Gauss1DMAP(arma::Col<ImageCoordT> size, VecT psf_sigma) : 
-            PointEmitterModel(make_default_prior(size(0))), 
-            ImageFormat1DBase(size(0)),
-            Gauss1DModel(size(0), psf_sigma(0))
+Gauss1DMAP::Gauss1DMAP(arma::Col<ImageCoordT> size, VecT psf_sigma) :
+    Gauss1DMAP(size(0), psf_sigma(0))
 { }
 
 Gauss1DMAP::Gauss1DMAP(ImageSizeT size, double psf_sigma) : 
@@ -21,9 +19,8 @@ Gauss1DMAP::Gauss1DMAP(ImageSizeT size, double psf_sigma) :
             Gauss1DModel(size, psf_sigma)
 { }
 
-template<class PriorDistT>
-Gauss1DMAP::Gauss1DMAP(ImageSizeT size, double psf_sigma, PriorDistT&& prior) : 
-            PointEmitterModel(std::forward<PriorDistT>(prior)), 
+Gauss1DMAP::Gauss1DMAP(ImageSizeT size, double psf_sigma, CompositeDist&& prior) : 
+            PointEmitterModel(std::move(prior)), 
             ImageFormat1DBase(size),
             Gauss1DModel(size, psf_sigma)
 { }

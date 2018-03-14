@@ -1,6 +1,6 @@
 # Mappel - libmappel CMakeLists.txt
 #
-# Mark J. Olah [mjo@cs.unm.edu] (02/2014)
+# Mark J. Olah [mjo@cs.unm DOT edu] (02/2014)
 #
 # Currently we build shared and static libs for each plaform.
 # We depend on the cGaussMLE and SFMT object libraries and make a single object
@@ -10,10 +10,12 @@ add_subdirectory(cGaussMLE)
 
 set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 PointEmitterModel.cpp 
-                ImageFormat1DBase.cpp 
-                PoissonNoise1DObjective.cpp  
+                ImageFormat1DBase.cpp PoissonNoise1DObjective.cpp  
+                ImageFormat2DBase.cpp PoissonNoise2DObjective.cpp  
                 Gauss1DModel.cpp Gauss1DMLE.cpp Gauss1DMAP.cpp
                 Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
+                Gauss2DModel.cpp Gauss2DMLE.cpp Gauss2DMAP.cpp
+                Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp
                 )
 
 file(GLOB MAPPEL_HDRS *.h)

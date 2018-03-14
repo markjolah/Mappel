@@ -1,6 +1,6 @@
 
 /** @file MAPEstimator.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2017
  * @brief Class declaration and inline and templated functions for MAPEstimator.
  */

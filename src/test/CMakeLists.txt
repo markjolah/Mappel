@@ -1,5 +1,5 @@
 # Mappel - test CMakeLists.txt
-# Mark J. Olah [mjo@cs.unm.edu] (02/2014)
+# Mark J. Olah [mjo@cs.unm DOT edu] (02/2014)
 #
 # Build google-test executable (cross-platform) and 
 # test execucatable which is unix command line testing

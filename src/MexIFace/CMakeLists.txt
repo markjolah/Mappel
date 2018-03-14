@@ -1,6 +1,6 @@
 # Mappel - mex wrapper CMakeLists.txt
 #
-# Mark J. Olah [mjo@cs.unm.edu] (2014)
+# Mark J. Olah [mjo@cs.unm DOT edu] (2014)
 #
 #copyright Mark J. Olah and The Regents of the University of New Mexico (2014).
 # This code is free for non-commercial use and modification, provided

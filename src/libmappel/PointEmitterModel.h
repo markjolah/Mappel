@@ -1,5 +1,5 @@
 /** @file PointEmitterModel.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-13-2014
  * @brief The class declaration and inline and templated functions for PointEmitterModel.
  *
@@ -26,6 +26,9 @@
 
 namespace mappel {
 
+using CompositeDist = prior_hessian::CompositeDist<ParallelRngGeneratorT>; /**<Composite distribution from prior_hessian:: for representing priors */
+
+    
 /** @brief A virtual Base type for point emitter localization models.
  * 
  * Initialized with a prior as a PriorHessian::CompositeDist object, this sets the dimensionality (num_params) and num_hyperparams,
@@ -42,36 +45,35 @@ protected:
     PointEmitterModel() {}; //Never called by actual top-level classes.  Allows virtual inheritance non-concrete base classes to ignore creating a constructor if necessary.
 public:
     /* Internal Types */    
-    template<class T> using IsPointEmitterModelT = typename std::enable_if<std::is_base_of<PointEmitterModel,T>::value>::type;
-    using CompositeDist = prior_hessian::CompositeDist<ParallelRngGeneratorT>;
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
-
-    /* Static data members */
-//     constexpr static double bounds_epsilon = std::numeric_limits<double>::epsilon(); /**< The amount to keep away parameter values from the singularities of the prior distribtions */
-    constexpr static double bounds_epsilon = 1.0E-9; /**< The amount to keep away parameter values from the singularities of the prior distribtions */
+    static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D seperable intializataions */
     
-    constexpr static double default_pos_beta = 3; /**< Default position parameter in symmetric beta-distributions */
-    constexpr static double default_pos_sigma = 1; /**< Default position parameter in symmetric beta-distributions */
+    /* Static data members */
+    constexpr static double bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
+    constexpr static double global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
+    constexpr static double global_max_psf_sigma = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
+    
+    constexpr static double default_beta_pos = 3; /**< Default position parameter in symmetric beta-distributions */
+    constexpr static double default_sigma_pos = 1; /**< Default position parameter in symmetric beta-distributions */
     constexpr static double default_mean_I = 300; /**< Default emitter intensity mean*/
     constexpr static double default_intensity_kappa = 2;  /**< Default shape for intensity gamma distributions */
     constexpr static double default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
-    constexpr static double default_kappa_bg = 2; /**< Default per-pixel background gamma distribution shape */
-    constexpr static double default_sigma_alpha = 2; /**< Default per-pixel background gamma distribution shape */
+    constexpr static double default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
 
     
     /* prior building functions.  These generate individual prior elements and can be used by subclasses to easily make a prior  */
     static prior_hessian::NormalDist        
-    make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma=default_pos_sigma);
+    make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma=default_sigma_pos);
     
     static prior_hessian::SymmetricBetaDist 
-    make_prior_component_position_beta(std::string var, IdxT size, double pos_beta=default_pos_beta);
+    make_prior_component_position_beta(std::string var, IdxT size, double pos_beta=default_beta_pos);
     
     static prior_hessian::GammaDist         
     make_prior_component_intensity(std::string var, double mean=default_mean_I, double kappa=default_intensity_kappa);
     
     static prior_hessian::ParetoDist        
-    make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha=default_sigma_alpha);
+    make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
 
     /* Constructor */
     PointEmitterModel(CompositeDist&& prior_);    
@@ -83,14 +85,25 @@ public:
     StatsT get_stats() const;
     
     IdxT get_num_params() const;
+    void check_param_shape(const ParamT &theta) const;
+    void check_param_shape(const ParamVecT &theta) const;
+    void check_psf_sigma(double psf_sigma) const;
+    void check_psf_sigma(const VecT &psf_sigma) const;
+    
     ParamT make_param() const;
     ParamVecT make_param_stack(IdxT n) const;
     MatT make_param_mat() const;
     CubeT make_param_mat_stack(IdxT n) const;
-    void check_param_shape(const ParamT &theta) const;
-    void check_param_shape(const ParamVecT &theta) const;
     
-    
+    template<class FillT>
+    ParamT make_param(FillT fill) const;
+    template<class FillT>
+    ParamVecT make_param_stack(IdxT n, FillT fill) const;
+    template<class FillT>
+    MatT make_param_mat(FillT fill) const;
+    template<class FillT>
+    CubeT make_param_mat_stack(IdxT n, FillT fill) const;
+        
     CompositeDist& get_prior();
     const CompositeDist& get_prior() const;
     void set_prior(CompositeDist&& prior_);
@@ -124,7 +137,7 @@ public:
     ParamVecT reflected_theta_stack(const ParamVecT &theta) const;
 
     /* MCMC related */
-    /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
+    /** @brief The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
     IdxT get_mcmc_num_candidate_sampling_phases() const;
     
 protected:
@@ -138,19 +151,15 @@ protected:
     /* Data members */
     IdxT mcmc_num_candidate_sampling_phases=0; /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
     double mcmc_candidate_sample_dist_ratio=1./30.; /**< Controls the candidate distribution spread for MCMC stuff */
-    double mcmc_candidate_eta_x; /**< The standard deviation for the normally distributed perturbation to theta_I in the random walk MCMC sampling */
+    double mcmc_candidate_eta_x; /**< The standard deviation for the normally distributed perturbation to theta_x in the random walk MCMC sampling */
     double mcmc_candidate_eta_I; /**< The standard deviation for the normally distributed perturbation to theta_I in the random walk MCMC sampling */
     double mcmc_candidate_eta_bg; /**< The standard deviation for the normally distributed perturbation to theta_bg in the random walk MCMC sampling */
-
 };
 
-
-
-template<class Model, typename=PointEmitterModel::IsPointEmitterModelT<Model>>
+template<class Model, typename=IsSubclassT<Model,PointEmitterModel>>
 std::ostream& operator<<(std::ostream &out,const Model &model);
 
 /* Inline member function definitions */
-
 inline
 void PointEmitterModel::set_rng_seed(RngSeedT seed)
 { rng_manager.seed(seed); }
@@ -183,12 +192,32 @@ inline
 CubeT PointEmitterModel::make_param_mat_stack(IdxT n) const
 { return CubeT(num_params, num_params, n); }
 
+template<class FillT>
+PointEmitterModel::ParamT 
+PointEmitterModel::make_param(FillT fill) const
+{ return ParamT(num_params, fill); }
+
+template<class FillT>
+PointEmitterModel::ParamVecT
+PointEmitterModel::make_param_stack(IdxT n, FillT fill) const
+{ return ParamVecT(num_params, n, fill); }
+
+template<class FillT>
+MatT 
+PointEmitterModel::make_param_mat(FillT fill) const
+{ return MatT(num_params, num_params, fill); }
+
+template<class FillT>
+CubeT 
+PointEmitterModel::make_param_mat_stack(IdxT n, FillT fill) const
+{ return CubeT(num_params, num_params, n, fill); }
+
 inline
-PointEmitterModel::CompositeDist& PointEmitterModel::get_prior() 
+CompositeDist& PointEmitterModel::get_prior() 
 { return prior; }
 
 inline 
-const PointEmitterModel::CompositeDist& PointEmitterModel::get_prior() const 
+const CompositeDist& PointEmitterModel::get_prior() const 
 { return prior; }
 
 inline 
@@ -207,7 +236,6 @@ inline
 IdxT PointEmitterModel::get_mcmc_num_candidate_sampling_phases() const 
 { return mcmc_num_candidate_sampling_phases; }
 
-
 inline
 void PointEmitterModel::set_hyperparams(const VecT &hyperparams)
 { prior.set_params(hyperparams); }
@@ -215,7 +243,6 @@ void PointEmitterModel::set_hyperparams(const VecT &hyperparams)
 inline
 PointEmitterModel::ParamT PointEmitterModel::get_hyperparams() const
 { return prior.params(); }
-
 
 inline
 StringVecT PointEmitterModel::get_params_desc() const
@@ -233,7 +260,6 @@ inline
 void PointEmitterModel::set_hyperparams_desc(const StringVecT &desc)
 { prior.set_params_desc(desc); }
 
-
 template<class RngT>
 PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
 { return prior.sample(rng); }
@@ -244,7 +270,6 @@ PointEmitterModel::ParamT PointEmitterModel::sample_prior()
 
 
 /* Template function definitions */
-
 template<class Model, typename>
 std::ostream& operator<<(std::ostream &out, const Model &model)
 {
@@ -254,8 +279,6 @@ std::ostream& operator<<(std::ostream &out, const Model &model)
     return out;
 }
 
-
 } /* namespace mappel */
-
 
 #endif /* _POINTEMITTERMODEL_H */

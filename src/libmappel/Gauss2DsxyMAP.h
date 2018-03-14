@@ -1,5 +1,5 @@
 /** @file GaussHSMAP.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-13-2014
  * @brief The class declaration and inline and templated functions for GaussHSMAP.
  */

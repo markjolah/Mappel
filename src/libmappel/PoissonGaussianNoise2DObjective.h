@@ -1,5 +1,5 @@
 /** @file PoissonGaussianNoise2DObjective.h
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 04-2017
  * @brief The class declaration and inline and templated functions for PoissonGaussianNoise2DObjective.
  *

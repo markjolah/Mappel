@@ -1,6 +1,6 @@
 
 /** @file stencil.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 03-22-2014
  * @brief The stencils for pixel based computations
  */

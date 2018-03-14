@@ -1,6 +1,6 @@
 /** @file Gauss1DsModel.cpp
- * @author Mark J. Olah (mjo\@cs.unm.edu)
- * @date 2017
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss1DsModel
  */
 
@@ -20,7 +20,8 @@ Gauss1DsModel::Gauss1DsModel(IdxT size_)
     mcmc_candidate_eta_sigma = 1.0*mcmc_candidate_sample_dist_ratio;    
 }
 
-Gauss1DsModel::CompositeDist Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
+CompositeDist 
+Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
 {
     return CompositeDist(make_prior_component_position_beta("x",size),
                          make_prior_component_intensity("I"),
@@ -28,57 +29,67 @@ Gauss1DsModel::CompositeDist Gauss1DsModel::make_default_prior(IdxT size, double
                          make_prior_component_sigma("sigma",min_sigma,max_sigma));
 }
 
-Gauss1DsModel::CompositeDist 
+CompositeDist 
 Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg,
-                                       double min_sigma, double max_sigma)
+                                       double min_sigma, double max_sigma, double alpha_sigma)
 {
     return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
                          make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                         make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
+                        );
 }
 
-Gauss1DsModel::CompositeDist 
+CompositeDist 
 Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos, 
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg,
-                                       double min_sigma, double max_sigma)
+                                       double min_sigma, double max_sigma, double alpha_sigma)
 {
     return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
                          make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                         make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
+                        );
 }
 
-void Gauss1DsModel::set_min_sigma(double min_sigma)
+void Gauss1DsModel::set_min_sigma(double new_sigma)
 {
+    check_psf_sigma(new_sigma);
+    if(new_sigma >= get_max_sigma()) {
+        std::ostringstream msg;
+        msg<<"Invalid new min_sigma:"<<new_sigma<<" >= max_sigma:"<<get_max_sigma();
+        throw ParameterValueError(msg.str());
+    }
     auto lb = prior.lbound();
-    lb(3) = min_sigma;
+    lb(3) = new_sigma;
     set_lbound(lb);
 }
 
-void Gauss1DsModel::set_max_sigma(double max_sigma)
+void Gauss1DsModel::set_max_sigma(double new_sigma)
 {
+    check_psf_sigma(new_sigma);
+    if(new_sigma <= get_min_sigma()) {
+        std::ostringstream msg;
+        msg<<"Invalid new max_sigma:"<<new_sigma<<" <= min_sigma:"<<get_min_sigma();
+        throw ParameterValueError(msg.str());
+    }
     auto ub = prior.ubound();
-    ub(3) = max_sigma;
+    ub(3) = new_sigma;
     set_ubound(ub);
 }
 
 void Gauss1DsModel::set_min_sigma(const VecT &min_sigma)
 {
-    auto lb = prior.lbound();
-    lb(3) = min_sigma(0);
-    set_lbound(lb);
+    set_min_sigma(min_sigma(0));
 }
 
 void Gauss1DsModel::set_max_sigma(const VecT &max_sigma)
 {
-    auto ub = prior.ubound();
-    ub(3) = max_sigma(0);
-    set_ubound(ub);
+    set_max_sigma(max_sigma(0));
 }
-
-
 
 Gauss1DsModel::Stencil::Stencil(const Gauss1DsModel &model_,
                                const Gauss1DsModel::ParamT &theta,
@@ -124,9 +135,10 @@ StatsT Gauss1DsModel::get_stats() const
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat1DBase::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats["min_sigma"] = get_min_sigma();
+    stats["max_sigma"] = get_max_sigma();
     return stats;
 }
-
 
 void
 Gauss1DsModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
@@ -147,8 +159,6 @@ Gauss1DsModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, d
     for(IdxT c=0; c<hess.n_cols; c++) for(IdxT r=0; r<=c; r++)
         hess(r,c) -= dmm_ratio * pgrad(r) * pgrad(c);
 }
-
-
 
 Gauss1DsModel::Stencil
 Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
@@ -175,7 +185,6 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
     return make_stencil(ParamT{x_pos,  I, bg, sigma});
 }
 
-
 void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
 {
     int phase = sample_index%mcmc_num_candidate_sampling_phases;
@@ -192,7 +201,5 @@ void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_
             mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
     }
 }
-
-
 
 } /* namespace mappel */
