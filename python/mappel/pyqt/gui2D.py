@@ -40,14 +40,19 @@ class App(QMainWindow):
         exitAct.triggered.connect(qApp.quit)
 
         genModelAct = QAction('&Generate Model',self)
+        genModelAct.triggered.connect(self._generateModel)
+
         genSimAct = QAction('&Generate Simulation',self)
+        genSimAct.triggered.connect(self._generateSim)
+
         priorAct = QAction('&Model Parameters',self)
+        priorAct.triggered.connect(self._generatePrior)
 
         # Buttons for Algorithm Menu
         modelAct = QAction('&Estimator',self)
         modelAct.setShortcut('Ctrl+M')
         modelAct.setStatusTip('Estimator Selection')
-        #modelAct.triggered.connect()
+        modelAct.triggered.connect(self._estimatorSelect)
 
         # Buttons for Display Menu
         dispModelAct = QAction('&Display Model',self)
@@ -56,6 +61,7 @@ class App(QMainWindow):
 
         # Buttons for Help Menu
         helpAct = QAction('&Documentation',self)
+        helpAct.triggered.connect(self._helpScreen)
 
         # add the menu
         mainMenu = self.menuBar()
@@ -77,6 +83,24 @@ class App(QMainWindow):
         dispMenu.addAction(dispEstAct)
 
         helpMenu.addAction(helpAct)
+
+    def _generateModel(self):
+        pass
+
+    def _generateSim(self):
+        pass
+
+    def _generatePrior(self):
+        pass
+
+    def _estimatorSelect(self):
+        pass
+
+    def _helpScreen(self):
+        print "Opening a new popup window..."
+        self.help = QWidget()
+        self.help.setGeometry(QRect(100, 100, 400, 200))
+        self.help.show()
 
 class MyTableWidget(QWidget):
         
