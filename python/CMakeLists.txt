@@ -31,4 +31,4 @@ add_custom_command(TARGET prepare_python PRE_BUILD
    COMMENT "Symlinking mappel python code")
 
 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} setup.py install –prefix=${CMAKE_INSTALL_PREFIX} 
-                              WORKING_DIRECTORY ${PYTHON_BUILD_DIR}")
+                              WORKING_DIRECTORY ${PYTHON_BUILD_DIR})")
