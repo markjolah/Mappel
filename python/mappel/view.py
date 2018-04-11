@@ -162,7 +162,7 @@ class viewer1D:
         thetas = [x_init, I_init, bg_init]
         def loss_Func(thetas):
             model = self.engine.model_image(thetas)
-            return np.sum( (data-model)**2)
+            return data-model # least_squares takes the square of this
         res_1 = least_squares(loss_Func,thetas,bounds=([0,0,0],[self.imsize,4*I_init,4*I_init]))
         return res_1.x
     
