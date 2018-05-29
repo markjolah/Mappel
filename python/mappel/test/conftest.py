@@ -25,7 +25,8 @@ ModelConstructorArgs = {
     mappel.Gauss2DsMAP:{"size":np.array([7,9],dtype="uint32"), "min_sigma":psf_sigma, "max_sigma":3.0*psf_sigma},
 }
 
-MappelEstimatorTestMethods = ["heuristic","newton","newtondiagonal","quasinewton","simulatedannealing","trustregion"]
+MappelEstimatorTestMethods = ["newton","newtondiagonal","quasinewton","simulatedannealing","trustregion"]
+#MappelEstimatorTestMethods = ["heuristic","newton","newtondiagonal","quasinewton","simulatedannealing","trustregion"]
 
 def model_id(model_class):
     return model_class.__name__

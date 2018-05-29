@@ -147,6 +147,8 @@ def draw_infeasible_theta(model, hyp_data):
 def draw_prior_theta(model, seed, N=0):
     """Use hypotheis-supplied rng seed and model.sample_prior() to draw a theta from the prior distribution."""
     model.set_rng_seed(seed)
+    #import pdb
+    #pdb.set_trace()
     if N==0:
         theta = model.sample_prior()
         check_theta(model,theta,1)

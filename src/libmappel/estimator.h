@@ -12,6 +12,7 @@
 #include <string>
 #include <limits>
 #include <memory>
+#include <mutex>
 #include <map>
 #include "rng.h"
 #include "cGaussMLE/cGaussMLE.h"
@@ -119,7 +120,7 @@ protected:
     using Estimator<Model>::model;
     int max_threads;
     int num_threads;
-    boost::mutex mtx;
+    std::mutex mtx;
 };
 
 template<class Model>

@@ -6,6 +6,8 @@ _build
 _install
 _win64*
 
+.gdb_history
+
 __pycache__
 
 # Prerequisites

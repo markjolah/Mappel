@@ -40,7 +40,6 @@ void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<
     sample.col(0) = theta_init.theta;
     sample_rllh(0) = methods::objective::rllh(model, im, theta_init);
     IdxT phase = 0;
-    std::cout<<"Nsamples: "<<Nsamples<<"\n";
     for(IdxT n=1;n<Nsamples;n++){
         ParamT<Model> can_theta = sample.col(n-1);
         model.sample_mcmc_candidate_theta(phase++, can_theta);
@@ -78,7 +77,6 @@ void sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const Ste
     candidate.col(0) = sample.col(0);
     candidate_rllh(0) = sample_rllh(0);
     IdxT phase = 0;
-    phase++;
     for(IdxT n=1;n<Nsamples;n++){
         ParamT<Model> can_theta = sample.col(n-1);
         model.sample_mcmc_candidate_theta(phase++, can_theta);

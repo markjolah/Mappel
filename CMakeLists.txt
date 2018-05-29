@@ -11,7 +11,7 @@
 
 cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.2 LANGUAGES CXX)
-
+message(STATUS "CMAKE_MODULE_PATH:${CMAKE_MODULE_PATH}")
 # cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
 # cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
 
@@ -57,6 +57,7 @@ include(Mappel-PackageConfig) #Configure Package Config and associated files for
 
 add_subdirectory(src/libmappel) #Main library
 # add_subdirectory(src/test) #Test executables
+
 
 if(OPT_MATLAB)
     #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX

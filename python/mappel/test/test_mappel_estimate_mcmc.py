@@ -14,7 +14,7 @@ from .conftest import MappelEstimatorTestMethods
 from .common import *
 
 Nestimate = 8
-Nsample = 5000
+Nsample = 200
 Nburnin = 30
 thin = 0
 

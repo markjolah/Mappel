@@ -30,7 +30,7 @@ endif()
 set(LIB_TARGET Mappel) #Name for main Mappel library
 add_library(${LIB_TARGET} SHARED ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>)
 target_link_libraries(${LIB_TARGET} PUBLIC ${BacktraceException_LIBRARIES} )
-target_link_libraries(${LIB_TARGET} PUBLIC ${ParallelRngManager_LIBRARIES} )
+target_link_libraries(${LIB_TARGET} PUBLIC ParallelRngManager::ParallelRngManager_SHARED )
 target_link_libraries(${LIB_TARGET} PUBLIC ${PriorHessian_LIBRARIES})
 target_link_libraries(${LIB_TARGET} PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
 target_link_libraries(${LIB_TARGET} PUBLIC OpenMP::OpenMP_CXX) #OpenMP (non-empty for WIN32)
