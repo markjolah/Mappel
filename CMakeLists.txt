@@ -11,9 +11,6 @@
 
 cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.2 LANGUAGES CXX)
-message(STATUS "CMAKE_MODULE_PATH:${CMAKE_MODULE_PATH}")
-# cmake_policy(SET CMP0054 NEW) #Don't derrefernce in if() statements
-# cmake_policy(SET CMP0022 NEW) #LINK_INTERFACE_LIBRARIES fix
 
 # Enable Matlab Support via MexIFace
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
@@ -21,26 +18,73 @@ option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
 # Enable Support for Python via Boost::Python
 option(OPT_PYTHON "Add support for Python via boost::python" OFF)
 
-# Hyperspectral code
-option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
+# # Hyperspectral code
+# option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
-option(OPT_DEBUG "Support debugging features")
+option(OPT_DEBUG "Support debugging features" OFF)
+option(OPT_TESTING "Support testing features" OFF)
 
-#Modules
-set(${PROJECT_NAME}_CMAKE_DIR ${CMAKE_SOURCE_DIR}/cmake)
-set(${PROJECT_NAME}_CMAKE_MODULES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Modules)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_CMAKE_MODULES_DIR})
-set(${PROJECT_NAME}_CMAKE_FUNCTIONS_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Functions)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${${PROJECT_NAME}_CMAKE_FUNCTIONS_DIR}) 
-set(${PROJECT_NAME}_CMAKE_TEMPLATES_DIR ${${PROJECT_NAME}_CMAKE_DIR}/Templates)
-set(${PROJECT_NAME}_CMAKE_TOOLCHAINS_DIR ${MexIFace_CMAKE_DIR}/Toolchains)
+message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
+message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
+message(STATUS "OPTION: OPT_DEBUG: ${OPT_DEBUG}")
+message(STATUS "OPTION: OPT_TESTING: ${OPT_TESTING}")
+
+list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/Modules)
+
+
+#INTERPROCEDURAL_OPTIMIZATION
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_SUPPORTED_ERROR)
+
+if( IPO_SUPPORTED )
+    message(STATUS "IPO / LTO enabled")
+    set_property(DIRECTORY PROPERTY INTERPROCEDURAL_OPTIMIZATION ON) 
+else()
+    message(STATUS "IPO / LTO not supported: <${IPO_SUPPORTED_ERROR}>")
+endif()
+
+# Armadillo
+find_package(Armadillo REQUIRED)
+add_definitions(-DARMA_USE_CXX11)
+add_definitions(-DARMA_DONT_USE_WRAPPER)
+add_definitions(-DARMA_BLAS_LONG)
+add_definitions(-DARMA_DONT_USE_OPENMP) #We want to control the use of openMP at a higher-grained level
+add_definitions(-DARMA_DONT_USE_HDF5)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:ARMA_PRINT_ERRORS>)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<NOT:$<CONFIG:Debug>>:ARMA_NO_DEBUG>)
+if(OPT_DEBUG)
+    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:ARMA_EXTRA_DEBUG>)
+endif()
+
+# OpenMP
+find_package(OpenMP REQUIRED)
+
+# LAPACK & BLAS
+find_package(LAPACK REQUIRED)
+find_package(BLAS REQUIRED)
+
+#Boost configure
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_LIBS OFF)
+if(WIN32)
+    find_library(Boost_THREAD_LIBRARY_RELEASE libboost_thread_win32-mt.dll )
+endif()
+find_package(Boost REQUIRED COMPONENTS system chrono thread iostreams)
+add_definitions( -DBOOST_THREAD_USE_LIB )
+
+# Pthreads
+if (WIN32)
+    find_library(PTHREAD_LIBRARY libwinpthread.dll REQUIRED)
+elseif(UNIX)
+    find_library(PTHREAD_LIBRARY libpthread.so REQUIRED)
+endif()
+message(STATUS "Found Pthread Libarary: ${PTHREAD_LIBRARY}")
 
 #Allow inclusion of external dependencies
 include(AddExternalDependency)
 
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
-# CACHE STRING URL of BacktraceException library dependency)
 AddExternalDependency(BacktraceException ${BacktraceExceptionURL} SHARED)
 
 #ParallelRngManager allows for management of parallel rng streams.
@@ -51,13 +95,39 @@ AddExternalDependency(ParallelRngManager ${ParallelRngManagerURL} SHARED)
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
 AddExternalDependency(PriorHessian ${PriorHessianURL} SHARED)
 
-include(Mappel-configure) #Main configuration module
-include(Mappel-Doxygen) #Add Doxygen documentation targets
-include(Mappel-PackageConfig) #Configure Package Config and associated files for exports
+# CFLAGS ##
+add_compile_options($<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU>>:-O0>)
+add_compile_options($<$<CONFIG:Debug>:-W>)
+add_compile_options($<$<CONFIG:Debug>:-Wall>)
+add_compile_options($<$<CONFIG:Debug>:-Wextra>)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:DEBUG>)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU>>:-fmax-errors=5>>)
+
+# Compiler Definitions
+if (WIN32)
+    add_definitions( -DWIN32 )
+elseif(UNIX AND NOT APPLE)
+    add_definitions( -DLINUX )
+endif()
+
+set(CMAKE_DEBUG_POSTFIX ".debug" CACHE STRING "Debug file extension")
+
+## MAC OS X Config ##
+set(CMAKE_MACOSX_RPATH 1) #Enable rpaths on OS X
+
+### PackageConfig Exports
+include(ExportPackageWizzard)
+export_package_wizzard()
+
+#include(Mappel-Doxygen) #Add Doxygen documentation targets
 
 add_subdirectory(src/libmappel) #Main library
-# add_subdirectory(src/test) #Test executables
 
+if(OPT_TESTING)
+    include(CTest)
+    enable_testing()
+    add_subdirectory(src/test)
+endif()
 
 if(OPT_MATLAB)
     #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX
@@ -73,5 +143,3 @@ if(OPT_PYTHON)
     add_subdirectory(src/python)
     add_subdirectory(python)
 endif()
-
-
