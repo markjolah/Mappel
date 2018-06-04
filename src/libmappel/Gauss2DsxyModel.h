@@ -1,11 +1,11 @@
-/** @file Gauss2DsModel.h
+/** @file Gauss2DsxyModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2014-2018
- * @brief The class declaration and inline and templated functions for Gauss2DsModel.
+ * @brief The class declaration and inline and templated functions for Gauss2DsxyModel.
  */
 
-#ifndef _MAPPEL_GAUSS2DSMODEL_H
-#define _MAPPEL_GAUSS2DSMODEL_H
+#ifndef _MAPPEL_GAUSS2DSXYMODEL_H
+#define _MAPPEL_GAUSS2DSXYMODEL_H
 
 #include "PointEmitterModel.h"
 #include "ImageFormat2DBase.h"
@@ -13,46 +13,52 @@
 
 namespace mappel {
 
-/** @brief A base class for 2D Gaussian PSF where the gaussian sigma is controlled by a single scalar parameter
- * which is called sigma_ratio.  The size of the gaussian psf is sigma_ratio*psf_sigma, where psf_sigma is 
- * considered as a vector [psf_sigmaX, psf_sigmaY].
- *
+/** @brief A base class for 2D Gaussian PSF with axis-aligned gaussian with free parameters for both sigma_x and sigma_y.
+ * Gaussian sigma parameters sigma_x and sigma_y are measured in units of pixels.  The model has 6 parameters,
+ * [x,y,I,bg,sigma_x,sigma_y].
+ * 
+ * Importantly sigma_x and sigma_y must be in the range given by parameters min_sigma, max_sigma.  Each is a 2-element vector, giving the minimum and maximum acceptable values for
+ * the gaussian sigma.  It is important that min_sigma is at least 0.5 pixel, estimating gaussian centers when any component of the sigma is significantly
+ * smaller than a pixel will lead to poor results anyways.
+ * 
+ * 
  */
 
-class Gauss2DsModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase 
+class Gauss2DsxyModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase 
 {
 public:
-     /** @brief Stencil for 2D scalar-sigma models.
+     /** @brief Stencil for 2D free-sigma (astigmatic) models.
      */
     class Stencil {
     public:
         bool derivatives_computed=false;
-        typedef Gauss2DsModel::ParamT ParamT;
-        Gauss2DsModel const *model;
+        typedef Gauss2DsxyModel::ParamT ParamT;
+        Gauss2DsxyModel const *model;
         
         ParamT theta;
         VecT dx, dy;
         VecT Gx, Gy;
         VecT X, Y;
         VecT DX, DY;
+        VecT DXSX, DYSX;
         VecT DXS, DYS;
         VecT DXS2, DYS2;
         VecT DXSX, DYSY;
         Stencil() {}
-        Stencil(const Gauss2DsModel &model,const ParamT &theta, bool _compute_derivatives=true);
+        Stencil(const Gauss2DsxyModel &model,const ParamT &theta, bool _compute_derivatives=true);
         void compute_derivatives();
         inline double x() const {return theta(0);}
         inline double y() const {return theta(1);}
         inline double I() const {return theta(2);}
         inline double bg() const {return theta(3);}
-        inline double sigma_ratio() const {return theta(4);}
-        inline double sigmaX() const {return model->min_sigma(0)*sigma_ratio();}
-        inline double sigmaY() const {return model->min_sigma(1)*sigma_ratio();}
-        friend std::ostream& operator<<(std::ostream &out, const Gauss2DsModel::Stencil &s);
+        inline double sigmaX() const {return theta(4);}
+        inline double sigmaY() const {return theta(5);}
+        friend std::ostream& operator<<(std::ostream &out, const Gauss2DsxyModel::Stencil &s);
     };
+
     using StencilVecT = std::vector<Stencil>;
 
-    Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
+    Gauss2DsxyModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
     /* Prior construction */
     static CompositeDist make_default_prior(const ImageSizeT &size, double max_sigma_ratio);
     static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos, 
@@ -113,20 +119,20 @@ protected:
 /* Inline Methods */
 
 inline
-VecT Gauss2DsModel::get_min_sigma() const
+VecT Gauss2DsxyModel::get_min_sigma() const
 { return min_sigma; }
 
 
 inline
-VecT Gauss2DsModel::get_max_sigma() const
+VecT Gauss2DsxyModel::get_max_sigma() const
 { return get_min_sigma() * get_max_sigma_ratio(); }
 
 inline
-double Gauss2DsModel::get_max_sigma(IdxT dim) const
+double Gauss2DsxyModel::get_max_sigma(IdxT dim) const
 { return get_min_sigma(dim) * get_max_sigma_ratio(); }
 
 inline
-double Gauss2DsModel::get_max_sigma_ratio() const
+double Gauss2DsxyModel::get_max_sigma_ratio() const
 { return get_ubound()(4); }
 
 
@@ -147,8 +153,8 @@ double Gauss2DsModel::get_max_sigma_ratio() const
  * @return A new Stencil object ready to compute with
  */
 inline
-Gauss2DsModel::Stencil
-Gauss2DsModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
+Gauss2DsxyModel::Stencil
+Gauss2DsxyModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 {
     if(!theta_in_bounds(theta)) {
         std::ostringstream msg;
@@ -162,14 +168,14 @@ Gauss2DsModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 /* Model Pixel Value And Derivatives */
 
 inline
-double Gauss2DsModel::pixel_model_value(int i, int j, const Stencil &s) const
+double Gauss2DsxyModel::pixel_model_value(int i, int j, const Stencil &s) const
 {
     return s.bg()+s.I()*s.X(i)*s.Y(j);
 }
 
 inline
 void
-Gauss2DsModel::pixel_grad(int i, int j, const Stencil &s, ParamT &pgrad) const
+Gauss2DsxyModel::pixel_grad(int i, int j, const Stencil &s, ParamT &pgrad) const
 {
     double I = s.I();
     pgrad(0) = I * s.DX(i) * s.Y(j);
@@ -181,7 +187,7 @@ Gauss2DsModel::pixel_grad(int i, int j, const Stencil &s, ParamT &pgrad) const
 
 inline
 void
-Gauss2DsModel::pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const
+Gauss2DsxyModel::pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const
 {
     double I = s.I();
     pgrad2(0) = I/s.sigmaX() * s.DXS(i) * s.Y(j);
@@ -193,7 +199,7 @@ Gauss2DsModel::pixel_grad2(int i, int j, const Stencil &s, ParamT &pgrad2) const
 
 inline
 void
-Gauss2DsModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
+Gauss2DsxyModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
 {
     hess.zeros();
     double I = s.I();
@@ -212,22 +218,22 @@ Gauss2DsModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
 }
 
 inline
-Gauss2DsModel::Stencil 
-Gauss2DsModel::initial_theta_estimate(const ImageT &im)
+Gauss2DsxyModel::Stencil 
+Gauss2DsxyModel::initial_theta_estimate(const ImageT &im)
 {
     return initial_theta_estimate(im, make_param(arma::fill::zeros), DefaultSeperableInitEstimator);
 }
 
 inline
-Gauss2DsModel::Stencil 
-Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
+Gauss2DsxyModel::Stencil 
+Gauss2DsxyModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
 {
     return initial_theta_estimate(im, theta_init, DefaultSeperableInitEstimator);
 }
 
 /* Templated Overloads */
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model> >::type
+typename std::enable_if<std::is_base_of<Gauss2DsxyModel,Model>::value, StencilT<Model> >::type
 cgauss_heuristic_compute_estimate(const Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init)
 {
     auto size = model.get_size(0);
@@ -241,7 +247,7 @@ cgauss_heuristic_compute_estimate(const Model &model, const ModelDataT<Model> &i
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model>>::type
+typename std::enable_if<std::is_base_of<Gauss2DsxyModel,Model>::value, StencilT<Model>>::type
 cgauss_compute_estimate(Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init, int max_iterations)
 {
     auto size = model.get_size(0);
@@ -256,7 +262,7 @@ cgauss_compute_estimate(Model &model, const ModelDataT<Model> &im, const ParamT<
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model>>::type
+typename std::enable_if<std::is_base_of<Gauss2DsxyModel,Model>::value, StencilT<Model>>::type
 cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im, 
                        const ParamT<Model> &theta_init, int max_iterations,
                        ParamVecT<Model> &sequence)
@@ -275,4 +281,4 @@ cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im,
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DSMODEL_H */
+#endif /* _MAPPEL_GAUSS2DSXYMODEL_H */

@@ -28,21 +28,21 @@ Gauss2DModel::Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma)
 void Gauss2DModel::set_prior(CompositeDist&& prior_)
 {
     PointEmitterModel::set_prior(std::move(prior_));
-    //Reset initializer hyperparams
+    //Reset initializer models' hyperparams
     update_internal_1D_estimators();
 }
 
 void Gauss2DModel::set_hyperparams(const VecT &hyperparams)
 {
     PointEmitterModel::set_hyperparams(hyperparams);
-    //Reset initializer hyperparams
+    //Reset initializer models' hyperparams
     update_internal_1D_estimators();
 }
 
 void Gauss2DModel::set_size(const ImageSizeT &size_)
 {
     ImageFormat2DBase::set_size(size_);
-    //Reset initializer model sizes
+    //Reset initializer models' sizes
     x_model.set_size(size(0));
     y_model.set_size(size(1));
 }
@@ -51,7 +51,7 @@ void Gauss2DModel::set_psf_sigma(const VecT& new_sigma)
 { 
     check_psf_sigma(new_sigma);
     psf_sigma = new_sigma;
-    //Reset initializer model psf_sigma
+    //Reset initializer models' psf_sigma
     x_model.set_psf_sigma(psf_sigma(0));
     y_model.set_psf_sigma(psf_sigma(1));
 }
