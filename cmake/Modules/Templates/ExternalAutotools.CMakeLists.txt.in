@@ -1,0 +1,37 @@
+# ExternalAutotools.CMakeLists.txt.in
+#
+# Template to generate a CMAKE project in the build tree that will download config build and install
+# an external project dependency based on the autotools system.  
+# Installs to CMAKE_INSTALL_PREFIX using ExternalProject_Add
+#
+cmake_minimum_required(VERSION 2.8.2)
+
+project(@ExtProjectName@-External NONE)
+
+include(ExternalProject)
+
+set(CONFIGURE_ARGS --prefix=@ExtProjectInstallPrefix@)
+if(@ExtProject_BUILD_SHARED_LIBS)
+    set(CONIGURE_ARGS ${CONFIGURE_ARGS} --enable-shared)
+endif()
+if(@ExtProject_BUILD_STATIC_LIBS)
+    set(CONIGURE_ARGS ${CONFIGURE_ARGS} --enable-static)
+endif()
+
+set(SOURCE_DIR @ExtProjectDir@/source)
+
+include(ProcessorCount)
+ProcessorCount(NUM_PROCS)
+set(INSTALL_COMMAND  @CMAKE_COMMAND@ --build . --target install -- -j${NUM_PROCS})
+
+ExternalProject_Add(@ExtProjectName@
+    GIT_REPOSITORY @ExtProjectURL@
+    GIT_TAG master
+    GIT_SHALLOW 1
+    GIT_PROGRESS 0
+    SOURCE_DIR ${SOURCE_DIR}
+    BUILD_IN_SOURCE TRUE
+    INSTALL_DIR @ExtProjectInstallPrefix@
+    CONFIGURE_COMMAND cd ${SOURCE_DIR} && autoreconf && ./configure ${CONFIGURE_ARGS}
+    INSTALL_COMMAND make -j${NUM_PROCS} install
+    )
