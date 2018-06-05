@@ -17,7 +17,7 @@ set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 Gauss2DModel.cpp Gauss2DMLE.cpp Gauss2DMAP.cpp
                 Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp)
 
-set(PUBLIC_HEADER_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/../include)
+set(PUBLIC_HEADER_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include)
                 
 if(OPT_HYPERSPECTRAL)
     file(GLOB HS_SRCS hyperspectral/*.cpp)

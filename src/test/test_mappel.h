@@ -5,24 +5,31 @@
  */
 #include "gtest/gtest.h"
 #include "test_helpers/rng_environment.h"
-
+#include "PointEmitter1DModel.h"
 
 /* Globals */
 extern test_helper::RngEnvironment *env;
 
 /* Factory functions */
-// template<class Dist> 
-// Dist make_dist();
-// template<> prior_hessian::NormalDist make_dist();
+template<class Model>
+typename std::enable_if<std::is_base_of<PointEmitter1DModel,Model>::value>::type
+Model make_model()
+{
+    int size = env->sample_integer(4,40);
+    double psf_sigma = size*env->sample_exponential(1.5);
+    std::cout<<"1DModel Generated[size:"<<size<<", psf_sigma:"<<psf_sigma<<"\n";
+    return Model(size,psf_sigma);
+}
 
 
 /* Type parameterized test fixtures */
-// template<class Dist>
-// class UnivariateDistTest : public ::testing::Test {
-// public:    
-//     Dist dist{0,1,"x"};
-//     virtual void SetUp() {
-//         env->reset_rng();
-//         dist = make_dist<Dist>();
-//     }
-// };
+template<class Model>
+class TestModel1D : public ::testing::Test {
+public:    
+    Model model;
+    TestModel1D() : model(make_model<Model>()) {}
+    virtual void SetUp() {
+        env->reset_rng();
+        model = make_model<Model>();
+    }
+};

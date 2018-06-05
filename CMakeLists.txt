@@ -132,7 +132,7 @@ add_subdirectory(src/libmappel) #Main library
 if(OPT_TESTING)
     include(CTest)
     enable_testing()
-#     add_subdirectory(src/test)
+    add_subdirectory(src/test)
 endif()
 
 if(OPT_MATLAB)
