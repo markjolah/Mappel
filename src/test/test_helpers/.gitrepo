@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/markjolah/test_helpers.git
+	branch = master
+	commit = 2d02658373e2dcd4344f40aa26ce846ad8e04cd6
+	parent = 686802e813d109505c27f849bb275e053b972c4e
+	method = merge
+	cmdver = 0.4.0
