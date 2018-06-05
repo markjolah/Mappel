@@ -15,10 +15,9 @@ set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 Gauss1DModel.cpp Gauss1DMLE.cpp Gauss1DMAP.cpp
                 Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
                 Gauss2DModel.cpp Gauss2DMLE.cpp Gauss2DMAP.cpp
-                Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp
-                )
+                Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp)
 
-file(GLOB MAPPEL_HDRS *.h)
+set(PUBLIC_HEADER_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/../include)
                 
 if(OPT_HYPERSPECTRAL)
     file(GLOB HS_SRCS hyperspectral/*.cpp)
@@ -27,34 +26,34 @@ if(OPT_HYPERSPECTRAL)
     set(MAPPEL_HDRS ${MAPPEL_HDRS} ${HS_HDRS})
 endif()
 
-set(LIB_TARGET Mappel) #Name for main Mappel library
-add_library(${LIB_TARGET} SHARED ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>)
-target_link_libraries(${LIB_TARGET} PUBLIC ${BacktraceException_LIBRARIES} )
-target_link_libraries(${LIB_TARGET} PUBLIC ParallelRngManager::ParallelRngManager_SHARED )
-target_link_libraries(${LIB_TARGET} PUBLIC ${PriorHessian_LIBRARIES})
-target_link_libraries(${LIB_TARGET} PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
-target_link_libraries(${LIB_TARGET} PUBLIC OpenMP::OpenMP_CXX) #OpenMP (non-empty for WIN32)
-target_link_libraries(${LIB_TARGET} PUBLIC ${PTHREAD_LIBRARY}) #Pthreads
-target_link_libraries(${LIB_TARGET} PUBLIC Boost::chrono Boost::thread) 
-set_target_properties(${LIB_TARGET} PROPERTIES PUBLIC_HEADER "${MAPPEL_HDRS}")
-# set_target_properties(${LIB_TARGET} PROPERTIES DEBUG_POSTFIX ${CMAKE_DEBUG_POSTFIX})
-target_include_directories(${LIB_TARGET} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
-#target_include_directories(${LIB_TARGET} PUBLIC $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
-if( IPO_SUPPORTED  )
-    set_property(TARGET ${LIB_TARGET} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+include(AddSharedStaticLibraries)
+add_shared_static_libraries("${MAPPEL_SRCS};$<TARGET_OBJECTS:cGaussMLE>" ${PROJECT_NAME}) 
+
+foreach(target ${LIB_TARGETS})
+    target_link_libraries(${target} PUBLIC BacktraceException::BacktraceException )
+    target_link_libraries(${target} PUBLIC ParallelRngManager::ParallelRngManager )
+    target_link_libraries(${target} PUBLIC PriorHessian::PriorHessian)
+    target_link_libraries(${target} PUBLIC OpenMP::OpenMP_CXX) #OpenMP (non-empty for WIN32)
+    target_link_libraries(${target} PUBLIC Boost::chrono)
+    target_link_libraries(${target} PUBLIC Boost::thread) 
+    target_link_libraries(${target} PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
+    target_link_libraries(${target} PUBLIC ${PTHREAD_LIBRARY}) #Pthreads
+    target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${PUBLIC_HEADER_SRC_DIR}> 
+                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
+                                                $<INSTALL_INTERFACE:include>)
+endforeach()
+if(UNIX)
+    install(TARGETS ${LIB_TARGETS} EXPORT ${PROJECT_NAME}Targets
+            LIBRARY DESTINATION lib COMPONENT Runtime
+            ARCHIVE DESTINATION lib  COMPONENT Development)
+elseif(WIN32)
+    install(TARGETS ${LIB_TARGETS} EXPORT ${PROJECT_NAME}Targets
+            RUNTIME DESTINATION lib  COMPONENT Runtime
+            ARCHIVE DESTINATION lib  COMPONENT Development)
 endif()
 
-if(UNIX)
-    install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
-            LIBRARY DESTINATION lib COMPONENT Runtime
-            PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
-elseif(WIN32)
-    install(TARGETS ${LIB_TARGET} EXPORT ${EXPORT_TARGETS_NAME}
-            RUNTIME DESTINATION lib  COMPONENT Runtime
-            ARCHIVE DESTINATION lib  COMPONENT Development
-            PUBLIC_HEADER DESTINATION include/${PROJECT_NAME} COMPONENT Development)
-endif()
+install(DIRECTORY ${PUBLIC_HEADER_SRC_DIR}/ DESTINATION include COMPONENT Development)
 
 if(OPT_MATLAB)
-    fixup_dependencies(${LIB_TARGET})
+    fixup_dependencies(${LIB_TARGETS})
 endif()

@@ -6,32 +6,32 @@
 #
 cmake_minimum_required(VERSION 2.8.2)
 
-project(@ExtProjectName@-External NONE)
+project(@_ExtProject_NAME@-External NONE)
 
 include(ExternalProject)
 
-set(CONFIGURE_ARGS --prefix=@ExtProjectInstallPrefix@)
-if(@ExtProject_BUILD_SHARED_LIBS)
+set(CONFIGURE_ARGS --prefix=@_ExtProject_INSTALL_PREFIX@)
+if(@_ExtProject_SHARED@)
     set(CONIGURE_ARGS ${CONFIGURE_ARGS} --enable-shared)
 endif()
-if(@ExtProject_BUILD_STATIC_LIBS)
+if(@_ExtProject_STATIC@)
     set(CONIGURE_ARGS ${CONFIGURE_ARGS} --enable-static)
 endif()
 
-set(SOURCE_DIR @ExtProjectDir@/source)
+set(SOURCE_DIR @_ExtProject_Dir@/source)
 
 include(ProcessorCount)
 ProcessorCount(NUM_PROCS)
 set(INSTALL_COMMAND  @CMAKE_COMMAND@ --build . --target install -- -j${NUM_PROCS})
 
-ExternalProject_Add(@ExtProjectName@
-    GIT_REPOSITORY @ExtProjectURL@
+ExternalProject_Add(@_ExtProject_NAME@
+    GIT_REPOSITORY @_ExtProject_URL@
     GIT_TAG master
     GIT_SHALLOW 1
     GIT_PROGRESS 0
     SOURCE_DIR ${SOURCE_DIR}
     BUILD_IN_SOURCE TRUE
-    INSTALL_DIR @ExtProjectInstallPrefix@
+    INSTALL_DIR @_ExtProject_INSTALL_PREFIX@
     CONFIGURE_COMMAND cd ${SOURCE_DIR} && autoreconf && ./configure ${CONFIGURE_ARGS}
     INSTALL_COMMAND make -j${NUM_PROCS} install
     )

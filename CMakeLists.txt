@@ -13,6 +13,9 @@ cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.2 LANGUAGES CXX)
 
 # Enable Matlab Support via MexIFace
+option(BUILD_SHARED_LIBS "Build shared libraries" ON)
+option(BUILD_STATIC_LIBS "Build static libraries" ON)
+
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
 
 # Enable Support for Python via Boost::Python
@@ -24,6 +27,8 @@ option(OPT_PYTHON "Add support for Python via boost::python" OFF)
 option(OPT_DEBUG "Support debugging features" OFF)
 option(OPT_TESTING "Support testing features" OFF)
 
+message(STATUS "OPTION: BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
+message(STATUS "OPTION: BUILD_STATIC_LIBS: ${BUILD_STATIC_LIBS}")
 message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
 message(STATUS "OPTION: OPT_DEBUG: ${OPT_DEBUG}")
@@ -52,9 +57,9 @@ add_definitions(-DARMA_DONT_USE_OPENMP) #We want to control the use of openMP at
 add_definitions(-DARMA_DONT_USE_HDF5)
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:ARMA_PRINT_ERRORS>)
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<NOT:$<CONFIG:Debug>>:ARMA_NO_DEBUG>)
-if(OPT_DEBUG)
-    set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:ARMA_EXTRA_DEBUG>)
-endif()
+# if(OPT_DEBUG)
+#     set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:ARMA_EXTRA_DEBUG>)
+# endif()
 
 # OpenMP
 find_package(OpenMP REQUIRED)
@@ -79,21 +84,22 @@ elseif(UNIX)
     find_library(PTHREAD_LIBRARY libpthread.so REQUIRED)
 endif()
 message(STATUS "Found Pthread Libarary: ${PTHREAD_LIBRARY}")
-
 #Allow inclusion of external dependencies
 include(AddExternalDependency)
 
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
-AddExternalDependency(BacktraceException ${BacktraceExceptionURL} SHARED)
+add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED)
 
 #ParallelRngManager allows for management of parallel rng streams.
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
-AddExternalDependency(ParallelRngManager ${ParallelRngManagerURL} SHARED)
+add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED)
 
 #PriorHessian allows for hessians of prior distirbutions
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
-AddExternalDependency(PriorHessian ${PriorHessianURL} SHARED)
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED)
+message(STATUS "PATH:${CMAKE_MODULE_PATH}")
+include(ExportPackageWizzard)
 
 # CFLAGS ##
 add_compile_options($<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU>>:-O0>)
@@ -101,7 +107,7 @@ add_compile_options($<$<CONFIG:Debug>:-W>)
 add_compile_options($<$<CONFIG:Debug>:-Wall>)
 add_compile_options($<$<CONFIG:Debug>:-Wextra>)
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<CONFIG:Debug>:DEBUG>)
-set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU>>:-fmax-errors=5>>)
+set_property(DIRECTORY APPEND PROPERTY COMPILE_OPTIONS $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU>>:-fmax-errors=5>)
 
 # Compiler Definitions
 if (WIN32)
@@ -116,7 +122,7 @@ set(CMAKE_DEBUG_POSTFIX ".debug" CACHE STRING "Debug file extension")
 set(CMAKE_MACOSX_RPATH 1) #Enable rpaths on OS X
 
 ### PackageConfig Exports
-include(ExportPackageWizzard)
+
 export_package_wizzard()
 
 #include(Mappel-Doxygen) #Add Doxygen documentation targets
@@ -126,7 +132,7 @@ add_subdirectory(src/libmappel) #Main library
 if(OPT_TESTING)
     include(CTest)
     enable_testing()
-    add_subdirectory(src/test)
+#     add_subdirectory(src/test)
 endif()
 
 if(OPT_MATLAB)

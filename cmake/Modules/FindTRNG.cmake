@@ -7,11 +7,8 @@
 # Find the TRNG (Tina's Random Number Generator Library)
 # GIT: https://github.com/rabauke/trng4.git
 # URL: https://www.numbercrunch.de/trng/
-
-message(STATUS "Called FindTRNG.cmake")
-
-find_path(TRNG_INCLUDE_DIR NAMES trng/lcg64.hpp HINTS ${CMAKE_INSTALL_PREFIX})
-find_library(TRNG_LIBRARY NAMES trng4 HINTS ${CMAKE_INSTALL_PREFIX})
+find_path(TRNG_INCLUDE_DIR NAMES trng/lcg64.hpp HINTS ${TRNG_PREFIX_HINTS} PATH_SUFFIXES include)
+find_library(TRNG_LIBRARY NAMES trng4 HINTS ${TRNG_PREFIX_HINTS} PATH_SUFFIXES lib lib64)
 
 if(TRNG_INCLUDE_DIR)
     file(READ ${TRNG_INCLUDE_DIR}/trng/config.hpp TRNG_CONFIG)

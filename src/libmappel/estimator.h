@@ -354,18 +354,18 @@ class TrustRegionMaximizer : public IterativeMaximizer<Model> {
 public:
     using MaximizerData = typename IterativeMaximizer<Model>::MaximizerData;
     
-    static constexpr double rho_cauchy_min = 0.1;  //Coleman beta | Bellavia beta_1
-    static constexpr double rho_obj_min = 0.25;  //Coleman mu | Bellavia beta_2
-    static constexpr double rho_obj_opt = 0.75;  //Coleman eta | Bellavia beta_2
-    static constexpr double delta_decrease_min = 0.125; // Coleman gamma_0 | Bellavia alpha_1
-    static constexpr double delta_decrease = 0.25; // Coleman gamma_1 | Bellavia alpha_2
-    static constexpr double delta_increase = 2; // Coleman gamma_2 | Bellavia alpha_3
+    static const double rho_cauchy_min;// = 0.1;  //Coleman beta | Bellavia beta_1
+    static const double rho_obj_min;// = 0.25;  //Coleman mu | Bellavia beta_2
+    static const double rho_obj_opt;// = 0.75;  //Coleman eta | Bellavia beta_2
+    static const double delta_decrease_min;// = 0.125; // Coleman gamma_0 | Bellavia alpha_1
+    static const double delta_decrease;// = 0.25; // Coleman gamma_1 | Bellavia alpha_2
+    static const double delta_increase;// = 2; // Coleman gamma_2 | Bellavia alpha_3
     
-    static constexpr double min_scaling = 1.0e-5;  //Minimum for Dscale(i)
-    static constexpr double max_scaling = 1.0e5;   //Maximum for Dscale(i)
-    static constexpr double delta_init_min = 1.0e-3; //Minimum initial trust region radius
-    static constexpr double delta_init_max = 1.0e3;  //Maximum initial trust region radius
-    static constexpr double boundary_stepback_min_kappa = 1.0 - 1.0e-5; //Distance to step back from the bounadary to remain in interrior
+    static const double min_scaling;// = 1.0e-5;  //Minimum for Dscale(i)
+    static const double max_scaling;// = 1.0e5;   //Maximum for Dscale(i)
+    static const double delta_init_min;// = 1.0e-3; //Minimum initial trust region radius
+    static const double delta_init_max;// = 1.0e3;  //Maximum initial trust region radius
+    static const double boundary_stepback_min_kappa;// = 1.0 - 1.0e-5; //Distance to step back from the bounadary to remain in interrior
     
     TrustRegionMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS)
         : IterativeMaximizer<Model>(model,max_iterations) {}

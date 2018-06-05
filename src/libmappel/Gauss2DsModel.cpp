@@ -311,7 +311,7 @@ Gauss2DsModel::sample_mcmc_candidate_theta(int sample_index, ParamT &mcmc_candid
 void Gauss2DsModel::update_internal_1D_estimators()
 {
     /* Initialization stencils */
-    std::type_index xpos_dist = prior.types()[0];
+    std::type_index xpos_dist = prior.component_types()[0];
     std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
     std::type_index normal_dist(typeid(prior_hessian::NormalDist));
     

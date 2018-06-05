@@ -718,6 +718,31 @@ void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
     data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
 }
 
+
+template<class Model>
+const double TrustRegionMaximizer<Model>::rho_cauchy_min = 0.1;  //Coleman beta | Bellavia beta_1
+template<class Model>
+const double TrustRegionMaximizer<Model>::rho_obj_min = 0.25;  //Coleman mu | Bellavia beta_2
+template<class Model>
+const double TrustRegionMaximizer<Model>::rho_obj_opt = 0.75;  //Coleman eta | Bellavia beta_2
+template<class Model>
+const double TrustRegionMaximizer<Model>::delta_decrease_min = 0.125; // Coleman gamma_0 | Bellavia alpha_1
+template<class Model>
+const double TrustRegionMaximizer<Model>::delta_decrease = 0.25; // Coleman gamma_1 | Bellavia alpha_2
+template<class Model>
+const double TrustRegionMaximizer<Model>::delta_increase = 2; // Coleman gamma_2 | Bellavia alpha_3
+
+template<class Model>
+const double TrustRegionMaximizer<Model>::min_scaling = 1.0e-5;  //Minimum for Dscale(i)
+template<class Model>
+const double TrustRegionMaximizer<Model>::max_scaling = 1.0e5;   //Maximum for Dscale(i)
+template<class Model>
+const double TrustRegionMaximizer<Model>::delta_init_min = 1.0e-3; //Minimum initial trust region radius
+template<class Model>
+const double TrustRegionMaximizer<Model>::delta_init_max = 1.0e3;  //Maximum initial trust region radius
+template<class Model>
+const double TrustRegionMaximizer<Model>::boundary_stepback_min_kappa = 1.0 - 1.0e-5; //Distance to step back from the bounadary to remain in interrior
+
 template<class Model>
 void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
 {
