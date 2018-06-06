@@ -69,7 +69,13 @@ public:
         std::exponential_distribution<double> d(lambda);
         return d(rng);
     }
-    
+
+    double sample_gamma(double alpha, double beta) 
+    {
+        std::gamma_distribution<double> d(alpha,beta);
+        return d(rng);
+    }
+
     RngT& get_rng()
     {
         return rng;

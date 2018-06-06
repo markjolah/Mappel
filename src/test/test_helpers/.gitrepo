@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/markjolah/test_helpers.git
 	branch = master
-	commit = 2d02658373e2dcd4344f40aa26ce846ad8e04cd6
-	parent = 686802e813d109505c27f849bb275e053b972c4e
+	commit = 3534092cec2ba9d2c780c554630d953c6cd1841c
+	parent = 5f0908401bb13f7e3a8f6abb19caf93c70ed31a7
 	method = merge
 	cmdver = 0.4.0
