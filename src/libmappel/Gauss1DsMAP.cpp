@@ -4,7 +4,7 @@
  * @brief The class definition and template Specializations for Gauss1DsMAP
  */
 
-#include "Gauss1DsMAP.h"
+#include "Mappel/Gauss1DsMAP.h"
 
 namespace mappel {
 const std::string Gauss1DsMAP::name("Gauss1DsMAP");

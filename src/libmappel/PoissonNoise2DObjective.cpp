@@ -4,7 +4,7 @@
  * @brief The class definition and template Specializations for PoissonNoise2DObjective
  */
 
-#include "PoissonNoise2DObjective.h"
+#include "Mappel/PoissonNoise2DObjective.h"
 
 namespace mappel {
 

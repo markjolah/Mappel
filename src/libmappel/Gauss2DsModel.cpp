@@ -4,8 +4,8 @@
  * @brief The class definition and template Specializations for Gauss2DsModel
  */
 
-#include "Gauss2DsModel.h"
-#include "stencil.h"
+#include "Mappel/Gauss2DsModel.h"
+#include "Mappel/stencil.h"
 
 namespace mappel {
 
@@ -119,11 +119,13 @@ double Gauss2DsModel::get_min_sigma(IdxT dim) const
 CompositeDist 
 Gauss2DsModel::make_default_prior(const ImageSizeT &size, double max_sigma_ratio)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size(0)),
-                         make_prior_component_position_beta("y",size(1)),
-                         make_prior_component_intensity("I"),
-                         make_prior_component_intensity("bg",default_pixel_mean_bg),
-                         make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size(0)),
+                            make_prior_component_position_beta("y",size(1)),
+                            make_prior_component_intensity("I"),
+                            make_prior_component_intensity("bg",default_pixel_mean_bg),
+                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio)
+                                        ));
 }
 
 CompositeDist 
@@ -132,11 +134,13 @@ Gauss2DsModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos
                                        double mean_bg, double kappa_bg,
                                        double max_sigma_ratio, double alpha_sigma)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size(0),beta_xpos),
-                         make_prior_component_position_beta("y",size(1),beta_ypos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                         make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size(0),beta_xpos),
+                            make_prior_component_position_beta("y",size(1),beta_ypos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma)
+                                        ));
 }
 
 CompositeDist 
@@ -145,11 +149,13 @@ Gauss2DsModel::make_prior_normal_position(const ImageSizeT &size, double sigma_x
                                        double mean_bg, double kappa_bg,
                                        double max_sigma_ratio, double alpha_sigma)
 {
-    return CompositeDist(make_prior_component_position_normal("x",size(0), sigma_xpos),
-                         make_prior_component_position_normal("y",size(1), sigma_ypos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                         make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_normal("x",size(0), sigma_xpos),
+                            make_prior_component_position_normal("y",size(1), sigma_ypos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma)
+                                        ));
 }
 
 

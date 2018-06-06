@@ -5,13 +5,13 @@
  */
 
 #include "test_mappel.h"
-#include "Gauss1DMLE.h"
-#include "Gauss1DMAP.h"
+#include "Mappel/Gauss1DMLE.h"
+#include "Mappel/Gauss1DMAP.h"
 
 using TypesModel1D = ::testing::Types<mappel::Gauss1DMLE,mappel::Gauss1DMAP> ;
 TYPED_TEST_CASE(TestModel1D, TypesModel1D);
 
 
 TYPED_TEST(TestModel1D, num_dim) {
-    EXPECT_EQ(this->Model::num_dim,1)<<"1D Model";
+    EXPECT_EQ(this->model.num_dim,1)<<"1D Model";
 }

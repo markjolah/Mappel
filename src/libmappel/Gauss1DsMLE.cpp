@@ -4,7 +4,7 @@
  * @brief The class definition and template Specializations for Gauss1DsMLE
  */
 
-#include "Gauss1DsMLE.h"
+#include "Mappel/Gauss1DsMLE.h"
 
 namespace mappel {
 const std::string Gauss1DsMLE::name("Gauss1DsMLE");

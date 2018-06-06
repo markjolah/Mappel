@@ -4,8 +4,8 @@
  * @brief The class definition and template Specializations for Gauss2DModel
  */
 
-#include "Gauss2DModel.h"
-#include "stencil.h"
+#include "Mappel/Gauss2DModel.h"
+#include "Mappel/stencil.h"
 
 namespace mappel {
 
@@ -69,10 +69,12 @@ double Gauss2DModel::get_psf_sigma(IdxT dim) const
 CompositeDist 
 Gauss2DModel::make_default_prior(const ImageSizeT &size)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size(0)),
-                         make_prior_component_position_beta("y",size(1)),
-                         make_prior_component_intensity("I"),
-                         make_prior_component_intensity("bg",default_pixel_mean_bg));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size(0)),
+                            make_prior_component_position_beta("y",size(1)),
+                            make_prior_component_intensity("I"),
+                            make_prior_component_intensity("bg",default_pixel_mean_bg)
+                                        ));
 }
 
 CompositeDist 
@@ -80,10 +82,12 @@ Gauss2DModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos,
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size(0),beta_xpos),
-                         make_prior_component_position_beta("y",size(1),beta_ypos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size(0),beta_xpos),
+                            make_prior_component_position_beta("y",size(1),beta_ypos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
+                                        ));
 }
 
 CompositeDist 
@@ -91,10 +95,12 @@ Gauss2DModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xp
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(make_prior_component_position_normal("x",size(0), sigma_xpos),
-                         make_prior_component_position_normal("y",size(1), sigma_ypos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_normal("x",size(0), sigma_xpos),
+                            make_prior_component_position_normal("y",size(1), sigma_ypos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
+                                        ));
 }
 
 Gauss2DModel::Stencil::Stencil(const Gauss2DModel &model_,

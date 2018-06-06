@@ -5,8 +5,8 @@
  */
 #include <algorithm>
 
-#include "PointEmitterModel.h"
-// #include "util.h"
+#include "Mappel/PointEmitterModel.h"
+// #include "Mappel/util.h"
 // #include <omp.h>
 
 namespace mappel {
@@ -23,6 +23,14 @@ PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
 {
 }
 
+// PointEmitterModel::PointEmitterModel(const PointEmitterModel &o) : 
+//     prior(o.prior()),
+//       num_params(prior.num_dim()),
+//       num_hyperparams(prior.num_params()),
+//       lbound(prior.lbound()),
+//       ubound(prior.ubound())
+// {
+// }    
 prior_hessian::NormalDist        
 PointEmitterModel::make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma)
 {

@@ -4,7 +4,7 @@
  * @brief The class definition and template Specializations for PointEmitter2DModel
  */
 
-#include "PoissonGaussianNoise2DObjective.h"
+#include "Mappel/PoissonGaussianNoise2DObjective.h"
 
 namespace mappel {
     

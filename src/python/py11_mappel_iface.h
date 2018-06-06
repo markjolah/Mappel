@@ -21,15 +21,15 @@
 #include "python_error.h"
 #include "py11_armadillo_iface.h"
 
-#include "Gauss1DMLE.h"
-#include "Gauss1DMAP.h"
-#include "Gauss1DsMLE.h"
-#include "Gauss1DsMAP.h"
+#include "Mappel/Gauss1DMLE.h"
+#include "Mappel/Gauss1DMAP.h"
+#include "Mappel/Gauss1DsMLE.h"
+#include "Mappel/Gauss1DsMAP.h"
 
-#include "Gauss2DMLE.h"
-#include "Gauss2DMAP.h"
-#include "Gauss2DsMLE.h"
-#include "Gauss2DsMAP.h"
+#include "Mappel/Gauss2DMLE.h"
+#include "Mappel/Gauss2DMAP.h"
+#include "Mappel/Gauss2DsMLE.h"
+#include "Mappel/Gauss2DsMAP.h"
 
 namespace mappel {
 namespace python {

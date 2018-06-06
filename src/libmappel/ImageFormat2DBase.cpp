@@ -3,7 +3,7 @@
  * @date 2014-2018
  * @brief The class definition and template Specializations for ImageFormat2DBase
  */
-#include "ImageFormat2DBase.h"
+#include "Mappel/ImageFormat2DBase.h"
 
 namespace mappel {
 

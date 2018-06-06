@@ -5,7 +5,7 @@
  */
 #include "Python.h"
 #include "py11_mappel_iface.h"
-#include "Gauss1DsMAP.h"
+#include "Mappel/Gauss1DsMAP.h"
 
 PYBIND11_MODULE(_Gauss1DsMAP, M)
 {

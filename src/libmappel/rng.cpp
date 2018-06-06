@@ -1,5 +1,5 @@
 
-#include "rng.h"
+#include "Mappel/rng.h"
 #include "trng/lcg64_shift.hpp"
 
 namespace mappel {

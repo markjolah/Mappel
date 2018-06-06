@@ -5,9 +5,9 @@
  * @brief The stencils for pixel based computations
  */
 #include <sstream>
-#include "util.h"
-#include "stencil.h"
-#include "display.h"
+#include "Mappel/util.h"
+#include "Mappel/stencil.h"
+#include "Mappel/display.h"
 
 namespace mappel {
 

@@ -5,15 +5,15 @@
  */
 #include "gtest/gtest.h"
 #include "test_helpers/rng_environment.h"
-#include "PointEmitter1DModel.h"
+#include "Mappel/Gauss1DModel.h"
 
 /* Globals */
 extern test_helper::RngEnvironment *env;
 
 /* Factory functions */
 template<class Model>
-typename std::enable_if<std::is_base_of<PointEmitter1DModel,Model>::value>::type
-Model make_model()
+typename std::enable_if<std::is_base_of<mappel::Gauss1DModel,Model>::value,Model>::type
+make_model()
 {
     int size = env->sample_integer(4,40);
     double psf_sigma = size*env->sample_exponential(1.5);

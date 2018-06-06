@@ -1,5 +1,5 @@
-// #include "mcmc.h"
-#include "util.h"
+// #include "Mappel/mcmc.h"
+#include "Mappel/util.h"
 
 namespace mappel {
 namespace mcmc {

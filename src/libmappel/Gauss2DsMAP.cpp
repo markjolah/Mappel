@@ -3,7 +3,7 @@
  * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss2DsMAP
  */
-#include "Gauss2DsMAP.h"
+#include "Mappel/Gauss2DsMAP.h"
 
 namespace mappel {
 

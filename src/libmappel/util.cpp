@@ -3,7 +3,7 @@
 #endif
 #include <cctype>
 #include <omp.h>
-#include "util.h"
+#include "Mappel/util.h"
 
 namespace mappel {
 

@@ -6,7 +6,7 @@
  *
  */
 
-#include "display.h"
+#include "Mappel/display.h"
 
 namespace mappel {
     

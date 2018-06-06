@@ -2,20 +2,20 @@
 #include <ctime>
 #include <iostream>
 
-#include "display.h"
-#include "Gauss1DMLE.h"
-#include "Gauss1DMAP.h"
-#include "Gauss1DsMLE.h"
-#include "Gauss1DsMAP.h"
+#include "Mappel/display.h"
+#include "Mappel/Gauss1DMLE.h"
+#include "Mappel/Gauss1DMAP.h"
+#include "Mappel/Gauss1DsMLE.h"
+#include "Mappel/Gauss1DsMAP.h"
 
-#include "test_helpers.h"
-//#include "Gauss2DMLE.h"
-// #include "Gauss2DsMAP.h"
-// #include "Gauss2DsMLE.h"
-// #include "Blink2DsMAP.h"
-// #include "GaussHSMAP.h"
-// #include "GaussHSsMAP.h"
-// #include "BlinkHSsMAP.h"
+#include "Mappel/test_helpers.h"
+//#include "Mappel/Gauss2DMLE.h"
+// #include "Mappel/Gauss2DsMAP.h"
+// #include "Mappel/Gauss2DsMLE.h"
+// #include "Mappel/Blink2DsMAP.h"
+// #include "Mappel/GaussHSMAP.h"
+// #include "Mappel/GaussHSsMAP.h"
+// #include "Mappel/BlinkHSsMAP.h"
 
 
 using namespace std;

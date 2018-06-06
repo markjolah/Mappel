@@ -4,8 +4,8 @@
  * @brief The class definition and template Specializations for Gauss1DsModel
  */
 
-#include "Gauss1DsModel.h"
-#include "stencil.h"
+#include "Mappel/Gauss1DsModel.h"
+#include "Mappel/stencil.h"
 
 namespace mappel {
 
@@ -23,10 +23,12 @@ Gauss1DsModel::Gauss1DsModel(IdxT size_)
 CompositeDist 
 Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size),
-                         make_prior_component_intensity("I"),
-                         make_prior_component_intensity("bg",default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
-                         make_prior_component_sigma("sigma",min_sigma,max_sigma));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size),
+                            make_prior_component_intensity("I"),
+                            make_prior_component_intensity("bg",default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                            make_prior_component_sigma("sigma",min_sigma,max_sigma)
+                                        ));
 }
 
 CompositeDist 
@@ -35,11 +37,12 @@ Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos,
                                        double mean_bg, double kappa_bg,
                                        double min_sigma, double max_sigma, double alpha_sigma)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                         make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
-                        );
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size,beta_xpos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                            make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
+                                        ));
 }
 
 CompositeDist 
@@ -48,11 +51,12 @@ Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                                        double mean_bg, double kappa_bg,
                                        double min_sigma, double max_sigma, double alpha_sigma)
 {
-    return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                         make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
-                        );
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_normal("x",size, sigma_xpos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
+                            make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
+                                        ));
 }
 
 void Gauss1DsModel::set_min_sigma(double new_sigma)

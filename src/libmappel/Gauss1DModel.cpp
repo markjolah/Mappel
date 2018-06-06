@@ -4,8 +4,8 @@
  * @brief The class definition and template Specializations for Gauss1DModel
  */
 
-#include "Gauss1DModel.h"
-#include "stencil.h"
+#include "Mappel/Gauss1DModel.h"
+#include "Mappel/stencil.h"
 
 namespace mappel {
 
@@ -23,9 +23,11 @@ Gauss1DModel::Gauss1DModel(IdxT size, double psf_sigma)
 CompositeDist 
 Gauss1DModel::make_default_prior(IdxT size)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size),
-                         make_prior_component_intensity("I"),
-                         make_prior_component_intensity("bg",default_pixel_mean_bg*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size),
+                            make_prior_component_intensity("I"),
+                            make_prior_component_intensity("bg",default_pixel_mean_bg*size) 
+                                       ));//bg is summed over the other dimension leading to larger mean per 1D 'pixel'
 }
 
 CompositeDist 
@@ -33,9 +35,11 @@ Gauss1DModel::make_prior_beta_position(IdxT size, double beta_xpos,
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(make_prior_component_position_beta("x",size,beta_xpos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_beta("x",size,beta_xpos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
+                                        ));
 }
 
 CompositeDist 
@@ -43,9 +47,11 @@ Gauss1DModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                                        double mean_I, double kappa_I, 
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(make_prior_component_position_normal("x",size, sigma_xpos),
-                         make_prior_component_intensity("I",mean_I,kappa_I),
-                         make_prior_component_intensity("bg",mean_bg, kappa_bg));
+    return CompositeDist(std::make_tuple(
+                            make_prior_component_position_normal("x",size, sigma_xpos),
+                            make_prior_component_intensity("I",mean_I,kappa_I),
+                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
+                                        ));
 }
 
 void Gauss1DModel::set_psf_sigma(double new_sigma)

@@ -3,7 +3,7 @@
  * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss2DMLE
  */
-#include "Gauss2DMLE.h"
+#include "Mappel/Gauss2DMLE.h"
 
 namespace mappel {
 

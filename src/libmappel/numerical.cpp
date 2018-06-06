@@ -4,7 +4,7 @@
  * @brief Numerical matrix operations
  */
 #include <cassert>
-#include "numerical.h"
+#include "Mappel/numerical.h"
 
 namespace mappel {
     
