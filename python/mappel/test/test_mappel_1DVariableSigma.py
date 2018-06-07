@@ -7,6 +7,7 @@ import math
 def test_min_max_sigma_1D(model1DVariableSigma):
     """Check min_sigma and max_sigma get and set properties."""
     model = model1DVariableSigma
+    assert 0 < model.global_min_psf_sigma 
     assert model.global_min_psf_sigma <=model.min_sigma 
     assert model.min_sigma < model.max_sigma
     assert model.max_sigma <= model.global_max_psf_sigma
@@ -15,10 +16,10 @@ def test_min_max_sigma_1D(model1DVariableSigma):
     #check setter properties
     min_sigma = model.min_sigma
     max_sigma = model.max_sigma
-    model.min_sigma /= 2
-    model.max_sigma += 3
-    assert model.min_sigma == min_sigma/2
-    assert model.max_sigma == max_sigma+3
+    model.min_sigma *= 0.9
+    model.max_sigma *= 1.1
+    assert model.min_sigma == min_sigma*0.9
+    assert model.max_sigma == max_sigma*1.1
 
 def test_min_max_sigma_bounds_1D(model1DVariableSigma):
     """Check min_sigma and max_sigma are respected in bounds."""

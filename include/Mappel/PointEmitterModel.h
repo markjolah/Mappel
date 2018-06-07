@@ -54,16 +54,16 @@ public:
     static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D seperable intializataions */
     
     /* Static data members */
-    constexpr static double bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
-    constexpr static double global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
-    constexpr static double global_max_psf_sigma = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
+    static const double bounds_epsilon;// = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
+    static const double global_min_psf_sigma;// = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
+    static const double global_max_psf_sigma;// = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
     
-    constexpr static double default_beta_pos = 3; /**< Default position parameter in symmetric beta-distributions */
-    constexpr static double default_sigma_pos = 1; /**< Default position parameter in symmetric beta-distributions */
-    constexpr static double default_mean_I = 300; /**< Default emitter intensity mean*/
-    constexpr static double default_intensity_kappa = 2;  /**< Default shape for intensity gamma distributions */
-    constexpr static double default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
-    constexpr static double default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
+    static const double default_beta_pos;// = 3; /**< Default position parameter in symmetric beta-distributions */
+    static const double default_sigma_pos;// = 1; /**< Default position parameter in symmetric beta-distributions */
+    static const double default_mean_I;// = 300; /**< Default emitter intensity mean*/
+    static const double default_intensity_kappa;// = 2;  /**< Default shape for intensity gamma distributions */
+    static const double default_pixel_mean_bg;// = 4; /**< Default per-pixel mean background counts */
+    static const double default_alpha_sigma;// = 2; /**< Default per-pixel background gamma distribution shape */
 
     
     /* prior building functions.  These generate individual prior elements and can be used by subclasses to easily make a prior  */

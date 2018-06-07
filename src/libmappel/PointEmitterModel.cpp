@@ -12,6 +12,16 @@
 namespace mappel {
 
 const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
+const double PointEmitterModel::bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
+const double PointEmitterModel::global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
+const double PointEmitterModel::global_max_psf_sigma = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
+
+const double PointEmitterModel::default_beta_pos = 3; /**< Default position parameter in symmetric beta-distributions */
+const double PointEmitterModel::default_sigma_pos = 1; /**< Default position parameter in symmetric beta-distributions */
+const double PointEmitterModel::default_mean_I = 300; /**< Default emitter intensity mean*/
+const double PointEmitterModel::default_intensity_kappa = 2;  /**< Default shape for intensity gamma distributions */
+const double PointEmitterModel::default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
+const double PointEmitterModel::default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
 
 
 PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)

@@ -6,6 +6,7 @@
 #include "gtest/gtest.h"
 #include "test_helpers/rng_environment.h"
 #include "Mappel/Gauss1DModel.h"
+#include "Mappel/Gauss1DsModel.h"
 
 /* Globals */
 extern test_helper::RngEnvironment *env;
@@ -17,19 +18,18 @@ make_model()
 {
     int size = env->sample_integer(4,40);
     double psf_sigma = size*env->sample_exponential(1.5);
-    std::cout<<"1DModel Generated[size:"<<size<<", psf_sigma:"<<psf_sigma<<"\n";
+    std::cout<<"1DModel Generated[size:"<<size<<", psf_sigma:"<<psf_sigma<<std::endl;
     return Model(size,psf_sigma);
 }
 
-
-/* Type parameterized test fixtures */
 template<class Model>
-class TestModel1D : public ::testing::Test {
-public:    
-    Model model;
-    TestModel1D() : model(make_model<Model>()) {}
-    virtual void SetUp() {
-        env->reset_rng();
-        model = make_model<Model>();
-    }
-};
+typename std::enable_if<std::is_base_of<mappel::Gauss1DsModel,Model>::value,Model>::type
+make_model()
+{
+    int size = env->sample_integer(4,40);
+    double min_sigma = size*env->sample_real(0.1,.3);
+    double max_sigma = env->sample_real(min_sigma*1.2,min_sigma*6);
+    std::cout<<"1DsModel Generated[size:"<<size<<", sigma:["<<min_sigma<<","<<max_sigma<<"]"<<std::endl;
+    return Model(size,min_sigma,max_sigma);
+}
+
