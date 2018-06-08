@@ -32,3 +32,6 @@ add_custom_command(TARGET prepare_python PRE_BUILD
 
 install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} setup.py install –prefix=${CMAKE_INSTALL_PREFIX} 
                               WORKING_DIRECTORY ${PYTHON_BUILD_DIR})")
+if(OPT_TESTING)
+    add_test(NAME python_mappel COMMAND python -m mappel WORKING_DIRECTORY ${PYTHON_BUILD_DIR})
+endif()

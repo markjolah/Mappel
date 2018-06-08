@@ -18,7 +18,7 @@ target_link_libraries(${GTEST_EXE} GTest::GTest GTest::Main)
 add_executable(trivial trivial.cpp)
 target_link_libraries(trivial Mappel::Mappel) 
 
-add_test(NAME GTest COMMAND ${GTEST_EXE})
+add_test(NAME gtest_mappel COMMAND ${GTEST_EXE} WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 # 
 # add_test(NAME GTest COMMAND ${GTEST_EXE})
