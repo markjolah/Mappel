@@ -10,12 +10,14 @@ import scipy.linalg
 import pytest
 import hypothesis
 import hypothesis.extra.numpy as npst
+from hypothesis import settings
 
 from .conftest import MappelEstimatorTestMethods
 from .common import *
 
-Nestimate = 8;
-
+settings.register_profile("estimate_max", max_examples=5)
+settings.load_profile("estimate_max")
+Nestimate = 32
 
 @hypothesis.given(seed=npst.arrays(shape=1,dtype="uint64"))
 @pytest.mark.parametrize("method",MappelEstimatorTestMethods)

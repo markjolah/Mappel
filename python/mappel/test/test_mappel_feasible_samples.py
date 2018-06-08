@@ -12,8 +12,12 @@ import pytest
 import hypothesis
 import hypothesis.strategies as st
 import hypothesis.extra.numpy as npst
+from hypothesis import settings
 
 from .common import *
+
+settings.register_profile("feasible_samples", max_examples=50)
+settings.load_profile("feasible_samples")
 
 @hypothesis.given(data=st.data())
 def test_model_image(model, data):

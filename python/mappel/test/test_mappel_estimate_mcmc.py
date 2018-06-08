@@ -9,11 +9,14 @@ import numpy as np
 import pytest
 import hypothesis
 import hypothesis.extra.numpy as npst
+from hypothesis import settings
 
 from .conftest import MappelEstimatorTestMethods
 from .common import *
 
-Nestimate = 8
+settings.register_profile("estimate_mcmc", max_examples=5)
+settings.load_profile("estimate_mcmc")
+Nestimate = 32
 Nsample = 200
 Nburnin = 30
 thin = 0

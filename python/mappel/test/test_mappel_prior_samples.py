@@ -15,8 +15,10 @@ import pytest
 import hypothesis
 #import hypothesis.strategies as st
 import hypothesis.extra.numpy as npst
-
+from hypothesis import settings
 from .common import *
+settings.register_profile("prior_samples", max_examples=50)
+settings.load_profile("prior_samples")
 
 Nstack = 80 #Number of samples for to test a vector operation with
 
