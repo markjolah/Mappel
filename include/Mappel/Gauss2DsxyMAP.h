@@ -8,7 +8,7 @@
 #ifndef _MAPPEL_GAUSS2DSXYMAP_H
 #define _MAPPEL_GAUSS2DSXYMAP_H
 
-#include "Mappel/PoissonNoise1DObjective.h"
+#include "Mappel/PoissonNoise2DObjective.h"
 #include "Mappel/MAPEstimator.h"
 #include "Mappel/Gauss1DModel.h"
 #include "Mappel/model_methods.h" //Declaration of methods

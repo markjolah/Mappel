@@ -10,34 +10,108 @@
 namespace mappel {
 
 Gauss2DsModel::Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma)
-    : ImageFormat2DBase(size),
-      min_sigma(min_sigma),
-      x_model(size(0), min_sigma(0), max_sigma(0)),
-      y_model(size(1), min_sigma(1), max_sigma(1))
-{
-    /* Initialize MCMC step sizes */
-    mcmc_num_candidate_sampling_phases = 3;
-    mcmc_candidate_eta_x = size(0)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_y = size(1)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_sigma = 0.3*mcmc_candidate_sample_dist_ratio;
+    :  PointEmitterModel(), ImageFormat2DBase(size), //V-base calls ignored since a higher concrete class will call them
+       MCMCAdaptor2Ds(),
+       min_sigma(min_sigma),
+      x_model{make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior)},
+      y_model{make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior)}
+{ }
 
-    update_internal_1D_estimators();
+Gauss2DsModel::Gauss2DsModel(const Gauss2DsModel &o)
+    : PointEmitterModel(o), ImageFormat2DBase(o), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor2Ds(o),
+      min_sigma(o.min_sigma),
+      x_model{make_internal_1Dsum_estimator(0,size,min_sigma,get_max_sigma(),prior)},
+      y_model{make_internal_1Dsum_estimator(1,size,min_sigma,get_max_sigma(),prior)}
+{ }
+
+Gauss2DsModel::Gauss2DsModel(Gauss2DsModel &&o)
+    : PointEmitterModel(std::move(o)), ImageFormat2DBase(std::move(o)), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor2Ds(std::move(o)),
+      min_sigma(o.min_sigma),
+      x_model{make_internal_1Dsum_estimator(0,size,min_sigma,get_max_sigma(),prior)},
+      y_model{make_internal_1Dsum_estimator(1,size,min_sigma,get_max_sigma(),prior)}
+{ }
+
+Gauss2DsModel& Gauss2DsModel::operator=(const Gauss2DsModel &o)
+{
+    //Don't copy virtual base classes.  This is called by superclass only.
+    MCMCAdaptor2Ds::operator=(o);
+    //Copy data memebers
+    min_sigma = o.min_sigma;
+    auto max_sigma = get_max_sigma();
+    x_model = make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior);
+    y_model = make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior);
+    return *this;
+}
+
+Gauss2DsModel& Gauss2DsModel::operator=(Gauss2DsModel &&o)
+{
+    //Don't copy virtual base classes.  This is called by superclass only.
+    MCMCAdaptor2Ds::operator=(std::move(o));
+    //Copy data memebers
+    min_sigma = o.min_sigma;
+    auto max_sigma = get_max_sigma();
+    x_model = make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior);
+    y_model = make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior);
+    return *this;
+}
+
+Gauss2DsModel::Gauss1DSumModelT 
+Gauss2DsModel::make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, const VecT &min_sigma,const VecT &max_sigma, const CompositeDist &prior)
+{
+    std::type_index pos_dist = prior.component_types()[dim];
+    std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
+    std::type_index normal_dist(typeid(prior_hessian::NormalDist));
+    auto hyperparams = prior.params();
+    if(pos_dist == beta_dist){
+        double beta_pos = hyperparams(dim);
+        double mean_I = hyperparams(2);
+        double kappa_I = hyperparams(3);
+        double mean_bg = size((dim+1)%2) * hyperparams(4); //Amplify bg to account for summation
+        double kappa_bg = hyperparams(5);
+        double alpha_sigma = hyperparams(6);
+        return {size(dim),Gauss1DSumModelT::make_prior_beta_position(
+                    size(dim), beta_pos, mean_I, kappa_I, mean_bg, kappa_bg, min_sigma(dim), max_sigma(dim),alpha_sigma)};
+    } else if(pos_dist == normal_dist) {
+        double sigma_pos = hyperparams(2*dim+1);
+        double mean_I = hyperparams(4);
+        double kappa_I = hyperparams(5);
+        double mean_bg = size((dim+1)%2) * hyperparams(6); //Amplify bg to account for summation
+        double kappa_bg = hyperparams(7);
+        double alpha_sigma = hyperparams(8);
+        return {size(dim),Gauss1DSumModelT::make_prior_normal_position(
+                    size(dim), sigma_pos, mean_I, kappa_I, mean_bg, kappa_bg, min_sigma(dim), max_sigma(dim),alpha_sigma)};
+    } else {
+        std::ostringstream msg;
+        msg<<"Unknown position distribution: "<<pos_dist.name();
+        throw ParameterValueError(msg.str());
+    }    
+}
+
+void Gauss2DsModel::update_internal_1Dsum_estimators()
+{
+    auto max_sigma = get_max_sigma();
+    x_model = make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,get_prior());
+    y_model = make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,get_prior());
 }
 
 void Gauss2DsModel::set_prior(CompositeDist&& prior_)
 {
     PointEmitterModel::set_prior(std::move(prior_));
-    //Reset initializer hyperparams
-    update_internal_1D_estimators();
+    update_internal_1Dsum_estimators();
+}
+
+void Gauss2DsModel::set_prior(const CompositeDist& prior_)
+{
+    PointEmitterModel::set_prior(prior_);
+    update_internal_1Dsum_estimators();
 }
 
 void Gauss2DsModel::set_hyperparams(const VecT &hyperparams)
 {
     PointEmitterModel::set_hyperparams(hyperparams);
-    //Reset initializer hyperparams
-    update_internal_1D_estimators();
+    update_internal_1Dsum_estimators();
 }
 
 void Gauss2DsModel::set_size(const ImageSizeT &size_)
@@ -57,11 +131,12 @@ void Gauss2DsModel::set_min_sigma(const VecT& new_sigma)
     check_psf_sigma(new_sigma);
     min_sigma = new_sigma;
     //Reset initializer model sigma ranges
-    x_model.set_min_sigma(get_min_sigma(0));
-    x_model.set_max_sigma(get_max_sigma(0));
+    auto max_sigma = get_max_sigma();
+    x_model.set_min_sigma(min_sigma(0));
+    x_model.set_max_sigma(max_sigma(0));
     
-    y_model.set_min_sigma(get_min_sigma(1));
-    y_model.set_max_sigma(get_max_sigma(1));
+    y_model.set_min_sigma(min_sigma(1));
+    y_model.set_max_sigma(max_sigma(1));
 }
 
 
@@ -218,7 +293,9 @@ StatsT Gauss2DsModel::get_stats() const
 {
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat2DBase::get_stats();
+    auto mcmc_stats = MCMCAdaptor2Ds::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats.insert(mcmc_stats.begin(), mcmc_stats.end());
     stats["min_sigma.0"] = get_min_sigma(0);
     stats["min_sigma.1"] = get_min_sigma(1);
     stats["max_sigma.0"] = get_max_sigma(0);
@@ -292,72 +369,6 @@ Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
         sigma_ratio = .5*(x_est.theta(3)/min_sigma(0) + y_est.theta(3)/min_sigma(1));
     }
     return make_stencil(ParamT{x_pos, y_pos, I, bg, sigma_ratio});
-}
-
-void
-Gauss2DsModel::sample_mcmc_candidate_theta(int sample_index, ParamT &mcmc_candidate_theta, double scale)
-{
-    int phase = sample_index%mcmc_num_candidate_sampling_phases;
-    switch(phase) {
-        case 0:  //change x,y
-            mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
-            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_y*scale;
-            break;
-        case 1: //change I, sigma
-            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
-            mcmc_candidate_theta(4) += rng_manager.randn()*mcmc_candidate_eta_sigma*scale;
-            break;
-        case 2: //change I, bg
-            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
-            mcmc_candidate_theta(3) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
-    }
-}
-
-
-void Gauss2DsModel::update_internal_1D_estimators()
-{
-    /* Initialization stencils */
-    std::type_index xpos_dist = prior.component_types()[0];
-    std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
-    std::type_index normal_dist(typeid(prior_hessian::NormalDist));
-    
-    std::cout<<"Got X dist:"<<xpos_dist.name()<<std::endl;
-    std::cout<<"Looking for SymmetricBetaDist dist:"<<beta_dist.name()<<std::endl;
-    std::cout<<"Looking for NormalDist dist:"<<normal_dist.name()<<std::endl;
-    
-    double mean_I = find_hyperparam("mean_I",default_mean_I);
-    double kappa_I = find_hyperparam("kappa_I",default_intensity_kappa);
-    double pixel_mean_bg = find_hyperparam("mean_bg",default_pixel_mean_bg);
-    double kappa_bg = find_hyperparam("kappa_bg",default_intensity_kappa);
-    double alpha_sigma = find_hyperparam("alpha_sigma_ratio",default_alpha_sigma);
-    double x_mean_bg = pixel_mean_bg * size(1);
-    double y_mean_bg = pixel_mean_bg * size(0);
-    
-    std::cout<<"mean_I:"<<mean_I<<" kappa_I:"<<kappa_I<<" pixel_mean_bg:"<<pixel_mean_bg<<" kappa_bg:"<<kappa_bg<<" alpha_sigma:"<<alpha_sigma<<std::endl;
-    
-    if(xpos_dist == beta_dist){
-        double beta_x = find_hyperparam("beta_x",default_beta_pos);
-        double beta_y = find_hyperparam("beta_y",default_beta_pos);        
-        x_model.set_prior(x_model.make_prior_beta_position(
-                            size(0), beta_x, mean_I, kappa_I, x_mean_bg, kappa_bg, 
-                            get_min_sigma(0), get_max_sigma(0), alpha_sigma));
-        y_model.set_prior(y_model.make_prior_beta_position(
-                            size(1), beta_y, mean_I, kappa_I, y_mean_bg, kappa_bg, 
-                            get_min_sigma(1), get_max_sigma(1), alpha_sigma));
-    } else if(xpos_dist == normal_dist) {
-        double sigma_x = find_hyperparam("sigma_x",default_sigma_pos);
-        double sigma_y = find_hyperparam("sigma_y",default_sigma_pos);
-        x_model.set_prior(x_model.make_prior_normal_position(
-                            size(0), sigma_x, mean_I, kappa_I, x_mean_bg, kappa_bg, 
-                            get_min_sigma(0), get_max_sigma(0), alpha_sigma));
-        y_model.set_prior(y_model.make_prior_normal_position(
-                            size(1), sigma_y, mean_I, kappa_I, y_mean_bg, kappa_bg, 
-                            get_min_sigma(1), get_max_sigma(1), alpha_sigma));
-    } else {
-        std::ostringstream msg;
-        msg<<"Unknown Xposition distribution: "<<xpos_dist.name();        
-        throw ParameterValueError(msg.str());
-    }    
 }
 
 } /* namespace mappel */

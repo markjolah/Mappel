@@ -20,8 +20,6 @@ namespace mappel {
  * 
  */
 class ImageFormat2DBase {
-protected:
-    ImageFormat2DBase()=default; //For virtual inheritance simplification
 public:
     using ImageCoordT = uint32_t; /**< Image size coordinate storage type  */
     using ImagePixelT = double; /**< Image pixel storage type */
@@ -36,12 +34,10 @@ public:
     using ImageT = ImageShapeT<ImagePixelT>; /**< Data type to represent single image*/
     using ImageStackT = ImageStackShapeT<ImagePixelT>; /**< Data type to represent a sequence of images */
 
-    constexpr static ImageCoordT num_dim = 2;  /**< Number of image dimensions. */
-    constexpr static ImageCoordT global_min_size = 3; /**< Minimum size along any dimension of the image. */
-    constexpr static ImageCoordT global_max_size = 4096; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
+    static const ImageCoordT num_dim; /**< Number of image dimensions. */
+    static const ImageCoordT global_min_size; /**< Minimum size along any dimension of the image. */
+    static const ImageCoordT global_max_size; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
 
-    ImageFormat2DBase(const ImageSizeT &size);
-    
     StatsT get_stats() const;
 
     ImageT make_image() const;
@@ -58,11 +54,17 @@ public:
     void set_size(const ImageSizeT &size_);
     void check_image_shape(const ImageT &im) const;
     void check_image_shape(const ImageStackT &ims) const;
-
-protected:
-    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
-
     static void check_size(const ImageSizeT &size_);
+protected:
+    ImageFormat2DBase()=default;
+    explicit ImageFormat2DBase(const ImageSizeT &size);
+//     ImageFormat2DBase(const ImageFormat2DBase&)=default;
+//     ImageFormat2DBase(ImageFormat2DBase&&)=default;
+//     ImageFormat2DBase& operator=(const ImageFormat2DBase&)=default;
+//     ImageFormat2DBase& operator=(ImageFormat2DBase&&)=default;
+    
+    /* Non-static data members */
+    ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
 };
 
 /* Inline Method Definitions */

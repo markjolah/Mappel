@@ -29,7 +29,11 @@ public:
     Gauss2DMLE(const ImageSizeT &size, double psf_sigma);
     Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma);
     Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma, CompositeDist&& prior);     
-
+    Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma, const CompositeDist& prior);
+    Gauss2DMLE(const Gauss2DMLE &o);
+    Gauss2DMLE& operator=(const Gauss2DMLE &o);
+    Gauss2DMLE(Gauss2DMLE &&o);
+    Gauss2DMLE& operator=(Gauss2DMLE &&o);    
     static const std::string name;
 };
 

@@ -21,7 +21,11 @@ namespace mappel {
  */
 class MAPEstimator  : public virtual PointEmitterModel {
 protected:
-    MAPEstimator() = default;
+    MAPEstimator() {}
+    MAPEstimator(const MAPEstimator &o) : PointEmitterModel(o) {}
+    MAPEstimator(MAPEstimator &&o) : PointEmitterModel(std::move(o)) {}
+    MAPEstimator& operator=(const MAPEstimator &o) {return *this;}
+    MAPEstimator& operator=(MAPEstimator &&o) {return *this;}
 };
 
 namespace methods{

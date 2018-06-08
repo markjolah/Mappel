@@ -23,6 +23,12 @@ public:
     static const std::vector<std::string> estimator_names;
     using ModelDataT = ImageT; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
     using ModelDataStackT = ImageStackT; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
+protected:
+    PoissonNoise2DObjective();
+    PoissonNoise2DObjective(const PoissonNoise2DObjective &o);
+    PoissonNoise2DObjective(PoissonNoise2DObjective &&o);
+    PoissonNoise2DObjective& operator=(const PoissonNoise2DObjective &o);
+    PoissonNoise2DObjective& operator=(PoissonNoise2DObjective &&o);
 };
 
 namespace methods {
@@ -117,7 +123,7 @@ make_estimator(Model &model, std::string ename)
     }
 }
 
-/* Core likelihood computations for PoissonNoise1DObjective Models.  No interaction with prior.
+/* Core likelihood computations for PoissonNoise2DObjective Models.  No interaction with prior.
     */
 namespace likelihood {
     template<class Model>

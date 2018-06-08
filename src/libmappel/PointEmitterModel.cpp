@@ -23,24 +23,73 @@ const double PointEmitterModel::default_intensity_kappa = 2;  /**< Default shape
 const double PointEmitterModel::default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
 const double PointEmitterModel::default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
 
-
-PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
-    : prior(std::move(prior_)),
-      num_params(prior.num_dim()),
-      num_hyperparams(prior.num_params()),
-      lbound(prior.lbound()),
-      ubound(prior.ubound())
+PointEmitterModel::PointEmitterModel()
+    : prior{}, 
+      rng_manager{}
 {
+    update_cached_prior_values();
+//     std::cout<<"Default Constructor rvalue-ref called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
-// PointEmitterModel::PointEmitterModel(const PointEmitterModel &o) : 
-//     prior(o.prior()),
-//       num_params(prior.num_dim()),
-//       num_hyperparams(prior.num_params()),
-//       lbound(prior.lbound()),
-//       ubound(prior.ubound())
-// {
-// }    
+PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
+    : prior{std::move(prior_)},
+      rng_manager{}
+{
+    update_cached_prior_values();
+//     std::cout<<"Constructor rvalue-ref called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+}
+
+PointEmitterModel::PointEmitterModel(const CompositeDist& prior_)
+    : prior{prior_},
+      rng_manager{}
+{
+    update_cached_prior_values();
+//     std::cout<<"Constructor called const lvalue-ref prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+}
+
+PointEmitterModel::PointEmitterModel(const PointEmitterModel &o) 
+    : prior{o.prior},
+      rng_manager{o.rng_manager}
+{
+    update_cached_prior_values();
+//     std::cout<<"Copy constructor called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+}
+
+PointEmitterModel::PointEmitterModel(PointEmitterModel &&o) 
+    : prior{std::move(o.prior)},
+      rng_manager{std::move(o.rng_manager)}
+{
+    update_cached_prior_values();
+//     std::cout<<"Move constructor called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+}
+
+PointEmitterModel& PointEmitterModel::operator=(const PointEmitterModel &o)
+{
+    prior = o.prior;
+    rng_manager = o.rng_manager;
+    update_cached_prior_values();
+//     std::cout<<"Copy assignment operator called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+    return *this;
+}
+
+PointEmitterModel& PointEmitterModel::operator=(PointEmitterModel &&o)
+{
+    prior = std::move(o.prior);
+    rng_manager = std::move(o.rng_manager);
+    update_cached_prior_values();
+//     std::cout<<"Move assignment operator called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
+    return *this;
+}
+
+void PointEmitterModel::update_cached_prior_values()
+{
+    num_params = prior.num_dim();
+    num_hyperparams = prior.num_params();
+    lbound = prior.lbound();
+    ubound = prior.ubound();    
+}
+
+
 prior_hessian::NormalDist        
 PointEmitterModel::make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma)
 {
@@ -78,10 +127,6 @@ StatsT PointEmitterModel::get_stats() const
     auto hyperparams_desc = prior.params_desc();
     std::string hp_str("hyperparameters.");
     for(IdxT i=0; i<num_hyperparams; i++) stats[hp_str+hyperparams_desc[i]] = hyperparams[i];
-    stats["mcmcparams.num_phases"]=mcmc_num_candidate_sampling_phases;
-    stats["mcmcparams.etaX"]=mcmc_candidate_eta_x;
-    stats["mcmcparams.etaI"]=mcmc_candidate_eta_I;
-    stats["mcmcparams.etabg"]=mcmc_candidate_eta_bg;
     for(IdxT n=0;n<num_params;n++) {
         std::ostringstream outl,outu;
         outl<<"lbound."<<n+1;
@@ -97,6 +142,15 @@ StatsT PointEmitterModel::get_stats() const
     return stats;
 }
 
+void PointEmitterModel::set_prior(const CompositeDist& prior_)
+{
+    prior = prior_;
+    num_params = prior.num_dim();
+    num_hyperparams = prior.num_dim();
+    lbound = prior.lbound();
+    ubound = prior.ubound();
+}
+
 void PointEmitterModel::set_prior(CompositeDist&& prior_)
 {
     prior = std::move(prior_);
@@ -105,6 +159,7 @@ void PointEmitterModel::set_prior(CompositeDist&& prior_)
     lbound = prior.lbound();
     ubound = prior.ubound();
 }
+
 /**
  * @param param_name Exact name to search for
  * @param default_val Optional.  defaults to NaN

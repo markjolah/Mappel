@@ -8,7 +8,7 @@
 namespace mappel {
 const ImageFormat1DBase::ImageCoordT ImageFormat1DBase::num_dim = 1;  /**< Number of image dimensions. */
 const ImageFormat1DBase::ImageCoordT ImageFormat1DBase::global_min_size = 3; /**< Minimum size along any dimension of the image. */
-const ImageFormat1DBase::ImageCoordT ImageFormat1DBase::global_max_size = 4096; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
+const ImageFormat1DBase::ImageCoordT ImageFormat1DBase::global_max_size = 512; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
 
 ImageFormat1DBase::ImageFormat1DBase(ImageSizeT size)
     : size(size)

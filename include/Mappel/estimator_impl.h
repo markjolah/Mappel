@@ -9,7 +9,7 @@
 #include <cmath>
 #include <armadillo>
 
-#include "Mappel/estimator.h"
+#include "estimator.h"
 #include "Mappel/rng.h"
 #include "Mappel/numerical.h"
 
@@ -1243,7 +1243,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
     UniformDistT uniform;
     NewtonDiagonalMaximizer<Model> tr_max(model);
 //     TrustRegionMaximizer<Model> tr_max(model);
-    int niters = max_iterations*model.get_mcmc_num_candidate_sampling_phases();
+    int niters = max_iterations;
     sequence = model.make_param_stack(niters+1);
     sequence_rllh.set_size(niters+1);
     sequence.col(0)=theta_init.theta;
@@ -1255,7 +1255,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
     int naccepted=1;
     for(int n=1; n<niters; n++){
         ParamT<Model> can_theta = sequence.col(naccepted-1);
-        model.sample_mcmc_candidate_theta(n, can_theta);
+        model.sample_mcmc_candidate(n, can_theta);
         if(!model.theta_in_bounds(can_theta)) { //OOB
             n--;
             continue;

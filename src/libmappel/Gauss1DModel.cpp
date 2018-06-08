@@ -1,6 +1,6 @@
 /** @file Gauss1DModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017
+ * @date 2014-2018
  * @brief The class definition and template Specializations for Gauss1DModel
  */
 
@@ -10,14 +10,39 @@
 namespace mappel {
 
 Gauss1DModel::Gauss1DModel(IdxT size, double psf_sigma)
-    : ImageFormat1DBase(size), //Virtual base class call ignored
+    :  PointEmitterModel(), ImageFormat1DBase(size), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1D(),
       psf_sigma(psf_sigma)
+{ }
+
+Gauss1DModel::Gauss1DModel(const Gauss1DModel &o)
+    : PointEmitterModel(o), ImageFormat1DBase(o), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1D(),
+      psf_sigma(o.psf_sigma)
+{ }
+
+Gauss1DModel::Gauss1DModel(Gauss1DModel &&o)
+    : PointEmitterModel(o), ImageFormat1DBase(o), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1D(),
+      psf_sigma(o.psf_sigma)
+{ }
+
+Gauss1DModel& Gauss1DModel::operator=(const Gauss1DModel &o)
 {
-    /* Initialize MCMC step sizes */
-    mcmc_num_candidate_sampling_phases=2;
-    mcmc_candidate_eta_x = size*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
+    //Don't copy virtual base classes.  This is called by superclass only.
+    MCMCAdaptor1D::operator=(o);
+    //Copy data memebers
+    psf_sigma=o.psf_sigma;
+    return *this;
+}
+
+Gauss1DModel& Gauss1DModel::operator=(Gauss1DModel &&o)
+{
+    //Don't copy virtual base classes.  This is called by superclass only.
+    MCMCAdaptor1D::operator=(std::move(o));
+    //Copy data memebers
+    psf_sigma = o.psf_sigma;
+    return *this;
 }
 
 CompositeDist 
@@ -107,16 +132,16 @@ std::ostream& operator<<(std::ostream &out, const Gauss1DModel::Stencil &s)
     return out;
 }
 
-
 StatsT Gauss1DModel::get_stats() const
 {
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat1DBase::get_stats();
+    auto mcmc_stats = MCMCAdaptor1D::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats.insert(mcmc_stats.begin(), mcmc_stats.end());
     stats["psf_sigma"] = get_psf_sigma();
     return stats;
 }
-
 
 /** @brief pixel derivative inner loop calculations.
  */
@@ -154,20 +179,6 @@ Gauss1DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
     if(I <= 0 || !std::isfinite(I))  
         I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg});
-}
-
-void 
-Gauss1DModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
-{
-    IdxT phase = sample_index%mcmc_num_candidate_sampling_phases;
-    switch(phase) {
-        case 0:  //change pos
-            mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
-            break;
-        case 1: //change I, bg
-            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
-            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
-    }
 }
 
 } /* namespace mappel */

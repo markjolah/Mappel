@@ -9,6 +9,7 @@
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat2DBase.h"
+#include "Mappel/MCMCAdaptor2Ds.h"
 #include "Mappel/Gauss1DsMAP.h"
 
 namespace mappel {
@@ -19,7 +20,7 @@ namespace mappel {
  *
  */
 
-class Gauss2DsModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase 
+class Gauss2DsModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase, public MCMCAdaptor2Ds
 {
 public:
      /** @brief Stencil for 2D scalar-sigma models.
@@ -52,7 +53,6 @@ public:
     };
     using StencilVecT = std::vector<Stencil>;
 
-    Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
     /* Prior construction */
     static CompositeDist make_default_prior(const ImageSizeT &size, double max_sigma_ratio);
     static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos, 
@@ -65,6 +65,7 @@ public:
     /* Overrides of Base methods to enable resizing of 1D internal models */
     void set_hyperparams(const VecT &hyperparams);
     void set_prior(CompositeDist&& prior_);
+    void set_prior(const CompositeDist& prior_);
     void set_size(const ImageSizeT &size_);
 
     /* min_sigma and max_sigma accessors */
@@ -93,20 +94,22 @@ public:
     Stencil initial_theta_estimate(const ImageT &im);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
-
-    /* Posterior Sampling */
-    void sample_mcmc_candidate_theta(int sample_index, ParamT &canidate_theta, double scale=1.0);
-
 protected:
-    double mcmc_candidate_eta_y; /**< Std-dev for the normal perturbations to theta_y under MCMC sampling */    
-    double mcmc_candidate_eta_sigma; /**< The standard deviation for the normally distributed pertebation to theta_sigma in the random walk MCMC sampling */
-
-    void update_internal_1D_estimators();
+    Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
+    Gauss2DsModel(const Gauss2DsModel &o);
+    Gauss2DsModel(Gauss2DsModel &&o);
+    Gauss2DsModel& operator=(const Gauss2DsModel &o);
+    Gauss2DsModel& operator=(Gauss2DsModel &&o);
+    
+    using Gauss1DSumModelT = Gauss1DsMAP; //Use a MAP estimator for the 1D initializer models
+    void update_internal_1Dsum_estimators();   
+    static Gauss1DSumModelT make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, 
+                                        const VecT &min_sigma, const VecT &max_sigma, const CompositeDist &prior);
     static double compute_max_sigma_ratio(const VecT& min_sigma, const VecT& max_sigma);
     /* Non-static data Members */
     VecT min_sigma; /**< Gaussian PSF in pixels */
-    Gauss1DsMAP x_model; /**< X-model fits 2D images X-axis (column sum).  Using variable sigma 1D model. */
-    Gauss1DsMAP y_model; /**< Y-model fits 2D images Y-axis (row sum).  Using variable sigma 1D model. */
+    Gauss1DSumModelT x_model; /**< X-model fits 2D images X-axis (column sum).  Using variable sigma 1D model. */
+    Gauss1DSumModelT y_model; /**< Y-model fits 2D images Y-axis (row sum).  Using variable sigma 1D model. */
 
 };
 
@@ -115,7 +118,6 @@ protected:
 inline
 VecT Gauss2DsModel::get_min_sigma() const
 { return min_sigma; }
-
 
 inline
 VecT Gauss2DsModel::get_max_sigma() const
@@ -157,9 +159,6 @@ Gauss2DsModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
     }
     return Stencil(*this,theta,compute_derivatives);
 }
-
-
-/* Model Pixel Value And Derivatives */
 
 inline
 double Gauss2DsModel::pixel_model_value(int i, int j, const Stencil &s) const

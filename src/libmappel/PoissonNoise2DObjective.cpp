@@ -12,4 +12,30 @@ const std::vector<std::string> PoissonNoise2DObjective::estimator_names(
     { "Heuristic",  "CGaussHeuristic", "CGauss",  "Newton", "NewtonDiagonal",
        "QuasiNewton", "TrustRegion", "SimulatedAnnealing"});
 
+PoissonNoise2DObjective::PoissonNoise2DObjective()
+    : ImageFormat2DBase()
+{ }
+
+PoissonNoise2DObjective::PoissonNoise2DObjective(const PoissonNoise2DObjective &o)
+    : ImageFormat2DBase{o}
+{ }
+
+PoissonNoise2DObjective::PoissonNoise2DObjective(PoissonNoise2DObjective &&o)
+    : ImageFormat2DBase{std::move(o)}
+{ }
+
+PoissonNoise2DObjective& PoissonNoise2DObjective::operator=(const PoissonNoise2DObjective &o)
+{
+    if(this == &o) return *this; //Check for self assignment
+    ImageFormat2DBase::operator=(o);
+    return *this;
+}
+
+PoissonNoise2DObjective& PoissonNoise2DObjective::operator=(PoissonNoise2DObjective &&o)
+{
+    if(this == &o) return *this; //Check for self assignment
+    ImageFormat2DBase::operator=(std::move(o));
+    return *this;
+}
+
 } /* namespace mappel */

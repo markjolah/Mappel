@@ -24,6 +24,12 @@ public:
     static const std::vector<std::string> estimator_names;
     using ModelDataT = ImageT; /**< Objective function data type: 1D double precision image, gain-corrected to approximate photons counts */
     using ModelDataStackT = ImageStackT; /**< Objective function data stack type: 1D double precision image stack, of images gain-corrected to approximate photons counts */
+protected:
+    PoissonNoise1DObjective();
+    PoissonNoise1DObjective(const PoissonNoise1DObjective &o);
+    PoissonNoise1DObjective(PoissonNoise1DObjective &&o);
+    PoissonNoise1DObjective& operator=(const PoissonNoise1DObjective &o);
+    PoissonNoise1DObjective& operator=(PoissonNoise1DObjective &&o);
 };
 
 namespace methods {

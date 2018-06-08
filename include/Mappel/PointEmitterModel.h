@@ -41,12 +41,6 @@ using CompositeDist = prior_hessian::CompositeDist<ParallelRngGeneratorT>; /**<C
  * Of note some of the common MCMC variables are rooted here in the inheritance tree.
  */
 class PointEmitterModel {
-protected:
-    PointEmitterModel()=default; //Never called by actual top-level classes.  Allows virtual inheritance non-concrete base classes to ignore creating a constructor if necessary.
-    PointEmitterModel(const PointEmitterModel &) =default;
-//     PointEmitterModel& operator=(const PointEmitterModel &) =default;
-//     PointEmitterModel(PointEmitterModel &&) =default;
-//     PointEmitterModel& operator=(PointEmitterModel &&) =default;
 public:
     /* Internal Types */    
     using ParamT = arma::vec; /**< Parameter vector */
@@ -64,7 +58,6 @@ public:
     static const double default_intensity_kappa;// = 2;  /**< Default shape for intensity gamma distributions */
     static const double default_pixel_mean_bg;// = 4; /**< Default per-pixel mean background counts */
     static const double default_alpha_sigma;// = 2; /**< Default per-pixel background gamma distribution shape */
-
     
     /* prior building functions.  These generate individual prior elements and can be used by subclasses to easily make a prior  */
     static prior_hessian::NormalDist        
@@ -79,8 +72,6 @@ public:
     static prior_hessian::ParetoDist        
     make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
 
-    /* Constructor */
-    PointEmitterModel(CompositeDist&& prior_);    
     
     void set_rng_seed(RngSeedT seed);
     ParallelRngManagerT& get_rng_manager();
@@ -111,6 +102,7 @@ public:
     CompositeDist& get_prior();
     const CompositeDist& get_prior() const;
     void set_prior(CompositeDist&& prior_);
+    void set_prior(const CompositeDist& prior_);
     
     IdxT get_num_hyperparams() const;
     void set_hyperparams(const VecT &hyperparams);
@@ -139,25 +131,27 @@ public:
     BoolVecT theta_stack_in_bounds(const ParamVecT &theta) const;
     ParamVecT bounded_theta_stack(const ParamVecT &theta,double epsilon=bounds_epsilon) const;
     ParamVecT reflected_theta_stack(const ParamVecT &theta) const;
-
-    /* MCMC related */
-    /** @brief The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
-    IdxT get_mcmc_num_candidate_sampling_phases() const;
     
 protected:
-    /* Constant model parameter information */
-    ParallelRngManagerT rng_manager;
+protected:
+    /* Constructor */
+    PointEmitterModel();
+    explicit PointEmitterModel(const CompositeDist& prior_);    
+    explicit PointEmitterModel(CompositeDist&& prior_);    
+    PointEmitterModel(const PointEmitterModel &);
+    PointEmitterModel(PointEmitterModel &&);
+    PointEmitterModel& operator=(const PointEmitterModel &);
+    PointEmitterModel& operator=(PointEmitterModel &&);
+
+    /* Data members */
     CompositeDist prior; /* Prior distribution represented using libPriorHessian */
     IdxT num_params;
     IdxT num_hyperparams;
     ParamT lbound,ubound; /* Vectors of lower and upper bounds. (lbound>=prior.lbound && ubound<=prior.ubound) */
+    ParallelRngManagerT rng_manager;
     
-    /* Data members */
-    IdxT mcmc_num_candidate_sampling_phases=0; /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
-    double mcmc_candidate_sample_dist_ratio=1./30.; /**< Controls the candidate distribution spread for MCMC stuff */
-    double mcmc_candidate_eta_x; /**< The standard deviation for the normally distributed perturbation to theta_x in the random walk MCMC sampling */
-    double mcmc_candidate_eta_I; /**< The standard deviation for the normally distributed perturbation to theta_I in the random walk MCMC sampling */
-    double mcmc_candidate_eta_bg; /**< The standard deviation for the normally distributed perturbation to theta_bg in the random walk MCMC sampling */
+private:
+    void update_cached_prior_values();    
 };
 
 template<class Model, typename=IsSubclassT<Model,PointEmitterModel>>
@@ -236,10 +230,6 @@ inline
 const PointEmitterModel::ParamT& PointEmitterModel::get_ubound() const 
 { return ubound; }    
 
-inline 
-IdxT PointEmitterModel::get_mcmc_num_candidate_sampling_phases() const 
-{ return mcmc_num_candidate_sampling_phases; }
-
 inline
 void PointEmitterModel::set_hyperparams(const VecT &hyperparams)
 { prior.set_params(hyperparams); }
@@ -271,7 +261,6 @@ PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
 inline
 PointEmitterModel::ParamT PointEmitterModel::sample_prior()
 { return prior.sample(get_rng_generator()); }
-
 
 /* Template function definitions */
 template<class Model, typename>

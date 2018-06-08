@@ -6,6 +6,9 @@
 #include "Mappel/ImageFormat2DBase.h"
 
 namespace mappel {
+const ImageFormat2DBase::ImageCoordT ImageFormat2DBase::num_dim=2; /**< Number of image dimensions. */
+const ImageFormat2DBase::ImageCoordT ImageFormat2DBase::global_min_size=3; /**< Minimum size along any dimension of the image. */
+const ImageFormat2DBase::ImageCoordT ImageFormat2DBase::global_max_size=512; /**< Maximum size along any dimension of the image.  This is insanely big to catch obvious errors */
 
 ImageFormat2DBase::ImageFormat2DBase(const ImageSizeT &size)
     : size(size)

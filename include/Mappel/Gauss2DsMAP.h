@@ -20,7 +20,6 @@ namespace mappel {
  *   Model: Gauss2DsModel - 2D Gaussian variable scalar PSF sigma
  *   Objective: PoissonNoise2DObjective - Poisson noise model for 2D
  *   Estimator: MAPEstimator - Maximum a-posteriori estimator
- * 
  */
 class Gauss2DsMAP : public Gauss2DsModel, public PoissonNoise2DObjective, public MAPEstimator 
 {
@@ -29,7 +28,11 @@ public:
     Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio);
     Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
     Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, CompositeDist&& prior);     
-
+    Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const CompositeDist& prior);     
+    Gauss2DsMAP(const Gauss2DsMAP &o);
+    Gauss2DsMAP& operator=(const Gauss2DsMAP &o);
+    Gauss2DsMAP(Gauss2DsMAP &&o);
+    Gauss2DsMAP& operator=(Gauss2DsMAP &&o);    
     static const std::string name;
 };
 

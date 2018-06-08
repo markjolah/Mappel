@@ -9,15 +9,35 @@
 
 namespace mappel {
 
-Gauss1DsModel::Gauss1DsModel(IdxT size_)
-    : ImageFormat1DBase(size_)
+Gauss1DsModel::Gauss1DsModel(IdxT size)
+    :  PointEmitterModel(), ImageFormat1DBase(size), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1Ds()
+{ }
+
+Gauss1DsModel::Gauss1DsModel(const Gauss1DsModel &o)
+    : PointEmitterModel(o), ImageFormat1DBase(o), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1Ds()
+{ }
+
+Gauss1DsModel::Gauss1DsModel(Gauss1DsModel &&o)
+    : PointEmitterModel(o), ImageFormat1DBase(o), //V-base calls ignored since a higher concrete class will call them
+      MCMCAdaptor1Ds()
+{ }
+
+Gauss1DsModel& Gauss1DsModel::operator=(const Gauss1DsModel &o)
 {
-    /* Initialize MCMC step sizes */
-    mcmc_num_candidate_sampling_phases = 3;
-    mcmc_candidate_eta_x = size*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_I = find_hyperparam("mean_I",default_mean_I)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*mcmc_candidate_sample_dist_ratio;
-    mcmc_candidate_eta_sigma = 1.0*mcmc_candidate_sample_dist_ratio;    
+    //Don't copy virtual base classes.  This is called by superclass only.
+    if(this == &o) return *this; //Check for self assignment
+    MCMCAdaptor1Ds::operator=(o);
+    return *this;
+}
+
+Gauss1DsModel& Gauss1DsModel::operator=(Gauss1DsModel &&o)
+{
+    //Don't copy virtual base classes.  This is called by superclass only.
+    if(this == &o) return *this; //Check for self assignment
+    MCMCAdaptor1Ds::operator=(std::move(o));
+    return *this;
 }
 
 CompositeDist 
@@ -96,8 +116,8 @@ void Gauss1DsModel::set_max_sigma(const VecT &max_sigma)
 }
 
 Gauss1DsModel::Stencil::Stencil(const Gauss1DsModel &model_,
-                               const Gauss1DsModel::ParamT &theta,
-                               bool _compute_derivatives)
+                                const Gauss1DsModel::ParamT &theta,
+                                bool _compute_derivatives)
 : model(&model_),theta(theta)
 {
     IdxT szX = model->size;
@@ -138,7 +158,9 @@ StatsT Gauss1DsModel::get_stats() const
 {
     auto stats = PointEmitterModel::get_stats();
     auto im_stats = ImageFormat1DBase::get_stats();
+    auto mcmc_stats = MCMCAdaptor1Ds::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
+    stats.insert(mcmc_stats.begin(), mcmc_stats.end());
     stats["min_sigma"] = get_min_sigma();
     stats["max_sigma"] = get_max_sigma();
     return stats;
@@ -187,23 +209,6 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
     if(bg <= 0) bg = std::max(1.0, 0.75*im.min());
     if(I <= 0)  I = std::max(1.0, arma::sum(im) - bg*size);
     return make_stencil(ParamT{x_pos,  I, bg, sigma});
-}
-
-void Gauss1DsModel::sample_mcmc_candidate_theta(IdxT sample_index, ParamT &mcmc_candidate_theta, double scale)
-{
-    int phase = sample_index%mcmc_num_candidate_sampling_phases;
-    switch(phase) {
-        case 0:  //change pos
-            mcmc_candidate_theta(0) += rng_manager.randn()*mcmc_candidate_eta_x*scale;
-            break;
-        case 1: //change I, sigma
-            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
-            mcmc_candidate_theta(3) += rng_manager.randn()*mcmc_candidate_eta_sigma*scale;
-            break;
-        case 2: //change I, bg
-            mcmc_candidate_theta(1) += rng_manager.randn()*mcmc_candidate_eta_I*scale;
-            mcmc_candidate_theta(2) += rng_manager.randn()*mcmc_candidate_eta_bg*scale;
-    }
 }
 
 } /* namespace mappel */

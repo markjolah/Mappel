@@ -1,6 +1,6 @@
 /** @file Gauss1DModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017-2018
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss1DModel.
  */
 
@@ -9,9 +9,11 @@
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat1DBase.h"
+#include "Mappel/MCMCAdaptor1D.h"
 
 namespace mappel {
 
+    
 /** @brief A base class for 1D Gaussian PSF with a fixed sigma (standard dev.)
  *
  * This base class defines the Stencil type for 1D Gaussian PSF as well as the prior shape and parameters.
@@ -19,7 +21,7 @@ namespace mappel {
  * Initialized by an integer, size, and double, psf_sigma.
  * 
  */
-class Gauss1DModel : public virtual PointEmitterModel, public virtual ImageFormat1DBase 
+class Gauss1DModel : public virtual PointEmitterModel, public virtual ImageFormat1DBase, public MCMCAdaptor1D
 {   
 public:
     /** @brief Stencil for 1D fixed-sigma models.
@@ -46,15 +48,13 @@ public:
     };
     using StencilVecT = std::vector<Stencil>;
     
-    Gauss1DModel(IdxT size, double psf_sigma);
-
     /* Prior construction */
     static CompositeDist make_default_prior(IdxT size);
     static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
                                              double kappa_I, double mean_bg, double kappa_bg);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg);
-    
+    /* psf_sigma accessors */
     double get_psf_sigma() const;
     double get_psf_sigma(IdxT idx) const;
     void set_psf_sigma(double new_psf_sigma);
@@ -73,10 +73,14 @@ public:
     /** @brief Fast, heuristic estimate of initial theta */
     Stencil initial_theta_estimate(const ImageT &im) const;
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
-
-    /** @brief Posterior Sampling */
-    void sample_mcmc_candidate_theta(IdxT sample_index, ParamT &canidate_theta, double scale=1.0);
 protected:
+    //Abstract class cannot be instantiated
+    Gauss1DModel(IdxT size, double psf_sigma);
+    Gauss1DModel(const Gauss1DModel &o);
+    Gauss1DModel(Gauss1DModel &&o);
+    Gauss1DModel& operator=(const Gauss1DModel &o);
+    Gauss1DModel& operator=(Gauss1DModel &&o);
+        
     /* Non-static data Members */
     double psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
 };
@@ -115,9 +119,6 @@ Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 inline
 double Gauss1DModel::get_psf_sigma() const
 { return psf_sigma; }
-
-
-/* Model Pixel Value And Derivatives */
 
 inline
 double Gauss1DModel::pixel_model_value(IdxT i,  const Stencil &s) const

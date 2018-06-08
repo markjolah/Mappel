@@ -101,7 +101,7 @@ public:
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
 
     /* Posterior Sampling */
-    void sample_mcmc_candidate_theta(int sample_index, ParamT &canidate_theta, double scale=1.0);
+    void sample_mcmc_candidate(int sample_index, ParamT &canidate_theta, double scale=1.0);
 
 protected:
     double mcmc_candidate_eta_y; /**< Std-dev for the normal perturbations to theta_y under MCMC sampling */    

@@ -1,6 +1,6 @@
 /** @file Gauss1DsModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss1DsModel.
  */
 
@@ -9,13 +9,14 @@
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat1DBase.h"
+#include "Mappel/MCMCAdaptor1Ds.h"
 
 namespace mappel {
 
 /** @brief Base class for 1D Gaussian PSF with variable Gaussian sigma (standard deviation) measured in units of pixels.
  *
  */
-class Gauss1DsModel : public virtual PointEmitterModel, public virtual ImageFormat1DBase 
+class Gauss1DsModel : public virtual PointEmitterModel, public virtual ImageFormat1DBase, public MCMCAdaptor1Ds
 {
 public:
     /** @brief Stencil for 1D variable-sigma models.
@@ -45,8 +46,6 @@ public:
     };
     using StencilVecT = std::vector<Stencil>;
 
-    Gauss1DsModel(IdxT size_);
-    
     /* Prior construction */
     static CompositeDist make_default_prior(IdxT size, double min_sigma, double max_sigma);
     static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
@@ -64,7 +63,6 @@ public:
     void set_max_sigma(const VecT &max_sigma);
     
     StatsT get_stats() const;
-
     Stencil make_stencil(const ParamT &theta, bool compute_derivatives=true) const;
     
     /* Model Pixel Value And Derivatives */
@@ -78,12 +76,12 @@ public:
     /** @brief Fast, heuristic estimate of initial theta */
     Stencil initial_theta_estimate(const ImageT &im) const;
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
-
-    /** @brief Posterior Sampling */
-    void sample_mcmc_candidate_theta(IdxT sample_index, ParamT &canidate_theta, double scale=1.0);
 protected:
-    double mcmc_candidate_eta_sigma; /**< Std-dev for the normal perturbations to theta_sigma under MCMC sampling */
-
+    explicit Gauss1DsModel(IdxT size_);
+    Gauss1DsModel(const Gauss1DsModel &o);
+    Gauss1DsModel(Gauss1DsModel &&o);
+    Gauss1DsModel& operator=(const Gauss1DsModel &o);
+    Gauss1DsModel& operator=(Gauss1DsModel &&o);
 };
 
 

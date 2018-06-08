@@ -20,7 +20,6 @@ namespace mappel {
  *   Model: Gauss2DsModel - 2D Gaussian variable scalar PSF sigma
  *   Objective: PoissonNoise2DObjective - Poisson noise model for 2D
  *   Estimator: MLEstimator - Pure-likelihood estimator
- * 
  */
 class Gauss2DsMLE : public Gauss2DsModel, public PoissonNoise2DObjective, public MLEstimator 
 {
@@ -29,7 +28,11 @@ public:
     Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio);
     Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
     Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, CompositeDist&& prior);     
-
+    Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, const CompositeDist& prior);     
+    Gauss2DsMLE(const Gauss2DsMLE &o);
+    Gauss2DsMLE& operator=(const Gauss2DsMLE &o);
+    Gauss2DsMLE(Gauss2DsMLE &&o);
+    Gauss2DsMLE& operator=(Gauss2DsMLE &&o);
     static const std::string name;
 };
 

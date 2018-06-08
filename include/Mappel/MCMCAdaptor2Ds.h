@@ -1,0 +1,39 @@
+/** @file MCMCAdaptor2Ds.h
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2018
+ * @brief The class declaration and inline and templated functions for MCMCAdaptor2Ds.
+ */
+
+#ifndef _MAPPEL_MCMCADAPTOR2DS_H
+#define _MAPPEL_MCMCADAPTOR2DS_H
+
+#include "Mappel/MCMCAdaptorBase.h"
+#include "Mappel/PointEmitterModel.h"
+
+namespace mappel {
+
+class MCMCAdaptor2Ds : public virtual PointEmitterModel, public MCMCAdaptorBase
+{
+public:
+    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0);
+protected:
+    MCMCAdaptor2Ds();
+    explicit MCMCAdaptor2Ds(double sigma_scale);
+    MCMCAdaptor2Ds(const MCMCAdaptor2Ds &o);
+    MCMCAdaptor2Ds(MCMCAdaptor2Ds &&o);
+    MCMCAdaptor2Ds& operator=(const MCMCAdaptor2Ds &o);
+    MCMCAdaptor2Ds& operator=(MCMCAdaptor2Ds &&o);    
+    StatsT get_stats() const;
+private:
+    void initialize();
+
+    double eta_x=0; /**< The standard deviation for the normally distributed perturbation to theta_x in the random walk MCMC sampling */
+    double eta_y=0; /**< The standard deviation for the normally distributed perturbation to theta_x in the random walk MCMC sampling */
+    double eta_I=0; /**< The standard deviation for the normally distributed perturbation to theta_I in the random walk MCMC sampling */
+    double eta_bg=0; /**< The standard deviation for the normally distributed perturbation to theta_bg in the random walk MCMC sampling */
+    double eta_sigma=0; /**< The standard deviation for the normally distributed perturbation to theta_bg in the random walk MCMC sampling */
+};
+
+} /* namespace mappel */
+
+#endif /* _MAPPEL_MCMCADAPTOR2DS_H */

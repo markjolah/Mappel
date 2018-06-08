@@ -22,7 +22,6 @@ public:
 using TypesModel1DFixedSigma = ::testing::Types<mappel::Gauss1DMLE,mappel::Gauss1DMAP> ;
 TYPED_TEST_CASE(TestModel1DFixedSigma, TypesModel1DFixedSigma);
 
-
 TYPED_TEST(TestModel1DFixedSigma, psf_sigma) {
     TypeParam &model = this->model;
     EXPECT_GE(model.get_psf_sigma(),model.global_min_psf_sigma);

@@ -22,7 +22,6 @@ public:
 using TypesModel1DVariableSigma = ::testing::Types<mappel::Gauss1DsMLE,mappel::Gauss1DsMAP> ;
 TYPED_TEST_CASE(TestModel1DVariableSigma, TypesModel1DVariableSigma);
 
-
 TYPED_TEST(TestModel1DVariableSigma, min_max_sigma_1D) {
     //"""Check min_sigma and max_sigma get and set properties."""
     TypeParam &model = this->model;

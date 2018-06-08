@@ -28,7 +28,6 @@ void estimate_sample_posterior(const MatT &sample, VecT &theta_posterior_mean, M
     theta_posterior_cov = arma::cov(sample.t());
 }
 
-
 template <class Model>
 void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
                       MatT &sample, VecT &sample_rllh)
@@ -39,10 +38,9 @@ void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<
     sample_rllh.set_size(Nsamples);
     sample.col(0) = theta_init.theta;
     sample_rllh(0) = methods::objective::rllh(model, im, theta_init);
-    IdxT phase = 0;
     for(IdxT n=1;n<Nsamples;n++){
         ParamT<Model> can_theta = sample.col(n-1);
-        model.sample_mcmc_candidate_theta(phase++, can_theta);
+        model.sample_mcmc_candidate(n, can_theta);
         if(!model.theta_in_bounds(can_theta)) { //Reject: out-of-bounds
             sample.col(n) = sample.col(n-1);
             sample_rllh(n) = sample_rllh(n-1);
@@ -76,10 +74,9 @@ void sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const Ste
     sample_rllh(0) = methods::objective::rllh(model, im, theta_init);
     candidate.col(0) = sample.col(0);
     candidate_rllh(0) = sample_rllh(0);
-    IdxT phase = 0;
     for(IdxT n=1;n<Nsamples;n++){
         ParamT<Model> can_theta = sample.col(n-1);
-        model.sample_mcmc_candidate_theta(phase++, can_theta);
+        model.sample_mcmc_candidate(n, can_theta);
         candidate.col(n) = can_theta;
         if(!model.theta_in_bounds(can_theta)) { //Reject: out-of-bounds
             sample.col(n) = sample.col(n-1);

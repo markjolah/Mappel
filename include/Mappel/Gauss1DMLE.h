@@ -25,8 +25,12 @@ class Gauss1DMLE : public Gauss1DModel, public PoissonNoise1DObjective, public M
 public:
     Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma);
     Gauss1DMLE(ImageSizeT size, double psf_sigma);
-    Gauss1DMLE(ImageSizeT size, double psf_sigma, CompositeDist&& prior);     
-    
+    Gauss1DMLE(ImageSizeT size, double psf_sigma, CompositeDist&& prior);   
+    Gauss1DMLE(ImageSizeT size, double psf_sigma, const CompositeDist& prior);   
+    Gauss1DMLE(const Gauss1DMLE &o);
+    Gauss1DMLE& operator=(const Gauss1DMLE &o);
+    Gauss1DMLE(Gauss1DMLE &&o);
+    Gauss1DMLE& operator=(Gauss1DMLE &&o);    
     static const std::string name;
 };
  

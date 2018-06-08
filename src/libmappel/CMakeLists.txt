@@ -13,6 +13,7 @@ set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 ImageFormat1DBase.cpp PoissonNoise1DObjective.cpp  
                 ImageFormat2DBase.cpp PoissonNoise2DObjective.cpp  
                 Gauss1DModel.cpp Gauss1DMLE.cpp Gauss1DMAP.cpp
+                MCMCAdaptorBase.cpp MCMCAdaptor1D.cpp MCMCAdaptor1Ds.cpp MCMCAdaptor2D.cpp MCMCAdaptor2Ds.cpp
                 Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
                 Gauss2DModel.cpp Gauss2DMLE.cpp Gauss2DMAP.cpp
                 Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp)

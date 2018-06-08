@@ -1,7 +1,7 @@
 
 /** @file Gauss1DsMLE.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017
+ * @date 2014-2018
  * @brief The class declaration and inline and templated functions for Gauss1DsMLE.
  */
 
@@ -27,7 +27,11 @@ public:
     Gauss1DsMLE(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma);
     Gauss1DsMLE(ImageSizeT size, double min_sigma, double max_sigma);
     Gauss1DsMLE(ImageSizeT size, CompositeDist&& prior);     
-    
+    Gauss1DsMLE(ImageSizeT size, const CompositeDist& prior);     
+    Gauss1DsMLE(const Gauss1DsMLE &o);
+    Gauss1DsMLE& operator=(const Gauss1DsMLE &o);
+    Gauss1DsMLE(Gauss1DsMLE &&o);
+    Gauss1DsMLE& operator=(Gauss1DsMLE &&o);    
     static const std::string name;
 };
  
