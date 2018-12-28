@@ -80,6 +80,9 @@ public:
     Stencil initial_theta_estimate(const ImageT &im);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
+
+    Gauss1DSumModelT& debug_internal_sum_model_x() const {return x_model;}
+    Gauss1DSumModelT& debug_internal_sum_model_y() const {return y_model;}
 protected:
     //Abstract class cannot be instantiated
     Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma);

@@ -416,9 +416,9 @@ void bindMappelModel(py::module &M)
                                   "Number of prior distribution parameters." );
     model.def_property_readonly("bounds_epsilon",[](Model &model) { return Model::bounds_epsilon; },
                                          "Minimum distance away from the boundary for feasible theta.");
-    model.def_property("params_desc",[](Model &model) {return model.get_params_desc();},[](Model &model,StringVecT &desc) { model.set_params_desc(desc); },
+    model.def_property("param_names",[](Model &model) {return model.get_param_names();},[](Model &model,StringVecT &desc) { model.set_param_names(desc); },
                          "Names of model parameters." );
-    model.def_property("hyperparams_desc",[](Model &model) {return model.get_hyperparams_desc();}, [](Model &model,StringVecT &desc) { model.set_hyperparams_desc(desc); },
+    model.def_property("hyperparam_names",[](Model &model) {return model.get_hyperparam_names();}, [](Model &model,StringVecT &desc) { model.set_hyperparam_names(desc); },
                          "Names of prior distribution parameters."  );
     model.def_property("hyperparams",&ModelWrapper<Model>::get_hyperparams, &ModelWrapper<Model>::set_hyperparams,
                          "Prior distribution parameters.");

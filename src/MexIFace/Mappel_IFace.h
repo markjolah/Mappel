@@ -20,11 +20,8 @@ namespace mappel {
 template<class Model>
 class Mappel_IFace :  public MexIFace, public MexIFaceHandler<Model> {
 public:
-    using Stencil = typename Model::Stencil;
     using ParamT = typename Model::ParamT;
     using ParamVecT = typename Model::ParamVecT;
-//     using ImageT = typename Model::ImageT;
-//     using ImageStackT = typename Model::ImageStackT;
     using ImagePixelT = typename Model::ImagePixelT;
     template<class T> using ImageShapeT = typename Model::template ImageShapeT<T>;
     template<class T> using ImageStackShapeT = typename Model::template ImageStackShapeT<T>;
@@ -112,43 +109,43 @@ void MappelVarSigma_IFace<Model>::objConstruct()
 template<class Model>
 Mappel_IFace<Model>::Mappel_IFace() 
 {
-    methodmap["getHyperparams"]=boost::bind(&Mappel_IFace::objGetHyperparams, this);
-    methodmap["setHyperparams"]=boost::bind(&Mappel_IFace::objSetHyperparams, this);
-    methodmap["getStats"]=boost::bind(&Mappel_IFace::objGetStats, this);
+    methodmap["getHyperparams"] = boost::bind(&Mappel_IFace::objGetHyperparams, this);
+    methodmap["setHyperparams"] = boost::bind(&Mappel_IFace::objSetHyperparams, this);
+    methodmap["getStats"] = boost::bind(&Mappel_IFace::objGetStats, this);
     
-    methodmap["boundTheta"]=boost::bind(&Mappel_IFace::objBoundTheta, this);
-    methodmap["thetaInBounds"]=boost::bind(&Mappel_IFace::objThetaInBounds, this);
-    methodmap["samplePrior"]=boost::bind(&Mappel_IFace::objSamplePrior, this);
+    methodmap["boundTheta"] = boost::bind(&Mappel_IFace::objBoundTheta, this);
+    methodmap["thetaInBounds"] = boost::bind(&Mappel_IFace::objThetaInBounds, this);
+    methodmap["samplePrior"] = boost::bind(&Mappel_IFace::objSamplePrior, this);
     
-    methodmap["modelImage"]=boost::bind(&Mappel_IFace::objModelImage, this);
-    methodmap["simulateImage"]=boost::bind(&Mappel_IFace::objSimulateImage, this);
+    methodmap["modelImage"] = boost::bind(&Mappel_IFace::objModelImage, this);
+    methodmap["simulateImage"] = boost::bind(&Mappel_IFace::objSimulateImage, this);
     
-    methodmap["LLH"]=boost::bind(&Mappel_IFace::objLLH, this);
-    methodmap["modelGrad"]=boost::bind(&Mappel_IFace::objModelGrad, this);
-    methodmap["modelHessian"]=boost::bind(&Mappel_IFace::objModelHessian, this);
-    methodmap["objModelHessianNegativeDefinite"]=boost::bind(&Mappel_IFace::objModelHessianNegativeDefinite, this);
+    methodmap["LLH"] = boost::bind(&Mappel_IFace::objLLH, this);
+    methodmap["modelGrad"] = boost::bind(&Mappel_IFace::objModelGrad, this);
+    methodmap["modelHessian"] = boost::bind(&Mappel_IFace::objModelHessian, this);
+    methodmap["objModelHessianNegativeDefinite"] = boost::bind(&Mappel_IFace::objModelHessianNegativeDefinite, this);
 
-    methodmap["modelObjective"]=boost::bind(&Mappel_IFace::objModelObjective, this);
-    methodmap["modelObjectiveAposteriori"]=boost::bind(&Mappel_IFace::objModelObjectiveAposteriori, this);
-    methodmap["modelObjectiveLikelihood"]=boost::bind(&Mappel_IFace::objModelObjectiveLikelihood, this);
-    methodmap["modelObjectivePrior"]=boost::bind(&Mappel_IFace::objModelObjectivePrior, this);
+    methodmap["modelObjective"] = boost::bind(&Mappel_IFace::objModelObjective, this);
+    methodmap["modelObjectiveAposteriori"] = boost::bind(&Mappel_IFace::objModelObjectiveAposteriori, this);
+    methodmap["modelObjectiveLikelihood"] = boost::bind(&Mappel_IFace::objModelObjectiveLikelihood, this);
+    methodmap["modelObjectivePrior"] = boost::bind(&Mappel_IFace::objModelObjectivePrior, this);
 
-    methodmap["estimate"]=boost::bind(&Mappel_IFace::objEstimate, this);
-    methodmap["estimateError"]=boost::bind(&Mappel_IFace::objEstimateError, this);
-    methodmap["estimatePosterior"]=boost::bind(&Mappel_IFace::objEstimatePosterior, this);
+    methodmap["estimate"] = boost::bind(&Mappel_IFace::objEstimate, this);
+    methodmap["estimateError"] = boost::bind(&Mappel_IFace::objEstimateError, this);
+    methodmap["estimatePosterior"] = boost::bind(&Mappel_IFace::objEstimatePosterior, this);
 
-    methodmap["expectedInformation"]=boost::bind(&Mappel_IFace::objExpectedInformation, this);
-    methodmap["CRLB"]=boost::bind(&Mappel_IFace::objCRLB, this);
+    methodmap["expectedInformation"] = boost::bind(&Mappel_IFace::objExpectedInformation, this);
+    methodmap["CRLB"] = boost::bind(&Mappel_IFace::objCRLB, this);
 
     /* Debug */
-    methodmap["estimateDebug"]=boost::bind(&Mappel_IFace::objEstimateDebug, this);
-    methodmap["estimatePosteriorDebug"]=boost::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
-    methodmap["modelObjectiveComponents"]=boost::bind(&Mappel_IFace::objModelObjectiveComponents, this);
+    methodmap["estimateDebug"] = boost::bind(&Mappel_IFace::objEstimateDebug, this);
+    methodmap["estimatePosteriorDebug"] = boost::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
+    methodmap["modelObjectiveComponents"] = boost::bind(&Mappel_IFace::objModelObjectiveComponents, this);
 
     /* Static debug */
-    staticmethodmap["cholesky"]=boost::bind(&Mappel_IFace::objCholesky, this);
-    staticmethodmap["modifiedCholesky"]=boost::bind(&Mappel_IFace::objModifiedCholesky, this);
-    staticmethodmap["choleskySolve"]=boost::bind(&Mappel_IFace::objCholeskySolve, this);
+    staticmethodmap["cholesky"] = boost::bind(&Mappel_IFace::objCholesky, this);
+    staticmethodmap["modifiedCholesky"] = boost::bind(&Mappel_IFace::objModifiedCholesky, this);
+    staticmethodmap["choleskySolve"] = boost::bind(&Mappel_IFace::objCholeskySolve, this);
 }
 
 template<class Model>

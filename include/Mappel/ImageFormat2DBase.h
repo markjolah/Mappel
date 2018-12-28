@@ -118,7 +118,7 @@ ImageFormat2DBase::set_image_in_stack(ImageStackT &stack, ImageCoordT n, const I
 namespace methods {
 
     template<class Model>
-    typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value,typename Model::ImageT>::type
+    ReturnIfSubclassT<ImageT<Model>, Model, ImageFormat2DBase> 
     model_image(const Model &model, const typename Model::Stencil &s)
     {
         auto im = model.make_image();

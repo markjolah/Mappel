@@ -54,7 +54,6 @@ TYPED_TEST(TestModel, lbound_prior) {
     TypeParam &model = this->model;
     auto lbound = model.get_lbound();
     auto prior = model.get_prior();
-//     std::cout<<"Prior: "<<prior<<std::endl;
     auto plbound = prior.lbound();
     ASSERT_EQ(lbound.n_elem,model.get_num_params());
     ASSERT_EQ(plbound.n_elem,model.get_num_params());

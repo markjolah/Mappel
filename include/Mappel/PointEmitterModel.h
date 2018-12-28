@@ -71,11 +71,10 @@ public:
     
     static prior_hessian::ParetoDist        
     make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
-
     
-    void set_rng_seed(RngSeedT seed);
-    ParallelRngManagerT& get_rng_manager();
-    ParallelRngGeneratorT& get_rng_generator();
+    static void set_rng_seed(RngSeedT seed);
+    static ParallelRngManagerT& get_rng_manager();
+    static ParallelRngGeneratorT& get_rng_generator();
     
     StatsT get_stats() const;
     
@@ -107,12 +106,17 @@ public:
     IdxT get_num_hyperparams() const;
     void set_hyperparams(const VecT &hyperparams);
     VecT get_hyperparams() const;
-    double find_hyperparam(std::string param_name, double default_val) const;
-
-    StringVecT get_params_desc() const;
-    void set_params_desc(const StringVecT &desc);
-    StringVecT get_hyperparams_desc() const;
-    void set_hyperparams_desc(const StringVecT &desc);
+    
+    bool has_hyperparam(const std::string &name) const;
+    double get_hyperparam_value(const std::string &name) const; 
+    int get_hyperparam_index(const std::string &name) const; 
+    void set_hyperparam_value(const std::string &name, double value);
+    void rename_hyperparam(const std::string &old_name, const std::string &new_name);
+    
+    StringVecT get_param_names() const;
+    void set_param_names(const StringVecT &desc);
+    StringVecT get_hyperparam_names() const;
+    void set_hyperparam_names(const StringVecT &desc);
     
     template<class RngT> ParamT sample_prior(RngT &rng);
     ParamT sample_prior();
@@ -133,7 +137,6 @@ public:
     ParamVecT reflected_theta_stack(const ParamVecT &theta) const;
     
 protected:
-protected:
     /* Constructor */
     PointEmitterModel();
     explicit PointEmitterModel(const CompositeDist& prior_);    
@@ -148,27 +151,15 @@ protected:
     IdxT num_params;
     IdxT num_hyperparams;
     ParamT lbound,ubound; /* Vectors of lower and upper bounds. (lbound>=prior.lbound && ubound<=prior.ubound) */
-    ParallelRngManagerT rng_manager;
     
 private:
     void update_cached_prior_values();    
 };
 
-template<class Model, typename=IsSubclassT<Model,PointEmitterModel>>
+template<class Model, typename=EnableIfSubclassT<Model,PointEmitterModel>>
 std::ostream& operator<<(std::ostream &out,const Model &model);
 
 /* Inline member function definitions */
-inline
-void PointEmitterModel::set_rng_seed(RngSeedT seed)
-{ rng_manager.seed(seed); }
-
-inline
-ParallelRngManagerT& PointEmitterModel::get_rng_manager()
-{ return rng_manager; }
-
-inline
-ParallelRngGeneratorT& PointEmitterModel::get_rng_generator()
-{ return rng_manager.generator(); }
 
 inline
 IdxT PointEmitterModel::get_num_params() const 
@@ -239,20 +230,40 @@ PointEmitterModel::ParamT PointEmitterModel::get_hyperparams() const
 { return prior.params(); }
 
 inline
-StringVecT PointEmitterModel::get_params_desc() const
+bool PointEmitterModel::has_hyperparam(const std::string &name) const
+{ return prior.has_param(name); }
+
+inline
+double PointEmitterModel::get_hyperparam_value(const std::string &name) const
+{ return prior.get_param_value(name); }
+
+inline
+int PointEmitterModel::get_hyperparam_index(const std::string &name) const
+{ return prior.get_param_index(name); }
+
+inline
+void PointEmitterModel::set_hyperparam_value(const std::string &name, double value)
+{ prior.set_param_value(name,value); }
+
+inline
+void PointEmitterModel::rename_hyperparam(const std::string &old_name, const std::string &new_name);
+{ prior.rename_param(old_name,new_name); }
+
+inline
+StringVecT PointEmitterModel::get_param_names() const
 { return prior.dim_variables(); }
 
 inline
-void PointEmitterModel::set_params_desc(const StringVecT &desc)
+void PointEmitterModel::set_param_names(const StringVecT &desc)
 { prior.set_dim_variables(desc); }
 
 inline
-StringVecT PointEmitterModel::get_hyperparams_desc() const
-{ return prior.params_desc(); }
+StringVecT PointEmitterModel::get_hyperparam_names() const
+{ return prior.param_names(); }
 
 inline
-void PointEmitterModel::set_hyperparams_desc(const StringVecT &desc)
-{ prior.set_params_desc(desc); }
+void PointEmitterModel::set_hyperparam_names(const StringVecT &desc)
+{ prior.set_param_names(desc); }
 
 template<class RngT>
 PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)

@@ -11,6 +11,9 @@
 
 namespace mappel {
 
+//Single global RNG_Manager to rule them all!
+ParallelRngManagerT rng_manager;
+    
 const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
 const double PointEmitterModel::bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
 const double PointEmitterModel::global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
@@ -23,44 +26,35 @@ const double PointEmitterModel::default_intensity_kappa = 2;  /**< Default shape
 const double PointEmitterModel::default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
 const double PointEmitterModel::default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
 
+/* Constructors and assignment operators */
 PointEmitterModel::PointEmitterModel()
-    : prior{}, 
-      rng_manager{}
+    : prior{}
 {
     update_cached_prior_values();
-//     std::cout<<"Default Constructor rvalue-ref called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
 PointEmitterModel::PointEmitterModel(CompositeDist&& prior_)
-    : prior{std::move(prior_)},
-      rng_manager{}
+    : prior{std::move(prior_)}
 {
     update_cached_prior_values();
-//     std::cout<<"Constructor rvalue-ref called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
 PointEmitterModel::PointEmitterModel(const CompositeDist& prior_)
-    : prior{prior_},
-      rng_manager{}
+    : prior{prior_}
 {
     update_cached_prior_values();
-//     std::cout<<"Constructor called const lvalue-ref prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
 PointEmitterModel::PointEmitterModel(const PointEmitterModel &o) 
-    : prior{o.prior},
-      rng_manager{o.rng_manager}
+    : prior{o.prior}
 {
     update_cached_prior_values();
-//     std::cout<<"Copy constructor called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
 PointEmitterModel::PointEmitterModel(PointEmitterModel &&o) 
-    : prior{std::move(o.prior)},
-      rng_manager{std::move(o.rng_manager)}
+    : prior{std::move(o.prior)}
 {
     update_cached_prior_values();
-//     std::cout<<"Move constructor called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
 }
 
 PointEmitterModel& PointEmitterModel::operator=(const PointEmitterModel &o)
@@ -68,7 +62,6 @@ PointEmitterModel& PointEmitterModel::operator=(const PointEmitterModel &o)
     prior = o.prior;
     rng_manager = o.rng_manager;
     update_cached_prior_values();
-//     std::cout<<"Copy assignment operator called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
     return *this;
 }
 
@@ -77,7 +70,6 @@ PointEmitterModel& PointEmitterModel::operator=(PointEmitterModel &&o)
     prior = std::move(o.prior);
     rng_manager = std::move(o.rng_manager);
     update_cached_prior_values();
-//     std::cout<<"Move assignment operator called: prior-ubound"<<prior.ubound().t()<<" ubound:"<<ubound.t()<<std::endl;
     return *this;
 }
 
@@ -89,7 +81,7 @@ void PointEmitterModel::update_cached_prior_values()
     ubound = prior.ubound();    
 }
 
-
+/* Static member functions */
 prior_hessian::NormalDist        
 PointEmitterModel::make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma)
 {
@@ -117,6 +109,21 @@ PointEmitterModel::make_prior_component_sigma(std::string var, double min_sigma,
     return prior_hessian::ParetoDist(alpha,min_sigma,max_sigma,var);
 }
 
+/* Non-static member functions */
+void PointEmitterModel::set_rng_seed(RngSeedT seed)
+{ 
+    rng_manager.seed(seed); 
+}
+
+ParallelRngManagerT& PointEmitterModel::get_rng_manager()
+{ 
+    return rng_manager; 
+}
+
+ParallelRngGeneratorT& PointEmitterModel::get_rng_generator()
+{ 
+    return rng_manager.generator(); 
+}
 
 StatsT PointEmitterModel::get_stats() const
 {
@@ -124,9 +131,9 @@ StatsT PointEmitterModel::get_stats() const
     stats["num_params"] = num_params;
     stats["num_hyperparams"] = num_hyperparams;
     auto hyperparams = prior.params();
-    auto hyperparams_desc = prior.params_desc();
+    auto hyperparam_names = prior.param_names();
     std::string hp_str("hyperparameters.");
-    for(IdxT i=0; i<num_hyperparams; i++) stats[hp_str+hyperparams_desc[i]] = hyperparams[i];
+    for(IdxT i=0; i<num_hyperparams; i++) stats[hp_str+hyperparam_names[i]] = hyperparams[i];
     for(IdxT n=0;n<num_params;n++) {
         std::ostringstream outl,outu;
         outl<<"lbound."<<n+1;
@@ -159,24 +166,6 @@ void PointEmitterModel::set_prior(CompositeDist&& prior_)
     lbound = prior.lbound();
     ubound = prior.ubound();
 }
-
-/**
- * @param param_name Exact name to search for
- * @param default_val Optional.  defaults to NaN
- * @return Hyperparam value. default_val if not found. NaN if not found and no default given.
- */
-double PointEmitterModel::find_hyperparam(std::string param_name, double default_val=std::numeric_limits<double>::quiet_NaN()) const
-{
-    auto hp = get_hyperparams(); 
-    auto hp_desc = get_hyperparams_desc(); 
-    auto desc_idx = std::find(hp_desc.begin(), hp_desc.end(), param_name);
-    if(desc_idx != hp_desc.end()) {
-        return hp(std::distance(hp_desc.begin(),desc_idx));   
-    } else {
-        return default_val;
-    }
-}
-
 
 void PointEmitterModel::check_param_shape(const ParamT &theta) const
 {

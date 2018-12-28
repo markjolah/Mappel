@@ -30,13 +30,13 @@ def test_num_hyperparams(model):
     """Check model.num_hyperparams is non-zero"""
     assert model.num_hyperparams > 0
 
-def test_params_desc(model):
-    """Check model.params_desc"""
-    assert len(model.params_desc) == model.num_params
+def test_param_names(model):
+    """Check model.param_names"""
+    assert len(model.param_names) == model.num_params
 
-def test_hyperparams_desc(model):
-    """Check model.hyperparams_desc"""
-    assert len(model.hyperparams_desc) == model.num_hyperparams
+def test_hyperparam_names(model):
+    """Check model.hyperparam_names"""
+    assert len(model.hyperparam_names) == model.num_hyperparams
 
 def test_hyperparams(model):
     """Check model.hyperparams property get and set methods"""

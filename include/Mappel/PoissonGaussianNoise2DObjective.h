@@ -28,9 +28,6 @@ public:
     using CoordStackT = arma::mat<uint32_t>;
     using ModelDataT = std::pair<ImageT, CoordT>; /**< Objective function data type: 2D double precision image, gain-corrected to approximate photons counts */
     using ModelDataStackT = std::pair<ImageStackT,CoordStackT>; /**< Objective function data stack type: 2D double precision image stack, of images gain-corrected to approximate photons counts */
-    template<class T> using IsSubclassT = typename std::enable_if<std::is_base_of<PoissonGaussianNoise2DObjective,T>::value>::type;
-
-
     
     /* Model parameters */
     ImageT sensor_gain_map;

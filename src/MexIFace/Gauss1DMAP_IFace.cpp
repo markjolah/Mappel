@@ -1,7 +1,7 @@
 /** @file Gauss1DMAP_IFace.cpp
+ *  @author Mark J. Olah (mjo at cs.unm.edu)
+ *  @date 2015-2018
  *  @brief The entry point for Gauss1DMAP_IFace mex module.
- * 
- * Just calls the MappleMexIface.mexFunction which is the IFace entry point.
  * 
  */
 #include "Mappel_IFace.h"

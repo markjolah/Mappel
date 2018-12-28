@@ -113,8 +113,8 @@ ImageFormat1DBase::set_image_in_stack(ImageStackT &stack, ImageCoordT n, const I
 
 namespace methods {
     
-    template<class Model, typename = IsSubclassT<Model,ImageFormat1DBase>>
-    ImageT<Model>
+    template<class Model>
+    ReturnIfSubclassT<ImageT<Model>, Model, ImageFormat1DBase> 
     model_image(const Model &model, const StencilT<Model> &s)
     {
         auto im = model.make_image();

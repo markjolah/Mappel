@@ -1,0 +1,39 @@
+OMP_NUM_THREADS=4
+language: cpp
+
+compiler:
+  - gcc
+  - clang
+addons:
+  apt:
+    packages:
+    - libc++-dev 
+    - libc++abi-dev
+    - libarmadillo-dev 
+    - libboost-dev
+    - libatlas-base-dev
+    - libblas-dev 
+    - libatlas-cpp
+
+before_install:
+- echo $LANG
+- echo $LC_ALL
+- echo $TRAVIS_OS_NAME
+- if [ $TRAVIS_OS_NAME == linux ]; then ./scripts/travisCI/install-trusty-dependencies.sh; fi
+script: 
+    - ./build.test.sh 
+    
+branches:
+  only:
+- master
+
+#notifications:
+#email: false
+# webhooks:
+#    urls:
+#      secure: h2oTAbAZF6+c6iv/kHoDGtl1mzQDF2vQSKWnO1pwfEz+L80lX9u3+JB+jsbYUcZ9smBRnRRghqxpLBmyzH3QZCrBdxKnTWfGc7I7lkTCFQZ5O3pPmIusO6W5zX+YUc+NHPPZXouHuHFmEeEB9vJnt/YB/fyGAGOIq+qXV4s+R9M=
+#    on_success: always
+#    on_failure: always
+#on_start: always
+#env:
+#global:

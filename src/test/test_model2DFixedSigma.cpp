@@ -22,6 +22,21 @@ public:
 using TypesModel2DFixedSigma = ::testing::Types<mappel::Gauss2DMLE,mappel::Gauss2DMAP> ;
 TYPED_TEST_CASE(TestModel2DFixedSigma, TypesModel2DFixedSigma);
 
+
+template<class Model>
+void check_sum_model_consitency(const Model &model)
+{
+    auto x_model = model.debug_internal_sum_model_x();
+    auto y_model = model.debug_internal_sum_model_y();
+    EXPECT_EQ(x_model.get_size(), model.get_size()(0));
+    EXPECT_EQ(y_model.get_size(), model.get_size()(1));
+    EXPECT_EQ(x_model.get_psf_sigma(), model.get_psf_sigma()(0));
+    EXPECT_EQ(y_model.get_psf_sigma(), model.get_psf_sigma()(1));
+    auto x_prior = x_model.get_prior();
+    //Test prior
+}
+
+
 // TYPED_TEST(TestModel2DFixedSigma, psf_sigma) {
 // //     TypeParam &model = this->model;
 // //     EXPECT_GE(model.get_psf_sigma(),model.global_min_psf_sigma);
