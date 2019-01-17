@@ -17,44 +17,13 @@ set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
                 Gauss1DsModel.cpp Gauss1DsMLE.cpp Gauss1DsMAP.cpp
                 Gauss2DModel.cpp Gauss2DMLE.cpp Gauss2DMAP.cpp
                 Gauss2DsModel.cpp Gauss2DsMLE.cpp Gauss2DsMAP.cpp)
-
-set(PUBLIC_HEADER_SRC_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include)
                 
 if(OPT_HYPERSPECTRAL)
     file(GLOB HS_SRCS hyperspectral/*.cpp)
-    file(GLOB HS_HDRS hyperspectral/*.cpp)
-    set(MAPPEL_SRCS ${MAPPEL_SRCS} ${HS_SRCS})
-    set(MAPPEL_HDRS ${MAPPEL_HDRS} ${HS_HDRS})
+    list(APPEND MAPPEL_SRCS ${HS_SRCS})
 endif()
 
 include(AddSharedStaticLibraries)
-add_shared_static_libraries("${MAPPEL_SRCS};$<TARGET_OBJECTS:cGaussMLE>" ${PROJECT_NAME}) 
-
-foreach(target ${LIB_TARGETS})
-    target_link_libraries(${target} PUBLIC BacktraceException::BacktraceException )
-    target_link_libraries(${target} PUBLIC ParallelRngManager::ParallelRngManager )
-    target_link_libraries(${target} PUBLIC PriorHessian::PriorHessian)
-    target_link_libraries(${target} PUBLIC OpenMP::OpenMP_CXX) #OpenMP (non-empty for WIN32)
-    target_link_libraries(${target} PUBLIC Boost::chrono)
-    target_link_libraries(${target} PUBLIC Boost::thread) 
-    target_link_libraries(${target} PUBLIC ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} )
-    target_link_libraries(${target} PUBLIC ${PTHREAD_LIBRARY}) #Pthreads
-    target_include_directories(${target} PUBLIC $<BUILD_INTERFACE:${PUBLIC_HEADER_SRC_DIR}> 
-                                                $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
-                                                $<INSTALL_INTERFACE:include>)
-endforeach()
-if(UNIX)
-    install(TARGETS ${LIB_TARGETS} EXPORT ${PROJECT_NAME}Targets
-            LIBRARY DESTINATION lib COMPONENT Runtime
-            ARCHIVE DESTINATION lib  COMPONENT Development)
-elseif(WIN32)
-    install(TARGETS ${LIB_TARGETS} EXPORT ${PROJECT_NAME}Targets
-            RUNTIME DESTINATION lib  COMPONENT Runtime
-            ARCHIVE DESTINATION lib  COMPONENT Development)
-endif()
-
-install(DIRECTORY ${PUBLIC_HEADER_SRC_DIR}/ DESTINATION include COMPONENT Development)
-
-if(OPT_MATLAB)
-    fixup_dependencies(${LIB_TARGETS})
-endif()
+add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE> PUBLIC_HEADER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include
+    LINK_LIBRARIES BacktraceException::BacktraceException ParallelRngManager::ParallelRngManager PriorHessian::PriorHessian
+                   OpenMP::OpenMP_CXX Boost::thread Boost::chrono ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${PTHREAD_LIBRARY} )
