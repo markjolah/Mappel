@@ -106,10 +106,12 @@ endfunction()
 
 
 #Find target_destination: the relative directory path from ${CMAKE_INSTALL_PREFIX} that target will be installed to
-set(target_destination @FIXUP_TARGET_DESTINATION@)
-if(NOT target_destination)
+set(target_destination "@FIXUP_TARGET_DESTINATIONS@")
+message(STATUS "GOT target_destination:${target_destination}")
+list(LENGTH target_destination _N_dests)
+if(NOT target_destination OR _N_dests GREATER 1)
     #try to find installed file
-    find_file(_file ${target_file_name} PATHS ${install_prefix} PATH_SUFFIXES lib lib/${project_name} bin bin/${project_name} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+    find_file(_file ${target_file_name} PATHS ${install_prefix} PATH_SUFFIXES ${target_destination} lib lib/${project_name} bin bin/${project_name} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
     if(NOT _file)
         message(FATAL_ERROR "Could not find installed location for target fixup file: ${target_file_name} under install dir: ${install_prefix}")
     endif()
@@ -123,15 +125,24 @@ endif()
 set(parent_lib "@FIXUP_PARENT_LIB@")
 set(target_install_dir ${install_prefix}/${target_destination})
 set(target_install_file ${target_install_dir}/${target_file_name})
-get_filename_component(lib_copy_dest ${target_install_dir}/@FIXUP_COPY_DESTINATION@ ABSOLUTE) #Destination for libraries to copy in
+set(crosscompiling @CMAKE_CROSSCOMPILING@)
+set(toolchain_file @CMAKE_TOOLCHAIN_FILE@)
+set(target_os @FIXUP_TARGET_OS@)
+
+#Destination for libraries to copy in
+set(_FIXUP_COPY_DESTINATION @FIXUP_COPY_DESTINATION@)
+message("_FIXUP_COPY_DESTINATION:${_FIXUP_COPY_DESTINATION}")
+if(_FIXUP_COPY_DESTINATION)
+    get_filename_component(lib_copy_dest ${install_prefix}/${_FIXUP_COPY_DESTINATION} ABSOLUTE)
+else()
+    set(lib_copy_dest ${target_install_dir}) #Windows always fixes-up in-place
+endif()
+unset(_FIXUP_COPY_DESTINATION)
 
 set(provided_lib_dirs @FIXUP_PROVIDED_LIB_DIRS@)
 transform_filename_component_list(provided_lib_dirs REALPATH)
 set(provided_libs @FIXUP_PROVIDED_LIBS@)
 
-set(crosscompiling @CMAKE_CROSSCOMPILING@)
-set(toolchain_file @CMAKE_TOOLCHAIN_FILE@)
-set(target_os @FIXUP_TARGET_OS@)
 
 set(staging_prefix @CMAKE_STAGING_PREFIX@)
 if(staging_prefix)
@@ -153,59 +164,7 @@ if(search_lib_dirs)
     transform_filename_component_list(search_lib_dirs REALPATH)
 endif()
 
-#default_library_search_suffixs - generally matches the CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES
-set(default_library_search_suffixs)
-if(target_os STREQUAL "UNIX")
-    set(_suffixs @CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES@) #dirs of libraries provided by host system
-    foreach(sdir IN LISTS _suffixs)
-        if(sdir MATCHES "^/(.*)")
-            list(APPEND default_library_search_suffixs ${CMAKE_MATCH_1})
-        else()
-            list(APPEND default_library_search_suffixs ${sdir})
-        endif()
-    endforeach()
-    unset(_suffixs)
-    list(APPEND default_library_search_suffixs lib lib64)
-elseif(target_os STREQUAL "WIN32")
-    set(_suffixs @CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES@) #dirs of libraries provided by host system
-    foreach(_suffix IN LISTS _suffixs)
-        if(IS_ABSOLUTE ${_suffix})
-            get_filename_component(_suffix ${_suffix} REALPATH)
-            set(_found)
-            foreach(pre IN ITEMS @CMAKE_FIND_ROOT_PATH@)
-                get_filename_component(pre ${pre} REALPATH)
-                if(_suffix MATCHES "^${pre}/(.*)")
-                    list(APPEND default_library_search_suffixs ${CMAKE_MATCH_1})
-                    set(_found True)
-                    break()
-                endif()
-            endforeach()
-            if(NOT _found AND ${_suffix} MATCHES "^/(.*)")
-                list(APPEND default_library_search_suffixs ${CMAKE_MATCH_1})
-            endif()
-        else()
-            list(APPEND default_library_search_suffixs ${_suffix})
-        endif()
-    endforeach()
-    unset(_suffixs)
-    list(APPEND default_library_search_suffixs bin usr/bin lib usr/lib)
-endif()
-
-#Provided system libraries that should not be copied or recursed on.
-if(target_os STREQUAL "UNIX")
-    #libc and ld-linux-x86-64 loader must match versions exactly with system loader since
-    #the loader location is hard-coded as an absolute path, it cannot be made relocatable without using system
-    #loader which implied also using system libc.
-    if(NOT @FIXUP_COPY_GCC_LIBS@)
-        list(APPEND provided_libs libstdc++ libgfortran libgcc_s libatomic libgomp libquadmath libmpx libmpxwrappers) #gcc libs
-    endif()
-    if(NOT @FIXUP_COPY_GLIBC_LIBS@)
-        list(APPEND provided_libs libc libdl libpthread libcrypt librt libm) #glibc libs
-    endif()
-    list(APPEND provided_libs ld-linux-x86-64) #loader
-elseif(target_os STREQUAL "WIN32")
-    list(APPEND provided_libs kernel32 user32 msvcrt advapi32 ws2_32 msvcp120 msvcr120 msvcp120 dbghelp oleaut32 ole32 psapi powrprof)
-endif()
+set(default_library_search_suffixs @FIXUP_DEFAULT_LIBRARY_SEARCH_SUFFIXS@)
 
 message(STATUS "${msg_hdr} install_prefix: ${install_prefix} target_destination: ${target_destination}")
 message(STATUS "${msg_hdr} parent_lib: ${parent_lib}")
@@ -429,6 +388,21 @@ function(fixup_win32_target target)
         fixup_win32_target(${lib_copy_dest}/${_dep})
     endmacro()
 
+    macro(_do_link_recurse)
+        message(STATUS "do_link_recurse: FIXUP_LINK_INSTALLED_LIBS:@FIXUP_LINK_INSTALLED_LIBS@")
+        if(@FIXUP_LINK_INSTALLED_LIBS@)
+            get_filename_component(_link_name ${fitem} NAME)
+            execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${fitem} ${lib_copy_dest}/${_link_name})
+            message(STATUS "  @@@ >>> Symlinking:  ${fitem} --> ${lib_copy_dest}/${_link_name}")
+            unset(_link_name)
+        else()
+            execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${fitem} ${lib_copy_dest})
+            message(STATUS "  +++ >>> Copying:  ${fitem} --> ${lib_copy_dest}")
+        endif()
+        unset(fitem CACHE)
+        fixup_win32_target(${lib_copy_dest}/${_dep})
+    endmacro()
+
     foreach(_dep IN LISTS _deps)
         set(msg_hdr "{Dep:${_dep}}")
         get_filename_component(_dep_base_name ${_dep} NAME_WE)
@@ -465,7 +439,7 @@ function(fixup_win32_target target)
         if(fitem)
             get_filename_component(resolved_dir ${fitem} DIRECTORY)
             message(STATUS "  +++ ${msg_hdr}: Exists under install prefix at: ${resolved_dir}")
-            _do_copy_recurse()
+            _do_link_recurse()
             continue()
         endif()
 
