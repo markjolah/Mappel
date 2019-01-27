@@ -10,7 +10,7 @@
 # See: LICENCE file
 
 cmake_minimum_required( VERSION 3.9 )
-project(Mappel VERSION 0.0.2 LANGUAGES CXX)
+project(Mappel VERSION 0.0.3 LANGUAGES CXX)
 
 # Enable Matlab Support via MexIFace
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)
