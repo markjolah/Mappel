@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _MAPPEL_OPENMP_METHODS
-#define _MAPPEL_OPENMP_METHODS
+#ifndef MAPPEL_OPENMP_METHODS
+#define MAPPEL_OPENMP_METHODS
 
 #include <omp.h>
 #include "Mappel/util.h"
@@ -560,4 +560,4 @@ void negative_definite_hessian_stack(const Model &model,
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_OPENMP_METHODS */
+#endif /* MAPPEL_OPENMP_METHODS */

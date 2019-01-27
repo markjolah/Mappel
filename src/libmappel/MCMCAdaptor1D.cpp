@@ -8,32 +8,43 @@
 
 namespace mappel {
 
-MCMCAdaptor1D::MCMCAdaptor1D()
-    : PointEmitterModel{}, //VB never called here.
-      MCMCAdaptorBase{2}
-{ initialize(); }
+MCMCAdaptor1D::MCMCAdaptor1D() : MCMCAdaptor1D(global_default_mcmc_sigma_scale)
+{ }
 
 MCMCAdaptor1D::MCMCAdaptor1D(double sigma_scale)
     : PointEmitterModel{}, //VB never called here.
       MCMCAdaptorBase{2,sigma_scale}
-{ initialize(); }
+{
+    double xsize = get_ubound()(0) - get_lbound()(0);
+    eta_x = xsize*sigma_scale;
+}
 
 MCMCAdaptor1D::MCMCAdaptor1D(const MCMCAdaptor1D &o)
     : PointEmitterModel{o}, //VB never called here.
       MCMCAdaptorBase{o}
-{ initialize(); }
+{
+    eta_x = o.eta_x;
+    eta_I = o.eta_I;
+    eta_bg = o.eta_bg;
+}
 
 MCMCAdaptor1D::MCMCAdaptor1D(MCMCAdaptor1D &&o)
     : PointEmitterModel{std::move(o)}, //VB never called here.
       MCMCAdaptorBase{std::move(o)}
-{ initialize(); }
+{
+    eta_x = o.eta_x;
+    eta_I = o.eta_I;
+    eta_bg = o.eta_bg;
+}
 
 MCMCAdaptor1D& MCMCAdaptor1D::operator=(const MCMCAdaptor1D &o)
 {
     if(this == &o) return *this; //No self copy
     //Ignore virtual base copy, someone else will do that
     MCMCAdaptorBase::operator=(o);
-    initialize();
+    eta_x = o.eta_x;
+    eta_I = o.eta_I;
+    eta_bg = o.eta_bg;
     return *this;
 }
 
@@ -42,17 +53,44 @@ MCMCAdaptor1D& MCMCAdaptor1D::operator=(MCMCAdaptor1D &&o)
     if(this == &o) return *this; //No self copy
     //Ignore virtual base copy, someone else will do that
     MCMCAdaptorBase::operator=(std::move(o));
-    initialize();
+    eta_x = o.eta_x;
+    eta_I = o.eta_I;
+    eta_bg = o.eta_bg;
     return *this;
 }
 
 /* Initialize MCMC step sizes */
-void MCMCAdaptor1D::initialize()
+void MCMCAdaptor1D::set_intensity_mcmc_sampling(double new_eta_I)
 {
-    double xsize = get_ubound()(0) - get_lbound()(0);
-    eta_x = xsize*sigma_scale;
-    eta_I = find_hyperparam("mean_I",default_mean_I)*sigma_scale;
-    eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*sigma_scale;    
+    if(new_eta_I<=0) {
+        double mean_I;
+        try {
+            mean_I = get_hyperparam_value("intensity_scale")*get_hyperparam_value("intensity_shape");
+        } catch (ParameterValueError&) {
+            //use defaults
+            mean_I = default_mean_I;
+        }
+        eta_I = mean_I*sigma_scale;
+    } else {
+        eta_I = new_eta_I;
+    }
+}
+
+void MCMCAdaptor1D::set_background_mcmc_sampling(double new_eta_bg)
+{
+    if(new_eta_bg<=0) {
+        double mean_bg;
+        try {
+            mean_bg = get_hyperparam_value("background_scale")*get_hyperparam_value("background_shape");
+        } catch (ParameterValueError&) {
+            //use defaults
+            double xsize = get_ubound()(0) - get_lbound()(0);
+            mean_bg = default_pixel_mean_bg * xsize; //Adjust for 1D summation over pixels
+        }
+        eta_bg = mean_bg*sigma_scale;
+    } else {
+        eta_bg = new_eta_bg;
+    }
 }
 
 StatsT MCMCAdaptor1D::get_stats() const

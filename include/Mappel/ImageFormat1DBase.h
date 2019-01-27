@@ -1,13 +1,13 @@
 /** @file ImageFormat1DBase.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for ImageFormat1DBase.
  *
  * The virtual base class for all point 2D image based emitter Models and Objectives
  */
 
-#ifndef _MAPPEL_IMAGEFORMAT1DBASE_H
-#define _MAPPEL_IMAGEFORMAT1DBASE_H
+#ifndef MAPPEL_IMAGEFORMAT1DBASE_H
+#define MAPPEL_IMAGEFORMAT1DBASE_H
 
 #include "Mappel/util.h"
 #include "Mappel/ImageFormat2DBase.h"
@@ -128,4 +128,4 @@ namespace methods {
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_IMAGEFORMAT1DBASE_H */
+#endif /* MAPPEL_IMAGEFORMAT1DBASE_H */

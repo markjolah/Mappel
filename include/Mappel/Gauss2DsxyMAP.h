@@ -5,8 +5,8 @@
  * @brief The class declaration and inline and templated functions for Gauss2DsxyMAP.
  */
 
-#ifndef _MAPPEL_GAUSS2DSXYMAP_H
-#define _MAPPEL_GAUSS2DSXYMAP_H
+#ifndef MAPPEL_GAUSS2DSXYMAP_H
+#define MAPPEL_GAUSS2DSXYMAP_H
 
 #include "Mappel/PoissonNoise2DObjective.h"
 #include "Mappel/MAPEstimator.h"
@@ -32,4 +32,4 @@ public:
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DSXYMAP_H */
+#endif /* MAPPEL_GAUSS2DSXYMAP_H */

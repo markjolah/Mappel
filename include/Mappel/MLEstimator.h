@@ -5,8 +5,8 @@
  * @brief Class declaration and inline and templated functions for MLEstimator.
  */
 
-#ifndef _MAPPEL_MLESTIMATOR_H
-#define _MAPPEL_MLESTIMATOR_H
+#ifndef MAPPEL_MLESTIMATOR_H
+#define MAPPEL_MLESTIMATOR_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/MAPEstimator.h"
@@ -102,4 +102,4 @@ namespace methods {
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_MLESTIMATOR_H */
+#endif /* MAPPEL_MLESTIMATOR_H */

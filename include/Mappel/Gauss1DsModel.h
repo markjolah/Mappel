@@ -1,11 +1,11 @@
 /** @file Gauss1DsModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss1DsModel.
  */
 
-#ifndef _MAPPEL_GAUSS1DSMODEL_H
-#define _MAPPEL_GAUSS1DSMODEL_H
+#ifndef MAPPEL_GAUSS1DSMODEL_H
+#define MAPPEL_GAUSS1DSMODEL_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat1DBase.h"
@@ -47,13 +47,18 @@ public:
     using StencilVecT = std::vector<Stencil>;
 
     /* Prior construction */
-    static CompositeDist make_default_prior(IdxT size, double min_sigma, double max_sigma);
+    static const StringVecT prior_types;
+    static const std::string DefaultPriorType;
+    static CompositeDist make_default_prior(IdxT size, double min_sigma, double max_sigma, const std::string &prior_type);
+    static CompositeDist make_default_prior_beta_position(IdxT size, double min_sigma, double max_sigma);
+    static CompositeDist make_default_prior_normal_position(IdxT size, double min_sigma, double max_sigma);
     static CompositeDist make_prior_beta_position(IdxT size, double beta_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
                                                double min_sigma, double max_sigma, double alpha_sigma);
     static CompositeDist make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I,
                                                double kappa_I, double mean_bg, double kappa_bg, 
                                                double min_sigma, double max_sigma, double alpha_sigma);
+
     /* min_sigma and max_sigma accessors */
     double get_min_sigma() const;
     double get_max_sigma() const;
@@ -82,6 +87,8 @@ protected:
     Gauss1DsModel(Gauss1DsModel &&o);
     Gauss1DsModel& operator=(const Gauss1DsModel &o);
     Gauss1DsModel& operator=(Gauss1DsModel &&o);
+private:
+    static void set_prior_variable_names(CompositeDist &prior);
 };
 
 
@@ -171,4 +178,4 @@ Gauss1DsModel::initial_theta_estimate(const ImageT &im) const
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS1DSMODEL_H */
+#endif /* MAPPEL_GAUSS1DSMODEL_H */

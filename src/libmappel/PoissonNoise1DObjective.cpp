@@ -1,6 +1,6 @@
 /** @file PoissonNoise1DObjective.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for PoissonNoise1DObjective
  */
 
@@ -25,15 +25,11 @@ PoissonNoise1DObjective::PoissonNoise1DObjective(PoissonNoise1DObjective &&o)
 
 PoissonNoise1DObjective& PoissonNoise1DObjective::operator=(const PoissonNoise1DObjective &o)
 {
-    if(this == &o) return *this; //Check for self assignment
-    ImageFormat1DBase::operator=(o);
-    return *this;
+   return *this;
 }
 
 PoissonNoise1DObjective& PoissonNoise1DObjective::operator=(PoissonNoise1DObjective &&o)
 {
-    if(this == &o) return *this; //Check for self assignment
-    ImageFormat1DBase::operator=(std::move(o));
     return *this;
 }
 

@@ -1,11 +1,11 @@
 /** @file Gauss2DsxyModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss2DsxyModel.
  */
 
-#ifndef _MAPPEL_GAUSS2DSXYMODEL_H
-#define _MAPPEL_GAUSS2DSXYMODEL_H
+#ifndef MAPPEL_GAUSS2DSXYMODEL_H
+#define MAPPEL_GAUSS2DSXYMODEL_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat2DBase.h"
@@ -281,4 +281,4 @@ cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im,
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DSXYMODEL_H */
+#endif /* MAPPEL_GAUSS2DSXYMODEL_H */

@@ -5,8 +5,8 @@
  * @brief Namespace and function definitions for the model:: namespace which contains the major methods for computing with PointEmitterModels
  */
 
-#ifndef _MAPPEL_MODEL_METHODS
-#define _MAPPEL_MODEL_METHODS
+#ifndef MAPPEL_MODEL_METHODS
+#define MAPPEL_MODEL_METHODS
 
 //#include "Mappel/PointEmitterModel.h"
 
@@ -257,4 +257,4 @@ namespace methods {
 #include "Mappel/model_methods_impl.h" //Implementation of methods
 #include "Mappel/estimator_impl.h"
 
-#endif /* _MAPPEL_MODEL_METHODS */
+#endif /* MAPPEL_MODEL_METHODS */

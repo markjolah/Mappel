@@ -1,13 +1,13 @@
 /** @file ImageFormat2DBase.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for ImageFormat2DBase.
  *
  * The virtual base class for all point 2D image based emitter Models and Objectives
  */
 
-#ifndef _MAPPEL_IMAGEFORMAT2DBASE_H
-#define _MAPPEL_IMAGEFORMAT2DBASE_H
+#ifndef MAPPEL_IMAGEFORMAT2DBASE_H
+#define MAPPEL_IMAGEFORMAT2DBASE_H
 
 #include "Mappel/util.h"
 
@@ -48,7 +48,7 @@ public:
     template<class ImT>
     void set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const;
     
-    ImageSizeT get_size() const;
+    const ImageSizeT& get_size() const;
     ImageCoordT get_size(IdxT idx) const;
     ImageCoordT get_num_pixels() const;
     void set_size(const ImageSizeT &size_);
@@ -58,10 +58,10 @@ public:
 protected:
     ImageFormat2DBase()=default;
     explicit ImageFormat2DBase(const ImageSizeT &size);
-//     ImageFormat2DBase(const ImageFormat2DBase&)=default;
-//     ImageFormat2DBase(ImageFormat2DBase&&)=default;
-//     ImageFormat2DBase& operator=(const ImageFormat2DBase&)=default;
-//     ImageFormat2DBase& operator=(ImageFormat2DBase&&)=default;
+    ImageFormat2DBase(const ImageFormat2DBase&);
+    ImageFormat2DBase(ImageFormat2DBase&&);
+    ImageFormat2DBase& operator=(const ImageFormat2DBase&);
+    ImageFormat2DBase& operator=(ImageFormat2DBase&&);
     
     /* Non-static data members */
     ImageSizeT size; /**< Number of pixels in X dimension for 1D image */
@@ -70,7 +70,7 @@ protected:
 /* Inline Method Definitions */
 
 inline
-ImageFormat2DBase::ImageSizeT  
+const ImageFormat2DBase::ImageSizeT&
 ImageFormat2DBase::get_size() const
 { return size; }
 
@@ -134,4 +134,4 @@ namespace methods {
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_IMAGEFORMAT2DBASE_H */
+#endif /* MAPPEL_IMAGEFORMAT2DBASE_H */

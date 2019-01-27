@@ -26,6 +26,15 @@ bool istarts_with(const char* s, const char* pattern)
     return !*pattern;  //True if the pattern is over
 }
 
+bool istarts_with(const std::string& str, const char* pattern)
+{
+    auto s = str.begin();
+    while(*s && *pattern) {
+        if(toupper(*s++) != toupper(*pattern++)) return false;
+    }
+    return !*pattern;  //True if the pattern is over
+}
+
 
 const char * icontains(const char* s, const char* pattern)
 {

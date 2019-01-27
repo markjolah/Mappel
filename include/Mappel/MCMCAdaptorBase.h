@@ -19,11 +19,12 @@ public:
     void set_mcmc_sigma_scale(double scale);
     double get_mcmc_sigma_scale() const;
     IdxT get_mcmc_num_phases() const;
-    
+
 protected:
     MCMCAdaptorBase(IdxT num_phases);
     MCMCAdaptorBase(IdxT num_phases, double sigma_scale);
-    
+    void set_mcmc_num_phases(IdxT num_phases);
+
     StatsT get_stats() const;
     IdxT num_phases; /**< The number of different sampling phases for candidate selection MCMC.  Each phase changes a different subset of variables.*/
     double sigma_scale; /**< A scaling factor for step sizes as a fraction of the size of the domain dimension we are walking in. (0.05 default)*/

@@ -8,60 +8,49 @@
 
 namespace mappel {
 
-MCMCAdaptor1Ds::MCMCAdaptor1Ds()
-    : PointEmitterModel{}, //VB never called here.
-      MCMCAdaptorBase{3}
-{ initialize(); }
+MCMCAdaptor1Ds::MCMCAdaptor1Ds() : MCMCAdaptor1D{global_default_mcmc_sigma_scale}
+{ }
 
 MCMCAdaptor1Ds::MCMCAdaptor1Ds(double sigma_scale)
-    : PointEmitterModel{}, //VB never called here.
-      MCMCAdaptorBase{3,sigma_scale}
-{ initialize(); }
+    : MCMCAdaptor1D{sigma_scale}
+{
+    set_mcmc_num_phases(3);
+    eta_sigma = 0.5*sigma_scale;
+}
 
 MCMCAdaptor1Ds::MCMCAdaptor1Ds(const MCMCAdaptor1Ds &o)
-    : PointEmitterModel{o}, //VB never called here.
-      MCMCAdaptorBase{o}
-{ initialize(); }
+    : PointEmitterModel{},
+      MCMCAdaptor1D{o}
+{
+    eta_sigma = o.eta_sigma;
+}
 
 MCMCAdaptor1Ds::MCMCAdaptor1Ds(MCMCAdaptor1Ds &&o)
-    : PointEmitterModel{std::move(o)}, //VB never called here.
-      MCMCAdaptorBase{std::move(o)}
-{ initialize(); }
+    : PointEmitterModel{std::move(o)},
+      MCMCAdaptor1D{std::move(o)}
+{
+    eta_sigma = o.eta_sigma;
+}
 
 MCMCAdaptor1Ds& MCMCAdaptor1Ds::operator=(const MCMCAdaptor1Ds &o)
 {
     if(this == &o) return *this; //No self copy
-    //Ignore virtual base copy, someone else will do that
-    MCMCAdaptorBase::operator=(o);
-    initialize();
+    MCMCAdaptor1D::operator=(o);
+    eta_sigma = o.eta_sigma;
     return *this;
 }
 
 MCMCAdaptor1Ds& MCMCAdaptor1Ds::operator=(MCMCAdaptor1Ds &&o)   
 {
     if(this == &o) return *this; //No self copy
-    //Ignore virtual base copy, someone else will do that
-    MCMCAdaptorBase::operator=(std::move(o));
-    initialize();
+    MCMCAdaptor1D::operator=(std::move(o));
+    eta_sigma = o.eta_sigma;
     return *this;
-}
-
-/* Initialize MCMC step sizes */
-void MCMCAdaptor1Ds::initialize()
-{
-    double xsize = get_ubound()(0) - get_lbound()(0);
-    eta_x = xsize*sigma_scale;
-    eta_I = find_hyperparam("mean_I",default_mean_I)*sigma_scale;
-    eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*sigma_scale;
-    eta_sigma = 1.0*sigma_scale;
 }
 
 StatsT MCMCAdaptor1Ds::get_stats() const
 {
-    auto stats=MCMCAdaptorBase::get_stats();
-    stats["mcmc_eta_x"] = eta_x;
-    stats["mcmc_eta_I"] = eta_I;
-    stats["mcmc_eta_bg"] = eta_bg;
+    auto stats=MCMCAdaptor1D::get_stats();
     stats["mcmc_eta_sigma"] = eta_sigma;
     return stats;
 }

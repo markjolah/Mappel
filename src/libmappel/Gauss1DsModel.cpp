@@ -1,6 +1,6 @@
 /** @file Gauss1DsModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss1DsModel
  */
 
@@ -40,15 +40,54 @@ Gauss1DsModel& Gauss1DsModel::operator=(Gauss1DsModel &&o)
     return *this;
 }
 
-CompositeDist 
-Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma)
+/* Prior construction */
+const StringVecT Gauss1DsModel::prior_types = { "Beta", //Model the position as a symmetric Beta distribution scaled over (0,size)
+                                                       "Normal"  //Model the position as a truncated Normal distribution centered at size/2 with domain (0,size)
+                                                      };
+const std::string Gauss1DsModel::DefaultPriorType = "Normal";
+
+CompositeDist
+Gauss1DsModel::make_default_prior(IdxT size, double min_sigma, double max_sigma, const std::string &prior_type)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size),
-                            make_prior_component_intensity("I"),
-                            make_prior_component_intensity("bg",default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
-                            make_prior_component_sigma("sigma",min_sigma,max_sigma)
-                                        ));
+    if(istarts_with(prior_type,"Normal")) {
+        return make_default_prior_normal_position(size, min_sigma, max_sigma);
+    } else if(istarts_with(prior_type,"Beta")) {
+        return make_default_prior_beta_position(size, min_sigma, max_sigma);
+    } else {
+        std::ostringstream msg;
+        msg<<"Unknown prior type: "<<prior_type;
+        throw ParameterValueError(msg.str());
+    }
+}
+
+void
+Gauss1DsModel::set_prior_variable_names(CompositeDist &pr)
+{
+    pr.set_component_names(StringVecT{"x_pos", "intensity", "background","psf_sigma"});
+    pr.set_dim_variables(StringVecT{"x","I","bg","sigma"});
+}
+
+
+CompositeDist 
+Gauss1DsModel::make_default_prior_beta_position(IdxT size, double min_sigma, double max_sigma)
+{
+    CompositeDist d(make_prior_component_position_beta(size),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_sigma(min_sigma,max_sigma));
+    set_prior_variable_names(d);
+    return d;
+}
+
+CompositeDist
+Gauss1DsModel::make_default_prior_normal_position(IdxT size, double min_sigma, double max_sigma)
+{
+     CompositeDist d(make_prior_component_position_normal(size),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg*size), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_sigma(min_sigma,max_sigma));
+    set_prior_variable_names(d);
+    return d;
 }
 
 CompositeDist 
@@ -57,12 +96,12 @@ Gauss1DsModel::make_prior_beta_position(IdxT size, double beta_xpos,
                                        double mean_bg, double kappa_bg,
                                        double min_sigma, double max_sigma, double alpha_sigma)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size,beta_xpos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                            make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
-                                        ));
+    CompositeDist d(make_prior_component_position_beta(size,beta_xpos),
+                    make_prior_component_intensity(mean_I,kappa_I),
+                    make_prior_component_intensity(mean_bg, kappa_bg), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_sigma(min_sigma,max_sigma, alpha_sigma));
+    set_prior_variable_names(d);
+    return d;
 }
 
 CompositeDist 
@@ -71,14 +110,15 @@ Gauss1DsModel::make_prior_normal_position(IdxT size, double sigma_xpos,
                                        double mean_bg, double kappa_bg,
                                        double min_sigma, double max_sigma, double alpha_sigma)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_normal("x",size, sigma_xpos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                            make_prior_component_sigma("sigma",min_sigma,max_sigma, alpha_sigma)
-                                        ));
+    CompositeDist d(make_prior_component_position_normal(size,sigma_xpos),
+                    make_prior_component_intensity(mean_I,kappa_I),
+                    make_prior_component_intensity(mean_bg, kappa_bg), //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_sigma(min_sigma,max_sigma, alpha_sigma));
+    set_prior_variable_names(d);
+    return d;
 }
 
+/* min_sigma and max_sigma accessors */
 void Gauss1DsModel::set_min_sigma(double new_sigma)
 {
     check_psf_sigma(new_sigma);
@@ -115,6 +155,7 @@ void Gauss1DsModel::set_max_sigma(const VecT &max_sigma)
     set_max_sigma(max_sigma(0));
 }
 
+/* Gauss1DsModel::Stencil member functions */
 Gauss1DsModel::Stencil::Stencil(const Gauss1DsModel &model_,
                                 const Gauss1DsModel::ParamT &theta,
                                 bool _compute_derivatives)

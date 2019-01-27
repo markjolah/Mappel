@@ -1,6 +1,6 @@
 
-#ifndef _MAPPEL_UTIL_H
-#define _MAPPEL_UTIL_H
+#ifndef MAPPEL_UTIL_H
+#define MAPPEL_UTIL_H
 
 #include <cstdint>
 #include <cmath>
@@ -51,6 +51,7 @@ template<class Model> using StencilVecT = typename Model::StencilVecT;  /* The M
 void enable_all_cpus();
 
 bool istarts_with(const char* s, const char* pattern);
+bool istarts_with(const std::string& s, const char* pattern);
 const char * icontains(const char* s, const char* pattern);
 int maxidx(const VecT &v);
 
@@ -139,4 +140,4 @@ std::ostream& operator<<(std::ostream &out,const StatsT &stats);
 
 
 
-#endif /* _MAPPEL_UTIL_H */
+#endif /* MAPPEL_UTIL_H */

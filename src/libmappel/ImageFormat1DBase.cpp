@@ -1,6 +1,6 @@
 /** @file ImageFormat1DBase.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for ImageFormat1DBase
  */
 #include "Mappel/ImageFormat1DBase.h"

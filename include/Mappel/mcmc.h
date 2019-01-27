@@ -1,11 +1,11 @@
 /** @file mcmc.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 05-22-2015
+ * @date 2015-2019
  * @brief Templated MCMC methods for posterior estimation
  */
 
-#ifndef _MAPPEL_MCMC_H
-#define _MAPPEL_MCMC_H
+#ifndef MAPPEL_MCMC_H
+#define MAPPEL_MCMC_H
 
 #include <cmath>
 #include "Mappel/util.h"
@@ -102,4 +102,4 @@ void sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const Ste
 } /* namespace mappel::mcmc */    
 } /* namespace mappel */
 
-#endif /* _MAPPEL_MCMC_H */
+#endif /* MAPPEL_MCMC_H */

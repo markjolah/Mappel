@@ -1,11 +1,11 @@
 /** @file PoissonNoise2DObjective.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for PoissonNoise2DObjective.
  */
 
-#ifndef _MAPPEL_POISSONNOISE2DOBJECTIVE_H
-#define _MAPPEL_POISSONNOISE2DOBJECTIVE_H
+#ifndef MAPPEL_POISSONNOISE2DOBJECTIVE_H
+#define MAPPEL_POISSONNOISE2DOBJECTIVE_H
 
 #include "Mappel/ImageFormat2DBase.h"
 #include "Mappel/estimator.h"
@@ -303,4 +303,4 @@ namespace likelihood {
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_POISSONNOISE2DOBJECTIVE_H */
+#endif /* MAPPEL_POISSONNOISE2DOBJECTIVE_H */

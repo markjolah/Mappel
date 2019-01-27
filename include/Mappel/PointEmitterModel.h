@@ -6,8 +6,8 @@
  * The base class for all point emitter localization models
  */
 
-#ifndef _POINTEMITTERMODEL_H
-#define _POINTEMITTERMODEL_H
+#ifndef MAPPEL_POINTEMITTERMODEL_H
+#define MAPPEL_POINTEMITTERMODEL_H
 
 #include <iostream>
 #include <string>
@@ -15,18 +15,19 @@
 #include <armadillo>
 
 #include <PriorHessian/CompositeDist.h>
-#include <PriorHessian/NormalDist.h>
-#include <PriorHessian/SymmetricBetaDist.h>
-#include <PriorHessian/GammaDist.h>
-#include <PriorHessian/ParetoDist.h>
+#include <PriorHessian/TruncatedNormalDist.h>
+#include <PriorHessian/ScaledSymmetricBetaDist.h>
+#include <PriorHessian/TruncatedGammaDist.h>
+#include <PriorHessian/TruncatedParetoDist.h>
 
 #include "Mappel/util.h"
 #include "Mappel/stencil.h"
 #include "Mappel/display.h"
+#include "Mappel/rng.h"
 
 namespace mappel {
 
-using CompositeDist = prior_hessian::CompositeDist<ParallelRngGeneratorT>; /**<Composite distribution from prior_hessian:: for representing priors */
+using prior_hessian::CompositeDist; /**<Composite distribution from prior_hessian:: for representing priors */
 
     
 /** @brief A virtual Base type for point emitter localization models.
@@ -45,32 +46,26 @@ public:
     /* Internal Types */    
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
-    static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D seperable intializataions */
+    static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D separable initializations */
     
     /* Static data members */
     static const double bounds_epsilon;// = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
     static const double global_min_psf_sigma;// = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
-    static const double global_max_psf_sigma;// = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
+    static const double global_max_psf_sigma;// = 1E2; /**< Global maximum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */
     
     static const double default_beta_pos;// = 3; /**< Default position parameter in symmetric beta-distributions */
     static const double default_sigma_pos;// = 1; /**< Default position parameter in symmetric beta-distributions */
     static const double default_mean_I;// = 300; /**< Default emitter intensity mean*/
+    static const double default_max_I;// = infinity; /**< Default emitter intensity mean*/
     static const double default_intensity_kappa;// = 2;  /**< Default shape for intensity gamma distributions */
     static const double default_pixel_mean_bg;// = 4; /**< Default per-pixel mean background counts */
     static const double default_alpha_sigma;// = 2; /**< Default per-pixel background gamma distribution shape */
     
     /* prior building functions.  These generate individual prior elements and can be used by subclasses to easily make a prior  */
-    static prior_hessian::NormalDist        
-    make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma=default_sigma_pos);
-    
-    static prior_hessian::SymmetricBetaDist 
-    make_prior_component_position_beta(std::string var, IdxT size, double pos_beta=default_beta_pos);
-    
-    static prior_hessian::GammaDist         
-    make_prior_component_intensity(std::string var, double mean=default_mean_I, double kappa=default_intensity_kappa);
-    
-    static prior_hessian::ParetoDist        
-    make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
+    static prior_hessian::TruncatedNormalDist make_prior_component_position_normal(IdxT size, double pos_sigma=default_sigma_pos);
+    static prior_hessian::ScaledSymmetricBetaDist make_prior_component_position_beta(IdxT size, double pos_beta=default_beta_pos);
+    static prior_hessian::TruncatedGammaDist make_prior_component_intensity(double mean=default_mean_I, double kappa=default_intensity_kappa);
+    static prior_hessian::TruncatedParetoDist make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
     
     static void set_rng_seed(RngSeedT seed);
     static ParallelRngManagerT& get_rng_manager();
@@ -119,8 +114,8 @@ public:
     void set_hyperparam_names(const StringVecT &desc);
     
     template<class RngT> ParamT sample_prior(RngT &rng);
-    ParamT sample_prior();
-    
+    ParamT sample_prior(); //Use global ParallelRngManager
+
     /** Box-type parameter bounds */
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
     void set_lbound(const ParamT &lbound);
@@ -246,7 +241,7 @@ void PointEmitterModel::set_hyperparam_value(const std::string &name, double val
 { prior.set_param_value(name,value); }
 
 inline
-void PointEmitterModel::rename_hyperparam(const std::string &old_name, const std::string &new_name);
+void PointEmitterModel::rename_hyperparam(const std::string &old_name, const std::string &new_name)
 { prior.rename_param(old_name,new_name); }
 
 inline
@@ -269,9 +264,12 @@ template<class RngT>
 PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
 { return prior.sample(rng); }
 
-inline
-PointEmitterModel::ParamT PointEmitterModel::sample_prior()
-{ return prior.sample(get_rng_generator()); }
+inline PointEmitterModel::ParamT
+PointEmitterModel::sample_prior()
+{
+    return prior.sample(rng_manager.generic_generator());
+}
+
 
 /* Template function definitions */
 template<class Model, typename>
@@ -285,4 +283,4 @@ std::ostream& operator<<(std::ostream &out, const Model &model)
 
 } /* namespace mappel */
 
-#endif /* _POINTEMITTERMODEL_H */
+#endif /* MAPPEL_POINTEMITTERMODEL_H */

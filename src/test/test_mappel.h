@@ -10,12 +10,15 @@
 #include "Mappel/Gauss2DModel.h"
 #include "Mappel/Gauss2DsModel.h"
 
-/* Globals */
-extern test_helper::RngEnvironment *env;
-
 using mappel::IdxT;
 using mappel::VecT;
 using mappel::MatT;
+
+/* Globals */
+extern test_helper::RngEnvironment *env;
+extern IdxT Nsample;
+
+
 
 /* Factory functions */
 template<class Model>
@@ -47,8 +50,10 @@ make_model()
     int sizey = env->sample_integer(std::max(4,sizex-5),std::min(sizex+5,40));
     double sigmax = sizex*env->sample_real(0.1,.3);
     double sigmay = sizey*env->sample_real(0.1,.3);
-//     std::cout<<"1DModel Generated[size:"<<size<<", psf_sigma:"<<psf_sigma<<std::endl;
-    return Model(typename Model::ImageSizeT{static_cast<typename Model::ImageCoordT>(sizex),static_cast<typename Model::ImageCoordT>(sizey)},VecT{sigmax,sigmay});
+    typename Model::ImageSizeT size = {static_cast<typename Model::ImageCoordT>(sizex),static_cast<typename Model::ImageCoordT>(sizey)};
+    VecT psf_sigma={sigmax,sigmay};
+//     std::cout<<"2DModel Generated[size:"<<sizex<<","<<sizey<<"], psf_sigma:["<<sigmax<<","<<sigmay<<"]"<<std::endl;
+    return Model(size, psf_sigma);
 }
 
 template<class Model>
@@ -60,7 +65,9 @@ make_model()
     double sigmax = sizex*env->sample_real(0.1,.3);
     double sigmay = sizey*env->sample_real(0.1,.3);
     double max_sigma = env->sample_real(2.2,6);
-//     std::cout<<"2DsModel Generated[size:"<<sizex<<","<<sizey<<"], psf_sigma:["<<sigmax<<","<<msigmay<<"]"<<std::endl;
-    return Model(typename Model::ImageSizeT{static_cast<typename Model::ImageCoordT>(sizex),static_cast<typename Model::ImageCoordT>(sizey)},VecT{sigmax,sigmay},max_sigma);
+    typename Model::ImageSizeT size = {static_cast<typename Model::ImageCoordT>(sizex),static_cast<typename Model::ImageCoordT>(sizey)};
+    VecT psf_sigma={sigmax,sigmay};
+//     std::cout<<"2DsModel Generated[size:"<<sizex<<","<<sizey<<"], psf_sigma:["<<sigmax<<","<<sigmay<<"] max_sigma:"<<max_sigma<<std::endl;
+    return Model(size,psf_sigma,max_sigma);
 }
 

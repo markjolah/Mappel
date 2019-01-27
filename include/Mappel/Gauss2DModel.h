@@ -1,11 +1,11 @@
 /** @file Gauss2DModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss2DModel.
  */
 
-#ifndef _MAPPEL_GAUSS2DMODEL_H
-#define _MAPPEL_GAUSS2DMODEL_H
+#ifndef MAPPEL_GAUSS2DMODEL_H
+#define MAPPEL_GAUSS2DMODEL_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat2DBase.h"
@@ -20,6 +20,7 @@ namespace mappel {
 class Gauss2DModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase, public MCMCAdaptor2D
 {    
 public:
+    using Gauss1DSumModelT = Gauss1DMAP; //Use a MAP estimator for the 1D initializer models
     /** @brief Stencil for 2D fixed-sigma models.
      */
     class Stencil {
@@ -45,13 +46,17 @@ public:
     };
     using StencilVecT = std::vector<Stencil>;
     
-
     /* Prior construction */
-    static CompositeDist make_default_prior(const ImageSizeT &size);
-    static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos, 
-                                                  double mean_I, double kappa_I, double mean_bg, double kappa_bg);
-    static CompositeDist make_prior_normal_position(const ImageSizeT &size, double sigma_xpos,double sigma_ypos, 
-                                                  double mean_I, double kappa_I, double mean_bg, double kappa_bg);
+    static const StringVecT prior_types;
+    static const std::string DefaultPriorType;
+    static CompositeDist make_default_prior(const ImageSizeT &size, const std::string &prior_type);
+    static CompositeDist make_default_prior_beta_position(const ImageSizeT &size);
+    static CompositeDist make_default_prior_normal_position(const ImageSizeT &size);
+    static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos, double mean_I,
+                                               double kappa_I, double mean_bg, double kappa_bg);
+    static CompositeDist make_prior_normal_position(const ImageSizeT &size, double sigma_xpos, double beta_ypos, double mean_I,
+                                               double kappa_I, double mean_bg, double kappa_bg);
+
 
     /* Overrides of Base methods to enable resizing of 1D internal models */
     void set_hyperparams(const VecT &hyperparams);
@@ -81,8 +86,8 @@ public:
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
 
-    Gauss1DSumModelT& debug_internal_sum_model_x() const {return x_model;}
-    Gauss1DSumModelT& debug_internal_sum_model_y() const {return y_model;}
+    Gauss1DSumModelT debug_internal_sum_model_x() const {return x_model;}
+    Gauss1DSumModelT debug_internal_sum_model_y() const {return y_model;}
 protected:
     //Abstract class cannot be instantiated
     Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma);
@@ -92,7 +97,6 @@ protected:
     Gauss2DModel& operator=(Gauss2DModel &&o);
     
 
-    using Gauss1DSumModelT = Gauss1DMAP; //Use a MAP estimator for the 1D initializer models
     void update_internal_1Dsum_estimators();
     static Gauss1DSumModelT make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, 
                                                 const VecT &psf_sigma, const CompositeDist &prior);
@@ -100,6 +104,8 @@ protected:
     VecT psf_sigma; /**< Standard deviation of the fixed-sigma 1D Gaussian PSF in pixels */
     Gauss1DSumModelT x_model; /**< X-model fits 2D images X-axis (column sum) */
     Gauss1DSumModelT y_model; /**< Y-model fits 2D images Y-axis (row sum) */
+private:
+    static void set_prior_variable_names(CompositeDist &prior);
 };
 
 /* Inline Method Definitions */
@@ -247,4 +253,4 @@ cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im,
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DMODEL_H */
+#endif /* MAPPEL_GAUSS2DMODEL_H */

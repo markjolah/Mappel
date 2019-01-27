@@ -2,7 +2,7 @@
 # Mappel python wrapper build system
 # Mark J. Olah
 # mjo@cs.unm DOT edu
-# 2018
+# 2018-2019
 #
 # python bindings are only an optional component of Mappel, but the easiest way to manipulate and
 # install python extension modules is with python setuptools, providing a setup.py and setup.cfg.

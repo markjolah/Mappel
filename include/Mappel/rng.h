@@ -16,14 +16,18 @@
 #include <trng/lcg64_shift.hpp>
 #include <ParallelRngManager/ParallelRngManager.h>
 
-// #include <omp.h>
-
 namespace mappel {
 
 using ParallelRngGeneratorT = trng::lcg64_shift;
 using ParallelRngManagerT = parallel_rng::ParallelRngManager<ParallelRngGeneratorT>;
 using RngSeedT = parallel_rng::SeedT;
 using UniformDistT = std::uniform_real_distribution<double>;
+
+//Globals
+
+//Single global rng manager
+extern ParallelRngManagerT rng_manager;
+
 /** @brief Genrates a single poisson disributed int from distribution with mean mu.
  * @param mu - mean of poisson distribution
  * @param sfmt - A pointer to the SFMT rng state.
@@ -77,7 +81,6 @@ template<class RngT>
 double generate_poisson(RngT &rng, double mu)
 {
     const uint64_t max_mu = std::numeric_limits<uint32_t>::max()/4;
-//     std::cout<<"generate_poisson: "<<mu<<std::endl;
     if (mu<0. || !std::isfinite(mu)) {
         std::ostringstream msg;
         msg<<"Generate Poisson got invalid rate mu:"<<mu;

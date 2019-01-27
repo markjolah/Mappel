@@ -1,6 +1,6 @@
 /** @file Gauss2DsModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss2DsModel
  */
 
@@ -13,9 +13,17 @@ Gauss2DsModel::Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, cons
     :  PointEmitterModel(), ImageFormat2DBase(size), //V-base calls ignored since a higher concrete class will call them
        MCMCAdaptor2Ds(),
        min_sigma(min_sigma),
-      x_model{make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior)},
-      y_model{make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior)}
-{ }
+       x_model{make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior)},
+       y_model{make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior)}
+{
+    check_psf_sigma(min_sigma);
+    check_psf_sigma(max_sigma);
+    if(!arma::all(min_sigma < max_sigma)){
+        std::ostringstream msg;
+        msg<<"Got bad sigma min_sigma:"<<min_sigma<<" >= max_sigma:"<<max_sigma;
+        throw ParameterValueError(msg.str());
+    }
+}
 
 Gauss2DsModel::Gauss2DsModel(const Gauss2DsModel &o)
     : PointEmitterModel(o), ImageFormat2DBase(o), //V-base calls ignored since a higher concrete class will call them
@@ -40,8 +48,8 @@ Gauss2DsModel& Gauss2DsModel::operator=(const Gauss2DsModel &o)
     //Copy data memebers
     min_sigma = o.min_sigma;
     auto max_sigma = get_max_sigma();
-    x_model = make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior);
-    y_model = make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior);
+    x_model = o.x_model;
+    y_model = o.y_model;
     return *this;
 }
 
@@ -51,9 +59,9 @@ Gauss2DsModel& Gauss2DsModel::operator=(Gauss2DsModel &&o)
     MCMCAdaptor2Ds::operator=(std::move(o));
     //Copy data memebers
     min_sigma = o.min_sigma;
-    auto max_sigma = get_max_sigma();
-    x_model = make_internal_1Dsum_estimator(0,size,min_sigma,max_sigma,prior);
-    y_model = make_internal_1Dsum_estimator(1,size,min_sigma,max_sigma,prior);
+    //Move sub models
+    x_model = std::move(o.x_model);
+    y_model = std::move(o.y_model);
     return *this;
 }
 
@@ -61,8 +69,8 @@ Gauss2DsModel::Gauss1DSumModelT
 Gauss2DsModel::make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, const VecT &min_sigma,const VecT &max_sigma, const CompositeDist &prior)
 {
     std::type_index pos_dist = prior.component_types()[dim];
-    std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
-    std::type_index normal_dist(typeid(prior_hessian::NormalDist));
+    std::type_index beta_dist(typeid(prior_hessian::ScaledSymmetricBetaDist));
+    std::type_index normal_dist(typeid(prior_hessian::TruncatedNormalDist));
     auto hyperparams = prior.params();
     if(pos_dist == beta_dist){
         double beta_pos = hyperparams(dim);
@@ -190,47 +198,88 @@ double Gauss2DsModel::get_min_sigma(IdxT dim) const
     return min_sigma(dim); 
 }
 
+/* Prior construction */
+const StringVecT Gauss2DsModel::prior_types = { "Beta", //Model the position as a symmetric Beta distribution scaled over (0,size)
+                                                "Normal"  //Model the position as a truncated Normal distribution centered at size/2 with domain (0,size)
+                                                 };
+const std::string Gauss2DsModel::DefaultPriorType = "Normal";
 
-CompositeDist 
-Gauss2DsModel::make_default_prior(const ImageSizeT &size, double max_sigma_ratio)
+CompositeDist
+Gauss2DsModel::make_default_prior(const ImageSizeT &size, double max_sigma_ratio, const std::string &prior_type)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size(0)),
-                            make_prior_component_position_beta("y",size(1)),
-                            make_prior_component_intensity("I"),
-                            make_prior_component_intensity("bg",default_pixel_mean_bg),
-                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio)
-                                        ));
+    if(istarts_with(prior_type,"Normal")) {
+        return make_default_prior_normal_position(size, max_sigma_ratio);
+    } else if(istarts_with(prior_type,"Beta")) {
+        return make_default_prior_beta_position(size, max_sigma_ratio);
+    } else {
+        std::ostringstream msg;
+        msg<<"Unknown prior type: "<<prior_type;
+        throw ParameterValueError(msg.str());
+    }
 }
 
-CompositeDist 
-Gauss2DsModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos,double beta_ypos,
-                                       double mean_I, double kappa_I, 
+void
+Gauss2DsModel::set_prior_variable_names(CompositeDist &pr)
+{
+    pr.set_component_names(StringVecT{"x_pos", "y_pos", "intensity", "background","psf_sigma_ratio"});
+    pr.set_dim_variables(StringVecT{"x","y","I","bg","sigma_ratio"});
+}
+
+
+CompositeDist
+Gauss2DsModel::make_default_prior_beta_position(const ImageSizeT &size, double max_sigma_ratio)
+{
+    CompositeDist d(make_prior_component_position_beta(size(0)),
+                    make_prior_component_position_beta(size(1)),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg),
+                    make_prior_component_sigma(1.0, max_sigma_ratio));
+    set_prior_variable_names(d);
+    return d;
+}
+
+
+CompositeDist
+Gauss2DsModel::make_default_prior_normal_position(const ImageSizeT &size, double max_sigma_ratio)
+{
+    CompositeDist d(make_prior_component_position_normal(size(0)),
+                    make_prior_component_position_normal(size(1)),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg),
+                    make_prior_component_sigma(1.0, max_sigma_ratio));
+    set_prior_variable_names(d);
+    return d;
+}
+
+CompositeDist
+Gauss2DsModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos,
+                                       double mean_I, double kappa_I,
                                        double mean_bg, double kappa_bg,
                                        double max_sigma_ratio, double alpha_sigma)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size(0),beta_xpos),
-                            make_prior_component_position_beta("y",size(1),beta_ypos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma)
-                                        ));
+   CompositeDist d(make_prior_component_position_beta(size(0),beta_xpos),
+                   make_prior_component_position_beta(size(1), beta_ypos),
+                   make_prior_component_intensity(mean_I,kappa_I),
+                   make_prior_component_intensity(mean_bg, kappa_bg),
+                   make_prior_component_sigma(1.0, max_sigma_ratio,alpha_sigma));
+    set_prior_variable_names(d);
+    return d;
 }
 
-CompositeDist 
+
+CompositeDist
 Gauss2DsModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xpos, double sigma_ypos,
-                                       double mean_I, double kappa_I, 
+                                       double mean_I, double kappa_I,
                                        double mean_bg, double kappa_bg,
                                        double max_sigma_ratio, double alpha_sigma)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_normal("x",size(0), sigma_xpos),
-                            make_prior_component_position_normal("y",size(1), sigma_ypos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg),
-                            make_prior_component_sigma("sigma_ratio",1.0, max_sigma_ratio,alpha_sigma)
-                                        ));
+    CompositeDist d(make_prior_component_position_normal(size(0), sigma_xpos),
+                    make_prior_component_position_normal(size(1), sigma_ypos),
+                    make_prior_component_intensity(mean_I,kappa_I),
+                    make_prior_component_intensity(mean_bg, kappa_bg),
+                    make_prior_component_sigma(1.0, max_sigma_ratio,alpha_sigma));
+    set_prior_variable_names(d);
+    return d;
 }
 
 
@@ -349,8 +398,8 @@ Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
         bg = theta_init(3);
         sigma_ratio = theta_init(4);
     }
-    Gauss1DsModel::ImageT x_im = arma::sum(im,0).t();
-    Gauss1DsModel::ImageT y_im = arma::sum(im,1);
+    Gauss2DsModel::ImageT x_im = arma::sum(im,0).t();
+    Gauss2DsModel::ImageT y_im = arma::sum(im,1);
     auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
     auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
     

@@ -1,6 +1,6 @@
 /** @file Gauss2DModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss2DModel
  */
 
@@ -15,7 +15,9 @@ Gauss2DModel::Gauss2DModel(const ImageSizeT &size, const VecT &psf_sigma)
       psf_sigma(psf_sigma),
       x_model{make_internal_1Dsum_estimator(0,size,psf_sigma,prior)},
       y_model{make_internal_1Dsum_estimator(1,size,psf_sigma,prior)}
-{ }
+{
+    check_psf_sigma(psf_sigma);
+}
 
 Gauss2DModel::Gauss2DModel(const Gauss2DModel &o)
     : PointEmitterModel(o), ImageFormat2DBase(o), //V-base calls ignored since a higher concrete class will call them
@@ -39,8 +41,8 @@ Gauss2DModel& Gauss2DModel::operator=(const Gauss2DModel &o)
     MCMCAdaptor2D::operator=(o);
     //Copy data memebers
     psf_sigma = o.psf_sigma;
-    x_model = make_internal_1Dsum_estimator(0,size,psf_sigma,prior);
-    y_model = make_internal_1Dsum_estimator(1,size,psf_sigma,prior);
+    x_model = o.x_model;
+    y_model = o.y_model;
     return *this;
 }
 
@@ -50,8 +52,9 @@ Gauss2DModel& Gauss2DModel::operator=(Gauss2DModel &&o)
     MCMCAdaptor2D::operator=(std::move(o));
     //Copy data memebers
     psf_sigma = o.psf_sigma;
-    x_model = make_internal_1Dsum_estimator(0,size,psf_sigma,prior);
-    y_model = make_internal_1Dsum_estimator(1,size,psf_sigma,prior);
+    //Move sub models
+    x_model = std::move(o.x_model);
+    y_model = std::move(o.y_model);
     return *this;
 }
 
@@ -59,8 +62,8 @@ Gauss2DModel::Gauss1DSumModelT
 Gauss2DModel::make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, const VecT &psf_sigma, const CompositeDist &prior)
 {
     std::type_index pos_dist = prior.component_types()[dim];
-    std::type_index beta_dist(typeid(prior_hessian::SymmetricBetaDist));
-    std::type_index normal_dist(typeid(prior_hessian::NormalDist));
+    std::type_index beta_dist(typeid(prior_hessian::ScaledSymmetricBetaDist));
+    std::type_index normal_dist(typeid(prior_hessian::TruncatedNormalDist));
     auto hyperparams = prior.params();
     if(pos_dist == beta_dist){
         double beta_pos = hyperparams(dim);
@@ -136,41 +139,80 @@ double Gauss2DModel::get_psf_sigma(IdxT dim) const
     return psf_sigma(dim); 
 }
 
-CompositeDist 
-Gauss2DModel::make_default_prior(const ImageSizeT &size)
+
+/* Prior construction */
+const StringVecT Gauss2DModel::prior_types = { "Beta", //Model the position as a symmetric Beta distribution scaled over (0,size)
+                                                       "Normal"  //Model the position as a truncated Normal distribution centered at size/2 with domain (0,size)
+                                                      };
+const std::string Gauss2DModel::DefaultPriorType = "Normal";
+
+CompositeDist
+Gauss2DModel::make_default_prior(const ImageSizeT &size, const std::string &prior_type)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size(0)),
-                            make_prior_component_position_beta("y",size(1)),
-                            make_prior_component_intensity("I"),
-                            make_prior_component_intensity("bg",default_pixel_mean_bg)
-                                        ));
+    if(istarts_with(prior_type,"Normal")) {
+        return make_default_prior_normal_position(size);
+    } else if(istarts_with(prior_type,"Beta")) {
+        return make_default_prior_beta_position(size);
+    } else {
+        std::ostringstream msg;
+        msg<<"Unknown prior type: "<<prior_type;
+        throw ParameterValueError(msg.str());
+    }
 }
 
-CompositeDist 
-Gauss2DModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos,double beta_ypos,
-                                       double mean_I, double kappa_I, 
+void
+Gauss2DModel::set_prior_variable_names(CompositeDist &pr)
+{
+    pr.set_component_names(StringVecT{"x_pos", "y_pos", "intensity", "background"});
+    pr.set_dim_variables(StringVecT{"x","y","I","bg"});
+}
+
+CompositeDist
+Gauss2DModel::make_default_prior_beta_position(const ImageSizeT &size)
+{
+    CompositeDist d(make_prior_component_position_beta(size(0)),
+                    make_prior_component_position_beta(size(1)),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg));
+    set_prior_variable_names(d);
+    return d;
+}
+
+CompositeDist
+Gauss2DModel::make_default_prior_normal_position(const ImageSizeT &size)
+{
+    CompositeDist d(make_prior_component_position_normal(size(0)),
+                    make_prior_component_position_normal(size(1)),
+                    make_prior_component_intensity(),
+                    make_prior_component_intensity(default_pixel_mean_bg));
+    set_prior_variable_names(d);
+    return d;
+}
+
+CompositeDist
+Gauss2DModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos,
+                                       double mean_I, double kappa_I,
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_beta("x",size(0),beta_xpos),
-                            make_prior_component_position_beta("y",size(1),beta_ypos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
-                                        ));
+    CompositeDist d( make_prior_component_position_beta(size(0),beta_xpos),
+                    make_prior_component_position_beta(size(1),beta_ypos),
+                    make_prior_component_intensity(mean_I,kappa_I),
+                    make_prior_component_intensity(mean_bg, kappa_bg));
+    set_prior_variable_names(d);
+    return d;
 }
 
-CompositeDist 
+CompositeDist
 Gauss2DModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xpos, double sigma_ypos,
-                                       double mean_I, double kappa_I, 
+                                       double mean_I, double kappa_I,
                                        double mean_bg, double kappa_bg)
 {
-    return CompositeDist(std::make_tuple(
-                            make_prior_component_position_normal("x",size(0), sigma_xpos),
-                            make_prior_component_position_normal("y",size(1), sigma_ypos),
-                            make_prior_component_intensity("I",mean_I,kappa_I),
-                            make_prior_component_intensity("bg",mean_bg, kappa_bg)
-                                        ));
+    CompositeDist d( make_prior_component_position_normal(size(0), sigma_xpos),
+                   make_prior_component_position_normal(size(1), sigma_ypos),
+                   make_prior_component_intensity(mean_I,kappa_I),
+                   make_prior_component_intensity(mean_bg, kappa_bg));
+    set_prior_variable_names(d);
+    return d;
 }
 
 Gauss2DModel::Stencil::Stencil(const Gauss2DModel &model_,
@@ -272,8 +314,8 @@ Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init,
         I = theta_init(2);
         bg = theta_init(3);
     }
-    Gauss1DModel::ImageT x_im = arma::sum(im,0).t();
-    Gauss1DModel::ImageT y_im = arma::sum(im,1);
+    Gauss2DModel::ImageT x_im = arma::sum(im,0).t();
+    Gauss2DModel::ImageT y_im = arma::sum(im,1);
     auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
     auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
     

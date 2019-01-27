@@ -1,12 +1,12 @@
 
 /** @file Gauss1DsMAP.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss1DsMAP.
  */
 
-#ifndef _MAPPEL_GAUSS1DSMAP_H
-#define _MAPPEL_GAUSS1DSMAP_H
+#ifndef MAPPEL_GAUSS1DSMAP_H
+#define MAPPEL_GAUSS1DSMAP_H
 
 #include "Mappel/Gauss1DsModel.h"
 #include "Mappel/PoissonNoise1DObjective.h"
@@ -24,8 +24,8 @@ namespace mappel {
 class Gauss1DsMAP : public Gauss1DsModel, public PoissonNoise1DObjective, public MAPEstimator 
 {
 public:    
-    Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma);
-    Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma);
+    Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma, const std::string &prior_type = DefaultPriorType);
+    Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma, const std::string &prior_type = DefaultPriorType);
     Gauss1DsMAP(ImageSizeT size, CompositeDist&& prior);
     Gauss1DsMAP(ImageSizeT size, const CompositeDist& prior);
     Gauss1DsMAP(const Gauss1DsMAP &o);
@@ -37,4 +37,4 @@ public:
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS1DSMAP_H */
+#endif /* MAPPEL_GAUSS1DSMAP_H */

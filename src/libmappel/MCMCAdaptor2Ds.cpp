@@ -8,63 +8,46 @@
 
 namespace mappel {
 
-MCMCAdaptor2Ds::MCMCAdaptor2Ds()
-    : PointEmitterModel{}, //VB never called here.
-      MCMCAdaptorBase{3}
-{ initialize(); }
+MCMCAdaptor2Ds::MCMCAdaptor2Ds() : MCMCAdaptor2Ds{global_default_mcmc_sigma_scale}
+{ }
 
 MCMCAdaptor2Ds::MCMCAdaptor2Ds(double sigma_scale)
     : PointEmitterModel{}, //VB never called here.
-      MCMCAdaptorBase{3,sigma_scale}
-{ initialize(); }
+      MCMCAdaptor2D{sigma_scale}
+{
+    set_mcmc_num_phases(3);
+    eta_sigma = 0.5*sigma_scale;
+}
 
 MCMCAdaptor2Ds::MCMCAdaptor2Ds(const MCMCAdaptor2Ds &o)
     : PointEmitterModel{o}, //VB never called here.
-      MCMCAdaptorBase{o}
-{ initialize(); }
+      MCMCAdaptor2D{o}
+{ eta_sigma = o.eta_sigma; }
 
 MCMCAdaptor2Ds::MCMCAdaptor2Ds(MCMCAdaptor2Ds &&o)
     : PointEmitterModel{std::move(o)}, //VB never called here.
-      MCMCAdaptorBase{std::move(o)}
-{ initialize(); }
+      MCMCAdaptor2D{std::move(o)}
+{ eta_sigma = o.eta_sigma; }
 
 MCMCAdaptor2Ds& MCMCAdaptor2Ds::operator=(const MCMCAdaptor2Ds &o)
 {
     if(this == &o) return *this; //No self copy
-    //Ignore virtual base copy, someone else will do that
-    MCMCAdaptorBase::operator=(o);
-    initialize();
+    MCMCAdaptor2D::operator=(o);
+    eta_sigma = o.eta_sigma;
     return *this;
 }
 
 MCMCAdaptor2Ds& MCMCAdaptor2Ds::operator=(MCMCAdaptor2Ds &&o)   
 {
     if(this == &o) return *this; //No self copy
-    //Ignore virtual base copy, someone else will do that
-    MCMCAdaptorBase::operator=(std::move(o));
-    initialize();
+    MCMCAdaptor2D::operator=(std::move(o));
+    eta_sigma = o.eta_sigma;
     return *this;
-}
-
-/* Initialize MCMC step sizes */
-void MCMCAdaptor2Ds::initialize()
-{
-    double xsize = get_ubound()(0) - get_lbound()(0);
-    double ysize = get_ubound()(1) - get_lbound()(1);
-    eta_x = xsize*sigma_scale;
-    eta_y = ysize*sigma_scale;
-    eta_I = find_hyperparam("mean_I",default_mean_I)*sigma_scale;
-    eta_bg = find_hyperparam("mean_bg",default_pixel_mean_bg)*sigma_scale;
-    eta_sigma = 1.0*sigma_scale;
 }
 
 StatsT MCMCAdaptor2Ds::get_stats() const
 {
-    auto stats=MCMCAdaptorBase::get_stats();
-    stats["mcmc_eta_x"] = eta_x;
-    stats["mcmc_eta_y"] = eta_y;
-    stats["mcmc_eta_I"] = eta_I;
-    stats["mcmc_eta_bg"] = eta_bg;
+    auto stats=MCMCAdaptor2D::get_stats();
     stats["mcmc_eta_sigma"] = eta_sigma;
     return stats;
 }

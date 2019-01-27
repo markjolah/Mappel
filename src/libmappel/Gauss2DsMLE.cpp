@@ -1,6 +1,6 @@
 /** @file Gauss2DsMLE.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss2DsMLE
  */
 #include "Mappel/Gauss2DsMLE.h"
@@ -8,12 +8,12 @@
 namespace mappel {
 const std::string Gauss2DsMLE::name("Gauss2DsMLE");
 
-Gauss2DsMLE::Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio) 
-    : Gauss2DsMLE{size, min_sigma, VecT{max_sigma_ratio*min_sigma}}
+Gauss2DsMLE::Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio, const std::string &prior_type)
+    : Gauss2DsMLE{size, min_sigma, VecT{max_sigma_ratio*min_sigma}, prior_type}
 { }
 
-Gauss2DsMLE::Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma) 
-    : Gauss2DsMLE{size, min_sigma,make_default_prior(size,compute_max_sigma_ratio(min_sigma,max_sigma))}
+Gauss2DsMLE::Gauss2DsMLE(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma, const std::string &prior_type)
+    : Gauss2DsMLE{size, min_sigma, make_default_prior(size, compute_max_sigma_ratio(min_sigma,max_sigma), prior_type)}
 { }
 
 Gauss2DsMLE::Gauss2DsMLE(const ImageSizeT &_size, const VecT &min_sigma, CompositeDist&& _prior) 

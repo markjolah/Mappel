@@ -9,41 +9,40 @@
 namespace mappel {
 const std::string Gauss1DsMAP::name("Gauss1DsMAP");
 
-Gauss1DsMAP::Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma) 
-    : Gauss1DsMAP(size(0),make_default_prior(size(0),min_sigma(0),max_sigma(0)))
+Gauss1DsMAP::Gauss1DsMAP(arma::Col<ImageCoordT> size, VecT min_sigma, VecT max_sigma, const std::string &prior_type)
+    : Gauss1DsMAP(size(0),make_default_prior(size(0),min_sigma(0),max_sigma(0),prior_type))
 { }
 
-Gauss1DsMAP::Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma) 
-    : Gauss1DsMAP(size,make_default_prior(size,min_sigma,max_sigma))
+Gauss1DsMAP::Gauss1DsMAP(ImageSizeT size, double min_sigma, double max_sigma, const std::string &prior_type)
+    : Gauss1DsMAP(size,make_default_prior(size,min_sigma,max_sigma,prior_type))
 { }
 
-Gauss1DsMAP::Gauss1DsMAP(ImageSizeT _size, CompositeDist&& _prior) : 
-            PointEmitterModel(std::move(_prior)), 
+Gauss1DsMAP::Gauss1DsMAP(ImageSizeT _size, CompositeDist&& _prior)
+          : PointEmitterModel(std::move(_prior)),
             ImageFormat1DBase(_size),
             Gauss1DsModel(size),
             PoissonNoise1DObjective(),
             MAPEstimator()
 { }
 
-Gauss1DsMAP::Gauss1DsMAP(ImageSizeT _size, const CompositeDist& _prior) : 
-            PointEmitterModel(_prior), 
+Gauss1DsMAP::Gauss1DsMAP(ImageSizeT _size, const CompositeDist& _prior)
+          : PointEmitterModel(_prior),
             ImageFormat1DBase(_size),
             Gauss1DsModel(size),
             PoissonNoise1DObjective(),
             MAPEstimator()
 { }
 
-
-Gauss1DsMAP::Gauss1DsMAP(const Gauss1DsMAP &o) :
-            PointEmitterModel(o), 
+Gauss1DsMAP::Gauss1DsMAP(const Gauss1DsMAP &o)
+          : PointEmitterModel(o),
             ImageFormat1DBase(o),
             Gauss1DsModel(o),
             PoissonNoise1DObjective(o),
             MAPEstimator(o)
 { }
 
-Gauss1DsMAP::Gauss1DsMAP(Gauss1DsMAP &&o) :
-            PointEmitterModel(std::move(o)), 
+Gauss1DsMAP::Gauss1DsMAP(Gauss1DsMAP &&o)
+          : PointEmitterModel(std::move(o)),
             ImageFormat1DBase(std::move(o)),
             Gauss1DsModel(std::move(o)),
             PoissonNoise1DObjective(std::move(o)),

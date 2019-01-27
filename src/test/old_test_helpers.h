@@ -10,8 +10,8 @@
  * This moves the polymorphism to compile time instead of run-time and will eliminate
  * the runtime overhead associated with virtual functions
  */
-#ifndef _MAPPEL_TEST_HELPERS_H
-#define _MAPPEL_TEST_HELPERS_H
+#ifndef MAPPEL_TEST_HELPERS_H
+#define MAPPEL_TEST_HELPERS_H
 
 
 #include <iostream>
@@ -453,4 +453,4 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
 } /* namespace mappel::test */
 } /* namespace mappel */
 
-#endif /* _MAPPEL_TEST_HELPERS_H */
+#endif /* MAPPEL_TEST_HELPERS_H */

@@ -1,6 +1,6 @@
 /** @file Gauss2DsMAP.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss2DsMAP
  */
 #include "Mappel/Gauss2DsMAP.h"
@@ -8,12 +8,12 @@
 namespace mappel {
 const std::string Gauss2DsMAP::name("Gauss2DsMAP");
 
-Gauss2DsMAP::Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio) 
-    : Gauss2DsMAP{size,min_sigma, VecT{max_sigma_ratio*min_sigma}}
+Gauss2DsMAP::Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio, const std::string &prior_type)
+    : Gauss2DsMAP{size,min_sigma, VecT{max_sigma_ratio*min_sigma}, prior_type}
 { }
 
-Gauss2DsMAP::Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma) 
-    : Gauss2DsMAP{size,min_sigma,make_default_prior(size, compute_max_sigma_ratio(min_sigma,max_sigma))}
+Gauss2DsMAP::Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma, const std::string &prior_type)
+    : Gauss2DsMAP{size,min_sigma,make_default_prior(size, compute_max_sigma_ratio(min_sigma,max_sigma), prior_type)}
 { }
 
 Gauss2DsMAP::Gauss2DsMAP(const ImageSizeT &_size, const VecT &min_sigma, CompositeDist&& _prior) 

@@ -4,7 +4,7 @@
 # High-performance, parallel, robust, cross-platform localization for EMCCD and SCMOS microscopy.
 #
 # Mark J. Olah (mjo@cs.unm DOT edu)
-# Copyright 2014-2017
+# Copyright 2014-2019
 # Licensed under the Apache License, Version 2.0
 # https://www.apache.org/licenses/LICENSE-2.0
 # See: LICENCE file
@@ -34,6 +34,7 @@ option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debu
 message(STATUS "OPTION: BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
 message(STATUS "OPTION: BUILD_STATIC_LIBS: ${BUILD_STATIC_LIBS}")
 message(STATUS "OPTION: BUILD_TESTING: ${BUILD_TESTING}")
+message(STATUS "OPTION: OPT_EXPORT_BUILD_TREE: ${OPT_EXPORT_BUILD_TREE}")
 message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
 message(STATUS "OPTION: OPT_DEBUG: ${OPT_DEBUG}")
@@ -48,6 +49,9 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 #  * Blas
 #  * Pthreads 
 include(ConfigureNumericalDependenciesArmadillo)
+
+find_package(Boost REQUIRED COMPONENTS thread chrono)
+
 #Configure standard CFlags and definitions for debug builds
 include(ConfigureDebugBuilds) 
 
@@ -67,16 +71,6 @@ set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
 add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED)
 message(STATUS "PATH:${CMAKE_MODULE_PATH}")
 
-# Compiler Definitions
-# Check if we still need these
-# if (WIN32)
-#     add_definitions( -DWIN32 )
-# elseif(UNIX AND NOT APPLE)
-#     add_definitions( -DLINUX )
-# endif()
-
-## MAC OS X Config ##
-#set(CMAKE_MACOSX_RPATH 1) #Enable rpaths on OS X
 
 #TODO: get this working again
 #include(Mappel-Doxygen) #Add Doxygen documentation targets
@@ -95,16 +89,15 @@ if(BUILD_TESTING)
 endif()
 
 if(OPT_MATLAB)
-    #MexIFace allows for cross-building of .mex modules for matlab in linux win64 and macosX
-    message(STATUS "*** Matlab Module Building Enabled ***")
-    set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING URL of MexIFace library dependency)
-    AddExternalDependency(MexIFace ${MexIFaceURL} SHARED)
-    #Configure MexIFace envrionment
-    include(MexIFace)
+    message(STATUS "*** Matlab MEX Modules Enabled ***")
+    set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
+    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED TESTING)
     add_subdirectory(src/MexIFace) #MATLAB Modules
+    mexiface_configure_install(EXPORT_BUILD_TREE "${OPT_EXPORT_BUILD_TREE}") #Matlab code and startupTracker.m configure and install
 endif()
 
 if(OPT_PYTHON)
+    message(STATUS "*** Python Libraries Enabled ***")
     add_subdirectory(src/python) #C++ interface source code
     add_subdirectory(python) #python source code
 endif()

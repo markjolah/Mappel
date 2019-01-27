@@ -1,4 +1,4 @@
-/** @file test_models1DVariableSigma.cpp
+/** @file test_model2D.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2018
  * @brief tests general to ALL 2D models.
@@ -32,6 +32,7 @@ TYPED_TEST(TestModel2D, size_2D) {
 TYPED_TEST(TestModel2D, size) {
     TypeParam &model = this->model;
     auto size = model.get_size();
+    EXPECT_EQ(size.n_elem, 2);
     for(int dim=0;dim<2;dim++){
         EXPECT_LE(model.global_min_size, size(dim))<<"Dim: "<<dim;
         EXPECT_GE(model.global_max_size, size(dim))<<"Dim: "<<dim;
@@ -41,9 +42,9 @@ TYPED_TEST(TestModel2D, size) {
 TYPED_TEST(TestModel2D, set_size) {
     TypeParam &model = this->model;
     auto size = model.get_size();
-    size(0) = model.global_min_size-1
+    size(0) = model.global_min_size-1;
     EXPECT_THROW(model.set_size(size), mappel::ParameterValueError);
-    size(0) = model.global_max_size+1
+    size(0) = model.global_max_size+1;
     EXPECT_THROW(model.set_size(size), mappel::ParameterValueError);
     auto new_size = model.get_size();
     new_size+=1;

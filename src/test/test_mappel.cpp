@@ -8,20 +8,25 @@
 
 /* Globals */
 test_helper::RngEnvironment *env = new test_helper::RngEnvironment; //Googletest wants to free env, so we need to appease its demands or face segfaults.
+IdxT Nsample=100;
 
-int main(int argc, char **argv) 
+
+int main(int argc, char **argv)
 {
-    if(argc>1) {
+    if(argc>2 && !strncmp("--seed",argv[1],6)){
         char* end;
-        env->set_seed(strtoull(argv[0],&end,0));
+        auto seed = strtoull(argv[2],&end,0);
+        env->set_seed(seed);
+        //Pass on seed to G-test as command line argument
+        const int N=30;
+        char buf[N];
+        snprintf(buf,N,"--gtest_random_seed=%llu",seed);
+        argv[2] = buf;
+        argc--; argv++;
     } else {
         env->set_seed();
     }
-    
-    backtrace_exception::disable_backtraces();
-    
     ::testing::AddGlobalTestEnvironment(env);
-    
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

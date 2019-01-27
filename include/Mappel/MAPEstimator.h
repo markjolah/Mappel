@@ -1,12 +1,12 @@
 
 /** @file MAPEstimator.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017
+ * @date 2017-2019
  * @brief Class declaration and inline and templated functions for MAPEstimator.
  */
 
-#ifndef _MAPPEL_MAPESTIMATOR_H
-#define _MAPPEL_MAPESTIMATOR_H
+#ifndef MAPPEL_MAPESTIMATOR_H
+#define MAPPEL_MAPESTIMATOR_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/MLEstimator.h"
@@ -110,4 +110,4 @@ namespace methods{
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_MAPESTIMATOR_H */
+#endif /* MAPPEL_MAPESTIMATOR_H */

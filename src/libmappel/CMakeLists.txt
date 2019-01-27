@@ -8,7 +8,7 @@
 #
 add_subdirectory(cGaussMLE)
 
-set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp
+set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp rng.cpp
                 PointEmitterModel.cpp 
                 ImageFormat1DBase.cpp PoissonNoise1DObjective.cpp  
                 ImageFormat2DBase.cpp PoissonNoise2DObjective.cpp  
@@ -26,4 +26,5 @@ endif()
 include(AddSharedStaticLibraries)
 add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE> PUBLIC_HEADER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include
     LINK_LIBRARIES BacktraceException::BacktraceException ParallelRngManager::ParallelRngManager PriorHessian::PriorHessian
-                   OpenMP::OpenMP_CXX Boost::thread Boost::chrono ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${PTHREAD_LIBRARY} )
+                   OpenMP::OpenMP_CXX Boost::thread Boost::chrono ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${PTHREAD_LIBRARY}
+    INCLUDE_DIRECTORIES $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)

@@ -56,6 +56,17 @@ double MCMCAdaptorBase::get_mcmc_sigma_scale() const
 IdxT MCMCAdaptorBase::get_mcmc_num_phases() const
 { return num_phases; }
 
+void MCMCAdaptorBase::set_mcmc_num_phases(IdxT _num_phases)
+{
+    if(_num_phases < 1) {
+        std::ostringstream os;
+        os<<"num_phases: "<<_num_phases<<" invalid.";
+        throw ParameterValueError(os.str());
+    }
+    num_phases = _num_phases;
+}
+
+
 StatsT MCMCAdaptorBase::get_stats() const
 {
     StatsT stats{};

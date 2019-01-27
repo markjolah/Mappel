@@ -1,6 +1,6 @@
 /** @file ImageFormat2DBase.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for ImageFormat2DBase
  */
 #include "Mappel/ImageFormat2DBase.h"
@@ -15,6 +15,27 @@ ImageFormat2DBase::ImageFormat2DBase(const ImageSizeT &size)
 {
     check_size(size);
 }
+
+ImageFormat2DBase::ImageFormat2DBase(const ImageFormat2DBase &o)
+    : size(o.size)
+{ }
+
+ImageFormat2DBase::ImageFormat2DBase(ImageFormat2DBase &&o)
+    : size(std::move(o.size))
+{ }
+
+ImageFormat2DBase& ImageFormat2DBase::operator=(const ImageFormat2DBase &o)
+{
+    size = o.size;
+    return *this;
+}
+
+ImageFormat2DBase& ImageFormat2DBase::operator=(ImageFormat2DBase &&o)
+{
+    size = std::move(o.size);
+    return *this;
+}
+
 
 ImageFormat2DBase::ImageCoordT  
 ImageFormat2DBase::get_size(IdxT idx) const

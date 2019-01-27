@@ -1,11 +1,11 @@
 /** @file Gauss1DMLE.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss1DMLE.
  */
 
-#ifndef _MAPPEL_GAUSS1DMLE_H
-#define _MAPPEL_GAUSS1DMLE_H
+#ifndef MAPPEL_GAUSS1DMLE_H
+#define MAPPEL_GAUSS1DMLE_H
 
 #include "Mappel/Gauss1DModel.h"
 #include "Mappel/PoissonNoise1DObjective.h"
@@ -23,8 +23,8 @@ namespace mappel {
 class Gauss1DMLE : public Gauss1DModel, public PoissonNoise1DObjective, public MLEstimator 
 {
 public:
-    Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma);
-    Gauss1DMLE(ImageSizeT size, double psf_sigma);
+    Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma, const std::string &prior_type = DefaultPriorType);
+    Gauss1DMLE(ImageSizeT size, double psf_sigma, const std::string &prior_type = DefaultPriorType);
     Gauss1DMLE(ImageSizeT size, double psf_sigma, CompositeDist&& prior);   
     Gauss1DMLE(ImageSizeT size, double psf_sigma, const CompositeDist& prior);   
     Gauss1DMLE(const Gauss1DMLE &o);
@@ -36,4 +36,4 @@ public:
  
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS1DMLE_H */
+#endif /* MAPPEL_GAUSS1DMLE_H */

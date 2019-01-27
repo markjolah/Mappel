@@ -1,12 +1,12 @@
 
 /** @file Gauss2DsMAP.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss2DsMAP.
  */
 
-#ifndef _MAPPEL_GAUSS2DSMAP_H
-#define _MAPPEL_GAUSS2DSMAP_H
+#ifndef MAPPEL_GAUSS2DSMAP_H
+#define MAPPEL_GAUSS2DSMAP_H
 
 #include "Mappel/Gauss2DsModel.h"
 #include "Mappel/PoissonNoise2DObjective.h"
@@ -25,8 +25,8 @@ class Gauss2DsMAP : public Gauss2DsModel, public PoissonNoise2DObjective, public
 {
 public:
     /* Constructor/Destructor */
-    Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio);
-    Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
+    Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, double max_sigma_ratio, const std::string &prior_type = DefaultPriorType);
+    Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma, const std::string &prior_type = DefaultPriorType);
     Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, CompositeDist&& prior);     
     Gauss2DsMAP(const ImageSizeT &size, const VecT &min_sigma, const CompositeDist& prior);     
     Gauss2DsMAP(const Gauss2DsMAP &o);
@@ -38,4 +38,4 @@ public:
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DSMAP_H */
+#endif /* MAPPEL_GAUSS2DSMAP_H */

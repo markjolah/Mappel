@@ -3,16 +3,15 @@
  * @date 03-13-2014
  * @brief The class definition and template Specializations for PointEmitterModel
  */
+#include <cmath>
 #include <algorithm>
 
 #include "Mappel/PointEmitterModel.h"
+
 // #include "Mappel/util.h"
 // #include <omp.h>
 
 namespace mappel {
-
-//Single global RNG_Manager to rule them all!
-ParallelRngManagerT rng_manager;
     
 const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
 const double PointEmitterModel::bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
@@ -22,6 +21,7 @@ const double PointEmitterModel::global_max_psf_sigma = 1E2; /**< Global maxmimum
 const double PointEmitterModel::default_beta_pos = 3; /**< Default position parameter in symmetric beta-distributions */
 const double PointEmitterModel::default_sigma_pos = 1; /**< Default position parameter in symmetric beta-distributions */
 const double PointEmitterModel::default_mean_I = 300; /**< Default emitter intensity mean*/
+const double PointEmitterModel::default_max_I = INFINITY; /**< Default emitter intensity mean*/
 const double PointEmitterModel::default_intensity_kappa = 2;  /**< Default shape for intensity gamma distributions */
 const double PointEmitterModel::default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
 const double PointEmitterModel::default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
@@ -60,7 +60,6 @@ PointEmitterModel::PointEmitterModel(PointEmitterModel &&o)
 PointEmitterModel& PointEmitterModel::operator=(const PointEmitterModel &o)
 {
     prior = o.prior;
-    rng_manager = o.rng_manager;
     update_cached_prior_values();
     return *this;
 }
@@ -68,7 +67,6 @@ PointEmitterModel& PointEmitterModel::operator=(const PointEmitterModel &o)
 PointEmitterModel& PointEmitterModel::operator=(PointEmitterModel &&o)
 {
     prior = std::move(o.prior);
-    rng_manager = std::move(o.rng_manager);
     update_cached_prior_values();
     return *this;
 }
@@ -82,31 +80,29 @@ void PointEmitterModel::update_cached_prior_values()
 }
 
 /* Static member functions */
-prior_hessian::NormalDist        
-PointEmitterModel::make_prior_component_position_normal(std::string var, IdxT size, double pos_sigma)
+prior_hessian::TruncatedNormalDist
+PointEmitterModel::make_prior_component_position_normal(IdxT size, double pos_sigma)
 {
-    std::vector<std::string> param_names = {var+"pos_mean", var+"pos_sigma"};
     double pos_mean = size/2;
-    return prior_hessian::NormalDist(pos_mean,pos_sigma,0,size,var,std::move(param_names));
+    return prior_hessian::make_bounded_normal_dist(pos_mean,pos_sigma,std::make_pair(0.,size));
 }
     
-prior_hessian::SymmetricBetaDist 
-PointEmitterModel::make_prior_component_position_beta(std::string var, IdxT size, double pos_beta)
+prior_hessian::ScaledSymmetricBetaDist
+PointEmitterModel::make_prior_component_position_beta(IdxT size, double pos_beta)
 {
-    std::vector<std::string> param_names = {var+"pos_beta"};
-    return prior_hessian::SymmetricBetaDist(pos_beta,0,size,var,std::move(param_names));
+    return prior_hessian::make_scaled_symmetric_beta_dist(pos_beta,std::make_pair(0.,size));
 }
 
-prior_hessian::GammaDist         
-PointEmitterModel::make_prior_component_intensity(std::string var, double mean, double kappa)
+prior_hessian::TruncatedGammaDist
+PointEmitterModel::make_prior_component_intensity(double mean, double kappa)
 {
-    return prior_hessian::GammaDist(mean,kappa,var);
+    return prior_hessian::make_bounded_gamma_dist(mean/kappa,kappa,std::make_pair(0.,default_max_I));
 }
 
-prior_hessian::ParetoDist        
-PointEmitterModel::make_prior_component_sigma(std::string var, double min_sigma, double max_sigma, double alpha)
+prior_hessian::TruncatedParetoDist
+PointEmitterModel::make_prior_component_sigma(double min_sigma, double max_sigma, double alpha)
 {
-    return prior_hessian::ParetoDist(alpha,min_sigma,max_sigma,var);
+    return prior_hessian::make_bounded_pareto_dist(alpha,std::make_pair(min_sigma,max_sigma));
 }
 
 /* Non-static member functions */
@@ -325,5 +321,6 @@ PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
     for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
     return new_theta;
 }
+
 
 } /* namespace mappel */

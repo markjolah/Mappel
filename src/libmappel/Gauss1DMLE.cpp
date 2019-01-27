@@ -1,6 +1,6 @@
 /** @file Gauss1DMLE.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss1DMLE
  */
 #include "Mappel/Gauss1DMLE.h"
@@ -8,12 +8,12 @@
 namespace mappel {
 const std::string Gauss1DMLE::name("Gauss1DMLE");
 
-Gauss1DMLE::Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma) :
-    Gauss1DMLE(size(0),psf_sigma(0))
+Gauss1DMLE::Gauss1DMLE(arma::Col<ImageCoordT> size, VecT psf_sigma, const std::string &prior_type)
+    : Gauss1DMLE(size(0), psf_sigma(0), prior_type)
 { }
 
-Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma) :
-    Gauss1DMLE(size,psf_sigma,make_default_prior(size))
+Gauss1DMLE::Gauss1DMLE(ImageSizeT size, double psf_sigma, const std::string &prior_type)
+    : Gauss1DMLE(size,psf_sigma,make_default_prior(size,prior_type))
 { }
 
 Gauss1DMLE::Gauss1DMLE(ImageSizeT _size, double psf_sigma, CompositeDist&& _prior)

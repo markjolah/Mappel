@@ -244,7 +244,8 @@ void register_exceptions()
         catch (const NumericalError &err)      { PyErr_SetString(PyExc_RuntimeError, err.what()); }
         catch (const LogicalError &err)        { PyErr_SetString(PyExc_RuntimeError, err.what()); }
         catch (const NotImplementedError &err) { PyErr_SetString(PyExc_NotImplementedError, err.what()); }
-        });
+        catch (const prior_hessian::ParameterNameError &err) { PyErr_SetString(PyExc_ValueError, err.what()); }
+       });
     python_error::register_exceptions();        
     //Exception backtraces are a problem with python and pdb
     //Disable them globally here for any python code.
@@ -429,8 +430,18 @@ void bindMappelModel(py::module &M)
  
     model.def("set_rng_seed",[](Model &model, SeedT seed) { model.set_rng_seed(seed); }, py::arg("seed"),
                 "Re-seed the internal rng manager.");
-    model.def("find_hyperparam",&ModelWrapper<Model>::find_hyperparam,py::arg("name"),py::arg("default_val")=-1,
-                "Find a hyperparameter value by name or return a default_val.");
+
+    model.def("has_hyperparam",[](Model &model,std::string &name) {return model.has_hyperparam(name);}, py::arg("name"),
+                "True if a hyperparameter of given name exists.");
+    model.def("hyperparam_index",[](Model &model,std::string &name) {return model.get_hyperparam_index(name);}, py::arg("name"),
+                "Index of a hyperparameter by name.");
+    model.def("get_hyperparam_value",[](Model &model,std::string &name) { return model.get_hyperparam_value(name); }, py::arg("name"),
+                "Get the value of a hyperparameter by name.");
+    model.def("set_hyperparam_value",[](Model &model,std::string &name, double value) { model.set_hyperparam_value(name,value); }, py::arg("name"), py::arg("value"),
+                "Set the value of a hyperparameter by name.");
+    model.def("rename_hyperparam",[](Model &model,std::string &old_name,std::string &new_name) {model.rename_hyperparam(old_name,new_name); }, py::arg("old_name"), py::arg("new_name"),
+              "Rename a hyperparameter.");
+
     model.def("bounded_theta", &ModelWrapper<Model>::bounded_theta,py::arg("theta"),
                 "Bound parameter theta to be within the box-constraints by truncation.");
     model.def("reflected_theta", &ModelWrapper<Model>::reflected_theta,py::arg("theta"),
@@ -503,7 +514,7 @@ void bindMappelModel(py::module &M)
         This is Maximum likelihood estimation (MLE) or maximum-aposeteriori (MAP) estimation depending on the model.  
         fixed_theta is a vector of fixed values free values are indicated by inf or nan. [OpenMP])DOC");
 
-//     model.deg("estimate_profile_max",&ModelWrapper<Model>::estimate_profile_max,  
+//     model.def("estimate_profile_max",&ModelWrapper<Model>::estimate_profile_max,
 //               py::arg("image"),  py::arg("fixed_theta_stack"), py::arg("method"), py::arg("theta_mle"), py::arg("return_stats")=false,
 //               "Returns (theta_profile_max_stack,rllh_stack,observedI_stack) estimating the maximum of the model objective for each image using given method and theta_init. [OpenMP]");
               
@@ -542,7 +553,7 @@ void bindMappelModel(py::module &M)
         These bounds are only valid if the estimator errors are normally distributed (i.e., the objective 
         function is regular near the maximum.)DOC");
                 
-//     model.deg("error_bounds_profile",&ModelWrapper<Model>::error_bounds_profile,  
+//     model.def("error_bounds_profile",&ModelWrapper<Model>::error_bounds_profile,
 //               py::arg("images"),py::arg("theta_est"), py::arg("confidence")=0.95,
 //               " Returns error bounds for each parameter (theta_lb, theta_ub). Make no assumptions about the Normality of the errors or regularity of the objective and use a pure-likelihood based approach to find the estimated error bounds. [OpenMP]");
     model.def("error_bounds_posterior_credible",&ModelWrapper<Model>::error_bounds_posterior_credible,  
@@ -689,13 +700,6 @@ ModelWrapper<Model>::get_hyperparams(Model &model)
     auto theta = pyarma::asVec(arr);
     theta = model.get_hyperparams();
     return arr;
-}
-
-template<class Model>
-double 
-ModelWrapper<Model>:: find_hyperparam(Model &model, std::string param_name, double default_val)
-{
-    return model.find_hyperparam(param_name,default_val);
 }
 
 template<class Model>

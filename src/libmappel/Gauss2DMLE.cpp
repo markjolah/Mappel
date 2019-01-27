@@ -1,6 +1,6 @@
 /** @file Gauss2DMLE.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class definition and template Specializations for Gauss2DMLE
  */
 #include "Mappel/Gauss2DMLE.h"
@@ -8,16 +8,16 @@
 namespace mappel {
 const std::string Gauss2DMLE::name("Gauss2DMLE");
 
-Gauss2DMLE::Gauss2DMLE(ImageCoordT size, double psf_sigma) 
-    : Gauss2DMLE(ImageSizeT(2,arma::fill::ones)*size, VecT(2,arma::fill::ones)*size)
+Gauss2DMLE::Gauss2DMLE(ImageCoordT size, double psf_sigma, const std::string &prior_type)
+    : Gauss2DMLE(ImageSizeT(2,arma::fill::ones)*size, VecT(2,arma::fill::ones)*size, prior_type)
 { }
     
-Gauss2DMLE::Gauss2DMLE(const ImageSizeT &size, double psf_sigma) 
-    : Gauss2DMLE(size, VecT(2,arma::fill::ones)%size)
+Gauss2DMLE::Gauss2DMLE(const ImageSizeT &size, double psf_sigma, const std::string &prior_type)
+    : Gauss2DMLE(size, VecT(2,arma::fill::ones)%size, make_default_prior(size,prior_type))
 { }
 
-Gauss2DMLE::Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma) 
-    : Gauss2DMLE(size,psf_sigma,make_default_prior(size))
+Gauss2DMLE::Gauss2DMLE(const ImageSizeT &size, const VecT &psf_sigma, const std::string &prior_type)
+    : Gauss2DMLE(size, psf_sigma, make_default_prior(size,prior_type))
 { }
 
 Gauss2DMLE::Gauss2DMLE(const ImageSizeT &_size, const VecT &psf_sigma, CompositeDist&& _prior) 

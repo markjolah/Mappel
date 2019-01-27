@@ -3,8 +3,8 @@
  * @date 01-15-2014
  * @brief 
  */
-#ifndef _MAPPEL_ESTIMATOR_IMPL_H
-#define _MAPPEL_ESTIMATOR_IMPL_H
+#ifndef MAPPEL_ESTIMATOR_IMPL_H
+#define MAPPEL_ESTIMATOR_IMPL_H
 
 #include <cmath>
 #include <armadillo>
@@ -1288,4 +1288,4 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_ESTIMATOR_IMPL_H */
+#endif /* MAPPEL_ESTIMATOR_IMPL_H */

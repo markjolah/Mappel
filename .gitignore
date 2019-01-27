@@ -5,6 +5,7 @@ _build
 #Local install dir
 _install
 _win64*
+_gcc4_9*
 
 .gdb_history
 

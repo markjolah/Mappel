@@ -1,11 +1,11 @@
 /** @file Gauss2DsModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2014-2018
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Gauss2DsModel.
  */
 
-#ifndef _MAPPEL_GAUSS2DSMODEL_H
-#define _MAPPEL_GAUSS2DSMODEL_H
+#ifndef MAPPEL_GAUSS2DSMODEL_H
+#define MAPPEL_GAUSS2DSMODEL_H
 
 #include "Mappel/PointEmitterModel.h"
 #include "Mappel/ImageFormat2DBase.h"
@@ -23,6 +23,7 @@ namespace mappel {
 class Gauss2DsModel : public virtual PointEmitterModel, public virtual ImageFormat2DBase, public MCMCAdaptor2Ds
 {
 public:
+    using Gauss1DSumModelT = Gauss1DsMAP; //Use a MAP estimator for the 1D initializer models
      /** @brief Stencil for 2D scalar-sigma models.
      */
     class Stencil {
@@ -54,8 +55,13 @@ public:
     using StencilVecT = std::vector<Stencil>;
 
     /* Prior construction */
-    static CompositeDist make_default_prior(const ImageSizeT &size, double max_sigma_ratio);
-    static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos, 
+    static const StringVecT prior_types;
+    static const std::string DefaultPriorType;
+    static CompositeDist make_default_prior(const ImageSizeT &size, double max_sigma_ratio, const std::string &prior_type);
+
+    static CompositeDist make_default_prior_beta_position(const ImageSizeT &size, double max_sigma_ratio);
+    static CompositeDist make_default_prior_normal_position(const ImageSizeT &size, double max_sigma_ratio);
+    static CompositeDist make_prior_beta_position(const ImageSizeT &size, double beta_xpos, double beta_ypos,
                                                   double mean_I, double kappa_I, double mean_bg, double kappa_bg,
                                                   double max_sigma_ratio, double alpha_sigma);
     static CompositeDist make_prior_normal_position(const ImageSizeT &size, double sigma_xpos,double sigma_ypos, 
@@ -95,8 +101,8 @@ public:
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init);
     Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
 
-    Gauss1DSumModelT& debug_internal_sum_model_x() const {return x_model;}
-    Gauss1DSumModelT& debug_internal_sum_model_y() const {return y_model;}
+    Gauss1DSumModelT debug_internal_sum_model_x() const {return x_model;}
+    Gauss1DSumModelT debug_internal_sum_model_y() const {return y_model;}
 protected:
     Gauss2DsModel(const ImageSizeT &size, const VecT &min_sigma, const VecT &max_sigma);
     Gauss2DsModel(const Gauss2DsModel &o);
@@ -104,7 +110,6 @@ protected:
     Gauss2DsModel& operator=(const Gauss2DsModel &o);
     Gauss2DsModel& operator=(Gauss2DsModel &&o);
     
-    using Gauss1DSumModelT = Gauss1DsMAP; //Use a MAP estimator for the 1D initializer models
     void update_internal_1Dsum_estimators();   
     static Gauss1DSumModelT make_internal_1Dsum_estimator(IdxT dim, const ImageSizeT &size, 
                                         const VecT &min_sigma, const VecT &max_sigma, const CompositeDist &prior);
@@ -113,7 +118,8 @@ protected:
     VecT min_sigma; /**< Gaussian PSF in pixels */
     Gauss1DSumModelT x_model; /**< X-model fits 2D images X-axis (column sum).  Using variable sigma 1D model. */
     Gauss1DSumModelT y_model; /**< Y-model fits 2D images Y-axis (row sum).  Using variable sigma 1D model. */
-
+private:
+    static void set_prior_variable_names(CompositeDist &prior);
 };
 
 /* Inline Methods */
@@ -277,4 +283,4 @@ cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im,
 
 } /* namespace mappel */
 
-#endif /* _MAPPEL_GAUSS2DSMODEL_H */
+#endif /* MAPPEL_GAUSS2DSMODEL_H */
