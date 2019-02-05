@@ -12,7 +12,7 @@ const std::vector<std::string> PoissonNoise1DObjective::estimator_names(
     { "Heuristic", "Newton", "NewtonDiagonal", "QuasiNewton", "TrustRegion", "SimulatedAnnealing"});
 
 PoissonNoise1DObjective::PoissonNoise1DObjective()
-    : ImageFormat1DBase{}
+    : ImageFormat1DBase()
 { }
 
 PoissonNoise1DObjective::PoissonNoise1DObjective(const PoissonNoise1DObjective &o)

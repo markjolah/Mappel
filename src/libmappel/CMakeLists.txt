@@ -28,6 +28,7 @@ include(AddSharedStaticLibraries)
 add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>
                             COMPILE_FEATURES cxx_std_14
                             PUBLIC_HEADER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include
+                            INCLUDE_DIRECTORIES $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
                             RETURN_TARGETS lib_targets)
 
 #Custom target settings for each lib_target from add_shared_static_libraries

@@ -51,21 +51,24 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 #External depenency integration
 include(AddExternalDependency)
 set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING OPT_INSTALL_TESTING)
+if(OPT_ARMADILLO_INT64)
+    set(EXTERNAL_COMPONENTS_INT64 COMPONENTS INT64)
+endif()
 #BacktraceException provides backtraces for caught exceptions.
-set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
+set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING "URL of BacktraceException library dependency")
 add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING_VARS})
 
 #ParallelRngManager allows for management of parallel rng streams.
-set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
-add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 COMPONENTS INT64)
+set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git CACHE STRING "URL of ParallelRngManager library dependency")
+add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
 
 #PriorHessian allows for hessians of prior distirbutions
-set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
-add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 COMPONENTS INT64)
+set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
 
 if(OPT_MATLAB)
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
-    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING})
+    add_external_dependency(NAME MexIFace URL ${MexIFaceURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING})
 endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
