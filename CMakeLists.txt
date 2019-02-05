@@ -50,18 +50,23 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 ### Dependencies
 #External depenency integration
 include(AddExternalDependency)
-set(EXTERNAL_DEPENDENCY_TESTING TESTING PASS_CACHE_VARIABLES OPT_INSTALL_TESTING OPT_ARMADILLO_INT64)
+set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING OPT_INSTALL_TESTING)
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
-add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
+add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING_VARS})
 
 #ParallelRngManager allows for management of parallel rng streams.
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
-add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
+add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 COMPONENTS INT64)
 
 #PriorHessian allows for hessians of prior distirbutions
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
-add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 COMPONENTS INT64)
+
+if(OPT_MATLAB)
+    set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
+    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING})
+endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
 if(OPT_ARMADILLO_INT64)
@@ -98,8 +103,6 @@ endif()
 
 if(OPT_MATLAB)
     message(STATUS "*** Matlab MEX Modules Enabled ***")
-    set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
-    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED ${EXTERNAL_DEPENDENCY_TESTING})
     add_subdirectory(src/MexIFace) #MATLAB Modules
     mexiface_configure_install(EXPORT_BUILD_TREE "${OPT_EXPORT_BUILD_TREE}") #Matlab code and startupTracker.m configure and install
 endif()
