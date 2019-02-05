@@ -1,11 +1,6 @@
-# Mappel - libmappel CMakeLists.txt
-#
-# Mark J. Olah [mjo@cs.unm DOT edu] (02/2014)
-#
-# Currently we build shared and static libs for each plaform.
-# We depend on the cGaussMLE and SFMT object libraries and make a single object
-# library mappel-core which is used for both the shared and static builds
-#
+# Mapple/src/libmapple
+# Main CMakeLists.txt for Mapple libraries
+
 add_subdirectory(cGaussMLE)
 
 set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp rng.cpp
@@ -24,7 +19,30 @@ if(OPT_HYPERSPECTRAL)
 endif()
 
 include(AddSharedStaticLibraries)
-add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE> PUBLIC_HEADER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include
-    LINK_LIBRARIES BacktraceException::BacktraceException ParallelRngManager::ParallelRngManager PriorHessian::PriorHessian
-                   OpenMP::OpenMP_CXX Boost::thread Boost::chrono ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES} ${PTHREAD_LIBRARY}
-    INCLUDE_DIRECTORIES $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>)
+# add_shared_static_libraries()
+# * Add shared and static library targets to project namespace
+# * Sets target_include_directories
+# * Sets target_compile_features and target_link_libraries
+# * Installs target libraries and headers
+# * returns lsit SHARED_STATIC_LIB_TARGETS of created targets for adjusting additional target properties
+add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>
+                            COMPILE_FEATURES cxx_std_14
+                            PUBLIC_HEADER_DIR ${CMAKE_CURRENT_LIST_DIR}/../../include
+                            RETURN_TARGETS lib_targets)
+
+#Custom target settings for each lib_target from add_shared_static_libraries
+foreach(target IN LISTS lib_targets)
+    if(OPT_ARMADILLO_INT64)
+        target_link_libraries(${target} INTERFACE LAPACK::LapackInt64 BLAS::BlasInt64)
+    else()
+        target_link_libraries(${target} INTERFACE LAPACK::Lapack BLAS::Blas)
+    endif()
+
+    target_link_libraries(${target} PUBLIC BacktraceException::BacktraceException)
+    target_link_libraries(${target} PUBLIC ParallelRngManager::ParallelRngManager)
+    target_link_libraries(${target} PUBLIC PriorHessian::PriorHessian)
+    target_link_libraries(${target} PUBLIC OpenMP::OpenMP_CXX)
+    target_link_libraries(${target} PUBLIC Boost::thread Boost::chrono)
+    target_link_libraries(${target} PUBLIC Pthread::Pthread)
+    target_link_libraries(${target} INTERFACE Armadillo::Armadillo)
+endforeach()

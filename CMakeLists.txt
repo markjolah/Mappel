@@ -20,67 +20,75 @@ if(${CMAKE_BUILD_TYPE} MATCHES Debug)
 else()
     option(BUILD_TESTING "Build testing framework" OFF)
 endif()
-
+option(OPT_INSTALL_TESTING "Install testing executables" OFF)
+option(OPT_EXPORT_BUILD_TREE "Configure the package so it is usable from the build tree.  Useful for development." OFF)
+option(OPT_ARMADILLO_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Must be on if OPT_MATLAB is on]" OFF)
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
-
-# Enable Support for Python via Boost::Python
-option(OPT_PYTHON "Add support for Python via boost::python" OFF)
-
+option(OPT_PYTHON "Add support for Python via boost::python" OFF) # Enable Support for Python via Boost::Python
+option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debug features (Armadillo)
 # # Hyperspectral code
 # option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
-option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debug features (Armadillo)
+if(OPT_MATLAB AND NOT OPT_ARMADILLO_INT64)
+    set(OPT_ARMADILLO_INT64 True)
+    set(OPT_ARMADILLO_INT64 True CACHE BOOL "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Forced on by OPT_MATLAB]." FORCE)
+endif()
 
 message(STATUS "OPTION: BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
 message(STATUS "OPTION: BUILD_STATIC_LIBS: ${BUILD_STATIC_LIBS}")
 message(STATUS "OPTION: BUILD_TESTING: ${BUILD_TESTING}")
+message(STATUS "OPTION: OPT_INSTALL_TESTING: ${OPT_INSTALL_TESTING}")
 message(STATUS "OPTION: OPT_EXPORT_BUILD_TREE: ${OPT_EXPORT_BUILD_TREE}")
+message(STATUS "OPTION: OPT_ARMADILLO_INT64: ${OPT_ARMADILLO_INT64}")
 message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
-message(STATUS "OPTION: OPT_DEBUG: ${OPT_DEBUG}")
 message(STATUS "OPTION: OPT_EXTRA_DEBUG: ${OPT_EXTRA_DEBUG}") 
 
+#Add UcommonCmakeModules git subpreo to path.
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeModules)
 
-# Standard configuration for a numerical computation environment 
-#  * Armadillo 
-#  * OpenMP
-#  * LAPACK
-#  * Blas
-#  * Pthreads 
-include(ConfigureNumericalDependenciesArmadillo)
+### Dependencies
+#External depenency integration
+include(AddExternalDependency)
+set(EXTERNAL_DEPENDENCY_TESTING TESTING PASS_CACHE_VARIABLES OPT_INSTALL_TESTING OPT_ARMADILLO_INT64)
+#BacktraceException provides backtraces for caught exceptions.
+set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
+add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
 
+#ParallelRngManager allows for management of parallel rng streams.
+set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
+add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
+
+#PriorHessian allows for hessians of prior distirbutions
+set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED ${EXTERNAL_DEPENDENCY_TESTING})
+
+#Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
+if(OPT_ARMADILLO_INT64)
+    set(ARMADILLO_INT64_COMPONENT INT64) #Enable INT64 interface for armadillo, Blas and Lapack
+else()
+    set(ARMADILLO_INT64_COMPONENT)
+endif()
+find_package(BLAS REQUIRED COMPONENTS ${ARMADILLO_INT64_COMPONENT})
+find_package(LAPACK REQUIRED COMPONENTS ${ARMADILLO_INT64_COMPONENT})
+find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_INT64_COMPONENT})
+add_compile_definitions(${ARMADILLO_PRIVATE_COMPILE_DEFINITIONS})
+
+find_package(OpenMP REQUIRED)
+find_package(Pthread REQUIRED)
 find_package(Boost REQUIRED COMPONENTS thread chrono)
 
 #Configure standard CFlags and definitions for debug builds
 include(ConfigureDebugBuilds) 
 
-#External depenency integration
-include(AddExternalDependency)
-
-#BacktraceException provides backtraces for caught exceptions.
-set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git)
-add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED)
-
-#ParallelRngManager allows for management of parallel rng streams.
-set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git)
-add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED)
-
-#PriorHessian allows for hessians of prior distirbutions
-set(PriorHessianURL https://github.com/markjolah/PriorHessian.git)
-add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED)
-message(STATUS "PATH:${CMAKE_MODULE_PATH}")
-
-
-#TODO: get this working again
 #include(Mappel-Doxygen) #Add Doxygen documentation targets
 
-### PackageConfig Exports from UncommonCMakeModules
+### PackageConfig Exports from UncommonCMakeModules/ExportPackageWizzard.cmake
+#setup build-tree and install-tree exports and PackageConfig files
 include(ExportPackageWizzard)
 export_package_wizzard()
 
-#Main library
-add_subdirectory(src/libmappel) 
+add_subdirectory(src/libmappel) #Main library
 
 if(BUILD_TESTING)
     include(CTest)
@@ -91,7 +99,7 @@ endif()
 if(OPT_MATLAB)
     message(STATUS "*** Matlab MEX Modules Enabled ***")
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
-    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED TESTING)
+    add_external_dependency(NAME MexIFace URL "${MexIFaceURL}" SHARED ${EXTERNAL_DEPENDENCY_TESTING})
     add_subdirectory(src/MexIFace) #MATLAB Modules
     mexiface_configure_install(EXPORT_BUILD_TREE "${OPT_EXPORT_BUILD_TREE}") #Matlab code and startupTracker.m configure and install
 endif()
