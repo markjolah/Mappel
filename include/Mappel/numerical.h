@@ -35,8 +35,15 @@ void copy_Lsym_mat(arma::mat &lsym);
 /** Convert matrix in internal cholesky format into a lower triangular matrix L where M = L*L' */
 void cholesky_convert_lower_triangular(arma::mat &chol);
 
-/** Convert matrix in internal cholesky format into a full matrix */
+/** Convert matrix in internal cholesky format into a full matrix M = L*L' */
 void cholesky_convert_full_matrix(arma::mat &chol);
+
+/** Modify m inplace using modfied choslesky decomposition to ensure m is negative definite */
+void cholesky_make_negative_definite(arma::mat &m);
+
+/** Modify m inplace using modfied choslesky decomposition to ensure m is positive definite */
+void cholesky_make_positive_definite(arma::mat &m);
+
 
 /**
  * Determine if C is positive definite

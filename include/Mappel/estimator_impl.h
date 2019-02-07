@@ -457,13 +457,13 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         throw NumericalError(msg.str());
     }
     if(arma::dot(data.grad, data.step)<=0){
-        //We are maximizing so we should be moving in direction of gradiant not away
+        //We are maximizing so we should be moving in direction of gradient not away
         std::ostringstream msg;
         msg<<"Backtrack with Negative Gradient. grad:"<<data.grad.t()<<" step:"<<data.step.t()<<" <grad, step>: "<<arma::dot(data.grad, data.step);
         throw NumericalError(msg.str());
     }
     for(int n=0; n<max_backtracks; n++){
-        //Reflective boundary conditions
+        //Boundary conditions
         auto new_theta = model.bounded_theta(model.reflected_theta(data.saved_theta() + lambda*data.step));
         data.set_stencil(model.make_stencil(new_theta,false));
         double can_rllh = methods::objective::rllh(model, data.im, data.stencil()); //candidate points log-lh

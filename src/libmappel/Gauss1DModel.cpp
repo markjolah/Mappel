@@ -190,7 +190,7 @@ StatsT Gauss1DModel::get_stats() const
  */
 void Gauss1DModel::pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const
 {
-    auto pgrad=make_param();
+    auto pgrad = make_param();
     pixel_grad(i,s,pgrad);
     double I = s.I();
     /* Update grad */

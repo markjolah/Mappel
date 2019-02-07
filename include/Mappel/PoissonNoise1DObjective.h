@@ -66,12 +66,12 @@ simulate_image_from_model(const Model &model, const ImageT<Model> &model_im, rng
 }
 
 /** @brief Compute the expected information (Fisher information at theta).
-    * Note: Expected information is an average quantity and is independent of the data.
-    * Enabled for PoissonNoise1DObjective
-    * @param model PointEmitterModel
-    * @param s Stencil at desired theta
-    * @returns The fisher information matrix as an symmetric matrix in upper-triangular format
-    */
+ * Note: Expected information is an average quantity and is independent of the data.
+ * Enabled for PoissonNoise1DObjective
+ * @param model PointEmitterModel
+ * @param s Stencil at desired theta
+ * @returns The fisher information matrix as an symmetric matrix in upper-triangular format
+ */
 template<class Model>
 ReturnIfSubclassT<MatT, Model, PoissonNoise1DObjective>
 expected_information(const Model &model, const StencilT<Model> &s)
@@ -81,8 +81,10 @@ expected_information(const Model &model, const StencilT<Model> &s)
     for(ImageCoordT<Model> i=0; i<model.get_size(); i++) {  
         auto model_val = model.pixel_model_value(i,s);
         model.pixel_grad(i,s,pgrad);
-        for(IdxT c=0; c<model.get_num_params(); c++) for(IdxT r=0; r<=c; r++) {
-            fisherI(r,c) += pgrad(r)*pgrad(c)/model_val; //Fill upper triangle
+        for(IdxT c=0; c<model.get_num_params(); c++) {
+            double col_prod = pgrad(c)/model_val;
+            for(IdxT r=0; r<=c; r++)
+                fisherI(r,c) += pgrad(r)*col_prod; //Fill upper triangle
         }
     }
     return fisherI;

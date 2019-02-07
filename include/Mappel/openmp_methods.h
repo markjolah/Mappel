@@ -1,19 +1,19 @@
 
 /** @file openmp_methods.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2013-2017
- * @brief Namespaces for OpenMP parallelized verions of the mappel::model namespace functions (external methods)
+ * @date 2013-2019
+ * @brief Namespaces for OpenMP parallelized versions of the mappel::model namespace functions (external methods)
  *
- * OpenMP computation for stacked Model operations on verctor data.
+ * OpenMP computation for stacked Model operations on vector data.
  *
  *  Design Decisions
  *  * OpenMP vectorized versions are implemented as templated external methods in inline namespaces openmp.
- *    This allows easy future replacement with other parallelization mechanisms (CUDA, C++11 threads, etc..).
+ *    This allows easy future replacement with other palatalization mechanisms (CUDA, C++11 threads, etc..).
  *    Also allows the vectorized versions to directly overload with the non-vectorized base-versions.
  *  * Because we want to integrate as seamlessly as possible with matlab, we use the armadillo
  *    package which stores arrays in column major order.
  *  * Therefore in the *_stack operations, if they are to be parallelized, we want the data
- *    stored as a nParms X n matrix, i.e. each column is a parameter matrix.  Simillarly
+ *    stored as a nParms X n matrix, i.e. each column is a parameter matrix.  Similarly
  *    stacks are size X size X n, so that contiguous images sequences are contiguous in
  *    memory.  This avoids false sharing.
  *
@@ -27,10 +27,7 @@
 #include "Mappel/mcmc.h"
 
 namespace mappel {
-
-
 namespace methods {
-
 inline namespace openmp {
 /** @brief Parallel sampling of the model prior.
  * 
@@ -77,8 +74,6 @@ void model_image_stack(const Model &model,
         model.set_image_in_stack(image_stack,n, model_image(model, theta_stack.col(n)));
 }
 
-
-
 /** @brief Parallel simulation of images from one or more theta.
  * 
  * This accepts either a single theta and a stack of images, or a stack of thetas
@@ -121,7 +116,6 @@ void simulate_image_stack(Model &model,
     }
 }
 
-
 template<class Model>
 void cr_lower_bound_stack(const Model &model,
                           const ParamVecT<Model> &theta_stack,
@@ -130,7 +124,7 @@ void cr_lower_bound_stack(const Model &model,
     int nthetas = static_cast<int>(theta_stack.n_cols);
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        crlb_stack.col(n) = cr_lower_bound(model,theta_stack.col(n));
+        crlb_stack.col(n) = methods::cr_lower_bound(model,theta_stack.col(n));
 }
 
 template<class Model>
@@ -144,8 +138,6 @@ void expected_information_stack(const Model &model,
         fisherI_stack.slice(n) = methods::expected_information(model,theta_stack.col(n));
 }
 
-
-
 template<class Model>
 void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
                         ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack)
@@ -179,8 +171,6 @@ void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, 
     estimator->estimate_max_stack(data_stack, theta_init_stack, theta_max_stack, theta_max_rllh, obsI_stack);
     stats = estimator->get_stats();
 }
-
-
 
 template <class Model>
 void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data_stack, const ParamVecT<Model> &theta_init_stack,
@@ -212,7 +202,6 @@ void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data
     auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
     estimate_mcmc_sample_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, sample, sample_rllh);
 }
-
 
 template <class Model>
 void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &data_stack, const ParamVecT<Model> &theta_init_stack,
@@ -247,7 +236,6 @@ void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &d
     auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
     estimate_mcmc_posterior_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, theta_mean_stack, theta_cov_stack);
 }
-
 
 template<class Model>
 void error_bounds_expected_stack(const Model &model, const MatT &theta_est_stack, double confidence,
@@ -298,9 +286,10 @@ void error_bounds_posterior_credible_stack(const Model &model, const CubeT &samp
                                      MatT &theta_mean_stack, MatT &theta_lb_stack, MatT &theta_ub_stack)
 {
     IdxT count = sample_stack.n_slices;
-    theta_mean_stack.set_size(model.get_num_params(), count);
-    theta_lb_stack.set_size(model.get_num_params(), count);
-    theta_ub_stack.set_size(model.get_num_params(), count);
+    auto Np = model.get_num_params();
+    theta_mean_stack.set_size(Np, count);
+    theta_lb_stack.set_size(Np, count);
+    theta_ub_stack.set_size(Np, count);
     #pragma omp parallel
     {
         MatT sample(sample_stack.n_rows,sample_stack.n_cols);
@@ -338,14 +327,12 @@ inline namespace openmp {
  * @param[out] llh_stack Sequence of llh values computed.
  */
 template<class Model>
-void llh_stack(const Model &model,
-                    const typename Model::ImageT &image,
-                          const ParamVecT<Model> &theta_stack,
-                          VecT &llh_stack)
+void llh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<Model> &theta_stack, VecT &llh_stack)
 {
-    int nthetas = static_cast<int>(theta_stack.n_cols);
+    auto nthetas = theta_stack.n_cols;
+    llh_stack.set_size(nthetas);
     #pragma omp parallel for
-    for(int n=0; n<nthetas; n++)
+    for(IdxT n=0; n<theta_stack.n_cols; n++)
         llh_stack(n) = methods::objective::llh(model, image, theta_stack.col(n));
 }
 
@@ -361,27 +348,27 @@ void llh_stack(const Model &model,
  * @param[out] llh_stack Sequence of llh values computed. Size: [n]
  */
 template<class Model>
-void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack,
-               VecT &llh_stack)
+void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack, VecT &llh_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
-    int nthetas = static_cast<int>(theta_stack.n_cols);
+    IdxT nimages = model.get_size_image_stack(image_stack);
+    IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
+    llh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         llh_stack(0) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) {
-        auto s=model.make_stencil(theta_stack.col(0));
+        auto s = model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++)
+        for(IdxT n=0; n<nimages; n++)
             llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) {
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++)
+        for(IdxT n=0; n<nimages; n++)
             llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
@@ -398,17 +385,17 @@ void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const 
  * @param[out] rllh_stack Sequence of rllh values computed. Size: [n]
  */
 template<class Model>
-void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack, 
-                VecT &rllh_stack)
+void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack, VecT &rllh_stack)
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
+    rllh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         rllh_stack(0) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) {
-        auto s=model.make_stencil(theta_stack.col(0));
+        auto s = model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
         for(IdxT n=0; n<nimages; n++)
             rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), s);
@@ -424,12 +411,12 @@ void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const
 }
 
 template<class Model>
-void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<Model> &theta_stack, 
-                VecT &rllh_stack)
+void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<Model> &theta_stack, VecT &rllh_stack)
 {
     IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image);
+    rllh_stack.set_size(nthetas);
     #pragma omp parallel for
     for(IdxT n=0; n<nthetas; n++)
         rllh_stack(n) = objective::rllh(model, image, theta_stack.col(n));
@@ -448,28 +435,28 @@ void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<
  * @param[out] grad_stack  Sequence of grad vectors values computed. Size: [model.num_params, n]
  */
 template<class Model>
-void grad_stack(const Model &model, const ImageStackT<Model> &image_stack,
-                          const ParamVecT<Model> &theta_stack,
-                          ParamVecT<Model> &grad_stack)
+void grad_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack,
+                ParamVecT<Model> &grad_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
-    int nthetas = static_cast<int>(theta_stack.n_cols);
+    IdxT nimages = model.get_size_image_stack(image_stack);
+    IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
+    grad_stack.set_size(model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         grad_stack.col(0) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s = model.make_stencil(theta_stack.col(0));
         #pragma omp for
-        for(int n=0; n<nimages; n++) 
+        for(IdxT n=0; n<nimages; n++)
             grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
@@ -486,29 +473,28 @@ void grad_stack(const Model &model, const ImageStackT<Model> &image_stack,
  * @param[out] hess_stack  Sequence of Hessian matrices computed. Size: [model.num_params, model.num_params, n]
  */
 template<class Model>
-void hessian_stack(const Model &model,
-                          const ImageStackT<Model> &image_stack,
-                          const ParamVecT<Model> &theta_stack,
-                          CubeT &hessian_stack)
+void hessian_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack,
+                    CubeT &hessian_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
-    int nthetas = static_cast<int>(theta_stack.n_cols);
+    IdxT nimages = model.get_size_image_stack(image_stack);
+    IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
+    hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
-        auto s=model.make_stencil(theta_stack.col(0));
+        auto s = model.make_stencil(theta_stack.col(0));
         #pragma omp for
-        for(int n=0; n<nimages; n++) 
+        for(IdxT n=0; n<nimages; n++)
             hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
@@ -526,38 +512,35 @@ void hessian_stack(const Model &model,
  * @param[out] hess_stack  Sequence of approximate Hessian negative definite matrices computed. Size: [model.num_params, model.num_params, n]
  */
 template<class Model>
-void negative_definite_hessian_stack(const Model &model,
-                          const ImageStackT<Model> &image_stack,
-                          const ParamVecT<Model> &theta_stack,
-                          CubeT &hessian_stack)
+void negative_definite_hessian_stack(const Model &model, const ImageStackT<Model> &image_stack, const ParamVecT<Model> &theta_stack,
+                                     CubeT &hessian_stack)
 {
-    int nimages = model.get_size_image_stack(image_stack);
-    int nthetas = theta_stack.n_cols;
+    IdxT nimages = model.get_size_image_stack(image_stack);
+    IdxT nthetas = theta_stack.n_cols;
     model.check_param_shape(theta_stack);
     model.check_image_shape(image_stack);
+    hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
     } else if (nthetas==1) { //Single theta multiple images
         auto s=model.make_stencil(theta_stack.col(0));
         #pragma omp parallel for
-        for(int n=0; n<nimages; n++)
+        for(IdxT n=0; n<nimages; n++)
             hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), s);
     } else if (nimages==1) { //Single image multiple thetas
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
         #pragma omp parallel for
-        for(int n=0; n<nthetas; n++)
+        for(IdxT n=0; n<nthetas; n++)
             hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
     }
 }
 
-} /* namespace mappel::mathods::objective::openmp */
-} /* namespace mappel::mathods::objective */
-
+} /* namespace mappel::methods::objective::openmp */
+} /* namespace mappel::methods::objective */
 } /* namespace mappel::methods */
-
 } /* namespace mappel */
 
 #endif /* MAPPEL_OPENMP_METHODS */

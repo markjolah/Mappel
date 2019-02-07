@@ -147,10 +147,7 @@ namespace methods {
                                   ParamT<Model> &grad, MatT &hess)
         {
             hessian(model, data_im, s, grad, hess);
-            hess = -hess;
-            modified_cholesky(hess);
-            cholesky_convert_full_matrix(hess); //convert from internal format to a full (negative definite) matrix
-            hess = -hess;
+            cholesky_make_negative_definite(hess);
         }
 
         inline namespace debug {
@@ -190,8 +187,8 @@ namespace methods {
     aposteriori_objective(const Model &model, const ModelDataT<Model> &data_im, const StencilT<Model> &s, 
                           double &rllh,  ParamT<Model> &grad, MatT &hess)
     {
-        rllh = likelihood::rllh(model, data_im, s);
-        likelihood::hessian(model, data_im, s, grad, hess);
+        rllh = methods::likelihood::rllh(model, data_im, s);
+        methods::likelihood::hessian(model, data_im, s, grad, hess);
         rllh += model.get_prior().rllh(s.theta);
         model.get_prior().grad_hess_accumulate(s.theta,grad,hess);
     }
@@ -214,7 +211,7 @@ namespace methods {
                          double &rllh,  ParamT<Model> &grad, MatT &hess)
     {
         rllh = likelihood::rllh(model, data_im, s);
-        likelihood::hessian(model, data_im, s, grad, hess);
+        methods::likelihood::hessian(model, data_im, s, grad, hess);
     }
 
     template<class Model>
@@ -260,7 +257,7 @@ namespace methods {
     template<class Model>
     MatT observed_information(const Model &model, const ModelDataT<Model> &data, const StencilT<Model> &theta_mode)
     {
-        MatT obsI = - objective::hessian(model,data,theta_mode); //Observed information is defined for negative llh and so negative hessian should be positive definite
+        MatT obsI = -objective::hessian(model,data,theta_mode); //Observed information is defined for negative llh and so negative hessian should be positive definite
         //if(!is_positive_definite(obsI)) throw NumericalError("Hessian is not positive definite");
         return obsI;
     }

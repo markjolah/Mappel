@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef _STACKCOMP_H
-#define _STACKCOMP_H
+#ifndef MAPPEL_STACKCOMP_H
+#define MAPPEL_STACKCOMP_H
 
 #include <omp.h>
 #include "Mappel/rng.h"
@@ -324,4 +324,4 @@ void fisher_information_stack(const Model &model,
 
 } /* namespace mappel */
 
-#endif /* _STACKCOMP_H */
+#endif /* MAPPEL_STACKCOMP_H */

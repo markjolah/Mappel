@@ -35,6 +35,20 @@ void copy_Lsym_mat(arma::mat &lsym)
         lsym(j,i) = lsym(i,j); //i>j
 }
 
+void cholesky_make_negative_definite(arma::mat &m)
+{
+    m = -m;
+    modified_cholesky(m);
+    cholesky_convert_full_matrix(m); //convert from internal format to a full (negative definite) matrix
+    m = -m;
+}
+
+void cholesky_make_positive_definite(arma::mat &m)
+{
+    modified_cholesky(m);
+    cholesky_convert_full_matrix(m); //convert from internal format to a full (negative definite) matrix
+}
+
 bool is_negative_definite(const arma::mat &usym)
 {
     return is_positive_definite(-usym);

@@ -25,18 +25,18 @@ namespace mappel {
  * 
  */
 /** @brief External template based methods for PointEmitterModel's.  
- * These are general or convienience functions
+ * These are general or convenience functions
  * that are included in this file.  Those methods specific to other sub-types of Models should be included within that
- * sub-type's .h file, using the enbale_if mechansim to restrict their instantiation to the correct sub-types.
+ * sub-type's .h file, using the enable_if mechanism to restrict their instantiation to the correct sub-types.
  */
 namespace methods {
-    /*These types are defined elsewhere in the Model class heierachy we use template types to stand in for them */
+    /*These types are defined elsewhere in the Model class hierarchy we use template types to stand in for them */
 
     
     /** Expected number of photons at each pixel in image given the emitter model 
      */
     template<class Model>
-    typename Model::ImageT model_image(const Model &model, const ParamT<Model> &theta);
+    ImageT<Model> model_image(const Model &model, const ParamT<Model> &theta);
 
     template<class Model, class rng_t>
     ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta);
@@ -129,7 +129,7 @@ namespace methods {
     void likelihood_objective(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, 
                               double &rllh,  ParamT<Model> &grad, MatT &hess);
 
-    /** @brief Calculate the Cramer-Rao lower bound at the given paramters
+    /** @brief Calculate the Cramer-Rao lower bound at the given parameters
     * @param[in] theta The parameters to evaluate the CRLB at
     * @param[out] crlb The calculated parameters
     */

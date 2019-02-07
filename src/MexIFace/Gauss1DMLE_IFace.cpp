@@ -4,8 +4,8 @@
  * Just calls the MappleMexIface.mexFunction which is the IFace entry point.
  * 
  */
+#include "Mappel/Gauss1DMLE.h"
 #include "Mappel_IFace.h"
-#include "Gauss1DMLE.h"
 
 mappel::MappelFixedSigma_IFace<mappel::Gauss1DMLE> iface; /**< Global iface object provides a iface.mexFunction */
 

@@ -548,7 +548,7 @@ void bindMappelModel(py::module &M)
         Operates on one or more estimated theta values in parallel using OpenMP.
         
         The observed Fisher Information is the same as the negative hessian at the estimated maximum.  This should
-        be positive definte if theta_est is a true maximum.
+        be positive definite if theta_est is a true maximum.
         
         These bounds are only valid if the estimator errors are normally distributed (i.e., the objective 
         function is regular near the maximum.)DOC");
