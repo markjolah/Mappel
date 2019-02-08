@@ -10,6 +10,8 @@
 #include <sstream>
 #include <iostream>
 #include <functional>
+#include <thread>
+#include <omp.h>
 
 #include "MexIFace/MexIFace.h"
 #include "Mappel/PointEmitterModel.h"
@@ -180,6 +182,11 @@ Mappel_IFace<Model>::Mappel_IFace()
     staticmethodmap["choleskySolve"] = std::bind(&Mappel_IFace::staticCholeskySolve, this);
     staticmethodmap["positiveDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticPositiveDefiniteCholeskyApprox, this);
     staticmethodmap["negativeDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticNegativeDefiniteCholeskyApprox, this);
+
+
+    std::cout<<"MappelIFace. Preparing  Model: "<<Model::name<<std::endl;
+    std::cout<<"MappelIFace. Preparing  Model: "<<std::thread::hardware_concurrency()<<std::endl;
+    omp_set_num_threads(std::thread::hardware_concurrency());
 }
 
 template<class Model>
@@ -687,7 +694,7 @@ void Mappel_IFace<Model>::objEstimate()
     auto theta_stack = makeOutputArray(obj->get_num_params(),nimages);
     auto rllh_stack = makeOutputArray(nimages);
     auto obsI_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(),nimages);
-    if(nlhs<5) {
+    if(nlhs<4) {
         methods::estimate_max_stack(*obj, image_stack,method_name,theta_init_stack, theta_stack, rllh_stack, obsI_stack);
     } else {
         StatsT stats;
