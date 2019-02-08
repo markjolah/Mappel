@@ -345,10 +345,10 @@ StatsT Gauss2DsModel::get_stats() const
     auto mcmc_stats = MCMCAdaptor2Ds::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
     stats.insert(mcmc_stats.begin(), mcmc_stats.end());
-    stats["min_sigma.0"] = get_min_sigma(0);
-    stats["min_sigma.1"] = get_min_sigma(1);
-    stats["max_sigma.0"] = get_max_sigma(0);
-    stats["max_sigma.1"] = get_max_sigma(1);
+    stats["min_sigma.1"] = get_min_sigma(0);
+    stats["min_sigma.2"] = get_min_sigma(1);
+    stats["max_sigma.1"] = get_max_sigma(0);
+    stats["max_sigma.2"] = get_max_sigma(1);
     stats["max_sigma_ratio"] = get_max_sigma_ratio();
     return stats;
 }

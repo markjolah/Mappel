@@ -36,9 +36,10 @@ classdef MappelBase < MexIFace.IFaceMixin
                            'matlab-interior-point'...           %[MATLAB (fmincon)] Single threaded interior-point optimization from Matlab Optimization toolbox
                            };
     end
-    
-    properties (SetAccess = protected)
+    properties (Abstract=true, Constant=true)
         ImageDim; %Dimensionality of images
+    end
+    properties (SetAccess = protected)
         NumParams; %Number of model params (i.e., model dimensionality)
         NumHyperparams; %Number of hyper-parameters, (i.e., the parameters to the model's prior)
     end %read-only properties
@@ -47,7 +48,8 @@ classdef MappelBase < MexIFace.IFaceMixin
     % Size and type are checked, and cannot be changed.
     properties
         ImageSize; % 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
-        PSF_Sigma; %1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+        PSFSigmaMin; %1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+        PSFSigmaMax; %1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
         Hyperparams; % [NumHyperparams,1] vector of hyperparams.
         ParamNames;  % [NumParams,1] cellarray of param names
         HyperparamNames; % [NumHyperparams,1] cellarray of hyperparam names
@@ -71,13 +73,15 @@ classdef MappelBase < MexIFace.IFaceMixin
         DefauktGPUGaussMLE_Iterations = 15; %GPUGaussMLE is supported for Win64 only.
     end
 
-    properties (Abstract=true, Access=protected)
+    properties (Access=protected)
         GPUGaussMLEFitType;
     end
     
     methods
-        function obj = MappelBase(varargin)
-            % obj = MappelBase(iface,imsize,psf_sigma) - Make a new MappelBase for point localization in 2D.
+        function obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max)
+            % obj = MappelBase(iface, imsize, psf_sigma) - Make a new MappelBase for fixed-sigma models
+            % obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max) 
+            %                                           - Make a new MappelBase for free sigma models
             %
             % (in) iface: The iface object mex object nemae
             % (in) imsize: uint32 size:[ImageDim, 1] - size of image in pixels on each side (min: obj.MinSize)
@@ -96,14 +100,14 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (in) psf_sigma_max: double size:[ImageDim, 1] >psf_sigma_min - maximum of PSF in pixels
 
             % (out) obj - A new object
-            obj = obj@MexIFace.IFaceMixin(iface, imsize, psf_sigma_min, psf_sigma_max);
+            obj = obj@MexIFace.IFaceMixin(iface);
             if any(imsize<obj.MinSize)
                 error('MappelBase:Constructor:InvalidValue','imsize too small')
             end
             if any(psf_sigma_min<=0)
                 error('MappelBase:Constructor:InvalidValue','psf_sigma must be positive')
             end
-            psf_sigma_min = double(psf_sigma(:)');
+            psf_sigma_min = double(psf_sigma_min(:)');
             if numel(psf_sigma_min)<obj.ImageDim
                 psf_sigma_min = [psf_sigma_min, psf_sigma_min];
             end
@@ -113,16 +117,19 @@ classdef MappelBase < MexIFace.IFaceMixin
             end
             if nargin<4
                 initialized = obj.openIface(imsize, psf_sigma_min);
+                obj.PSFSigmaMin = psf_sigma_min;
+                obj.PSFSigmaMax = psf_sigma_min;
             else
-                psf_sigma_max = double(psf_sigma(:)');
+                psf_sigma_max = double(psf_sigma_max(:)');
                 initialized = obj.openIface(imsize, psf_sigma_min, psf_sigma_max);
+                obj.PSFSigmaMin = psf_sigma_min;
+                obj.PSFSigmaMax = psf_sigma_max;
+            end
             if(~initialized) 
                 error('MappelBase:Constructor:LogicalError','C++ MexIFace initialization failure');
             end
 
-            obj.ImageDim = numel(imsize);
             obj.ImageSize = imsize;
-            obj.PSF_Sigma = psf_sigma;
             obj.ParamNames = obj.call('getParamNames');
             obj.Hyperparams = obj.call('getHyperparams');
             obj.HyperparamNames = obj.call('getHyperparamNames');
@@ -147,7 +154,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (in) name: name of hyperparam (case insensitive)
             % (out) val: scalar value if found.
             % Throws MappelBase:HyperparamNotFound error if cannot find hyperparameter
-            found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first')
+            found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first');
             if isempty(found)
                 error('MappelBase:HyperparamNotFound',['Unknown hyperparameter: ', name])
             end
@@ -162,7 +169,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (in) name: name of hyperparam (case insensitive)
             % (in) val: new scalar value.
             % Throws MappelBase:HyperparamNotFound error if cannot find hyperparameter
-            found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first')
+            found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first');
             if isempty(found)
                 error('MappelBase:HyperparamNotFound',['Unknown hyperparameter: ', name])
             end
@@ -222,8 +229,8 @@ classdef MappelBase < MexIFace.IFaceMixin
         function image = modelImage(obj, theta)
             % image = obj.modelImage(theta)
             %
-            % (in) theta: an (NumParams X n) double of theta values
-            % (out) image: a double (imsize X imsize X n) image stack
+            % (in) theta: size:[NumParams, n] double of theta values
+            % (out) image: size:[flip(ImageSize), n] image stack
             theta=obj.checkTheta(theta);
             image= obj.call('modelImage', theta);
         end
@@ -235,8 +242,8 @@ classdef MappelBase < MexIFace.IFaceMixin
             % goes from left to right, and returns a DIP image (or image
             % sequence.)
             %
-            % (in) theta: an (NumParams X n) double of theta values
-            % (out) image: a (imsize X imsize X n) DIP image stack of model (mean) value at each pixel.
+            % (in) theta: size:[NumParams, n] double of theta values
+            % (out) image: size:[flip(ImageSize), n] DIP image stack of model (mean) value at each pixel.
             image = dip_image(obj.modelImage(theta));
         end
 
@@ -372,7 +379,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
             % negative- or positive-definite.
             %
-            % (in) image: an image, double size:[imsizeY,imsizeX]
+            % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (in) negate: optional) boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
@@ -381,7 +388,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
             % (out) definite_hess: (optional) negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
-            if nargin<3
+            if nargin<4
                 negate = false;
             end
             [varargout{1:nargout}] = obj.call('modelObjective', image, theta, negate);
@@ -405,7 +412,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
             % negative- or positive-definite.
             %
-            % (in) image: an image, double size:[imsizeY,imsizeX]
+            % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
@@ -414,10 +421,10 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
             % (out) definite_hess: (optional)  negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
-            if nargin<3
+            if nargin<4
                 negate = false;
             end
-            [varargout{1:nargout}] = obj.call('modeliObjectiveAPosteriori', image, theta, negate);
+            [varargout{1:nargout}] = obj.call('modelObjectiveAPosteriori', image, theta, negate);
         end
 
         function varargout = modelObjectiveLikelihood(obj, image, theta, negate)
@@ -438,7 +445,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
             % negative- or positive-definite.
             %
-            % (in) image: an image, double size:[imsizeY,imsizeX]
+            % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
@@ -447,10 +454,10 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
             % (out) definite_hess: (optional) negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
-            if nargin<3
+            if nargin<4
                 negate = false;
             end
-            [varargout{1:nargout}] = obj.call('modeliObjectiveLikelihood', image, theta, negate);
+            [varargout{1:nargout}] = obj.call('modelObjectiveLikelihood', image, theta, negate);
         end
 
         function varargout = modelObjectivePrior(obj, theta, negate)
@@ -482,7 +489,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             if nargin<3
                 negate = false;
             end
-            [varargout{1:nargout}] = obj.call('modeliObjectivePrior', theta, negate);
+            [varargout{1:nargout}] = obj.call('modelObjectivePrior', theta, negate);
         end
 
         function varargout = modelObjectiveComponents(obj, image, theta)
@@ -495,15 +502,12 @@ classdef MappelBase < MexIFace.IFaceMixin
             %  will have their individual values returned
             % NumComponets is prod(ImageSize) for MLE models and prod(ImageSize)+NumParams for MAP models where each of the final components corresponds to a single parameter in the
             %
-            % (in) image: an image, double size:[imsizeY,imsizeX]
+            % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (out) llh: log likelihood components size:[1,NumComponents]
             % (out) grad: (optional) components of grad of log likelihood size:[NumParams,NumComponents*]  * there is only a single extra grad component added for prior in MAP models.
             % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams,NumComponents*] * there is only a single extra hess component added for prior in MAP models.
-            if nargin<3
-                negate = false;
-            end
-            [varargout{1:nargout}] = obj.call('modelObjectiveComponents', image, theta, negate);
+            [varargout{1:nargout}] = obj.call('modelObjectiveComponents', image, theta);
         end
 
         function fisherI = expectedInformation(obj, theta)
@@ -580,7 +584,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             if nargin<4
                 confidence = obj.DefaultConfidenceLevel;
             end
-            [Observed_lb, observed_ub] = obj.call('errorBoundsExpected',image, theta_mle, confidence);
+            [expected_lb, expected_ub] = obj.call('errorBoundsExpected',image, theta_mle, confidence);
         end
 
         function [profile_lb, profile_ub, theta_mle_out] = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, algorithm, params_to_estimate)
@@ -629,7 +633,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (out) posterior_mean: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
             % (out) credible_lb: (optional) size:[NumParams,n] posterior credible interval lower bounds for each parameter for each image
             % (out) credible_ub: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
-            [posterior_mean, credible_lb, credible_ub] = obj.estimatePosterior(image, theta_mle, confidence, num_samples, burnin, thin)
+            [varargout{1:nargout}] = obj.estimatePosterior(image, theta_mle, confidence, num_samples, burnin, thin);
         end
 
         function varargout = estimate(obj, image, estimator_algorithm, theta_init)
@@ -659,7 +663,7 @@ classdef MappelBase < MexIFace.IFaceMixin
                 theta_init = [];
             end
             %Check to make sure we have a theta_init for each image
-            nIms = size(image, ndims(obj.imsize)+1);
+            nIms = size(image, obj.ImageDim+1);
             theta_init = obj.checkThetaInit(theta_init, nIms);
 
             if ~ischar(estimator_algorithm)
@@ -677,30 +681,30 @@ classdef MappelBase < MexIFace.IFaceMixin
             end
         end
 
-        function varargout = computeProfileLikelihood(obj, image, parameter, values, estimator_algorithm)
-            % [profile_likelihood, theta_mle, theta_mle_llh, obsI] = obj.computeProfileLikelihood(image, parameter, values, estimator_algorithm)
-            %
-            % Compute the profile likelihood for a single image and parameter, over a range of values.  For each value, the parameter
-            % of interest is fixed and the other parameters are optimized with the estimator_algorithm, and the llh is returned as the
-            % profile_likelihood.
-            %
-            % (in) image: a single images
-            % (in) parameter: integer 1<=parameter<=obj.NumParams
-            % (in) values: vector of values to estimates the parameter profile likelihood at.
-            % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion')
-            %                           Valid names are in obj.EstimationMethods
-            % (out) profile_likelihood: size:[N,1] profile likelihood for the parameter at each value.,
-            % (out) theta_mle: (optional) size[NumParams,1] theta (MLE or MAP) estimate.  The mode of the profile likelihood.
-            % (out) theta_mle_llh: (optional) scalar the log-likelihood at the MLE/MAP theta.
-            % (out) obsI: (optional) size:[NumParams,NumParams] observed information at MLE/MAP theta
-        end
+%         function varargout = computeProfileLikelihood(obj, image, parameter, values, estimator_algorithm)
+%             % [profile_likelihood, theta_mle, theta_mle_llh, obsI] = obj.computeProfileLikelihood(image, parameter, values, estimator_algorithm)
+%             %
+%             % Compute the profile likelihood for a single image and parameter, over a range of values.  For each value, the parameter
+%             % of interest is fixed and the other parameters are optimized with the estimator_algorithm, and the llh is returned as the
+%             % profile_likelihood.
+%             %
+%             % (in) image: a single images
+%             % (in) parameter: integer 1<=parameter<=obj.NumParams
+%             % (in) values: vector of values to estimates the parameter profile likelihood at.
+%             % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion')
+%             %                           Valid names are in obj.EstimationMethods
+%             % (out) profile_likelihood: size:[N,1] profile likelihood for the parameter at each value.,
+%             % (out) theta_mle: (optional) size[NumParams,1] theta (MLE or MAP) estimate.  The mode of the profile likelihood.
+%             % (out) theta_mle_llh: (optional) scalar the log-likelihood at the MLE/MAP theta.
+%             % (out) obsI: (optional) size:[NumParams,NumParams] observed information at MLE/MAP theta
+%         end
 
-        function [theta, obsI, llh, stats, sample, sample_rllh] = estimateDebug(obj, image, estimator_algorithm, theta_init)
+        function varargout = estimateDebug(obj, image, estimator_algorithm, theta_init)
             % [theta, obsI, llh, stats, sample, sample_rllh] = estimatedebug(image, estimator_algorithm, theta_init)
             %
             % Debugging routine.  Works for a single image.  Returns entire sequence of evaluated points and their llh.
             %
-            % (in) image: a size:[imsizeY, imsizeX] image
+            % (in) image: a size:[flip(ImageSize)] image
             % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'Newton')
             %           Valid names are in obj.EstimationMethods
             % (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
@@ -735,7 +739,9 @@ classdef MappelBase < MexIFace.IFaceMixin
                 otherwise
                     [varargout{1:nargout}] = obj.call('estimateDebug',image, estimator_algorithm, theta_init);
             end
-            stats = MexIFace.IFaceMixin.convertStatsToStructs(stats);
+            if nargout==6
+                varargout{6} = MexIFace.IFaceMixin.convertStatsToStructs(varargout{6});
+            end
         end    
 
         function varargout = estimatePosterior(obj, image, theta_init, confidence, num_samples, burnin, thin)
@@ -766,7 +772,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (out) mcmc_sample_llh: (optional) size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC each column corresponds to an image.
 
             image = obj.checkImage(image);
-            nIms = size(image, ndims(obj.imsize)+1);
+            nIms = size(image, obj.ImageDim+1);
             if nargin<3
                 theta_init = [];
             end
@@ -790,7 +796,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             [varargout{1:nargout}] = obj.call('estimatePosterior',image, theta_init, confidence, unit64(num_samples), uint64(burnin), unit64(thin));
         end
 
-        function [sample, sample_llh, candidates, candidate_llh] = estimatePosteriorDebug(obj, image, theta_init, num_samples)
+        function varargout = estimatePosteriorDebug(obj, image, theta_init, num_samples)
             % [sample, sample_llh, candidates, candidate_llh] = obj.estimatePosteriorDebug(image, theta_init, num_samples)
             %
             % Debugging routine.  Works on a single image.  Get out the exact MCMC sample sequence, as well as the candidate sequence.
@@ -817,7 +823,7 @@ classdef MappelBase < MexIFace.IFaceMixin
         end
 
         %% Model property accessors
-        function set.Hyperparams(obj,hyperparams)
+        function set.Hyperparams(obj, hyperparams)
             if numel(hyperparams) ~= obj.NumHyperparams
                 error('MappelBase:setHyperParms:InvalidSize', ['Invalid size. Expecting: ' obj.NumHyperparams ' elements']);
             elseif any(hyperparams<0)
@@ -834,11 +840,11 @@ classdef MappelBase < MexIFace.IFaceMixin
                 error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumHyperparams ' elements']);
             end
             try
-                names = cellstr(names)
+                names = cellstr(names);
             catch Err
                 switch ME.identifier
                     case 'MATLAB:cellstr:MustContainText'
-                        error('MappelBase:InvalidType', ['Invalid types given.  Expected char arrays or string objects'])
+                        error('MappelBase:InvalidType', 'Invalid types given.  Expected char arrays or string objects')
                     otherwise
                         rethrow(Err)
                 end
@@ -854,14 +860,14 @@ classdef MappelBase < MexIFace.IFaceMixin
 
         function set.ParamNames(obj,names)
             if numel(names) ~= obj.NumParams
-                error('MappelBaseInvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
+                error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
             end
             try
-                names = cellstr(names)
+                names = cellstr(names);
             catch Err
                 switch ME.identifier
                     case 'MATLAB:cellstr:MustContainText'
-                        error('MappelBase:InvalidType', ['Invalid types given.  Expected char arrays or string objects'])
+                        error('MappelBase:InvalidType', 'Invalid types given.  Expected char arrays or string objects')
                     otherwise
                         rethrow(Err)
                 end
@@ -880,11 +886,11 @@ classdef MappelBase < MexIFace.IFaceMixin
                 error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
             end
             try
-                units = cellstr(units)
+                units = cellstr(units);
             catch Err
                 switch ME.identifier
                     case 'MATLAB:cellstr:MustContainText'
-                        error('MappelBase:InvalidType', ['Invalid types given.  Expected char arrays or string objects'])
+                        error('MappelBase:InvalidType', 'Invalid types given.  Expected char arrays or string objects')
                     otherwise
                         rethrow(Err)
                 end
@@ -897,11 +903,11 @@ classdef MappelBase < MexIFace.IFaceMixin
                 error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
             end
             try
-                desc = cellstr(desc)
+                desc = cellstr(desc);
             catch Err
                 switch ME.identifier
                     case 'MATLAB:cellstr:MustContainText'
-                        error('MappelBase:InvalidType', ['Invalid types given.  Expected char arrays or string objects'])
+                        error('MappelBase:InvalidType', 'Invalid types given.  Expected char arrays or string objects')
                     otherwise
                         rethrow(Err)
                 end
@@ -914,22 +920,22 @@ classdef MappelBase < MexIFace.IFaceMixin
                 error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
             end
             if ~all(new_bound>obj.ParamLBound)
+                if ~isempty(obj.ParamUBound) %avoid calling on fist setting in constructor
+                    obj.call('setBounds',obj.ParamLBound, new_bound); %Set C++ object member variables
+                end
                 error('MappelBase:InvalidBound', 'Invalid bound must be greater than ParamLBound.');
-            end
-            if ~isempty(obj.ParamUBound) %avoid calling on fist setting in constructor
-                obj.call('setBounds',obj.ParamLBound, new_bound); %Set C++ object member variables
-            end
+            end    
             obj.ParamUBound = new_bound; % Set local property
         end
 
         function set.ParamLBound(obj,new_bound)
             if numel(new_bound) ~= obj.NumParams
                 error('MappelBase:InvalidSize', ['Invalid size. Expecting ' obj.NumParams ' elements']);
-            end
-            if ~all(new_bound<obj.ParamUBound)
-                error('MappelBase:InvalidBound', 'Invalid bound must be less than ParamUBound.');
-            end
+            end    
             if ~isempty(obj.ParamLBound) %avoid calling on fist setting in constructor
+                if ~all(new_bound<obj.ParamUBound)
+                    error('MappelBase:InvalidBound', 'Invalid bound must be less than ParamUBound.');
+                end
                 obj.call('setBounds',new_bound, obj.ParamUBound); %Set C++ object member variables
             end
             obj.ParamLBound = new_bound; % Set local property
@@ -940,10 +946,10 @@ classdef MappelBase < MexIFace.IFaceMixin
             % Test the model fit of a 1-parameter constant background model to the stack of images.
             % The mle estimate for a 1-parameter baground parameter is just the mean of the image.
             % The log-likelihood is calculated at this MLE estimate.
-            % (in) ims: a double size:[imsizeY, imsizeX, n] image stack
+            % (in) ims: a double size:[flip(ImageSize), n] image stack
             % (out) llh: a length N vector of the LLH for each image for the consant-background model
             % (out) theta_bg_mle: a length N vector of the estimated MLE constant background.
-            npixels = prod(obj.imsize);
+            npixels = prod(obj.ImageSize);
             ims = reshape(ims,npixels,[]);
             theta_bg_mle = mean(ims)';
             llh =  log(theta_bg_mle).*sum(ims)' - npixels*theta_bg_mle - sum(gammaln(ims+1))';
@@ -962,7 +968,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             %                          the constant bg is more likely (even though it has only 1 free parametet)
             %                          will be rejected.  These arguably should always be rejected.  It
             %                          indicates an almost certainly bad fit.
-            % (in) ims: a double size:[imsizeY, imsizeX, n] image stack
+            % (in) ims: a double size:[flip(ImageSize), n] image stack
             % (in) theta_mle: a double size:[NumParams, n] sequence of theta MLE values for each image in
             %                 ims
             % (out) pass: a boolean length N vector which is true if the emitter model passes for this test.
@@ -985,9 +991,9 @@ classdef MappelBase < MexIFace.IFaceMixin
             % In this model each pixel has its own parameter and that pixels mle will of course be the
             % value of the pixel itself.  Unlike the constant bg model there is no point to return the
             % mle values themselves since they are just the images.
-            % (in) ims: a double size:[imsizeY, imsizeX, n] image stack
+            % (in) ims: a double size:[flip(ImageSize), n] image stack
             % (out) llh: a length N vector of the LLH for each image for the consant-background model
-            npixels = prod(obj.imsize);
+            npixels = prod(obj.ImageSize);
             ims = reshape(ims,npixels,[]);
             llh = sum(ims.*log(ims)-ims-gammaln(ims+1))';
         end
@@ -997,7 +1003,7 @@ classdef MappelBase < MexIFace.IFaceMixin
                 theta_mle = obj.estimate(ims);
             end
             emitter_aic = 2*obj.NumParams - 2*obj.LLH(ims,theta_mle);
-            npixels = prod(obj.imsize);
+            npixels = prod(obj.ImageSize);
             apparent_bg_aic = 2*npixels - 2*obj.noiseBackgroundModelLLH(ims);
             pass = emitter_aic < apparent_bg_aic;
             bg_prob = min(1,exp((emitter_aic - apparent_bg_aic)/2));
@@ -1029,7 +1035,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             end
             error = theta_est-repmat(theta,1,nTrials);
             rmse = sqrt(mean(error.*error,2));
-            stddev = std(error')';
+            stddev = std(error,0,1);
         end
 
         function [theta_est, est_var]=evaluateEstimatorOn(obj, estimator, images)
@@ -1037,7 +1043,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % been generated using different models or parameters.
             %
             % (in) estimator - String. Estimator name.  Can be any of the MAP estimator names or 'Posterior N' where N is a count
-            % (in) images - size[imsizeY,imsize,N] -  An array of sample images to test on
+            % (in) images - size[flip(ImageSize),N] -  An array of sample images to test on
             % (out) theta_est - size:[NumParams,N]: the estimated thetas
             % (out) est_var - size:[NumParams,N]: the estimated variance of the estimate at each theta
             if strncmpi(estimator,'posterior',9)
@@ -1093,9 +1099,9 @@ classdef MappelBase < MexIFace.IFaceMixin
                 gridsize=[gridsize gridsize];
             end
             theta_grid=zeros([obj.NumParams, nTrials, gridsize]);
-            sample_grid=zeros([obj.imsize, nTrials, gridsize]);
-            grid_edges.x=linspace(0,obj.imsize(1),gridsize(1)+1);
-            grid_edges.y=linspace(0,obj.imsize(2),gridsize(2)+1);
+            sample_grid=zeros([obj.ImageSize, nTrials, gridsize]);
+            grid_edges.x=linspace(0,obj.ImageSize(1),gridsize(1)+1);
+            grid_edges.y=linspace(0,obj.ImageSize(2),gridsize(2)+1);
             for x=1:gridsize(1)
                 for y=1:gridsize(2)
                     pixel_thetas=repmat(theta,1,nTrials);
@@ -1127,7 +1133,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             if nargin<3
                 theta_err = obj.evaluateEstimatorAt('Newton',theta);
             end
-            srimsize=obj.imsize*res_factor;
+            srimsize=obj.ImageSize*res_factor;
             theta(1)=theta(1)*res_factor;
             theta(2)=theta(2)*res_factor;
             theta_err(1)=theta_err(1)*res_factor;
@@ -1141,8 +1147,8 @@ classdef MappelBase < MexIFace.IFaceMixin
         end
         
         function plotAccuracyMap(obj, grid)
-            x=[0.5,obj.imsize(1)-0.5];
-            y=[0.5,obj.imsize(2)-0.5];
+            x=[0.5,obj.ImageSize(1)-0.5];
+            y=[0.5,obj.ImageSize(2)-0.5];
             imagesc(x,y,grid');
             xlabel('x (pixels)');
             ylabel('y (pixels)');
@@ -1155,7 +1161,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             if ~ispc()
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE on this archetecture');
             end
-            if obj.psf_sigma(1)~=obj.psf_sigma(2) || obj.imsize(1)~=obj.imsize(2)
+            if obj.psf_sigma(1)~=obj.psf_sigma(2) || obj.ImageSize(1)~=obj.ImageSize(2)
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE as boxsize or psf_sigma is not uniform');            
             end
             if obj.GPUGaussMLEFitType<1
@@ -1165,11 +1171,8 @@ classdef MappelBase < MexIFace.IFaceMixin
             psf=obj.psf_sigma(1);
             iters=obj.GPUGaussMLE_Iterations;
             type=obj.GPUGaussMLEFitType;
-            [P, CRLB, LL]=gpugaussmlev2(data, psf, iters, type);
+            [P, ~, LL]=gpugaussmlev2(data, psf, iters, type);
             theta=double(P');
-            crlb = double(CRLB'); 
-            
-            crlb([1,2],:)=crlb([2,1],:); %swap dims
             theta([1,2],:) = theta([2,1],:); %Swap dims
             theta([1,2],:) = theta([1,2],:)+0.5; %Correct for 1/2 pixel
             obsI = obj.observedInformation(image, theta);
@@ -1182,7 +1185,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             if ~ispc()
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE on this archetecture');
             end
-            if obj.psf_sigma(1)~=obj.psf_sigma(2) || obj.imsize(1)~=obj.imsize(2)
+            if obj.psf_sigma(1)~=obj.psf_sigma(2) || obj.ImageSize(1)~=obj.ImageSize(2)
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE as boxsize or psf_sigma is not uniform');            
             end
             if obj.GPUGaussMLEFitType<1
@@ -1192,11 +1195,8 @@ classdef MappelBase < MexIFace.IFaceMixin
             psf=obj.psf_sigma(1);
             iters=obj.GPUGaussMLE_Iterations;
             type=obj.GPUGaussMLEFitType;
-            [P, CRLB, LL]=gpugaussmlev2(data, psf, iters, type);
+            [P, ~, LL]=gpugaussmlev2(data, psf, iters, type);
             theta=double(P');
-            crlb = double(CRLB'); 
-            
-            crlb([1,2],:)=crlb([2,1],:); %swap dims
             theta([1,2],:) = theta([2,1],:); %Swap dims
             theta([1,2],:) = theta([1,2],:)+0.5; %Correct for 1/2 pixel
             obsI = obj.observedInformation(image, theta);
@@ -1207,13 +1207,13 @@ classdef MappelBase < MexIFace.IFaceMixin
             sequence_llh=LL;
         end
 
-        function [theta,  llh, obsI stats]=estimate_fminsearch(obj, image, theta_init)
+        function [theta,  llh, obsI, stats]=estimate_fminsearch(obj, image, theta_init)
             %
             % Uses matlab's fminsearch (Simplex Algorithm) to maximize the LLH for a stack of images.
             % This is available in the core Matlab and does not require the optimization toolbox
             %
             % Uses LLH function evaluation calculations from C++ interface.
-            % (in) image - a stack of N double images size:[imsizeY, imsizeX, n]
+            % (in) image - a stack of N double images size:[flip(ImageSize), n]
             % (in) theta_init: (optional) Initial theta guesses size (NumParams x n).  Values of 0 indicate
             %            that we have no initial guess and the estimator should form its own guess.
             % (out) theta: size:[NumParams, N] double of estimated theta values
@@ -1299,7 +1299,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % All methods use the full hessian except for 'quasi-newton'.  All methods also use the full
             % gradieant values.
             %
-            % (in) image - A stack of N images. type: double size:[imsizeY, imsizeX, N]
+            % (in) image - A stack of N images. type: double size:[flip(ImageSize), N]
             % (in) theta_init - (optional) size:[NumParams, N] array giving initial theta value for each image
             %                   Default: Use Heuristic.
             % (in) algorithm - (optional) string: The algorithm to choose.
@@ -1347,7 +1347,7 @@ classdef MappelBase < MexIFace.IFaceMixin
                     objective = @(im,theta) deal(-obj.LLH(im,theta), -obj.modelGrad(im,theta)); % 2 arg (obj,grad)
             end
             problem.options = opts;
-            nIms = size(image, numel(obj.imsize)+1); %number of images to process
+            nIms = size(image, obj.ImageDim+1); %number of images to process
             theta = zeros(obj.NumParams, nIms);
             llh = zeros(nIms,1);
             niters = zeros(nIms,1);
@@ -1384,7 +1384,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % All methods use the full hessian except for 'quasi-newton'.  All methods also use the full
             % gradieant values.
             %
-            % (in) image - A single image. type: double size:[imsizeY, imsizeX]
+            % (in) image - A single image. type: double size:[flip(ImageSize)]
             % (in) theta_init - (optional) size:[NumParams, 1] initial theta value for image
             %                   Default: Use Heuristic.
             % (in) algorithm - (optional) string: The algorithm to choose.
@@ -1479,11 +1479,11 @@ classdef MappelBase < MexIFace.IFaceMixin
         end
 
         function definiteM = choleskyMakeNegativeDefinite(M)
-            definiteM = MappelBase.callstatic('negativeDefiniteCholeskyApprox',A,b);
+            definiteM = MappelBase.callstatic('negativeDefiniteCholeskyApprox',M);
         end
 
         function definiteM = choleskyMakePositiveDefinite(M)
-            definiteM = MappelBase.callstatic('positiveDefiniteCholeskyApprox',A,b);
+            definiteM = MappelBase.callstatic('positiveDefiniteCholeskyApprox',M);
         end
 
         function fig = viewDipImage(image, fig)
@@ -1501,17 +1501,17 @@ classdef MappelBase < MexIFace.IFaceMixin
     
     methods (Access=protected)        
         function image=checkImage(obj, image)
-            ndim=length(obj.imsize);
+            ndim=length(obj.ImageSize);
             if (ndims(image) < ndim) || (ndims(image) > ndim+1)
                 error('MappelBase:checkImage', 'Invalid image dimension');
             end
             if ndim==2
-                if size(image,1)~=obj.imsize(2) || size(image,2)~=obj.imsize(1) 
+                if size(image,1)~=obj.ImageSize(2) || size(image,2)~=obj.ImageSize(1) 
                     error('MappelBase:checkImage', 'Invalid image shape');
                 end
             else
                 imsz=size(image);
-                if any(imsz(ndim:-1:1)~=obj.imsize)
+                if any(imsz(ndim:-1:1)~=obj.ImageSize)
                     error('MappelBase:checkImage', 'Invalid image shape');
                 end
             end

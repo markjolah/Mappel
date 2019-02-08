@@ -17,6 +17,8 @@ MCMCAdaptor1D::MCMCAdaptor1D(double sigma_scale)
 {
     double xsize = get_ubound()(0) - get_lbound()(0);
     eta_x = xsize*sigma_scale;
+    set_intensity_mcmc_sampling();
+    set_background_mcmc_sampling();
 }
 
 MCMCAdaptor1D::MCMCAdaptor1D(const MCMCAdaptor1D &o)

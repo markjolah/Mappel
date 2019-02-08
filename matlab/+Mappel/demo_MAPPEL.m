@@ -48,9 +48,9 @@ actual_CRLB = g2d.CRLB(test_theta); % Compute the actual CRLB at test_theta
 sim_ims = g2d.simulateImage(test_theta, N); %Sample N realizations of the test_theta
 
 tic;
-[etheta, crlb, llh, stats] = g2d.estimateMAP(sim_ims); %Use Newton's method to find MAP estimates for each of a stack of images
-%crlb - Cramer-Rao lower bound (this is in units matching variance, take the sqrt for the standard error)
+[etheta, llh, obsI, stats] = g2d.estimateMAP(sim_ims); %Use Newton's method to find MAP estimates for each of a stack of images
 %llh - The log-liklihood with all constant correction terms included (this will not match cGaussMLE which drops constant factors)
+%obsI - Observed information 
 %stats - [optional] a struct with some statistics on the fitting.
 fit_time=toc;
 rmse = sqrt(mean((repmat(test_theta,1,N)-etheta).^2,2)); % compute root-mean-squared error for the estimator at test_theta with N samples

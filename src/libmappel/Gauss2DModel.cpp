@@ -272,8 +272,8 @@ StatsT Gauss2DModel::get_stats() const
     auto mcmc_stats = MCMCAdaptor2D::get_stats();
     stats.insert(im_stats.begin(), im_stats.end());
     stats.insert(mcmc_stats.begin(), mcmc_stats.end());
-    stats["psf_sigma.0"] = get_psf_sigma(0);
-    stats["psf_sigma.1"] = get_psf_sigma(1);
+    stats["psf_sigma.1"] = get_psf_sigma(0);
+    stats["psf_sigma.2"] = get_psf_sigma(1);
     return stats;
 }
 

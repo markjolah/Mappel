@@ -14,32 +14,30 @@
 classdef Gauss2DMAP < Mappel.MappelBase
     properties (Constant=true)
         Name = 'Gauss2DMAP';
+        ImageDim = 2;
     end% public constant properties
 
-    properties (Access=private, Constant=true)
+    properties (Access=public, Constant=true)
         DefaultParamUnits={'pixels','pixels','#','#'};
         DefaultParamDescription={'x-position', 'y-position', 'Intensity', 'background'};
+    end % public constant properties
+
+    properties (Access=protected, Constant=true)
         DefaultGPUGaussMLEFitType=1; %Fitting mode used for gpugaussmle estimator comparison
-    end % private constant properties
-    
+    end % protected constant properties
+
     methods (Access=public)
-        function obj = Gauss2DMAP(imsize_,psf_sigma_)
+        function obj = Gauss2DMAP(imsize, psf_sigma)
             % obj = Gauss2DMAP(imsize,psf_sigma) - Make a new Gauss2DMAP for
             % point localization in 2D with a fixes PSF.
             % (in) imsize: scalar int - size of image in pixels on each side (min: obj.MinSize)
             % (in) psf_sigma: scalar double>0 - size of PSF in pixels
-            % (out) obj - A new object
-            if isscalar(imsize)
-                imsize = [imsize, imsize];
-            end
-            if isscalar(psf_sigma)
-                psf_sigma = [psf_sigma, psf_sigma];
-            end
-            obj@Mappel.MappelBase(@Mappel.Gauss2DMAP_IFace, imsize_, psf_sigma_);
+            % (out) obj - A new object      
+            obj@Mappel.MappelBase(@Gauss2DMAP_IFace, imsize, psf_sigma);
             % set defaults
             obj.ParamUnits = obj.DefaultParamUnits;
             obj.ParamDescription = obj.DefaultParamDescription;
-            obj.DefaultGPUGaussMLEFitType = obj.DefaultGPUGaussMLEFitTypel;
+            obj.GPUGaussMLEFitType = obj.DefaultGPUGaussMLEFitType;
         end
     end %public methods
 end % classdef

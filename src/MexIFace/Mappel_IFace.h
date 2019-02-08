@@ -327,6 +327,7 @@ void Mappel_IFace<Model>::objModelImage()
     auto theta_stack = getMat();
     auto image_stack = obj->make_image_stack(theta_stack.n_cols);
     methods::model_image_stack(*obj, theta_stack, image_stack);
+    output(image_stack);
 }
 
 template<class Model>
@@ -347,6 +348,7 @@ void Mappel_IFace<Model>::objSimulateImage()
     if (count==1) count = getAsInt<IdxT>();
     auto image_stack = obj->make_image_stack(count);
     methods::simulate_image_stack(*obj, theta_stack, image_stack);
+    output(image_stack);
 }
 
 template<class Model>
@@ -581,7 +583,6 @@ void Mappel_IFace<Model>::objModelObjectivePrior()
     // stencil to compute the RLLH,Grad,Hessian as the 3 outputs, with optional outputs
     // of a (negative/positive) definite corrected hessian and the true LLH with constant terms
     //
-    // (in) image: an image
     // (in) theta: a parameter value size:[NumParams,1] double of theta
     // (in) (optional) negate: boolean. true if objective should be negated, as is the case with
     //                 matlab minimization routines
@@ -590,9 +591,8 @@ void Mappel_IFace<Model>::objModelObjectivePrior()
     // (out) (optional) Hess: hessian of log likelihood double size:[NumParams,NumParams]
     // (out) (optional) definite_hess: hessian of log likelihood double size:[NumParams,NumParams]
     // (out) (optional) LLH: full log likelihood with constant terms, double size:[NumParams,NumParams]
-    checkMinNumArgs(1,3);
-    checkMaxNumArgs(5,3);
-    auto image = getNumeric<ImageShapeT,ImagePixelT>();
+    checkMinNumArgs(1,2);
+    checkMaxNumArgs(5,2);
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
     double negate_scalar = negate ? -1 : 1;

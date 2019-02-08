@@ -6,6 +6,7 @@ _build
 _install
 _win64*
 _gcc4_9*
+_gcc6_5*
 
 .gdb_history
 

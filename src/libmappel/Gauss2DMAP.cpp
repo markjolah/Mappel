@@ -29,7 +29,7 @@ Gauss2DMAP::Gauss2DMAP(const ImageSizeT &_size, const VecT &psf_sigma, Composite
 { }
 
 Gauss2DMAP::Gauss2DMAP(const ImageSizeT &_size, const VecT &psf_sigma, const CompositeDist& _prior)
-    : PointEmitterModel(std::move(_prior)), 
+    : PointEmitterModel(_prior),
       ImageFormat2DBase(_size),
       Gauss2DModel(size, psf_sigma),
       PoissonNoise2DObjective(),

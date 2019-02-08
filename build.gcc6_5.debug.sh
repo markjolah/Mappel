@@ -1,9 +1,9 @@
 #!/bin/bash
-# build.gcc4_9.debug.sh
+# build.gcc6_5.debug.sh
 #
 #
 
-ARCH=gcc4_9
+ARCH=gcc6_5
 FULL_ARCH=x86_64-${ARCH}-linux-gnu
 TOOLCHAIN_FILE=./cmake/UncommonCMakeModules/Toolchains/Toolchain-${FULL_ARCH}.cmake
 INSTALL_PATH=_${ARCH}.install

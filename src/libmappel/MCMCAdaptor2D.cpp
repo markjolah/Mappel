@@ -8,7 +8,7 @@
 
 namespace mappel {
 
-MCMCAdaptor2D::MCMCAdaptor2D() : MCMCAdaptor1D{global_default_mcmc_sigma_scale}
+MCMCAdaptor2D::MCMCAdaptor2D() : MCMCAdaptor2D{global_default_mcmc_sigma_scale}
 { }
 
 MCMCAdaptor2D::MCMCAdaptor2D(double sigma_scale)
