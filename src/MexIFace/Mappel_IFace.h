@@ -66,7 +66,7 @@ protected:
     void objCRLB();
 
     void objEstimate();
-    //void objEstimateProfile();
+    void objEstimateProfileLikelihood();
     void objEstimatePosterior();
 
     void objErrorBoundsObserved();
@@ -128,6 +128,9 @@ void MappelVarSigma_IFace<Model>::objConstruct()
 template<class Model>
 Mappel_IFace<Model>::Mappel_IFace() 
 {
+    //This needs to be set for matlab to use all cores.
+    omp_set_num_threads(std::thread::hardware_concurrency());
+
     //These are used to set properties.
     methodmap["getHyperparams"] = std::bind(&Mappel_IFace::objGetHyperparams, this);
     methodmap["setHyperparams"] = std::bind(&Mappel_IFace::objSetHyperparams, this);
@@ -164,7 +167,7 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["CRLB"] = std::bind(&Mappel_IFace::objCRLB, this);
 
     methodmap["estimate"] = std::bind(&Mappel_IFace::objEstimate, this);
-    //methodmap["estimateProfile"] = std::bind(&Mappel_IFace::objEstimateProfile, this);
+    methodmap["estimateProfileLikelihood"] = std::bind(&Mappel_IFace::objEstimateProfileLikelihood, this);
     methodmap["estimatePosterior"] = std::bind(&Mappel_IFace::objEstimatePosterior, this);
 
     methodmap["errorBoundsObserved"] = std::bind(&Mappel_IFace::objErrorBoundsObserved, this);
@@ -183,10 +186,6 @@ Mappel_IFace<Model>::Mappel_IFace()
     staticmethodmap["positiveDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticPositiveDefiniteCholeskyApprox, this);
     staticmethodmap["negativeDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticNegativeDefiniteCholeskyApprox, this);
 
-
-    std::cout<<"MappelIFace. Preparing  Model: "<<Model::name<<std::endl;
-    std::cout<<"MappelIFace. Preparing  Model: "<<std::thread::hardware_concurrency()<<std::endl;
-    omp_set_num_threads(std::thread::hardware_concurrency());
 }
 
 template<class Model>
@@ -744,6 +743,46 @@ void Mappel_IFace<Model>::objEstimateDebug()
 }
 
 template<class Model>
+void Mappel_IFace<Model>::objEstimateProfileLikelihood()
+{
+    // profile_likelihood, profile_parameters,stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+    //
+    // Compute the profile log-likelihood for a single image and single parameter, over a range of values.  For each value, the parameter
+    // of interest is fixed and the other parameters are optimized with the estimator_algorithm.
+    // Values will be computed in parallel with OpenMP.
+    //
+    // (in) image: a single images
+    // (in) fixed_parameters: uint64 [NParams,1] 0=free 1=fixed.  At least one paramer must be fixed and at least one parameter must be free.
+    // (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximimize the other (free) parameters at.
+    // (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
+    // (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
+    //                  If only a single parameter [NumParams,1] is given, each profile estimation will use this single theta_init.
+    //                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
+    //                   should be auto estimated.  The values vector will be automatically substituted for any fixed parameters.  Therefore they
+    //                   do not need to be set in theta_init.
+    // (out) profile_likelihood: size:[1,N] profile likelihood for the fixed parameter(s) at each value.,
+    // (out) profile_parameters: size:[NumParams,N] parameters that achieve the profile likelihood maximum at each value.
+    // (out) stats: (optional)  Estimator stats dictionary.
+    checkMinNumArgs(2,5);
+    checkMaxNumArgs(3,5);
+    auto image = getNumeric<ImageShapeT,ImagePixelT>();
+    auto fixed_parameters = getVec<IdxT>();
+    auto fixed_values = getMat();
+    auto estimator_algorithm = getString();
+    auto theta_init = getMat();
+    auto N = fixed_values.n_rows;
+    auto profile_llh = makeOutputArray(N);
+    auto profile_parameters = makeOutputArray(obj->get_num_params(),N);
+    if(nlhs<3) {
+        methods::estimate_profile_likelihood(*obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init, profile_llh, profile_parameters);
+    } else {
+        StatsT stats;
+        methods::estimate_profile_likelihood(*obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init, profile_llh, profile_parameters,stats);
+        output(stats);
+    }
+}
+
+template<class Model>
 void Mappel_IFace<Model>::objEstimatePosterior()
 {
     // [posterior_mean, credible_lb, credible_ub, posterior_cov, mcmc_samples]
@@ -772,7 +811,7 @@ void Mappel_IFace<Model>::objEstimatePosterior()
     // (out) mcmc_samples: (optional) size:[NumParams,max_samples,n] complete sequence of posterior samples generated by MCMC for each image
     // (out) mcmc_sample_llh: (optional) size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC each column corresponds to an image.
     checkMinNumArgs(1,6);
-    checkMinNumArgs(6,6);
+    checkMaxNumArgs(6,6);
     //Get input
     auto ims = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_init_stack = getMat(); //Matlab iface code ensures we get proper shaped array even if user passes empty

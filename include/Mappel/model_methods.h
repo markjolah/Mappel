@@ -12,6 +12,8 @@
 
 namespace mappel {
 
+#include "Mappel/OMPExceptionCatcher/OMPExceptionCatcher.h"
+
 /** @brief Templated functions for operating on a PointEmitterModel
  * 
  * Most methods are overloaded to take a ParamT or a StencilT.  The precomputed stencil for a theta value contains
@@ -248,8 +250,8 @@ namespace methods {
 
     
 } /* namespace mappel::methods */
-
 } /* namespace mappel */
+
 
 #include "Mappel/estimator.h"
 #include "Mappel/mcmc.h"

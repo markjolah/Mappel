@@ -26,6 +26,7 @@ option(OPT_ARMADILLO_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK.
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
 option(OPT_PYTHON "Add support for Python via boost::python" OFF) # Enable Support for Python via Boost::Python
 option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debug features (Armadillo)
+option(OPT_EXAMPLES "Build C++ examples" ON) #Extra debug features (Armadillo)
 # # Hyperspectral code
 # option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
@@ -42,7 +43,8 @@ message(STATUS "OPTION: OPT_EXPORT_BUILD_TREE: ${OPT_EXPORT_BUILD_TREE}")
 message(STATUS "OPTION: OPT_ARMADILLO_INT64: ${OPT_ARMADILLO_INT64}")
 message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
-message(STATUS "OPTION: OPT_EXTRA_DEBUG: ${OPT_EXTRA_DEBUG}") 
+message(STATUS "OPTION: OPT_EXTRA_DEBUG: ${OPT_EXTRA_DEBUG}")
+message(STATUS "OPTION: OPT_EXAMPLES: ${OPT_EXAMPLES}")
 
 #Add UcommonCmakeModules git subpreo to path.
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeModules)
@@ -114,4 +116,9 @@ if(OPT_PYTHON)
     message(STATUS "*** Python Libraries Enabled ***")
     add_subdirectory(src/python) #C++ interface source code
     add_subdirectory(python) #python source code
+endif()
+
+if(OPT_EXAMPLES)
+    message(STATUS "*** C++ Example Programs Enabled ***")
+    add_subdirectory(src/examples) #C++ example libraries
 endif()

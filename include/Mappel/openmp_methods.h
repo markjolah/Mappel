@@ -29,6 +29,7 @@
 namespace mappel {
 namespace methods {
 inline namespace openmp {
+
 /** @brief Parallel sampling of the model prior.
  * 
  * Use: model.make_param_stack() to make a parameter stack of appropriate dimensions for the model
@@ -41,14 +42,16 @@ template<class Model>
 void sample_prior_stack(Model &model, ParamVecT<Model> &theta_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         auto &rng = model.get_rng_generator();
         #pragma omp for
         for(int n=0; n<nthetas; n++){
-            theta_stack.col(n) = model.sample_prior(rng);
+            catcher.run([&]{theta_stack.col(n) = model.sample_prior(rng);});
         }
     }
+    catcher.rethrow();
 }
 
 /** @brief Parallel computation of the model image.
@@ -69,9 +72,13 @@ void model_image_stack(const Model &model,
                        ImageStackT<Model> &image_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        model.set_image_in_stack(image_stack,n, model_image(model, theta_stack.col(n)));
+        catcher.run([&]{
+            model.set_image_in_stack(image_stack,n, model_image(model, theta_stack.col(n)));
+        });
+    catcher.rethrow();
 }
 
 /** @brief Parallel simulation of images from one or more theta.
@@ -96,23 +103,31 @@ void simulate_image_stack(Model &model,
     if (nimages==1 && nthetas==1) {
         auto &rng = model.get_rng_generator();
         model.set_image_in_stack(image_stack,0,simulate_image(model,theta_stack.col(0),rng));
-    } else if (nthetas==1) {
-        auto model_im=model_image(model, theta_stack.col(0));
-        #pragma omp parallel
-        {
-            auto &rng = model.get_rng_generator();
-            #pragma omp for
-            for(int n=0; n<nimages; n++)
-                model.set_image_in_stack(image_stack,n,simulate_image_from_model(model, model_im,rng));
-        }
     } else {
-        #pragma omp parallel
-        {
-            auto &rng = model.get_rng_generator();
-            #pragma omp for
-            for(int n=0; n<nimages; n++)
-                model.set_image_in_stack(image_stack,n,simulate_image(model,theta_stack.col(n),rng));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) {
+            auto model_im=model_image(model, theta_stack.col(0));
+            #pragma omp parallel
+            {
+                auto &rng = model.get_rng_generator();
+                #pragma omp for
+                for(int n=0; n<nimages; n++)
+                    catcher.run([&]{
+                        model.set_image_in_stack(image_stack,n,simulate_image_from_model(model, model_im,rng));
+                    });
+            }
+        } else {
+            #pragma omp parallel
+            {
+                auto &rng = model.get_rng_generator();
+                #pragma omp for
+                for(int n=0; n<nimages; n++)
+                    catcher.run([&]{
+                        model.set_image_in_stack(image_stack,n,simulate_image(model,theta_stack.col(n),rng));
+                    });
+            }
         }
+        catcher.rethrow();
     }
 }
 
@@ -122,9 +137,13 @@ void cr_lower_bound_stack(const Model &model,
                           ParamVecT<Model> &crlb_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        crlb_stack.col(n) = methods::cr_lower_bound(model,theta_stack.col(n));
+        catcher.run([&]{
+            crlb_stack.col(n) = methods::cr_lower_bound(model,theta_stack.col(n));
+        });
+    catcher.rethrow();
 }
 
 template<class Model>
@@ -133,9 +152,13 @@ void expected_information_stack(const Model &model,
                           CubeT &fisherI_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
     for(int n=0; n<nthetas; n++)
-        fisherI_stack.slice(n) = methods::expected_information(model,theta_stack.col(n));
+        catcher.run([&]{
+            fisherI_stack.slice(n) = methods::expected_information(model,theta_stack.col(n));
+        });
+    catcher.rethrow();
 }
 
 template<class Model>
@@ -169,6 +192,48 @@ void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, 
 {
     auto estimator = make_estimator(model,method);
     estimator->estimate_max_stack(data_stack, theta_init_stack, theta_max_stack, theta_max_rllh, obsI_stack);
+    stats = estimator->get_stats();
+}
+
+//default theta_init without stats
+template<class Model>
+void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
+                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters)
+{
+    auto estimator = make_estimator(model,method);
+    auto theta_init = model.make_param_vec(fixed_values.n_elem);
+    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
+}
+
+//default theta_init with stats
+template<class Model>
+void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
+                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters, StatsT &stats)
+{
+    auto estimator = make_estimator(model,method);
+    auto theta_init = model.make_param_vec(fixed_values.n_elem);
+    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
+    stats = estimator->get_stats();
+}
+
+//theta_init without stats
+template<class Model>
+void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
+                                 const ParamVecT<Model> &theta_init,
+                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters)
+{
+    auto estimator = make_estimator(model,method);
+    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
+}
+
+//theta_init with stats
+template<class Model>
+void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
+                                 const ParamVecT<Model> &theta_init,
+                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters, StatsT &stats)
+{
+    auto estimator = make_estimator(model,method);
+    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
     stats = estimator->get_stats();
 }
 
@@ -179,19 +244,22 @@ void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data
     IdxT count = model.get_size_image_stack(data_stack);
     sample_stack.set_size(model.get_num_params(), Nsamples, count);
     sample_rllh_stack.set_size(Nsamples,count);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         auto sample = model.make_param_stack(Nsamples);
         VecT sample_rllh(Nsamples);
         #pragma omp for
-        for(IdxT n=0; n<count; n++){
-            estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n), 
+        for(IdxT n=0; n<count; n++)
+            catcher.run([&]{
+                estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n),
                                  theta_init_stack.col(n), Nsamples, Nburnin, thin, 
                                  sample, sample_rllh);
-            sample_stack.slice(n) = sample;
-            sample_rllh_stack.col(n) = sample_rllh;
-        }
-    }    
+                sample_stack.slice(n) = sample;
+                sample_rllh_stack.col(n) = sample_rllh;
+            });
+    }
+    catcher.rethrow();
 }
 
 template <class Model>
@@ -210,6 +278,7 @@ void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &d
     IdxT count = model.get_size_image_stack(data_stack);
     theta_mean_stack.set_size(model.get_num_params(), count);
     theta_cov_stack.set_size(model.get_num_params(),model.get_num_params(),count);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         auto sample = model.make_param_stack(Nsamples);
@@ -217,15 +286,17 @@ void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &d
         auto theta_mean = model.make_param();
         auto theta_cov = model.make_param_mat();
         #pragma omp for
-        for(IdxT n=0; n<count; n++){
-            estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n), 
+        for(IdxT n=0; n<count; n++)
+            catcher.run([&]{
+                estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n),
                                  theta_init_stack.col(n), Nsamples, Nburnin, thin, 
                                  sample, sample_rllh);
-            mcmc::estimate_sample_posterior(sample,theta_mean, theta_cov);
-            theta_mean_stack.col(n) = theta_mean;
-            theta_cov_stack.slice(n) = theta_cov;
-        }
-    }    
+                mcmc::estimate_sample_posterior(sample,theta_mean, theta_cov);
+                theta_mean_stack.col(n) = theta_mean;
+                theta_cov_stack.slice(n) = theta_cov;
+            });
+    }
+    catcher.rethrow();
 }
 
 template <class Model>
@@ -259,26 +330,28 @@ void error_bounds_observed_stack(const Model &model, const MatT &theta_est_stack
     IdxT count = theta_est_stack.n_cols;
     theta_lb_stack.set_size(model.get_num_params(), count);
     theta_ub_stack.set_size(model.get_num_params(), count);
-//     double z = normal_quantile_twosided(confidence);
     if(obsI_stack.n_slices != count) {
         std::ostringstream msg;
         msg<<"Got inconsistent sizes.  Num theta_est:"<<count<<" #obsI:"<<obsI_stack.n_slices;
         ArrayShapeError(msg.str());
     }
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         auto obsI = model.make_param_mat();
         auto theta_lb = model.make_param();
         auto theta_ub = model.make_param();
         #pragma omp  for
-        for(IdxT n=0; n<count; n++) {
-            obsI = obsI_stack.slice(n);
-            error_bounds_observed(model, theta_est_stack.col(n), obsI, confidence, 
-                                theta_lb, theta_ub);
-            theta_lb_stack.col(n) = theta_lb;
-            theta_ub_stack.col(n) = theta_ub;
-        }
+        for(IdxT n=0; n<count; n++)
+            catcher.run([&]{
+                obsI = obsI_stack.slice(n);
+                error_bounds_observed(model, theta_est_stack.col(n), obsI, confidence,
+                                    theta_lb, theta_ub);
+                theta_lb_stack.col(n) = theta_lb;
+                theta_ub_stack.col(n) = theta_ub;
+            });
     }
+    catcher.rethrow();
 }
 
 template<class Model>
@@ -290,6 +363,7 @@ void error_bounds_posterior_credible_stack(const Model &model, const CubeT &samp
     theta_mean_stack.set_size(Np, count);
     theta_lb_stack.set_size(Np, count);
     theta_ub_stack.set_size(Np, count);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         MatT sample(sample_stack.n_rows,sample_stack.n_cols);
@@ -297,15 +371,17 @@ void error_bounds_posterior_credible_stack(const Model &model, const CubeT &samp
         auto theta_lb = model.make_param();
         auto theta_ub = model.make_param();
         #pragma omp for
-        for(IdxT n=0; n<count; n++) {
-            sample = sample_stack.slice(n);
-            error_bounds_posterior_credible(model, sample, confidence, 
-                                            theta_mean, theta_lb, theta_ub);
-            theta_mean_stack.col(n) = theta_mean;
-            theta_lb_stack.col(n) = theta_lb;
-            theta_ub_stack.col(n) = theta_ub;
-        }
+        for(IdxT n=0; n<count; n++)
+            catcher.run([&]{
+                sample = sample_stack.slice(n);
+                error_bounds_posterior_credible(model, sample, confidence,
+                                                theta_mean, theta_lb, theta_ub);
+                theta_mean_stack.col(n) = theta_mean;
+                theta_lb_stack.col(n) = theta_lb;
+                theta_ub_stack.col(n) = theta_ub;
+            });
     }
+    catcher.rethrow();
 }
 
 } /* namespace mappel::methods::openmp */
@@ -331,9 +407,13 @@ void llh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<M
 {
     auto nthetas = theta_stack.n_cols;
     llh_stack.set_size(nthetas);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
     for(IdxT n=0; n<theta_stack.n_cols; n++)
-        llh_stack(n) = methods::objective::llh(model, image, theta_stack.col(n));
+        catcher.run([&]{
+             llh_stack(n) = methods::objective::llh(model, image, theta_stack.col(n));
+        });
+    catcher.rethrow();
 }
 
 /** @brief Parallel log_likelihood calculations for a stack of images.
@@ -357,19 +437,29 @@ void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const 
     llh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         llh_stack(0) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
-    } else if (nthetas==1) {
-        auto s = model.make_stencil(theta_stack.col(0));
-        #pragma omp parallel for
-        for(IdxT n=0; n<nimages; n++)
-            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), s);
-    } else if (nimages==1) {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nimages; n++)
-            llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) {
+            auto s = model.make_stencil(theta_stack.col(0));
+            #pragma omp parallel for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), s);
+                });
+        } else if (nimages==1) {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+                });
+        } else {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    llh_stack(n) = objective::llh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+                });
+        }
+        catcher.rethrow();
     }
 }
 
@@ -394,19 +484,29 @@ void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const
     rllh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         rllh_stack(0) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
-    } else if (nthetas==1) {
-        auto s = model.make_stencil(theta_stack.col(0));
-        #pragma omp parallel for
-        for(IdxT n=0; n<nimages; n++)
-            rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), s);
-    } else if (nimages==1) {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nimages; n++)
-            rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) {
+            auto s = model.make_stencil(theta_stack.col(0));
+            #pragma omp parallel for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), s);
+                });
+        } else if (nimages==1) {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+                });
+        } else {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    rllh_stack(n) = objective::rllh(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+                });
+        }
+        catcher.rethrow();
     }
 }
 
@@ -417,9 +517,13 @@ void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<
     model.check_param_shape(theta_stack);
     model.check_image_shape(image);
     rllh_stack.set_size(nthetas);
+    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
     for(IdxT n=0; n<nthetas; n++)
-        rllh_stack(n) = objective::rllh(model, image, theta_stack.col(n));
+        catcher.run([&]{
+            rllh_stack(n) = objective::rllh(model, image, theta_stack.col(n));
+        });
+    catcher.rethrow();
 }
 
 
@@ -445,19 +549,29 @@ void grad_stack(const Model &model, const ImageStackT<Model> &image_stack, const
     grad_stack.set_size(model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         grad_stack.col(0) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
-    } else if (nthetas==1) { //Single theta multiple images
-        auto s = model.make_stencil(theta_stack.col(0));
-        #pragma omp for
-        for(IdxT n=0; n<nimages; n++)
-            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), s);
-    } else if (nimages==1) { //Single image multiple thetas
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) { //Single theta multiple images
+            auto s = model.make_stencil(theta_stack.col(0));
+            #pragma omp for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), s);
+                });
+        } else if (nimages==1) { //Single image multiple thetas
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+                });
+        } else {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    grad_stack.col(n) = objective::grad(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+                });
+        }
+        catcher.rethrow();
     }
 }
 
@@ -483,19 +597,29 @@ void hessian_stack(const Model &model, const ImageStackT<Model> &image_stack, co
     hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
-    } else if (nthetas==1) { //Single theta multiple images
-        auto s = model.make_stencil(theta_stack.col(0));
-        #pragma omp for
-        for(IdxT n=0; n<nimages; n++)
-            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), s);
-    } else if (nimages==1) { //Single image multiple thetas
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) { //Single theta multiple images
+            auto s = model.make_stencil(theta_stack.col(0));
+            #pragma omp for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), s);
+                });
+        } else if (nimages==1) { //Single image multiple thetas
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+                });
+        } else {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+                });
+        }
+        catcher.rethrow();
     }
 }
 
@@ -522,19 +646,29 @@ void negative_definite_hessian_stack(const Model &model, const ImageStackT<Model
     hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
-    } else if (nthetas==1) { //Single theta multiple images
-        auto s=model.make_stencil(theta_stack.col(0));
-        #pragma omp parallel for
-        for(IdxT n=0; n<nimages; n++)
-            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), s);
-    } else if (nimages==1) { //Single image multiple thetas
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
     } else {
-        #pragma omp parallel for
-        for(IdxT n=0; n<nthetas; n++)
-            hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+        omp_exception_catcher::OMPExceptionCatcher catcher;
+        if (nthetas==1) { //Single theta multiple images
+            auto s=model.make_stencil(theta_stack.col(0));
+            #pragma omp parallel for
+            for(IdxT n=0; n<nimages; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), s);
+                });
+        } else if (nimages==1) { //Single image multiple thetas
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(n));
+                });
+        } else {
+            #pragma omp parallel for
+            for(IdxT n=0; n<nthetas; n++)
+                catcher.run([&]{
+                    hessian_stack.slice(n) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,n), theta_stack.col(n));
+                });
+        }
+        catcher.rethrow();
     }
 }
 

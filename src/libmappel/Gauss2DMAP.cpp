@@ -8,16 +8,20 @@
 namespace mappel {
 const std::string Gauss2DMAP::name("Gauss2DMAP");
 
-Gauss2DMAP::Gauss2DMAP(ImageCoordT size, double psf_sigma, const std::string &prior_type)
-    : Gauss2DMAP(ImageSizeT(2,arma::fill::ones)*size, VecT(2,arma::fill::ones)*size, prior_type)
+Gauss2DMAP::Gauss2DMAP(ImageCoordT size_, double psf_sigma_, const std::string &prior_type)
+    : Gauss2DMAP(  ImageSizeT{size_,size_}, VecT{psf_sigma_, psf_sigma_} , prior_type)
 { }
     
-Gauss2DMAP::Gauss2DMAP(const ImageSizeT &size, double psf_sigma, const std::string &prior_type)
-    : Gauss2DMAP(size, VecT(2,arma::fill::ones)*size, prior_type)
+Gauss2DMAP::Gauss2DMAP(const ImageSizeT &size_, double psf_sigma_, const std::string &prior_type)
+    : Gauss2DMAP(size_, VecT{psf_sigma_, psf_sigma_} , prior_type)
 { }
 
-Gauss2DMAP::Gauss2DMAP(const ImageSizeT &size, const VecT &psf_sigma, const std::string &prior_type)
-    : Gauss2DMAP(size, psf_sigma, make_default_prior(size,prior_type))
+Gauss2DMAP::Gauss2DMAP(ImageSizeT &&size_, VecT &&psf_sigma_, CompositeDist&& prior_)
+    : PointEmitterModel(std::move(prior_)),
+      ImageFormat2DBase(std::move(size_)),
+      Gauss2DModel(size, std::move(psf_sigma_)),
+      PoissonNoise2DObjective(),
+      MAPEstimator()
 { }
 
 Gauss2DMAP::Gauss2DMAP(const ImageSizeT &_size, const VecT &psf_sigma, CompositeDist&& _prior) 

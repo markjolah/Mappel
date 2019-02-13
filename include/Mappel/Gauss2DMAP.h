@@ -25,8 +25,10 @@ class Gauss2DMAP : public Gauss2DModel, public PoissonNoise2DObjective, public M
 public:
     Gauss2DMAP(ImageCoordT size, double psf_sigma, const std::string &prior_type = DefaultPriorType);
     Gauss2DMAP(const ImageSizeT &size, double psf_sigma, const std::string &prior_type = DefaultPriorType);
-    Gauss2DMAP(const ImageSizeT &size, const VecT &psf_sigma, const std::string &prior_type = DefaultPriorType);
+    template<class IntType, class FloatType>
+    Gauss2DMAP(const arma::Col<IntType> &size, const arma::Col<FloatType> &psf_sigma, const std::string &prior_type = DefaultPriorType);
     Gauss2DMAP(const ImageSizeT &size, const VecT &psf_sigma, CompositeDist&& prior);
+    Gauss2DMAP(ImageSizeT &&size, VecT &&psf_sigma, CompositeDist&& prior);
     Gauss2DMAP(const ImageSizeT &size, const VecT &psf_sigma, const CompositeDist& prior);
     Gauss2DMAP(const Gauss2DMAP &o);
     Gauss2DMAP& operator=(const Gauss2DMAP &o);
@@ -34,6 +36,12 @@ public:
     Gauss2DMAP& operator=(Gauss2DMAP &&o);
     static const std::string name;
 };
+
+template<class IntType, class FloatType>
+Gauss2DMAP::Gauss2DMAP(const arma::Col<IntType> &size_, const arma::Col<FloatType> &psf_sigma_, const std::string &prior_type)
+    : Gauss2DMAP(arma::conv_to<ImageSizeT>::from(size_), arma::conv_to<VecT>::from(psf_sigma_), make_default_prior(arma::conv_to<ImageSizeT>::from(size_),prior_type))
+{ }
+
 
 } /* namespace mappel */
 

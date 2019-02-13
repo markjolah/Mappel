@@ -75,6 +75,9 @@ public:
     void estimate_max_stack(const ModelDataStackT<Model> &im_stack, 
                                 ParamVecT<Model> &theta_est_stack, VecT &rllh_stack, CubeT &obsI_stack);
 
+    virtual void estimate_profile_stack(const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &values, const ParamVecT<Model> &theta_init,
+                                        VecT &profile_likelihood, ParamVecT<Model> &profile_parameters)=0;
+
     /* Statistics */
     virtual StatsT get_stats();
     virtual StatsT get_debug_stats()=0;
@@ -89,6 +92,7 @@ protected:
     virtual StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
                                             ParamVecT<Model> &sequence, VecT &sequence_rllh);
     virtual void compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, ParamT<Model> &theta_est, double &rllh, MatT &obsI);
+    virtual void compute_profile_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, const IdxVecT &fixed_parameters, ParamT<Model> &theta_est, double &rllh);
 
     Model &model;
 
@@ -111,7 +115,9 @@ public:
     ThreadedEstimator(Model &model);
 
     void estimate_max_stack(const ModelDataStackT<Model> &im, const ParamVecT<Model> &theta_init,ParamVecT<Model> &theta, VecT &rllh, CubeT &obsI);
-    
+    void estimate_profile_stack(const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &values, const ParamVecT<Model> &theta_init,
+                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters);
+
     StatsT get_stats();
     StatsT get_debug_stats();
     void clear_stats();
@@ -283,7 +289,11 @@ protected:
         /** @brief Get the saved stencil's theta  */
         ParamT<Model>& saved_theta() {return current_stencil ? s1.theta : s0.theta;}
         int getIteration() const {return seq_len;}
+        void set_fixed_parameters(const IdxVecT &fixed_parameters);
+        VecT fixed_parameter_scalar;
+        bool has_fixed_parameters=false; //True for profile likelihood maximization
     protected:
+
         StencilT<Model> s0,s1; //These two stencils will be alternated as the current and old stencil points
         bool current_stencil; //This alternates to indicated weather s0 or s1 is the current stencil
 
@@ -292,6 +302,7 @@ protected:
         IdxVecT backtrack_idxs;
         int seq_len=0;
         const int max_seq_len;
+
     };
 
     void record_run_statistics(const MaximizerData &data);
@@ -299,7 +310,7 @@ protected:
     StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
     StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
                                     ParamVecT<Model> &sequence, VecT &sequence_rllh);
-
+    void compute_profile_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, const IdxVecT& fixed_parameters, ParamT<Model> &theta_est, double &rllh);
     virtual void maximize(MaximizerData &data)=0;
     bool backtrack(MaximizerData &data);
     bool convergence_test(MaximizerData &data);

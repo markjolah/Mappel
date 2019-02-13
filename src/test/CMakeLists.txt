@@ -14,20 +14,22 @@ file(GLOB GTEST_SRCS test_*.cpp)
 add_executable(${GTEST_EXE} ${GTEST_SRCS})
 target_link_libraries(${GTEST_EXE} ${PROJECT_NAME}::${PROJECT_NAME}) 
 target_link_libraries(${GTEST_EXE} GTest::GTest GTest::Main)
+add_test(NAME gtest_mappel COMMAND ${GTEST_EXE} WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
-# add_executable(trivial trivial.cpp)
-# target_link_libraries(trivial Mappel::Mappel)
 
 add_executable(estimator_speed estimator_speed.cpp)
 target_link_libraries(estimator_speed PUBLIC Mappel::Mappel)
 find_library(GOOGLE_PROFILER profiler)
 target_link_libraries(estimator_speed PRIVATE ${GOOGLE_PROFILER})
-fixup_dependencies(TARGETS estimator_speed EXPORT_BUILD_TREE True)
+if(CMAKE_CROSSCOMPILING)
+    fixup_dependencies(TARGETS estimator_speed EXPORT_BUILD_TREE True)
+endif()
+
+
 # get_target_property(_opts estimator_speed COMPILE_OPTIONS)
 # string(REPLACE "-O0" "-O2" _opts "${_opts}")
 # set_target_properties(estimator_speed PROPERTIES COMPILE_OPTIONS ${_opts})
 
-add_test(NAME gtest_mappel COMMAND ${GTEST_EXE} WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
 # 
 # add_test(NAME GTest COMMAND ${GTEST_EXE})

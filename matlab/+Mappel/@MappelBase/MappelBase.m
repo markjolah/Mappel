@@ -79,9 +79,8 @@ classdef MappelBase < MexIFace.IFaceMixin
     
     methods
         function obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max)
-            % obj = MappelBase(iface, imsize, psf_sigma) - Make a new MappelBase for fixed-sigma models
-            % obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max) 
-            %                                           - Make a new MappelBase for free sigma models
+            % fixed-sigma models: obj = MappelBase(iface, imsize, psf_sigma)
+            %  free-sigma models: obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max)
             %
             % (in) iface: The iface object mex object nemae
             % (in) imsize: uint32 size:[ImageDim, 1] - size of image in pixels on each side (min: obj.MinSize)
@@ -587,15 +586,15 @@ classdef MappelBase < MexIFace.IFaceMixin
             [expected_lb, expected_ub] = obj.call('errorBoundsExpected',image, theta_mle, confidence);
         end
 
-        function [profile_lb, profile_ub, theta_mle_out] = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, algorithm, params_to_estimate)
-            % [profile_lb, profile_ub, theta_mle_out] = obj.errorBoundsProfileLikelihood(image, theta_mle, confidence, algorithm, params_to_estimate)
+        function [profile_lb, profile_ub, theta_mle_out] = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, estimator_algorithm, params_to_estimate)
+            % [profile_lb, profile_ub, theta_mle_out] = obj.errorBoundsProfileLikelihood(image, theta_mle, confidence, estimator_algorithm, params_to_estimate)
             %
             % Compute the error bounds using the profile-likelihood-based interval,
             %
             % (in) image: a stack of N images
             % (in) theta_mle: (optional) a stack of MLE/MAP estimated thetas size:[NumParams,N].  If not provided or set to invalid values the, it will be estimated first.
             % (in) confidence: (optional)  desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
-            % (in) algorithm: (optional) name of optimization algorithm to use. [default=TrustRegion]
+            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
             % (in) params_to_estimate: (optional) boolean vector size:[NumParams,1], true if this parameter should have it's error estimated.
             %                                     This allows disable estimation of parameters that are not of interest.
             % (out) profile_lb: the profile-likelihood-based confidence interval lower bound for parameters, size:[NumParams,N]
@@ -608,12 +607,12 @@ classdef MappelBase < MexIFace.IFaceMixin
                 confidence = obj.DefaultConfidenceLevel;
             end
             if nargin<5
-                algorithm = obj.DefaultEstimatorMethod;
+                estimator_algorithm = obj.DefaultEstimatorMethod;
             end
             if nargin<6
                 params_to_estimate = ones(obj.NumParams,1);
             end
-            [profile_lb, profile_ub, theta_mle_out] = obj.call('errorBoundsProfileLikelihood',image, theta_mle, confidence, algorithm, params_to_estimate);
+            [profile_lb, profile_ub, theta_mle_out] = obj.call('errorBoundsProfileLikelihood',image, theta_mle, confidence, estimator_algorithm, params_to_estimate);
         end
 
         function varargout = errorBoundsPosteriorCredible(obj, image, theta_mle, confidence, num_samples, burnin, thin)
@@ -647,8 +646,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % 'Newton' or 'TrustRegion' are suggested as the most robust estimators.
             %
             % (in) image: a stack of N images
-            % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion')
-            %           Valid names are in obj.EstimationMethods
+            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
             % (in) theta_init: (optional) Initial theta guesses size:[NumParams, N].  Values of 0 indicate
             %            that we have no initial guess and the estimator should form its own guess.
             % (out) theta: size:[NumParams, N] estimated theta maximum for each image.
@@ -681,23 +679,42 @@ classdef MappelBase < MexIFace.IFaceMixin
             end
         end
 
-%         function varargout = computeProfileLikelihood(obj, image, parameter, values, estimator_algorithm)
-%             % [profile_likelihood, theta_mle, theta_mle_llh, obsI] = obj.computeProfileLikelihood(image, parameter, values, estimator_algorithm)
-%             %
-%             % Compute the profile likelihood for a single image and parameter, over a range of values.  For each value, the parameter
-%             % of interest is fixed and the other parameters are optimized with the estimator_algorithm, and the llh is returned as the
-%             % profile_likelihood.
-%             %
-%             % (in) image: a single images
-%             % (in) parameter: integer 1<=parameter<=obj.NumParams
-%             % (in) values: vector of values to estimates the parameter profile likelihood at.
-%             % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion')
-%             %                           Valid names are in obj.EstimationMethods
-%             % (out) profile_likelihood: size:[N,1] profile likelihood for the parameter at each value.,
-%             % (out) theta_mle: (optional) size[NumParams,1] theta (MLE or MAP) estimate.  The mode of the profile likelihood.
-%             % (out) theta_mle_llh: (optional) scalar the log-likelihood at the MLE/MAP theta.
-%             % (out) obsI: (optional) size:[NumParams,NumParams] observed information at MLE/MAP theta
-%         end
+        function varargout = estimateProfileLikelihood(obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+            % [profile_likelihood, profile_parameters, stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+            %
+            % Compute the profile likelihood for a single image and single parameter, over a range of values.  For each value, the parameter
+            % of interest is fixed and the other parameters are optimized with the estimator_algorithm in parallel with OpenMP.
+            %
+            % (in) image: a single images
+            % (in) fixed_parameters: uint64 [NParams,1] 0=free 1=fixed.  At least one paramer must be fixed and at least one parameter must be free.
+            % (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximimize the other (free) parameters at.
+            % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
+            % (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
+            %                  If only a single parameter [NumParams,1] is given, each profile estimation will use this single theta_init.
+            %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
+            % (out) profile_likelihood: size:[N,1] profile likelihood for the parameter at each value.,
+            % (out) profile_parameters: (optional) size:[NumParams,N] parameters that achieve the profile likelihood maximum at each value.
+            % (out) stats: (optional) Estimator stats dictionary.
+            image = obj.checkImage(image);
+            if nargin<5
+                estimator_algorithm = obj.DefaultEstimatorMethod;
+            end
+            if nargin<6
+                theta_init = [];
+            end
+            fixed_parameters = unit64(fixed_parameters~=0);
+            Nfixed = sum(fixed_parameters);
+            if Nfixed<1 || Nfixed>obj.Nparams
+                error('MappelBase','InvalidValue','fixed_parameters should have at least one fixed and at least one free parameter');
+            end
+            fixed_values_sz = size(vfixed_alues);
+            if fixed_values_sz(1) ~= Nfixed
+                error('MappelBase','InvalidSize','fixed_values must have one row for each parameter indicated in fixed_parameters');
+            end
+            theta_init = obj.checkThetaInit(theta_init, sz(2)); %expand theta_init to size:[NumParams,n]
+
+            [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+        end
 
         function varargout = estimateDebug(obj, image, estimator_algorithm, theta_init)
             % [theta, obsI, llh, stats, sample, sample_rllh] = estimatedebug(image, estimator_algorithm, theta_init)
@@ -705,8 +722,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % Debugging routine.  Works for a single image.  Returns entire sequence of evaluated points and their llh.
             %
             % (in) image: a size:[flip(ImageSize)] image
-            % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'Newton')
-            %           Valid names are in obj.EstimationMethods
+            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
             % (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
             %                   should be auto estimated.
@@ -783,7 +799,7 @@ classdef MappelBase < MexIFace.IFaceMixin
                 error('MappelBase:InvalidParameterValue', ['Bad confidence level for credible intervals: ', condfidence]);
             end
             if nargin<5 || isempty(num_samples) || num_samples<=1
-                num_samples = obj.DefaultMCMCMaxSamples;
+                num_samples = obj.DefaultMCMCNumSamples;
             end
             if nargin<6 || isempty(burnin) || burnin<0
                 burnin = obj.DefaultMCMCBurnin;
@@ -793,7 +809,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             elseif thin < 0
                 error('MappelBase:InvalidParameterValue', ['Bad MCMC thin value ', thin]);
             end
-            [varargout{1:nargout}] = obj.call('estimatePosterior',image, theta_init, confidence, unit64(num_samples), uint64(burnin), unit64(thin));
+            [varargout{1:nargout}] = obj.call('estimatePosterior',image, theta_init, confidence, uint64(num_samples), uint64(burnin), uint64(thin));
         end
 
         function varargout = estimatePosteriorDebug(obj, image, theta_init, num_samples)
@@ -1038,7 +1054,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             stddev = std(error,0,1);
         end
 
-        function [theta_est, est_var]=evaluateEstimatorOn(obj, estimator, images)
+        function [theta_est, obsI]=evaluateEstimatorOn(obj, estimator, images)
             %Evaluate this 2D estimator at a particular theta using the given samples which may have
             % been generated using different models or parameters.
             %
@@ -1094,14 +1110,15 @@ classdef MappelBase < MexIFace.IFaceMixin
             %                   suggest: [30 30]
             % (out) theta_grid - size:[obj.NumParams, nTrials,gridsize(1),gridsize(2)]
             % (out) sample_grid - size:[sizeY,sizeX,nTrials,gridsize(1),gridsize(2)]
-            theta=theta(:);
+            theta = theta(:);
+            
             if isscalar(gridsize)
                 gridsize=[gridsize gridsize];
             end
-            theta_grid=zeros([obj.NumParams, nTrials, gridsize]);
-            sample_grid=zeros([obj.ImageSize, nTrials, gridsize]);
-            grid_edges.x=linspace(0,obj.ImageSize(1),gridsize(1)+1);
-            grid_edges.y=linspace(0,obj.ImageSize(2),gridsize(2)+1);
+            theta_grid = zeros([obj.NumParams, nTrials, gridsize]);
+            sample_grid = zeros([flip(obj.ImageSize), nTrials, gridsize]);
+            grid_edges.x = linspace(0,double(obj.ImageSize(1)),gridsize(1)+1);
+            grid_edges.y = linspace(0,double(obj.ImageSize(2)),gridsize(2)+1);
             for x=1:gridsize(1)
                 for y=1:gridsize(2)
                     pixel_thetas=repmat(theta,1,nTrials);
@@ -1548,10 +1565,10 @@ classdef MappelBase < MexIFace.IFaceMixin
             if isempty(theta_init)
                 theta_init = zeros(obj.NumParams,nIms);
             elseif isvector(theta_init)
-                if numel(theta_init)~=obj.NumParams
+                if numel(theta_init) ~= obj.NumParams
                     error('Mappel:thetaInitValue','Invalid theta init shape');
                 end
-                theta_init=repmat(theta_init(:),1,nIms);
+                theta_init = repmat(theta_init(:),1,nIms);
             elseif any(size(theta_init) ~= [obj.NumParams, nIms])
                 error('MappelBase:InvalidValue','Invalid theta init shape' );
             end    
