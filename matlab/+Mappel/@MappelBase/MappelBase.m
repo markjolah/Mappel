@@ -6,7 +6,7 @@
 % Mappel base class interface for point-emitter models.
 
 
-classdef MappelBase < MexIFace.IFaceMixin
+classdef MappelBase < MexIFace.MexIFaceMixin
     %
     % This base class implements most of the methods for each of the Mappel Models classes.  The concrete classes pass their MEX module name to
     % the MappelBase constructor which manages the initialization of the object
@@ -99,7 +99,7 @@ classdef MappelBase < MexIFace.IFaceMixin
             % (in) psf_sigma_max: double size:[ImageDim, 1] >psf_sigma_min - maximum of PSF in pixels
 
             % (out) obj - A new object
-            obj = obj@MexIFace.IFaceMixin(iface);
+            obj = obj@MexIFace.MexIFaceMixin(iface);
             if any(imsize<obj.MinSize)
                 error('MappelBase:Constructor:InvalidValue','imsize too small')
             end
@@ -115,12 +115,12 @@ classdef MappelBase < MexIFace.IFaceMixin
                 imsize = [imsize, imsize];
             end
             if nargin<4
-                initialized = obj.openIface(imsize, psf_sigma_min);
+                initialized = obj.openIFace(imsize, psf_sigma_min);
                 obj.PSFSigmaMin = psf_sigma_min;
                 obj.PSFSigmaMax = psf_sigma_min;
             else
                 psf_sigma_max = double(psf_sigma_max(:)');
-                initialized = obj.openIface(imsize, psf_sigma_min, psf_sigma_max);
+                initialized = obj.openIFace(imsize, psf_sigma_min, psf_sigma_max);
                 obj.PSFSigmaMin = psf_sigma_min;
                 obj.PSFSigmaMax = psf_sigma_max;
             end

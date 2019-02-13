@@ -13,10 +13,6 @@
 #   COPY_GLIBC_LIBS - [UNIX only] [DANGEROUS} [default: off] Copy libraries provided glibc [i.e. libc, ld-linux-x86_64 etc.].
 #                      Also copy in Glibc libraries.  WARNING. This is almost certainly going to cause problems as
 #                     the version of libc and ld-linux-x86_64 must match exactly.  For now this is disabled.
-#
-#   EXPORT_BUILD_TREE - [default: off] Fixup the libraries for the build-tree export
-#   LINK_INSTALLED_LIBS - [default: off] [WIN32 only] [deprecated: does not seem to be viable option] instead of copying into current directory make a symlink if dep us under in the install_prefix
-#
 # Single argument keywords:
 #   COPY_DESTINATION - [optional] [default: 'lib'] Relative path from the install_prefix in which to copy dependencies.
 #   PARENT_LIB - [optional] [default: False] The library that will load this library possibly via dlopen.  We can use the RPATH or RUNPATH from this
@@ -24,6 +20,8 @@
 #                                            For fixing up matlab MEx files, this should be ${MATLAB_ROOT}/bin/${MATLAB_ARCH}/MATLAB or equivalent.
 #   FIXUP_INSTALL_SCRIPT_TEMPLATE - [optional] [default: FixupInstallTargetDependencies.cmake look for script in ../Templates or ./Templates]
 #   FIXUP_BUILD_SCRIPT_TEMPLATE - [optional] [default: FixupBuildTargetDependencies.cmake look for script in ../Templates or ./Templates]
+#   EXPORT_INSTALL_TREE - [optional] [default: On] Boolean. Fixup the libraries for the install-tree export.
+#   EXPORT_BUILD_TREE -  [optional] [default: Off] Boolean. Fixup the libraries for the build-tree export
 # Multi-argument keywords:
 #   TARGETS - List of targets to copy dependencies for.  These targets should share all of the other keyword propoerties.
 #             If multiple targets require different options to fixup_dependencies, then multiple independent calls should be made.
@@ -39,8 +37,8 @@
 #
 set(_fixup_dependencies_install_PATH ${CMAKE_CURRENT_LIST_DIR})
 function(fixup_dependencies)
-    cmake_parse_arguments(FIXUP "COPY_GCC_LIBS;COPY_GLIBC_LIBS;EXPORT_BUILD_TREE;LINK_INSTALLED_LIBS"
-                                "COPY_DESTINATION;PARENT_LIB;INSTALL_SCRIPT_TEMPLATE;BUILD_SCRIPT_TEMPLATE"
+    cmake_parse_arguments(FIXUP "COPY_GCC_LIBS;COPY_GLIBC_LIBS;LINK_INSTALLED_LIBS"
+                                "COPY_DESTINATION;PARENT_LIB;INSTALL_SCRIPT_TEMPLATE;BUILD_SCRIPT_TEMPLATE;EXPORT_BUILD_TREE;EXPORT_INSTALL_TREE"
                                 "TARGETS;TARGET_DESTINATIONS;PROVIDED_LIB_DIRS;PROVIDED_LIBS;SEARCH_LIB_DIRS;SEARCH_LIB_DIR_SUFFIXES" ${ARGN})
     set(msg_hdr "[fixup_dependencies:configure-phase]:")
     if(UNIX AND NOT FIXUP_COPY_DESTINATION)
@@ -49,7 +47,13 @@ function(fixup_dependencies)
     if(NOT FIXUP_TARGET_DESTINATIONS)
         set(FIXUP_TARGET_DESTINATIONS) #Signal to use find_file in FixupTarget script
     endif()
-    if(NOT FIXUP_INSTALL_SCRIPT_TEMPLATE)
+    if(NOT FIXUP_EXPORT_INSTALL_TREE)
+        set(FIXUP_EXPORT_INSTALL_TREE On)
+    endif()
+    if(NOT FIXUP_EXPORT_BUILD_TREE)
+        set(FIXUP_EXPORT_BUILD_TREE Off)
+    endif()
+    if(FIXUP_EXPORT_INSTALL_TREE AND NOT FIXUP_INSTALL_SCRIPT_TEMPLATE)
         find_file(FIXUP_INSTALL_SCRIPT_TEMPLATE_PATH FixupInstallTargetDependenciesScript.cmake.in
                 PATHS ${_fixup_dependencies_install_PATH}/Templates ${_fixup_dependencies_install_PATH}/../Templates
                 NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -158,18 +162,20 @@ function(fixup_dependencies)
         if(NOT (${FIXUP_TARGET_TYPE} MATCHES SHARED_LIBRARY OR ${FIXUP_TARGET_TYPE} MATCHES EXECUTABLE) )
             message(STATUS "${msg_hdr}  Skipping non-shared target: ${FIXUP_TARGET}")
         else()
-            set(FIXUP_INSTALL_SCRIPT ${FIXUP_SCRIPT_OUTPUT_DIR}/Fixup-Install-${FIXUP_TARGET}.cmake)
-            set(FIXUP_INSTALL_SCRIPT_GEN_TMP ${FIXUP_SCRIPT_OUTPUT_DIR}/gen.tmp/Fixup-Install-${FIXUP_TARGET}.cmake.gen) #temporary file to use for immediate generation
-            configure_file(${FIXUP_INSTALL_SCRIPT_TEMPLATE} ${FIXUP_INSTALL_SCRIPT_GEN_TMP} @ONLY)
-            file(GENERATE OUTPUT ${FIXUP_INSTALL_SCRIPT} INPUT ${FIXUP_INSTALL_SCRIPT_GEN_TMP})
-            install(SCRIPT ${FIXUP_INSTALL_SCRIPT})
-            get_target_property(script ${FIXUP_TARGET} FIXUP_INSTALL_SCRIPT)
-            if(script)
-                message(STATUS "${msg_hdr} Re-generated install-tree dependency fixup script for target: ${FIXUP_TARGET}")
-            else()
-                message(STATUS "${msg_hdr} Generated install-tree dependency fixup script for target: ${FIXUP_TARGET}")
+            if(FIXUP_INSTALL_BUILD_TREE)
+                set(FIXUP_INSTALL_SCRIPT ${FIXUP_SCRIPT_OUTPUT_DIR}/Fixup-Install-${FIXUP_TARGET}.cmake)
+                set(FIXUP_INSTALL_SCRIPT_GEN_TMP ${FIXUP_SCRIPT_OUTPUT_DIR}/gen.tmp/Fixup-Install-${FIXUP_TARGET}.cmake.gen) #temporary file to use for immediate generation
+                configure_file(${FIXUP_INSTALL_SCRIPT_TEMPLATE} ${FIXUP_INSTALL_SCRIPT_GEN_TMP} @ONLY)
+                file(GENERATE OUTPUT ${FIXUP_INSTALL_SCRIPT} INPUT ${FIXUP_INSTALL_SCRIPT_GEN_TMP})
+                install(SCRIPT ${FIXUP_INSTALL_SCRIPT})
+                get_target_property(script ${FIXUP_TARGET} FIXUP_INSTALL_SCRIPT)
+                if(script)
+                    message(STATUS "${msg_hdr} Re-generated install-tree dependency fixup script for target: ${FIXUP_TARGET}")
+                else()
+                    message(STATUS "${msg_hdr} Generated install-tree dependency fixup script for target: ${FIXUP_TARGET}")
+                endif()
+                set_target_properties(${FIXUP_TARGET} PROPERTIES FIXUP_INSTALL_SCRIPT ${FIXUP_INSTALL_SCRIPT}) #Mark as fixup-ready.
             endif()
-            set_target_properties(${FIXUP_TARGET} PROPERTIES FIXUP_INSTALL_SCRIPT ${FIXUP_INSTALL_SCRIPT}) #Mark as fixup-ready.
             if(FIXUP_EXPORT_BUILD_TREE)
                 get_target_property(_libs ${FIXUP_TARGET} LINK_LIBRARIES)
                 if(NOT _libs)
@@ -192,9 +198,7 @@ function(fixup_dependencies)
                 configure_file(${FIXUP_BUILD_SCRIPT_TEMPLATE} ${FIXUP_BUILD_SCRIPT_GEN_TMP} @ONLY)
                 file(GENERATE OUTPUT ${FIXUP_BUILD_SCRIPT} INPUT ${FIXUP_BUILD_SCRIPT_GEN_TMP})
                 set(_build_target "FixupDependencies-${FIXUP_TARGET}")
-#                 get_property(_all_targets GLOBAL PROPERTY FIXUP_ALL_CUSTOM_TARGETS)
                 add_custom_command(TARGET ${FIXUP_TARGET} POST_BUILD COMMAND cmake ARGS -P ${FIXUP_BUILD_SCRIPT} COMMENT "FIXUP Build tree dependencies of target: ${FIXUP_TARGET}")
-#                 set_property(GLOBAL APPEND PROPERTY FIXUP_ALL_CUSTOM_TARGETS ${_build_target})
                 message(STATUS "${msg_hdr} Generated build-tree dependency fixup script for target: ${FIXUP_TARGET}")
             endif()
         endif()
