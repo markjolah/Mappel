@@ -80,9 +80,9 @@ endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
 if(OPT_ARMADILLO_INT64)
-    set(ARMADILLO_BLASINT BLASINT64) #Enable INT64 interface for armadillo, Blas and Lapack
+    set(ARMADILLO_BLASINT INT64) #Enable INT64 interface for armadillo, Blas and Lapack
 else()
-    set(ARMADILLO_BLASINT BLASINT32)
+    set(ARMADILLO_BLASINT INT32)
 endif()
 find_package(BLAS REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
 find_package(LAPACK REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
