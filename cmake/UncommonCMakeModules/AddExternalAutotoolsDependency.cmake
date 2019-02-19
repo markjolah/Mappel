@@ -6,7 +6,7 @@
 #
 # Function: add_external_autotools_dependency
 #
-# Allows a cmake package dependency to be automatically added as a cmake ExternalProject, then built and installed
+# Allows a autotools-based package dependency to be automatically added as a cmake ExternalProject, then built and installed
 # to CMAKE_INSTALL_PREFIX.  All this happens before configure time for the client package, so that the dependency will be
 # automatically found through the cmake PackageConfig system and the normal find_package() mechanism.
 #
@@ -55,8 +55,6 @@ macro(add_external_autotools_dependency)
         endif()
         message(STATUS "[add_external_autotools_dependency] Initializing as ExternalProject using git URL:${_ExtProject_URL}")
         message(STATUS "[add_external_autotools_dependency] Installing to: ${_ExtProject_INSTALL_PREFIX}")
-        message(STATUS "[add_external_autotools_dependency] BUILD_STATIC_LIBS:${_ExtProject_STATIC} BUILD_SHARED_LIBS:${_ExtProject_SHARED}")
-        message(STATUS "_ExtProject_NAME: ${_ExtProject_NAME}")
         configure_file(${_ExtProject_CMAKELISTS_TEMPLATE} ${_ExtProject_Dir}/CMakeLists.txt @ONLY)
         execute_process(COMMAND ${CMAKE_COMMAND} . WORKING_DIRECTORY ${_ExtProject_Dir})
         message(STATUS "[add_external_autotools_dependency] Downloading Building and Installing: ${_ExtProject_NAME}")

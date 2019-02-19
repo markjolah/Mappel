@@ -2,44 +2,11 @@
 #
 # Mark J. Olah (mjo@cs.unm DOT edu)
 # Copyright 2019
-# see file: LICENCE
+# see file: LICENSE
 #
-# Functions to enable use of pkg-config for modern CMake namespaced-targets, with cross-compiling awareness.
+# Enables use of pkg-config for modern CMake namespaced-targets, with cross-compiling awareness.
 #
 #
-
-#get_pkg_config(ret_var pcname pcflags...)
-# Check if pcname is known to pkg-config
-# Returns:
-#  Boolean: true if ${pcname}.pc file is found by pkg-config).
-# Args:
-#  ret_var: return variable name.
-#  pcname: pkg-config name to look for (.pc file)
-function(check_pkg_config ret_var pcname)
-    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --exists ${pcname} RESULT_VARIABLE _found)
-    if(_found EQUAL 0)
-        set(${ret_var} True PARENT_SCOPE)
-    else()
-        set(${ret_var} False PARENT_SCOPE)
-    endif()
-endfunction()
-
-#get_pkg_config(ret_var pcname pcflags...)
-# Get the output of pkg-config
-# Args:
-#  ret_var: return variable name
-#  pcname: pkg-config name to look for (.pc file)
-#  pcflags: pkg-config flags to pass
-function(get_pkg_config ret_var pcname)
-    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} ${ARGN} ${pcname} OUTPUT_VARIABLE _out RESULT_VARIABLE _ret OUTPUT_STRIP_TRAILING_WHITESPACE)
-    if(_ret EQUAL 0)
-        separate_arguments(_out)
-        set(${ret_var} ${_out} PARENT_SCOPE)
-    else()
-        set(${ret_var} "" PARENT_SCOPE)
-    endif()
-endfunction()
-
 # make_pkg_config_target(target_var_name target_name [STATIC] pkg_config_names... )
 # Options:
 #   STATIC - Find static libs.  Will pass --static args to pkg_config
@@ -57,6 +24,42 @@ endfunction()
 #  ${VAR_NAME}_PKGCONFIG_NAME - pkg-config name found under if any.
 #
 #
+
+#Helper:
+#check_pkg_config(ret_var pcname pcflags...)
+# Check if pcname is known to pkg-config
+# Returns:
+#  Boolean: true if ${pcname}.pc file is found by pkg-config).
+# Args:
+#  ret_var: return variable name.
+#  pcname: pkg-config name to look for (.pc file)
+function(check_pkg_config ret_var pcname)
+    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --exists ${pcname} RESULT_VARIABLE _found)
+    if(_found EQUAL 0)
+        set(${ret_var} True PARENT_SCOPE)
+    else()
+        set(${ret_var} False PARENT_SCOPE)
+    endif()
+endfunction()
+
+#Helper:
+#get_pkg_config(ret_var pcname pcflags...)
+# Get the output of pkg-config
+# Args:
+#  ret_var: return variable name
+#  pcname: pkg-config name to look for (.pc file)
+#  pcflags: pkg-config flags to pass
+function(get_pkg_config ret_var pcname)
+    execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} ${ARGN} ${pcname} OUTPUT_VARIABLE _out RESULT_VARIABLE _ret OUTPUT_STRIP_TRAILING_WHITESPACE)
+    if(_ret EQUAL 0)
+        separate_arguments(_out)
+        set(${ret_var} ${_out} PARENT_SCOPE)
+    else()
+        set(${ret_var} "" PARENT_SCOPE)
+    endif()
+endfunction()
+
+
 function(make_pkg_config_target)
     set(options STATIC DISABLE_PKGCONFIG)
     set(oneValueArgs VAR_NAME NAMESPACE TARGET)
@@ -80,21 +83,29 @@ function(make_pkg_config_target)
         return()
     elseif(${target_var_name}_FOUND AND ${target_var_name}_LIBRARIES)
         add_library(${target_name} SHARED IMPORTED)
-        target_link_libraries(${target_name} INTERFACE ${${target_var_name}_LIBRARIES})
+        set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES "${${target_var_name}_LIBRARIES}")
         if(${target_var_name}_LINKER_FLAGS)
-            target_link_options(${target_name} INTERFACE ${${target_var_name}_LINKER_FLAGS})
+           if(${CMAKE_VERSION} VERSION_GREATER "3.13.0")
+                target_link_options(${target_name} INTERFACE ${${target_var_name}_LINKER_FLAGS})
+            else()
+                set_property(TARGET ${target_name} APPEND PROPERTY INTERFACE_LINK_LIBRARIES "${${target_var_name}_LINKER_FLAGS}") #Older CMAKE don't have INTERFACE_LINK_OPTIONS
+            endif()
         endif()
         if(${target_var_name}_LINKER_DIRS)
-            target_link_directories(${target_name} INTERFACE ${${target_var_name}_LINKER_DIRS})
+           if(${CMAKE_VERSION} VERSION_GREATER "3.13.0")
+                target_link_directories(${target_name} INTERFACE ${${target_var_name}_LINKER_DIRS})
+            else()
+                set_property(TARGET ${target_name} APPEND PROPERTY INTERFACE_LINK_LIBRARIES "${${target_var_name}_LINKER_DIRS}") #Older CMAKE don't have INTERFACE_LINK_DIRECTORIES
+            endif()
         endif()
         if(${target_var_name}_INCLUDE_DIRS)
-            target_include_directories(${target_name} INTERFACE ${${target_var_name}_INCLUDE_DIRS})
+            set_target_properties(${target_name} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${${target_var_name}_INCLUDE_DIRS}")
         endif()
         if(${target_var_name}_COMPILE_DEFINITIONS)
-            target_compile_definitions(${target_name} INTERFACE ${${target_var_name}_COMPILE_DEFINITIONS})
+            set_target_properties(${target_name} PROPERTIES INTERFACE_COMPILE_DEFINITIONS "${${target_var_name}_COMPILE_DEFINITIONS}")
         endif()
         if(${target_var_name}_COMPILE_OPTIONS)
-            target_compile_options(${target_name} INTERFACE ${${target_var_name}_COMPILE_OPTIONS})
+            set_target_properties(${target_name} PROPERTIES INTERFACE_COMPILE_OPTIONS "${${target_var_name}_COMPILE_OPTIONS}")
         endif()
         message(STATUS "Found ${target_name} manually specified")
         set(_FOUND True)
@@ -115,19 +126,25 @@ function(make_pkg_config_target)
                 if(_CFLAGS)
                     list(FILTER _COMPILE_OPTIONS EXCLUDE REGEX "^-D")
                     list(FILTER _COMPILE_DEFINITIONS INCLUDE REGEX "^-D")
-                    list(TRANSFORM _COMPILE_DEFINITIONS REPLACE "^-D" "")
+                    string(REGEX REPLACE "-D" "" _COMPILE_DEFINITIONS "${_COMPILE_DEFINITIONS}")
                 endif()
                 string(REGEX REPLACE "-L" "" _LIB_DIRS "${_LIB_DIRS}")
                 string(REGEX REPLACE "-l" "" _LIBS "${_LIBS}")
+                message(STATUS "[MakePkgConfigTarget] TARGET:${target_name} PCNAME:${pkg_config_name} def:${_COMPILE_DEFINITIONS} opt:${_COMPILE_OPTIONS} inc:${_INCLUDES} libopt:${_LINKER_OPTS} libdir:${_LIB_DIRS} libs:${_LIBS}")
 
                 add_library(${target_name} INTERFACE IMPORTED)
-                target_include_directories(${target_name} INTERFACE ${_INCLUDES})
-                target_compile_definitions(${target_name} INTERFACE ${_COMPILE_DEFINITIONS})
-                target_compile_options(${target_name} INTERFACE ${_COMPILE_OPTIONS})
-                target_link_directories(${target_name} INTERFACE ${_LIB_DIRS})
-                target_link_libraries(${target_name} INTERFACE ${_LIBS})
-                target_link_options(${target_name} INTERFACE ${_LINK_OPTS})
-
+                set_target_properties(${target_name} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_INCLUDES}")
+                set_target_properties(${target_name} PROPERTIES INTERFACE_COMPILE_DEFINITIONS "${_COMPILE_DEFINITIONS}")
+                set_target_properties(${target_name} PROPERTIES INTERFACE_COMPILE_OPTIONS "${_COMPILE_OPTIONS}")
+                if(${CMAKE_VERSION} VERSION_GREATER "3.13.0")
+                    target_link_options(${target_name} INTERFACE ${_LINK_OPTS})
+                    target_link_directories(${target_name} INTERFACE ${_LIB_DIRS})
+                    target_link_libraries(${target_name} INTERFACE ${_LIBS})
+                else()
+                    set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES "${_LINK_OPTS}") #Older CMAKE don't have INTERFACE_LINK_OPTIONS
+                    set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES "${_LIB_DIRS}") #Older CMAKE don't have INTERFACE_LINK_DIRECTORIES
+                    set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES "${_LIBS}") #Older CMAKE don't have INTERFACE_LINK_DIRECTORIES
+                endif()
                 set(_FOUND_PKG_CONFIG True)
                 set(${target_var_name}_PKGCONFIG_FOUND_NAME ${pkg_config_name} PARENT_SCOPE)
                 set(${target_var_name}_PKGCONFIG_FOUND_NAME ${pkg_config_name} CACHE STRING "${target_name} libraries: found using pkg-config name" FORCE)
@@ -153,7 +170,7 @@ if(NOT OPT_DISABLE_PKG_CONFIG AND CMAKE_CROSSCOMPILING)
         set(_sysroot ${CMAKE_SYSROOT})
     endif()
     foreach(_dir IN LISTS CMAKE_FIND_ROOT_PATH)
-        list(APPEND _lib_dirs ${_dir}/usr/lib/pkgconfig ${_dir}/usr/share/pkgconfig)
+        list(APPEND _lib_dirs ${_dir}/lib/pkgconfig ${_dir}/share/pkgconfig ${_dir}/usr/lib/pkgconfig ${_dir}/usr/share/pkgconfig)
         if(NOT _sysroot)
             set(_sysroot ${_dir})
         endif()

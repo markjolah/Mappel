@@ -4,7 +4,17 @@
 # Copyright 2014-2017
 # Licensed under the Apache License, Version 2.0
 # https://www.apache.org/licenses/LICENSE-2.0
-# See: LICENCE file
+# See: LICENSE file
+#
+# This tool automatically works to find and copy necessary dependencies to the build or install tree to allow packaging of
+# cross-compiled packages together with their necessary dependencies.   This function works for both the build and install trees.
+# Correctly handles dependency resoluition for Linux and Win64 cross-build Tartgets.  On linux the dependency resolution algorithm is
+# aware RPATH and RUNPATH variables and their respective implications for library search order.
+#
+# Respects the following CMake variables:
+#  * CMAKE_SYSROOT -
+#  * CMAKE_FIND_ROOT_PATH
+#  * CMAKE_STAGING_PREFIX
 #
 # Options:
 #   COPY_GCC_LIBS - [UNIX only]  [default: off] Copy libraries provided by GCC [i.e. libgcc_s libstdc++, etc.].  This implies
@@ -93,17 +103,18 @@ function(fixup_dependencies)
         endforeach()
         set(FIXUP_PROVIDED_LIBS ${_provided})
         if(WIN32)
-            list(TRANSFORM PROVIDED_LIBS TOLOWER) #Case insensitive-match on windows
+            string(TOLOWER "${PROVIDED_LIBS}" PROVIDED_LIBS) #Case insensitive-match on windows
         endif()
     endif()
 
     #Append system libraries to FIXUP_PROVIDED_LIBS
+    set(FIXUP_GCC_PROVIDED_LIBS libstdc++ libgfortran libgcc_s libatomic libgomp libquadmath libmpx libmpxwrappers)
     if(UNIX AND NOT APPLE)
         #libc and ld-linux-x86-64 loader must match versions exactly with system loader since
         #the loader location is hard-coded as an absolute path, it cannot be made relocatable without using system
         #loader which implied also using system libc.
         if(NOT FIXUP_COPY_GCC_LIBS)
-            list(APPEND FIXUP_PROVIDED_LIBS libstdc++ libgfortran libgcc_s libatomic libgomp libquadmath libmpx libmpxwrappers) #gcc libs
+            list(APPEND FIXUP_PROVIDED_LIBS ${FIXUP_GCC_PROVIDED_LIBS}) #gcc libs
         endif()
         if(NOT FIXUP_COPY_GLIBC_LIBS)
             list(APPEND FIXUP_PROVIDED_LIBS libdl libpthread libcrypt librt libm) #glibc libs
@@ -195,6 +206,9 @@ function(fixup_dependencies)
 
                 set(FIXUP_BUILD_SCRIPT ${FIXUP_SCRIPT_OUTPUT_DIR}/Fixup-Build-${FIXUP_TARGET}.cmake)
                 set(FIXUP_BUILD_SCRIPT_GEN_TMP ${FIXUP_SCRIPT_OUTPUT_DIR}/gen.tmp/Fixup-Build-${FIXUP_TARGET}.cmake.gen) #temporary file to use for immediate generation
+                if(UNIX AND NOT APPLE AND FIXUP_COPY_GCC_LIBS AND FIXUP_EXPORT_BUILD_TREE)
+                    list(APPEND FIXUP_PROVIDED_LIBS ${FIXUP_GCC_PROVIDED_LIBS}) #Prevent fixing-up gcc libs in build tree.  Risking breaking gcc and other tools.
+                endif()
                 configure_file(${FIXUP_BUILD_SCRIPT_TEMPLATE} ${FIXUP_BUILD_SCRIPT_GEN_TMP} @ONLY)
                 file(GENERATE OUTPUT ${FIXUP_BUILD_SCRIPT} INPUT ${FIXUP_BUILD_SCRIPT_GEN_TMP})
                 set(_build_target "FixupDependencies-${FIXUP_TARGET}")

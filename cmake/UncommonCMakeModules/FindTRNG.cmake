@@ -2,7 +2,7 @@
 #
 # Mark J. Olah (mjo@cs.unm DOT edu)
 # Copyright 2018
-# see file: LICENCE
+# see file: LICENSE
 #
 # Find the TRNG (Tina's Random Number Generator Library)
 # GIT: https://github.com/rabauke/trng4.git
@@ -32,9 +32,10 @@ mark_as_advanced(TRNG_INCLUDE_DIR
                  TRNG_VERSION_STRING)
 
 if(TRNG_FOUND AND NOT TARGET TRNG::TRNG)
-    add_library(TRNG::TRNG UNKNOWN IMPORTED)
+    get_filename_component(_lib_dir ${TRNG_LIBRARY} DIRECTORY)
+    add_library(TRNG::TRNG INTERFACE IMPORTED)
     set_target_properties(TRNG::TRNG PROPERTIES
-        IMPORTED_LINK_INTERFACE_LANGUAGES CXX
-        IMPORTED_LOCATION ${TRNG_LIBRARY}
-        INTERFACE_INCLUDE_DIRECTORIES ${TRNG_INCLUDE_DIR})
+        INTERFACE_INCLUDE_DIRECTORIES ${TRNG_INCLUDE_DIR}
+        INTERFACE_LINK_LIBRARIES ${TRNG_LIBRARY})
+    unset(_lib_dir)
 endif()
