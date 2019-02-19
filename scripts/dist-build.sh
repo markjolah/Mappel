@@ -1,7 +1,7 @@
 #!/bin/bash
 # scripts/dist-build.sh <INSTALL_DIR> <cmake-args...>
 #
-# Builds a re-distributable release-only build for C++ libraries.
+# Builds a re-distributable release-only build for C++ and python libraries.
 # Testing and documentation are enabled.
 # Creates a .zip and .tar.gz archives.
 #
@@ -34,8 +34,8 @@ if [ -z $OPT_ARMADILLO_INT64 ]; then
     OPT_ARMADILLO_INT64="Off"
 fi
 
-ZIP_FILE=${NAME}-${VERSION}.zip
-TAR_FILE=${NAME}-${VERSION}.tbz2
+ZIP_FILE=${NAME}-python-${VERSION}.zip
+TAR_FILE=${NAME}-python-${VERSION}.tbz2
 
 BUILD_PATH=${SRC_PATH}/_build/dist
 NUM_PROCS=$(grep -c ^processor /proc/cpuinfo)
@@ -47,8 +47,9 @@ ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_DOC=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
 ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=Off"
+ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On"  # Disable finding packages in the build-tree
 ARGS="${ARGS} -DOPT_ARMADILLO_INT64=${OPT_ARMADILLO_INT64}"
-ARGS="${ARGS} -DOPT_MATLAB=On"
+ARGS="${ARGS} -DOPT_MATLAB=Off"
 ARGS="${ARGS} -DOPT_PYTHON=On"
 
 set -ex

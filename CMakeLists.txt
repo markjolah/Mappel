@@ -59,6 +59,8 @@ include(AddExternalDependency)
 set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING OPT_INSTALL_TESTING)
 if(OPT_ARMADILLO_INT64)
     set(EXTERNAL_COMPONENTS_INT64 COMPONENTS INT64)
+else()
+    set(EXTERNAL_COMPONENTS_INT64 COMPONENTS INT32)
 endif()
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING "URL of BacktraceException library dependency")
@@ -71,7 +73,8 @@ add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHA
 #PriorHessian allows for hessians of prior distirbutions
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
 add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED
-                        PASS_CACHE_VARIABLES ${CMAKE_Fortran_COMPILER} ${EXTERNAL_DEPENDENCY_TESTING_VARS} OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
+                        PASS_CACHE_VARIABLES ${CMAKE_Fortran_COMPILER} ${EXTERNAL_DEPENDENCY_TESTING_VARS}
+                        OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
 
 if(OPT_MATLAB)
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
@@ -90,7 +93,11 @@ find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_BLASINT
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${ARMADILLO_PRIVATE_COMPILE_DEFINITIONS})
 
 find_package(OpenMP REQUIRED)
-find_package(Boost REQUIRED) #boost::math only
+if(WIN32)
+    find_package(Boost REQUIRED chrono system)
+else()
+    find_package(Boost REQUIRED)
+endif()
 
 #Configure standard CFlags and definitions for debug builds
 include(ConfigureDebugBuilds) 
@@ -112,7 +119,7 @@ add_subdirectory(src/libmappel) #Main library
 if(BUILD_TESTING)
     include(CTest)
     enable_testing()
-    add_subdirectory(src/test)
+    add_subdirectory(test)
 endif()
 
 if(OPT_MATLAB)
@@ -129,7 +136,7 @@ endif()
 
 if(OPT_EXAMPLES)
     message(STATUS "*** C++ Example Programs Enabled ***")
-    add_subdirectory(src/examples) #C++ example libraries
+    add_subdirectory(examples) #C++ example libraries
 endif()
 
 ### Documentation

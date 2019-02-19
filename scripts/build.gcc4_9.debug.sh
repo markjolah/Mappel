@@ -23,6 +23,8 @@ fi
 
 ARGS="-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN_FILE"
 ARGS="${ARGS} -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
+ARGS="${ARGS} -DBUILD_SHARED_LIBS=On"
+ARGS="${ARGS} -DBUILD_STATIC_LIBS=Off"
 ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_DOC=${OPT_DOC}"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
@@ -36,6 +38,7 @@ rm -rf $BUILD_PATH
 cmake -H${SRC_PATH} -B$BUILD_PATH -DCMAKE_BUILD_TYPE=Debug $ARGS $@
 VERBOSE=1 cmake --build $BUILD_PATH --target all -- -j$NUM_PROCS
 if [ "${OPT_DOC,,}" == "on" ] || [ $OPT_DOC -eq 1 ]; then
-    VERBOSE=1 cmake --build $BUILD_PATH --target pdf -- -j$NUM_PROCS
+    cmake --build $BUILD_PATH --target pdf -- -j$NUM_PROCS
 fi
-VERBOSE=1 cmake --build $BUILD_PATH --target install -- -j$NUM_PROCS
+cmake --build $BUILD_PATH --target test -- -j${NUM_PROCS}
+cmake --build $BUILD_PATH --target install -- -j$NUM_PROCS

@@ -26,7 +26,7 @@ typename std::enable_if<std::is_base_of<mappel::Gauss1DModel,Model>::value,Model
 make_model()
 {
     int size = env->sample_integer(4,40);
-    double psf_sigma = size*env->sample_exponential(1.5);
+    double psf_sigma = std::max(5*Model::global_min_psf_sigma,size*env->sample_exponential(1.8));
 //     std::cout<<"1DModel Generated[size:"<<size<<", psf_sigma:"<<psf_sigma<<std::endl;
     return Model(size,psf_sigma);
 }
