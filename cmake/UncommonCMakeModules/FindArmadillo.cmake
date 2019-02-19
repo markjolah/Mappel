@@ -99,7 +99,9 @@ else()
         message(FATAL_ERROR "[FindArmadillo] BLAS or LAPACK are in Armadillo_FIND_COMPONENTS, but neither INT32 nor INT64 are: ${Armadillo_FIND_COMPONENTS}.  Exactly one is required.")
     elseif(INT32 IN_LIST Armadillo_FIND_COMPONENTS AND INT64 IN_LIST Armadillo_FIND_COMPONENTS)
         message(FATAL_ERROR "[FindArmadillo] Both INT32 and INT64 are in find components:${ARMADILLO_ENABLED_COMPONENTS}.  Exactly one is required.")
-    elseif(INT32 IN_LIST Armadillo_FIND_COMPONENTS OR INT64 IN_LIST Armadillo_FIND_COMPONENTS)
+    elseif((BLAS IN_LIST Armadillo_FIND_COMPONENTS OR LAPACK IN_LIST Armadillo_FIND_COMPONENTS) AND
+           (BLAS IN_LIST ARMADILLO_ENABLED_COMPONENTS OR LAPACK IN_LIST ARMADILLO_ENABLED_COMPONENTS))
+        #Only check for compatibility if BLAS or LAPACK is enabled already and are also enabled in this find call
         foreach(_comp IN ITEMS INT32 INT64)
             if(${_comp} IN_LIST Armadillo_FIND_COMPONENTS AND NOT ${_comp} IN_LIST ARMADILLO_ENABLED_COMPONENTS)
                 message(FATAL_ERROR "[FindArmadillo] Armadillo is initialized already with COMPONENTS:${ARMADILLO_ENABLED_COMPONENTS}, but this find_package(Armadillo) requires ${Armadillo_FIND_COMPONENTS} which disagrees on required matching component: ${_comp}")
