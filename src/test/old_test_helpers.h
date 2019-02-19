@@ -199,7 +199,8 @@ void evaluate_single(Model &model, std::string method, const ParamT<Model> &thet
     VecT sequence_rllh;
     StatsT stats;
     auto init_stencil = model.initial_theta_estimate(im);
-    methods::estimate_max_debug(model, im, method, init_stencil.theta, theta_max, obsI, sequence, sequence_rllh, stats);
+    double theta_max_rllh;
+    methods::estimate_max_debug(model, im, method, init_stencil.theta, theta_max, theta_max_rllh, obsI, sequence, sequence_rllh, stats);
     auto theta_lb = model.make_param();
     auto theta_ub = model.make_param();
     double confidence = 0.95;
@@ -213,7 +214,6 @@ void evaluate_single(Model &model, std::string method, const ParamT<Model> &thet
     snprintf(str, s, "RLLH:%g ThetaInit:",theta_init_rllh );
     print_vec_row(cout, init_stencil.theta, str, s, TERM_GREEN);
     
-    double theta_max_rllh = methods::objective::rllh(model,im,theta_max);
     snprintf(str, s, "RLLH:%.9g ETheta[%s]:",theta_max_rllh , method.c_str());
     print_vec_row(cout, theta_max, str, s, TERM_YELLOW);
     snprintf(str, s, "Error[%s]:", method.c_str());

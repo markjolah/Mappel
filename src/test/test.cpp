@@ -8,7 +8,7 @@
 #include "Mappel/Gauss1DsMLE.h"
 #include "Mappel/Gauss1DsMAP.h"
 
-#include "Mappel/test_helpers.h"
+#include "old_test_helpers.h"
 //#include "Mappel/Gauss2DMLE.h"
 // #include "Mappel/Gauss2DsMAP.h"
 // #include "Mappel/Gauss2DsMLE.h"
@@ -607,9 +607,9 @@ int main(int argc, const char *argv[]){
             } else if (strstr(prog_name,"test_compare_estimators")) {
                 test_compare_estimators(argc, argv);
             } else*/ 
-            if (strstr(prog_name,"test_image")) {
+            if (strstr(prog_name,"demo_image")) {
                 test_image(argc, argv);
-            } else if (strstr(prog_name,"test_speed")) {
+            } else if (strstr(prog_name,"demo_speed")) {
                 test_speed(argc, argv);
             } else {
                 cout<<"Unknown test: "<<prog_name<<endl;

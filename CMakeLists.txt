@@ -27,7 +27,8 @@ option(OPT_ARMADILLO_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK.
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
 option(OPT_PYTHON "Add support for Python via boost::python" OFF) # Enable Support for Python via Boost::Python
 option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debug features (Armadillo)
-option(OPT_EXAMPLES "Build C++ examples" ON) #Extra debug features (Armadillo)
+option(OPT_EXAMPLES "Build C++ examples" OFF) #Extra debug features (Armadillo)
+option(OPT_PROFILE "Enable performance profiling" OFF) #Extra debug features (Armadillo)
 # # Hyperspectral code
 # option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
@@ -47,6 +48,7 @@ message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
 message(STATUS "OPTION: OPT_EXTRA_DEBUG: ${OPT_EXTRA_DEBUG}")
 message(STATUS "OPTION: OPT_EXAMPLES: ${OPT_EXAMPLES}")
+message(STATUS "OPTION: OPT_PROFILE: ${OPT_PROFILE}")
 
 #Add UcommonCmakeModules git subpreo to path.
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeModules)
@@ -78,13 +80,13 @@ endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
 if(OPT_ARMADILLO_INT64)
-    set(ARMADILLO_INT64_COMPONENT INT64) #Enable INT64 interface for armadillo, Blas and Lapack
+    set(ARMADILLO_BLASINT BLASINT64) #Enable INT64 interface for armadillo, Blas and Lapack
 else()
-    set(ARMADILLO_INT64_COMPONENT)
+    set(ARMADILLO_BLASINT BLASINT32)
 endif()
-find_package(BLAS REQUIRED COMPONENTS ${ARMADILLO_INT64_COMPONENT})
-find_package(LAPACK REQUIRED COMPONENTS ${ARMADILLO_INT64_COMPONENT})
-find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_INT64_COMPONENT})
+find_package(BLAS REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
+find_package(LAPACK REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
+find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_BLASINT})
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${ARMADILLO_PRIVATE_COMPILE_DEFINITIONS})
 
 find_package(OpenMP REQUIRED)
@@ -98,7 +100,12 @@ include(ConfigureDebugBuilds)
 ### PackageConfig Exports from UncommonCMakeModules/ExportPackageWizzard.cmake
 #setup build-tree and install-tree exports and PackageConfig files
 include(ExportPackageWizzard)
-export_package_wizzard()
+set(EXPORTED_FIND_MODULES cmake/UncommonCMakeModules/FindArmadillo.cmake
+                          cmake/UncommonCMakeModules/FindBLAS.cmake
+                          cmake/UncommonCMakeModules/FindLAPACK.cmake
+                          cmake/UncommonCMakeModules/MakePkgConfigTarget.cmake)
+export_package_wizzard(PROVIDED_COMPONENTS ${ARMADILLO_BLASINT}
+                       FIND_MODULES ${EXPORTED_FIND_MODULES})
 
 add_subdirectory(src/libmappel) #Main library
 

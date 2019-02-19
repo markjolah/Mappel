@@ -401,11 +401,10 @@ namespace methods {
     void error_bounds_observed(const Model &model, const ParamT<Model> &theta_est, MatT &obsI, double confidence,
                                ParamT<Model> &theta_lb, ParamT<Model> &theta_ub)
     {
-        auto var = arma::pinv(obsI).eval().diag();
         double z = normal_quantile_twosided(confidence);
-        auto sigma = arma::sqrt(var);
-        theta_lb = theta_est - z*sigma;
-        theta_ub = theta_est + z*sigma;        
+        VecT bnd = z*arma::sqrt(arma::pinv(obsI).eval().diag());
+        theta_lb = theta_est - bnd;
+        theta_ub = theta_est + bnd;
     }
 
 //     template<class Model>

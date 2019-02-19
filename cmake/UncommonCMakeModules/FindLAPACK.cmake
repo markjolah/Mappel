@@ -36,6 +36,7 @@
 #
 # find_package COMPONENTS respected:
 #   INT64 - Enable finding of 64-bit integer targets
+#   INT32 - Accepted for compatibility.  Always enables 32-bit integer targets if available.
 #   THREADS - Enable finding of threaded targets
 #   STATIC - Enable finding of static targets
 #   LAPACKE - Find LAPACKE targets also.

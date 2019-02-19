@@ -6,13 +6,18 @@
 #
 # Recognized Components:
 #  CXX11 - Add C++11 support
-#  INT64 - 64-bit integer support for armadillo and BLAS/LAPACK
+#  BLASBLASINT32 - 32-bit integer support for BLAS and LAPACK (incompatible with BLASBLASINT64)
+#  BLASBLASINT64 - 64-bit integer support for BLAS, and LAPACK  (incompatible with BLASBLASINT32)
 #  WRAPPER - Use the system armadillo wrapper armadillo.so
 #  BLAS - Add BLAS support
 #  LAPACK - Add LAPACK support
 #  SuperLU - Add SuperLU support
 #  OpenMP - Add openMP parallelization
 #  HDF5 - Add HDF5 support
+#
+# Note: for maximum compatibility we force ARMA_64BIT_WORD=1 for either BLASBLASINT32 or BLASBLASINT64 settings.
+# This allows armadillo libraries that don't use BLAS or LAPACK to work the same with downstream dependencies
+# irregardless of the BLAS integers sizes, as they only need to agree on the size of arma::uword.
 #
 # Find TARGETS
 #   Armadillo::Armadillo
@@ -44,10 +49,10 @@
 #  i.  Armadillo::Armadillo will not directly add Blas,Lapack, SuperLU, OpenMP, or HDF5 dependencies to the
 #      interface link libraries if the WRAPPER component is not specfied.  This allows users to find and link
 #      these target dependencies themselves potentially using customized find modules.  These libraries must
-#      also match the integer type INT64 signature, and optionally other ARMA_ defines may need to be added to modify
+#      also match the integer type BLASINT64 signature, and optionally other ARMA_ defines may need to be added to modify
 #      the Blas symbol names to correctly match capitalization and trailing underscores.  One option is to use
 #      the associated FindBLAS.cmake and FindLAPACK.cmake in UncommonCMakeModules which use pkg-config to make
-#      proper IMPORTED targets Blas::Blas and Blas::BlasInt64, etc.
+#      proper IMPORTED targets Blas::Blas and Blas::BlasBLASINT64, etc.
 find_library(ARMADILLO_WRAPPER NAMES armadillo)
 find_path(ARMADILLO_INCLUDE_DIR NAMES armadillo)
 
@@ -88,10 +93,17 @@ if(NOT TARGET Armadillo::Armadillo)
     set(ARMADILLO_PRIVATE_COMPILE_DEFINITIONS)
 else()
     #Check for components that must agree between multiple armadillo using dependencies
-    foreach(_comp IN ITEMS CXX11 INT64)
-        if((${_comp} IN_LIST Armadillo_FIND_COMPONENTS AND NOT ${_comp} IN_LIST ARMADILLO_ENABLED_COMPONENTS) OR
-           (NOT ${_comp} IN_LIST Armadillo_FIND_COMPONENTS AND ${_comp} IN_LIST ARMADILLO_ENABLED_COMPONENTS))
-            message(FATAL_ERROR "[FindArmadillo] Armadillo is initialized multiple times (by dependencies) with different values for Armadillo component ${_comp} All dependencies must agree on ${_comp} component flag for FindArmadillo.")
+    if(NOT BLASINT32 IN_LIST Armadillo_FIND_COMPONENTS AND NOT BLASINT64 IN_LIST Armadillo_FIND_COMPONENTS)
+        message(FATAL_ERROR "[FindArmadillo] Neither BLASINT32 nor BLASINT64 are in find components:${ARMADILLO_ENABLED_COMPONENTS}.  Exactly one is required.")
+    elseif(BLASINT32 IN_LIST Armadillo_FIND_COMPONENTS AND BLASINT64 IN_LIST Armadillo_FIND_COMPONENTS)
+        message(FATAL_ERROR "[FindArmadillo] Both BLASINT32 and BLASINT64 are in find components:${ARMADILLO_ENABLED_COMPONENTS}.  Exactly one is required.")
+    endif()
+    foreach(_comp IN ITEMS CXX11 BLASINT64 BLASINT32)
+        if(${_comp} IN_LIST Armadillo_FIND_COMPONENTS AND NOT ${_comp} IN_LIST ARMADILLO_ENABLED_COMPONENTS)
+            message(FATAL_ERROR "[FindArmadillo] Armadillo is initialized already with COMPONENTS:${ARMADILLO_ENABLED_COMPONENTS}, but this find_package(Armadillo) requires ${Armadillo_FIND_COMPONENTS} which disagrees on required matching component: ${_comp}")
+        endif()
+        if(NOT ${_comp} IN_LIST Armadillo_FIND_COMPONENTS AND ${_comp} IN_LIST ARMADILLO_ENABLED_COMPONENTS)
+            message(FATAL_ERROR "[FindArmadillo] Armadillo is initialized already with COMPONENTS:${ARMADILLO_ENABLED_COMPONENTS}, but this find_package(Armadillo) uses ${Armadillo_FIND_COMPONENTS} which disagree on required matching component: ${_comp}")
         endif()
     endforeach()
 endif()
@@ -124,14 +136,17 @@ endforeach()
 unset(_comp)
 
 if(LAPACK IN_LIST Armadillo_FIND_COMPONENTS)
-    set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS  ARMA_USE_NEWARP) #Use Armadillo Built-in ARPACK
+    set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS ARMA_USE_NEWARP) #Use Armadillo Built-in ARPACK
 endif()
 if(CXX11 IN_LIST Armadillo_FIND_COMPONENTS)
     set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
-    set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS  ARMA_USE_CXX11)
+    set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS ARMA_USE_CXX11)
 endif()
-if(INT64 IN_LIST Armadillo_FIND_COMPONENTS)
+if(BLASINT64 IN_LIST Armadillo_FIND_COMPONENTS)
     set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS ARMA_64BIT_WORD ARMA_BLAS_LONG_LONG)
+endif()
+if(BLASINT32 IN_LIST Armadillo_FIND_COMPONENTS)
+    set_property(TARGET Armadillo::Armadillo APPEND PROPERTY INTERFACE_COMPILE_DEFINITIONS ARMA_32BIT_WORD)
 endif()
 
 set(ARMADILLO_ENABLED_COMPONENTS ${ARMADILLO_ENABLED_COMPONENTS} ${Armadillo_FIND_COMPONENTS})
