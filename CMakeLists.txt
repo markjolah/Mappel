@@ -66,7 +66,8 @@ add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHA
 
 #PriorHessian allows for hessians of prior distirbutions
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
-add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED
+                        PASS_CACHE_VARIABLES ${CMAKE_Fortran_COMPILER} ${EXTERNAL_DEPENDENCY_TESTING} OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
 
 if(OPT_MATLAB)
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
