@@ -24,7 +24,7 @@ include(AddSharedStaticLibraries)
 # * Sets target_include_directories
 # * Sets target_compile_features and target_link_libraries
 # * Installs target libraries and headers
-# * returns lsit SHARED_STATIC_LIB_TARGETS of created targets for adjusting additional target properties
+# * returns list of created trargets: lib_targets
 add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>
                             COMPILE_FEATURES cxx_std_14
                             PUBLIC_HEADER_DIR ${CMAKE_SOURCE_DIR}/include
@@ -43,7 +43,7 @@ foreach(target IN LISTS lib_targets)
     target_link_libraries(${target} PUBLIC ParallelRngManager::ParallelRngManager)
     target_link_libraries(${target} PUBLIC PriorHessian::PriorHessian)
     target_link_libraries(${target} PUBLIC OpenMP::OpenMP_CXX)
-    target_link_libraries(${target} PUBLIC Boost::thread Boost::chrono)
-    target_link_libraries(${target} PUBLIC Pthread::Pthread)
+    #target_link_libraries(${target} PUBLIC Boost::thread Boost::chrono)
+    #target_link_libraries(${target} PUBLIC Pthread::Pthread)
     target_link_libraries(${target} INTERFACE Armadillo::Armadillo)
 endforeach()

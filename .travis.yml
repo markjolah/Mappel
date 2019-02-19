@@ -1,39 +1,65 @@
-OMP_NUM_THREADS=4
+#PriorHessian
 language: cpp
+os: linux
 
-compiler:
-  - gcc
-  - clang
-addons:
-  apt:
-    packages:
-    - libc++-dev 
-    - libc++abi-dev
-    - libarmadillo-dev 
-    - libboost-dev
-    - libatlas-base-dev
-    - libblas-dev 
-    - libatlas-cpp
+git:
+  depth: 3
+  quiet: true
 
-before_install:
-- echo $LANG
-- echo $LC_ALL
-- echo $TRAVIS_OS_NAME
-- if [ $TRAVIS_OS_NAME == linux ]; then ./scripts/travisCI/install-trusty-dependencies.sh; fi
-script: 
-    - ./build.test.sh 
-    
 branches:
-  only:
-- master
+    only:
+        - master
 
-#notifications:
-#email: false
-# webhooks:
-#    urls:
-#      secure: h2oTAbAZF6+c6iv/kHoDGtl1mzQDF2vQSKWnO1pwfEz+L80lX9u3+JB+jsbYUcZ9smBRnRRghqxpLBmyzH3QZCrBdxKnTWfGc7I7lkTCFQZ5O3pPmIusO6W5zX+YUc+NHPPZXouHuHFmEeEB9vJnt/YB/fyGAGOIq+qXV4s+R9M=
-#    on_success: always
-#    on_failure: always
-#on_start: always
-#env:
-#global:
+matrix:
+  include:
+      #- env:
+          #- MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
+          #- OPT_ARMADILLO_INT64=On
+      - env:
+          - OPT_ARMADILLO_INT64=On OPT_PYTHON=On OPT_MATLAB=Off
+          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+      - env:
+          - OPT_ARMADILLO_INT64=Off OPT_PYTHON=On OPT_MATLAB=Off
+          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+      - env:
+          - OPT_ARMADILLO_INT64=On OPT_PYTHON=Off OPT_MATLAB=Off
+          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+
+      ##Documentation build
+      - env: DOC=On PDFDOC=On DOPT_ARMADILLO_INT64=Off FC=gfortran
+        script: ./scripts/pdf-doc-build.sh -DOPT_ARMADILLO_INT64=${OPT_ARMADILLO_INT64}
+        dist: xenial #supports newer doxygen
+
+#MATRIX_EVAL allows CC and CXX to be set before dependencies are installed
+before_install:
+    - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+    - sudo apt-get update
+    - eval "${MATRIX_EVAL}"
+
+install:
+    - if [ "${DOC}" == "On" ]; then sudo apt-get install -y doxygen graphviz; fi
+    - if [ "${DOC}" == "On" ]; then sudo apt-get install -y gfortran; fi
+    - if [ "${PDFDOC}" == "On" ]; then sudo apt-get install -y doxygen-latex; fi
+    - if [ "${CXX}" == "g++-4.9" ]; then sudo apt-get install -y g++-4.9 gfortran-4.9; fi
+    - if [ "${CXX}" == "g++-5" ];   then sudo apt-get install -y g++-5 gfortran-5; fi
+    - if [ "${CXX}" == "g++-6" ];   then sudo apt-get install -y g++-6 gfortran-6; fi
+    - if [ "${CXX}" == "g++-7" ];   then sudo apt-get install -y g++-7 gfortran-7; fi
+    - if [ -z "$DOC" ]; then INT64="${OPT_ARMADILLO_INT64}" ./scripts/ci-numerical-dependencies/install-blas-lapack.sh; fi
+    - ./scripts/ci-numerical-dependencies/install-armadillo.sh
+    - sudo apt-get install -y libboost-math-dev
+    - if [ -z "$DOC" ]; then ./scripts/travis-trusty-install-gtest.sh; fi
+
+script:
+    - ./scripts/travis-build-test.sh -DCMAKE_Fortran_COMPILER=${FC}
+
+deploy:
+    name: Docu-Bot
+    provider: pages
+    skip-cleanup: true
+    github-token: $GH_TRAVISCI_DOCUMENTATION_TOKEN
+    keep-history: true
+    verbosed: true
+    local_dir: _build/documentation/doc/html
+    on:
+        branch: master
+        condition: $DOC = On

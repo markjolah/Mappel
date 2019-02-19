@@ -21,19 +21,50 @@ endif()
 
 add_executable(estimator_speed estimator_speed.cpp)
 target_link_libraries(estimator_speed PUBLIC Mappel::Mappel)
+
 find_library(GOOGLE_PROFILER profiler)
-target_link_libraries(estimator_speed PRIVATE ${GOOGLE_PROFILER})
+if(GOOGLE_PROFILER)
+    message(STATUS "GoogleProfiler found: ${GOOGLE_PROFILER}.  Enabling profiling for speed testing executables.")
+    target_link_libraries(estimator_speed PRIVATE ${GOOGLE_PROFILER})
+endif()
+
 if(CMAKE_CROSSCOMPILING)
     fixup_dependencies(TARGETS estimator_speed EXPORT_BUILD_TREE True EXPORT_INSTALL_TREE False)
 endif()
 
-#TODO: reenable older tests.
-# 
+
+# Reenabled older tests.
+add_executable(demo test.cpp)
+target_link_libraries(demo PUBLIC Mappel::Mappel)
+
+set(DEMO_CMDS mappel.demo_speed${EXE_POSTFIX}
+              mappel.demo_image${EXE_POSTFIX})
+#                mappel.test_prior${EXE_POSTFIX}
+#                mappel.test_compare_estimators${EXE_POSTFIX}
+#                mappel.test_image_compare_estimators${EXE_POSTFIX}
+#                mappel.test_point_evaluate_estimators${EXE_POSTFIX})
+
+foreach(cmd ${DEMO_CMDS})
+    add_custom_command(TARGET demo POST_BUILD COMMAND ln -sf demo ${cmd} )
+#     install(CODE "execute_process(COMMAND ln -sf demo ${cmd} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}/bin)")
+    add_test(NAME ${cmd} COMMAND ${cmd})
+endforeach()
+
+    #Tests can only be run automatically on Unix caus we are cross-compiling to w64
+#     add_test(NAME GTest COMMAND ${GTEST_TARGET})
+#     add_test(NAME TestSpeed COMMAND mappel.test_speed${DEBUG_FILE_EXT})
+#     add_test(NAME TestImage COMMAND mappel.test_image${DEBUG_FILE_EXT})
+
+
+if(CMAKE_CROSSCOMPILING)
+    fixup_dependencies(TARGETS demo EXPORT_BUILD_TREE True EXPORT_INSTALL_TREE False)
+endif()
+
+
 # add_test(NAME GTest COMMAND ${GTEST_EXE})
 # 
 # set(TEST_CORE_SRCS )
 # set(GTEST_SRCS gtest.cpp)
-# set(CTEST_SRCS test.cpp)
 # 
 # set(GTEST_TARGET mappel.gtest)
 # set(CTEST_TARGET mappel.ctest)
@@ -56,12 +87,6 @@ endif()
 # endif()
 # 
 # message(STATUS "EXE_POSTFIX:${EXE_POSTFIX}")
-# set(CTEST_CMDS mappel.test_speed${EXE_POSTFIX}
-#                mappel.test_image${EXE_POSTFIX})
-# #                mappel.test_prior${EXE_POSTFIX}
-# #                mappel.test_compare_estimators${EXE_POSTFIX}
-# #                mappel.test_image_compare_estimators${EXE_POSTFIX}
-# #                mappel.test_point_evaluate_estimators${EXE_POSTFIX})
 # set(ESTIMATORS Newton Huristic CGauss QuasiNewton NewtonRaphson)
 # 
 # #Ctest is only availible on Unix as it uses symlinks
@@ -81,7 +106,7 @@ endif()
 #         add_custom_command( TARGET ${CTEST_TARGET} POST_BUILD COMMAND ln -sf ${CTEST_NAME} ${cmd} )
 #         install(CODE "execute_process(COMMAND ln -sf ${CTEST_NAME} ${cmd} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}/bin)")
 #     endforeach()
-# 
+#
 #     #Tests can only be run automatically on Unix caus we are cross-compiling to w64
 # #     add_test(NAME GTest COMMAND ${GTEST_TARGET})
 # #     add_test(NAME TestSpeed COMMAND mappel.test_speed${DEBUG_FILE_EXT})

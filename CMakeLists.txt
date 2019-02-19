@@ -20,6 +20,7 @@ if(${CMAKE_BUILD_TYPE} MATCHES Debug)
 else()
     option(BUILD_TESTING "Build testing framework" OFF)
 endif()
+option(OPT_DOC "Build documentation" OFF)
 option(OPT_INSTALL_TESTING "Install testing executables" OFF)
 option(OPT_EXPORT_BUILD_TREE "Configure the package so it is usable from the build tree.  Useful for development." OFF)
 option(OPT_ARMADILLO_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Must be on if OPT_MATLAB is on]" OFF)
@@ -38,6 +39,7 @@ endif()
 message(STATUS "OPTION: BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
 message(STATUS "OPTION: BUILD_STATIC_LIBS: ${BUILD_STATIC_LIBS}")
 message(STATUS "OPTION: BUILD_TESTING: ${BUILD_TESTING}")
+message(STATUS "OPTION: OPT_DOC: ${OPT_DOC}")
 message(STATUS "OPTION: OPT_INSTALL_TESTING: ${OPT_INSTALL_TESTING}")
 message(STATUS "OPTION: OPT_EXPORT_BUILD_TREE: ${OPT_EXPORT_BUILD_TREE}")
 message(STATUS "OPTION: OPT_ARMADILLO_INT64: ${OPT_ARMADILLO_INT64}")
@@ -86,8 +88,7 @@ find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_INT64_C
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${ARMADILLO_PRIVATE_COMPILE_DEFINITIONS})
 
 find_package(OpenMP REQUIRED)
-find_package(Pthread REQUIRED)
-find_package(Boost REQUIRED COMPONENTS thread chrono)
+find_package(Boost REQUIRED) #boost::math only
 
 #Configure standard CFlags and definitions for debug builds
 include(ConfigureDebugBuilds) 
@@ -123,3 +124,9 @@ if(OPT_EXAMPLES)
     message(STATUS "*** C++ Example Programs Enabled ***")
     add_subdirectory(src/examples) #C++ example libraries
 endif()
+
+### Documentation
+if(OPT_DOC)
+    add_subdirectory(doc)
+endif()
+
