@@ -1,9 +1,50 @@
-# MappelConfig.cmake.in
-# Template for a Cmake package-config file.
 @PACKAGE_INIT@
 
-#Include targets file.  This will create IMPORTED targets
+# MappelConfig.cmake
+
+### Find dependencies
+include(CMakeFindDependencyMacro)
+set_and_check(PACKAGE_FIND_MODULES_PATH @PACKAGE_FIND_MODULES_PATH@)
+list(INSERT CMAKE_MODULE_PATH 0 ${PACKAGE_FIND_MODULES_PATH})
+#Use find_package because find_dependency does not respect COMPONENTS argument or allow
+#re-finding of packages with different COMPONENTS settings
+find_package(BLAS REQUIRED COMPONENTS @ARMADILLO_INT64_COMPONENT@)
+find_package(LAPACK REQUIRED COMPONENTS @ARMADILLO_INT64_COMPONENT@)
+find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 @ARMADILLO_INT64_COMPONENT@)
+list(REMOVE_AT CMAKE_MODULE_PATH 0)
+#Default CMAKE Find Modules
+find_dependency(BacktraceException)
+find_dependency(ParallelRngManager)
+find_dependency(PriorHessian)
+
+#To enable MexIFace Matlab module use find_package(... REQUIRED COMPONENTS MATLAB)
+if(@OPT_MATLAB@ AND MATLAB IN_LIST ${${CMAKE_PACKAGE_NAME}_FIND_COMPONENTS})
+    set_and_check(_MEXIFACE_CONFIG_FILE "${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Config-mexiface.cmake")
+    include(${_MEXIFACE_CONFIG_FILE})
+    unset(${_MEXIFACE_CONFIG_FILE})
+endif()
+
+#Single-library package with eponymous library
+#Sets:
+# @PROJECT_NAME@_LIBRARIES (set to shared libs if available)
+# @PROJECT_NAME@_SHARED_LIBRARIES
+# @PROJECT_NAME@_STATIC_LIBRARIES
+# @PROJECT_NAME@_BUILD_TYPES
+
+#Include targets file.  This will create IMPORTED target @PROJECT_NAME@
 include("${CMAKE_CURRENT_LIST_DIR}/@EXPORT_TARGETS_NAME@.cmake")
+set(@PROJECT_NAME@_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@)
+set(@PROJECT_NAME@_SHARED_LIBRARIES)
+set(@PROJECT_NAME@_STATIC_LIBRARIES)
+if(@BUILD_SHARED_LIBS@)
+    set(@PROJECT_NAME@_SHARED_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@)
+    if(@BUILD_STATIC_LIBS@)
+        set(@PROJECT_NAME@_STATIC_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@_STATIC)
+    endif()
+else()
+    set(@PROJECT_NAME@_STATIC_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@)
+endif()
+
+get_target_property(@PROJECT_NAME@_BUILD_TYPES @PROJECT_NAME@::@PROJECT_NAME@ IMPORTED_CONFIGURATIONS)
+
 check_required_components("@PROJECT_NAME@")
-
-

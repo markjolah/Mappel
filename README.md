@@ -7,6 +7,9 @@ High-performance, parallel, robust, cross-platform point-emitter localization fo
 
 
 
+
+
+
 * [TODO List / Upcoming Features ]
   * Profile-likelihood based confidence intervals
   * SCMOS Model variants with PoissonGaussianNoise2DObjective and associated classes
