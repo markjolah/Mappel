@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/markjolah/ci-numerical-dependencies.git
 	branch = master
-	commit = 21f464f92e06138896bd465bf8d40b9d435b34a0
-	parent = 324c363eacb63f5acfbbf66a75656d7e4dc57d8d
+	commit = 4259bce725293e8fb045b656e2038b44e5016367
+	parent = 3b481522269eab5beea8b59c4673420582221289
 	method = merge
 	cmdver = 0.4.0
