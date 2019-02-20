@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/markjolah/ci-numerical-dependencies.git
+	branch = master
+	commit = 21f464f92e06138896bd465bf8d40b9d435b34a0
+	parent = 324c363eacb63f5acfbbf66a75656d7e4dc57d8d
+	method = merge
+	cmdver = 0.4.0
