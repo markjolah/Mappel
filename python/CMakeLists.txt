@@ -28,9 +28,13 @@ add_custom_target(prepare_python ALL DEPENDS "${PYTHON_BUILD_DIR}/setup.py")
 #symlink the mappel python code into build_dir/python
 add_custom_command(TARGET prepare_python PRE_BUILD
    COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/mappel" "${PYTHON_BUILD_DIR}/mappel" 
-   COMMENT "Symlinking mappel python code")
+   COMMENT "Symlinking mappel python code" VERBATIM)
+add_custom_command(TARGET prepare_python PRE_BUILD
+   COMMAND find ${CMAKE_CURRENT_SOURCE_DIR} -regex "'^.*\\(__pycache__\\|\\.py[co]\\)$$'" -print -delete
+   COMMENT "Removing __pycache__")
 
-install(CODE "execute_process(COMMAND ${PYTHON_EXECUTABLE} setup.py install --prefix=${CMAKE_INSTALL_PREFIX}
+set(PYTHON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX})
+install(CODE "execute_process(COMMAND PYTHONPATH=${PYTHON_INSTALL_PATH} ./setup.py install --prefix=${CMAKE_INSTALL_PREFIX}
                               WORKING_DIRECTORY ${PYTHON_BUILD_DIR})")
 if(OPT_TESTING)
     add_test(NAME python_mappel COMMAND python -m mappel WORKING_DIRECTORY ${PYTHON_BUILD_DIR})
