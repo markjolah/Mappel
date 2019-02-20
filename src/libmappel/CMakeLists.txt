@@ -33,7 +33,7 @@ add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>
 
 #Custom target settings for each lib_target from add_shared_static_libraries
 foreach(target IN LISTS lib_targets)
-    if(OPT_ARMADILLO_INT64)
+    if(OPT_BLAS_INT64)
         target_link_libraries(${target} INTERFACE LAPACK::LapackInt64 BLAS::BlasInt64)
     else()
         target_link_libraries(${target} INTERFACE LAPACK::Lapack BLAS::Blas)

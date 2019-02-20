@@ -12,7 +12,7 @@
 #  <cmake_args...> - additional cmake arguments.
 #
 # Optional environment variables:
-# OPT_ARMADILLO_INT64 - enable armadillo 64-bit integer support
+# OPT_BLAS_INT64 - enable armadillo 64-bit integer support
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SRC_PATH=${SCRIPT_DIR}/..
@@ -30,8 +30,8 @@ else
     INSTALL_PATH=$1/$DIST_DIR_NAME
 fi
 
-if [ -z $OPT_ARMADILLO_INT64 ]; then
-    OPT_ARMADILLO_INT64="Off"
+if [ -z $OPT_BLAS_INT64 ]; then
+    OPT_BLAS_INT64="Off"
 fi
 
 ZIP_FILE=${NAME}-python-${VERSION}.zip
@@ -48,7 +48,7 @@ ARGS="${ARGS} -DOPT_DOC=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
 ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=Off"
 ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On"  # Disable finding packages in the build-tree
-ARGS="${ARGS} -DOPT_ARMADILLO_INT64=${OPT_ARMADILLO_INT64}"
+ARGS="${ARGS} -DOPT_BLAS_INT64=${OPT_BLAS_INT64}"
 ARGS="${ARGS} -DOPT_MATLAB=Off"
 ARGS="${ARGS} -DOPT_PYTHON=On"
 

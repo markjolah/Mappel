@@ -14,20 +14,20 @@ matrix:
   include:
       #- env:
           #- MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
-          #- OPT_ARMADILLO_INT64=On
+          #- OPT_BLAS_INT64=On
       - env:
-          - OPT_ARMADILLO_INT64=On OPT_PYTHON=On OPT_MATLAB=Off
+          - OPT_BLAS_INT64=On OPT_PYTHON=On OPT_MATLAB=Off
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
       - env:
-          - OPT_ARMADILLO_INT64=Off OPT_PYTHON=On OPT_MATLAB=Off
+          - OPT_BLAS_INT64=Off OPT_PYTHON=On OPT_MATLAB=Off
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
       - env:
-          - OPT_ARMADILLO_INT64=On OPT_PYTHON=Off OPT_MATLAB=Off
+          - OPT_BLAS_INT64=On OPT_PYTHON=Off OPT_MATLAB=Off
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
 
       ##Documentation build
-      - env: DOC=On PDFDOC=On DOPT_ARMADILLO_INT64=Off FC=gfortran
-        script: ./scripts/pdf-doc-build.sh -DOPT_ARMADILLO_INT64=${OPT_ARMADILLO_INT64}
+      - env: DOC=On PDFDOC=On DOPT_BLAS_INT64=Off FC=gfortran
+        script: ./scripts/pdf-doc-build.sh -DOPT_BLAS_INT64=${OPT_BLAS_INT64}
         dist: xenial #supports newer doxygen
 
 #MATRIX_EVAL allows CC and CXX to be set before dependencies are installed
@@ -44,7 +44,7 @@ install:
     - if [ "${CXX}" == "g++-5" ];   then sudo apt-get install -y g++-5 gfortran-5; fi
     - if [ "${CXX}" == "g++-6" ];   then sudo apt-get install -y g++-6 gfortran-6; fi
     - if [ "${CXX}" == "g++-7" ];   then sudo apt-get install -y g++-7 gfortran-7; fi
-    - if [ -z "$DOC" ]; then INT64="${OPT_ARMADILLO_INT64}" ./scripts/ci-numerical-dependencies/install-blas-lapack.sh; fi
+    - if [ -z "$DOC" ]; then INT64="${OPT_BLAS_INT64}" ./scripts/ci-numerical-dependencies/install-blas-lapack.sh; fi
     - ./scripts/ci-numerical-dependencies/install-armadillo.sh
     - sudo apt-get install -y libboost-math-dev python3
     - if [ -z "$DOC" ]; then ./scripts/travis-trusty-install-gtest.sh; fi
@@ -52,7 +52,7 @@ install:
 script:
     - |
       ./scripts/travis-build-test.sh -DCMAKE_Fortran_COMPILER=${FC} \
-      -DOPT_ARMADILLO_INT64=${OPT_ARMADILLO_INT64}  \
+      -DOPT_BLAS_INT64=${OPT_BLAS_INT64}  \
       -DOPT_PYTHON=${OPT_PYTHON} \
       -DMAPPEL_PYTHON_EXECUTABLE=/usr/bin/python3 \
       -DMAPPEL_PYTHON_VERSIONS=3.4

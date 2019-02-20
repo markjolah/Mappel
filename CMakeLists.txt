@@ -23,7 +23,7 @@ endif()
 option(OPT_DOC "Build documentation" OFF)
 option(OPT_INSTALL_TESTING "Install testing executables" OFF)
 option(OPT_EXPORT_BUILD_TREE "Configure the package so it is usable from the build tree.  Useful for development." OFF)
-option(OPT_ARMADILLO_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Must be on if OPT_MATLAB is on]" OFF)
+option(OPT_BLAS_INT64 "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Must be on if OPT_MATLAB is on]" OFF)
 option(OPT_MATLAB "Add support for Matlab via MexIFace." OFF)
 option(OPT_PYTHON "Add support for Python via boost::python" OFF) # Enable Support for Python via Boost::Python
 option(OPT_EXTRA_DEBUG "Support extra noisy debugging features" OFF) #Extra debug features (Armadillo)
@@ -32,9 +32,9 @@ option(OPT_PROFILE "Enable performance profiling" OFF) #Extra debug features (Ar
 # # Hyperspectral code
 # option(OPT_HYPERSPECTRAL "Add support for hyperspectral and blinking psf" OFF)
 
-if(OPT_MATLAB AND NOT OPT_ARMADILLO_INT64)
-    set(OPT_ARMADILLO_INT64 True)
-    set(OPT_ARMADILLO_INT64 True CACHE BOOL "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Forced on by OPT_MATLAB]." FORCE)
+if(OPT_MATLAB AND NOT OPT_BLAS_INT64)
+    set(OPT_BLAS_INT64 True)
+    set(OPT_BLAS_INT64 True CACHE BOOL "Use 64-bit integers for Armadillo, BLAS, and LAPACK. [Forced on by OPT_MATLAB]." FORCE)
 endif()
 
 message(STATUS "OPTION: BUILD_SHARED_LIBS: ${BUILD_SHARED_LIBS}")
@@ -43,7 +43,7 @@ message(STATUS "OPTION: BUILD_TESTING: ${BUILD_TESTING}")
 message(STATUS "OPTION: OPT_DOC: ${OPT_DOC}")
 message(STATUS "OPTION: OPT_INSTALL_TESTING: ${OPT_INSTALL_TESTING}")
 message(STATUS "OPTION: OPT_EXPORT_BUILD_TREE: ${OPT_EXPORT_BUILD_TREE}")
-message(STATUS "OPTION: OPT_ARMADILLO_INT64: ${OPT_ARMADILLO_INT64}")
+message(STATUS "OPTION: OPT_BLAS_INT64: ${OPT_BLAS_INT64}")
 message(STATUS "OPTION: OPT_MATLAB: ${OPT_MATLAB}")
 message(STATUS "OPTION: OPT_PYTHON: ${OPT_PYTHON}")
 message(STATUS "OPTION: OPT_EXTRA_DEBUG: ${OPT_EXTRA_DEBUG}")
@@ -56,33 +56,33 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 ### Dependencies
 #External depenency integration
 include(AddExternalDependency)
-set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING OPT_INSTALL_TESTING)
-if(OPT_ARMADILLO_INT64)
-    set(EXTERNAL_COMPONENTS_INT64 COMPONENTS INT64)
+set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING )
+if(OPT_BLAS_INT64)
+    set(EXTERNAL_COMPONENTS BLAS_INT64)
 else()
-    set(EXTERNAL_COMPONENTS_INT64 COMPONENTS INT32)
+    set(EXTERNAL_COMPONENTS BLAS_INT32)
 endif()
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING "URL of BacktraceException library dependency")
-add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING_VARS})
+add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} VARS OPT_INSTALL_TESTING)
 
 #ParallelRngManager allows for management of parallel rng streams.
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git CACHE STRING "URL of ParallelRngManager library dependency")
-add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING_VARS})
+add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} VARS OPT_INSTALL_TESTING)
 
 #PriorHessian allows for hessians of prior distirbutions
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
-add_external_dependency(NAME PriorHessian URL ${PriorHessianURL} SHARED
-                        PASS_CACHE_VARIABLES CMAKE_Fortran_COMPILER ${EXTERNAL_DEPENDENCY_TESTING_VARS}
-                        OPT_ARMADILLO_INT64 ${EXTERNAL_COMPONENTS_INT64})
+add_external_dependency(NAME PriorHessian URL ${PriorHessianURL}
+                        VARS OPT_INSTALL_TESTING OPT_BLAS_INT64
+                        COMPONENTS ${EXTERNAL_COMPONENTS})
 
 if(OPT_MATLAB)
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
-    add_external_dependency(NAME MexIFace URL ${MexIFaceURL} SHARED PASS_CACHE_VARIABLES ${EXTERNAL_DEPENDENCY_TESTING})
+    add_external_dependency(NAME MexIFace URL ${MexIFaceURL} VARS OPT_INSTALL_TESTING)
 endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
-if(OPT_ARMADILLO_INT64)
+if(OPT_BLAS_INT64)
     set(ARMADILLO_BLASINT INT64) #Enable INT64 interface for armadillo, Blas and Lapack
 else()
     set(ARMADILLO_BLASINT INT32)

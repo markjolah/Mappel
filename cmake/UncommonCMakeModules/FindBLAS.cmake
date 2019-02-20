@@ -35,8 +35,8 @@
 #   {LIB}_COMPILE_OPTIONS
 #
 # find_package COMPONENTS respected:
-#   INT64 - Enable finding of 64-bit integer targets
-#   INT32 - Accepted for compatibility.  Always enables 32-bit integer targets if available.
+#   BLAS_INT64 - Enable finding of 64-bit integer targets
+#   BLAS_INT32 - Accepted for compatibility.  Always enables 32-bit integer targets if available.
 #   THREADS - Enable finding of threaded targets
 #   STATIC - Enable finding of static targets
 #   CBLAS - Find CBLAS targets also.
@@ -126,7 +126,7 @@ foreach(_lib IN LISTS _LIBS)
     endif()
 
     #int64 shared/static
-    if(INT64 IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS)
+    if(BLAS_INT64 IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS)
         if(NOT ${_LIB}_INT64_PKG_CONFIG_NAMES)
             #list(TRANSFORM ${_LIB}_PKG_CONFIG_NAMES APPEND ${PKG_CONFIG_SUFFIX_INT64} OUTPUT_VARIABLE ${_LIB}_INT64_PKG_CONFIG_NAMES) #Requires cmake 3.12
             string(REGEX REPLACE "([^;]+)" "\\1${PKG_CONFIG_SUFFIX_INT64}" ${_LIB}_INT64_PKG_CONFIG_NAMES "${${_LIB}_PKG_CONFIG_NAMES}")
@@ -138,7 +138,7 @@ foreach(_lib IN LISTS _LIBS)
     endif()
 
     #int64 shared/static with threads
-    if(INT64 IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS AND THREADS IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS)
+    if(BLAS_INT64 IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS AND THREADS IN_LIST ${CMAKE_FIND_PACKAGE_NAME}_FIND_COMPONENTS)
         if(NOT ${_LIB}_INT64_THREADS_PKG_CONFIG_NAMES)
             #list(TRANSFORM ${_LIB}_PKG_CONFIG_NAMES APPEND ${PKG_CONFIG_SUFFIX_INT64} OUTPUT_VARIABLE ${_LIB}_INT64_THREADS_PKG_CONFIG_NAMES) #Requires cmake 3.12
             #list(TRANSFORM ${_LIB}_INT64_THREADS_PKG_CONFIG_NAMES APPEND ${PKG_CONFIG_SUFFIX_THREADS}) #Requires cmake 3.12
