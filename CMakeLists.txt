@@ -58,9 +58,9 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 include(AddExternalDependency)
 set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING )
 if(OPT_BLAS_INT64)
-    set(EXTERNAL_COMPONENTS BLAS_INT64)
+    set(BLAS_INT_COMPONENT BLAS_INT64)
 else()
-    set(EXTERNAL_COMPONENTS BLAS_INT32)
+    set(BLAS_INT_COMPONENT BLAS_INT32)
 endif()
 #BacktraceException provides backtraces for caught exceptions.
 set(BacktraceExceptionURL https://github.com/markjolah/BacktraceException.git CACHE STRING "URL of BacktraceException library dependency")
@@ -74,7 +74,7 @@ add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} VAR
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
 add_external_dependency(NAME PriorHessian URL ${PriorHessianURL}
                         VARS OPT_INSTALL_TESTING OPT_BLAS_INT64
-                        COMPONENTS ${EXTERNAL_COMPONENTS})
+                        COMPONENTS ${BLAS_INT_COMPONENT})
 
 if(OPT_MATLAB)
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
@@ -87,9 +87,9 @@ if(OPT_BLAS_INT64)
 else()
     set(ARMADILLO_BLASINT INT32)
 endif()
-find_package(BLAS REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
-find_package(LAPACK REQUIRED COMPONENTS ${ARMADILLO_BLASINT})
-find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${ARMADILLO_BLASINT})
+find_package(BLAS REQUIRED COMPONENTS ${BLAS_INT_COMPONENT})
+find_package(LAPACK REQUIRED COMPONENTS ${BLAS_INT_COMPONENT})
+find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${BLAS_INT_COMPONENT})
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS ${ARMADILLO_PRIVATE_COMPILE_DEFINITIONS})
 
 find_package(OpenMP REQUIRED)
@@ -111,7 +111,7 @@ set(EXPORTED_FIND_MODULES cmake/UncommonCMakeModules/FindArmadillo.cmake
                           cmake/UncommonCMakeModules/FindBLAS.cmake
                           cmake/UncommonCMakeModules/FindLAPACK.cmake
                           cmake/UncommonCMakeModules/MakePkgConfigTarget.cmake)
-export_package_wizzard(PROVIDED_COMPONENTS ${ARMADILLO_BLASINT}
+export_package_wizzard(PROVIDED_COMPONENTS ${BLAS_INT_COMPONENT}
                        FIND_MODULES ${EXPORTED_FIND_MODULES})
 
 add_subdirectory(src/libmappel) #Main library
