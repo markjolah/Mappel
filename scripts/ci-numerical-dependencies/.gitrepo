@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = /nfs/olah/home/mjo/github/ci-numerical-dependencies
+	branch = debugging
+	commit = 21f464f92e06138896bd465bf8d40b9d435b34a0
+	parent = d4d01032828f647aab9c460faff75afb3ac85f74
+	method = merge
+	cmdver = 0.4.0
