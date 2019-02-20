@@ -70,7 +70,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/MakePkgConfigTarget.cmake)
 
 #Default BLAS names to search for in decreasing order of importance
 if(NOT BLAS_PKG_CONFIG_NAMES)
-    set(BLAS_PKG_CONFIG_NAMES blas openblas goto2 refblas)
+    set(BLAS_PKG_CONFIG_NAMES blas openblas goto2 refblas blas-netlib blas-reference)
 endif()
 
 if(NOT CBLAS_PKG_CONFIG_NAMES)

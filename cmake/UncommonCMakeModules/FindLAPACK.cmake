@@ -71,11 +71,11 @@ include(${CMAKE_CURRENT_LIST_DIR}/MakePkgConfigTarget.cmake)
 
 #Default LAPACK names to search for in decreasing order of importance
 if(NOT LAPACK_PKG_CONFIG_NAMES)
-    set(LAPACK_PKG_CONFIG_NAMES lapack reflapack)
+    set(LAPACK_PKG_CONFIG_NAMES lapack reflapack lapack-netlib lapack-reference)
 endif()
 
 if(NOT LAPACKE_PKG_CONFIG_NAMES)
-    set(LAPACKE_PKG_CONFIG_NAMES lapacke reflapacke)
+    set(LAPACKE_PKG_CONFIG_NAMES lapacke reflapacke lapacke-netlib lapacke-reference)
 endif()
 
 if(NOT PKG_CONFIG_SUFFIX_INT64)
