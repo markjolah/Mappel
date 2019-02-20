@@ -1,0 +1,63 @@
+\hypertarget{stencil_8cpp}{}\subsection{stencil.\+cpp File Reference}
+\label{stencil_8cpp}\index{stencil.\+cpp@{stencil.\+cpp}}
+
+
+The stencils for pixel based computations.  
+
+
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/stencil.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/display.\+h\char`\"{}}\\*
+Include dependency graph for stencil.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stencil_8cpp__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}{mappel\+::normal\+\_\+quantile\+\_\+twosided} (double confidence)
+\item 
+double \hyperlink{namespacemappel_a7cf2f920819c8899c4f01d25072412db}{mappel\+::normal\+\_\+quantile\+\_\+onesided} (double confidence)
+\item 
+void \hyperlink{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}{mappel\+::fill\+\_\+gaussian\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, double sigma)
+\item 
+double \hyperlink{namespacemappel_a93917141391e8f1ac5b4b5b0712cd29c}{mappel\+::gaussian\+\_\+convolution} (int x, int y, const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil)
+\item 
+void \hyperlink{namespacemappel_a3b80821e227772c7480e6d5d27090593}{mappel\+::estimate\+\_\+gaussian\+\_\+2\+Dmax} (const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil, int max\+\_\+pos\mbox{[}$\,$\mbox{]}, double \&min\+\_\+val)
+\item 
+void \hyperlink{namespacemappel_ae0365a07ea08b7deae147915077091c8}{mappel\+::refine\+\_\+gaussian\+\_\+2\+Dmax} (const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil, int max\+\_\+pos\mbox{[}$\,$\mbox{]})
+\item 
+double \hyperlink{namespacemappel_af7eb6e00596bd775bfefa5b8d826241d}{mappel\+::gaussian\+\_\+3\+D\+\_\+convolution} (int x, int y, int z, const CubeT \&data, const Vec\+FieldT \&stencils)
+\item 
+void \hyperlink{namespacemappel_a2d597c426bd6287ad1a506511a68c9c2}{mappel\+::estimate\+\_\+gaussian\+\_\+3\+Dmax} (const CubeT \&data, const Vec\+FieldT \&stencils, int max\+\_\+pos\mbox{[}$\,$\mbox{]}, double \&min\+\_\+val)
+\item 
+void \hyperlink{namespacemappel_ab65cc5c100590b4b5246984162e3e678}{mappel\+::refine\+\_\+gaussian\+\_\+3\+Dmax} (const CubeT \&data, const Vec\+FieldT \&stencils, int max\+\_\+pos\mbox{[}$\,$\mbox{]})
+\item 
+double \hyperlink{namespacemappel_ae4735b28fdcd3dafd492d565357f7641}{mappel\+::estimate\+\_\+background} (const MatT \&im, const MatT \&unit\+\_\+model\+\_\+im, double min\+\_\+bg)
+\item 
+double \hyperlink{namespacemappel_acc51debd218d0e3181f7ddf32576f739}{mappel\+::estimate\+\_\+intensity} (const MatT \&im, const MatT \&unit\+\_\+model\+\_\+im, double bg)
+\item 
+double \hyperlink{namespacemappel_a5066b92cf654828129635a6ca61aaca4}{mappel\+::estimate\+\_\+background} (const CubeT \&im, const CubeT \&unit\+\_\+model\+\_\+im)
+\item 
+double \hyperlink{namespacemappel_a2d00c518aa213c069f09c666c25b026a}{mappel\+::estimate\+\_\+intensity} (const CubeT \&im, const CubeT \&unit\+\_\+model\+\_\+im, double bg)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The stencils for pixel based computations. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+03-\/22-\/2014 
+\end{DoxyDate}

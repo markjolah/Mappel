@@ -1,0 +1,5 @@
+<map id="mappel::rllh_beta_prior" name="mappel::rllh_beta_prior">
+<area shape="rect" id="node2" href="$classmappel_1_1PriorMAP1DObjective.html#a08683df7a96febdeca35291129291b6d" title="mappel::PriorMAP1DObjective\l::prior_relative_log_likelihood" alt="" coords="203,5,391,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PriorMAP1DObjective.html#ac5b20bb93fe2f2eddd75d19bf34283c7" title="mappel::PriorMAP1DObjective\l::set_hyperparameters" alt="" coords="675,5,863,44"/>
+<area shape="rect" id="node4" href="$classmappel_1_1PriorMAP1DObjective.html#a3cb80b4c435d260e1a62ba666fbbb787" title="mappel::PriorMAP1DObjective\l::prior_log_likelihood" alt="" coords="439,33,627,72"/>
+</map>

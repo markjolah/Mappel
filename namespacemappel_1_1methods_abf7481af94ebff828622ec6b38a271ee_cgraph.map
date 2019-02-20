@@ -1,0 +1,6 @@
+<map id="mappel::methods::estimate_mcmc_sample" name="mappel::methods::estimate_mcmc_sample">
+<area shape="rect" id="node2" href="$namespacemappel_1_1mcmc.html#a29219ed7564edad6489889dc2ec2a0d6" title="mappel::mcmc::num_oversample" alt="" coords="221,5,424,31"/>
+<area shape="rect" id="node3" href="$namespacemappel_1_1mcmc.html#a788cb1c156fa3b03724c3a44fe9e83ce" title="mappel::mcmc::sample\l_posterior" alt="" coords="249,55,396,93"/>
+<area shape="rect" id="node5" href="$namespacemappel_1_1mcmc.html#a2930a61f34237af553702ddaaf72c5b5" title="mappel::mcmc::thin\l_sample" alt="" coords="259,117,386,156"/>
+<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="472,55,643,93"/>
+</map>

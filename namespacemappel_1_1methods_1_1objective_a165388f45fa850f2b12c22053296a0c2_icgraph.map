@@ -1,0 +1,7 @@
+<map id="mappel::methods::objective::grad2" name="mappel::methods::objective::grad2">
+<area shape="rect" id="node2" href="$namespacemappel_1_1methods_1_1objective.html#a5a6ea0d3fa967fa2ade437fceb717af6" title="mappel::methods::objective\l::grad2" alt="" coords="247,5,418,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1NewtonDiagonalMaximizer.html#ac445064041b5c7f3c147c08a0065cd68" title="mappel::NewtonDiagonalMaximizer\l::maximize" alt="" coords="224,68,441,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1TrustRegionMaximizer.html#ac30ffdcd3f25cd0cbb066cdb5d28082a" title="mappel::TrustRegionMaximizer\l::name" alt="" coords="237,131,429,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1PriorMAP1DObjective.html#af21177beb6afa9a865289f4d49362d55" title="mappel::PriorMAP1DObjective\l::prior_grad2_update" alt="" coords="239,193,427,232"/>
+<area shape="rect" id="node6" href="$classmappel_1_1PriorMAP1DObjective.html#ac5b20bb93fe2f2eddd75d19bf34283c7" title="mappel::PriorMAP1DObjective\l::set_hyperparameters" alt="" coords="489,223,677,261"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="mappel::Gauss2DsMLE::operator=" name="mappel::Gauss2DsMLE::operator=">
+<area shape="rect" id="node2" href="$classmappel_1_1MLEstimator.html#ace25f714ea4c7918b71def996c638d0c" title="mappel::MLEstimator\l::operator=" alt="" coords="241,5,379,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PoissonNoise2DObjective.html#abdfcdfc3fb1a1da2a0b7c3898532175e" title="mappel::PoissonNoise2DObjective\l::operator=" alt="" coords="204,68,416,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1ImageFormat2DBase.html#af7abdfaf54b018bc3a4b2a2a4e37b451" title="mappel::ImageFormat2DBase\l::operator=" alt="" coords="217,131,403,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#ab1b09eccafc20261b34a404fc8dede4e" title="mappel::Gauss2DsModel\l::operator=" alt="" coords="230,193,390,232"/>
+<area shape="rect" id="node13" href="$classmappel_1_1PointEmitterModel.html#aa84b896a736bca3cab2f07e2ccda5489" title="mappel::PointEmitterModel\l::operator=" alt="" coords="225,256,395,295"/>
+<area shape="rect" id="node6" href="$classmappel_1_1MCMCAdaptor2Ds.html#a271813db8cfbca730d2ebd60b335b33e" title="mappel::MCMCAdaptor2Ds\l::operator=" alt="" coords="464,163,636,201"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss2DsModel.html#a11f03c648095b6d7dd5c38c3a5eca2dc" title="mappel::Gauss2DsModel\l::get_max_sigma" alt="" coords="470,225,630,264"/>
+<area shape="rect" id="node7" href="$classmappel_1_1MCMCAdaptor2D.html#aeddb1b66ab86ef64421b9a7d6a208769" title="mappel::MCMCAdaptor2D\l::operator=" alt="" coords="684,163,851,201"/>
+<area shape="rect" id="node8" href="$classmappel_1_1MCMCAdaptor1D.html#a669bba7517087d842f941957cbbf5fb5" title="mappel::MCMCAdaptor1D\l::operator=" alt="" coords="900,163,1067,201"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Gauss2DsModel.html#a46da2752c2d1ca376b72d910818e47ae" title="mappel::Gauss2DsModel\l::get_max_sigma_ratio" alt="" coords="687,225,847,264"/>
+<area shape="rect" id="node12" href="$classmappel_1_1Gauss2DsModel.html#af93a5f984a97e23ae1d371c980e48a41" title="mappel::Gauss2DsModel\l::get_min_sigma" alt="" coords="687,288,847,327"/>
+<area shape="rect" id="node11" href="$classmappel_1_1PointEmitterModel.html#a0dfb473c48d177a4540d328abb03cd55" title="mappel::PointEmitterModel\l::get_ubound" alt="" coords="899,225,1068,264"/>
+</map>

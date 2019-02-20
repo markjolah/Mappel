@@ -1,0 +1,8 @@
+<map id="mappel::methods::likelihood_objective" name="mappel::methods::likelihood_objective">
+<area shape="rect" id="node2" href="$namespacemappel_1_1methods_1_1objective.html#a8e120e5a79029803453cea5f9f2d8f67" title="mappel::methods::objective\l::grad" alt="" coords="230,5,401,44"/>
+<area shape="rect" id="node3" href="$namespacemappel_1_1methods.html#a82eaea0b938b0daff819da153e1351e2" title="mappel::methods::likelihood\l_objective" alt="" coords="228,68,403,107"/>
+<area shape="rect" id="node7" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="230,131,401,169"/>
+<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1likelihood.html#a0233341d03d8f8d06cb852068942ba73" title="mappel::methods::likelihood\l::hessian" alt="" coords="451,37,625,76"/>
+<area shape="rect" id="node5" href="$namespacemappel_1_1methods_1_1likelihood.html#ae064b0a1e26a5626c62bde870e587ecb" title="mappel::methods::likelihood\l::rllh" alt="" coords="451,100,625,139"/>
+<area shape="rect" id="node6" href="$namespacemappel.html#a6e36ec38eee9f05906f51d4db8767b9e" title="mappel::relative_poisson\l_log_likelihood" alt="" coords="673,100,832,139"/>
+</map>

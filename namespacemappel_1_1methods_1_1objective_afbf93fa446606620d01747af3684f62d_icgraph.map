@@ -1,0 +1,9 @@
+<map id="mappel::methods::objective::hessian" name="mappel::methods::objective::hessian">
+<area shape="rect" id="node2" href="$namespacemappel_1_1methods_1_1objective.html#aff0530b529e752a4c9039a8aef0eac20" title="mappel::methods::objective\l::hessian" alt="" coords="238,5,409,44"/>
+<area shape="rect" id="node3" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#a134e673cbfdb9ac4e2d9ebec23ca2841" title="Parallel model Hessian calculations for a stack of images. " alt="" coords="238,68,409,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1NewtonMaximizer.html#aca7e3071f17ef6f381878eb6151c86d7" title="mappel::NewtonMaximizer\l::maximize" alt="" coords="240,131,407,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1QuasiNewtonMaximizer.html#ab4d32d8ba90d4355262a228753619b9f" title="mappel::QuasiNewtonMaximizer\l::maximize" alt="" coords="224,193,423,232"/>
+<area shape="rect" id="node6" href="$classmappel_1_1TrustRegionMaximizer.html#ae4f4499f81a4d3213e7ea863243e926c" title="mappel::TrustRegionMaximizer\l::maximize" alt="" coords="227,256,419,295"/>
+<area shape="rect" id="node7" href="$namespacemappel_1_1methods_1_1objective.html#a8c40861cc75e4165606b495a6c04c62a" title="mappel::methods::objective\l::negative_definite_hessian" alt="" coords="237,319,409,357"/>
+<area shape="rect" id="node8" href="$namespacemappel_1_1methods.html#a0e3bec3c7363eb6005abdeaa151decb9" title="mappel::methods::observed\l_information" alt="" coords="237,381,410,420"/>
+</map>

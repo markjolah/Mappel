@@ -1,0 +1,49 @@
+\hypertarget{Gauss2DsxyModel_8h}{}\subsection{Gauss2\+Dsxy\+Model.\+h File Reference}
+\label{Gauss2DsxyModel_8h}\index{Gauss2\+Dsxy\+Model.\+h@{Gauss2\+Dsxy\+Model.\+h}}
+
+
+The class declaration and inline and templated functions for Gauss2\+Dsxy\+Model.  
+
+
+{\ttfamily \#include \char`\"{}Mappel/\+Point\+Emitter\+Model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+Image\+Format2\+D\+Base.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+Gauss1\+Ds\+M\+A\+P.\+h\char`\"{}}\\*
+Include dependency graph for Gauss2\+Dsxy\+Model.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gauss2DsxyModel_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1Gauss2DsxyModel}{mappel\+::\+Gauss2\+Dsxy\+Model}
+\begin{DoxyCompactList}\small\item\em A base class for 2D Gaussian P\+SF with axis-\/aligned gaussian with free parameters for both sigma\+\_\+x and sigma\+\_\+y. Gaussian sigma parameters sigma\+\_\+x and sigma\+\_\+y are measured in units of pixels. The model has 6 parameters, \mbox{[}x,y,I,bg,sigma\+\_\+x,sigma\+\_\+y\mbox{]}. \end{DoxyCompactList}\item 
+class \hyperlink{classmappel_1_1Gauss2DsxyModel_1_1Stencil}{mappel\+::\+Gauss2\+Dsxy\+Model\+::\+Stencil}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmappel_1_1Gauss2DsxyModel_1_1Stencil}{Stencil} for 2D free-\/sigma (astigmatic) models. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Dsxy\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_a81262a4320f5a0468ef39f0d8eefbbe4}{mappel\+::cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Dsxy\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_acc653fb1d59f0403ed375c36e14dfa9a}{mappel\+::cgauss\+\_\+compute\+\_\+estimate} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init, int max\+\_\+iterations)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Dsxy\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_ac77df7c0889cc08a2937436d33691029}{mappel\+::cgauss\+\_\+compute\+\_\+estimate\+\_\+debug} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init, int max\+\_\+iterations, Param\+VecT$<$ Model $>$ \&sequence)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The class declaration and inline and templated functions for Gauss2\+Dsxy\+Model. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2014-\/2019 
+\end{DoxyDate}

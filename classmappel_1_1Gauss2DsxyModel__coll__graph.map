@@ -1,0 +1,15 @@
+<map id="mappel::Gauss2DsxyModel" name="mappel::Gauss2DsxyModel">
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="494,333,663,358"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss1DsModel.html" title="Base class for 1D Gaussian PSF with variable Gaussian sigma (standard deviation) measured in units of..." alt="" coords="1487,218,1647,243"/>
+<area shape="rect" id="node11" href="$classmappel_1_1MCMCAdaptor1D.html" title="mappel::MCMCAdaptor1D" alt="" coords="769,213,936,238"/>
+<area shape="rect" id="node17" href="$classmappel_1_1MAPEstimator.html" title="A Mixin class to configure a for MLE estimation (null prior). " alt="" coords="960,375,1107,401"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="186,165,261,190"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DsMAP.html" title="A 1D Gaussian with variable PSF sigma under an Poisson read noise assumption and MAP Objective..." alt="" coords="1739,218,1891,243"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="5,158,123,197"/>
+<area shape="rect" id="node6" href="$classmappel_1_1ImageFormat2DBase.html" title="A virtual base class for 2D image localization objectives. " alt="" coords="1723,477,1908,502"/>
+<area shape="rect" id="node9" href="$classmappel_1_1ImageFormat1DBase.html" title="A virtual base class for 2D image localization objectives. " alt="" coords="1131,106,1316,131"/>
+<area shape="rect" id="node15" href="$classmappel_1_1PoissonNoise1DObjective.html" title="A base class for 1D objectives with Poisson read noise. This objective function and its subclasses ar..." alt="" coords="1461,95,1673,121"/>
+<area shape="rect" id="node10" href="$classmappel_1_1MCMCAdaptor1Ds.html" title="mappel::MCMCAdaptor1Ds" alt="" coords="1137,218,1309,243"/>
+<area shape="rect" id="node12" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="489,210,668,235"/>
+<area shape="rect" id="node13" title="STL class. " alt="" coords="801,137,905,162"/>
+</map>

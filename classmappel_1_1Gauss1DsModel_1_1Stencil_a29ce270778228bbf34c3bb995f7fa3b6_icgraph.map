@@ -1,0 +1,8 @@
+<map id="mappel::Gauss1DsModel::Stencil::I" name="mappel::Gauss1DsModel::Stencil::I">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DsModel.html#ad987432d37b221f7fa01605d1bef0bbe" title="mappel::Gauss1DsModel\l::initial_theta_estimate" alt="" coords="213,5,373,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel.html#a03b7f5f6e8511fa8f1947cb6e15f3a25" title="mappel::Gauss1DsModel\l::pixel_grad" alt="" coords="213,68,373,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DsModel.html#ad7909d3b050709cd2a6d93b4114c5ff8" title="mappel::Gauss1DsModel\l::pixel_hess_update" alt="" coords="421,97,581,136"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss1DsModel.html#a1e60df620a31b1fa5619c5aca8d082ad" title="mappel::Gauss1DsModel\l::pixel_grad2" alt="" coords="213,183,373,221"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DsModel.html#ae28133465cec4427bdc9ed769d8a324a" title="mappel::Gauss1DsModel\l::pixel_hess" alt="" coords="213,245,373,284"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DsModel.html#a2c1c6c8b86fbf992c6816d7ca3ac767f" title="mappel::Gauss1DsModel\l::pixel_model_value" alt="" coords="213,308,373,347"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="mappel::PointEmitterModel::make_param" name="mappel::PointEmitterModel::make_param">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DModel.html#a055a3bd9bc0ff8540a48a1c6f50ec523" title="Fast, heuristic estimate of initial theta. " alt="" coords="231,5,386,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel.html#acd86dd83dc88fae355f6e6bc18255d49" title="Fast, heuristic estimate of initial theta. " alt="" coords="229,68,389,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DModel.html#a41572cfae5f8f77ee731a291848fc1c4" title="Fast, heuristic estimate of initial theta. " alt="" coords="231,131,386,169"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsxyModel.html#ab8129a326be2ffaa51b1edbce903181c" title="Fast, heuristic estimate of initial theta. " alt="" coords="223,193,395,232"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DsModel.html#a86bc63141107624bf3ca7016a570e994" title="Fast, heuristic estimate of initial theta. " alt="" coords="229,256,389,295"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Gauss1DModel.html#a6b0a57e7620ef80030c94903aae5954f" title="pixel derivative inner loop calculations. " alt="" coords="231,319,386,357"/>
+<area shape="rect" id="node11" href="$classmappel_1_1Gauss1DsModel.html#ad7909d3b050709cd2a6d93b4114c5ff8" title="mappel::Gauss1DsModel\l::pixel_hess_update" alt="" coords="229,381,389,420"/>
+<area shape="rect" id="node12" href="$classmappel_1_1Gauss2DModel.html#aa4ada829604d1a79ef92d0df4fdff94c" title="pixel derivative inner loop calculations. " alt="" coords="231,444,386,483"/>
+<area shape="rect" id="node13" href="$classmappel_1_1Gauss2DsModel.html#abc9ec137a0cf5238a34b9c041e3fc3a5" title="pixel derivative inner loop calculations. " alt="" coords="229,507,389,545"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DModel.html#ae058886a3f8328a340ea8fe2332113dd" title="mappel::Gauss2DModel\l::initial_theta_estimate" alt="" coords="451,131,606,169"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsxyModel.html#a15ae6b11aa71727df0ca8abffd47d7f2" title="mappel::Gauss2DsxyModel\l::initial_theta_estimate" alt="" coords="443,193,615,232"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss2DsModel.html#a0de2129889e9c5d5ff294da9be5a890b" title="mappel::Gauss2DsModel\l::initial_theta_estimate" alt="" coords="449,256,609,295"/>
+</map>

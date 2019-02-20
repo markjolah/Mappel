@@ -1,0 +1,9 @@
+<map id="mappel::IterativeMaximizer::compute_estimate_debug" name="mappel::IterativeMaximizer::compute_estimate_debug">
+<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aade1d8879a22dff77c2707b379b2203e" title="Return the saved theta sequence. " alt="" coords="229,5,397,57"/>
+<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#adda45df3816750fa019f25ff46bf9809" title="mappel::IterativeMaximizer\l::MaximizerData::get_theta\l_sequence_rllh" alt="" coords="229,81,397,133"/>
+<area shape="rect" id="node4" href="$classmappel_1_1IterativeMaximizer.html#a4d05ed89de53e6e73f2f13bef30862ec" title="mappel::IterativeMaximizer\l::maximize" alt="" coords="229,157,397,196"/>
+<area shape="rect" id="node5" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af2e61c659a8cc78365bd801026c2f6a9" title="mappel::IterativeMaximizer\l::MaximizerData::record_exit" alt="" coords="224,220,401,259"/>
+<area shape="rect" id="node6" href="$classmappel_1_1IterativeMaximizer.html#af5614c292f139b5032b733a8d6fdf73e" title="mappel::IterativeMaximizer\l::record_run_statistics" alt="" coords="229,283,397,321"/>
+<area shape="rect" id="node8" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a29ccc1aa8e5ecf505f4ca76f6b8b214e" title="Get the current stencil. " alt="" coords="229,345,397,384"/>
+<area shape="rect" id="node7" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac9d06c390f911f733c3912dbdcbae954" title="mappel::IterativeMaximizer\l::MaximizerData::get_backtrack_idxs" alt="" coords="449,283,671,321"/>
+</map>

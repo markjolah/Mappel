@@ -1,0 +1,827 @@
+\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData}{}\subsection{mappel\+:\+:Iterative\+Maximizer$<$ Model $>$\+:\+:Maximizer\+Data Class Reference}
+\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData}\index{mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/estimator.\+h$>$}
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aa14baec5beb341270a0f09f0d3ff5481}{Maximizer\+Data} (const Model \&\hyperlink{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}{model}, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&\hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_afcee3fa283be1a9ba1d197ed777d447c}{im}, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s, bool \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af13babebeb16147883db7af0b4875b53}{save\+\_\+seq}=false, int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aee106ddaebe30496f5280095fc01301a}{max\+\_\+seq\+\_\+len}=0)
+\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af2e61c659a8cc78365bd801026c2f6a9}{record\+\_\+exit} (\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521c}{Exit\+Code} code)
+\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1096048bf29ccbc45e4a60dc6cbf7b2c}{record\+\_\+iteration} ()
+\begin{DoxyCompactList}\small\item\em Record an iteration point (derivatives computed) Using the saved theta as the default. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9eca9cd87534fa88ff6b1116853123d0}{record\+\_\+iteration} (const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&accepted\+\_\+theta)
+\begin{DoxyCompactList}\small\item\em Record an iteration point (derivatives computed) \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a8c82784b23315be8f74b968ee4188388}{record\+\_\+backtrack} (double rejected\+\_\+rllh)
+\begin{DoxyCompactList}\small\item\em Record a backtracked point (no derivative computations performed) Using the saved theta as the default. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ae60e71250e72ce3ce5cad912df8f16cf}{record\+\_\+backtrack} (const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&rejected\+\_\+theta, double rejected\+\_\+rllh)
+\begin{DoxyCompactList}\small\item\em Record a backtracked point (no derivative computations performed) \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aade1d8879a22dff77c2707b379b2203e}{get\+\_\+theta\+\_\+sequence} () const 
+\begin{DoxyCompactList}\small\item\em Return the saved theta sequence. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac9d06c390f911f733c3912dbdcbae954}{get\+\_\+backtrack\+\_\+idxs} () const 
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_adda45df3816750fa019f25ff46bf9809}{get\+\_\+theta\+\_\+sequence\+\_\+rllh} () const 
+\item 
+\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \& \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a29ccc1aa8e5ecf505f4ca76f6b8b214e}{stencil} ()
+\begin{DoxyCompactList}\small\item\em Get the current stencil. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a295d06c20f4d620602eece746f4c7d85}{set\+\_\+stencil} (const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s)
+\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a0349ede0482bdc352643e1eba2ab3f11}{save\+\_\+stencil} ()
+\begin{DoxyCompactList}\small\item\em Save the current stencil to the single reserve spot. Overwrites any previously saved stencil. This is used to save a stencil when backtracking. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a5f65e52de343dbd012c3b3a7b463b792}{restore\+\_\+stencil} ()
+\begin{DoxyCompactList}\small\item\em Restore the single reserved stencil to the current stencil spot. Overwrites any previously saved stencil. This is used to restore a last good iterate (and associated stencil data) when backtracking. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \& \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac98f83e1362c3edd65e0681ee93c6da0}{saved\+\_\+stencil} ()
+\begin{DoxyCompactList}\small\item\em Get the saved stencil. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \& \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac6ed5231a1ac2f4bfdd51a2800212fea}{theta} ()
+\begin{DoxyCompactList}\small\item\em Get the current stencil\textquotesingle{}s theta. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \& \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aedc8670533fe0323a62e7def637875db}{saved\+\_\+theta} ()
+\begin{DoxyCompactList}\small\item\em Get the saved stencil\textquotesingle{}s theta. \end{DoxyCompactList}\item 
+int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ab4248a81292964ea9cbfd37964a7b2c1}{get\+Iteration} () const 
+\item 
+void \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aeff700342cb52da0b5b0d8edb3dac020}{set\+\_\+fixed\+\_\+parameters} (const \hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \&fixed\+\_\+parameters)
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \& \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_afcee3fa283be1a9ba1d197ed777d447c}{im}
+\item 
+\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3125e5d8ae4e2d4c4969ccb0187903fb}{grad}
+\item 
+\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af592d029ed46c5ec9bedd2291db12920}{step}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aead80fc0e12236ca355849ad36749094}{lbound}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a222f9843c94b82c5ee9ad7c8af04ab52}{ubound}
+\item 
+double \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a224b29201511a2ab8ca86535631c41ef}{rllh}
+\item 
+int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7caa78309de84e0ab4815fc00fbd6cf5}{n\+Backtracks} =0
+\item 
+int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7ee453c4ba6108b9c0cbce345b0ee4da}{n\+Iterations} =0
+\item 
+bool \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af13babebeb16147883db7af0b4875b53}{save\+\_\+seq}
+\item 
+\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521c}{Exit\+Code} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_abf4f25be02f47143a077c7ac6419aed6}{exit\+\_\+code} =\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca3476bf9c3af766198bfbd4f065a51e69}{Exit\+Code\+::\+Unassigned}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af078e8d5506273857fd7c2ffad69f8da}{fixed\+\_\+parameter\+\_\+scalar}
+\item 
+bool \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9f1c22b2c3065f92244230a74fc948aa}{has\+\_\+fixed\+\_\+parameters} =false
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1a3b8f9693e769eded9fe76751fa49c1}{s0}
+\item 
+\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3c0f6ec4ba531dfefe8e4b73f537192d}{s1}
+\item 
+bool \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a321e112eacabe76c882ea8976efb0e9b}{current\+\_\+stencil}
+\item 
+\hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a2c8a2c8724b6f507cd8d4a2b6310324f}{theta\+\_\+seq}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aaf6e3749e8bf4e8714bac4a48902a4cb}{seq\+\_\+rllh}
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a088734ca36fdf979d8e57779352b2f79}{backtrack\+\_\+idxs}
+\item 
+int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a78a56d5ffe0cad0de474e244816748a6}{seq\+\_\+len} =0
+\item 
+const int \hyperlink{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aee106ddaebe30496f5280095fc01301a}{max\+\_\+seq\+\_\+len}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\subsubsection*{template$<$class Model$>$\\*
+class mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data}
+
+
+
+Definition at line 244 of file estimator.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!Maximizer\+Data@{Maximizer\+Data}}
+\index{Maximizer\+Data@{Maximizer\+Data}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{Maximizer\+Data(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&im, const Stencil\+T$<$ Model $>$ \&s, bool save\+\_\+seq=false, int max\+\_\+seq\+\_\+len=0)}{MaximizerData(const Model &model, const ModelDataT< Model > &im, const StencilT< Model > &s, bool save_seq=false, int max_seq_len=0)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::\+Maximizer\+Data (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{im, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s, }
+\item[{bool}]{save\+\_\+seq = {\ttfamily false}, }
+\item[{int}]{max\+\_\+seq\+\_\+len = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aa14baec5beb341270a0f09f0d3ff5481}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aa14baec5beb341270a0f09f0d3ff5481}
+
+
+Definition at line 364 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::backtrack\+\_\+idxs, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::seq\+\_\+rllh, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta\+\_\+seq.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aa14baec5beb341270a0f09f0d3ff5481_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!get\+\_\+backtrack\+\_\+idxs@{get\+\_\+backtrack\+\_\+idxs}}
+\index{get\+\_\+backtrack\+\_\+idxs@{get\+\_\+backtrack\+\_\+idxs}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{get\+\_\+backtrack\+\_\+idxs() const }{get_backtrack_idxs() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::get\+\_\+backtrack\+\_\+idxs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac9d06c390f911f733c3912dbdcbae954}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac9d06c390f911f733c3912dbdcbae954}
+
+
+Definition at line 270 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac9d06c390f911f733c3912dbdcbae954_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!get\+\_\+theta\+\_\+sequence@{get\+\_\+theta\+\_\+sequence}}
+\index{get\+\_\+theta\+\_\+sequence@{get\+\_\+theta\+\_\+sequence}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{get\+\_\+theta\+\_\+sequence() const }{get_theta_sequence() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Param\+VecT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aade1d8879a22dff77c2707b379b2203e}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aade1d8879a22dff77c2707b379b2203e}
+
+
+Return the saved theta sequence. 
+
+
+
+Definition at line 269 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aade1d8879a22dff77c2707b379b2203e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!get\+\_\+theta\+\_\+sequence\+\_\+rllh@{get\+\_\+theta\+\_\+sequence\+\_\+rllh}}
+\index{get\+\_\+theta\+\_\+sequence\+\_\+rllh@{get\+\_\+theta\+\_\+sequence\+\_\+rllh}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{get\+\_\+theta\+\_\+sequence\+\_\+rllh() const }{get_theta_sequence_rllh() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence\+\_\+rllh (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_adda45df3816750fa019f25ff46bf9809}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_adda45df3816750fa019f25ff46bf9809}
+
+
+Definition at line 271 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_adda45df3816750fa019f25ff46bf9809_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!get\+Iteration@{get\+Iteration}}
+\index{get\+Iteration@{get\+Iteration}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{get\+Iteration() const }{getIteration() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::get\+Iteration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ab4248a81292964ea9cbfd37964a7b2c1}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ab4248a81292964ea9cbfd37964a7b2c1}
+
+
+Definition at line 291 of file estimator.\+h.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!record\+\_\+backtrack@{record\+\_\+backtrack}}
+\index{record\+\_\+backtrack@{record\+\_\+backtrack}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{record\+\_\+backtrack(double rejected\+\_\+rllh)}{record_backtrack(double rejected_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::record\+\_\+backtrack (
+\begin{DoxyParamCaption}
+\item[{double}]{rejected\+\_\+rllh}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a8c82784b23315be8f74b968ee4188388}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a8c82784b23315be8f74b968ee4188388}
+
+
+Record a backtracked point (no derivative computations performed) Using the saved theta as the default. 
+
+
+
+Definition at line 264 of file estimator.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack().
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a8c82784b23315be8f74b968ee4188388_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a8c82784b23315be8f74b968ee4188388_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!record\+\_\+backtrack@{record\+\_\+backtrack}}
+\index{record\+\_\+backtrack@{record\+\_\+backtrack}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{record\+\_\+backtrack(const Param\+T$<$ Model $>$ \&rejected\+\_\+theta, double rejected\+\_\+rllh)}{record_backtrack(const ParamT< Model > &rejected_theta, double rejected_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::record\+\_\+backtrack (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{rejected\+\_\+theta, }
+\item[{double}]{rejected\+\_\+rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ae60e71250e72ce3ce5cad912df8f16cf}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ae60e71250e72ce3ce5cad912df8f16cf}
+
+
+Record a backtracked point (no derivative computations performed) 
+
+
+
+Definition at line 399 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::backtrack\+\_\+idxs, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::max\+\_\+seq\+\_\+len, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+seq, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::seq\+\_\+len, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::seq\+\_\+rllh, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta\+\_\+seq.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!record\+\_\+exit@{record\+\_\+exit}}
+\index{record\+\_\+exit@{record\+\_\+exit}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{record\+\_\+exit(\+Exit\+Code code)}{record_exit(ExitCode code)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::record\+\_\+exit (
+\begin{DoxyParamCaption}
+\item[{{\bf Exit\+Code}}]{code}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af2e61c659a8cc78365bd801026c2f6a9}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af2e61c659a8cc78365bd801026c2f6a9}
+
+
+Definition at line 412 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::exit\+\_\+code.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af2e61c659a8cc78365bd801026c2f6a9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!record\+\_\+iteration@{record\+\_\+iteration}}
+\index{record\+\_\+iteration@{record\+\_\+iteration}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{record\+\_\+iteration()}{record_iteration()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::record\+\_\+iteration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1096048bf29ccbc45e4a60dc6cbf7b2c}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1096048bf29ccbc45e4a60dc6cbf7b2c}
+
+
+Record an iteration point (derivatives computed) Using the saved theta as the default. 
+
+
+
+Definition at line 260 of file estimator.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::\+Maximizer\+Data(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1096048bf29ccbc45e4a60dc6cbf7b2c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1096048bf29ccbc45e4a60dc6cbf7b2c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!record\+\_\+iteration@{record\+\_\+iteration}}
+\index{record\+\_\+iteration@{record\+\_\+iteration}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{record\+\_\+iteration(const Param\+T$<$ Model $>$ \&accepted\+\_\+theta)}{record_iteration(const ParamT< Model > &accepted_theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::record\+\_\+iteration (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{accepted\+\_\+theta}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9eca9cd87534fa88ff6b1116853123d0}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9eca9cd87534fa88ff6b1116853123d0}
+
+
+Record an iteration point (derivatives computed) 
+
+
+
+Definition at line 387 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::max\+\_\+seq\+\_\+len, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+seq, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::seq\+\_\+len, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::seq\+\_\+rllh, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta\+\_\+seq.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!restore\+\_\+stencil@{restore\+\_\+stencil}}
+\index{restore\+\_\+stencil@{restore\+\_\+stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{restore\+\_\+stencil()}{restore_stencil()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::restore\+\_\+stencil (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a5f65e52de343dbd012c3b3a7b463b792}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a5f65e52de343dbd012c3b3a7b463b792}
+
+
+Restore the single reserved stencil to the current stencil spot. Overwrites any previously saved stencil. This is used to restore a last good iterate (and associated stencil data) when backtracking. 
+
+
+
+Definition at line 284 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a5f65e52de343dbd012c3b3a7b463b792_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!save\+\_\+stencil@{save\+\_\+stencil}}
+\index{save\+\_\+stencil@{save\+\_\+stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{save\+\_\+stencil()}{save_stencil()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::save\+\_\+stencil (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a0349ede0482bdc352643e1eba2ab3f11}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a0349ede0482bdc352643e1eba2ab3f11}
+
+
+Save the current stencil to the single reserve spot. Overwrites any previously saved stencil. This is used to save a stencil when backtracking. 
+
+
+
+Definition at line 279 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a0349ede0482bdc352643e1eba2ab3f11_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!saved\+\_\+stencil@{saved\+\_\+stencil}}
+\index{saved\+\_\+stencil@{saved\+\_\+stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{saved\+\_\+stencil()}{saved_stencil()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$Model$>$\& {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::saved\+\_\+stencil (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac98f83e1362c3edd65e0681ee93c6da0}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac98f83e1362c3edd65e0681ee93c6da0}
+
+
+Get the saved stencil. 
+
+
+
+Definition at line 286 of file estimator.\+h.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!saved\+\_\+theta@{saved\+\_\+theta}}
+\index{saved\+\_\+theta@{saved\+\_\+theta}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{saved\+\_\+theta()}{saved_theta()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$Model$>$\& {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::saved\+\_\+theta (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aedc8670533fe0323a62e7def637875db}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aedc8670533fe0323a62e7def637875db}
+
+
+Get the saved stencil\textquotesingle{}s theta. 
+
+
+
+Definition at line 290 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aedc8670533fe0323a62e7def637875db_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!set\+\_\+fixed\+\_\+parameters@{set\+\_\+fixed\+\_\+parameters}}
+\index{set\+\_\+fixed\+\_\+parameters@{set\+\_\+fixed\+\_\+parameters}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{set\+\_\+fixed\+\_\+parameters(const Idx\+Vec\+T \&fixed\+\_\+parameters)}{set_fixed_parameters(const IdxVecT &fixed_parameters)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::set\+\_\+fixed\+\_\+parameters (
+\begin{DoxyParamCaption}
+\item[{const {\bf Idx\+VecT} \&}]{fixed\+\_\+parameters}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aeff700342cb52da0b5b0d8edb3dac020}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aeff700342cb52da0b5b0d8edb3dac020}
+
+
+Definition at line 418 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::fixed\+\_\+parameter\+\_\+scalar, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::has\+\_\+fixed\+\_\+parameters.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aeff700342cb52da0b5b0d8edb3dac020_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!set\+\_\+stencil@{set\+\_\+stencil}}
+\index{set\+\_\+stencil@{set\+\_\+stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{set\+\_\+stencil(const Stencil\+T$<$ Model $>$ \&s)}{set_stencil(const StencilT< Model > &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::set\+\_\+stencil (
+\begin{DoxyParamCaption}
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a295d06c20f4d620602eece746f4c7d85}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a295d06c20f4d620602eece746f4c7d85}
+
+
+Definition at line 274 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a295d06c20f4d620602eece746f4c7d85_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!stencil@{stencil}}
+\index{stencil@{stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{stencil()}{stencil()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$Model$>$\& {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::stencil (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a29ccc1aa8e5ecf505f4ca76f6b8b214e}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a29ccc1aa8e5ecf505f4ca76f6b8b214e}
+
+
+Get the current stencil. 
+
+
+
+Definition at line 273 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a29ccc1aa8e5ecf505f4ca76f6b8b214e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!theta@{theta}}
+\index{theta@{theta}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{theta()}{theta()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$Model$>$\& {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::theta (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac6ed5231a1ac2f4bfdd51a2800212fea}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac6ed5231a1ac2f4bfdd51a2800212fea}
+
+
+Get the current stencil\textquotesingle{}s theta. 
+
+
+
+Definition at line 288 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1IterativeMaximizer_1_1MaximizerData_ac6ed5231a1ac2f4bfdd51a2800212fea_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!backtrack\+\_\+idxs@{backtrack\+\_\+idxs}}
+\index{backtrack\+\_\+idxs@{backtrack\+\_\+idxs}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{backtrack\+\_\+idxs}{backtrack_idxs}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::backtrack\+\_\+idxs\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a088734ca36fdf979d8e57779352b2f79}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a088734ca36fdf979d8e57779352b2f79}
+
+
+Definition at line 302 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::\+Maximizer\+Data(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!current\+\_\+stencil@{current\+\_\+stencil}}
+\index{current\+\_\+stencil@{current\+\_\+stencil}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{current\+\_\+stencil}{current_stencil}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ bool {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::current\+\_\+stencil\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a321e112eacabe76c882ea8976efb0e9b}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a321e112eacabe76c882ea8976efb0e9b}
+
+
+Definition at line 298 of file estimator.\+h.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!exit\+\_\+code@{exit\+\_\+code}}
+\index{exit\+\_\+code@{exit\+\_\+code}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{exit\+\_\+code}{exit_code}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Exit\+Code} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::exit\+\_\+code ={\bf Exit\+Code\+::\+Unassigned}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_abf4f25be02f47143a077c7ac6419aed6}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_abf4f25be02f47143a077c7ac6419aed6}
+
+
+Definition at line 254 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!fixed\+\_\+parameter\+\_\+scalar@{fixed\+\_\+parameter\+\_\+scalar}}
+\index{fixed\+\_\+parameter\+\_\+scalar@{fixed\+\_\+parameter\+\_\+scalar}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{fixed\+\_\+parameter\+\_\+scalar}{fixed_parameter_scalar}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::fixed\+\_\+parameter\+\_\+scalar}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af078e8d5506273857fd7c2ffad69f8da}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af078e8d5506273857fd7c2ffad69f8da}
+
+
+Definition at line 293 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+fixed\+\_\+parameters().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!grad@{grad}}
+\index{grad@{grad}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{grad}{grad}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::grad}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3125e5d8ae4e2d4c4969ccb0187903fb}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3125e5d8ae4e2d4c4969ccb0187903fb}
+
+
+Definition at line 247 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!has\+\_\+fixed\+\_\+parameters@{has\+\_\+fixed\+\_\+parameters}}
+\index{has\+\_\+fixed\+\_\+parameters@{has\+\_\+fixed\+\_\+parameters}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{has\+\_\+fixed\+\_\+parameters}{has_fixed_parameters}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ bool {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::has\+\_\+fixed\+\_\+parameters =false}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9f1c22b2c3065f92244230a74fc948aa}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a9f1c22b2c3065f92244230a74fc948aa}
+
+
+Definition at line 294 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+fixed\+\_\+parameters().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!im@{im}}
+\index{im@{im}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{im}{im}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const {\bf Model\+DataT}$<$Model$>$\& {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::im}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_afcee3fa283be1a9ba1d197ed777d447c}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_afcee3fa283be1a9ba1d197ed777d447c}
+
+
+Definition at line 246 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!lbound@{lbound}}
+\index{lbound@{lbound}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{lbound}{lbound}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::lbound}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aead80fc0e12236ca355849ad36749094}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aead80fc0e12236ca355849ad36749094}
+
+
+Definition at line 249 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!max\+\_\+seq\+\_\+len@{max\+\_\+seq\+\_\+len}}
+\index{max\+\_\+seq\+\_\+len@{max\+\_\+seq\+\_\+len}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{max\+\_\+seq\+\_\+len}{max_seq_len}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::max\+\_\+seq\+\_\+len\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aee106ddaebe30496f5280095fc01301a}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aee106ddaebe30496f5280095fc01301a}
+
+
+Definition at line 304 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!n\+Backtracks@{n\+Backtracks}}
+\index{n\+Backtracks@{n\+Backtracks}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{n\+Backtracks}{nBacktracks}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::n\+Backtracks =0}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7caa78309de84e0ab4815fc00fbd6cf5}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7caa78309de84e0ab4815fc00fbd6cf5}
+
+
+Definition at line 251 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!n\+Iterations@{n\+Iterations}}
+\index{n\+Iterations@{n\+Iterations}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{n\+Iterations}{nIterations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::n\+Iterations =0}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7ee453c4ba6108b9c0cbce345b0ee4da}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a7ee453c4ba6108b9c0cbce345b0ee4da}
+
+
+Definition at line 252 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!rllh@{rllh}}
+\index{rllh@{rllh}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{rllh}{rllh}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::rllh}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a224b29201511a2ab8ca86535631c41ef}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a224b29201511a2ab8ca86535631c41ef}
+
+
+Definition at line 250 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!s0@{s0}}
+\index{s0@{s0}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{s0}{s0}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::s0\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1a3b8f9693e769eded9fe76751fa49c1}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a1a3b8f9693e769eded9fe76751fa49c1}
+
+
+Definition at line 297 of file estimator.\+h.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!s1@{s1}}
+\index{s1@{s1}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{s1}{s1}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::s1\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3c0f6ec4ba531dfefe8e4b73f537192d}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a3c0f6ec4ba531dfefe8e4b73f537192d}
+
+
+Definition at line 297 of file estimator.\+h.
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!save\+\_\+seq@{save\+\_\+seq}}
+\index{save\+\_\+seq@{save\+\_\+seq}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{save\+\_\+seq}{save_seq}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ bool {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::save\+\_\+seq}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af13babebeb16147883db7af0b4875b53}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af13babebeb16147883db7af0b4875b53}
+
+
+Definition at line 253 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!seq\+\_\+len@{seq\+\_\+len}}
+\index{seq\+\_\+len@{seq\+\_\+len}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{seq\+\_\+len}{seq_len}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::seq\+\_\+len =0\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a78a56d5ffe0cad0de474e244816748a6}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a78a56d5ffe0cad0de474e244816748a6}
+
+
+Definition at line 303 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!seq\+\_\+rllh@{seq\+\_\+rllh}}
+\index{seq\+\_\+rllh@{seq\+\_\+rllh}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{seq\+\_\+rllh}{seq_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::seq\+\_\+rllh\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aaf6e3749e8bf4e8714bac4a48902a4cb}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_aaf6e3749e8bf4e8714bac4a48902a4cb}
+
+
+Definition at line 301 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::\+Maximizer\+Data(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!step@{step}}
+\index{step@{step}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{step}{step}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::step}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af592d029ed46c5ec9bedd2291db12920}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_af592d029ed46c5ec9bedd2291db12920}
+
+
+Definition at line 248 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::bound\+\_\+step().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!theta\+\_\+seq@{theta\+\_\+seq}}
+\index{theta\+\_\+seq@{theta\+\_\+seq}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{theta\+\_\+seq}{theta_seq}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Param\+VecT}$<$Model$>$ {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::theta\+\_\+seq\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a2c8a2c8724b6f507cd8d4a2b6310324f}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a2c8a2c8724b6f507cd8d4a2b6310324f}
+
+
+Definition at line 300 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::\+Maximizer\+Data(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration().
+
+\index{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}!ubound@{ubound}}
+\index{ubound@{ubound}!mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data@{mappel\+::\+Iterative\+Maximizer\+::\+Maximizer\+Data}}
+\paragraph[{\texorpdfstring{ubound}{ubound}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Maximizer\+Data\+::ubound}\hypertarget{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a222f9843c94b82c5ee9ad7c8af04ab52}{}\label{classmappel_1_1IterativeMaximizer_1_1MaximizerData_a222f9843c94b82c5ee9ad7c8af04ab52}
+
+
+Definition at line 249 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{estimator_8h}{estimator.\+h}\item 
+\hyperlink{estimator__impl_8h}{estimator\+\_\+impl.\+h}\end{DoxyCompactItemize}

@@ -1,0 +1,10 @@
+<map id="mappel::make_DXS_stencil" name="mappel::make_DXS_stencil">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DsModel_1_1Stencil.html#a9e8b6059b84e28bea0ba3496bc95e7ce" title="mappel::Gauss1DsModel\l::Stencil::compute_derivatives" alt="" coords="227,5,411,44"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DModel_1_1Stencil.html#aa454ad18859be0dcc48f5de8982c7ba7" title="mappel::Gauss2DModel\l::Stencil::compute_derivatives" alt="" coords="227,68,411,107"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a4bc1fdd7b3c4df021ac4a519c4e659f8" title="mappel::Gauss1DModel\l::Stencil::compute_derivatives" alt="" coords="227,131,411,169"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#ab11c806f8335bbafeb3db7476526680d" title="mappel::Gauss2DsModel\l::Stencil::compute_derivatives" alt="" coords="227,193,411,232"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel_1_1Stencil.html#ae4f12261a80d8ed1a2d3652c0e7b629b" title="mappel::Gauss1DsModel\l::Stencil::Stencil" alt="" coords="459,5,619,44"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DModel_1_1Stencil.html#a9e1f0ff585b5394d2d114a432b8c7d94" title="mappel::Gauss2DModel\l::Stencil::Stencil" alt="" coords="461,68,616,107"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a6881e128436697dd57b41d20a1c8b56e" title="mappel::Gauss1DModel\l::Stencil::Stencil" alt="" coords="461,131,616,169"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#a924f5f8d4524831f1ef50041b85a842f" title="mappel::Gauss2DsModel\l::Stencil::Stencil" alt="" coords="459,193,619,232"/>
+</map>

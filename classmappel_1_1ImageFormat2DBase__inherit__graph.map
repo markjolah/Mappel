@@ -1,0 +1,10 @@
+<map id="mappel::ImageFormat2DBase" name="mappel::ImageFormat2DBase">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel.html" title="A base class for 2D Gaussian PSF with fixed but possibly asymmetric sigma. " alt="" coords="267,29,422,55"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html" title="A base class for 2D Gaussian PSF where the gaussian sigma is controlled by a single scalar parameter ..." alt="" coords="265,128,425,153"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DsxyModel.html" title="A base class for 2D Gaussian PSF with axis&#45;aligned gaussian with free parameters for both sigma_x and..." alt="" coords="259,177,431,203"/>
+<area shape="rect" id="node9" href="$classmappel_1_1PoissonNoise2DObjective.html" title="A base class for 2D objectives with Poisson read noise. This objective function and its subclasses ar..." alt="" coords="239,79,451,104"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DMAP.html" title="A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="" coords="501,5,648,31"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DMLE.html" title="A 2D Gaussian with fixed PSF under an Poisson noise assumption and maximum&#45;likelihood objective..." alt="" coords="502,55,647,80"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsMAP.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum a&#45;pos..." alt="" coords="499,104,651,129"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsMLE.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum&#45;likel..." alt="" coords="499,153,650,179"/>
+</map>

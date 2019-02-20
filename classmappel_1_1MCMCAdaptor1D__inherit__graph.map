@@ -1,0 +1,20 @@
+<map id="mappel::MCMCAdaptor1D" name="mappel::MCMCAdaptor1D">
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DModel.html" title="A base class for 1D Gaussian PSF with a fixed sigma (standard dev.) " alt="" coords="455,80,610,105"/>
+<area shape="rect" id="node8" href="$classmappel_1_1MCMCAdaptor1Ds.html" title="mappel::MCMCAdaptor1Ds" alt="" coords="447,153,619,179"/>
+<area shape="rect" id="node12" href="$classmappel_1_1MCMCAdaptor2D.html" title="mappel::MCMCAdaptor2D" alt="" coords="449,228,616,253"/>
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="10,128,179,153"/>
+<area shape="rect" id="node3" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="5,177,184,203"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss1DMAP.html" title="A 1D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="" coords="679,5,826,31"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DMLE.html" title="A 1D Gaussian with fixed PSF under an Poisson noise assumption and maximum&#45;likelihood objective..." alt="" coords="680,55,825,80"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsxyMAP.html" title="A 1D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="" coords="671,104,835,129"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss1DsModel.html" title="Base class for 1D Gaussian PSF with variable Gaussian sigma (standard deviation) measured in units of..." alt="" coords="673,153,833,179"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Gauss1DsMAP.html" title="A 1D Gaussian with variable PSF sigma under an Poisson read noise assumption and MAP Objective..." alt="" coords="891,104,1043,129"/>
+<area shape="rect" id="node11" href="$classmappel_1_1Gauss1DsMLE.html" title="A 1D Gaussian with variable PSF under an Poisson noise assumption and maximum&#45;likelihood estimator..." alt="" coords="891,153,1042,179"/>
+<area shape="rect" id="node13" href="$classmappel_1_1Gauss2DModel.html" title="A base class for 2D Gaussian PSF with fixed but possibly asymmetric sigma. " alt="" coords="675,228,830,253"/>
+<area shape="rect" id="node16" href="$classmappel_1_1MCMCAdaptor2Ds.html" title="mappel::MCMCAdaptor2Ds" alt="" coords="667,277,839,303"/>
+<area shape="rect" id="node14" href="$classmappel_1_1Gauss2DMAP.html" title="A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="" coords="893,203,1040,228"/>
+<area shape="rect" id="node15" href="$classmappel_1_1Gauss2DMLE.html" title="A 2D Gaussian with fixed PSF under an Poisson noise assumption and maximum&#45;likelihood objective..." alt="" coords="894,252,1039,277"/>
+<area shape="rect" id="node17" href="$classmappel_1_1Gauss2DsModel.html" title="A base class for 2D Gaussian PSF where the gaussian sigma is controlled by a single scalar parameter ..." alt="" coords="887,301,1047,327"/>
+<area shape="rect" id="node18" href="$classmappel_1_1Gauss2DsMAP.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum a&#45;pos..." alt="" coords="1095,276,1247,301"/>
+<area shape="rect" id="node19" href="$classmappel_1_1Gauss2DsMLE.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum&#45;likel..." alt="" coords="1095,325,1246,351"/>
+</map>

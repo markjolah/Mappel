@@ -1,0 +1,5 @@
+<map id="mappel::TrustRegionMaximizer::solve_restricted_step_length_newton" name="mappel::TrustRegionMaximizer::solve_restricted_step_length_newton">
+<area shape="rect" id="node2" href="$namespacemappel.html#abc3956f093388acda04ee4455d01b515" title="mappel::cholesky" alt="" coords="309,5,426,31"/>
+<area shape="rect" id="node3" href="$namespacemappel.html#ab5ab3a874402fccd700e6c7afbbd3e15" title="mappel::cholesky_convert\l_lower_triangular" alt="" coords="285,55,449,93"/>
+<area shape="rect" id="node4" href="$namespacemappel.html#a83b18a0a288ca81106d44e26d830d6d5" title="mappel::cholesky_solve" alt="" coords="291,117,444,143"/>
+</map>

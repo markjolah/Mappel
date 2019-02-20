@@ -1,0 +1,247 @@
+\hypertarget{classmappel_1_1MCMCAdaptorBase}{}\subsection{mappel\+:\+:M\+C\+M\+C\+Adaptor\+Base Class Reference}
+\label{classmappel_1_1MCMCAdaptorBase}\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+M\+C\+M\+C\+Adaptor\+Base.\+h$>$}
+
+
+
+Inheritance diagram for mappel\+:\+:M\+C\+M\+C\+Adaptor\+Base\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptorBase__inherit__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}{set\+\_\+mcmc\+\_\+sigma\+\_\+scale} (double scale)
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}{get\+\_\+mcmc\+\_\+sigma\+\_\+scale} () const 
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}{get\+\_\+mcmc\+\_\+num\+\_\+phases} () const 
+\end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const double \hyperlink{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale} = 0.\+05
+\item 
+static const double \hyperlink{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale} = 0.\+5
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1MCMCAdaptorBase_ae81fbae5dae730e851ee135cca76c9b3}{M\+C\+M\+C\+Adaptor\+Base} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases})
+\item 
+\hyperlink{classmappel_1_1MCMCAdaptorBase_aef72a001000ee2f4d6bed9ec3c2150ba}{M\+C\+M\+C\+Adaptor\+Base} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases}, double \hyperlink{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}{sigma\+\_\+scale})
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}{set\+\_\+mcmc\+\_\+num\+\_\+phases} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases})
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1MCMCAdaptorBase_ad6054973528dfad89976882cdb50aba5}{get\+\_\+stats} () const 
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases}
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}{sigma\+\_\+scale}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+
+
+Definition at line 13 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!M\+C\+M\+C\+Adaptor\+Base@{M\+C\+M\+C\+Adaptor\+Base}}
+\index{M\+C\+M\+C\+Adaptor\+Base@{M\+C\+M\+C\+Adaptor\+Base}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{M\+C\+M\+C\+Adaptor\+Base(\+Idx\+T num\+\_\+phases)}{MCMCAdaptorBase(IdxT num_phases)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::\+M\+C\+M\+C\+Adaptor\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{num\+\_\+phases}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_ae81fbae5dae730e851ee135cca76c9b3}{}\label{classmappel_1_1MCMCAdaptorBase_ae81fbae5dae730e851ee135cca76c9b3}
+
+
+Definition at line 14 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!M\+C\+M\+C\+Adaptor\+Base@{M\+C\+M\+C\+Adaptor\+Base}}
+\index{M\+C\+M\+C\+Adaptor\+Base@{M\+C\+M\+C\+Adaptor\+Base}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{M\+C\+M\+C\+Adaptor\+Base(\+Idx\+T num\+\_\+phases, double sigma\+\_\+scale)}{MCMCAdaptorBase(IdxT num_phases, double sigma_scale)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::\+M\+C\+M\+C\+Adaptor\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{num\+\_\+phases, }
+\item[{double}]{sigma\+\_\+scale}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_aef72a001000ee2f4d6bed9ec3c2150ba}{}\label{classmappel_1_1MCMCAdaptorBase_aef72a001000ee2f4d6bed9ec3c2150ba}
+
+
+Definition at line 18 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}}
+\index{get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+mcmc\+\_\+num\+\_\+phases() const }{get_mcmc_num_phases() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+num\+\_\+phases (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}{}\label{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}
+
+
+Definition at line 56 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References num\+\_\+phases.
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!get\+\_\+mcmc\+\_\+sigma\+\_\+scale@{get\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{get\+\_\+mcmc\+\_\+sigma\+\_\+scale@{get\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+mcmc\+\_\+sigma\+\_\+scale() const }{get_mcmc_sigma_scale() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+sigma\+\_\+scale (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}{}\label{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}
+
+
+Definition at line 53 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References sigma\+\_\+scale.
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!get\+\_\+stats@{get\+\_\+stats}}
+\index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+stats() const }{get_stats() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf StatsT} mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_ad6054973528dfad89976882cdb50aba5}{}\label{classmappel_1_1MCMCAdaptorBase_ad6054973528dfad89976882cdb50aba5}
+
+
+Definition at line 70 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References num\+\_\+phases, and sigma\+\_\+scale.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptorBase_ad6054973528dfad89976882cdb50aba5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}}
+\index{set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{set\+\_\+mcmc\+\_\+num\+\_\+phases(\+Idx\+T num\+\_\+phases)}{set_mcmc_num_phases(IdxT num_phases)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+num\+\_\+phases (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{num\+\_\+phases}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}{}\label{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}
+
+
+Definition at line 59 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References num\+\_\+phases.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), and mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{set\+\_\+mcmc\+\_\+sigma\+\_\+scale(double scale)}{set_mcmc_sigma_scale(double scale)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+sigma\+\_\+scale (
+\begin{DoxyParamCaption}
+\item[{double}]{scale}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}{}\label{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}
+
+
+Definition at line 39 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale, and sigma\+\_\+scale.
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}{global_default_mcmc_sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale = 0.\+05\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}{}\label{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}
+
+
+Definition at line 16 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), and mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds().
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}{global_max_mcmc_sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale = 0.\+5\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}{}\label{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}
+
+
+Definition at line 17 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by M\+C\+M\+C\+Adaptor\+Base(), and set\+\_\+mcmc\+\_\+sigma\+\_\+scale().
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!num\+\_\+phases@{num\+\_\+phases}}
+\index{num\+\_\+phases@{num\+\_\+phases}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{num\+\_\+phases}{num_phases}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{}\label{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}
+The number of different sampling phases for candidate selection M\+C\+MC. Each phase changes a different subset of variables. 
+
+Definition at line 29 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by get\+\_\+mcmc\+\_\+num\+\_\+phases(), get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), and set\+\_\+mcmc\+\_\+num\+\_\+phases().
+
+\index{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}!sigma\+\_\+scale@{sigma\+\_\+scale}}
+\index{sigma\+\_\+scale@{sigma\+\_\+scale}!mappel\+::\+M\+C\+M\+C\+Adaptor\+Base@{mappel\+::\+M\+C\+M\+C\+Adaptor\+Base}}
+\paragraph[{\texorpdfstring{sigma\+\_\+scale}{sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}{}\label{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}
+A scaling factor for step sizes as a fraction of the size of the domain dimension we are walking in. (0.\+05 default) 
+
+Definition at line 30 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by get\+\_\+mcmc\+\_\+sigma\+\_\+scale(), get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling(), and set\+\_\+mcmc\+\_\+sigma\+\_\+scale().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{MCMCAdaptorBase_8h}{M\+C\+M\+C\+Adaptor\+Base.\+h}\item 
+\hyperlink{MCMCAdaptorBase_8cpp}{M\+C\+M\+C\+Adaptor\+Base.\+cpp}\end{DoxyCompactItemize}

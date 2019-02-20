@@ -1,0 +1,71 @@
+\hypertarget{MLEstimator_8h}{}\subsection{M\+L\+Estimator.\+h File Reference}
+\label{MLEstimator_8h}\index{M\+L\+Estimator.\+h@{M\+L\+Estimator.\+h}}
+
+
+Class declaration and inline and templated functions for M\+L\+Estimator.  
+
+
+{\ttfamily \#include \char`\"{}Mappel/\+Point\+Emitter\+Model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+M\+A\+P\+Estimator.\+h\char`\"{}}\\*
+Include dependency graph for M\+L\+Estimator.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{MLEstimator_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{MLEstimator_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1MLEstimator}{mappel\+::\+M\+L\+Estimator}
+\begin{DoxyCompactList}\small\item\em A Mixin class to configure a for M\+LE estimation (null prior). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1methods}{mappel\+::methods}
+\begin{DoxyCompactList}\small\item\em Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}. \end{DoxyCompactList}\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective}{mappel\+::methods\+::objective}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug}{mappel\+::methods\+::objective\+::debug}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ double, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_ac391c37d46e7f85d67947402d85a72ea}{mappel\+::methods\+::objective\+::llh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ double, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_ab59f42ad9220e14c55b31c04562e691f}{mappel\+::methods\+::objective\+::rllh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ ParamT$<$ Model $>$, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_a2969893932c9440afbb69645a6a31a63}{mappel\+::methods\+::objective\+::grad} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ void, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_a7bf5acef5f9edd9ddf2c47cb5a90e8db}{mappel\+::methods\+::objective\+::grad2} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, ParamT$<$ Model $>$ \&grad, ParamT$<$ Model $>$ \&grad2)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ void, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_ad7242f889fcefed1ec11c238cd3d22e3}{mappel\+::methods\+::objective\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ VecT, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_a4c1a85963ef4d11a91b3f717d230f5a3}{mappel\+::methods\+::objective\+::debug\+::llh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ VecT, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_a7ec8943da4b014006711299a8eebccab}{mappel\+::methods\+::objective\+::debug\+::rllh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ MatT, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_a79653687e63f306852dd988484be56f8}{mappel\+::methods\+::objective\+::debug\+::grad\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ CubeT, Model, M\+L\+Estimator $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_af8701356bd2b54d5e4c915e443cf95a4}{mappel\+::methods\+::objective\+::debug\+::hessian\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Class declaration and inline and templated functions for M\+L\+Estimator. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2017 
+\end{DoxyDate}

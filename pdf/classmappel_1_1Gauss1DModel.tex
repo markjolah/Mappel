@@ -1,0 +1,2999 @@
+\hypertarget{classmappel_1_1Gauss1DModel}{}\subsection{mappel\+:\+:Gauss1\+D\+Model Class Reference}
+\label{classmappel_1_1Gauss1DModel}\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+
+
+A base class for 1D Gaussian P\+SF with a fixed sigma (standard dev.)  
+
+
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Gauss1\+D\+Model.\+h$>$}
+
+
+
+Inheritance diagram for mappel\+:\+:Gauss1\+D\+Model\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mappel\+:\+:Gauss1\+D\+Model\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} for 1D fixed-\/sigma models. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{classmappel_1_1Gauss1DModel_a442a5cb4b21cbb2f5187f327e5c01124}{Stencil\+VecT} = std\+::vector$<$ \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} $>$
+\item 
+using \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} = arma\+::vec
+\item 
+using \hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} = arma\+::mat
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} = uint32\+\_\+t
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} = double
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{Image\+Size\+ShapeT} = CoordT
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{Image\+Size\+Vec\+ShapeT} = arma\+::\+Col$<$ CoordT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} = \hyperlink{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{Image\+Size\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}{Image\+Size\+VecT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{Image\+Size\+Vec\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{Image\+ShapeT} = arma\+::\+Col$<$ PixelT $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{Image\+Stack\+ShapeT} = arma\+::\+Mat$<$ PixelT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{Image\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} = \hyperlink{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{Image\+Stack\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} $>$
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}{get\+\_\+psf\+\_\+sigma} () const 
+\item 
+double \hyperlink{classmappel_1_1Gauss1DModel_ae7bd64fb97894f9657be0a4b542aa3c6}{get\+\_\+psf\+\_\+sigma} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} idx) const 
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8}{set\+\_\+psf\+\_\+sigma} (double new\+\_\+psf\+\_\+sigma)
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9}{get\+\_\+stats} () const 
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \hyperlink{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20}{make\+\_\+stencil} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta, bool compute\+\_\+derivatives=true) const 
+\begin{DoxyCompactList}\small\item\em Make a new Model\+::\+Stencil object at theta. \end{DoxyCompactList}\item 
+double \hyperlink{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439}{pixel\+\_\+model\+\_\+value} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} i, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \&s) const 
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55}{pixel\+\_\+grad} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} i, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \&s, \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&pgrad) const 
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3}{pixel\+\_\+grad2} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} i, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \&s, \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&pgrad2) const 
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a}{pixel\+\_\+hess} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} i, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \&s, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess) const 
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_a6b0a57e7620ef80030c94903aae5954f}{pixel\+\_\+hess\+\_\+update} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} i, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \&s, double dm\+\_\+ratio\+\_\+m1, double dmm\+\_\+ratio, \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess) const 
+\begin{DoxyCompactList}\small\item\em pixel derivative inner loop calculations. \end{DoxyCompactList}\item 
+\hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \hyperlink{classmappel_1_1Gauss1DModel_a055a3bd9bc0ff8540a48a1c6f50ec523}{initial\+\_\+theta\+\_\+estimate} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im) const 
+\begin{DoxyCompactList}\small\item\em Fast, heuristic estimate of initial theta. \end{DoxyCompactList}\item 
+\hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} \hyperlink{classmappel_1_1Gauss1DModel_a4c4e01a489a6d8f7b119dd50b51610c2}{initial\+\_\+theta\+\_\+estimate} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im, const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta\+\_\+init) const 
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_a6fe8129bd24ab5c6620b3ab106b6c91a}{get\+\_\+num\+\_\+params} () const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771}{check\+\_\+param\+\_\+shape} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta) const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a54b341a9bc0e32e2c8bbfe4ec0d8c9a1}{check\+\_\+param\+\_\+shape} (const \hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \&theta) const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b}{check\+\_\+psf\+\_\+sigma} (double \hyperlink{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{psf\+\_\+sigma}) const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a85780ca544a5ef5e0a62e74005081677}{check\+\_\+psf\+\_\+sigma} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&\hyperlink{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{psf\+\_\+sigma}) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749}{make\+\_\+param} () const 
+\item 
+{\footnotesize template$<$class FillT $>$ }\\\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a5638e3df26cf84d7cf0f23112132682e}{make\+\_\+param} (FillT fill) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_a6c7edc7f2549058df66472cd7647cf9b}{make\+\_\+param\+\_\+stack} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} n) const 
+\item 
+{\footnotesize template$<$class FillT $>$ }\\\hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_abab975b04e09e6336a930b6d8fd8c267}{make\+\_\+param\+\_\+stack} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} n, FillT fill) const 
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{classmappel_1_1PointEmitterModel_a8ede9fe8e3b6a3e621c2da72e23c7f9d}{make\+\_\+param\+\_\+mat} () const 
+\item 
+{\footnotesize template$<$class FillT $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{classmappel_1_1PointEmitterModel_a68a9c537f2f2725eb8fb9d3e250dd84b}{make\+\_\+param\+\_\+mat} (FillT fill) const 
+\item 
+\hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \hyperlink{classmappel_1_1PointEmitterModel_a57b98d5f8b2b5ed2c455bbf76b632f87}{make\+\_\+param\+\_\+mat\+\_\+stack} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} n) const 
+\item 
+{\footnotesize template$<$class FillT $>$ }\\\hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \hyperlink{classmappel_1_1PointEmitterModel_a2c11fa045187c7ea9ba382141b5d53c1}{make\+\_\+param\+\_\+mat\+\_\+stack} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} n, FillT fill) const 
+\item 
+Composite\+Dist \& \hyperlink{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9}{get\+\_\+prior} ()
+\item 
+const Composite\+Dist \& \hyperlink{classmappel_1_1PointEmitterModel_a239826b8e6b914c0cdaa293f1f5ddfd4}{get\+\_\+prior} () const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7}{set\+\_\+prior} (Composite\+Dist \&\&prior\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_acf37c5f28dc0c66197162b3408a6b815}{set\+\_\+prior} (const Composite\+Dist \&prior\+\_\+)
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_a442522cdaaa76be15b00a4f25110d7ec}{get\+\_\+num\+\_\+hyperparams} () const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b}{set\+\_\+hyperparams} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&hyperparams)
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1PointEmitterModel_a4085ade54f4b039c647bc9bf7804e007}{get\+\_\+hyperparams} () const 
+\item 
+bool \hyperlink{classmappel_1_1PointEmitterModel_afba2b17a81a506b0acd41616c8604412}{has\+\_\+hyperparam} (const std\+::string \&name) const 
+\item 
+double \hyperlink{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705}{get\+\_\+hyperparam\+\_\+value} (const std\+::string \&name) const 
+\item 
+int \hyperlink{classmappel_1_1PointEmitterModel_ae13aa99689266d870b659d1045d595f1}{get\+\_\+hyperparam\+\_\+index} (const std\+::string \&name) const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_ade3e56cc00c43e9b7a521d8c4778d3b7}{set\+\_\+hyperparam\+\_\+value} (const std\+::string \&name, double value)
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a447c83f0769e6dea2bfad68d957287d0}{rename\+\_\+hyperparam} (const std\+::string \&old\+\_\+name, const std\+::string \&new\+\_\+name)
+\item 
+\hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{String\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_aa910d1137d808041c0601f2dd3db96f0}{get\+\_\+param\+\_\+names} () const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a2abccbca47fc60700d73244e6c4dbe30}{set\+\_\+param\+\_\+names} (const \hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{String\+VecT} \&desc)
+\item 
+\hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{String\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_a1b8bbd4bdddfb8f5236e8e50fe546c36}{get\+\_\+hyperparam\+\_\+names} () const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a6cdba258bda50cff162dc16a49383bb0}{set\+\_\+hyperparam\+\_\+names} (const \hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{String\+VecT} \&desc)
+\item 
+{\footnotesize template$<$class RngT $>$ }\\\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a031ef6c978371ce3774dffe811060842}{sample\+\_\+prior} (RngT \&rng)
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a481a8021b13918c01f7ff5b657418227}{sample\+\_\+prior} ()
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a31f139d9eb58f210f3359a9f5be9dd15}{set\+\_\+bounds} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&\hyperlink{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}{lbound}, const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&\hyperlink{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}{ubound})
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541}{set\+\_\+lbound} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&\hyperlink{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}{lbound})
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6}{set\+\_\+ubound} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&\hyperlink{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}{ubound})
+\item 
+const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \& \hyperlink{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848}{get\+\_\+lbound} () const 
+\item 
+const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \& \hyperlink{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55}{get\+\_\+ubound} () const 
+\item 
+bool \hyperlink{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d}{theta\+\_\+in\+\_\+bounds} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta) const 
+\item 
+void \hyperlink{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85}{bound\+\_\+theta} (\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta, double epsilon=\hyperlink{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{bounds\+\_\+epsilon}) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06}{bounded\+\_\+theta} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta, double epsilon=\hyperlink{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{bounds\+\_\+epsilon}) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3}{reflected\+\_\+theta} (const \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&theta) const 
+\item 
+\hyperlink{namespacemappel_a167d761ecce3cafb6f98c00c16bdb523}{Bool\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8}{theta\+\_\+stack\+\_\+in\+\_\+bounds} (const \hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \&theta) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe}{bounded\+\_\+theta\+\_\+stack} (const \hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \&theta, double epsilon=\hyperlink{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{bounds\+\_\+epsilon}) const 
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \hyperlink{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f}{reflected\+\_\+theta\+\_\+stack} (const \hyperlink{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{Param\+VecT} \&theta) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \hyperlink{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{make\+\_\+image} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \hyperlink{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{make\+\_\+image\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{get\+\_\+size\+\_\+image\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \hyperlink{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{get\+\_\+image\+\_\+from\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n) const 
+\item 
+{\footnotesize template$<$class ImT $>$ }\\void \hyperlink{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{set\+\_\+image\+\_\+in\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n, const ImT \&im) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \hyperlink{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{get\+\_\+size} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}{get\+\_\+size} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} idx) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{get\+\_\+num\+\_\+pixels} () const 
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{set\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a single images is correct for model size. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&ims) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a stack of images is correct for model size. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1MCMCAdaptor1D_a009fcf597dbc4a97d234d6948a4a42ec}{sample\+\_\+mcmc\+\_\+candidate} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} sample\+\_\+index, \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \&candidate, double step\+\_\+scale=1.\+0)
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c}{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling} (double \hyperlink{classmappel_1_1MCMCAdaptor1D_a5780d326be0c40e10d6c91777cfffbd3}{eta\+\_\+I}=-\/1)
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1}{set\+\_\+background\+\_\+mcmc\+\_\+sampling} (double \hyperlink{classmappel_1_1MCMCAdaptor1D_af54c93421b8e298289cbb92743c6b3d5}{eta\+\_\+bg}=-\/1)
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}{set\+\_\+mcmc\+\_\+sigma\+\_\+scale} (double scale)
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}{get\+\_\+mcmc\+\_\+sigma\+\_\+scale} () const 
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}{get\+\_\+mcmc\+\_\+num\+\_\+phases} () const 
+\end{DoxyCompactItemize}
+\subsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Composite\+Dist \hyperlink{classmappel_1_1Gauss1DModel_ab9aeff0d5e4f065e81b1d49183ca3fcb}{make\+\_\+default\+\_\+prior} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, const std\+::string \&prior\+\_\+type)
+\item 
+static Composite\+Dist \hyperlink{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92}{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size})
+\item 
+static Composite\+Dist \hyperlink{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0}{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size})
+\item 
+static Composite\+Dist \hyperlink{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb}{make\+\_\+prior\+\_\+beta\+\_\+position} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, double beta\+\_\+xpos, double mean\+\_\+I, double kappa\+\_\+I, double mean\+\_\+bg, double kappa\+\_\+bg)
+\item 
+static Composite\+Dist \hyperlink{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619}{make\+\_\+prior\+\_\+normal\+\_\+position} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, double sigma\+\_\+xpos, double mean\+\_\+I, double kappa\+\_\+I, double mean\+\_\+bg, double kappa\+\_\+bg)
+\item 
+static prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist \hyperlink{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, double pos\+\_\+sigma=\hyperlink{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{default\+\_\+sigma\+\_\+pos})
+\item 
+static prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist \hyperlink{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, double pos\+\_\+beta=\hyperlink{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{default\+\_\+beta\+\_\+pos})
+\item 
+static prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}{make\+\_\+prior\+\_\+component\+\_\+intensity} (double mean=\hyperlink{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{default\+\_\+mean\+\_\+I}, double kappa=\hyperlink{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{default\+\_\+intensity\+\_\+kappa})
+\item 
+static prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}{make\+\_\+prior\+\_\+component\+\_\+sigma} (double min\+\_\+sigma, double max\+\_\+sigma, double alpha=\hyperlink{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{default\+\_\+alpha\+\_\+sigma})
+\item 
+static void \hyperlink{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}{set\+\_\+rng\+\_\+seed} (\hyperlink{namespacemappel_a318bca259a7add5979160939a3f4e60b}{Rng\+SeedT} seed)
+\item 
+static \hyperlink{namespacemappel_acf276a4212f07b1ed4cb2ddce379ba1d}{Parallel\+Rng\+ManagerT} \& \hyperlink{classmappel_1_1PointEmitterModel_ae876f0fa81613161a064452973bfb558}{get\+\_\+rng\+\_\+manager} ()
+\item 
+static \hyperlink{namespacemappel_ad1e99b214465229065d30f881a89d1cc}{Parallel\+Rng\+GeneratorT} \& \hyperlink{classmappel_1_1PointEmitterModel_af9f6630e9d496bb83e151f00522ecc2d}{get\+\_\+rng\+\_\+generator} ()
+\item 
+static void \hyperlink{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}{check\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\begin{DoxyCompactList}\small\item\em Check the size argument for the model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const \hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{String\+VecT} \hyperlink{classmappel_1_1Gauss1DModel_a2f72a3c4729aa81d8ffdd96a60374cd6}{prior\+\_\+types}
+\item 
+static const std\+::string \hyperlink{classmappel_1_1Gauss1DModel_a4186ce131a5cc9a451ecc0011e4e6682}{Default\+Prior\+Type} = \char`\"{}Normal\char`\"{}
+\item 
+static const std\+::string \hyperlink{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}{Default\+Seperable\+Init\+Estimator} = \char`\"{}Trust\+Region\char`\"{}
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{bounds\+\_\+epsilon} = 1.\+0\+E-\/6
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}{global\+\_\+min\+\_\+psf\+\_\+sigma} = 1\+E-\/1
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}{global\+\_\+max\+\_\+psf\+\_\+sigma} = 1\+E2
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{default\+\_\+beta\+\_\+pos} = 3
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{default\+\_\+sigma\+\_\+pos} = 1
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{default\+\_\+mean\+\_\+I} = 300
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}{default\+\_\+max\+\_\+I} = I\+N\+F\+I\+N\+I\+TY
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{default\+\_\+intensity\+\_\+kappa} = 2
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}{default\+\_\+pixel\+\_\+mean\+\_\+bg} = 4
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{default\+\_\+alpha\+\_\+sigma} = 2
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}{num\+\_\+dim} = 1
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}{global\+\_\+min\+\_\+size} = 3
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}{global\+\_\+max\+\_\+size} = 512
+\item 
+static const double \hyperlink{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale} = 0.\+05
+\item 
+static const double \hyperlink{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale} = 0.\+5
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel_ac4d64dccdf5ec50e53538ee4cef23e39}{Gauss1\+D\+Model} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}, double \hyperlink{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{psf\+\_\+sigma})
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel_a7ae1d38dcb890c6b98c287fb2a1575b2}{Gauss1\+D\+Model} (const \hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \&o)
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel_a3085c37d52754ff25a52e042bc7ecc3b}{Gauss1\+D\+Model} (\hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \&\&o)
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \& \hyperlink{classmappel_1_1Gauss1DModel_ae26f69421bc365c8b5928276508cc25d}{operator=} (const \hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \&o)
+\item 
+\hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \& \hyperlink{classmappel_1_1Gauss1DModel_a27ea4274b62c73a8431129e6d1d38451}{operator=} (\hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} \&\&o)
+\item 
+void \hyperlink{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}{set\+\_\+mcmc\+\_\+num\+\_\+phases} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases})
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{psf\+\_\+sigma}
+\item 
+Composite\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a393839f8eb1dd3d61c9369377742ba0e}{prior}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_a9af0484391bd6021ddc04ac666ab49ad}{num\+\_\+params}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_ab2423214fdd81c8212118770b5b17b1f}{num\+\_\+hyperparams}
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}{lbound}
+\item 
+\hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{ParamT} \hyperlink{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}{ubound}
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptor1D_ae5787e38c9cef6168acf6fc5d3216693}{eta\+\_\+x} =0
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptor1D_a5780d326be0c40e10d6c91777cfffbd3}{eta\+\_\+I} =0
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptor1D_af54c93421b8e298289cbb92743c6b3d5}{eta\+\_\+bg} =0
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{num\+\_\+phases}
+\item 
+double \hyperlink{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}{sigma\+\_\+scale}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A base class for 1D Gaussian P\+SF with a fixed sigma (standard dev.) 
+
+This base class defines the \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} type for 1D Gaussian P\+SF as well as the prior shape and parameters.
+
+Initialized by an integer, size, and double, psf\+\_\+sigma. 
+
+Definition at line 24 of file Gauss1\+D\+Model.\+h.
+
+
+
+\subsubsection{Member Typedef Documentation}
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+CoordT@{Image\+CoordT}}
+\index{Image\+CoordT@{Image\+CoordT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+CoordT}{ImageCoordT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+CoordT} =  uint32\+\_\+t\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{}\label{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}
+Image size coordinate storage type 
+
+Definition at line 25 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+PixelT@{Image\+PixelT}}
+\index{Image\+PixelT@{Image\+PixelT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+PixelT}{ImagePixelT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+PixelT} =  double\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{}\label{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}
+Image pixel storage type 
+
+Definition at line 26 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+ShapeT@{Image\+ShapeT}}
+\index{Image\+ShapeT@{Image\+ShapeT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+ShapeT}{ImageShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+ShapeT} =  arma\+::\+Col$<$PixelT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{}\label{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}
+Shape of the data type for a single image 
+
+Definition at line 33 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+Size\+ShapeT@{Image\+Size\+ShapeT}}
+\index{Image\+Size\+ShapeT@{Image\+Size\+ShapeT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+Size\+ShapeT}{ImageSizeShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+ShapeT} =  CoordT\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{}\label{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}
+Shape of the data type to store 1-\/image\textquotesingle{}s coordinates 
+
+Definition at line 28 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+SizeT@{Image\+SizeT}}
+\index{Image\+SizeT@{Image\+SizeT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+SizeT}{ImageSizeT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+SizeT} =  {\bf Image\+Size\+ShapeT}$<${\bf Image\+CoordT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{}\label{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}
+Data type for a single image size 
+
+Definition at line 30 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}}
+\index{Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+Size\+Vec\+ShapeT}{ImageSizeVecShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+Vec\+ShapeT} =  arma\+::\+Col$<$CoordT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{}\label{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}
+Shape of the data type to store a vector of image\textquotesingle{}s coordinates 
+
+Definition at line 29 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+Size\+VecT@{Image\+Size\+VecT}}
+\index{Image\+Size\+VecT@{Image\+Size\+VecT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+Size\+VecT}{ImageSizeVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+VecT} =  {\bf Image\+Size\+Vec\+ShapeT}$<${\bf Image\+CoordT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}{}\label{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}
+Data type for a sequence of image sizes 
+
+Definition at line 31 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}}
+\index{Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+Stack\+ShapeT}{ImageStackShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Stack\+ShapeT} =  arma\+::\+Mat$<$PixelT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{}\label{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}
+Shape of the data type for a sequence of images 
+
+Definition at line 34 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Image\+StackT@{Image\+StackT}}
+\index{Image\+StackT@{Image\+StackT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Image\+StackT}{ImageStackT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+StackT} =  {\bf Image\+Stack\+ShapeT}$<${\bf Image\+PixelT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{}\label{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}
+Data type to represent a sequence of images 
+
+Definition at line 36 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!ImageT@{ImageT}}
+\index{ImageT@{ImageT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{ImageT}{ImageT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+ImageT} =  {\bf Image\+ShapeT}$<${\bf Image\+PixelT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{}\label{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}
+Data type to represent single image 
+
+Definition at line 35 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!ParamT@{ParamT}}
+\index{ParamT@{ParamT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{ParamT}{ParamT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Point\+Emitter\+Model\+::\+ParamT} =  arma\+::vec\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{}\label{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}
+Parameter vector 
+
+Definition at line 47 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Param\+VecT@{Param\+VecT}}
+\index{Param\+VecT@{Param\+VecT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Param\+VecT}{ParamVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Point\+Emitter\+Model\+::\+Param\+VecT} =  arma\+::mat\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}{}\label{classmappel_1_1PointEmitterModel_add253b568d763f1513a810aac35de719}
+Vector of parameter vectors 
+
+Definition at line 48 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Stencil\+VecT@{Stencil\+VecT}}
+\index{Stencil\+VecT@{Stencil\+VecT}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Stencil\+VecT}{StencilVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+VecT} =  std\+::vector$<${\bf Stencil}$>$}\hypertarget{classmappel_1_1Gauss1DModel_a442a5cb4b21cbb2f5187f327e5c01124}{}\label{classmappel_1_1Gauss1DModel_a442a5cb4b21cbb2f5187f327e5c01124}
+
+
+Definition at line 49 of file Gauss1\+D\+Model.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Gauss1\+D\+Model@{Gauss1\+D\+Model}}
+\index{Gauss1\+D\+Model@{Gauss1\+D\+Model}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Gauss1\+D\+Model(\+Idx\+T size, double psf\+\_\+sigma)}{Gauss1DModel(IdxT size, double psf_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Gauss1\+D\+Model\+::\+Gauss1\+D\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{double}]{psf\+\_\+sigma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_ac4d64dccdf5ec50e53538ee4cef23e39}{}\label{classmappel_1_1Gauss1DModel_ac4d64dccdf5ec50e53538ee4cef23e39}
+
+
+Definition at line 12 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ac4d64dccdf5ec50e53538ee4cef23e39_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Gauss1\+D\+Model@{Gauss1\+D\+Model}}
+\index{Gauss1\+D\+Model@{Gauss1\+D\+Model}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Gauss1\+D\+Model(const Gauss1\+D\+Model \&o)}{Gauss1DModel(const Gauss1DModel &o)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Gauss1\+D\+Model\+::\+Gauss1\+D\+Model (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gauss1\+D\+Model} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_a7ae1d38dcb890c6b98c287fb2a1575b2}{}\label{classmappel_1_1Gauss1DModel_a7ae1d38dcb890c6b98c287fb2a1575b2}
+
+
+Definition at line 20 of file Gauss1\+D\+Model.\+cpp.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Gauss1\+D\+Model@{Gauss1\+D\+Model}}
+\index{Gauss1\+D\+Model@{Gauss1\+D\+Model}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Gauss1\+D\+Model(\+Gauss1\+D\+Model \&\&o)}{Gauss1DModel(Gauss1DModel &&o)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Gauss1\+D\+Model\+::\+Gauss1\+D\+Model (
+\begin{DoxyParamCaption}
+\item[{{\bf Gauss1\+D\+Model} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_a3085c37d52754ff25a52e042bc7ecc3b}{}\label{classmappel_1_1Gauss1DModel_a3085c37d52754ff25a52e042bc7ecc3b}
+
+
+Definition at line 26 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!bound\+\_\+theta@{bound\+\_\+theta}}
+\index{bound\+\_\+theta@{bound\+\_\+theta}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{bound\+\_\+theta(\+Param\+T \&theta, double epsilon=bounds\+\_\+epsilon) const }{bound_theta(ParamT &theta, double epsilon=bounds_epsilon) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta (
+\begin{DoxyParamCaption}
+\item[{{\bf ParamT} \&}]{theta, }
+\item[{double}]{epsilon = {\ttfamily {\bf bounds\+\_\+epsilon}}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85}{}\label{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85}
+
+
+Definition at line 247 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!bounded\+\_\+theta@{bounded\+\_\+theta}}
+\index{bounded\+\_\+theta@{bounded\+\_\+theta}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{bounded\+\_\+theta(const Param\+T \&theta, double epsilon=bounds\+\_\+epsilon) const }{bounded_theta(const ParamT &theta, double epsilon=bounds_epsilon) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{theta, }
+\item[{double}]{epsilon = {\ttfamily {\bf bounds\+\_\+epsilon}}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06}{}\label{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06}
+
+
+Definition at line 264 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!bounded\+\_\+theta\+\_\+stack@{bounded\+\_\+theta\+\_\+stack}}
+\index{bounded\+\_\+theta\+\_\+stack@{bounded\+\_\+theta\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{bounded\+\_\+theta\+\_\+stack(const Param\+Vec\+T \&theta, double epsilon=bounds\+\_\+epsilon) const }{bounded_theta_stack(const ParamVecT &theta, double epsilon=bounds_epsilon) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Param\+VecT} \&}]{theta, }
+\item[{double}]{epsilon = {\ttfamily {\bf bounds\+\_\+epsilon}}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe}{}\label{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe}
+
+
+Definition at line 306 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), and mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+T \&im) const }{check_image_shape(const ImageT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf ImageT} \&}]{im}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{}\label{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}
+
+
+Check the shape of a single images is correct for model size. 
+
+
+
+Definition at line 59 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+Stack\+T \&ims) const }{check_image_shape(const ImageStackT &ims) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{ims}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}{}\label{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}
+
+
+Check the shape of a stack of images is correct for model size. 
+
+
+
+Definition at line 71 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}}
+\index{check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+param\+\_\+shape(const Param\+T \&theta) const }{check_param_shape(const ParamT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771}{}\label{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771}
+
+
+Definition at line 166 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}}
+\index{check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+param\+\_\+shape(const Param\+Vec\+T \&theta) const }{check_param_shape(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf Param\+VecT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a54b341a9bc0e32e2c8bbfe4ec0d8c9a1}{}\label{classmappel_1_1PointEmitterModel_a54b341a9bc0e32e2c8bbfe4ec0d8c9a1}
+
+
+Definition at line 175 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}}
+\index{check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+psf\+\_\+sigma(double psf\+\_\+sigma) const }{check_psf_sigma(double psf_sigma) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{double}]{psf\+\_\+sigma}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b}{}\label{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b}
+
+
+Definition at line 184 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+max\+\_\+psf\+\_\+sigma, and mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+min\+\_\+psf\+\_\+sigma.
+
+
+
+Referenced by Gauss1\+D\+Model(), mappel\+::\+Gauss2\+D\+Model\+::\+Gauss2\+D\+Model(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Gauss2\+Ds\+Model(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+min\+\_\+sigma(), set\+\_\+psf\+\_\+sigma(), and mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}}
+\index{check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+psf\+\_\+sigma(const Vec\+T \&psf\+\_\+sigma) const }{check_psf_sigma(const VecT &psf_sigma) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{psf\+\_\+sigma}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a85780ca544a5ef5e0a62e74005081677}{}\label{classmappel_1_1PointEmitterModel_a85780ca544a5ef5e0a62e74005081677}
+
+
+Definition at line 196 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+max\+\_\+psf\+\_\+sigma, and mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+min\+\_\+psf\+\_\+sigma.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!check\+\_\+size@{check\+\_\+size}}
+\index{check\+\_\+size@{check\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{check\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{check_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}{}\label{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}
+
+
+Check the size argument for the model. 
+
+
+
+Definition at line 39 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::global\+\_\+max\+\_\+size, and mappel\+::\+Image\+Format1\+D\+Base\+::global\+\_\+min\+\_\+size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Format1\+D\+Base(), and mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+hyperparam\+\_\+index@{get\+\_\+hyperparam\+\_\+index}}
+\index{get\+\_\+hyperparam\+\_\+index@{get\+\_\+hyperparam\+\_\+index}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+hyperparam\+\_\+index(const std\+::string \&name) const }{get_hyperparam_index(const std::string &name) const }}]{\setlength{\rightskip}{0pt plus 5cm}int mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+index (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ae13aa99689266d870b659d1045d595f1}{}\label{classmappel_1_1PointEmitterModel_ae13aa99689266d870b659d1045d595f1}
+
+
+Definition at line 236 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+hyperparam\+\_\+names@{get\+\_\+hyperparam\+\_\+names}}
+\index{get\+\_\+hyperparam\+\_\+names@{get\+\_\+hyperparam\+\_\+names}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+hyperparam\+\_\+names() const }{get_hyperparam_names() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf String\+VecT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+names (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a1b8bbd4bdddfb8f5236e8e50fe546c36}{}\label{classmappel_1_1PointEmitterModel_a1b8bbd4bdddfb8f5236e8e50fe546c36}
+
+
+Definition at line 256 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+hyperparam\+\_\+value@{get\+\_\+hyperparam\+\_\+value}}
+\index{get\+\_\+hyperparam\+\_\+value@{get\+\_\+hyperparam\+\_\+value}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+hyperparam\+\_\+value(const std\+::string \&name) const }{get_hyperparam_value(const std::string &name) const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+value (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705}{}\label{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705}
+
+
+Definition at line 232 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+hyperparams@{get\+\_\+hyperparams}}
+\index{get\+\_\+hyperparams@{get\+\_\+hyperparams}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+hyperparams() const }{get_hyperparams() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparams (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a4085ade54f4b039c647bc9bf7804e007}{}\label{classmappel_1_1PointEmitterModel_a4085ade54f4b039c647bc9bf7804e007}
+
+
+Definition at line 224 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}}
+\index{get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+image\+\_\+from\+\_\+stack(const Image\+Stack\+T \&stack, Image\+Coord\+T n) const }{get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::get\+\_\+image\+\_\+from\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{}\label{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}
+
+
+Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+lbound@{get\+\_\+lbound}}
+\index{get\+\_\+lbound@{get\+\_\+lbound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+lbound() const }{get_lbound() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Point\+Emitter\+Model\+::\+ParamT} \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+lbound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848}{}\label{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848}
+
+
+Definition at line 212 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::lbound.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}}
+\index{get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+mcmc\+\_\+num\+\_\+phases() const }{get_mcmc_num_phases() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+num\+\_\+phases (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}{}\label{classmappel_1_1MCMCAdaptorBase_adb9997f1dc774f3a169c61cdb730a85f}
+
+
+Definition at line 56 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+mcmc\+\_\+sigma\+\_\+scale@{get\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{get\+\_\+mcmc\+\_\+sigma\+\_\+scale@{get\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+mcmc\+\_\+sigma\+\_\+scale() const }{get_mcmc_sigma_scale() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+sigma\+\_\+scale (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}{}\label{classmappel_1_1MCMCAdaptorBase_a9de5ee52bbf5c8fd3c1e3bd00836801a}
+
+
+Definition at line 53 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+num\+\_\+hyperparams@{get\+\_\+num\+\_\+hyperparams}}
+\index{get\+\_\+num\+\_\+hyperparams@{get\+\_\+num\+\_\+hyperparams}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+num\+\_\+hyperparams() const }{get_num_hyperparams() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+num\+\_\+hyperparams (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a442522cdaaa76be15b00a4f25110d7ec}{}\label{classmappel_1_1PointEmitterModel_a442522cdaaa76be15b00a4f25110d7ec}
+
+
+Definition at line 208 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+hyperparams.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+num\+\_\+params@{get\+\_\+num\+\_\+params}}
+\index{get\+\_\+num\+\_\+params@{get\+\_\+num\+\_\+params}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+num\+\_\+params() const }{get_num_params() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+num\+\_\+params (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a6fe8129bd24ab5c6620b3ab106b6c91a}{}\label{classmappel_1_1PointEmitterModel_a6fe8129bd24ab5c6620b3ab106b6c91a}
+
+
+Definition at line 160 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}}
+\index{get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+num\+\_\+pixels() const }{get_num_pixels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+num\+\_\+pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{}\label{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}
+
+
+Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+param\+\_\+names@{get\+\_\+param\+\_\+names}}
+\index{get\+\_\+param\+\_\+names@{get\+\_\+param\+\_\+names}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+param\+\_\+names() const }{get_param_names() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf String\+VecT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+param\+\_\+names (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_aa910d1137d808041c0601f2dd3db96f0}{}\label{classmappel_1_1PointEmitterModel_aa910d1137d808041c0601f2dd3db96f0}
+
+
+Definition at line 248 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+prior@{get\+\_\+prior}}
+\index{get\+\_\+prior@{get\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+prior()}{get_prior()}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+prior (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9}{}\label{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9}
+
+
+Definition at line 200 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators(), and mappel\+::\+Gauss2\+Ds\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+prior@{get\+\_\+prior}}
+\index{get\+\_\+prior@{get\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+prior() const }{get_prior() const }}]{\setlength{\rightskip}{0pt plus 5cm}const Composite\+Dist \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+prior (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a239826b8e6b914c0cdaa293f1f5ddfd4}{}\label{classmappel_1_1PointEmitterModel_a239826b8e6b914c0cdaa293f1f5ddfd4}
+
+
+Definition at line 204 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}}
+\index{get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+psf\+\_\+sigma() const }{get_psf_sigma() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}{}\label{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}
+
+
+Definition at line 126 of file Gauss1\+D\+Model.\+h.
+
+
+
+References psf\+\_\+sigma.
+
+
+
+Referenced by get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}}
+\index{get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+psf\+\_\+sigma(\+Idx\+T idx) const }{get_psf_sigma(IdxT idx) const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{idx}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1Gauss1DModel_ae7bd64fb97894f9657be0a4b542aa3c6}{}\label{classmappel_1_1Gauss1DModel_ae7bd64fb97894f9657be0a4b542aa3c6}
+
+
+Definition at line 131 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References psf\+\_\+sigma.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+rng\+\_\+generator@{get\+\_\+rng\+\_\+generator}}
+\index{get\+\_\+rng\+\_\+generator@{get\+\_\+rng\+\_\+generator}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+rng\+\_\+generator()}{get_rng_generator()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parallel\+Rng\+GeneratorT} \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+generator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_af9f6630e9d496bb83e151f00522ecc2d}{}\label{classmappel_1_1PointEmitterModel_af9f6630e9d496bb83e151f00522ecc2d}
+
+
+Definition at line 119 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::rng\+\_\+manager.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+rng\+\_\+manager@{get\+\_\+rng\+\_\+manager}}
+\index{get\+\_\+rng\+\_\+manager@{get\+\_\+rng\+\_\+manager}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+rng\+\_\+manager()}{get_rng_manager()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parallel\+Rng\+ManagerT} \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+manager (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ae876f0fa81613161a064452973bfb558}{}\label{classmappel_1_1PointEmitterModel_ae876f0fa81613161a064452973bfb558}
+
+
+Definition at line 114 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::rng\+\_\+manager.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+size() const }{get_size() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+SizeT} Image\+Format1\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{}\label{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}
+
+
+Definition at line 70 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+size(\+Idx\+T idx) const }{get_size(IdxT idx) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{idx}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}{}\label{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}
+
+
+Definition at line 20 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}}
+\index{get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+size\+\_\+image\+\_\+stack(const Image\+Stack\+T \&stack) const }{get_size_image_stack(const ImageStackT &stack) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+size\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{}\label{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}
+
+
+Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+stats@{get\+\_\+stats}}
+\index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+stats() const }{get_stats() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf StatsT} mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9}{}\label{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9}
+
+
+Definition at line 178 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References get\+\_\+psf\+\_\+sigma(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats(), and mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!get\+\_\+ubound@{get\+\_\+ubound}}
+\index{get\+\_\+ubound@{get\+\_\+ubound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{get\+\_\+ubound() const }{get_ubound() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Point\+Emitter\+Model\+::\+ParamT} \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+ubound (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55}{}\label{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55}
+
+
+Definition at line 216 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Gauss2\+Dsxy\+Model\+::get\+\_\+max\+\_\+sigma\+\_\+ratio(), mappel\+::\+Gauss2\+Ds\+Model\+::get\+\_\+max\+\_\+sigma\+\_\+ratio(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!has\+\_\+hyperparam@{has\+\_\+hyperparam}}
+\index{has\+\_\+hyperparam@{has\+\_\+hyperparam}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{has\+\_\+hyperparam(const std\+::string \&name) const }{has_hyperparam(const std::string &name) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mappel\+::\+Point\+Emitter\+Model\+::has\+\_\+hyperparam (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_afba2b17a81a506b0acd41616c8604412}{}\label{classmappel_1_1PointEmitterModel_afba2b17a81a506b0acd41616c8604412}
+
+
+Definition at line 228 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}}
+\index{initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{initial\+\_\+theta\+\_\+estimate(const Image\+T \&im) const }{initial_theta_estimate(const ImageT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+Model\+::\+Stencil} mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate (
+\begin{DoxyParamCaption}
+\item[{const {\bf ImageT} \&}]{im}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_a055a3bd9bc0ff8540a48a1c6f50ec523}{}\label{classmappel_1_1Gauss1DModel_a055a3bd9bc0ff8540a48a1c6f50ec523}
+
+
+Fast, heuristic estimate of initial theta. 
+
+
+
+Definition at line 164 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::theta.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a055a3bd9bc0ff8540a48a1c6f50ec523_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}}
+\index{initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{initial\+\_\+theta\+\_\+estimate(const Image\+T \&im, const Param\+T \&theta\+\_\+init) const }{initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+Model\+::\+Stencil} mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate (
+\begin{DoxyParamCaption}
+\item[{const {\bf ImageT} \&}]{im, }
+\item[{const {\bf ParamT} \&}]{theta\+\_\+init}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1Gauss1DModel_a4c4e01a489a6d8f7b119dd50b51610c2}{}\label{classmappel_1_1Gauss1DModel_a4c4e01a489a6d8f7b119dd50b51610c2}
+
+
+Definition at line 207 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::bg(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), make\+\_\+stencil(), mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a4c4e01a489a6d8f7b119dd50b51610c2_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+default\+\_\+prior@{make\+\_\+default\+\_\+prior}}
+\index{make\+\_\+default\+\_\+prior@{make\+\_\+default\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+default\+\_\+prior(\+Idx\+T size, const std\+::string \&prior\+\_\+type)}{make_default_prior(IdxT size, const std::string &prior_type)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{const std\+::string \&}]{prior\+\_\+type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_ab9aeff0d5e4f065e81b1d49183ca3fcb}{}\label{classmappel_1_1Gauss1DModel_ab9aeff0d5e4f065e81b1d49183ca3fcb}
+
+
+Definition at line 59 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::istarts\+\_\+with(), make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), and make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab9aeff0d5e4f065e81b1d49183ca3fcb_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position}}
+\index{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(\+Idx\+T size)}{make_default_prior_beta_position(IdxT size)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92}{}\label{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92}
+
+
+Definition at line 80 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_\+bg, mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity(), and mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta().
+
+
+
+Referenced by make\+\_\+default\+\_\+prior().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position}}
+\index{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(\+Idx\+T size)}{make_default_prior_normal_position(IdxT size)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0}{}\label{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0}
+
+
+Definition at line 90 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_\+bg, mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity(), and mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal().
+
+
+
+Referenced by make\+\_\+default\+\_\+prior().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+image@{make\+\_\+image}}
+\index{make\+\_\+image@{make\+\_\+image}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+image() const }{make_image() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::make\+\_\+image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{}\label{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}
+
+
+Definition at line 80 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}}
+\index{make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+image\+\_\+stack(\+Image\+Coord\+T n) const }{make_image_stack(ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+StackT} Image\+Format1\+D\+Base\+::make\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{}\label{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}
+
+
+Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param@{make\+\_\+param}}
+\index{make\+\_\+param@{make\+\_\+param}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param() const }{make_param() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749}{}\label{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749}
+
+
+Definition at line 164 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+
+
+Referenced by initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Dsxy\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss1\+Ds\+Model\+::pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), and mappel\+::\+Gauss2\+Ds\+Model\+::pixel\+\_\+hess\+\_\+update().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param@{make\+\_\+param}}
+\index{make\+\_\+param@{make\+\_\+param}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param(\+Fill\+T fill) const }{make_param(FillT fill) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class FillT $>$ {\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param (
+\begin{DoxyParamCaption}
+\item[{FillT}]{fill}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a5638e3df26cf84d7cf0f23112132682e}{}\label{classmappel_1_1PointEmitterModel_a5638e3df26cf84d7cf0f23112132682e}
+
+
+Definition at line 181 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+mat@{make\+\_\+param\+\_\+mat}}
+\index{make\+\_\+param\+\_\+mat@{make\+\_\+param\+\_\+mat}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+mat() const }{make_param_mat() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a8ede9fe8e3b6a3e621c2da72e23c7f9d}{}\label{classmappel_1_1PointEmitterModel_a8ede9fe8e3b6a3e621c2da72e23c7f9d}
+
+
+Definition at line 172 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+mat@{make\+\_\+param\+\_\+mat}}
+\index{make\+\_\+param\+\_\+mat@{make\+\_\+param\+\_\+mat}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+mat(\+Fill\+T fill) const }{make_param_mat(FillT fill) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class FillT $>$ {\bf MatT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat (
+\begin{DoxyParamCaption}
+\item[{FillT}]{fill}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a68a9c537f2f2725eb8fb9d3e250dd84b}{}\label{classmappel_1_1PointEmitterModel_a68a9c537f2f2725eb8fb9d3e250dd84b}
+
+
+Definition at line 191 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+mat\+\_\+stack@{make\+\_\+param\+\_\+mat\+\_\+stack}}
+\index{make\+\_\+param\+\_\+mat\+\_\+stack@{make\+\_\+param\+\_\+mat\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+mat\+\_\+stack(\+Idx\+T n) const }{make_param_mat_stack(IdxT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CubeT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a57b98d5f8b2b5ed2c455bbf76b632f87}{}\label{classmappel_1_1PointEmitterModel_a57b98d5f8b2b5ed2c455bbf76b632f87}
+
+
+Definition at line 176 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+mat\+\_\+stack@{make\+\_\+param\+\_\+mat\+\_\+stack}}
+\index{make\+\_\+param\+\_\+mat\+\_\+stack@{make\+\_\+param\+\_\+mat\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+mat\+\_\+stack(\+Idx\+T n, Fill\+T fill) const }{make_param_mat_stack(IdxT n, FillT fill) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class FillT $>$ {\bf CubeT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{n, }
+\item[{FillT}]{fill}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a2c11fa045187c7ea9ba382141b5d53c1}{}\label{classmappel_1_1PointEmitterModel_a2c11fa045187c7ea9ba382141b5d53c1}
+
+
+Definition at line 196 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+stack@{make\+\_\+param\+\_\+stack}}
+\index{make\+\_\+param\+\_\+stack@{make\+\_\+param\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+stack(\+Idx\+T n) const }{make_param_stack(IdxT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a6c7edc7f2549058df66472cd7647cf9b}{}\label{classmappel_1_1PointEmitterModel_a6c7edc7f2549058df66472cd7647cf9b}
+
+
+Definition at line 168 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+param\+\_\+stack@{make\+\_\+param\+\_\+stack}}
+\index{make\+\_\+param\+\_\+stack@{make\+\_\+param\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+param\+\_\+stack(\+Idx\+T n, Fill\+T fill) const }{make_param_stack(IdxT n, FillT fill) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class FillT $>$ {\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{n, }
+\item[{FillT}]{fill}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_abab975b04e09e6336a930b6d8fd8c267}{}\label{classmappel_1_1PointEmitterModel_abab975b04e09e6336a930b6d8fd8c267}
+
+
+Definition at line 186 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+prior\+\_\+beta\+\_\+position}}
+\index{make\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+prior\+\_\+beta\+\_\+position}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+beta\+\_\+position(\+Idx\+T size, double beta\+\_\+xpos, double mean\+\_\+\+I, double kappa\+\_\+\+I, double mean\+\_\+bg, double kappa\+\_\+bg)}{make_prior_beta_position(IdxT size, double beta_xpos, double mean_I, double kappa_I, double mean_bg, double kappa_bg)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{double}]{beta\+\_\+xpos, }
+\item[{double}]{mean\+\_\+I, }
+\item[{double}]{kappa\+\_\+I, }
+\item[{double}]{mean\+\_\+bg, }
+\item[{double}]{kappa\+\_\+bg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb}{}\label{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb}
+
+
+Definition at line 101 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity(), and mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta().
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}}
+\index{make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+intensity(double mean=default\+\_\+mean\+\_\+\+I, double kappa=default\+\_\+intensity\+\_\+kappa)}{make_prior_component_intensity(double mean=default_mean_I, double kappa=default_intensity_kappa)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity (
+\begin{DoxyParamCaption}
+\item[{double}]{mean = {\ttfamily {\bf default\+\_\+mean\+\_\+I}}, }
+\item[{double}]{kappa = {\ttfamily {\bf default\+\_\+intensity\+\_\+kappa}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}{}\label{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}
+
+
+Definition at line 97 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+max\+\_\+I.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}}
+\index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta(\+Idx\+T size, double pos\+\_\+beta=default\+\_\+beta\+\_\+pos)}{make_prior_component_position_beta(IdxT size, double pos_beta=default_beta_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{double}]{pos\+\_\+beta = {\ttfamily {\bf default\+\_\+beta\+\_\+pos}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}{}\label{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}
+
+
+Definition at line 91 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), make\+\_\+prior\+\_\+beta\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}}
+\index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal(\+Idx\+T size, double pos\+\_\+sigma=default\+\_\+sigma\+\_\+pos)}{make_prior_component_position_normal(IdxT size, double pos_sigma=default_sigma_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{double}]{pos\+\_\+sigma = {\ttfamily {\bf default\+\_\+sigma\+\_\+pos}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}{}\label{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}
+
+
+Definition at line 84 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}}
+\index{make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+sigma(double min\+\_\+sigma, double max\+\_\+sigma, double alpha=default\+\_\+alpha\+\_\+sigma)}{make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=default_alpha_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{double}]{min\+\_\+sigma, }
+\item[{double}]{max\+\_\+sigma, }
+\item[{double}]{alpha = {\ttfamily {\bf default\+\_\+alpha\+\_\+sigma}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}{}\label{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}
+
+
+Definition at line 103 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+prior\+\_\+normal\+\_\+position}}
+\index{make\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+prior\+\_\+normal\+\_\+position}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+normal\+\_\+position(\+Idx\+T size, double sigma\+\_\+xpos, double mean\+\_\+\+I, double kappa\+\_\+\+I, double mean\+\_\+bg, double kappa\+\_\+bg)}{make_prior_normal_position(IdxT size, double sigma_xpos, double mean_I, double kappa_I, double mean_bg, double kappa_bg)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{size, }
+\item[{double}]{sigma\+\_\+xpos, }
+\item[{double}]{mean\+\_\+I, }
+\item[{double}]{kappa\+\_\+I, }
+\item[{double}]{mean\+\_\+bg, }
+\item[{double}]{kappa\+\_\+bg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619}{}\label{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619}
+
+
+Definition at line 114 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity(), and mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal().
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!make\+\_\+stencil@{make\+\_\+stencil}}
+\index{make\+\_\+stencil@{make\+\_\+stencil}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{make\+\_\+stencil(const Param\+T \&theta, bool compute\+\_\+derivatives=true) const }{make_stencil(const ParamT &theta, bool compute_derivatives=true) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+Model\+::\+Stencil} mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+stencil (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{theta, }
+\item[{bool}]{compute\+\_\+derivatives = {\ttfamily true}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20}{}\label{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20}
+
+
+Make a new Model\+::\+Stencil object at theta. 
+
+Stencils store all of the important calculations necessary for evaluating the log-\/likelihood and its derivatives at a particular theta (parameter) value.
+
+This allows re-\/use of the most expensive computations. Stencils can be easily passed around by reference, and most functions in the \hyperlink{namespacemappel_1_1methods}{mappel\+::methods} namespace accept a const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} reference in place of the model parameter.
+
+Throws \hyperlink{structmappel_1_1ModelBoundsError}{mappel\+::\+Model\+Bounds\+Error} if not model.\+theta\+\_\+in\+\_\+bounds(theta).
+
+If derivatives will not be computed with this stencil set compute\+\_\+derivatives=false
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & Prameter to evaluate at \\
+\hline
+{\em compute\+\_\+derivatives} & True to also prepare for derivative computations \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A new \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} object ready to compute with 
+\end{DoxyReturn}
+
+
+Definition at line 115 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+Stencil(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
+
+
+
+Referenced by initial\+\_\+theta\+\_\+estimate().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{operator=(const Gauss1\+D\+Model \&o)}{operator=(const Gauss1DModel &o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+Model} \& mappel\+::\+Gauss1\+D\+Model\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gauss1\+D\+Model} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_ae26f69421bc365c8b5928276508cc25d}{}\label{classmappel_1_1Gauss1DModel_ae26f69421bc365c8b5928276508cc25d}
+
+
+Definition at line 32 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::operator=(), and psf\+\_\+sigma.
+
+
+
+Referenced by mappel\+::\+Gauss1\+D\+M\+A\+P\+::operator=(), and mappel\+::\+Gauss1\+D\+M\+L\+E\+::operator=().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ae26f69421bc365c8b5928276508cc25d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{classmappel_1_1Gauss1DModel_ae26f69421bc365c8b5928276508cc25d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{operator=(\+Gauss1\+D\+Model \&\&o)}{operator=(Gauss1DModel &&o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+Model} \& mappel\+::\+Gauss1\+D\+Model\+::operator= (
+\begin{DoxyParamCaption}
+\item[{{\bf Gauss1\+D\+Model} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_a27ea4274b62c73a8431129e6d1d38451}{}\label{classmappel_1_1Gauss1DModel_a27ea4274b62c73a8431129e6d1d38451}
+
+
+Definition at line 41 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References Default\+Prior\+Type, mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::operator=(), prior\+\_\+types, and psf\+\_\+sigma.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a27ea4274b62c73a8431129e6d1d38451_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!pixel\+\_\+grad@{pixel\+\_\+grad}}
+\index{pixel\+\_\+grad@{pixel\+\_\+grad}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{pixel\+\_\+grad(\+Idx\+T i, const Stencil \&s, Param\+T \&pgrad) const }{pixel_grad(IdxT i, const Stencil &s, ParamT &pgrad) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+grad (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{i, }
+\item[{const {\bf Stencil} \&}]{s, }
+\item[{{\bf ParamT} \&}]{pgrad}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55}{}\label{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55}
+
+
+Definition at line 136 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+DX, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::X.
+
+
+
+Referenced by pixel\+\_\+hess\+\_\+update().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!pixel\+\_\+grad2@{pixel\+\_\+grad2}}
+\index{pixel\+\_\+grad2@{pixel\+\_\+grad2}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{pixel\+\_\+grad2(\+Idx\+T i, const Stencil \&s, Param\+T \&pgrad2) const }{pixel_grad2(IdxT i, const Stencil &s, ParamT &pgrad2) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+grad2 (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{i, }
+\item[{const {\bf Stencil} \&}]{s, }
+\item[{{\bf ParamT} \&}]{pgrad2}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3}{}\label{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3}
+
+
+Definition at line 145 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and psf\+\_\+sigma.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!pixel\+\_\+hess@{pixel\+\_\+hess}}
+\index{pixel\+\_\+hess@{pixel\+\_\+hess}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{pixel\+\_\+hess(\+Idx\+T i, const Stencil \&s, Mat\+T \&hess) const }{pixel_hess(IdxT i, const Stencil &s, MatT &hess) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+hess (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{i, }
+\item[{const {\bf Stencil} \&}]{s, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a}{}\label{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a}
+
+
+Definition at line 154 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+DX, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and psf\+\_\+sigma.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!pixel\+\_\+hess\+\_\+update@{pixel\+\_\+hess\+\_\+update}}
+\index{pixel\+\_\+hess\+\_\+update@{pixel\+\_\+hess\+\_\+update}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{pixel\+\_\+hess\+\_\+update(\+Idx\+T i, const Stencil \&s, double dm\+\_\+ratio\+\_\+m1, double dmm\+\_\+ratio, Param\+T \&grad, Mat\+T \&hess) const }{pixel_hess_update(IdxT i, const Stencil &s, double dm_ratio_m1, double dmm_ratio, ParamT &grad, MatT &hess) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+hess\+\_\+update (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{i, }
+\item[{const {\bf Stencil} \&}]{s, }
+\item[{double}]{dm\+\_\+ratio\+\_\+m1, }
+\item[{double}]{dmm\+\_\+ratio, }
+\item[{{\bf ParamT} \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1Gauss1DModel_a6b0a57e7620ef80030c94903aae5954f}{}\label{classmappel_1_1Gauss1DModel_a6b0a57e7620ef80030c94903aae5954f}
+
+
+pixel derivative inner loop calculations. 
+
+
+
+Definition at line 191 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param(), pixel\+\_\+grad(), and psf\+\_\+sigma.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a6b0a57e7620ef80030c94903aae5954f_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!pixel\+\_\+model\+\_\+value@{pixel\+\_\+model\+\_\+value}}
+\index{pixel\+\_\+model\+\_\+value@{pixel\+\_\+model\+\_\+value}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{pixel\+\_\+model\+\_\+value(\+Idx\+T i, const Stencil \&s) const }{pixel_model_value(IdxT i, const Stencil &s) const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+model\+\_\+value (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{i, }
+\item[{const {\bf Stencil} \&}]{s}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439}{}\label{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439}
+
+
+Definition at line 130 of file Gauss1\+D\+Model.\+h.
+
+
+
+References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::bg(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::X.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!reflected\+\_\+theta@{reflected\+\_\+theta}}
+\index{reflected\+\_\+theta@{reflected\+\_\+theta}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{reflected\+\_\+theta(const Param\+T \&theta) const }{reflected_theta(const ParamT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3}{}\label{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3}
+
+
+Definition at line 275 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!reflected\+\_\+theta\+\_\+stack@{reflected\+\_\+theta\+\_\+stack}}
+\index{reflected\+\_\+theta\+\_\+stack@{reflected\+\_\+theta\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{reflected\+\_\+theta\+\_\+stack(const Param\+Vec\+T \&theta) const }{reflected_theta_stack(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Param\+VecT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f}{}\label{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f}
+
+
+Definition at line 316 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), and mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!rename\+\_\+hyperparam@{rename\+\_\+hyperparam}}
+\index{rename\+\_\+hyperparam@{rename\+\_\+hyperparam}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{rename\+\_\+hyperparam(const std\+::string \&old\+\_\+name, const std\+::string \&new\+\_\+name)}{rename_hyperparam(const std::string &old_name, const std::string &new_name)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::rename\+\_\+hyperparam (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{old\+\_\+name, }
+\item[{const std\+::string \&}]{new\+\_\+name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a447c83f0769e6dea2bfad68d957287d0}{}\label{classmappel_1_1PointEmitterModel_a447c83f0769e6dea2bfad68d957287d0}
+
+
+Definition at line 244 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!sample\+\_\+mcmc\+\_\+candidate@{sample\+\_\+mcmc\+\_\+candidate}}
+\index{sample\+\_\+mcmc\+\_\+candidate@{sample\+\_\+mcmc\+\_\+candidate}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{sample\+\_\+mcmc\+\_\+candidate(\+Idx\+T sample\+\_\+index, Param\+T \&candidate, double step\+\_\+scale=1.\+0)}{sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{sample\+\_\+index, }
+\item[{{\bf ParamT} \&}]{candidate, }
+\item[{double}]{step\+\_\+scale = {\ttfamily 1.0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_a009fcf597dbc4a97d234d6948a4a42ec}{}\label{classmappel_1_1MCMCAdaptor1D_a009fcf597dbc4a97d234d6948a4a42ec}
+
+
+Definition at line 108 of file M\+C\+M\+C\+Adaptor1\+D.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+bg, mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+I, mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+x, mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases, and mappel\+::rng\+\_\+manager.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!sample\+\_\+prior@{sample\+\_\+prior}}
+\index{sample\+\_\+prior@{sample\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{sample\+\_\+prior(\+Rng\+T \&rng)}{sample_prior(RngT &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class RngT $>$ {\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::sample\+\_\+prior (
+\begin{DoxyParamCaption}
+\item[{RngT \&}]{rng}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a031ef6c978371ce3774dffe811060842}{}\label{classmappel_1_1PointEmitterModel_a031ef6c978371ce3774dffe811060842}
+
+
+Definition at line 264 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!sample\+\_\+prior@{sample\+\_\+prior}}
+\index{sample\+\_\+prior@{sample\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{sample\+\_\+prior()}{sample_prior()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::sample\+\_\+prior (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a481a8021b13918c01f7ff5b657418227}{}\label{classmappel_1_1PointEmitterModel_a481a8021b13918c01f7ff5b657418227}
+
+
+Definition at line 268 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::rng\+\_\+manager.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+background\+\_\+mcmc\+\_\+sampling@{set\+\_\+background\+\_\+mcmc\+\_\+sampling}}
+\index{set\+\_\+background\+\_\+mcmc\+\_\+sampling@{set\+\_\+background\+\_\+mcmc\+\_\+sampling}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+background\+\_\+mcmc\+\_\+sampling(double eta\+\_\+bg=-\/1)}{set_background_mcmc_sampling(double eta_bg=-1)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling (
+\begin{DoxyParamCaption}
+\item[{double}]{eta\+\_\+bg = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1}{}\label{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1}
+
+
+Definition at line 81 of file M\+C\+M\+C\+Adaptor1\+D.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_\+bg, mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+bg, mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+value(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+lbound(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+ubound(), and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+bounds@{set\+\_\+bounds}}
+\index{set\+\_\+bounds@{set\+\_\+bounds}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+bounds(const Param\+T \&lbound, const Param\+T \&ubound)}{set_bounds(const ParamT &lbound, const ParamT &ubound)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{lbound\+\_\+, }
+\item[{const {\bf ParamT} \&}]{ubound\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a31f139d9eb58f210f3359a9f5be9dd15}{}\label{classmappel_1_1PointEmitterModel_a31f139d9eb58f210f3359a9f5be9dd15}
+Box-\/type parameter bounds
+
+Modifies the prior bounds to prevent sampling outside the valid box-\/constraints. 
+
+Definition at line 212 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon, mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+hyperparam\+\_\+names@{set\+\_\+hyperparam\+\_\+names}}
+\index{set\+\_\+hyperparam\+\_\+names@{set\+\_\+hyperparam\+\_\+names}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+hyperparam\+\_\+names(const String\+Vec\+T \&desc)}{set_hyperparam_names(const StringVecT &desc)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparam\+\_\+names (
+\begin{DoxyParamCaption}
+\item[{const {\bf String\+VecT} \&}]{desc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a6cdba258bda50cff162dc16a49383bb0}{}\label{classmappel_1_1PointEmitterModel_a6cdba258bda50cff162dc16a49383bb0}
+
+
+Definition at line 260 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+hyperparam\+\_\+value@{set\+\_\+hyperparam\+\_\+value}}
+\index{set\+\_\+hyperparam\+\_\+value@{set\+\_\+hyperparam\+\_\+value}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+hyperparam\+\_\+value(const std\+::string \&name, double value)}{set_hyperparam_value(const std::string &name, double value)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparam\+\_\+value (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{name, }
+\item[{double}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ade3e56cc00c43e9b7a521d8c4778d3b7}{}\label{classmappel_1_1PointEmitterModel_ade3e56cc00c43e9b7a521d8c4778d3b7}
+
+
+Definition at line 240 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+hyperparams@{set\+\_\+hyperparams}}
+\index{set\+\_\+hyperparams@{set\+\_\+hyperparams}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+hyperparams(const Vec\+T \&hyperparams)}{set_hyperparams(const VecT &hyperparams)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparams (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{hyperparams}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b}{}\label{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b}
+
+
+Definition at line 220 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+hyperparams(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+hyperparams().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}}
+\index{set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+image\+\_\+in\+\_\+stack(\+Image\+Stack\+T \&stack, Image\+Coord\+T n, const Im\+T \&im) const }{set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ImT $>$ void Image\+Format1\+D\+Base\+::set\+\_\+image\+\_\+in\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n, }
+\item[{const ImT \&}]{im}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{}\label{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}
+
+
+Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+intensity\+\_\+mcmc\+\_\+sampling@{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling}}
+\index{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling@{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling(double eta\+\_\+\+I=-\/1)}{set_intensity_mcmc_sampling(double eta_I=-1)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling (
+\begin{DoxyParamCaption}
+\item[{double}]{eta\+\_\+I = {\ttfamily -\/1}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c}{}\label{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c}
+
+
+Definition at line 65 of file M\+C\+M\+C\+Adaptor1\+D.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+mean\+\_\+I, mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+I, mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+value(), and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+lbound@{set\+\_\+lbound}}
+\index{set\+\_\+lbound@{set\+\_\+lbound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+lbound(const Param\+T \&lbound)}{set_lbound(const ParamT &lbound)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{lbound}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541}{}\label{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541}
+
+
+Definition at line 225 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon, mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}}
+\index{set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+mcmc\+\_\+num\+\_\+phases(\+Idx\+T num\+\_\+phases)}{set_mcmc_num_phases(IdxT num_phases)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+num\+\_\+phases (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{num\+\_\+phases}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}{}\label{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a}
+
+
+Definition at line 59 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), and mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+mcmc\+\_\+sigma\+\_\+scale(double scale)}{set_mcmc_sigma_scale(double scale)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+sigma\+\_\+scale (
+\begin{DoxyParamCaption}
+\item[{double}]{scale}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}{}\label{classmappel_1_1MCMCAdaptorBase_aa6b8eea136bf1f34f0c50bf8d1937a58}
+
+
+Definition at line 39 of file M\+C\+M\+C\+Adaptor\+Base.\+cpp.
+
+
+
+References mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale, and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+param\+\_\+names@{set\+\_\+param\+\_\+names}}
+\index{set\+\_\+param\+\_\+names@{set\+\_\+param\+\_\+names}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+param\+\_\+names(const String\+Vec\+T \&desc)}{set_param_names(const StringVecT &desc)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+param\+\_\+names (
+\begin{DoxyParamCaption}
+\item[{const {\bf String\+VecT} \&}]{desc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a2abccbca47fc60700d73244e6c4dbe30}{}\label{classmappel_1_1PointEmitterModel_a2abccbca47fc60700d73244e6c4dbe30}
+
+
+Definition at line 252 of file Point\+Emitter\+Model.\+h.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::prior.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+prior@{set\+\_\+prior}}
+\index{set\+\_\+prior@{set\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+prior(\+Composite\+Dist \&\&prior\+\_\+)}{set_prior(CompositeDist &&prior_)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior (
+\begin{DoxyParamCaption}
+\item[{Composite\+Dist \&\&}]{prior\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7}{}\label{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7}
+
+
+Definition at line 157 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+hyperparams, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+prior(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+prior().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+prior@{set\+\_\+prior}}
+\index{set\+\_\+prior@{set\+\_\+prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+prior(const Composite\+Dist \&prior\+\_\+)}{set_prior(const CompositeDist &prior_)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior (
+\begin{DoxyParamCaption}
+\item[{const Composite\+Dist \&}]{prior\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_acf37c5f28dc0c66197162b3408a6b815}{}\label{classmappel_1_1PointEmitterModel_acf37c5f28dc0c66197162b3408a6b815}
+
+
+Definition at line 148 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+hyperparams, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+psf\+\_\+sigma@{set\+\_\+psf\+\_\+sigma}}
+\index{set\+\_\+psf\+\_\+sigma@{set\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+psf\+\_\+sigma(double new\+\_\+psf\+\_\+sigma)}{set_psf_sigma(double new_psf_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::set\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{double}]{new\+\_\+psf\+\_\+sigma}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8}{}\label{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8}
+
+
+Definition at line 125 of file Gauss1\+D\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma(), and psf\+\_\+sigma.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+rng\+\_\+seed@{set\+\_\+rng\+\_\+seed}}
+\index{set\+\_\+rng\+\_\+seed@{set\+\_\+rng\+\_\+seed}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+rng\+\_\+seed(\+Rng\+Seed\+T seed)}{set_rng_seed(RngSeedT seed)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+rng\+\_\+seed (
+\begin{DoxyParamCaption}
+\item[{{\bf Rng\+SeedT}}]{seed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}{}\label{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}
+
+
+Definition at line 109 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::rng\+\_\+manager.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+size@{set\+\_\+size}}
+\index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{set_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::set\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{}\label{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}
+
+
+Definition at line 30 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size(), and mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!set\+\_\+ubound@{set\+\_\+ubound}}
+\index{set\+\_\+ubound@{set\+\_\+ubound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{set\+\_\+ubound(const Param\+T \&ubound)}{set_ubound(const ParamT &ubound)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{ubound}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6}{}\label{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6}
+
+
+Definition at line 236 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon, mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, mappel\+::\+Point\+Emitter\+Model\+::prior, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!theta\+\_\+in\+\_\+bounds@{theta\+\_\+in\+\_\+bounds}}
+\index{theta\+\_\+in\+\_\+bounds@{theta\+\_\+in\+\_\+bounds}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{theta\+\_\+in\+\_\+bounds(const Param\+T \&theta) const }{theta_in_bounds(const ParamT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds (
+\begin{DoxyParamCaption}
+\item[{const {\bf ParamT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d}{}\label{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d}
+
+
+Definition at line 256 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), make\+\_\+stencil(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+Dsxy\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+stencil(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!theta\+\_\+stack\+\_\+in\+\_\+bounds@{theta\+\_\+stack\+\_\+in\+\_\+bounds}}
+\index{theta\+\_\+stack\+\_\+in\+\_\+bounds@{theta\+\_\+stack\+\_\+in\+\_\+bounds}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{theta\+\_\+stack\+\_\+in\+\_\+bounds(const Param\+Vec\+T \&theta) const }{theta_stack_in_bounds(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bool\+VecT} mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds (
+\begin{DoxyParamCaption}
+\item[{const {\bf Param\+VecT} \&}]{theta}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8}{}\label{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8}
+
+
+Definition at line 296 of file Point\+Emitter\+Model.\+cpp.
+
+
+
+References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!bounds\+\_\+epsilon@{bounds\+\_\+epsilon}}
+\index{bounds\+\_\+epsilon@{bounds\+\_\+epsilon}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{bounds\+\_\+epsilon}{bounds_epsilon}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon = 1.\+0\+E-\/6\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{}\label{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}
+Distance from the boundary to constrain in bound\+\_\+theta and bounded\+\_\+theta methods 
+
+Definition at line 52 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio(), and mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+alpha\+\_\+sigma@{default\+\_\+alpha\+\_\+sigma}}
+\index{default\+\_\+alpha\+\_\+sigma@{default\+\_\+alpha\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+alpha\+\_\+sigma}{default_alpha_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+alpha\+\_\+sigma = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{}\label{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}
+Default per-\/pixel background gamma distribution shape 
+
+Definition at line 62 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+beta\+\_\+pos@{default\+\_\+beta\+\_\+pos}}
+\index{default\+\_\+beta\+\_\+pos@{default\+\_\+beta\+\_\+pos}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+beta\+\_\+pos}{default_beta_pos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+beta\+\_\+pos = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{}\label{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}
+Default position parameter in symmetric beta-\/distributions 
+
+Definition at line 56 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+intensity\+\_\+kappa@{default\+\_\+intensity\+\_\+kappa}}
+\index{default\+\_\+intensity\+\_\+kappa@{default\+\_\+intensity\+\_\+kappa}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+intensity\+\_\+kappa}{default_intensity_kappa}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+intensity\+\_\+kappa = 2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{}\label{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}
+Default shape for intensity gamma distributions 
+
+Definition at line 60 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+max\+\_\+I@{default\+\_\+max\+\_\+I}}
+\index{default\+\_\+max\+\_\+I@{default\+\_\+max\+\_\+I}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+max\+\_\+I}{default_max_I}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+max\+\_\+I = I\+N\+F\+I\+N\+I\+TY\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}{}\label{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}
+Default emitter intensity mean 
+
+Definition at line 59 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+mean\+\_\+I@{default\+\_\+mean\+\_\+I}}
+\index{default\+\_\+mean\+\_\+I@{default\+\_\+mean\+\_\+I}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+mean\+\_\+I}{default_mean_I}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+mean\+\_\+I = 300\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{}\label{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}
+Default emitter intensity mean 
+
+Definition at line 58 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+pixel\+\_\+mean\+\_\+bg@{default\+\_\+pixel\+\_\+mean\+\_\+bg}}
+\index{default\+\_\+pixel\+\_\+mean\+\_\+bg@{default\+\_\+pixel\+\_\+mean\+\_\+bg}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+pixel\+\_\+mean\+\_\+bg}{default_pixel_mean_bg}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_\+bg = 4\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}{}\label{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}
+Default per-\/pixel mean background counts 
+
+Definition at line 61 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!default\+\_\+sigma\+\_\+pos@{default\+\_\+sigma\+\_\+pos}}
+\index{default\+\_\+sigma\+\_\+pos@{default\+\_\+sigma\+\_\+pos}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{default\+\_\+sigma\+\_\+pos}{default_sigma_pos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+sigma\+\_\+pos = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{}\label{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}
+Default position parameter in symmetric beta-\/distributions 
+
+Definition at line 57 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Default\+Prior\+Type@{Default\+Prior\+Type}}
+\index{Default\+Prior\+Type@{Default\+Prior\+Type}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+Type}{DefaultPriorType}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string mappel\+::\+Gauss1\+D\+Model\+::\+Default\+Prior\+Type = \char`\"{}Normal\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_a4186ce131a5cc9a451ecc0011e4e6682}{}\label{classmappel_1_1Gauss1DModel_a4186ce131a5cc9a451ecc0011e4e6682}
+
+
+Definition at line 53 of file Gauss1\+D\+Model.\+h.
+
+
+
+Referenced by operator=().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!Default\+Seperable\+Init\+Estimator@{Default\+Seperable\+Init\+Estimator}}
+\index{Default\+Seperable\+Init\+Estimator@{Default\+Seperable\+Init\+Estimator}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{Default\+Seperable\+Init\+Estimator}{DefaultSeperableInitEstimator}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Seperable\+Init\+Estimator = \char`\"{}Trust\+Region\char`\"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}{}\label{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}
+\hyperlink{classmappel_1_1Estimator}{Estimator} name to use in 1D separable initializations 
+
+Definition at line 49 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Dsxy\+Model\+::initial\+\_\+theta\+\_\+estimate(), and mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!eta\+\_\+bg@{eta\+\_\+bg}}
+\index{eta\+\_\+bg@{eta\+\_\+bg}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{eta\+\_\+bg}{eta_bg}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+bg =0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_af54c93421b8e298289cbb92743c6b3d5}{}\label{classmappel_1_1MCMCAdaptor1D_af54c93421b8e298289cbb92743c6b3d5}
+The standard deviation for the normally distributed perturbation to theta\+\_\+bg in the random walk M\+C\+MC sampling 
+
+Definition at line 32 of file M\+C\+M\+C\+Adaptor1\+D.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::operator=(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!eta\+\_\+I@{eta\+\_\+I}}
+\index{eta\+\_\+I@{eta\+\_\+I}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{eta\+\_\+I}{eta_I}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+I =0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_a5780d326be0c40e10d6c91777cfffbd3}{}\label{classmappel_1_1MCMCAdaptor1D_a5780d326be0c40e10d6c91777cfffbd3}
+The standard deviation for the normally distributed perturbation to theta\+\_\+I in the random walk M\+C\+MC sampling 
+
+Definition at line 31 of file M\+C\+M\+C\+Adaptor1\+D.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::operator=(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!eta\+\_\+x@{eta\+\_\+x}}
+\index{eta\+\_\+x@{eta\+\_\+x}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{eta\+\_\+x}{eta_x}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::eta\+\_\+x =0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptor1D_ae5787e38c9cef6168acf6fc5d3216693}{}\label{classmappel_1_1MCMCAdaptor1D_ae5787e38c9cef6168acf6fc5d3216693}
+The standard deviation for the normally distributed perturbation to theta\+\_\+x in the random walk M\+C\+MC sampling 
+
+Definition at line 30 of file M\+C\+M\+C\+Adaptor1\+D.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::operator=(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale}{global_default_mcmc_sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::global\+\_\+default\+\_\+mcmc\+\_\+sigma\+\_\+scale = 0.\+05\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}{}\label{classmappel_1_1MCMCAdaptorBase_a44cebca0e27135c854fa8430d2d89929}
+
+
+Definition at line 16 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), and mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
+\index{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale@{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale}{global_max_mcmc_sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::global\+\_\+max\+\_\+mcmc\+\_\+sigma\+\_\+scale = 0.\+5\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}{}\label{classmappel_1_1MCMCAdaptorBase_aebc93881ca351e67de867238a62579eb}
+
+
+Definition at line 17 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::\+M\+C\+M\+C\+Adaptor\+Base(), and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+sigma\+\_\+scale().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+max\+\_\+psf\+\_\+sigma@{global\+\_\+max\+\_\+psf\+\_\+sigma}}
+\index{global\+\_\+max\+\_\+psf\+\_\+sigma@{global\+\_\+max\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+psf\+\_\+sigma}{global_max_psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+max\+\_\+psf\+\_\+sigma = 1\+E2\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}{}\label{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}
+Global maxmimum for any psf\+\_\+sigma. Sizes above this value are invalid, and nowhere near useful for practical point emitter localization 
+
+Definition at line 54 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}}
+\index{global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+size}{global_max_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::global\+\_\+max\+\_\+size = 512\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}{}\label{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}
+Maximum size along any dimension of the image. This is insanely big to catch obvious errors 
+
+Definition at line 40 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+min\+\_\+psf\+\_\+sigma@{global\+\_\+min\+\_\+psf\+\_\+sigma}}
+\index{global\+\_\+min\+\_\+psf\+\_\+sigma@{global\+\_\+min\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+min\+\_\+psf\+\_\+sigma}{global_min_psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+min\+\_\+psf\+\_\+sigma = 1\+E-\/1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}{}\label{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}
+Global minimum for any psf\+\_\+sigma. Sizes below this value are invalid, and nowhere near useful for practical point emitter localization 
+
+Definition at line 53 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}}
+\index{global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{global\+\_\+min\+\_\+size}{global_min_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::global\+\_\+min\+\_\+size = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}{}\label{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}
+Minimum size along any dimension of the image. 
+
+Definition at line 39 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!lbound@{lbound}}
+\index{lbound@{lbound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{lbound}{lbound}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ParamT} mappel\+::\+Point\+Emitter\+Model\+::lbound\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}{}\label{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}
+
+
+Definition at line 148 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+lbound(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Point\+Emitter\+Model\+::operator=(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!num\+\_\+dim@{num\+\_\+dim}}
+\index{num\+\_\+dim@{num\+\_\+dim}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{num\+\_\+dim}{num_dim}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::num\+\_\+dim = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}{}\label{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}
+Number of image dimensions. 
+
+Definition at line 38 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!num\+\_\+hyperparams@{num\+\_\+hyperparams}}
+\index{num\+\_\+hyperparams@{num\+\_\+hyperparams}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{num\+\_\+hyperparams}{num_hyperparams}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+hyperparams\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_ab2423214fdd81c8212118770b5b17b1f}{}\label{classmappel_1_1PointEmitterModel_ab2423214fdd81c8212118770b5b17b1f}
+
+
+Definition at line 147 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+num\+\_\+hyperparams(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+Point\+Emitter\+Model\+::operator=(), and mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!num\+\_\+params@{num\+\_\+params}}
+\index{num\+\_\+params@{num\+\_\+params}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{num\+\_\+params}{num_params}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a9af0484391bd6021ddc04ac666ab49ad}{}\label{classmappel_1_1PointEmitterModel_a9af0484391bd6021ddc04ac666ab49ad}
+
+
+Definition at line 146 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+num\+\_\+params(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+mat\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::operator=(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!num\+\_\+phases@{num\+\_\+phases}}
+\index{num\+\_\+phases@{num\+\_\+phases}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{num\+\_\+phases}{num_phases}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}{}\label{classmappel_1_1MCMCAdaptorBase_a44b90a984ace712584074dc17831fe25}
+The number of different sampling phases for candidate selection M\+C\+MC. Each phase changes a different subset of variables. 
+
+Definition at line 29 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+num\+\_\+phases(), mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+num\+\_\+phases().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!prior@{prior}}
+\index{prior@{prior}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{prior}{prior}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Point\+Emitter\+Model\+::prior\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a393839f8eb1dd3d61c9369377742ba0e}{}\label{classmappel_1_1PointEmitterModel_a393839f8eb1dd3d61c9369377742ba0e}
+
+
+Definition at line 145 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::debug\+\_\+internal\+\_\+sum\+\_\+model\+\_\+y(), mappel\+::\+Gauss2\+Ds\+Model\+::debug\+\_\+internal\+\_\+sum\+\_\+model\+\_\+y(), mappel\+::\+Gauss2\+D\+Model\+::\+Gauss2\+D\+Model(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Gauss2\+Ds\+Model(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+index(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+names(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparam\+\_\+value(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparams(), mappel\+::\+Gauss1\+Ds\+Model\+::get\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss1\+Ds\+Model\+::get\+\_\+min\+\_\+sigma(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+param\+\_\+names(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+prior(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+Point\+Emitter\+Model\+::has\+\_\+hyperparam(), mappel\+::\+Point\+Emitter\+Model\+::operator=(), mappel\+::\+Point\+Emitter\+Model\+::\+Point\+Emitter\+Model(), mappel\+::\+Point\+Emitter\+Model\+::rename\+\_\+hyperparam(), mappel\+::\+Point\+Emitter\+Model\+::sample\+\_\+prior(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparam\+\_\+names(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparam\+\_\+value(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+hyperparams(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+param\+\_\+names(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior(), and mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!prior\+\_\+types@{prior\+\_\+types}}
+\index{prior\+\_\+types@{prior\+\_\+types}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{prior\+\_\+types}{prior_types}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf String\+VecT} mappel\+::\+Gauss1\+D\+Model\+::prior\+\_\+types\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1Gauss1DModel_a2f72a3c4729aa81d8ffdd96a60374cd6}{}\label{classmappel_1_1Gauss1DModel_a2f72a3c4729aa81d8ffdd96a60374cd6}
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+= \{ \textcolor{stringliteral}{"Beta"}, 
+                                                       \textcolor{stringliteral}{"Normal"}  
+                                                      \}
+\end{DoxyCode}
+
+
+Definition at line 52 of file Gauss1\+D\+Model.\+h.
+
+
+
+Referenced by operator=().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!psf\+\_\+sigma@{psf\+\_\+sigma}}
+\index{psf\+\_\+sigma@{psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{psf\+\_\+sigma}{psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{}\label{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}
+Standard deviation of the fixed-\/sigma 1D Gaussian P\+SF in pixels 
+
+Definition at line 89 of file Gauss1\+D\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), get\+\_\+psf\+\_\+sigma(), operator=(), pixel\+\_\+grad2(), pixel\+\_\+hess(), pixel\+\_\+hess\+\_\+update(), set\+\_\+psf\+\_\+sigma(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+Stencil().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!sigma\+\_\+scale@{sigma\+\_\+scale}}
+\index{sigma\+\_\+scale@{sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{sigma\+\_\+scale}{sigma_scale}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::sigma\+\_\+scale\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}{}\label{classmappel_1_1MCMCAdaptorBase_a76312f7d589bf3f3e754beca174b884b}
+A scaling factor for step sizes as a fraction of the size of the domain dimension we are walking in. (0.\+05 default) 
+
+Definition at line 30 of file M\+C\+M\+C\+Adaptor\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+sigma\+\_\+scale(), mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling(), and mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+sigma\+\_\+scale().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!size@{size}}
+\index{size@{size}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{size}{size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+SizeT} mappel\+::\+Image\+Format1\+D\+Base\+::size\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{}\label{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}
+Number of pixels in X dimension for 1D image 
+
+Definition at line 64 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape(), mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+num\+\_\+pixels(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+size(), initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Image\+Format1\+D\+Base\+::make\+\_\+image(), mappel\+::\+Image\+Format1\+D\+Base\+::make\+\_\+image\+\_\+stack(), mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size(), mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+Stencil(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+Stencil().
+
+\index{mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}!ubound@{ubound}}
+\index{ubound@{ubound}!mappel\+::\+Gauss1\+D\+Model@{mappel\+::\+Gauss1\+D\+Model}}
+\paragraph[{\texorpdfstring{ubound}{ubound}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ParamT} mappel\+::\+Point\+Emitter\+Model\+::ubound\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}{}\label{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}
+
+
+Definition at line 148 of file Point\+Emitter\+Model.\+h.
+
+
+
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+ubound(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Point\+Emitter\+Model\+::operator=(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+ubound(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Gauss1DModel_8h}{Gauss1\+D\+Model.\+h}\item 
+\hyperlink{Gauss1DModel_8cpp}{Gauss1\+D\+Model.\+cpp}\end{DoxyCompactItemize}

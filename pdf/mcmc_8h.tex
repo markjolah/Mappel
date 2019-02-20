@@ -1,0 +1,58 @@
+\hypertarget{mcmc_8h}{}\subsection{mcmc.\+h File Reference}
+\label{mcmc_8h}\index{mcmc.\+h@{mcmc.\+h}}
+
+
+Templated M\+C\+MC methods for posterior estimation.  
+
+
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/rng.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$trng/uniform01\+\_\+dist.\+hpp$>$}\\*
+Include dependency graph for mcmc.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mcmc_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{mcmc_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1mcmc}{mappel\+::mcmc}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+IdxT \hyperlink{namespacemappel_1_1mcmc_a29219ed7564edad6489889dc2ec2a0d6}{mappel\+::mcmc\+::num\+\_\+oversample} (IdxT Nsample, IdxT Nburnin, IdxT thin)
+\item 
+MatT \hyperlink{namespacemappel_1_1mcmc_a2930a61f34237af553702ddaaf72c5b5}{mappel\+::mcmc\+::thin\+\_\+sample} (MatT \&sample, IdxT Nburnin, IdxT thin)
+\item 
+void \hyperlink{namespacemappel_1_1mcmc_a9e20794d8718ad2230529af28855e542}{mappel\+::mcmc\+::thin\+\_\+sample} (const MatT \&sample, const VecT \&sample\+\_\+rllh, IdxT Nburnin, IdxT thin, MatT \&subsample, VecT \&subsample\+\_\+rllh)
+\item 
+void \hyperlink{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735}{mappel\+::mcmc\+::estimate\+\_\+sample\+\_\+posterior} (const MatT \&sample, VecT \&theta\+\_\+posterior\+\_\+mean, MatT \&theta\+\_\+posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce}{mappel\+::mcmc\+::sample\+\_\+posterior} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159}{mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh, MatT \&candidate, VecT \&candidate\+\_\+rllh)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Templated M\+C\+MC methods for posterior estimation. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2015-\/2019 
+\end{DoxyDate}

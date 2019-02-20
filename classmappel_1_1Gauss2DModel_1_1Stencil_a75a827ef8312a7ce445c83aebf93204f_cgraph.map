@@ -1,0 +1,10 @@
+<map id="mappel::Gauss2DModel::Stencil::Stencil" name="mappel::Gauss2DModel::Stencil::Stencil">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel_1_1Stencil.html#aa454ad18859be0dcc48f5de8982c7ba7" title="mappel::Gauss2DModel\l::Stencil::compute_derivatives" alt="" coords="208,48,392,87"/>
+<area shape="rect" id="node3" href="$namespacemappel.html#aa5c2f294298c875605ee1e9876b7d116" title="mappel::make_G_stencil" alt="" coords="448,5,605,31"/>
+<area shape="rect" id="node6" href="$namespacemappel.html#a8da88490d6ff7d5886b96b66c1bab369" title="mappel::make_DX_stencil" alt="" coords="444,55,609,80"/>
+<area shape="rect" id="node8" href="$namespacemappel.html#af7636db506977133c8b30d108fede711" title="mappel::make_DXS_stencil" alt="" coords="440,104,613,129"/>
+<area shape="rect" id="node4" href="$namespacemappel.html#a5ca82edc201e8605107a991493ad0d5e" title="mappel::fill_G_stencil" alt="" coords="669,5,808,31"/>
+<area shape="rect" id="node5" href="$namespacemappel.html#a8475cdb3edacceb0ae215c3ebd1f33c1" title="mappel::square" alt="" coords="864,55,971,80"/>
+<area shape="rect" id="node7" href="$namespacemappel.html#ad2dd4330fc626fa673a3acf691d6b9a7" title="mappel::fill_DX_stencil" alt="" coords="665,55,812,80"/>
+<area shape="rect" id="node9" href="$namespacemappel.html#ab0cb62f6dcecae5ff19468d87a283e7a" title="mappel::fill_DXS_stencil" alt="" coords="661,104,816,129"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="mappel::Gauss2DModel" name="mappel::Gauss2DModel">
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DMAP.html" title="A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="" coords="53,299,199,324"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DMLE.html" title="A 2D Gaussian with fixed PSF under an Poisson noise assumption and maximum&#45;likelihood objective..." alt="" coords="224,299,369,324"/>
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="5,5,175,31"/>
+<area shape="rect" id="node5" href="$classmappel_1_1MCMCAdaptor1D.html" title="mappel::MCMCAdaptor1D" alt="" coords="128,79,295,104"/>
+<area shape="rect" id="node3" href="$classmappel_1_1ImageFormat2DBase.html" title="A virtual base class for 2D image localization objectives. " alt="" coords="319,152,504,177"/>
+<area shape="rect" id="node4" href="$classmappel_1_1MCMCAdaptor2D.html" title="mappel::MCMCAdaptor2D" alt="" coords="128,152,295,177"/>
+<area shape="rect" id="node6" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="199,5,378,31"/>
+</map>

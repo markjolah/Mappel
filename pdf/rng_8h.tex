@@ -1,0 +1,61 @@
+\hypertarget{rng_8h}{}\subsection{rng.\+h File Reference}
+\label{rng_8h}\index{rng.\+h@{rng.\+h}}
+
+
+Random number generation usign sfmt.  
+
+
+{\ttfamily \#include $<$random$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
+{\ttfamily \#include $<$trng/lcg64\+\_\+shift.\+hpp$>$}\\*
+{\ttfamily \#include $<$Parallel\+Rng\+Manager/\+Parallel\+Rng\+Manager.\+h$>$}\\*
+Include dependency graph for rng.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{rng_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{rng_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{namespacemappel_ad1e99b214465229065d30f881a89d1cc}{mappel\+::\+Parallel\+Rng\+GeneratorT} = trng\+::lcg64\+\_\+shift
+\item 
+using \hyperlink{namespacemappel_acf276a4212f07b1ed4cb2ddce379ba1d}{mappel\+::\+Parallel\+Rng\+ManagerT} = parallel\+\_\+rng\+::\+Parallel\+Rng\+Manager$<$ Parallel\+Rng\+GeneratorT $>$
+\item 
+using \hyperlink{namespacemappel_a318bca259a7add5979160939a3f4e60b}{mappel\+::\+Rng\+SeedT} = parallel\+\_\+rng\+::\+SeedT
+\item 
+using \hyperlink{namespacemappel_ac559959896fbdf3a8ce294353ea41aff}{mappel\+::\+Uniform\+DistT} = std\+::uniform\+\_\+real\+\_\+distribution$<$ double $>$
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class RngT $>$ }\\IdxT \hyperlink{namespacemappel_af5deeb186fbcfbd0f449064cc70e8a86}{mappel\+::generate\+\_\+poisson\+\_\+small} (RngT \&rng, double mu)
+\begin{DoxyCompactList}\small\item\em Genrates a single poisson disributed int from distribution with mean mu. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class RngT $>$ }\\IdxT \hyperlink{namespacemappel_ae776a0d92c466702788b7405a4a166e0}{mappel\+::generate\+\_\+poisson\+\_\+large} (RngT \&rng, double mu)
+\item 
+{\footnotesize template$<$class RngT $>$ }\\double \hyperlink{namespacemappel_adc1e3a6c0fd4804406d162c48d805d44}{mappel\+::generate\+\_\+poisson} (RngT \&rng, double mu)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Random number generation usign sfmt. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (email mjo@cs.\+unm D\+OT edu ) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+12-\/12-\/2013 
+\end{DoxyDate}

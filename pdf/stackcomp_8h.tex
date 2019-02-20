@@ -1,0 +1,61 @@
+\hypertarget{stackcomp_8h}{}\subsection{stackcomp.\+h File Reference}
+\label{stackcomp_8h}\index{stackcomp.\+h@{stackcomp.\+h}}
+
+
+Data-\/parallel versions of core computational functions using Open\+MP.  
+
+
+{\ttfamily \#include $<$omp.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/rng.\+h\char`\"{}}\\*
+Include dependency graph for stackcomp.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stackcomp_8h__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_afc24dba55dd63a1628388626bb7a7304}{mappel\+::sample\+\_\+prior\+\_\+stack} (Model \&model, typename Model\+::\+Param\+VecT \&theta\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel sampling of the model prior. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_ac0a6248ecc5b41b2d7fe10231dcc00cb}{mappel\+::model\+\_\+image\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Image\+StackT \&image\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel computation of the model image. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a79ac0dd997da8729f9610aab0fdbb347}{mappel\+::simulate\+\_\+image\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Image\+StackT \&image\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel simulation of images from one or more theta. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_ac37bf1175da6d4a80cd4cb147bfb68e2}{mappel\+::log\+\_\+likelihood\+\_\+stack} (const Model \&model, const typename Model\+::\+ImageT \&image, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, VecT \&llh\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a single image. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_aa57494d2d4d7461509dfc3f657cea340}{mappel\+::log\+\_\+likelihood\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, VecT \&llh\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a053f2ea8e88ce464bb0c41657fac50ef}{mappel\+::model\+\_\+grad\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Param\+VecT \&grad\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model gradient calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a74564859e87b485dda106ce035b9157b}{mappel\+::model\+\_\+hessian\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, CubeT \&hessian\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model Hessian calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a2e223ad253e6d02bcc65056de3af6c24}{mappel\+::model\+\_\+positive\+\_\+hessian\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, CubeT \&hessian\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model positive-\/definite Hessian approximation calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_af7a80413a48625a3d97079177d8f959b}{mappel\+::cr\+\_\+lower\+\_\+bound\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Param\+VecT \&crlb\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a77bdeb8e88ba5b04e736ff55ab9a33fd}{mappel\+::fisher\+\_\+information\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, CubeT \&fisher\+I\+\_\+stack)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Data-\/parallel versions of core computational functions using Open\+MP. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm.\+edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/2017 Open\+MP computation for stacked Model operations on verctor data.
+\end{DoxyDate}
+
+\begin{DoxyItemize}
+\item Design Decisions
+\item Because we want to integrate as seamlessly as possible with matlab, we use the armadillo package which stores arrays in column major order.
+\item Therefore in the $\ast$\+\_\+stack operations, if they are to be parallelized, we want the data stored as a n\+Parms X n matrix, i.\+e. each column is a parameter matrix. Simillarly stacks are size X size X n, so that contiguous images sequences are contiguous in memory. This avoids false sharing. 
+\end{DoxyItemize}

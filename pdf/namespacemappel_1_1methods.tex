@@ -1,0 +1,1442 @@
+\hypertarget{namespacemappel_1_1methods}{}\subsection{mappel\+:\+:methods Namespace Reference}
+\label{namespacemappel_1_1methods}\index{mappel\+::methods@{mappel\+::methods}}
+
+
+Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}.  
+
+
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1debug}{debug}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1likelihood}{likelihood}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective}{objective}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1openmp}{openmp}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1ImageFormat1DBase}{Image\+Format1\+D\+Base} $>$ \hyperlink{namespacemappel_1_1methods_ae92825adbc9f0eea36c2b0afdbf40d66}{model\+\_\+image} (const Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} $>$ \hyperlink{namespacemappel_1_1methods_a864e97c52c849c580bccf04401695d13}{model\+\_\+image} (const Model \&model, const typename Model\+::\+Stencil \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a4243465f0e58305d795497cbb0499433}{model\+\_\+image} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a950d7858d6cc0ffb6e651776a24c9e35}{simulate\+\_\+image} (Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a74ba8d927de2e6fad2fec49599d4429e}{simulate\+\_\+image} (Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta, rng\+\_\+t \&rng)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_af3db039a162d71bd04eb08b773035542}{simulate\+\_\+image} (Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a8ec3a0fdc71eed2a0bdfe33599f23623}{simulate\+\_\+image\+\_\+from\+\_\+model} (Model \&model, const \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$ \&model\+\_\+im)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b}{aposteriori\+\_\+objective} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data\+\_\+im, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s, double \&rllh, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a3b0e13b783d21c08ba063a210b0a344b}{aposteriori\+\_\+objective} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data\+\_\+im, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta, double \&rllh, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a275f2b0364c48bfc7e6f88e866d593bd}{prior\+\_\+objective} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta, double \&rllh, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2}{likelihood\+\_\+objective} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data\+\_\+im, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s, double \&rllh, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a496d45e1db23f89b54ae0bef016a19b0}{likelihood\+\_\+objective} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data\+\_\+im, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta, double \&rllh, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&grad, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115}{cr\+\_\+lower\+\_\+bound} (const Model \&model, const typename Model\+::\+Stencil \&s)
+\begin{DoxyCompactList}\small\item\em Calculate the Cramer-\/\+Rao lower bound at the given parameters. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a30d0f08f37d8f412a2677280cb39c588}{cr\+\_\+lower\+\_\+bound} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1methods_a6632adc36d8b32fd8d198669e268c767}{expected\+\_\+information} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1methods_a83244dbe0995e8698475a12d34fb2f35}{observed\+\_\+information} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+mode)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1methods_a0e3bec3c7363eb6005abdeaa151decb9}{observed\+\_\+information} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&theta\+\_\+mode)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_abde9a4b10690b8eefe709d730fac69d9}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, double \&rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a9494d0ddea2acc25bd92100b7587a1c1}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_aee25050c1c9f8cf29d38d8c47d593a3e}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a8db06e0816204cdca735bdf498e2bae2}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a336e74435f33240ea8251bfc21dbe279}{estimate\+\_\+max} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1methods_a8bec3dcf3172f17383eb5f6693e7e956}{estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample=1000, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin=100, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin=0)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1methods_abf7481af94ebff828622ec6b38a271ee}{estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample=1000, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin=100, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin=0)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a5b0c8018510cec5dec285ea4cad912c5}{estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a224995eff4bf3ee7652f2ed9116d8cf7}{estimate\+\_\+mcmc\+\_\+posterior} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&posterior\+\_\+mean, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_ab616d99318131c7f70f49581d9c9d77a}{estimate\+\_\+mcmc\+\_\+posterior} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&posterior\+\_\+mean, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a40f38c9be75ed5bbcc4066a289894ea1}{error\+\_\+bounds\+\_\+expected} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+est, double confidence, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+lb, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_afa9582bf7c7354506ba4976a70172ba7}{error\+\_\+bounds\+\_\+observed} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+est, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, double confidence, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+lb, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a18420d9682150122165a2dfdf43c273a}{error\+\_\+bounds\+\_\+posterior\+\_\+credible} (const Model \&model, const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, double confidence, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+mean, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+lb, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Model\+::\+ImageT \hyperlink{namespacemappel_1_1methods_ab7601760f76a0f3d283aaa1b21d4f5b5}{model\+\_\+image} (const Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d}{simulate\+\_\+image} (Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model , class RngT $>$ }\\\hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_abd0aa1868ba545867d80bf166aaeed03}{simulate\+\_\+image} (Model \&model, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta, RngT \&rng)
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_abe1122f5c810f1b41c391a7e724fd74d}{simulate\+\_\+image} (const Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_a4a6ea9893f28e1f5c2604d8c3e7b6852}{simulate\+\_\+image\+\_\+from\+\_\+model} (const Model \&model, const \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$ \&model\+\_\+im, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}, Model, \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_a07072e1c0c19cbffa6878362056f5758}{expected\+\_\+information} (const Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ std\+::unique\+\_\+ptr$<$ \hyperlink{classmappel_1_1Estimator}{Estimator}$<$ Model $>$ $>$, Model, \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_a0f47a66f366b6e5841f1224e839ed828}{make\+\_\+estimator} (Model \&model, std\+::string ename)
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_a2b9a50b06cafb7ac9d857589df8979dc}{simulate\+\_\+image} (const Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$, Model, \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_a2dd4cb94fa6669d64488ed95bc1c6d02}{simulate\+\_\+image\+\_\+from\+\_\+model} (const Model \&model, const \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT}$<$ Model $>$ \&model\+\_\+im, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}, Model, \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_abc7bb2a867d157f3adbb71abdd3680d2}{expected\+\_\+information} (const Model \&model, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\\hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{Return\+If\+SubclassT}$<$ std\+::unique\+\_\+ptr$<$ \hyperlink{classmappel_1_1Estimator}{Estimator}$<$ Model $>$ $>$, Model, \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective} $>$ \hyperlink{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec}{make\+\_\+estimator} (Model \&model, std\+::string ename)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}. 
+
+Most methods are overloaded to take a ParamT or a StencilT. The precomputed stencil for a theta value contains the common computational values needed by all methods that compute the likelihood function or its derivatives. Note that methods in model\+::prior\+:\+: namespace do not take a stencil (or data) a they are independent of the data and the likelihood function.
+
+Methods with xxx\+\_\+comonents return a sequence of values representing the results from each pixel in turn. The sum of these components is the overall model value. (e.\+g. sum(llh\+\_\+components(...))==llh(...) ). These methods are usefully for detailed inspection of the contributions of each pixel or prior component to the overall result.\+External template based methods for \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}\textquotesingle{}s. These are general or convenience functions that are included in this file. Those methods specific to other sub-\/types of Models should be included within that sub-\/type\textquotesingle{}s .h file, using the enable\+\_\+if mechanism to restrict their instantiation to the correct sub-\/types. 
+
+\subsubsection{Function Documentation}
+\index{mappel\+::methods@{mappel\+::methods}!aposteriori\+\_\+objective@{aposteriori\+\_\+objective}}
+\index{aposteriori\+\_\+objective@{aposteriori\+\_\+objective}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{aposteriori\+\_\+objective(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Stencil\+T$<$ Model $>$ \&s, double \&rllh, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{aposteriori_objective(const Model &model, const ModelDataT< Model > &data_im, const StencilT< Model > &s, double &rllh, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::aposteriori\+\_\+objective (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s, }
+\item[{double \&}]{rllh, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b}{}\label{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b}
+
+
+Definition at line 187 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::methods\+::likelihood\+::hessian(), and mappel\+::methods\+::likelihood\+::rllh().
+
+
+
+Referenced by aposteriori\+\_\+objective().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!aposteriori\+\_\+objective@{aposteriori\+\_\+objective}}
+\index{aposteriori\+\_\+objective@{aposteriori\+\_\+objective}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{aposteriori\+\_\+objective(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Param\+T$<$ Model $>$ \&theta, double \&rllh, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{aposteriori_objective(const Model &model, const ModelDataT< Model > &data_im, const ParamT< Model > &theta, double &rllh, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::aposteriori\+\_\+objective (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta, }
+\item[{double \&}]{rllh, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a3b0e13b783d21c08ba063a210b0a344b}{}\label{namespacemappel_1_1methods_a3b0e13b783d21c08ba063a210b0a344b}
+
+
+Definition at line 219 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References aposteriori\+\_\+objective(), mappel\+::methods\+::objective\+::grad(), and mappel\+::methods\+::objective\+::rllh().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a3b0e13b783d21c08ba063a210b0a344b_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!cr\+\_\+lower\+\_\+bound@{cr\+\_\+lower\+\_\+bound}}
+\index{cr\+\_\+lower\+\_\+bound@{cr\+\_\+lower\+\_\+bound}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{cr\+\_\+lower\+\_\+bound(const Model \&model, const typename Model\+::\+Stencil \&s)}{cr_lower_bound(const Model &model, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$ Model $>$ mappel\+::methods\+::cr\+\_\+lower\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115}{}\label{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115}
+
+
+Calculate the Cramer-\/\+Rao lower bound at the given parameters. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em theta} & The parameters to evaluate the C\+R\+LB at \\
+\hline
+\mbox{\tt out}  & {\em crlb} & The calculated parameters \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 234 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References expected\+\_\+information().
+
+
+
+Referenced by cr\+\_\+lower\+\_\+bound(), mappel\+::cr\+\_\+lower\+\_\+bound\+\_\+stack(), and error\+\_\+bounds\+\_\+expected().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=334pt]{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!cr\+\_\+lower\+\_\+bound@{cr\+\_\+lower\+\_\+bound}}
+\index{cr\+\_\+lower\+\_\+bound@{cr\+\_\+lower\+\_\+bound}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{cr\+\_\+lower\+\_\+bound(const Model \&model, const Param\+T$<$ Model $>$ \&theta)}{cr_lower_bound(const Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ParamT}$<$ Model $>$ mappel\+::methods\+::cr\+\_\+lower\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a30d0f08f37d8f412a2677280cb39c588}{}\label{namespacemappel_1_1methods_a30d0f08f37d8f412a2677280cb39c588}
+
+
+Definition at line 246 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References cr\+\_\+lower\+\_\+bound().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a30d0f08f37d8f412a2677280cb39c588_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!error\+\_\+bounds\+\_\+expected@{error\+\_\+bounds\+\_\+expected}}
+\index{error\+\_\+bounds\+\_\+expected@{error\+\_\+bounds\+\_\+expected}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{error\+\_\+bounds\+\_\+expected(const Model \&model, const Param\+T$<$ Model $>$ \&theta\+\_\+est, double confidence, Param\+T$<$ Model $>$ \&theta\+\_\+lb, Param\+T$<$ Model $>$ \&theta\+\_\+ub)}{error_bounds_expected(const Model &model, const ParamT< Model > &theta_est, double confidence, ParamT< Model > &theta_lb, ParamT< Model > &theta_ub)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::error\+\_\+bounds\+\_\+expected (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+est, }
+\item[{double}]{confidence, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+lb, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+ub}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a40f38c9be75ed5bbcc4066a289894ea1}{}\label{namespacemappel_1_1methods_a40f38c9be75ed5bbcc4066a289894ea1}
+
+
+Definition at line 390 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References cr\+\_\+lower\+\_\+bound(), and mappel\+::normal\+\_\+quantile\+\_\+twosided().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a40f38c9be75ed5bbcc4066a289894ea1_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!error\+\_\+bounds\+\_\+observed@{error\+\_\+bounds\+\_\+observed}}
+\index{error\+\_\+bounds\+\_\+observed@{error\+\_\+bounds\+\_\+observed}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{error\+\_\+bounds\+\_\+observed(const Model \&model, const Param\+T$<$ Model $>$ \&theta\+\_\+est, Mat\+T \&obs\+I, double confidence, Param\+T$<$ Model $>$ \&theta\+\_\+lb, Param\+T$<$ Model $>$ \&theta\+\_\+ub)}{error_bounds_observed(const Model &model, const ParamT< Model > &theta_est, MatT &obsI, double confidence, ParamT< Model > &theta_lb, ParamT< Model > &theta_ub)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::error\+\_\+bounds\+\_\+observed (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+est, }
+\item[{{\bf MatT} \&}]{obsI, }
+\item[{double}]{confidence, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+lb, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+ub}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_afa9582bf7c7354506ba4976a70172ba7}{}\label{namespacemappel_1_1methods_afa9582bf7c7354506ba4976a70172ba7}
+
+
+Definition at line 401 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::normal\+\_\+quantile\+\_\+twosided().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=346pt]{namespacemappel_1_1methods_afa9582bf7c7354506ba4976a70172ba7_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!error\+\_\+bounds\+\_\+posterior\+\_\+credible@{error\+\_\+bounds\+\_\+posterior\+\_\+credible}}
+\index{error\+\_\+bounds\+\_\+posterior\+\_\+credible@{error\+\_\+bounds\+\_\+posterior\+\_\+credible}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{error\+\_\+bounds\+\_\+posterior\+\_\+credible(const Model \&model, const Mat\+T \&sample, double confidence, Param\+T$<$ Model $>$ \&theta\+\_\+mean, Param\+T$<$ Model $>$ \&theta\+\_\+lb, Param\+T$<$ Model $>$ \&theta\+\_\+ub)}{error_bounds_posterior_credible(const Model &model, const MatT &sample, double confidence, ParamT< Model > &theta_mean, ParamT< Model > &theta_lb, ParamT< Model > &theta_ub)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::error\+\_\+bounds\+\_\+posterior\+\_\+credible (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf MatT} \&}]{sample, }
+\item[{double}]{confidence, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+mean, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+lb, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+ub}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a18420d9682150122165a2dfdf43c273a}{}\label{namespacemappel_1_1methods_a18420d9682150122165a2dfdf43c273a}
+
+
+Definition at line 417 of file model\+\_\+methods\+\_\+impl.\+h.
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$ Model $>$ mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e}{}\label{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e}
+
+
+Definition at line 273 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), and mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, const Param\+T$<$ Model $>$ \&theta\+\_\+init, double \&rllh)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method, const ParamT< Model > &theta_init, double &rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StencilT}$<$ Model $>$ mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{double \&}]{rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_abde9a4b10690b8eefe709d730fac69d9}{}\label{namespacemappel_1_1methods_abde9a4b10690b8eefe709d730fac69d9}
+
+
+Definition at line 280 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_abde9a4b10690b8eefe709d730fac69d9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, Param\+T$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, Mat\+T \&obs\+I)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method, ParamT< Model > &theta_max, double &theta_max_llh, MatT &obsI)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+max, }
+\item[{double \&}]{theta\+\_\+max\+\_\+llh, }
+\item[{{\bf MatT} \&}]{obsI}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a9494d0ddea2acc25bd92100b7587a1c1}{}\label{namespacemappel_1_1methods_a9494d0ddea2acc25bd92100b7587a1c1}
+
+
+Definition at line 288 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a9494d0ddea2acc25bd92100b7587a1c1_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, Param\+T$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, Mat\+T \&obs\+I, Stats\+T \&stats)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method, ParamT< Model > &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+max, }
+\item[{double \&}]{theta\+\_\+max\+\_\+llh, }
+\item[{{\bf MatT} \&}]{obsI, }
+\item[{{\bf StatsT} \&}]{stats}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_aee25050c1c9f8cf29d38d8c47d593a3e}{}\label{namespacemappel_1_1methods_aee25050c1c9f8cf29d38d8c47d593a3e}
+
+
+Definition at line 296 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_aee25050c1c9f8cf29d38d8c47d593a3e_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Param\+T$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, Mat\+T \&obs\+I)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method, const ParamT< Model > &theta_init, ParamT< Model > &theta_max, double &theta_max_llh, MatT &obsI)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+max, }
+\item[{double \&}]{theta\+\_\+max\+\_\+llh, }
+\item[{{\bf MatT} \&}]{obsI}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a8db06e0816204cdca735bdf498e2bae2}{}\label{namespacemappel_1_1methods_a8db06e0816204cdca735bdf498e2bae2}
+
+
+Definition at line 305 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a8db06e0816204cdca735bdf498e2bae2_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Param\+T$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, Mat\+T \&obs\+I, Stats\+T \&stats)}{estimate_max(Model &model, const ModelDataT< Model > &data, const std::string &method, const ParamT< Model > &theta_init, ParamT< Model > &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const std\+::string \&}]{method, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+max, }
+\item[{double \&}]{theta\+\_\+max\+\_\+llh, }
+\item[{{\bf MatT} \&}]{obsI, }
+\item[{{\bf StatsT} \&}]{stats}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a336e74435f33240ea8251bfc21dbe279}{}\label{namespacemappel_1_1methods_a336e74435f33240ea8251bfc21dbe279}
+
+
+Definition at line 313 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References make\+\_\+estimator().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a336e74435f33240ea8251bfc21dbe279_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+mcmc\+\_\+posterior@{estimate\+\_\+mcmc\+\_\+posterior}}
+\index{estimate\+\_\+mcmc\+\_\+posterior@{estimate\+\_\+mcmc\+\_\+posterior}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+posterior(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, Idx\+T Nsample, Idx\+T Nburnin, Idx\+T thin, Param\+T$<$ Model $>$ \&posterior\+\_\+mean, Mat\+T \&posterior\+\_\+cov)}{estimate_mcmc_posterior(Model &model, const ModelDataT< Model > &data, IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT< Model > &posterior_mean, MatT &posterior_cov)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+posterior (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf IdxT}}]{Nsample, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{posterior\+\_\+mean, }
+\item[{{\bf MatT} \&}]{posterior\+\_\+cov}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a224995eff4bf3ee7652f2ed9116d8cf7}{}\label{namespacemappel_1_1methods_a224995eff4bf3ee7652f2ed9116d8cf7}
+
+
+Definition at line 373 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+Referenced by estimate\+\_\+mcmc\+\_\+posterior().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a224995eff4bf3ee7652f2ed9116d8cf7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+mcmc\+\_\+posterior@{estimate\+\_\+mcmc\+\_\+posterior}}
+\index{estimate\+\_\+mcmc\+\_\+posterior@{estimate\+\_\+mcmc\+\_\+posterior}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+posterior(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Idx\+T Nsample, Idx\+T Nburnin, Idx\+T thin, Param\+T$<$ Model $>$ \&posterior\+\_\+mean, Mat\+T \&posterior\+\_\+cov)}{estimate_mcmc_posterior(Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_init, IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT< Model > &posterior_mean, MatT &posterior_cov)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+posterior (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf IdxT}}]{Nsample, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{posterior\+\_\+mean, }
+\item[{{\bf MatT} \&}]{posterior\+\_\+cov}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_ab616d99318131c7f70f49581d9c9d77a}{}\label{namespacemappel_1_1methods_ab616d99318131c7f70f49581d9c9d77a}
+
+
+Definition at line 381 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References estimate\+\_\+mcmc\+\_\+posterior(), and mappel\+::mcmc\+::estimate\+\_\+sample\+\_\+posterior().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_ab616d99318131c7f70f49581d9c9d77a_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}}
+\index{estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+sample(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, Idx\+T Nsample=1000, Idx\+T Nburnin=100, Idx\+T thin=0)}{estimate_mcmc_sample(Model &model, const ModelDataT< Model > &data, IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf IdxT}}]{Nsample = {\ttfamily 1000}, }
+\item[{{\bf IdxT}}]{Nburnin = {\ttfamily 100}, }
+\item[{{\bf IdxT}}]{thin = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a8bec3dcf3172f17383eb5f6693e7e956}{}\label{namespacemappel_1_1methods_a8bec3dcf3172f17383eb5f6693e7e956}
+
+
+Definition at line 336 of file model\+\_\+methods\+\_\+impl.\+h.
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}}
+\index{estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+sample(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Idx\+T Nsample=1000, Idx\+T Nburnin=100, Idx\+T thin=0)}{estimate_mcmc_sample(Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_init, IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf IdxT}}]{Nsample = {\ttfamily 1000}, }
+\item[{{\bf IdxT}}]{Nburnin = {\ttfamily 100}, }
+\item[{{\bf IdxT}}]{thin = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_abf7481af94ebff828622ec6b38a271ee}{}\label{namespacemappel_1_1methods_abf7481af94ebff828622ec6b38a271ee}
+
+
+Definition at line 343 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::mcmc\+::num\+\_\+oversample(), mappel\+::mcmc\+::sample\+\_\+posterior(), and mappel\+::mcmc\+::thin\+\_\+sample().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_abf7481af94ebff828622ec6b38a271ee_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}}
+\index{estimate\+\_\+mcmc\+\_\+sample@{estimate\+\_\+mcmc\+\_\+sample}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+sample(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Idx\+T Nsample, Idx\+T Nburnin, Idx\+T thin, Mat\+T \&sample, Vec\+T \&sample\+\_\+rllh)}{estimate_mcmc_sample(Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_init, IdxT Nsample, IdxT Nburnin, IdxT thin, MatT &sample, VecT &sample_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf IdxT}}]{Nsample, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin, }
+\item[{{\bf MatT} \&}]{sample, }
+\item[{{\bf VecT} \&}]{sample\+\_\+rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a5b0c8018510cec5dec285ea4cad912c5}{}\label{namespacemappel_1_1methods_a5b0c8018510cec5dec285ea4cad912c5}
+
+
+Definition at line 356 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::mcmc\+::num\+\_\+oversample(), mappel\+::mcmc\+::sample\+\_\+posterior(), and mappel\+::mcmc\+::thin\+\_\+sample().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a5b0c8018510cec5dec285ea4cad912c5_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!expected\+\_\+information@{expected\+\_\+information}}
+\index{expected\+\_\+information@{expected\+\_\+information}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{expected\+\_\+information(const Model \&model, const Stencil\+T$<$ Model $>$ \&s)}{expected_information(const Model &model, const StencilT< Model > &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<${\bf MatT}, Model, {\bf Poisson\+Noise1\+D\+Objective}$>$ mappel\+::methods\+::expected\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a07072e1c0c19cbffa6878362056f5758}{}\label{namespacemappel_1_1methods_a07072e1c0c19cbffa6878362056f5758}
+
+
+Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model} & \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
+\hline
+{\em s} & Stencil at desired theta \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The fisher information matrix as an symmetric matrix in upper-\/triangular format 
+\end{DoxyReturn}
+
+
+Definition at line 77 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+\index{mappel\+::methods@{mappel\+::methods}!expected\+\_\+information@{expected\+\_\+information}}
+\index{expected\+\_\+information@{expected\+\_\+information}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{expected\+\_\+information(const Model \&model, const Stencil\+T$<$ Model $>$ \&s)}{expected_information(const Model &model, const StencilT< Model > &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<${\bf MatT}, Model, {\bf Poisson\+Noise2\+D\+Objective}$>$ mappel\+::methods\+::expected\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_abc7bb2a867d157f3adbb71abdd3680d2}{}\label{namespacemappel_1_1methods_abc7bb2a867d157f3adbb71abdd3680d2}
+
+
+Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em model} & Po\+Image\+Coord\+T\+Emitter\+Model \\
+\hline
+{\em s} & Stencil at desired theta \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The fisher information matrix as an symmetric matrix in upper-\/triangular format 
+\end{DoxyReturn}
+
+
+Definition at line 83 of file Poisson\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::\+Image\+Format2\+D\+Base\+::size.
+
+\index{mappel\+::methods@{mappel\+::methods}!expected\+\_\+information@{expected\+\_\+information}}
+\index{expected\+\_\+information@{expected\+\_\+information}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{expected\+\_\+information(const Model \&model, const Param\+T$<$ Model $>$ \&theta)}{expected_information(const Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::expected\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a6632adc36d8b32fd8d198669e268c767}{}\label{namespacemappel_1_1methods_a6632adc36d8b32fd8d198669e268c767}
+
+
+Definition at line 252 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+Referenced by cr\+\_\+lower\+\_\+bound().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a6632adc36d8b32fd8d198669e268c767_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!likelihood\+\_\+objective@{likelihood\+\_\+objective}}
+\index{likelihood\+\_\+objective@{likelihood\+\_\+objective}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{likelihood\+\_\+objective(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Stencil\+T$<$ Model $>$ \&s, double \&rllh, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{likelihood_objective(const Model &model, const ModelDataT< Model > &data_im, const StencilT< Model > &s, double &rllh, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::likelihood\+\_\+objective (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s, }
+\item[{double \&}]{rllh, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2}{}\label{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2}
+
+
+Definition at line 210 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::methods\+::likelihood\+::hessian(), and mappel\+::methods\+::likelihood\+::rllh().
+
+
+
+Referenced by likelihood\+\_\+objective().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!likelihood\+\_\+objective@{likelihood\+\_\+objective}}
+\index{likelihood\+\_\+objective@{likelihood\+\_\+objective}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{likelihood\+\_\+objective(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Param\+T$<$ Model $>$ \&theta, double \&rllh, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{likelihood_objective(const Model &model, const ModelDataT< Model > &data_im, const ParamT< Model > &theta, double &rllh, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::likelihood\+\_\+objective (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta, }
+\item[{double \&}]{rllh, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a496d45e1db23f89b54ae0bef016a19b0}{}\label{namespacemappel_1_1methods_a496d45e1db23f89b54ae0bef016a19b0}
+
+
+Definition at line 227 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::methods\+::objective\+::grad(), likelihood\+\_\+objective(), and mappel\+::methods\+::objective\+::rllh().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a496d45e1db23f89b54ae0bef016a19b0_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!make\+\_\+estimator@{make\+\_\+estimator}}
+\index{make\+\_\+estimator@{make\+\_\+estimator}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{make\+\_\+estimator(\+Model \&model, std\+::string ename)}{make_estimator(Model &model, std::string ename)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<$std\+::unique\+\_\+ptr$<${\bf Estimator}$<$Model$>$ $>$, Model, {\bf Poisson\+Noise1\+D\+Objective}$>$ mappel\+::methods\+::make\+\_\+estimator (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{std\+::string}]{ename}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a0f47a66f366b6e5841f1224e839ed828}{}\label{namespacemappel_1_1methods_a0f47a66f366b6e5841f1224e839ed828}
+
+
+Definition at line 95 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+
+
+References mappel\+::istarts\+\_\+with().
+
+
+
+Referenced by estimate\+\_\+max(), mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug(), mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::methods\+::openmp\+::estimate\+\_\+profile\+\_\+likelihood().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{namespacemappel_1_1methods_a0f47a66f366b6e5841f1224e839ed828_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a0f47a66f366b6e5841f1224e839ed828_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!make\+\_\+estimator@{make\+\_\+estimator}}
+\index{make\+\_\+estimator@{make\+\_\+estimator}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{make\+\_\+estimator(\+Model \&model, std\+::string ename)}{make_estimator(Model &model, std::string ename)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<$std\+::unique\+\_\+ptr$<${\bf Estimator}$<$Model$>$ $>$, Model, {\bf Poisson\+Noise2\+D\+Objective}$>$ mappel\+::methods\+::make\+\_\+estimator (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{std\+::string}]{ename}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec}{}\label{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec}
+
+
+Definition at line 100 of file Poisson\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::istarts\+\_\+with().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=328pt]{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!model\+\_\+image@{model\+\_\+image}}
+\index{model\+\_\+image@{model\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{model\+\_\+image(const Model \&model, const Param\+T$<$ Model $>$ \&theta)}{model_image(const Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ Model\+::\+ImageT mappel\+::methods\+::model\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_ab7601760f76a0f3d283aaa1b21d4f5b5}{}\label{namespacemappel_1_1methods_ab7601760f76a0f3d283aaa1b21d4f5b5}
+Expected number of photons at each pixel in image given the emitter model 
+
+Definition at line 17 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References model\+\_\+image().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_ab7601760f76a0f3d283aaa1b21d4f5b5_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!model\+\_\+image@{model\+\_\+image}}
+\index{model\+\_\+image@{model\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{model\+\_\+image(const Model \&model, const Param\+T$<$ Model $>$ \&theta)}{model_image(const Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf ImageT}$<$Model$>$ mappel\+::methods\+::model\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a4243465f0e58305d795497cbb0499433}{}\label{namespacemappel_1_1methods_a4243465f0e58305d795497cbb0499433}
+Expected number of photons at each pixel in image given the emitter model 
+
+Definition at line 17 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References model\+\_\+image().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a4243465f0e58305d795497cbb0499433_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!model\+\_\+image@{model\+\_\+image}}
+\index{model\+\_\+image@{model\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{model\+\_\+image(const Model \&model, const Stencil\+T$<$ Model $>$ \&s)}{model_image(const Model &model, const StencilT< Model > &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<${\bf ImageT}$<$Model$>$, Model, {\bf Image\+Format1\+D\+Base}$>$ mappel\+::methods\+::model\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_ae92825adbc9f0eea36c2b0afdbf40d66}{}\label{namespacemappel_1_1methods_ae92825adbc9f0eea36c2b0afdbf40d66}
+
+
+Definition at line 118 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by model\+\_\+image(), and mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_ae92825adbc9f0eea36c2b0afdbf40d66_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!model\+\_\+image@{model\+\_\+image}}
+\index{model\+\_\+image@{model\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{model\+\_\+image(const Model \&model, const typename Model\+::\+Stencil \&s)}{model_image(const Model &model, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<${\bf ImageT}$<$Model$>$, Model, {\bf Image\+Format2\+D\+Base}$>$ mappel\+::methods\+::model\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a864e97c52c849c580bccf04401695d13}{}\label{namespacemappel_1_1methods_a864e97c52c849c580bccf04401695d13}
+
+
+Definition at line 122 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format2\+D\+Base\+::size.
+
+\index{mappel\+::methods@{mappel\+::methods}!observed\+\_\+information@{observed\+\_\+information}}
+\index{observed\+\_\+information@{observed\+\_\+information}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{observed\+\_\+information(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+mode)}{observed_information(const Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_mode)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::observed\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+mode}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a83244dbe0995e8698475a12d34fb2f35}{}\label{namespacemappel_1_1methods_a83244dbe0995e8698475a12d34fb2f35}
+
+
+Definition at line 266 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), and mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a83244dbe0995e8698475a12d34fb2f35_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!observed\+\_\+information@{observed\+\_\+information}}
+\index{observed\+\_\+information@{observed\+\_\+information}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{observed\+\_\+information(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Stencil\+T$<$ Model $>$ \&theta\+\_\+mode)}{observed_information(const Model &model, const ModelDataT< Model > &data, const StencilT< Model > &theta_mode)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::observed\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{theta\+\_\+mode}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a0e3bec3c7363eb6005abdeaa151decb9}{}\label{namespacemappel_1_1methods_a0e3bec3c7363eb6005abdeaa151decb9}
+
+
+Definition at line 258 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::methods\+::objective\+::hessian().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a0e3bec3c7363eb6005abdeaa151decb9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!prior\+\_\+objective@{prior\+\_\+objective}}
+\index{prior\+\_\+objective@{prior\+\_\+objective}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{prior\+\_\+objective(const Model \&model, const Param\+T$<$ Model $>$ \&theta, double \&rllh, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{prior_objective(const Model &model, const ParamT< Model > &theta, double &rllh, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::prior\+\_\+objective (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta, }
+\item[{double \&}]{rllh, }
+\item[{{\bf ParamT}$<$ Model $>$ \&}]{grad, }
+\item[{{\bf MatT} \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a275f2b0364c48bfc7e6f88e866d593bd}{}\label{namespacemappel_1_1methods_a275f2b0364c48bfc7e6f88e866d593bd}
+
+
+Definition at line 198 of file model\+\_\+methods\+\_\+impl.\+h.
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(\+Model \&model, const Param\+T$<$ Model $>$ \&theta)}{simulate_image(Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Model\+DataT}$<$Model$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d}{}\label{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d}
+
+
+Definition at line 23 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References simulate\+\_\+image().
+
+
+
+Referenced by simulate\+\_\+image(), mappel\+::simulate\+\_\+image\+\_\+stack(), and mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(\+Model \&model, const Param\+T$<$ Model $>$ \&theta, Rng\+T \&rng)}{simulate_image(Model &model, const ParamT< Model > &theta, RngT &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class RngT $>$ {\bf Model\+DataT}$<$Model$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta, }
+\item[{RngT \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_abd0aa1868ba545867d80bf166aaeed03}{}\label{namespacemappel_1_1methods_abd0aa1868ba545867d80bf166aaeed03}
+
+
+Definition at line 30 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References simulate\+\_\+image().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_abd0aa1868ba545867d80bf166aaeed03_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(\+Model \&model, const Param\+T$<$ Model $>$ \&theta)}{simulate_image(Model &model, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Model\+DataT}$<$Model$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a950d7858d6cc0ffb6e651776a24c9e35}{}\label{namespacemappel_1_1methods_a950d7858d6cc0ffb6e651776a24c9e35}
+
+
+Definition at line 23 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References simulate\+\_\+image().
+
+
+
+Referenced by simulate\+\_\+image(), mappel\+::simulate\+\_\+image\+\_\+stack(), and mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{namespacemappel_1_1methods_a950d7858d6cc0ffb6e651776a24c9e35_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a950d7858d6cc0ffb6e651776a24c9e35_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(const Model \&model, const Stencil\+T$<$ Model $>$ \&s, rng\+\_\+t \&rng)}{simulate_image(const Model &model, const StencilT< Model > &s, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Return\+If\+SubclassT}$<${\bf Model\+DataT}$<$Model$>$, Model, {\bf Poisson\+Noise1\+D\+Objective}$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_abe1122f5c810f1b41c391a7e724fd74d}{}\label{namespacemappel_1_1methods_abe1122f5c810f1b41c391a7e724fd74d}
+
+
+Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em model} & Model object \\
+\hline
+\mbox{\tt in}  & {\em s} & The stencil computed at theta. \\
+\hline
+\mbox{\tt in,out}  & {\em rng} & A random number generator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A simulated image at theta under the noise model. 
+\end{DoxyReturn}
+
+
+Definition at line 45 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_abe1122f5c810f1b41c391a7e724fd74d_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(const Model \&model, const Stencil\+T$<$ Model $>$ \&s, rng\+\_\+t \&rng)}{simulate_image(const Model &model, const StencilT< Model > &s, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Return\+If\+SubclassT}$<${\bf ImageT}$<$Model$>$, Model, {\bf Poisson\+Noise2\+D\+Objective}$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a2b9a50b06cafb7ac9d857589df8979dc}{}\label{namespacemappel_1_1methods_a2b9a50b06cafb7ac9d857589df8979dc}
+
+
+Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em model} & Model object \\
+\hline
+\mbox{\tt in}  & {\em s} & The stencil computed at theta. \\
+\hline
+\mbox{\tt in,out}  & {\em rng} & A random number generator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A simulated image at theta under the noise model. 
+\end{DoxyReturn}
+
+
+Definition at line 45 of file Poisson\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson(), and mappel\+::\+Image\+Format2\+D\+Base\+::size.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a2b9a50b06cafb7ac9d857589df8979dc_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(\+Model \&model, const Param\+T$<$ Model $>$ \&theta, rng\+\_\+t \&rng)}{simulate_image(Model &model, const ParamT< Model > &theta, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Model\+DataT}$<$Model$>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a74ba8d927de2e6fad2fec49599d4429e}{}\label{namespacemappel_1_1methods_a74ba8d927de2e6fad2fec49599d4429e}
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(\+Model \&model, const Stencil\+T$<$ Model $>$ \&s)}{simulate_image(Model &model, const StencilT< Model > &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Model\+DataT}$<$ Model $>$ mappel\+::methods\+::simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_af3db039a162d71bd04eb08b773035542}{}\label{namespacemappel_1_1methods_af3db039a162d71bd04eb08b773035542}
+
+
+Definition at line 36 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References simulate\+\_\+image().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_af3db039a162d71bd04eb08b773035542_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}}
+\index{simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image\+\_\+from\+\_\+model(\+Model \&model, const Image\+T$<$ Model $>$ \&model\+\_\+im)}{simulate_image_from_model(Model &model, const ImageT< Model > &model_im)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Model\+DataT}$<$ Model $>$ mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf ImageT}$<$ Model $>$ \&}]{model\+\_\+im}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a8ec3a0fdc71eed2a0bdfe33599f23623}{}\label{namespacemappel_1_1methods_a8ec3a0fdc71eed2a0bdfe33599f23623}
+
+
+Definition at line 42 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+Referenced by mappel\+::simulate\+\_\+image\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a8ec3a0fdc71eed2a0bdfe33599f23623_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}}
+\index{simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image\+\_\+from\+\_\+model(const Model \&model, const Image\+T$<$ Model $>$ \&model\+\_\+im, rng\+\_\+t \&rng)}{simulate_image_from_model(const Model &model, const ImageT< Model > &model_im, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Return\+If\+SubclassT}$<${\bf Model\+DataT}$<$Model$>$, Model, {\bf Poisson\+Noise1\+D\+Objective}$>$ mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ImageT}$<$ Model $>$ \&}]{model\+\_\+im, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a4a6ea9893f28e1f5c2604d8c3e7b6852}{}\label{namespacemappel_1_1methods_a4a6ea9893f28e1f5c2604d8c3e7b6852}
+
+
+Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em model} & Model object \\
+\hline
+\mbox{\tt in}  & {\em model\+\_\+im} & An image representing the expected (mean) at each pixel under the P\+SF model. \\
+\hline
+\mbox{\tt in,out}  & {\em rng} & A random number generator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A simulated image corresponding to model\+\_\+im under the noise model. 
+\end{DoxyReturn}
+
+
+Definition at line 61 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a4a6ea9893f28e1f5c2604d8c3e7b6852_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::methods@{mappel\+::methods}!simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}}
+\index{simulate\+\_\+image\+\_\+from\+\_\+model@{simulate\+\_\+image\+\_\+from\+\_\+model}!mappel\+::methods@{mappel\+::methods}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image\+\_\+from\+\_\+model(const Model \&model, const Image\+T$<$ Model $>$ \&model\+\_\+im, rng\+\_\+t \&rng)}{simulate_image_from_model(const Model &model, const ImageT< Model > &model_im, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ {\bf Return\+If\+SubclassT}$<${\bf ImageT}$<$Model$>$, Model, {\bf Poisson\+Noise2\+D\+Objective}$>$ mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf ImageT}$<$ Model $>$ \&}]{model\+\_\+im, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_a2dd4cb94fa6669d64488ed95bc1c6d02}{}\label{namespacemappel_1_1methods_a2dd4cb94fa6669d64488ed95bc1c6d02}
+
+
+Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em model} & Model object \\
+\hline
+\mbox{\tt in}  & {\em model\+\_\+im} & An image representing the expected (mean) at each pixel under the P\+SF model. \\
+\hline
+\mbox{\tt in,out}  & {\em rng} & A random number generator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A simulated image corresponding to model\+\_\+im under the noise model. 
+\end{DoxyReturn}
+
+
+Definition at line 64 of file Poisson\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson(), and mappel\+::\+Image\+Format2\+D\+Base\+::size.
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1methods_a2dd4cb94fa6669d64488ed95bc1c6d02_cgraph}
+\end{center}
+\end{figure}
+
+

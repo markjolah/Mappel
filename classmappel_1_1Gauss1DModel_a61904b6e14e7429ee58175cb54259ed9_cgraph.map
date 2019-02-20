@@ -1,0 +1,9 @@
+<map id="mappel::Gauss1DModel::get_stats" name="mappel::Gauss1DModel::get_stats">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DModel.html#a8786ff874e58de054ab3633a5f201192" title="mappel::Gauss1DModel\l::get_psf_sigma" alt="" coords="223,5,378,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1MCMCAdaptor1D.html#ad1cb677abb1a3e214c2f6fc1e1c3cb86" title="mappel::MCMCAdaptor1D\l::get_stats" alt="" coords="217,68,384,107"/>
+<area shape="rect" id="node5" href="$classmappel_1_1ImageFormat1DBase.html#ac6b74b16ce0a764516cc2686ee8cd60f" title="mappel::ImageFormat1DBase\l::get_stats" alt="" coords="208,131,393,169"/>
+<area shape="rect" id="node8" href="$classmappel_1_1PointEmitterModel.html#a7fd2b4b01b10bb6a493a39eb72d480cb" title="mappel::PointEmitterModel\l::get_stats" alt="" coords="216,193,385,232"/>
+<area shape="rect" id="node4" href="$classmappel_1_1MCMCAdaptorBase.html#ad6054973528dfad89976882cdb50aba5" title="mappel::MCMCAdaptorBase\l::get_stats" alt="" coords="445,68,623,107"/>
+<area shape="rect" id="node6" href="$classmappel_1_1ImageFormat1DBase.html#aea1194302eccc0d8ad62394176aa6b0c" title="mappel::ImageFormat1DBase\l::get_size" alt="" coords="441,131,627,169"/>
+<area shape="rect" id="node7" href="$classmappel_1_1ImageFormat1DBase.html#a96644883bef9d230eea893ece4578e96" title="mappel::ImageFormat1DBase\l::get_num_pixels" alt="" coords="441,193,627,232"/>
+</map>

@@ -1,0 +1,14 @@
+<map id="mappel::methods::objective::grad" name="mappel::methods::objective::grad">
+<area shape="rect" id="node2" href="$namespacemappel_1_1methods.html#a3b0e13b783d21c08ba063a210b0a344b" title="mappel::methods::aposteriori\l_objective" alt="" coords="233,5,413,44"/>
+<area shape="rect" id="node3" href="$namespacemappel_1_1methods_1_1objective.html#a7adc23453a6c075227b8bd4d3e7a494b" title="mappel::methods::objective\l::grad" alt="" coords="238,68,409,107"/>
+<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#aab0aa1ca7dbd172a955148063a112f50" title="Parallel model gradient calculations for a stack of images. " alt="" coords="238,131,409,169"/>
+<area shape="rect" id="node5" href="$namespacemappel_1_1methods_1_1objective.html#a21e579dfc19a06952bf98bd9d684fbdc" title="mappel::methods::objective\l::hessian" alt="" coords="238,193,409,232"/>
+<area shape="rect" id="node6" href="$namespacemappel_1_1methods.html#a496d45e1db23f89b54ae0bef016a19b0" title="mappel::methods::likelihood\l_objective" alt="" coords="236,256,411,295"/>
+<area shape="rect" id="node7" href="$classmappel_1_1QuasiNewtonMaximizer.html#ab4d32d8ba90d4355262a228753619b9f" title="mappel::QuasiNewtonMaximizer\l::maximize" alt="" coords="224,319,423,357"/>
+<area shape="rect" id="node8" href="$namespacemappel.html#a053f2ea8e88ce464bb0c41657fac50ef" title="Parallel model gradient calculations for a stack of images. " alt="" coords="256,381,391,420"/>
+<area shape="rect" id="node9" href="$namespacemappel.html#a74564859e87b485dda106ce035b9157b" title="Parallel model Hessian calculations for a stack of images. " alt="" coords="247,444,400,483"/>
+<area shape="rect" id="node10" href="$classmappel_1_1TrustRegionMaximizer.html#ac30ffdcd3f25cd0cbb066cdb5d28082a" title="mappel::TrustRegionMaximizer\l::name" alt="" coords="227,507,419,545"/>
+<area shape="rect" id="node11" href="$namespacemappel_1_1methods_1_1objective.html#aff95eac9143ee05d2611aa0c5b605f4c" title="mappel::methods::objective\l::negative_definite_hessian" alt="" coords="237,569,409,608"/>
+<area shape="rect" id="node12" href="$classmappel_1_1PriorMAP1DObjective.html#ae12cf228193e345f3382bc916e3c60ee" title="mappel::PriorMAP1DObjective\l::prior_grad_update" alt="" coords="229,632,417,671"/>
+<area shape="rect" id="node13" href="$classmappel_1_1PriorMAP1DObjective.html#ac5b20bb93fe2f2eddd75d19bf34283c7" title="mappel::PriorMAP1DObjective\l::set_hyperparameters" alt="" coords="471,661,659,700"/>
+</map>

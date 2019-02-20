@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$structmappel_1_1ArrayShapeError.html" title="Array is not of the right dimensionality. " alt="" coords="157,5,318,31"/>
+<area shape="rect" id="node3" href="$structmappel_1_1ArraySizeError.html" title="Array is not of the right size. " alt="" coords="163,55,312,80"/>
+<area shape="rect" id="node4" href="$structmappel_1_1LogicalError.html" title="Failure of code or algorithm logic. " alt="" coords="169,104,305,129"/>
+<area shape="rect" id="node5" href="$structmappel_1_1ModelBoundsError.html" title="Access outside the model bounds is attempted. " alt="" coords="151,153,323,179"/>
+<area shape="rect" id="node6" href="$structmappel_1_1NotImplementedError.html" title="Feature not yet implemented. " alt="" coords="144,203,331,228"/>
+<area shape="rect" id="node7" href="$structmappel_1_1NumericalError.html" title="Expected numerical condition does not hold. " alt="" coords="161,252,313,277"/>
+<area shape="rect" id="node8" href="$structmappel_1_1ParameterValueError.html" title="Parameter value is not valid. " alt="" coords="145,301,330,327"/>
+</map>

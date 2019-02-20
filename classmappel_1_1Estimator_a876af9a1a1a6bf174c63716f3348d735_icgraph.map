@@ -1,0 +1,11 @@
+<map id="mappel::Estimator::get_stats" name="mappel::Estimator::get_stats">
+<area shape="rect" id="node2" href="$classmappel_1_1CGaussMLE.html#a97e3a62d35af1279dc29a8b2bfbf8b32" title="mappel::CGaussMLE::\lCGaussMLE" alt="" coords="195,5,339,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1ThreadedEstimator.html#ab216e13ec19785839bc73caf7fac1c91" title="mappel::ThreadedEstimator\l::get_stats" alt="" coords="180,68,353,107"/>
+<area shape="rect" id="node9" href="$namespacemappel.html#a4d47cff4f8160c609b643f7a0b021ddd" title="mappel::operator\&lt;\&lt;" alt="" coords="202,131,331,156"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Estimator.html#a629823fa91d4b461b2b1f607d588e558" title="mappel::Estimator::\l~Estimator" alt="" coords="203,180,330,219"/>
+<area shape="rect" id="node4" href="$classmappel_1_1ThreadedEstimator.html#ab281b131d160352ee949dd33d49cf55e" title="mappel::ThreadedEstimator\l::get_debug_stats" alt="" coords="401,5,575,44"/>
+<area shape="rect" id="node5" href="$classmappel_1_1CGaussMLE.html#aafbdebb21652be135801911007d3568b" title="mappel::CGaussMLE::\lget_stats" alt="" coords="416,68,560,107"/>
+<area shape="rect" id="node7" href="$classmappel_1_1IterativeMaximizer.html#a22783dc49fb4fd6e754b0d0ee161c543" title="mappel::IterativeMaximizer\l::get_stats" alt="" coords="404,131,572,169"/>
+<area shape="rect" id="node6" href="$classmappel_1_1CGaussMLE.html#aaff3681877cb75e6776be5325adcfea0" title="mappel::CGaussMLE::\lget_debug_stats" alt="" coords="635,68,779,107"/>
+<area shape="rect" id="node8" href="$classmappel_1_1IterativeMaximizer.html#a1d9c29b69f468200a90bcd68adfb5643" title="mappel::IterativeMaximizer\l::get_debug_stats" alt="" coords="623,131,791,169"/>
+</map>

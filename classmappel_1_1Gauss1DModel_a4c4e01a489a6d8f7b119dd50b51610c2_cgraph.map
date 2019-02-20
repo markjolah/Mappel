@@ -1,0 +1,16 @@
+<map id="mappel::Gauss1DModel::initial_theta_estimate" name="mappel::Gauss1DModel::initial_theta_estimate">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a402ee3f3b26f9190a866acbe567e3ebf" title="mappel::Gauss1DModel\l::Stencil::bg" alt="" coords="208,5,363,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a2c254393720d2b7d499b8e93390e5580" title="mappel::Gauss1DModel\l::Stencil::I" alt="" coords="208,68,363,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DModel.html#a3068438846f29467b2df5a8504151c20" title="Make a new Model::Stencil object at theta. " alt="" coords="208,131,363,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a66878efbd3a4d99940d963fbb7b144d1" title="mappel::Gauss1DModel\l::Stencil::Stencil" alt="" coords="418,99,573,137"/>
+<area shape="rect" id="node14" href="$classmappel_1_1PointEmitterModel.html#ad50dfc29b6e7167fb4caf8683353079d" title="mappel::PointEmitterModel\l::theta_in_bounds" alt="" coords="411,161,580,200"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DModel_1_1Stencil.html#a4bc1fdd7b3c4df021ac4a519c4e659f8" title="mappel::Gauss1DModel\l::Stencil::compute_derivatives" alt="" coords="628,99,812,137"/>
+<area shape="rect" id="node7" href="$namespacemappel.html#a8da88490d6ff7d5886b96b66c1bab369" title="mappel::make_DX_stencil" alt="" coords="864,56,1029,81"/>
+<area shape="rect" id="node9" href="$namespacemappel.html#af7636db506977133c8b30d108fede711" title="mappel::make_DXS_stencil" alt="" coords="860,105,1033,131"/>
+<area shape="rect" id="node12" href="$namespacemappel.html#aa5c2f294298c875605ee1e9876b7d116" title="mappel::make_G_stencil" alt="" coords="868,155,1025,180"/>
+<area shape="rect" id="node8" href="$namespacemappel.html#ad2dd4330fc626fa673a3acf691d6b9a7" title="mappel::fill_DX_stencil" alt="" coords="1085,56,1232,81"/>
+<area shape="rect" id="node10" href="$namespacemappel.html#ab0cb62f6dcecae5ff19468d87a283e7a" title="mappel::fill_DXS_stencil" alt="" coords="1081,105,1236,131"/>
+<area shape="rect" id="node11" href="$namespacemappel.html#a8475cdb3edacceb0ae215c3ebd1f33c1" title="mappel::square" alt="" coords="1284,131,1391,156"/>
+<area shape="rect" id="node13" href="$namespacemappel.html#a5ca82edc201e8605107a991493ad0d5e" title="mappel::fill_G_stencil" alt="" coords="1089,155,1228,180"/>
+<area shape="rect" id="node15" href="$classmappel_1_1PointEmitterModel.html#a97a868e842302f670ed9f9bd49416771" title="mappel::PointEmitterModel\l::check_param_shape" alt="" coords="635,161,805,200"/>
+</map>

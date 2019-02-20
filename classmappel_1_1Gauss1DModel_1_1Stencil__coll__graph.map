@@ -1,0 +1,10 @@
+<map id="mappel::Gauss1DModel::Stencil" name="mappel::Gauss1DModel::Stencil">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DModel.html" title="A base class for 1D Gaussian PSF with a fixed sigma (standard dev.) " alt="" coords="1111,123,1265,148"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="494,63,663,88"/>
+<area shape="rect" id="node8" href="$classmappel_1_1MCMCAdaptor1D.html" title="mappel::MCMCAdaptor1D" alt="" coords="821,21,988,47"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="186,103,261,128"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="5,96,123,135"/>
+<area shape="rect" id="node7" href="$classmappel_1_1ImageFormat1DBase.html" title="A virtual base class for 2D image localization objectives. " alt="" coords="812,173,997,199"/>
+<area shape="rect" id="node9" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="489,5,668,31"/>
+<area shape="rect" id="node10" title="STL class. " alt="" coords="853,223,957,248"/>
+</map>

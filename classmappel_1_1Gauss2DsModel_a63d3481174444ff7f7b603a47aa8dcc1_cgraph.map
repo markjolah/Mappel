@@ -1,0 +1,13 @@
+<map id="mappel::Gauss2DsModel::set_min_sigma" name="mappel::Gauss2DsModel::set_min_sigma">
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html#a01ce8d6358acbd2575be519dff1df89b" title="mappel::PointEmitterModel\l::check_psf_sigma" alt="" coords="421,256,591,295"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsModel.html#a11f03c648095b6d7dd5c38c3a5eca2dc" title="mappel::Gauss2DsModel\l::get_max_sigma" alt="" coords="213,68,373,107"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DsModel.html#abcaaecd43be1f8c005b65e74482a7d86" title="mappel::Gauss1DsModel\l::set_max_sigma" alt="" coords="213,196,373,235"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Gauss1DsModel.html#ab57025e678a631f4311f33aae1a1674b" title="mappel::Gauss1DsModel\l::set_min_sigma" alt="" coords="213,315,373,353"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsModel.html#a46da2752c2d1ca376b72d910818e47ae" title="mappel::Gauss2DsModel\l::get_max_sigma_ratio" alt="" coords="426,68,586,107"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel.html#af93a5f984a97e23ae1d371c980e48a41" title="mappel::Gauss2DsModel\l::get_min_sigma" alt="" coords="426,5,586,44"/>
+<area shape="rect" id="node5" href="$classmappel_1_1PointEmitterModel.html#a0dfb473c48d177a4540d328abb03cd55" title="mappel::PointEmitterModel\l::get_ubound" alt="" coords="639,68,808,107"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss1DsModel.html#ab77513553950b5fa5e3c8254b75a564e" title="mappel::Gauss1DsModel\l::get_min_sigma" alt="" coords="426,193,586,232"/>
+<area shape="rect" id="node9" href="$classmappel_1_1PointEmitterModel.html#a7363961cc405e585b39e81a7ad85c8d6" title="mappel::PointEmitterModel\l::set_ubound" alt="" coords="421,131,591,169"/>
+<area shape="rect" id="node11" href="$classmappel_1_1Gauss1DsModel.html#aac5607105b0014d286fd419d0f1741e6" title="mappel::Gauss1DsModel\l::get_max_sigma" alt="" coords="426,381,586,420"/>
+<area shape="rect" id="node12" href="$classmappel_1_1PointEmitterModel.html#a737fa5857415b9830fa2e5ccdff48541" title="mappel::PointEmitterModel\l::set_lbound" alt="" coords="421,319,591,357"/>
+</map>

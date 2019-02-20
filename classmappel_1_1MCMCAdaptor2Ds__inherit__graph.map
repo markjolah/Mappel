@@ -1,0 +1,9 @@
+<map id="mappel::MCMCAdaptor2Ds" name="mappel::MCMCAdaptor2Ds">
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel.html" title="A base class for 2D Gaussian PSF where the gaussian sigma is controlled by a single scalar parameter ..." alt="" coords="109,299,269,324"/>
+<area shape="rect" id="node2" href="$classmappel_1_1MCMCAdaptor2D.html" title="mappel::MCMCAdaptor2D" alt="" coords="105,152,272,177"/>
+<area shape="rect" id="node3" href="$classmappel_1_1MCMCAdaptor1D.html" title="mappel::MCMCAdaptor1D" alt="" coords="105,79,272,104"/>
+<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="5,5,175,31"/>
+<area shape="rect" id="node5" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="199,5,378,31"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsMAP.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum a&#45;pos..." alt="" coords="25,372,177,397"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DsMLE.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum&#45;likel..." alt="" coords="201,372,352,397"/>
+</map>

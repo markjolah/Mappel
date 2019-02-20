@@ -1,0 +1,359 @@
+\hypertarget{PoissonGaussianNoise2DObjective_8h}{}\subsection{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h File Reference}
+\label{PoissonGaussianNoise2DObjective_8h}\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+
+
+The class declaration and inline and templated functions for \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}.  
+
+
+{\ttfamily \#include \char`\"{}Mappel/\+Poisson\+Noise2\+D.\+h\char`\"{}}\\*
+Include dependency graph for Poisson\+Gaussian\+Noise2\+D\+Objective.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{PoissonGaussianNoise2DObjective_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{PoissonGaussianNoise2DObjective_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$}
+\begin{DoxyCompactList}\small\item\em A Base type for point emitter localization models that use 2d images. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, typename Model\+::\+ImageT $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a6aeb8c744c0e5c41b9a593ac3220203a}{model\+\_\+image} (const Model \&model, const typename Model\+::\+Stencil \&s)
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, typename Model\+::\+ImageT $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a478c3e580a937a0f89aeda93d890e17b}{simulate\+\_\+image} (const Model \&model, const typename Model\+::\+Stencil \&s, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image using the P\+SF model, by generating Poisson noise. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, typename Model\+::\+ImageT $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a4980053276f4ec82c7cb86b1f0e25adb}{simulate\+\_\+image} (const Model \&model, const typename Model\+::\+ImageT \&model\+\_\+im, rng\+\_\+t \&rng)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a52e6c2397c471181decd3f5e5f888b78}{model\+\_\+grad} (const Model \&model, const typename Model\+::\+ImageT \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+ParamT \&grad)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a40de3cee16b8f0822521cca53c14dcd1}{model\+\_\+grad2} (const Model \&model, const typename Model\+::\+ImageT \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+ParamT \&grad, typename Model\+::\+ParamT \&grad2)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a6bc9a84f7098ab89db58be02c0780a63}{model\+\_\+hessian} (const Model \&model, const typename Model\+::\+ImageT \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+ParamT \&grad, typename Model\+::\+MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, double $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a8eb230d5181ae8cf5b5b9ed794d3b64c}{log\+\_\+likelihood} (const Model \&model, const typename Model\+::\+ImageT \&data\+\_\+im, const typename Model\+::\+Stencil \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, double $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_aa87ae0a4dcfe77673013d48a2061d4a8}{relative\+\_\+log\+\_\+likelihood} (const Model \&model, const typename Model\+::\+ImageT \&data\+\_\+im, const typename Model\+::\+Stencil \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, typename Model\+::\+MatT $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a8469a5ad4b663de4d482d8d58ec53721}{fisher\+\_\+information} (const Model \&model, const typename Model\+::\+Stencil \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}, Model $>$\+::value, std\+::shared\+\_\+ptr$<$ Estimator$<$ Model $>$ $>$ $>$\+::type \hyperlink{PoissonGaussianNoise2DObjective_8h_a55b7a6399e6ffe26dc4c9c0c55b97fea}{make\+\_\+estimator} (const Model \&model, std\+::string ename)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The class declaration and inline and templated functions for \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective}. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+04-\/2017 
+\end{DoxyDate}
+
+
+\subsubsection{Function Documentation}
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!fisher\+\_\+information@{fisher\+\_\+information}}
+\index{fisher\+\_\+information@{fisher\+\_\+information}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{fisher\+\_\+information(const Model \&model, const typename Model\+::\+Stencil \&s)}{fisher_information(const Model &model, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,typename Model\+::\+MatT$>$\+::type fisher\+\_\+information (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a8469a5ad4b663de4d482d8d58ec53721}{}\label{PoissonGaussianNoise2DObjective_8h_a8469a5ad4b663de4d482d8d58ec53721}
+
+
+Definition at line 200 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+Referenced by mappel\+::fisher\+\_\+information\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{PoissonGaussianNoise2DObjective_8h_a8469a5ad4b663de4d482d8d58ec53721_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!log\+\_\+likelihood@{log\+\_\+likelihood}}
+\index{log\+\_\+likelihood@{log\+\_\+likelihood}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{log\+\_\+likelihood(const Model \&model, const typename Model\+::\+Image\+T \&data\+\_\+im, const typename Model\+::\+Stencil \&s)}{log_likelihood(const Model &model, const typename Model::ImageT &data_im, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,double$>$\+::type log\+\_\+likelihood (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{data\+\_\+im, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a8eb230d5181ae8cf5b5b9ed794d3b64c}{}\label{PoissonGaussianNoise2DObjective_8h_a8eb230d5181ae8cf5b5b9ed794d3b64c}
+
+
+Definition at line 172 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::methods\+::objective\+::llh(), and mappel\+::poisson\+\_\+log\+\_\+likelihood().
+
+
+
+Referenced by mappel\+::log\+\_\+likelihood\+\_\+stack().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=333pt]{PoissonGaussianNoise2DObjective_8h_a8eb230d5181ae8cf5b5b9ed794d3b64c_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{PoissonGaussianNoise2DObjective_8h_a8eb230d5181ae8cf5b5b9ed794d3b64c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!make\+\_\+estimator@{make\+\_\+estimator}}
+\index{make\+\_\+estimator@{make\+\_\+estimator}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{make\+\_\+estimator(const Model \&model, std\+::string ename)}{make_estimator(const Model &model, std::string ename)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,std\+::shared\+\_\+ptr$<$Estimator$<$Model$>$ $>$ $>$\+::type make\+\_\+estimator (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{std\+::string}]{ename}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a55b7a6399e6ffe26dc4c9c0c55b97fea}{}\label{PoissonGaussianNoise2DObjective_8h_a55b7a6399e6ffe26dc4c9c0c55b97fea}
+
+
+Definition at line 217 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::istarts\+\_\+with().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{PoissonGaussianNoise2DObjective_8h_a55b7a6399e6ffe26dc4c9c0c55b97fea_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!model\+\_\+grad@{model\+\_\+grad}}
+\index{model\+\_\+grad@{model\+\_\+grad}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{model\+\_\+grad(const Model \&model, const typename Model\+::\+Image\+T \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+Param\+T \&grad)}{model_grad(const Model &model, const typename Model::ImageT &im, const typename Model::Stencil &s, typename Model::ParamT &grad)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value$>$\+::type model\+\_\+grad (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{im, }
+\item[{const typename Model\+::\+Stencil \&}]{s, }
+\item[{typename Model\+::\+ParamT \&}]{grad}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a52e6c2397c471181decd3f5e5f888b78}{}\label{PoissonGaussianNoise2DObjective_8h_a52e6c2397c471181decd3f5e5f888b78}
+
+
+Definition at line 101 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+Referenced by mappel\+::model\+\_\+grad\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=283pt]{PoissonGaussianNoise2DObjective_8h_a52e6c2397c471181decd3f5e5f888b78_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!model\+\_\+grad2@{model\+\_\+grad2}}
+\index{model\+\_\+grad2@{model\+\_\+grad2}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{model\+\_\+grad2(const Model \&model, const typename Model\+::\+Image\+T \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+Param\+T \&grad, typename Model\+::\+Param\+T \&grad2)}{model_grad2(const Model &model, const typename Model::ImageT &im, const typename Model::Stencil &s, typename Model::ParamT &grad, typename Model::ParamT &grad2)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value$>$\+::type model\+\_\+grad2 (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{im, }
+\item[{const typename Model\+::\+Stencil \&}]{s, }
+\item[{typename Model\+::\+ParamT \&}]{grad, }
+\item[{typename Model\+::\+ParamT \&}]{grad2}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a40de3cee16b8f0822521cca53c14dcd1}{}\label{PoissonGaussianNoise2DObjective_8h_a40de3cee16b8f0822521cca53c14dcd1}
+
+
+Definition at line 119 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!model\+\_\+hessian@{model\+\_\+hessian}}
+\index{model\+\_\+hessian@{model\+\_\+hessian}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{model\+\_\+hessian(const Model \&model, const typename Model\+::\+Image\+T \&im, const typename Model\+::\+Stencil \&s, typename Model\+::\+Param\+T \&grad, typename Model\+::\+Mat\+T \&hess)}{model_hessian(const Model &model, const typename Model::ImageT &im, const typename Model::Stencil &s, typename Model::ParamT &grad, typename Model::MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value$>$\+::type model\+\_\+hessian (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{im, }
+\item[{const typename Model\+::\+Stencil \&}]{s, }
+\item[{typename Model\+::\+ParamT \&}]{grad, }
+\item[{typename Model\+::\+MatT \&}]{hess}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a6bc9a84f7098ab89db58be02c0780a63}{}\label{PoissonGaussianNoise2DObjective_8h_a6bc9a84f7098ab89db58be02c0780a63}
+
+
+Definition at line 148 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+Referenced by mappel\+::model\+\_\+hessian\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{PoissonGaussianNoise2DObjective_8h_a6bc9a84f7098ab89db58be02c0780a63_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!model\+\_\+image@{model\+\_\+image}}
+\index{model\+\_\+image@{model\+\_\+image}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{model\+\_\+image(const Model \&model, const typename Model\+::\+Stencil \&s)}{model_image(const Model &model, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,typename Model\+::\+ImageT$>$\+::type model\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a6aeb8c744c0e5c41b9a593ac3220203a}{}\label{PoissonGaussianNoise2DObjective_8h_a6aeb8c744c0e5c41b9a593ac3220203a}
+
+
+Definition at line 59 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+Referenced by mappel\+::model\+\_\+image\+\_\+stack(), and mappel\+::simulate\+\_\+image\+\_\+stack().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{PoissonGaussianNoise2DObjective_8h_a6aeb8c744c0e5c41b9a593ac3220203a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!relative\+\_\+log\+\_\+likelihood@{relative\+\_\+log\+\_\+likelihood}}
+\index{relative\+\_\+log\+\_\+likelihood@{relative\+\_\+log\+\_\+likelihood}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{relative\+\_\+log\+\_\+likelihood(const Model \&model, const typename Model\+::\+Image\+T \&data\+\_\+im, const typename Model\+::\+Stencil \&s)}{relative_log_likelihood(const Model &model, const typename Model::ImageT &data_im, const typename Model::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,double$>$\+::type relative\+\_\+log\+\_\+likelihood (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{data\+\_\+im, }
+\item[{const typename Model\+::\+Stencil \&}]{s}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_aa87ae0a4dcfe77673013d48a2061d4a8}{}\label{PoissonGaussianNoise2DObjective_8h_aa87ae0a4dcfe77673013d48a2061d4a8}
+
+
+Definition at line 185 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::relative\+\_\+poisson\+\_\+log\+\_\+likelihood(), and mappel\+::methods\+::objective\+::rllh().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PoissonGaussianNoise2DObjective_8h_aa87ae0a4dcfe77673013d48a2061d4a8_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(const Model \&model, const typename Model\+::\+Stencil \&s, rng\+\_\+t \&rng)}{simulate_image(const Model &model, const typename Model::Stencil &s, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,typename Model\+::\+ImageT$>$\+::type simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+Stencil \&}]{s, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a478c3e580a937a0f89aeda93d890e17b}{}\label{PoissonGaussianNoise2DObjective_8h_a478c3e580a937a0f89aeda93d890e17b}
+
+
+Simulate an image using the P\+SF model, by generating Poisson noise. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em image} & An image to populate. \\
+\hline
+\mbox{\tt in}  & {\em theta} & The parameter values to us \\
+\hline
+\mbox{\tt in,out}  & {\em rng} & An initialized random number generator \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 78 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PoissonGaussianNoise2DObjective_8h_a478c3e580a937a0f89aeda93d890e17b_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}!simulate\+\_\+image@{simulate\+\_\+image}}
+\index{simulate\+\_\+image@{simulate\+\_\+image}!Poisson\+Gaussian\+Noise2\+D\+Objective.\+h@{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}}
+\paragraph[{\texorpdfstring{simulate\+\_\+image(const Model \&model, const typename Model\+::\+Image\+T \&model\+\_\+im, rng\+\_\+t \&rng)}{simulate_image(const Model &model, const typename Model::ImageT &model_im, rng_t &rng)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model , class rng\+\_\+t $>$ std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<${\bf Poisson\+Gaussian\+Noise2\+D\+Objective},Model$>$\+::value,typename Model\+::\+ImageT$>$\+::type simulate\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const typename Model\+::\+ImageT \&}]{model\+\_\+im, }
+\item[{rng\+\_\+t \&}]{rng}
+\end{DoxyParamCaption}
+)}\hypertarget{PoissonGaussianNoise2DObjective_8h_a4980053276f4ec82c7cb86b1f0e25adb}{}\label{PoissonGaussianNoise2DObjective_8h_a4980053276f4ec82c7cb86b1f0e25adb}
+
+
+Definition at line 89 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+References mappel\+::generate\+\_\+poisson().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PoissonGaussianNoise2DObjective_8h_a4980053276f4ec82c7cb86b1f0e25adb_cgraph}
+\end{center}
+\end{figure}
+
+

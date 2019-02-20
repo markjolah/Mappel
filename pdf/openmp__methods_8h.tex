@@ -1,0 +1,111 @@
+\hypertarget{openmp__methods_8h}{}\subsection{openmp\+\_\+methods.\+h File Reference}
+\label{openmp__methods_8h}\index{openmp\+\_\+methods.\+h@{openmp\+\_\+methods.\+h}}
+
+
+Namespaces for Open\+MP parallelized versions of the mappel\+::model namespace functions (external methods)  
+
+
+{\ttfamily \#include $<$omp.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/mcmc.\+h\char`\"{}}\\*
+Include dependency graph for openmp\+\_\+methods.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{openmp__methods_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{openmp__methods_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1methods}{mappel\+::methods}
+\begin{DoxyCompactList}\small\item\em Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}. \end{DoxyCompactList}\item 
+ \hyperlink{namespacemappel_1_1methods_1_1openmp}{mappel\+::methods\+::openmp}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective}{mappel\+::methods\+::objective}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp}{mappel\+::methods\+::objective\+::openmp}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a30d60c212568479d6f2b80f12c171d9e}{mappel\+::methods\+::openmp\+::sample\+\_\+prior\+\_\+stack} (Model \&model, Param\+VecT$<$ Model $>$ \&theta\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel sampling of the model prior. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a618f312f9e8b3a5d9972be5d755a7edb}{mappel\+::methods\+::openmp\+::model\+\_\+image\+\_\+stack} (const Model \&model, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, Image\+StackT$<$ Model $>$ \&image\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel computation of the model image. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a49b53ce5958e1a69e5b4cf8d4b0b1420}{mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack} (Model \&model, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, Image\+StackT$<$ Model $>$ \&image\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel simulation of images from one or more theta. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_aba5970f5df4416a3d26c3ca5a86b8da5}{mappel\+::methods\+::openmp\+::cr\+\_\+lower\+\_\+bound\+\_\+stack} (const Model \&model, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, Param\+VecT$<$ Model $>$ \&crlb\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_ad58ad93952714ee5b5d7701cdf6032a8}{mappel\+::methods\+::openmp\+::expected\+\_\+information\+\_\+stack} (const Model \&model, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, CubeT \&fisher\+I\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_aaf30517efe932ae2e79b740658c1e63e}{mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const std\+::string \&method, Param\+VecT$<$ Model $>$ \&theta\+\_\+max\+\_\+stack, VecT \&theta\+\_\+max\+\_\+rllh, CubeT \&obs\+I\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a9854c4b2a406b628092b91053e91886c}{mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const std\+::string \&method, Param\+VecT$<$ Model $>$ \&theta\+\_\+max\+\_\+stack, VecT \&theta\+\_\+max\+\_\+rllh, CubeT \&obs\+I\+\_\+stack, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a12da8e623d7d4aab4958232f0ffe0a3e}{mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const std\+::string \&method, Param\+VecT$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, Param\+VecT$<$ Model $>$ \&theta\+\_\+max\+\_\+stack, VecT \&theta\+\_\+max\+\_\+rllh, CubeT \&obs\+I\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a642f8ea143c84ec414410596fd6911bb}{mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const std\+::string \&method, Param\+VecT$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, Param\+VecT$<$ Model $>$ \&theta\+\_\+max\+\_\+stack, VecT \&theta\+\_\+max\+\_\+rllh, CubeT \&obs\+I\+\_\+stack, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a22579301b567235e0f8394de0e499347}{mappel\+::methods\+::openmp\+::estimate\+\_\+profile\+\_\+likelihood} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const Idx\+VecT \&fixed\+\_\+parameters, const MatT \&fixed\+\_\+values, const std\+::string \&method, VecT \&profile\+\_\+likelihood, Param\+VecT$<$ Model $>$ \&profile\+\_\+parameters)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a73674d78246aaf6315dc772f88c176be}{mappel\+::methods\+::openmp\+::estimate\+\_\+profile\+\_\+likelihood} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const Idx\+VecT \&fixed\+\_\+parameters, const MatT \&fixed\+\_\+values, const std\+::string \&method, VecT \&profile\+\_\+likelihood, Param\+VecT$<$ Model $>$ \&profile\+\_\+parameters, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a190af7ff01303344aeeb71628f8c9558}{mappel\+::methods\+::openmp\+::estimate\+\_\+profile\+\_\+likelihood} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const Idx\+VecT \&fixed\+\_\+parameters, const MatT \&fixed\+\_\+values, const std\+::string \&method, const Param\+VecT$<$ Model $>$ \&theta\+\_\+init, VecT \&profile\+\_\+likelihood, Param\+VecT$<$ Model $>$ \&profile\+\_\+parameters)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_ad47b336b7f0dd9f65e995ad4c035cc19}{mappel\+::methods\+::openmp\+::estimate\+\_\+profile\+\_\+likelihood} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const Idx\+VecT \&fixed\+\_\+parameters, const MatT \&fixed\+\_\+values, const std\+::string \&method, const Param\+VecT$<$ Model $>$ \&theta\+\_\+init, VecT \&profile\+\_\+likelihood, Param\+VecT$<$ Model $>$ \&profile\+\_\+parameters, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_aa09c0723739ee5b65f44f2570289cfa6}{mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, IdxT Nsamples, IdxT Nburnin, IdxT thin, CubeT \&sample\+\_\+stack, MatT \&sample\+\_\+rllh\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_af5cc14bf072377f8b6411ea79356b8e5}{mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, IdxT Nsamples, IdxT Nburnin, IdxT thin, CubeT \&sample, MatT \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a29a123586d125b8d00613119017f9d7b}{mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+posterior\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, IdxT Nsamples, IdxT Nburnin, IdxT thin, MatT \&theta\+\_\+mean\+\_\+stack, CubeT \&theta\+\_\+cov\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_afb909fac9a2058cf1d6c0e61d531b809}{mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+posterior\+\_\+stack} (Model \&model, const Model\+Data\+StackT$<$ Model $>$ \&data\+\_\+stack, IdxT Nsamples, IdxT Nburnin, IdxT thin, MatT \&theta\+\_\+mean\+\_\+stack, CubeT \&theta\+\_\+cov\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_ac9aac4b2df768e850bee73aa5c7f2686}{mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+expected\+\_\+stack} (const Model \&model, const MatT \&theta\+\_\+est\+\_\+stack, double confidence, MatT \&theta\+\_\+lb\+\_\+stack, MatT \&theta\+\_\+ub\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a82a1f1d04ea0a21f003b35fad25a3442}{mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+observed\+\_\+stack} (const Model \&model, const MatT \&theta\+\_\+est\+\_\+stack, CubeT \&obs\+I\+\_\+stack, double confidence, MatT \&theta\+\_\+lb\+\_\+stack, MatT \&theta\+\_\+ub\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1openmp_a41b38e201ce475920203f52ac6557f80}{mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+posterior\+\_\+credible\+\_\+stack} (const Model \&model, const CubeT \&sample\+\_\+stack, double confidence, MatT \&theta\+\_\+mean\+\_\+stack, MatT \&theta\+\_\+lb\+\_\+stack, MatT \&theta\+\_\+ub\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_ac3b3259220fa0dad56adb3db28711c55}{mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack} (const Model \&model, const ImageT$<$ Model $>$ \&image, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, VecT \&llh\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a single image. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_aacd838da9a8dd9462fe970b4e3fae0f0}{mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack} (const Model \&model, const Image\+StackT$<$ Model $>$ \&image\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, VecT \&llh\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_a8223d746bf91530f8cff4ec168e50b1d}{mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack} (const Model \&model, const Image\+StackT$<$ Model $>$ \&image\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, VecT \&rllh\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel relative log\+\_\+likelihood calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_afc8658d8593725d7de99dc533fa74274}{mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack} (const Model \&model, const ImageT$<$ Model $>$ \&image, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, VecT \&rllh\+\_\+stack)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_aab0aa1ca7dbd172a955148063a112f50}{mappel\+::methods\+::objective\+::openmp\+::grad\+\_\+stack} (const Model \&model, const Image\+StackT$<$ Model $>$ \&image\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, Param\+VecT$<$ Model $>$ \&grad\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model gradient calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_a134e673cbfdb9ac4e2d9ebec23ca2841}{mappel\+::methods\+::objective\+::openmp\+::hessian\+\_\+stack} (const Model \&model, const Image\+StackT$<$ Model $>$ \&image\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, CubeT \&hessian\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model Hessian calculations for a stack of images. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_1_1openmp_ad6a735087d0a6a785be32c3edaff6f1e}{mappel\+::methods\+::objective\+::openmp\+::negative\+\_\+definite\+\_\+hessian\+\_\+stack} (const Model \&model, const Image\+StackT$<$ Model $>$ \&image\+\_\+stack, const Param\+VecT$<$ Model $>$ \&theta\+\_\+stack, CubeT \&hessian\+\_\+stack)
+\begin{DoxyCompactList}\small\item\em Parallel model negative\+\_\+definite Hessian approximation calculations for a stack of images. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Namespaces for Open\+MP parallelized versions of the mappel\+::model namespace functions (external methods) 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2013-\/2019 Open\+MP computation for stacked Model operations on vector data.
+\end{DoxyDate}
+Design Decisions
+\begin{DoxyItemize}
+\item Open\+MP vectorized versions are implemented as templated external methods in inline namespaces openmp. This allows easy future replacement with other palatalization mechanisms (C\+U\+DA, C++11 threads, etc..). Also allows the vectorized versions to directly overload with the non-\/vectorized base-\/versions.
+\item Because we want to integrate as seamlessly as possible with matlab, we use the armadillo package which stores arrays in column major order.
+\item Therefore in the $\ast$\+\_\+stack operations, if they are to be parallelized, we want the data stored as a n\+Parms X n matrix, i.\+e. each column is a parameter matrix. Similarly stacks are size X size X n, so that contiguous images sequences are contiguous in memory. This avoids false sharing. 
+\end{DoxyItemize}

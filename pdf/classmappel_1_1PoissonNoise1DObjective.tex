@@ -1,0 +1,644 @@
+\hypertarget{classmappel_1_1PoissonNoise1DObjective}{}\subsection{mappel\+:\+:Poisson\+Noise1\+D\+Objective Class Reference}
+\label{classmappel_1_1PoissonNoise1DObjective}\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+
+
+A base class for 1D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel.  
+
+
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Poisson\+Noise1\+D\+Objective.\+h$>$}
+
+
+
+Inheritance diagram for mappel\+:\+:Poisson\+Noise1\+D\+Objective\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PoissonNoise1DObjective__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for mappel\+:\+:Poisson\+Noise1\+D\+Objective\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PoissonNoise1DObjective__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{classmappel_1_1PoissonNoise1DObjective_a0f72eebcb9fb785a5489fc5489bff9b0}{Model\+DataT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT}
+\item 
+using \hyperlink{classmappel_1_1PoissonNoise1DObjective_a62f5cb009e4c0e53fdfbf90b3153b94f}{Model\+Data\+StackT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT}
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} = uint32\+\_\+t
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} = double
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{Image\+Size\+ShapeT} = CoordT
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{Image\+Size\+Vec\+ShapeT} = arma\+::\+Col$<$ CoordT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} = \hyperlink{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{Image\+Size\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}{Image\+Size\+VecT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{Image\+Size\+Vec\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{Image\+ShapeT} = arma\+::\+Col$<$ PixelT $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{Image\+Stack\+ShapeT} = arma\+::\+Mat$<$ PixelT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} = \hyperlink{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{Image\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} = \hyperlink{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{Image\+Stack\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{Image\+PixelT} $>$
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f}{get\+\_\+stats} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \hyperlink{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{make\+\_\+image} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \hyperlink{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{make\+\_\+image\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{get\+\_\+size\+\_\+image\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \hyperlink{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{get\+\_\+image\+\_\+from\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n) const 
+\item 
+{\footnotesize template$<$class ImT $>$ }\\void \hyperlink{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{set\+\_\+image\+\_\+in\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} n, const ImT \&im) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \hyperlink{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{get\+\_\+size} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}{get\+\_\+size} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} idx) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{get\+\_\+num\+\_\+pixels} () const 
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{set\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a single images is correct for model size. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{Image\+StackT} \&ims) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a stack of images is correct for model size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}{check\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\begin{DoxyCompactList}\small\item\em Check the size argument for the model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const std\+::vector$<$ std\+::string $>$ \hyperlink{classmappel_1_1PoissonNoise1DObjective_a985200133fb3e5bfdf8755296cf700eb}{estimator\+\_\+names}
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}{num\+\_\+dim} = 1
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}{global\+\_\+min\+\_\+size} = 3
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}{global\+\_\+max\+\_\+size} = 512
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1PoissonNoise1DObjective_af5a4f7d5c6d8daf65a24fc13463483c8}{Poisson\+Noise1\+D\+Objective} ()
+\item 
+\hyperlink{classmappel_1_1PoissonNoise1DObjective_a728dad0989226cb45e6a184d6d04a430}{Poisson\+Noise1\+D\+Objective} (const \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \&o)
+\item 
+\hyperlink{classmappel_1_1PoissonNoise1DObjective_ade8f84dd53b28f14ffb49bda8329c92e}{Poisson\+Noise1\+D\+Objective} (\hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \&\&o)
+\item 
+\hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \& \hyperlink{classmappel_1_1PoissonNoise1DObjective_ab41b3958b61d38ef779fa2b52352e9ff}{operator=} (const \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \&o)
+\item 
+\hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \& \hyperlink{classmappel_1_1PoissonNoise1DObjective_a7aa170f9e24de2fe0fd4d8c101c42d30}{operator=} (\hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective} \&\&o)
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \hyperlink{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A base class for 1D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel. 
+
+
+
+Definition at line 22 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+
+
+\subsubsection{Member Typedef Documentation}
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+CoordT@{Image\+CoordT}}
+\index{Image\+CoordT@{Image\+CoordT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+CoordT}{ImageCoordT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+CoordT} =  uint32\+\_\+t\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{}\label{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}
+Image size coordinate storage type 
+
+Definition at line 25 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+PixelT@{Image\+PixelT}}
+\index{Image\+PixelT@{Image\+PixelT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+PixelT}{ImagePixelT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+PixelT} =  double\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}{}\label{classmappel_1_1ImageFormat1DBase_a156fe500fd249cb4b77bdb0abc0dd0ea}
+Image pixel storage type 
+
+Definition at line 26 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+ShapeT@{Image\+ShapeT}}
+\index{Image\+ShapeT@{Image\+ShapeT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+ShapeT}{ImageShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+ShapeT} =  arma\+::\+Col$<$PixelT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}{}\label{classmappel_1_1ImageFormat1DBase_a20d315459b83c348b1465614699783b3}
+Shape of the data type for a single image 
+
+Definition at line 33 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+Size\+ShapeT@{Image\+Size\+ShapeT}}
+\index{Image\+Size\+ShapeT@{Image\+Size\+ShapeT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+Size\+ShapeT}{ImageSizeShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+ShapeT} =  CoordT\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}{}\label{classmappel_1_1ImageFormat1DBase_ab722bbd223963861691ef038721b6e02}
+Shape of the data type to store 1-\/image\textquotesingle{}s coordinates 
+
+Definition at line 28 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+SizeT@{Image\+SizeT}}
+\index{Image\+SizeT@{Image\+SizeT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+SizeT}{ImageSizeT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+SizeT} =  {\bf Image\+Size\+ShapeT}$<${\bf Image\+CoordT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{}\label{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}
+Data type for a single image size 
+
+Definition at line 30 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}}
+\index{Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+Size\+Vec\+ShapeT}{ImageSizeVecShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+Vec\+ShapeT} =  arma\+::\+Col$<$CoordT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}{}\label{classmappel_1_1ImageFormat1DBase_a3c584ee68fa44dc10de2edbc3d9882bb}
+Shape of the data type to store a vector of image\textquotesingle{}s coordinates 
+
+Definition at line 29 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+Size\+VecT@{Image\+Size\+VecT}}
+\index{Image\+Size\+VecT@{Image\+Size\+VecT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+Size\+VecT}{ImageSizeVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Size\+VecT} =  {\bf Image\+Size\+Vec\+ShapeT}$<${\bf Image\+CoordT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}{}\label{classmappel_1_1ImageFormat1DBase_a5114a360a9bfcc4b5bc498c4600452f7}
+Data type for a sequence of image sizes 
+
+Definition at line 31 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}}
+\index{Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+Stack\+ShapeT}{ImageStackShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Stack\+ShapeT} =  arma\+::\+Mat$<$PixelT$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}{}\label{classmappel_1_1ImageFormat1DBase_ad9d4f0c3d04f3cecf3bf6b4709dcb4a8}
+Shape of the data type for a sequence of images 
+
+Definition at line 34 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Image\+StackT@{Image\+StackT}}
+\index{Image\+StackT@{Image\+StackT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Image\+StackT}{ImageStackT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+StackT} =  {\bf Image\+Stack\+ShapeT}$<${\bf Image\+PixelT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}{}\label{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25a76}
+Data type to represent a sequence of images 
+
+Definition at line 36 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!ImageT@{ImageT}}
+\index{ImageT@{ImageT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{ImageT}{ImageT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format1\+D\+Base\+::\+ImageT} =  {\bf Image\+ShapeT}$<${\bf Image\+PixelT}$>$\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{}\label{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}
+Data type to represent single image 
+
+Definition at line 35 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Model\+Data\+StackT@{Model\+Data\+StackT}}
+\index{Model\+Data\+StackT@{Model\+Data\+StackT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Model\+Data\+StackT}{ModelDataStackT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Poisson\+Noise1\+D\+Objective\+::\+Model\+Data\+StackT} =  {\bf Image\+StackT}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_a62f5cb009e4c0e53fdfbf90b3153b94f}{}\label{classmappel_1_1PoissonNoise1DObjective_a62f5cb009e4c0e53fdfbf90b3153b94f}
+Objective function data stack type\+: 1D double precision image stack, of images gain-\/corrected to approximate photons counts 
+
+Definition at line 26 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Model\+DataT@{Model\+DataT}}
+\index{Model\+DataT@{Model\+DataT}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Model\+DataT}{ModelDataT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Poisson\+Noise1\+D\+Objective\+::\+Model\+DataT} =  {\bf ImageT}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_a0f72eebcb9fb785a5489fc5489bff9b0}{}\label{classmappel_1_1PoissonNoise1DObjective_a0f72eebcb9fb785a5489fc5489bff9b0}
+Objective function data type\+: 1D double precision image, gain-\/corrected to approximate photons counts 
+
+Definition at line 25 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}}
+\index{Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Poisson\+Noise1\+D\+Objective()}{PoissonNoise1DObjective()}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Poisson\+Noise1\+D\+Objective\+::\+Poisson\+Noise1\+D\+Objective (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_af5a4f7d5c6d8daf65a24fc13463483c8}{}\label{classmappel_1_1PoissonNoise1DObjective_af5a4f7d5c6d8daf65a24fc13463483c8}
+
+
+Definition at line 14 of file Poisson\+Noise1\+D\+Objective.\+cpp.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}}
+\index{Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Poisson\+Noise1\+D\+Objective(const Poisson\+Noise1\+D\+Objective \&o)}{PoissonNoise1DObjective(const PoissonNoise1DObjective &o)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Poisson\+Noise1\+D\+Objective\+::\+Poisson\+Noise1\+D\+Objective (
+\begin{DoxyParamCaption}
+\item[{const {\bf Poisson\+Noise1\+D\+Objective} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_a728dad0989226cb45e6a184d6d04a430}{}\label{classmappel_1_1PoissonNoise1DObjective_a728dad0989226cb45e6a184d6d04a430}
+
+
+Definition at line 18 of file Poisson\+Noise1\+D\+Objective.\+cpp.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}}
+\index{Poisson\+Noise1\+D\+Objective@{Poisson\+Noise1\+D\+Objective}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{Poisson\+Noise1\+D\+Objective(\+Poisson\+Noise1\+D\+Objective \&\&o)}{PoissonNoise1DObjective(PoissonNoise1DObjective &&o)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Poisson\+Noise1\+D\+Objective\+::\+Poisson\+Noise1\+D\+Objective (
+\begin{DoxyParamCaption}
+\item[{{\bf Poisson\+Noise1\+D\+Objective} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_ade8f84dd53b28f14ffb49bda8329c92e}{}\label{classmappel_1_1PoissonNoise1DObjective_ade8f84dd53b28f14ffb49bda8329c92e}
+
+
+Definition at line 22 of file Poisson\+Noise1\+D\+Objective.\+cpp.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+T \&im) const }{check_image_shape(const ImageT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf ImageT} \&}]{im}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{}\label{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}
+
+
+Check the shape of a single images is correct for model size. 
+
+
+
+Definition at line 59 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+Stack\+T \&ims) const }{check_image_shape(const ImageStackT &ims) const }}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{ims}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}{}\label{classmappel_1_1ImageFormat1DBase_a8d5c0744643bf0bbbf30dd3122f98190}
+
+
+Check the shape of a stack of images is correct for model size. 
+
+
+
+Definition at line 71 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!check\+\_\+size@{check\+\_\+size}}
+\index{check\+\_\+size@{check\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{check\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{check_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::check\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}{}\label{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4}
+
+
+Check the size argument for the model. 
+
+
+
+Definition at line 39 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::global\+\_\+max\+\_\+size, and mappel\+::\+Image\+Format1\+D\+Base\+::global\+\_\+min\+\_\+size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Format1\+D\+Base(), and mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}}
+\index{get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+image\+\_\+from\+\_\+stack(const Image\+Stack\+T \&stack, Image\+Coord\+T n) const }{get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::get\+\_\+image\+\_\+from\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{}\label{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}
+
+
+Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}}
+\index{get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+num\+\_\+pixels() const }{get_num_pixels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+num\+\_\+pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{}\label{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}
+
+
+Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+size() const }{get_size() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+SizeT} Image\+Format1\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{}\label{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}
+
+
+Definition at line 70 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+size(\+Idx\+T idx) const }{get_size(IdxT idx) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{idx}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}{}\label{classmappel_1_1ImageFormat1DBase_a995bdd3b1be616d8d87af3a4a51fbad8}
+
+
+Definition at line 20 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}}
+\index{get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+size\+\_\+image\+\_\+stack(const Image\+Stack\+T \&stack) const }{get_size_image_stack(const ImageStackT &stack) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::get\+\_\+size\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{}\label{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}
+
+
+Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!get\+\_\+stats@{get\+\_\+stats}}
+\index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{get\+\_\+stats() const }{get_stats() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf StatsT} Image\+Format1\+D\+Base\+::get\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f}{}\label{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f}
+
+
+Definition at line 81 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+num\+\_\+pixels(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+size(), and mappel\+::\+Image\+Format1\+D\+Base\+::num\+\_\+dim.
+
+
+
+Referenced by mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+stats(), and mappel\+::\+Gauss1\+Ds\+Model\+::get\+\_\+stats().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!make\+\_\+image@{make\+\_\+image}}
+\index{make\+\_\+image@{make\+\_\+image}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{make\+\_\+image() const }{make_image() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::make\+\_\+image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{}\label{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}
+
+
+Definition at line 80 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}}
+\index{make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{make\+\_\+image\+\_\+stack(\+Image\+Coord\+T n) const }{make_image_stack(ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+Image\+StackT} Image\+Format1\+D\+Base\+::make\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{}\label{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}
+
+
+Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{operator=(const Poisson\+Noise1\+D\+Objective \&o)}{operator=(const PoissonNoise1DObjective &o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Poisson\+Noise1\+D\+Objective} \& mappel\+::\+Poisson\+Noise1\+D\+Objective\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Poisson\+Noise1\+D\+Objective} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_ab41b3958b61d38ef779fa2b52352e9ff}{}\label{classmappel_1_1PoissonNoise1DObjective_ab41b3958b61d38ef779fa2b52352e9ff}
+
+
+Definition at line 26 of file Poisson\+Noise1\+D\+Objective.\+cpp.
+
+
+
+Referenced by mappel\+::\+Gauss1\+D\+M\+A\+P\+::operator=(), mappel\+::\+Gauss1\+D\+M\+L\+E\+::operator=(), mappel\+::\+Gauss1\+Ds\+M\+A\+P\+::operator=(), and mappel\+::\+Gauss1\+Ds\+M\+L\+E\+::operator=().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1PoissonNoise1DObjective_ab41b3958b61d38ef779fa2b52352e9ff_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{operator=(\+Poisson\+Noise1\+D\+Objective \&\&o)}{operator=(PoissonNoise1DObjective &&o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Poisson\+Noise1\+D\+Objective} \& mappel\+::\+Poisson\+Noise1\+D\+Objective\+::operator= (
+\begin{DoxyParamCaption}
+\item[{{\bf Poisson\+Noise1\+D\+Objective} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_a7aa170f9e24de2fe0fd4d8c101c42d30}{}\label{classmappel_1_1PoissonNoise1DObjective_a7aa170f9e24de2fe0fd4d8c101c42d30}
+
+
+Definition at line 31 of file Poisson\+Noise1\+D\+Objective.\+cpp.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}}
+\index{set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{set\+\_\+image\+\_\+in\+\_\+stack(\+Image\+Stack\+T \&stack, Image\+Coord\+T n, const Im\+T \&im) const }{set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ImT $>$ void Image\+Format1\+D\+Base\+::set\+\_\+image\+\_\+in\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n, }
+\item[{const ImT \&}]{im}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{}\label{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}
+
+
+Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!set\+\_\+size@{set\+\_\+size}}
+\index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{set\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{set_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::set\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{}\label{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}
+
+
+Definition at line 30 of file Image\+Format1\+D\+Base.\+cpp.
+
+
+
+References mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size(), and mappel\+::\+Image\+Format1\+D\+Base\+::size.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!estimator\+\_\+names@{estimator\+\_\+names}}
+\index{estimator\+\_\+names@{estimator\+\_\+names}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{estimator\+\_\+names}{estimator_names}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ std\+::string $>$ mappel\+::\+Poisson\+Noise1\+D\+Objective\+::estimator\+\_\+names\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PoissonNoise1DObjective_a985200133fb3e5bfdf8755296cf700eb}{}\label{classmappel_1_1PoissonNoise1DObjective_a985200133fb3e5bfdf8755296cf700eb}
+
+
+Definition at line 24 of file Poisson\+Noise1\+D\+Objective.\+h.
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}}
+\index{global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+size}{global_max_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::global\+\_\+max\+\_\+size = 512\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}{}\label{classmappel_1_1ImageFormat1DBase_a5aafad20e635eae6f3609af56abad3ad}
+Maximum size along any dimension of the image. This is insanely big to catch obvious errors 
+
+Definition at line 40 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size().
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}}
+\index{global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{global\+\_\+min\+\_\+size}{global_min_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::global\+\_\+min\+\_\+size = 3\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}{}\label{classmappel_1_1ImageFormat1DBase_a27c75df8b3d83856d7c2c42ee987af89}
+Minimum size along any dimension of the image. 
+
+Definition at line 39 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size().
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!num\+\_\+dim@{num\+\_\+dim}}
+\index{num\+\_\+dim@{num\+\_\+dim}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{num\+\_\+dim}{num_dim}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format1\+D\+Base\+::\+Image\+CoordT} Image\+Format1\+D\+Base\+::num\+\_\+dim = 1\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}{}\label{classmappel_1_1ImageFormat1DBase_af81159de9010c3618d2f69349c1f2368}
+Number of image dimensions. 
+
+Definition at line 38 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
+
+\index{mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}!size@{size}}
+\index{size@{size}!mappel\+::\+Poisson\+Noise1\+D\+Objective@{mappel\+::\+Poisson\+Noise1\+D\+Objective}}
+\paragraph[{\texorpdfstring{size}{size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+SizeT} mappel\+::\+Image\+Format1\+D\+Base\+::size\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{}\label{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}
+Number of pixels in X dimension for 1D image 
+
+Definition at line 64 of file Image\+Format1\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+image\+\_\+shape(), mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+num\+\_\+pixels(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+size(), mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Image\+Format1\+D\+Base\+::make\+\_\+image(), mappel\+::\+Image\+Format1\+D\+Base\+::make\+\_\+image\+\_\+stack(), mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size(), mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+Stencil(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+Stencil().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{PoissonNoise1DObjective_8h}{Poisson\+Noise1\+D\+Objective.\+h}\item 
+\hyperlink{PoissonNoise1DObjective_8cpp}{Poisson\+Noise1\+D\+Objective.\+cpp}\end{DoxyCompactItemize}

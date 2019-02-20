@@ -1,0 +1,150 @@
+\hypertarget{stencil_8h}{}\subsection{stencil.\+h File Reference}
+\label{stencil_8h}\index{stencil.\+h@{stencil.\+h}}
+
+
+The stencils for pixel based computations.  
+
+
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$climits$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/rng.\+h\char`\"{}}\\*
+Include dependency graph for stencil.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stencil_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stencil_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{namespacemappel_afdf826a9bc6ea906415c89f1e7087f1a}{mappel\+::gauss\+\_\+norm} (double sigma)
+\item 
+void \hyperlink{namespacemappel_a0bd2fc62ed44e755a6777d1209fe6bac}{mappel\+::fill\+\_\+d\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, double theta\+\_\+x)
+\item 
+void \hyperlink{namespacemappel_a5ca82edc201e8605107a991493ad0d5e}{mappel\+::fill\+\_\+\+G\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double dx\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_ab6a11cd06ff348138cb04635b03a6de2}{mappel\+::fill\+\_\+\+X\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double dx\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_ad2dd4330fc626fa673a3acf691d6b9a7}{mappel\+::fill\+\_\+\+D\+X\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double Gx\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_ab0cb62f6dcecae5ff19468d87a283e7a}{mappel\+::fill\+\_\+\+D\+X\+S\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double dx\mbox{[}$\,$\mbox{]}, const double Gx\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_a445e83c8273da9b3a50cc10d038ed612}{mappel\+::fill\+\_\+\+D\+X\+S2\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double dx\mbox{[}$\,$\mbox{]}, const double Gx\mbox{[}$\,$\mbox{]}, const double D\+XS\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_ad3a6553e54dc90232fc04c93731fc69c}{mappel\+::fill\+\_\+\+D\+X\+S\+X\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, const double dx\mbox{[}$\,$\mbox{]}, const double Gx\mbox{[}$\,$\mbox{]}, const double DX\mbox{[}$\,$\mbox{]}, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_ac9d449b0121b33962da2c9c13cbb593c}{mappel\+::make\+\_\+d\+\_\+stencil} (int size, double theta\+\_\+x)
+\item 
+VecT \hyperlink{namespacemappel_aa5c2f294298c875605ee1e9876b7d116}{mappel\+::make\+\_\+\+G\+\_\+stencil} (int size, const VecT \&dx, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_a7b50d0a17c085d9b25b91c2b17ecb1cc}{mappel\+::make\+\_\+\+X\+\_\+stencil} (int size, const VecT \&dx, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_a8da88490d6ff7d5886b96b66c1bab369}{mappel\+::make\+\_\+\+D\+X\+\_\+stencil} (int size, const VecT \&Gx, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_af7636db506977133c8b30d108fede711}{mappel\+::make\+\_\+\+D\+X\+S\+\_\+stencil} (int size, const VecT \&dx, const VecT \&Gx, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_aef14b765af6f9b85d93f42ab8b84311b}{mappel\+::make\+\_\+\+D\+X\+S2\+\_\+stencil} (int size, const VecT \&dx, const VecT \&Gx, const VecT \&D\+XS, double theta\+\_\+sigma)
+\item 
+VecT \hyperlink{namespacemappel_abccec04f04b0b10940779c9bbae0e570}{mappel\+::make\+\_\+\+D\+X\+S\+X\+\_\+stencil} (int size, const VecT \&dx, const VecT \&Gx, const VecT \&DX, double theta\+\_\+sigma)
+\item 
+void \hyperlink{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}{mappel\+::fill\+\_\+gaussian\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, double sigma)
+\item 
+VecT \hyperlink{namespacemappel_ae7764483ad8e545319cacd2e91a1a849}{mappel\+::make\+\_\+gaussian\+\_\+stencil} (int size, double sigma)
+\item 
+void \hyperlink{namespacemappel_a3b80821e227772c7480e6d5d27090593}{mappel\+::estimate\+\_\+gaussian\+\_\+2\+Dmax} (const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil, int max\+\_\+pos\mbox{[}$\,$\mbox{]}, double \&min\+\_\+val)
+\item 
+void \hyperlink{namespacemappel_ae0365a07ea08b7deae147915077091c8}{mappel\+::refine\+\_\+gaussian\+\_\+2\+Dmax} (const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil, int max\+\_\+pos\mbox{[}$\,$\mbox{]})
+\item 
+double \hyperlink{namespacemappel_a93917141391e8f1ac5b4b5b0712cd29c}{mappel\+::gaussian\+\_\+convolution} (int x, int y, const MatT \&data, const VecT \&Xstencil, const VecT \&Ystencil)
+\item 
+void \hyperlink{namespacemappel_a2d597c426bd6287ad1a506511a68c9c2}{mappel\+::estimate\+\_\+gaussian\+\_\+3\+Dmax} (const CubeT \&data, const Vec\+FieldT \&stencils, int max\+\_\+pos\mbox{[}$\,$\mbox{]}, double \&min\+\_\+val)
+\item 
+void \hyperlink{namespacemappel_ab65cc5c100590b4b5246984162e3e678}{mappel\+::refine\+\_\+gaussian\+\_\+3\+Dmax} (const CubeT \&data, const Vec\+FieldT \&stencils, int max\+\_\+pos\mbox{[}$\,$\mbox{]})
+\item 
+double \hyperlink{namespacemappel_af7eb6e00596bd775bfefa5b8d826241d}{mappel\+::gaussian\+\_\+3\+D\+\_\+convolution} (int x, int y, int z, const CubeT \&data, const Vec\+FieldT \&stencils)
+\item 
+double \hyperlink{namespacemappel_ad6479b1e317a5f3bd2b92bfb562938d5}{mappel\+::poisson\+\_\+log\+\_\+likelihood} (double model\+\_\+val, double data\+\_\+val)
+\item 
+double \hyperlink{namespacemappel_a6e36ec38eee9f05906f51d4db8767b9e}{mappel\+::relative\+\_\+poisson\+\_\+log\+\_\+likelihood} (double model\+\_\+val, double data\+\_\+val)
+\item 
+double \hyperlink{namespacemappel_a9cd993c2d585a15b80f46d8d97381a0f}{mappel\+::check\+\_\+lower\+\_\+bound\+\_\+hyperparameter} (const char $\ast$name, double value, double lower\+\_\+bound)
+\item 
+double \hyperlink{namespacemappel_a545d3aeb521b1d098e8f060fbd24d5b3}{mappel\+::check\+\_\+positive\+\_\+hyperparameter} (const char $\ast$name, double value, double hyperprior\+\_\+epsilon=1\+E-\/6)
+\item 
+double \hyperlink{namespacemappel_af170ce3945b79af54277394ff3f62843}{mappel\+::check\+\_\+unit\+\_\+hyperparameter} (const char $\ast$name, double value, double hyperprior\+\_\+epsilon=1\+E-\/6)
+\item 
+double \hyperlink{namespacemappel_a9ca8f4d711a32790757590f2c60fa4cb}{mappel\+::log\+\_\+prior\+\_\+beta\+\_\+const} (double beta)
+\item 
+double \hyperlink{namespacemappel_aa76d20f90640303c9be2fd56a064aa56}{mappel\+::log\+\_\+prior\+\_\+beta2\+\_\+const} (double beta0, double beta1)
+\item 
+double \hyperlink{namespacemappel_a0485d74207be2d753c06a572693dd365}{mappel\+::log\+\_\+prior\+\_\+gamma\+\_\+const} (double kappa, double mean)
+\item 
+double \hyperlink{namespacemappel_ac21a7ae00d6e2d4baf30cbccc07ba70e}{mappel\+::log\+\_\+prior\+\_\+pareto\+\_\+const} (double alpha, double min)
+\item 
+double \hyperlink{namespacemappel_a514175d403ab15aa5bd58d0f96d8f79d}{mappel\+::log\+\_\+prior\+\_\+normal\+\_\+const} (double sigma)
+\item 
+double \hyperlink{namespacemappel_aba911d3a1a1a486fd6f6dfdfad37d90a}{mappel\+::rllh\+\_\+beta\+\_\+prior} (double beta, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_aaf6a672122290a7cb20a0d1c65661db7}{mappel\+::rllh\+\_\+beta2\+\_\+prior} (double beta0, double beta1, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_ac76807de851d24f1b720629ad9062cb2}{mappel\+::rllh\+\_\+gamma\+\_\+prior} (double kappa, double mean, double v)
+\item 
+double \hyperlink{namespacemappel_a2a07cb3a2c6ccd588241807747f3bd56}{mappel\+::rllh\+\_\+pareto\+\_\+prior} (double alpha, double v)
+\item 
+double \hyperlink{namespacemappel_a83c043a3c96a38aff92e40445f1ffd7a}{mappel\+::rllh\+\_\+normal\+\_\+prior} (double mu, double sigma)
+\item 
+double \hyperlink{namespacemappel_a077bd23f694399652e8e3a3be5758688}{mappel\+::beta\+\_\+prior\+\_\+grad} (double beta, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_a2b820140eb5c93d7d256a30fc6137ef8}{mappel\+::beta2\+\_\+prior\+\_\+grad} (double beta0, double beta1, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_a0f4c641d9784a4688faa26c126e28fa2}{mappel\+::gamma\+\_\+prior\+\_\+grad} (double kappa, double mean, double v)
+\item 
+double \hyperlink{namespacemappel_a39593a3b69416194cd751ce9d14c6ac3}{mappel\+::pareto\+\_\+prior\+\_\+grad} (double alpha, double v)
+\item 
+double \hyperlink{namespacemappel_a4cf075a8296209b3ad86ea5b0e1f69b3}{mappel\+::normal\+\_\+prior\+\_\+grad} (double mu, double sigma)
+\item 
+double \hyperlink{namespacemappel_a6a36b8a34be04643747e178a8358251c}{mappel\+::beta\+\_\+prior\+\_\+grad2} (double beta, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_af516b8782a35f0983f0184d8d907df5e}{mappel\+::beta2\+\_\+prior\+\_\+grad2} (double beta0, double beta1, double v, double max=1., double min=0.)
+\item 
+double \hyperlink{namespacemappel_a09f684e270fef9279b5eabff96e54edb}{mappel\+::gamma\+\_\+prior\+\_\+grad2} (double kappa, double v)
+\item 
+double \hyperlink{namespacemappel_ada81641eef9ad6a8741e8919ad5c13b9}{mappel\+::pareto\+\_\+prior\+\_\+grad2} (double alpha, double v)
+\item 
+double \hyperlink{namespacemappel_ab4d747ffc0e3113c61dc115210c4225f}{mappel\+::normal\+\_\+prior\+\_\+grad} (double sigma)
+\item 
+double \hyperlink{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}{mappel\+::normal\+\_\+quantile\+\_\+twosided} (double confidence)
+\item 
+double \hyperlink{namespacemappel_a7cf2f920819c8899c4f01d25072412db}{mappel\+::normal\+\_\+quantile\+\_\+onesided} (double confidence)
+\item 
+double \hyperlink{namespacemappel_acf463f0ab903ab18560ce6c1a94be694}{mappel\+::rllh\+\_\+normal\+\_\+prior} (double mu, double sigma, double v)
+\item 
+double \hyperlink{namespacemappel_a217d463069e4893cbae3574a7b91e68b}{mappel\+::normal\+\_\+prior\+\_\+grad} (double mu, double sigma, double v)
+\item 
+double \hyperlink{namespacemappel_af0854db4bba8cd5c5a782405867ada59}{mappel\+::normal\+\_\+prior\+\_\+grad2} (double sigma)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The stencils for pixel based computations. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+03-\/22-\/2014 
+\end{DoxyDate}

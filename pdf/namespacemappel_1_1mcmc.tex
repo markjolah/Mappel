@@ -1,0 +1,212 @@
+\hypertarget{namespacemappel_1_1mcmc}{}\subsection{mappel\+:\+:mcmc Namespace Reference}
+\label{namespacemappel_1_1mcmc}\index{mappel\+::mcmc@{mappel\+::mcmc}}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{namespacemappel_1_1mcmc_a29219ed7564edad6489889dc2ec2a0d6}{num\+\_\+oversample} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin)
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{namespacemappel_1_1mcmc_a2930a61f34237af553702ddaaf72c5b5}{thin\+\_\+sample} (\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin)
+\item 
+void \hyperlink{namespacemappel_1_1mcmc_a9e20794d8718ad2230529af28855e542}{thin\+\_\+sample} (const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nburnin, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} thin, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&subsample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&subsample\+\_\+rllh)
+\item 
+void \hyperlink{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735}{estimate\+\_\+sample\+\_\+posterior} (const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&theta\+\_\+posterior\+\_\+mean, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&theta\+\_\+posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce}{sample\+\_\+posterior} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&im, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159}{sample\+\_\+posterior\+\_\+debug} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&im, const \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&candidate, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&candidate\+\_\+rllh)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Function Documentation}
+\index{mappel\+::mcmc@{mappel\+::mcmc}!estimate\+\_\+sample\+\_\+posterior@{estimate\+\_\+sample\+\_\+posterior}}
+\index{estimate\+\_\+sample\+\_\+posterior@{estimate\+\_\+sample\+\_\+posterior}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{estimate\+\_\+sample\+\_\+posterior(const Mat\+T \&sample, Vec\+T \&theta\+\_\+posterior\+\_\+mean, Mat\+T \&theta\+\_\+posterior\+\_\+cov)}{estimate_sample_posterior(const MatT &sample, VecT &theta_posterior_mean, MatT &theta_posterior_cov)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::mcmc\+::estimate\+\_\+sample\+\_\+posterior (
+\begin{DoxyParamCaption}
+\item[{const {\bf MatT} \&}]{sample, }
+\item[{{\bf VecT} \&}]{theta\+\_\+posterior\+\_\+mean, }
+\item[{{\bf MatT} \&}]{theta\+\_\+posterior\+\_\+cov}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735}{}\label{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735}
+
+
+Definition at line 25 of file mcmc.\+h.
+
+
+
+Referenced by mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+posterior().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::mcmc@{mappel\+::mcmc}!num\+\_\+oversample@{num\+\_\+oversample}}
+\index{num\+\_\+oversample@{num\+\_\+oversample}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{num\+\_\+oversample(\+Idx\+T Nsample, Idx\+T Nburnin, Idx\+T thin)}{num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::num\+\_\+oversample (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{Nsample, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1mcmc_a29219ed7564edad6489889dc2ec2a0d6}{}\label{namespacemappel_1_1mcmc_a29219ed7564edad6489889dc2ec2a0d6}
+
+
+Definition at line 7 of file mcmc.\+cpp.
+
+
+
+Referenced by mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a29219ed7564edad6489889dc2ec2a0d6_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::mcmc@{mappel\+::mcmc}!sample\+\_\+posterior@{sample\+\_\+posterior}}
+\index{sample\+\_\+posterior@{sample\+\_\+posterior}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{sample\+\_\+posterior(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&im, const Stencil\+T$<$ Model $>$ \&theta\+\_\+init, Mat\+T \&sample, Vec\+T \&sample\+\_\+rllh)}{sample_posterior(Model &model, const ModelDataT< Model > &im, const StencilT< Model > &theta_init, MatT &sample, VecT &sample_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::mcmc\+::sample\+\_\+posterior (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{im, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf MatT} \&}]{sample, }
+\item[{{\bf VecT} \&}]{sample\+\_\+rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce}{}\label{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce}
+
+
+Definition at line 32 of file mcmc.\+h.
+
+
+
+References mappel\+::methods\+::objective\+::rllh().
+
+
+
+Referenced by mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::mcmc@{mappel\+::mcmc}!sample\+\_\+posterior\+\_\+debug@{sample\+\_\+posterior\+\_\+debug}}
+\index{sample\+\_\+posterior\+\_\+debug@{sample\+\_\+posterior\+\_\+debug}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{sample\+\_\+posterior\+\_\+debug(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&im, const Stencil\+T$<$ Model $>$ \&theta\+\_\+init, Mat\+T \&sample, Vec\+T \&sample\+\_\+rllh, Mat\+T \&candidate, Vec\+T \&candidate\+\_\+rllh)}{sample_posterior_debug(Model &model, const ModelDataT< Model > &im, const StencilT< Model > &theta_init, MatT &sample, VecT &sample_rllh, MatT &candidate, VecT &candidate_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug (
+\begin{DoxyParamCaption}
+\item[{Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{im, }
+\item[{const {\bf StencilT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf MatT} \&}]{sample, }
+\item[{{\bf VecT} \&}]{sample\+\_\+rllh, }
+\item[{{\bf MatT} \&}]{candidate, }
+\item[{{\bf VecT} \&}]{candidate\+\_\+rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159}{}\label{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159}
+
+
+Definition at line 64 of file mcmc.\+h.
+
+
+
+References mappel\+::methods\+::objective\+::rllh().
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+debug().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::mcmc@{mappel\+::mcmc}!thin\+\_\+sample@{thin\+\_\+sample}}
+\index{thin\+\_\+sample@{thin\+\_\+sample}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{thin\+\_\+sample(\+Mat\+T \&sample, Idx\+T Nburnin, Idx\+T thin)}{thin_sample(MatT &sample, IdxT Nburnin, IdxT thin)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::thin\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{{\bf MatT} \&}]{sample, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1mcmc_a2930a61f34237af553702ddaaf72c5b5}{}\label{namespacemappel_1_1mcmc_a2930a61f34237af553702ddaaf72c5b5}
+
+
+Definition at line 13 of file mcmc.\+cpp.
+
+
+
+Referenced by mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=337pt]{namespacemappel_1_1mcmc_a2930a61f34237af553702ddaaf72c5b5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::mcmc@{mappel\+::mcmc}!thin\+\_\+sample@{thin\+\_\+sample}}
+\index{thin\+\_\+sample@{thin\+\_\+sample}!mappel\+::mcmc@{mappel\+::mcmc}}
+\paragraph[{\texorpdfstring{thin\+\_\+sample(const Mat\+T \&sample, const Vec\+T \&sample\+\_\+rllh, Idx\+T Nburnin, Idx\+T thin, Mat\+T \&subsample, Vec\+T \&subsample\+\_\+rllh)}{thin_sample(const MatT &sample, const VecT &sample_rllh, IdxT Nburnin, IdxT thin, MatT &subsample, VecT &subsample_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::mcmc\+::thin\+\_\+sample (
+\begin{DoxyParamCaption}
+\item[{const {\bf MatT} \&}]{sample, }
+\item[{const {\bf VecT} \&}]{sample\+\_\+rllh, }
+\item[{{\bf IdxT}}]{Nburnin, }
+\item[{{\bf IdxT}}]{thin, }
+\item[{{\bf MatT} \&}]{subsample, }
+\item[{{\bf VecT} \&}]{subsample\+\_\+rllh}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1mcmc_a9e20794d8718ad2230529af28855e542}{}\label{namespacemappel_1_1mcmc_a9e20794d8718ad2230529af28855e542}
+
+
+Definition at line 24 of file mcmc.\+cpp.
+

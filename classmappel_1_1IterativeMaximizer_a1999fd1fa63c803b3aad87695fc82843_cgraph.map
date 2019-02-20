@@ -1,0 +1,8 @@
+<map id="mappel::IterativeMaximizer::compute_profile_estimate" name="mappel::IterativeMaximizer::compute_profile_estimate">
+<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer.html#a4d05ed89de53e6e73f2f13bef30862ec" title="mappel::IterativeMaximizer\l::maximize" alt="" coords="227,5,395,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af2e61c659a8cc78365bd801026c2f6a9" title="mappel::IterativeMaximizer\l::MaximizerData::record_exit" alt="" coords="223,68,400,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1IterativeMaximizer.html#af5614c292f139b5032b733a8d6fdf73e" title="mappel::IterativeMaximizer\l::record_run_statistics" alt="" coords="227,131,395,169"/>
+<area shape="rect" id="node6" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aeff700342cb52da0b5b0d8edb3dac020" title="mappel::IterativeMaximizer\l::MaximizerData::set_fixed\l_parameters" alt="" coords="227,193,395,245"/>
+<area shape="rect" id="node7" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac6ed5231a1ac2f4bfdd51a2800212fea" title="Get the current stencil&#39;s theta. " alt="" coords="227,269,395,308"/>
+<area shape="rect" id="node5" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac9d06c390f911f733c3912dbdcbae954" title="mappel::IterativeMaximizer\l::MaximizerData::get_backtrack_idxs" alt="" coords="448,131,669,169"/>
+</map>

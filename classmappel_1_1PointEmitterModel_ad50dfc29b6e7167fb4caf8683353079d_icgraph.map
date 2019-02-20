@@ -1,0 +1,12 @@
+<map id="mappel::PointEmitterModel::theta_in_bounds" name="mappel::PointEmitterModel::theta_in_bounds">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel.html#a4bb4e53073e2c45b9a63b942214b787c" title="mappel::Gauss2DModel\l::initial_theta_estimate" alt="" coords="445,16,600,55"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsModel.html#a70e079fd6b31bc6af5b7c10d2a0d8fb5" title="mappel::Gauss2DsModel\l::initial_theta_estimate" alt="" coords="443,290,603,328"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DModel.html#a3068438846f29467b2df5a8504151c20" title="Make a new Model::Stencil object at theta. " alt="" coords="231,107,386,146"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DsModel.html#a6c252dd37b7e6b317a9815cda4ef8d5e" title="Make a new Model::Stencil object at theta. " alt="" coords="229,170,389,208"/>
+<area shape="rect" id="node8" href="$classmappel_1_1Gauss2DModel.html#a584652e2d4ac0b27e870a21150c035a2" title="Make a new Model::Stencil object at theta. " alt="" coords="231,44,386,83"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss2DsxyModel.html#aab03b318c452c45c9fcf2f363e9c1e8f" title="Make a new Model::Stencil object at theta. " alt="" coords="223,284,395,323"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Gauss2DsModel.html#a797aeb7c17a24a7df89597789a0eacb4" title="Make a new Model::Stencil object at theta. " alt="" coords="229,347,389,386"/>
+<area shape="rect" id="node11" href="$classmappel_1_1PointEmitterModel.html#a7b6a59b4bc796b440025cffb7a6159f8" title="mappel::PointEmitterModel\l::theta_stack_in_bounds" alt="" coords="224,410,393,448"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss1DModel.html#a4c4e01a489a6d8f7b119dd50b51610c2" title="mappel::Gauss1DModel\l::initial_theta_estimate" alt="" coords="445,107,600,146"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DsModel.html#ad987432d37b221f7fa01605d1bef0bbe" title="mappel::Gauss1DsModel\l::initial_theta_estimate" alt="" coords="443,170,603,208"/>
+</map>

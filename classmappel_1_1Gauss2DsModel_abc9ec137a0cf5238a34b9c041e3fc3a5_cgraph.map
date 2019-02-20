@@ -1,0 +1,8 @@
+<map id="mappel::Gauss2DsModel::pixel_hess_update" name="mappel::Gauss2DsModel::pixel_hess_update">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#ac3c9d93e5830a73edf06e203c6beabb9" title="mappel::Gauss2DsModel\l::Stencil::I" alt="" coords="431,83,591,122"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PointEmitterModel.html#a1cd8ff64ce4132b6eaa8655696885749" title="mappel::PointEmitterModel\l::make_param" alt="" coords="213,35,383,74"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsModel.html#a8c46a4ca74f2aa48e6607fb998a2e22d" title="mappel::Gauss2DsModel\l::pixel_grad" alt="" coords="218,98,378,136"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#adab71d870d1b32f78e85d273dd7bd006" title="mappel::Gauss2DsModel\l::Stencil::sigmaX" alt="" coords="218,160,378,199"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#abc29f317d508c398a3fcc337a1fb8d1f" title="mappel::Gauss2DsModel\l::Stencil::sigmaY" alt="" coords="218,223,378,262"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#a98f618270de5ff947a1ed9800dffd977" title="mappel::Gauss2DsModel\l::Stencil::sigma_ratio" alt="" coords="431,176,591,215"/>
+</map>

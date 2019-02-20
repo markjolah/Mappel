@@ -1,0 +1,121 @@
+\hypertarget{util_8h}{}\subsection{util.\+h File Reference}
+\label{util_8h}\index{util.\+h@{util.\+h}}
+{\ttfamily \#include $<$cstdint$>$}\\*
+{\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include $<$memory$>$}\\*
+{\ttfamily \#include $<$utility$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$armadillo$>$}\\*
+{\ttfamily \#include $<$Backtrace\+Exception/\+Backtrace\+Exception.\+h$>$}\\*
+Include dependency graph for util.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{util_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{util_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmappel_1_1ParameterValueError}{mappel\+::\+Parameter\+Value\+Error}
+\begin{DoxyCompactList}\small\item\em Parameter value is not valid. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1ArrayShapeError}{mappel\+::\+Array\+Shape\+Error}
+\begin{DoxyCompactList}\small\item\em Array is not of the right dimensionality. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1ArraySizeError}{mappel\+::\+Array\+Size\+Error}
+\begin{DoxyCompactList}\small\item\em Array is not of the right size. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1ModelBoundsError}{mappel\+::\+Model\+Bounds\+Error}
+\begin{DoxyCompactList}\small\item\em Access outside the model bounds is attempted. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1NumericalError}{mappel\+::\+Numerical\+Error}
+\begin{DoxyCompactList}\small\item\em Expected numerical condition does not hold. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1LogicalError}{mappel\+::\+Logical\+Error}
+\begin{DoxyCompactList}\small\item\em Failure of code or algorithm logic. \end{DoxyCompactList}\item 
+struct \hyperlink{structmappel_1_1NotImplementedError}{mappel\+::\+Not\+Implemented\+Error}
+\begin{DoxyCompactList}\small\item\em Feature not yet implemented. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{namespacemappel_a74f3ebfb073cdde8b57926847deb4daa}{mappel\+::\+BoolT} = uint16\+\_\+t
+\item 
+using \hyperlink{namespacemappel_a167d761ecce3cafb6f98c00c16bdb523}{mappel\+::\+Bool\+VecT} = arma\+::\+Col$<$ uint16\+\_\+t $>$
+\item 
+using \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{mappel\+::\+IdxT} = arma\+::uword
+\item 
+using \hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{mappel\+::\+Idx\+VecT} = arma\+::\+Col$<$ IdxT $>$
+\item 
+using \hyperlink{namespacemappel_a08989eafa9aeb1a4c3ec773614297d0d}{mappel\+::\+Idx\+MatT} = arma\+::\+Mat$<$ IdxT $>$
+\item 
+using \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{mappel\+::\+VecT} = arma\+::vec
+\item 
+using \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{mappel\+::\+MatT} = arma\+::mat
+\item 
+using \hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{mappel\+::\+CubeT} = arma\+::cube
+\item 
+using \hyperlink{namespacemappel_a834ec4f32487f07c0ca1e22d4928d1f8}{mappel\+::\+Vec\+FieldT} = arma\+::field$<$ VecT $>$
+\item 
+using \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{mappel\+::\+StatsT} = std\+::map$<$ std\+::string, double $>$
+\item 
+using \hyperlink{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{mappel\+::\+String\+VecT} = std\+::vector$<$ std\+::string $>$
+\item 
+{\footnotesize template$<$class ModelT , class Model\+BaseT $>$ }\\using \hyperlink{namespacemappel_a5ee1448a35c267ee0bc4b8f1a2e09615}{mappel\+::\+Enable\+If\+SubclassT} = typename std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Model\+BaseT, ModelT $>$\+::value, void $>$\+::type
+\item 
+{\footnotesize template$<$class ReturnT , class ModelT , class Model\+BaseT $>$ }\\using \hyperlink{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{mappel\+::\+Return\+If\+SubclassT} = typename std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Model\+BaseT, ModelT $>$\+::value, ReturnT $>$\+::type
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a3ca6340183a2876d6bb6da936f1b667d}{mappel\+::\+Image\+CoordT} = typename Model\+::\+Image\+CoordT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a0b957a712590555ab00a1d0617a7f66f}{mappel\+::\+Image\+PixelT} = typename Model\+::\+Image\+PixelT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{mappel\+::\+ParamT} = typename Model\+::\+ParamT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{mappel\+::\+Param\+VecT} = typename Model\+::\+Param\+VecT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{mappel\+::\+ImageT} = typename Model\+::\+ImageT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{mappel\+::\+Model\+DataT} = typename Model\+::\+Model\+DataT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{mappel\+::\+StencilT} = typename Model\+::\+Stencil
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a636dbe5b195c267a5f6a65cd48ff94a6}{mappel\+::\+Image\+StackT} = typename Model\+::\+Image\+StackT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{mappel\+::\+Model\+Data\+StackT} = typename Model\+::\+Model\+Data\+StackT
+\item 
+{\footnotesize template$<$class Model $>$ }\\using \hyperlink{namespacemappel_a62f73447ef1973cca188b1b801864f7e}{mappel\+::\+Stencil\+VecT} = typename Model\+::\+Stencil\+VecT
+\item 
+using \hyperlink{namespacemappel_a9a55f6aee1523ba336066874a36dc29c}{mappel\+::\+Mappel\+Error} = backtrace\+\_\+exception\+::\+Backtrace\+Exception
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{namespacemappel_aba8aaabfad30754642d7d5ba791e4e37}{mappel\+::enable\+\_\+all\+\_\+cpus} ()
+\item 
+bool \hyperlink{namespacemappel_a610296a93ba507763bc770d39049f323}{mappel\+::istarts\+\_\+with} (const char $\ast$s, const char $\ast$pattern)
+\item 
+bool \hyperlink{namespacemappel_ab9264c8a764d4c5f4e3dd4343055d7d3}{mappel\+::istarts\+\_\+with} (const std\+::string \&str, const char $\ast$pattern)
+\item 
+const char $\ast$ \hyperlink{namespacemappel_aadd3347168b25dd7a097676d342e3ef8}{mappel\+::icontains} (const char $\ast$s, const char $\ast$pattern)
+\item 
+int \hyperlink{namespacemappel_abd020db8cce0baee03e09251e1a78e78}{mappel\+::maxidx} (const VecT \&v)
+\item 
+{\footnotesize template$<$typename T $>$ }\\int \hyperlink{namespacemappel_a0afb4ee3661d53a85a1091164f27a8fb}{mappel\+::sgn} (T val)
+\begin{DoxyCompactList}\small\item\em sign (signum) function\+: -\/1/0/1 \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename T $>$ }\\T \hyperlink{namespacemappel_a8475cdb3edacceb0ae215c3ebd1f33c1}{mappel\+::square} (T x)
+\item 
+double \hyperlink{namespacemappel_a8f4c92d0dd53d394b53df80013d8d730}{mappel\+::restrict\+\_\+value\+\_\+range} (double val, double minval, double maxval)
+\item 
+{\footnotesize template$<$typename T , typename... Args$>$ }\\std\+::unique\+\_\+ptr$<$ T $>$ \hyperlink{namespacemappel_a965a7374aa364331ed67aae33205aa9c}{mappel\+::make\+\_\+unique} (Args \&\&...args)
+\item 
+std\+::ostream \& \hyperlink{namespacemappel_ac61f8d2289377a38008fb499003a3893}{mappel\+::operator$<$$<$} (std\+::ostream \&out, const StatsT \&stats)
+\end{DoxyCompactItemize}

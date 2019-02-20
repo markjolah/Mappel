@@ -1,0 +1,11 @@
+<map id="mappel::Gauss2DModel::set_prior" name="mappel::Gauss2DModel::set_prior">
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html#a8ee7d3d5b4c1ae4500f802170a958ed7" title="mappel::PointEmitterModel\l::set_prior" alt="" coords="208,5,377,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DModel.html#a221f765c48f478177f150c08733e9d29" title="mappel::Gauss2DModel\l::update_internal_1Dsum\l_estimators" alt="" coords="213,68,373,120"/>
+<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html#a2182c250c15d590b582e76594e5f06b9" title="mappel::PointEmitterModel\l::get_prior" alt="" coords="425,40,595,79"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DModel.html#a0981f99341c0f6f63554680ce165df66" title="mappel::Gauss2DModel\l::make_internal_1Dsum\l_estimator" alt="" coords="433,103,587,155"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss1DModel.html#a808fde22a0fb00140b4ba60e7df685eb" title="mappel::Gauss1DModel\l::make_prior_beta_position" alt="" coords="650,77,821,116"/>
+<area shape="rect" id="node9" href="$classmappel_1_1Gauss1DModel.html#ab4fc9aafd94b2dd6532ef71f2ea47619" title="mappel::Gauss1DModel\l::make_prior_normal_position" alt="" coords="643,140,828,179"/>
+<area shape="rect" id="node7" href="$classmappel_1_1PointEmitterModel.html#a4517e887a22007bd2e03650dcb853c92" title="mappel::PointEmitterModel\l::make_prior_component\l_intensity" alt="" coords="876,101,1045,153"/>
+<area shape="rect" id="node8" href="$classmappel_1_1PointEmitterModel.html#ad4d563dd11df8c3daf83890374807185" title="mappel::PointEmitterModel\l::make_prior_component\l_position_beta" alt="" coords="876,25,1045,77"/>
+<area shape="rect" id="node10" href="$classmappel_1_1PointEmitterModel.html#ab99350cf74097c558f7a93b79e7a44c3" title="mappel::PointEmitterModel\l::make_prior_component\l_position_normal" alt="" coords="876,177,1045,229"/>
+</map>

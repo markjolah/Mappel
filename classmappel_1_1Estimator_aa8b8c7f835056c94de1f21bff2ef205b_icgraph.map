@@ -1,0 +1,7 @@
+<map id="mappel::Estimator::compute_estimate" name="mappel::Estimator::compute_estimate">
+<area shape="rect" id="node2" href="$classmappel_1_1HeuristicEstimator.html#a6c9efb24639627b3f3b3eb151e02d43b" title="mappel::HeuristicEstimator\l::name" alt="" coords="221,5,389,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1CGaussHeuristicEstimator.html#aaff25d03e3c0f6f41d72f161c4d2f78a" title="mappel::CGaussHeuristicEstimator\l::name" alt="" coords="199,68,411,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1CGaussMLE.html#af18f123ff581a8ef7332c38d66c6bd42" title="mappel::CGaussMLE::name" alt="" coords="218,131,393,156"/>
+<area shape="rect" id="node5" href="$classmappel_1_1SimulatedAnnealingMaximizer.html#a76e0c1b5ca19fc31d10dded7b992e0cb" title="mappel::SimulatedAnnealing\lMaximizer::SimulatedAnnealingMaximizer" alt="" coords="180,180,431,219"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Estimator.html#a629823fa91d4b461b2b1f607d588e558" title="mappel::Estimator::\l~Estimator" alt="" coords="242,243,369,281"/>
+</map>

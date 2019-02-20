@@ -1,0 +1,15 @@
+<map id="mappel::NewtonDiagonalMaximizer::maximize" name="mappel::NewtonDiagonalMaximizer::maximize">
+<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer.html#ac033d2b23a6a861e6d7adbe35f17624e" title="mappel::IterativeMaximizer\l::backtrack" alt="" coords="272,245,440,284"/>
+<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer.html#aef9b61d66d785a1a06dd2c75c3166435" title="mappel::IterativeMaximizer\l::convergence_test" alt="" coords="497,5,665,44"/>
+<area shape="rect" id="node14" href="$namespacemappel_1_1methods_1_1objective.html#a165388f45fa850f2b12c22053296a0c2" title="mappel::methods::objective\l::grad2" alt="" coords="271,308,441,347"/>
+<area shape="rect" id="node4" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af2e61c659a8cc78365bd801026c2f6a9" title="mappel::IterativeMaximizer\l::MaximizerData::record_exit" alt="" coords="724,128,901,167"/>
+<area shape="rect" id="node5" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aedc8670533fe0323a62e7def637875db" title="Get the saved stencil&#39;s theta. " alt="" coords="721,216,904,255"/>
+<area shape="rect" id="node7" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a8c82784b23315be8f74b968ee4188388" title="Record a backtracked point (no derivative computations performed) Using the saved theta as the defaul..." alt="" coords="497,384,665,436"/>
+<area shape="rect" id="node8" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a1096048bf29ccbc45e4a60dc6cbf7b2c" title="Record an iteration point (derivatives computed) Using the saved theta as the default. " alt="" coords="497,484,665,536"/>
+<area shape="rect" id="node9" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a5f65e52de343dbd012c3b3a7b463b792" title="Restore the single reserved stencil to the current stencil spot. Overwrites any previously saved sten..." alt="" coords="497,560,665,612"/>
+<area shape="rect" id="node10" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="496,636,667,675"/>
+<area shape="rect" id="node11" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a0349ede0482bdc352643e1eba2ab3f11" title="Save the current stencil to the single reserve spot. Overwrites any previously saved stencil..." alt="" coords="489,68,673,107"/>
+<area shape="rect" id="node12" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a295d06c20f4d620602eece746f4c7d85" title="mappel::IterativeMaximizer\l::MaximizerData::set_stencil" alt="" coords="494,131,669,169"/>
+<area shape="rect" id="node13" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a29ccc1aa8e5ecf505f4ca76f6b8b214e" title="Get the current stencil. " alt="" coords="497,245,665,284"/>
+<area shape="rect" id="node6" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac6ed5231a1ac2f4bfdd51a2800212fea" title="Get the current stencil&#39;s theta. " alt="" coords="729,5,897,44"/>
+</map>

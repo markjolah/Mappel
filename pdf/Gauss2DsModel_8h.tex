@@ -1,0 +1,57 @@
+\hypertarget{Gauss2DsModel_8h}{}\subsection{Gauss2\+Ds\+Model.\+h File Reference}
+\label{Gauss2DsModel_8h}\index{Gauss2\+Ds\+Model.\+h@{Gauss2\+Ds\+Model.\+h}}
+
+
+The class declaration and inline and templated functions for Gauss2\+Ds\+Model.  
+
+
+{\ttfamily \#include \char`\"{}Mappel/\+Point\+Emitter\+Model.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+Image\+Format2\+D\+Base.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+M\+C\+M\+C\+Adaptor2\+Ds.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/\+Gauss1\+Ds\+M\+A\+P.\+h\char`\"{}}\\*
+Include dependency graph for Gauss2\+Ds\+Model.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gauss2DsModel_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Gauss2DsModel_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1Gauss2DsModel}{mappel\+::\+Gauss2\+Ds\+Model}
+\begin{DoxyCompactList}\small\item\em A base class for 2D Gaussian P\+SF where the gaussian sigma is controlled by a single scalar parameter which is called sigma\+\_\+ratio. The size of the gaussian psf is sigma\+\_\+ratio$\ast$psf\+\_\+sigma, where psf\+\_\+sigma is considered as a vector \mbox{[}psf\+\_\+sigmaX, psf\+\_\+sigmaY\mbox{]}. \end{DoxyCompactList}\item 
+class \hyperlink{classmappel_1_1Gauss2DsModel_1_1Stencil}{mappel\+::\+Gauss2\+Ds\+Model\+::\+Stencil}
+\begin{DoxyCompactList}\small\item\em \hyperlink{classmappel_1_1Gauss2DsModel_1_1Stencil}{Stencil} for 2D scalar-\/sigma models. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Ds\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_a22a435e7e9c3da563ae988a31833408b}{mappel\+::cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Ds\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_afa049f05f9cb523f415e237dbd704c23}{mappel\+::cgauss\+\_\+compute\+\_\+estimate} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init, int max\+\_\+iterations)
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ Gauss2\+Ds\+Model, Model $>$\+::value, StencilT$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_a460a5be5bfa0074503b15ac4c1edb030}{mappel\+::cgauss\+\_\+compute\+\_\+estimate\+\_\+debug} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const ParamT$<$ Model $>$ \&theta\+\_\+init, int max\+\_\+iterations, Param\+VecT$<$ Model $>$ \&sequence)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The class declaration and inline and templated functions for Gauss2\+Ds\+Model. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2014-\/2019 
+\end{DoxyDate}

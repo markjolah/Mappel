@@ -1,0 +1,4 @@
+<map id="mappel::cholesky_solve" name="mappel::cholesky_solve">
+<area shape="rect" id="node2" href="$classmappel_1_1TrustRegionMaximizer.html#af32ed521848406591d8a77d5a8abb7be" title="mappel::TrustRegionMaximizer\l::solve_restricted_step_length_newton" alt="" coords="207,5,439,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1TrustRegionMaximizer.html#a3e6778bb5392353348ffe1c1c7a775b4" title="Exactly solver the TR subproblem even for non&#45;positive definite H. " alt="" coords="227,68,419,107"/>
+</map>

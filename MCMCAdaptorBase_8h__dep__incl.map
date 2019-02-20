@@ -1,0 +1,38 @@
+<map id="MCMCAdaptorBase.h" name="MCMCAdaptorBase.h">
+<area shape="rect" id="node2" href="$MCMCAdaptorBase_8cpp.html" title="The class definition and template Specializations for MCMCAdaptorBase. " alt="" coords="227,79,381,104"/>
+<area shape="rect" id="node3" href="$MCMCAdaptor1D_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor1D. " alt="" coords="405,79,534,104"/>
+<area shape="rect" id="node4" href="$MCMCAdaptor1D_8cpp.html" title="The class definition and template Specializations for MCMCAdaptor1D. " alt="" coords="197,152,339,177"/>
+<area shape="rect" id="node5" href="$Gauss1DModel_8h.html" title="The class declaration and inline and templated functions for Gauss1DModel. " alt="" coords="363,152,480,177"/>
+<area shape="rect" id="node19" href="$MCMCAdaptor1Ds_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor1Ds. " alt="" coords="835,152,970,177"/>
+<area shape="rect" id="node34" href="$MCMCAdaptor2D_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor2D. " alt="" coords="597,225,726,251"/>
+<area shape="rect" id="node6" href="$Gauss1DModel_8cpp.html" title="The class definition and template Specializations for Gauss1DModel. " alt="" coords="164,225,295,251"/>
+<area shape="rect" id="node7" href="$Gauss1DMAP_8h.html" title="The class declaration and inline and templated functions for Gauss1DMAP. " alt="" coords="319,225,428,251"/>
+<area shape="rect" id="node16" href="$Gauss1DMLE_8h.html" title="The class declaration and inline and templated functions for Gauss1DMLE. " alt="" coords="455,225,563,251"/>
+<area shape="rect" id="node18" href="$Gauss2DsxyMAP_8h.html" title="The class declaration and inline and templated functions for Gauss2DsxyMAP. " alt="" coords="13,225,139,251"/>
+<area shape="rect" id="node8" href="$estimator__statics_8cpp.html" title="estimator_statics.cpp" alt="" coords="152,299,288,324"/>
+<area shape="rect" id="node9" href="$Gauss1DMAP_8cpp.html" title="The class definition and template Specializations for Gauss1DMAP. " alt="" coords="5,299,128,324"/>
+<area shape="rect" id="node10" href="$Gauss2DModel_8h.html" title="The class declaration and inline and templated functions for Gauss2DModel. " alt="" coords="312,299,429,324"/>
+<area shape="rect" id="node11" href="$Gauss2DModel_8cpp.html" title="The class definition and template Specializations for Gauss2DModel. " alt="" coords="161,372,292,397"/>
+<area shape="rect" id="node12" href="$Gauss2DMAP_8h.html" title="The class declaration and inline and templated functions for Gauss2DMAP. " alt="" coords="316,372,425,397"/>
+<area shape="rect" id="node14" href="$Gauss2DMLE_8h.html" title="The class declaration and inline and templated functions for Gauss2DMLE. " alt="" coords="457,372,565,397"/>
+<area shape="rect" id="node13" href="$Gauss2DMAP_8cpp.html" title="The class definition and template Specializations for Gauss2DMAP. " alt="" coords="307,445,429,471"/>
+<area shape="rect" id="node15" href="$Gauss2DMLE_8cpp.html" title="The class definition and template Specializations for Gauss2DMLE. " alt="" coords="454,445,575,471"/>
+<area shape="rect" id="node17" href="$Gauss1DMLE_8cpp.html" title="The class definition and template Specializations for Gauss1DMLE. " alt="" coords="454,299,575,324"/>
+<area shape="rect" id="node20" href="$MCMCAdaptor1Ds_8cpp.html" title="The class definition and template Specializations for MCMCAdaptor1Ds. " alt="" coords="829,225,977,251"/>
+<area shape="rect" id="node21" href="$Gauss1DsModel_8h.html" title="The class declaration and inline and templated functions for Gauss1DsModel. " alt="" coords="1036,225,1159,251"/>
+<area shape="rect" id="node22" href="$Gauss1DsModel_8cpp.html" title="The class definition and template Specializations for Gauss1DsModel. " alt="" coords="1064,299,1200,324"/>
+<area shape="rect" id="node23" href="$Gauss1DsMAP_8h.html" title="The class declaration and inline and templated functions for Gauss1DsMAP. " alt="" coords="925,299,1040,324"/>
+<area shape="rect" id="node32" href="$Gauss1DsMLE_8h.html" title="The class declaration and inline and templated functions for Gauss1DsMLE. " alt="" coords="1231,299,1345,324"/>
+<area shape="rect" id="node24" href="$Gauss1DsMAP_8cpp.html" title="The class definition and template Specializations for Gauss1DsMAP. " alt="" coords="919,372,1047,397"/>
+<area shape="rect" id="node25" href="$Gauss2DsModel_8h.html" title="The class declaration and inline and templated functions for Gauss2DsModel. " alt="" coords="772,372,895,397"/>
+<area shape="rect" id="node31" href="$Gauss2DsxyModel_8h.html" title="The class declaration and inline and templated functions for Gauss2DsxyModel. " alt="" coords="1071,372,1206,397"/>
+<area shape="rect" id="node26" href="$Gauss2DsModel_8cpp.html" title="The class definition and template Specializations for Gauss2DsModel. " alt="" coords="616,445,752,471"/>
+<area shape="rect" id="node27" href="$Gauss2DsMAP_8h.html" title="The class declaration and inline and templated functions for Gauss2DsMAP. " alt="" coords="776,445,891,471"/>
+<area shape="rect" id="node29" href="$Gauss2DsMLE_8h.html" title="The class declaration and inline and templated functions for Gauss2DsMLE. " alt="" coords="921,445,1036,471"/>
+<area shape="rect" id="node28" href="$Gauss2DsMAP_8cpp.html" title="The class definition and template Specializations for Gauss2DsMAP. " alt="" coords="765,519,893,544"/>
+<area shape="rect" id="node30" href="$Gauss2DsMLE_8cpp.html" title="The class definition and template Specializations for Gauss2DsMLE. " alt="" coords="918,519,1045,544"/>
+<area shape="rect" id="node33" href="$Gauss1DsMLE_8cpp.html" title="The class definition and template Specializations for Gauss1DsMLE. " alt="" coords="1230,372,1357,397"/>
+<area shape="rect" id="node35" href="$MCMCAdaptor2D_8cpp.html" title="The class definition and template Specializations for MCMCAdaptor2D. " alt="" coords="599,299,742,324"/>
+<area shape="rect" id="node36" href="$MCMCAdaptor2Ds_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor2Ds. " alt="" coords="766,299,901,324"/>
+<area shape="rect" id="node37" href="$MCMCAdaptor2Ds_8cpp.html" title="The class definition and template Specializations for MCMCAdaptor2Ds. " alt="" coords="599,372,747,397"/>
+</map>

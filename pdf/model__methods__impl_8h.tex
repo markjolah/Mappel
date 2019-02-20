@@ -1,0 +1,133 @@
+\hypertarget{model__methods__impl_8h}{}\subsection{model\+\_\+methods\+\_\+impl.\+h File Reference}
+\label{model__methods__impl_8h}\index{model\+\_\+methods\+\_\+impl.\+h@{model\+\_\+methods\+\_\+impl.\+h}}
+{\ttfamily \#include \char`\"{}Mappel/numerical.\+h\char`\"{}}\\*
+Include dependency graph for model\+\_\+methods\+\_\+impl.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{model__methods__impl_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{model__methods__impl_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1methods}{mappel\+::methods}
+\begin{DoxyCompactList}\small\item\em Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}. \end{DoxyCompactList}\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective}{mappel\+::methods\+::objective}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug}{mappel\+::methods\+::objective\+::debug}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1debug}{mappel\+::methods\+::debug}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\Model\+::\+ImageT \hyperlink{namespacemappel_1_1methods_ab7601760f76a0f3d283aaa1b21d4f5b5}{mappel\+::methods\+::model\+\_\+image} (const Model \&model, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Model\+DataT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a3809077f8bb3dca1fdf43ccc67dde62d}{mappel\+::methods\+::simulate\+\_\+image} (Model \&model, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model , class RngT $>$ }\\Model\+DataT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_abd0aa1868ba545867d80bf166aaeed03}{mappel\+::methods\+::simulate\+\_\+image} (Model \&model, const ParamT$<$ Model $>$ \&theta, RngT \&rng)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Model\+DataT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_af3db039a162d71bd04eb08b773035542}{mappel\+::methods\+::simulate\+\_\+image} (Model \&model, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Model\+DataT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a8ec3a0fdc71eed2a0bdfe33599f23623}{mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model} (Model \&model, const ImageT$<$ Model $>$ \&model\+\_\+im)
+\item 
+{\footnotesize template$<$class Model $>$ }\\double \hyperlink{namespacemappel_1_1methods_1_1objective_a6f6dafac3df60b7d1c1dfa1eb7491eb8}{mappel\+::methods\+::objective\+::llh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\double \hyperlink{namespacemappel_1_1methods_1_1objective_ae5d28913a8f6ce2c042edd810cb17e13}{mappel\+::methods\+::objective\+::rllh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\ParamT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_a7adc23453a6c075227b8bd4d3e7a494b}{mappel\+::methods\+::objective\+::grad} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\ParamT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_1_1objective_a5a6ea0d3fa967fa2ade437fceb717af6}{mappel\+::methods\+::objective\+::grad2} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_ab437033475ac0491ae1dd3a2900a5c44}{mappel\+::methods\+::objective\+::grad2} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, ParamT$<$ Model $>$ \&grad\+\_\+val, ParamT$<$ Model $>$ \&grad2\+\_\+val)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_1_1objective_aff0530b529e752a4c9039a8aef0eac20}{mappel\+::methods\+::objective\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_1_1objective_a21e579dfc19a06952bf98bd9d684fbdc}{mappel\+::methods\+::objective\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_a5c451515f6ec9eae7ffd321b9b8f95f1}{mappel\+::methods\+::objective\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_a0c7b3cd5fa4327c8f75e56937b2e616d}{mappel\+::methods\+::objective\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_1_1objective_a1ea67c58d320c1634d8c69f834359029}{mappel\+::methods\+::objective\+::negative\+\_\+definite\+\_\+hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_1_1objective_aff95eac9143ee05d2611aa0c5b605f4c}{mappel\+::methods\+::objective\+::negative\+\_\+definite\+\_\+hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_a5f339b29348c61937b1ae42ef963b592}{mappel\+::methods\+::objective\+::negative\+\_\+definite\+\_\+hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1objective_a8c40861cc75e4165606b495a6c04c62a}{mappel\+::methods\+::objective\+::negative\+\_\+definite\+\_\+hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\VecT \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_abc521079f38755daeb93a34e52b144f7}{mappel\+::methods\+::objective\+::debug\+::llh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\VecT \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_acb5c86698fe86eb0cdec7d3c2282cbb2}{mappel\+::methods\+::objective\+::debug\+::rllh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_a248846fd4bd29d11cac981a3a8b3bdd4}{mappel\+::methods\+::objective\+::debug\+::grad\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\CubeT \hyperlink{namespacemappel_1_1methods_1_1objective_1_1debug_a70fff3cc898fe86da323c773dba30ab2}{mappel\+::methods\+::objective\+::debug\+::hessian\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a5227b7c0f1c45c27cbebfcafefcab72b}{mappel\+::methods\+::aposteriori\+\_\+objective} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, double \&rllh, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a275f2b0364c48bfc7e6f88e866d593bd}{mappel\+::methods\+::prior\+\_\+objective} (const Model \&model, const ParamT$<$ Model $>$ \&theta, double \&rllh, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a82eaea0b938b0daff819da153e1351e2}{mappel\+::methods\+::likelihood\+\_\+objective} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, double \&rllh, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a3b0e13b783d21c08ba063a210b0a344b}{mappel\+::methods\+::aposteriori\+\_\+objective} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, double \&rllh, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a496d45e1db23f89b54ae0bef016a19b0}{mappel\+::methods\+::likelihood\+\_\+objective} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const ParamT$<$ Model $>$ \&theta, double \&rllh, ParamT$<$ Model $>$ \&grad, MatT \&hess)
+\item 
+{\footnotesize template$<$class Model $>$ }\\ParamT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_ac1fe2927bc882d9a76138010f41df115}{mappel\+::methods\+::cr\+\_\+lower\+\_\+bound} (const Model \&model, const typename Model\+::\+Stencil \&s)
+\begin{DoxyCompactList}\small\item\em Calculate the Cramer-\/\+Rao lower bound at the given parameters. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\ParamT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a30d0f08f37d8f412a2677280cb39c588}{mappel\+::methods\+::cr\+\_\+lower\+\_\+bound} (const Model \&model, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_a6632adc36d8b32fd8d198669e268c767}{mappel\+::methods\+::expected\+\_\+information} (const Model \&model, const ParamT$<$ Model $>$ \&theta)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_a0e3bec3c7363eb6005abdeaa151decb9}{mappel\+::methods\+::observed\+\_\+information} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data, const StencilT$<$ Model $>$ \&theta\+\_\+mode)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_a83244dbe0995e8698475a12d34fb2f35}{mappel\+::methods\+::observed\+\_\+information} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data, const ParamT$<$ Model $>$ \&theta\+\_\+mode)
+\item 
+{\footnotesize template$<$class Model $>$ }\\StencilT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_a7f4a5561497c243edaa6f55fddf0ec4e}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method)
+\item 
+{\footnotesize template$<$class Model $>$ }\\StencilT$<$ Model $>$ \hyperlink{namespacemappel_1_1methods_abde9a4b10690b8eefe709d730fac69d9}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, const ParamT$<$ Model $>$ \&theta\+\_\+init, double \&rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a9494d0ddea2acc25bd92100b7587a1c1}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, ParamT$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, MatT \&obsI)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_aee25050c1c9f8cf29d38d8c47d593a3e}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, ParamT$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, MatT \&obsI, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a8db06e0816204cdca735bdf498e2bae2}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, const ParamT$<$ Model $>$ \&theta\+\_\+init, ParamT$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, MatT \&obsI)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a336e74435f33240ea8251bfc21dbe279}{mappel\+::methods\+::estimate\+\_\+max} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, const ParamT$<$ Model $>$ \&theta\+\_\+init, ParamT$<$ Model $>$ \&theta\+\_\+max, double \&theta\+\_\+max\+\_\+llh, MatT \&obsI, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_a8bec3dcf3172f17383eb5f6693e7e956}{mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0)
+\item 
+{\footnotesize template$<$class Model $>$ }\\MatT \hyperlink{namespacemappel_1_1methods_abf7481af94ebff828622ec6b38a271ee}{mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const ParamT$<$ Model $>$ \&theta\+\_\+init, IdxT Nsample=1000, IdxT Nburnin=100, IdxT thin=0)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a5b0c8018510cec5dec285ea4cad912c5}{mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+sample} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const ParamT$<$ Model $>$ \&theta\+\_\+init, IdxT Nsample, IdxT Nburnin, IdxT thin, MatT \&sample, VecT \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a224995eff4bf3ee7652f2ed9116d8cf7}{mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+posterior} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT$<$ Model $>$ \&posterior\+\_\+mean, MatT \&posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_ab616d99318131c7f70f49581d9c9d77a}{mappel\+::methods\+::estimate\+\_\+mcmc\+\_\+posterior} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const ParamT$<$ Model $>$ \&theta\+\_\+init, IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT$<$ Model $>$ \&posterior\+\_\+mean, MatT \&posterior\+\_\+cov)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a40f38c9be75ed5bbcc4066a289894ea1}{mappel\+::methods\+::error\+\_\+bounds\+\_\+expected} (const Model \&model, const ParamT$<$ Model $>$ \&theta\+\_\+est, double confidence, ParamT$<$ Model $>$ \&theta\+\_\+lb, ParamT$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_afa9582bf7c7354506ba4976a70172ba7}{mappel\+::methods\+::error\+\_\+bounds\+\_\+observed} (const Model \&model, const ParamT$<$ Model $>$ \&theta\+\_\+est, MatT \&obsI, double confidence, ParamT$<$ Model $>$ \&theta\+\_\+lb, ParamT$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_a18420d9682150122165a2dfdf43c273a}{mappel\+::methods\+::error\+\_\+bounds\+\_\+posterior\+\_\+credible} (const Model \&model, const MatT \&sample, double confidence, ParamT$<$ Model $>$ \&theta\+\_\+mean, ParamT$<$ Model $>$ \&theta\+\_\+lb, ParamT$<$ Model $>$ \&theta\+\_\+ub)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_af29a5642fbbd2e5d8d2c5708679ceccf}{mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, ParamT$<$ Model $>$ \&theta\+\_\+est, double \&rllh, MatT \&obsI, MatT \&sequence, VecT \&sequence\+\_\+rllh, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a6a5604069f158badd94b0efadc3e0e7c}{mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const std\+::string \&method, const ParamT$<$ Model $>$ \&theta\+\_\+init, ParamT$<$ Model $>$ \&theta\+\_\+est, double \&rllh, MatT \&obsI, MatT \&sequence, VecT \&sequence\+\_\+rllh, StatsT \&stats)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a7c94ce5d92872076693974f3abfa831b}{mappel\+::methods\+::debug\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, IdxT Nsample, MatT \&sample, VecT \&sample\+\_\+rllh, MatT \&candidates, VecT \&candidates\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_ab463288fab7e102729d075d60d9e15e0}{mappel\+::methods\+::debug\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&data, const ParamT$<$ Model $>$ \&theta\+\_\+init, IdxT Nsample, MatT \&sample, VecT \&sample\+\_\+rllh, MatT \&candidates, VecT \&candidates\+\_\+rllh)
+\end{DoxyCompactItemize}

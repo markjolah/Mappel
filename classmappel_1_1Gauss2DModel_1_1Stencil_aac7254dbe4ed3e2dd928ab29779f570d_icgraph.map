@@ -1,0 +1,8 @@
+<map id="mappel::Gauss2DModel::Stencil::I" name="mappel::Gauss2DModel::Stencil::I">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel.html#a4bb4e53073e2c45b9a63b942214b787c" title="mappel::Gauss2DModel\l::initial_theta_estimate" alt="" coords="208,5,363,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DModel.html#ae1c726836b5e437721a73183fbf349d7" title="mappel::Gauss2DModel\l::pixel_grad" alt="" coords="208,68,363,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DModel.html#aa4ada829604d1a79ef92d0df4fdff94c" title="pixel derivative inner loop calculations. " alt="" coords="411,97,565,136"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DModel.html#a608d40cbec10a7dcfd82913c619748ae" title="mappel::Gauss2DModel\l::pixel_grad2" alt="" coords="208,183,363,221"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DModel.html#a8d9e4d4cb049e5ebf2649fd073060191" title="mappel::Gauss2DModel\l::pixel_hess" alt="" coords="208,245,363,284"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DModel.html#a13cf02af379a7b2f7060008a9a7dfc82" title="mappel::Gauss2DModel\l::pixel_model_value" alt="" coords="208,308,363,347"/>
+</map>

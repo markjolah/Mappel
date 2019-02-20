@@ -1,0 +1,22 @@
+<map id="mappel::Estimator::~Estimator" name="mappel::Estimator::~Estimator">
+<area shape="rect" id="node2" href="$classmappel_1_1Estimator.html#a2181f8c34bfc89b5b6b491f4db63a4d8" title="mappel::Estimator::\lclear_stats" alt="" coords="202,5,329,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b" title="mappel::Estimator::\lcompute_estimate" alt="" coords="202,68,329,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Estimator.html#a29c41d423941e8b86add3e493cb1375e" title="mappel::Estimator::\lcompute_estimate_debug" alt="" coords="183,131,347,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Estimator.html#a273f65624e06688cd4b1126e3e7556ae" title="mappel::Estimator::\lcompute_profile_estimate" alt="" coords="184,193,347,232"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Estimator.html#a403f11575f81e47095e57cc403fd760d" title="mappel::Estimator::name" alt="" coords="419,229,577,255"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Estimator.html#a4406c994d5b6239e75628ea5d479bfa2" title="mappel::Estimator::\lestimate_max" alt="" coords="202,308,329,347"/>
+<area shape="rect" id="node11" href="$classmappel_1_1Estimator.html#a4a581372a320f1c13eeffacf6309911b" title="mappel::Estimator::\lestimate_max_debug" alt="" coords="195,371,335,409"/>
+<area shape="rect" id="node13" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="413,431,583,469"/>
+<area shape="rect" id="node14" href="$classmappel_1_1Estimator.html#a50c0cdffa2b5e7c45180a92dd3b34073" title="mappel::Estimator::\lestimate_max_stack" alt="" coords="199,485,332,524"/>
+<area shape="rect" id="node15" href="$classmappel_1_1Estimator.html#aa86d466843e5dae1e2eaaecb98012ff4" title="mappel::Estimator::\lestimate_profile_stack" alt="" coords="193,548,337,587"/>
+<area shape="rect" id="node16" href="$classmappel_1_1Estimator.html#a64b26c846a0e995fe16cd56cbead9f99" title="mappel::Estimator::\lget_debug_stats" alt="" coords="202,611,329,649"/>
+<area shape="rect" id="node17" href="$classmappel_1_1Estimator.html#a6c0b757d89033d70bdf03ad1fe6b03da" title="mappel::Estimator::\lget_model" alt="" coords="202,673,329,712"/>
+<area shape="rect" id="node18" href="$classmappel_1_1Estimator.html#a876af9a1a1a6bf174c63716f3348d735" title="mappel::Estimator::\lget_stats" alt="" coords="202,736,329,775"/>
+<area shape="rect" id="node19" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#a8223d746bf91530f8cff4ec168e50b1d" title="Parallel relative log_likelihood calculations for a stack of images. " alt="" coords="180,799,351,837"/>
+<area shape="rect" id="node21" href="$classmappel_1_1Estimator.html#aacade4f66038545ad196edf7e8596187" title="mappel::Estimator::\lset_model" alt="" coords="202,861,329,900"/>
+<area shape="rect" id="node8" href="$namespacemappel_1_1methods.html#a7f4a5561497c243edaa6f55fddf0ec4e" title="mappel::methods::estimate_max" alt="" coords="399,315,597,340"/>
+<area shape="rect" id="node9" href="$namespacemappel_1_1methods.html#a0f47a66f366b6e5841f1224e839ed828" title="mappel::methods::make\l_estimator" alt="" coords="645,308,797,347"/>
+<area shape="rect" id="node10" href="$namespacemappel.html#a610296a93ba507763bc770d39049f323" title="mappel::istarts_with" alt="" coords="845,315,976,340"/>
+<area shape="rect" id="node12" href="$namespacemappel_1_1methods.html#a83244dbe0995e8698475a12d34fb2f35" title="mappel::methods::observed\l_information" alt="" coords="411,368,585,407"/>
+<area shape="rect" id="node20" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#afc8658d8593725d7de99dc533fa74274" title="mappel::methods::objective\l::openmp::rllh_stack" alt="" coords="413,799,583,837"/>
+</map>

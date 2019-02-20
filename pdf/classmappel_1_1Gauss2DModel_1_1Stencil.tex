@@ -1,0 +1,500 @@
+\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil}{}\subsection{mappel\+:\+:Gauss2\+D\+Model\+:\+:Stencil Class Reference}
+\label{classmappel_1_1Gauss2DModel_1_1Stencil}\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+
+
+\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil}{Stencil} for 2D fixed-\/sigma models.  
+
+
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Gauss2\+D\+Model.\+h$>$}
+
+
+
+Collaboration diagram for mappel\+:\+:Gauss2\+D\+Model\+:\+:Stencil\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_af4899fe2829b3bf1c685cd6bfd1b602e}{ParamT} = \hyperlink{classmappel_1_1PointEmitterModel_a665ec6aea3aac139bb69a23c06d4b9a1}{Gauss2\+D\+Model\+::\+ParamT}
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a75a827ef8312a7ce445c83aebf93204f}{Stencil} ()
+\item 
+\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a9e1f0ff585b5394d2d114a432b8c7d94}{Stencil} (const \hyperlink{classmappel_1_1Gauss2DModel}{Gauss2\+D\+Model} \&\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_ac5ae33e358a883887bccedc8a485bca7}{model}, const \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_af4899fe2829b3bf1c685cd6bfd1b602e}{ParamT} \&\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_ac9ce60b33fe2235ebbb80dd9d90a49ad}{theta}, bool \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7}{compute\+\_\+derivatives}=true)
+\item 
+void \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7}{compute\+\_\+derivatives} ()
+\item 
+double \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a01755bf64c87675ddd69958e65eb0bc3}{x} () const 
+\item 
+double \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a3c130702adb8ce884c35eef9bb4d510f}{y} () const 
+\item 
+double \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_aac7254dbe4ed3e2dd928ab29779f570d}{I} () const 
+\item 
+double \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a1e6bea9d029ad5ff367e988a5af24101}{bg} () const 
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a3934a1152e447ec858bf576a7da4d305}{derivatives\+\_\+computed} =false
+\item 
+\hyperlink{classmappel_1_1Gauss2DModel}{Gauss2\+D\+Model} const $\ast$ \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_ac5ae33e358a883887bccedc8a485bca7}{model}
+\item 
+\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_af4899fe2829b3bf1c685cd6bfd1b602e}{ParamT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_ac9ce60b33fe2235ebbb80dd9d90a49ad}{theta}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a1326ab9634585b882909abf468f9cd36}{dx}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_ad5f76b9e7f4c9ca69b4177afc997b1a9}{dy}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a5fa2dbc0d5f95d6e2df63984927b3932}{Gx}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_abe22fdce34e3532fd33aa169aa68de56}{Gy}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a09ecf63ea4e36b797ac9d132e2f0e5a2}{X}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a83c1e9cdd33070a4c88bc0513eb569d7}{Y}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a393169d632114c7ff5d55920935919e4}{DX}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a840082243683a1c1f111c7473913da4e}{DY}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_abd31416e7475994f2a0c8a1b0f1564d4}{D\+XS}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a96444ae896e044524a7ffd81a8d7ab80}{D\+YS}
+\end{DoxyCompactItemize}
+\subsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil_a1b20b928af844d0e46c5eaa5e88543e2}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil}{Gauss2\+D\+Model\+::\+Stencil} \&s)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\hyperlink{classmappel_1_1Gauss2DModel_1_1Stencil}{Stencil} for 2D fixed-\/sigma models. 
+
+Definition at line 26 of file Gauss2\+D\+Model.\+h.
+
+
+
+\subsubsection{Member Typedef Documentation}
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!ParamT@{ParamT}}
+\index{ParamT@{ParamT}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{ParamT}{ParamT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+ParamT} =  {\bf Gauss2\+D\+Model\+::\+ParamT}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_af4899fe2829b3bf1c685cd6bfd1b602e}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_af4899fe2829b3bf1c685cd6bfd1b602e}
+
+
+Definition at line 29 of file Gauss2\+D\+Model.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!Stencil@{Stencil}}
+\index{Stencil@{Stencil}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{Stencil()}{Stencil()}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+Stencil (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a75a827ef8312a7ce445c83aebf93204f}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a75a827ef8312a7ce445c83aebf93204f}
+
+
+Definition at line 38 of file Gauss2\+D\+Model.\+h.
+
+
+
+References compute\+\_\+derivatives().
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+stencil().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a75a827ef8312a7ce445c83aebf93204f_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a75a827ef8312a7ce445c83aebf93204f_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!Stencil@{Stencil}}
+\index{Stencil@{Stencil}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{Stencil(const Gauss2\+D\+Model \&model, const Param\+T \&theta, bool compute\+\_\+derivatives=true)}{Stencil(const Gauss2DModel &model, const ParamT &theta, bool compute_derivatives=true)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+Stencil (
+\begin{DoxyParamCaption}
+\item[{const {\bf Gauss2\+D\+Model} \&}]{model, }
+\item[{const {\bf ParamT} \&}]{theta, }
+\item[{bool}]{compute\+\_\+derivatives = {\ttfamily true}}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a9e1f0ff585b5394d2d114a432b8c7d94}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a9e1f0ff585b5394d2d114a432b8c7d94}
+
+
+Definition at line 218 of file Gauss2\+D\+Model.\+cpp.
+
+
+
+References compute\+\_\+derivatives(), dx, dy, mappel\+::make\+\_\+d\+\_\+stencil(), mappel\+::make\+\_\+\+X\+\_\+stencil(), model, mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, mappel\+::\+Image\+Format2\+D\+Base\+::size, X, x(), Y, and y().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a9e1f0ff585b5394d2d114a432b8c7d94_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!bg@{bg}}
+\index{bg@{bg}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{bg() const }{bg() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::bg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a1e6bea9d029ad5ff367e988a5af24101}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a1e6bea9d029ad5ff367e988a5af24101}
+
+
+Definition at line 44 of file Gauss2\+D\+Model.\+h.
+
+
+
+References operator$<$$<$, and theta.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+model\+\_\+value().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a1e6bea9d029ad5ff367e988a5af24101_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!compute\+\_\+derivatives@{compute\+\_\+derivatives}}
+\index{compute\+\_\+derivatives@{compute\+\_\+derivatives}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{compute\+\_\+derivatives()}{compute_derivatives()}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::compute\+\_\+derivatives (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7}
+
+
+Definition at line 232 of file Gauss2\+D\+Model.\+cpp.
+
+
+
+References derivatives\+\_\+computed, dx, DX, D\+XS, dy, DY, D\+YS, Gx, Gy, mappel\+::make\+\_\+\+D\+X\+\_\+stencil(), mappel\+::make\+\_\+\+D\+X\+S\+\_\+stencil(), mappel\+::make\+\_\+\+G\+\_\+stencil(), model, mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, and mappel\+::\+Image\+Format2\+D\+Base\+::size.
+
+
+
+Referenced by Stencil().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_aa454ad18859be0dcc48f5de8982c7ba7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!I@{I}}
+\index{I@{I}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{I() const }{I() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::I (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_aac7254dbe4ed3e2dd928ab29779f570d}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_aac7254dbe4ed3e2dd928ab29779f570d}
+
+
+Definition at line 43 of file Gauss2\+D\+Model.\+h.
+
+
+
+References theta.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad2(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+model\+\_\+value().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1Gauss2DModel_1_1Stencil_aac7254dbe4ed3e2dd928ab29779f570d_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!x@{x}}
+\index{x@{x}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{x() const }{x() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::x (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a01755bf64c87675ddd69958e65eb0bc3}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a01755bf64c87675ddd69958e65eb0bc3}
+
+
+Definition at line 41 of file Gauss2\+D\+Model.\+h.
+
+
+
+References theta.
+
+
+
+Referenced by Stencil().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a01755bf64c87675ddd69958e65eb0bc3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!y@{y}}
+\index{y@{y}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{y() const }{y() const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a3c130702adb8ce884c35eef9bb4d510f}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a3c130702adb8ce884c35eef9bb4d510f}
+
+
+Definition at line 42 of file Gauss2\+D\+Model.\+h.
+
+
+
+References theta.
+
+
+
+Referenced by Stencil().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{classmappel_1_1Gauss2DModel_1_1Stencil_a3c130702adb8ce884c35eef9bb4d510f_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Friends And Related Function Documentation}
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{operator$<$$<$}{operator<<}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf Gauss2\+D\+Model\+::\+Stencil} \&}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a1b20b928af844d0e46c5eaa5e88543e2}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a1b20b928af844d0e46c5eaa5e88543e2}
+
+
+Definition at line 249 of file Gauss2\+D\+Model.\+cpp.
+
+
+
+Referenced by bg().
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!derivatives\+\_\+computed@{derivatives\+\_\+computed}}
+\index{derivatives\+\_\+computed@{derivatives\+\_\+computed}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{derivatives\+\_\+computed}{derivatives_computed}}]{\setlength{\rightskip}{0pt plus 5cm}bool mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::derivatives\+\_\+computed =false}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a3934a1152e447ec858bf576a7da4d305}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a3934a1152e447ec858bf576a7da4d305}
+
+
+Definition at line 28 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), and mappel\+::operator$<$$<$().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!dx@{dx}}
+\index{dx@{dx}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{dx}{dx}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::dx}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a1326ab9634585b882909abf468f9cd36}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a1326ab9634585b882909abf468f9cd36}
+
+
+Definition at line 33 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), and Stencil().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!DX@{DX}}
+\index{DX@{DX}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{DX}{DX}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+DX}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a393169d632114c7ff5d55920935919e4}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a393169d632114c7ff5d55920935919e4}
+
+
+Definition at line 36 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!D\+XS@{D\+XS}}
+\index{D\+XS@{D\+XS}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{D\+XS}{DXS}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+D\+XS}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_abd31416e7475994f2a0c8a1b0f1564d4}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_abd31416e7475994f2a0c8a1b0f1564d4}
+
+
+Definition at line 37 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad2(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!dy@{dy}}
+\index{dy@{dy}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{dy}{dy}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::dy}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_ad5f76b9e7f4c9ca69b4177afc997b1a9}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_ad5f76b9e7f4c9ca69b4177afc997b1a9}
+
+
+Definition at line 33 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), and Stencil().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!DY@{DY}}
+\index{DY@{DY}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{DY}{DY}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+DY}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a840082243683a1c1f111c7473913da4e}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a840082243683a1c1f111c7473913da4e}
+
+
+Definition at line 36 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!D\+YS@{D\+YS}}
+\index{D\+YS@{D\+YS}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{D\+YS}{DYS}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+D\+YS}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a96444ae896e044524a7ffd81a8d7ab80}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a96444ae896e044524a7ffd81a8d7ab80}
+
+
+Definition at line 37 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad2(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), and mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!Gx@{Gx}}
+\index{Gx@{Gx}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{Gx}{Gx}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+Gx}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a5fa2dbc0d5f95d6e2df63984927b3932}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a5fa2dbc0d5f95d6e2df63984927b3932}
+
+
+Definition at line 34 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), and mappel\+::operator$<$$<$().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!Gy@{Gy}}
+\index{Gy@{Gy}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{Gy}{Gy}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+Gy}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_abe22fdce34e3532fd33aa169aa68de56}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_abe22fdce34e3532fd33aa169aa68de56}
+
+
+Definition at line 34 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), and mappel\+::operator$<$$<$().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!model@{model}}
+\index{model@{model}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{model}{model}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss2\+D\+Model} const$\ast$ mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::model}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_ac5ae33e358a883887bccedc8a485bca7}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_ac5ae33e358a883887bccedc8a485bca7}
+
+
+Definition at line 30 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by compute\+\_\+derivatives(), and Stencil().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!theta@{theta}}
+\index{theta@{theta}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{theta}{theta}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ParamT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::theta}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_ac9ce60b33fe2235ebbb80dd9d90a49ad}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_ac9ce60b33fe2235ebbb80dd9d90a49ad}
+
+
+Definition at line 32 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by bg(), I(), mappel\+::operator$<$$<$(), x(), and y().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!X@{X}}
+\index{X@{X}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{X}{X}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::X}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a09ecf63ea4e36b797ac9d132e2f0e5a2}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a09ecf63ea4e36b797ac9d132e2f0e5a2}
+
+
+Definition at line 35 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad2(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+model\+\_\+value(), and Stencil().
+
+\index{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}!Y@{Y}}
+\index{Y@{Y}!mappel\+::\+Gauss2\+D\+Model\+::\+Stencil@{mappel\+::\+Gauss2\+D\+Model\+::\+Stencil}}
+\paragraph[{\texorpdfstring{Y}{Y}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::Y}\hypertarget{classmappel_1_1Gauss2DModel_1_1Stencil_a83c1e9cdd33070a4c88bc0513eb569d7}{}\label{classmappel_1_1Gauss2DModel_1_1Stencil_a83c1e9cdd33070a4c88bc0513eb569d7}
+
+
+Definition at line 35 of file Gauss2\+D\+Model.\+h.
+
+
+
+Referenced by mappel\+::operator$<$$<$(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+grad2(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+model\+\_\+value(), and Stencil().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{Gauss2DModel_8h}{Gauss2\+D\+Model.\+h}\item 
+\hyperlink{Gauss2DModel_8cpp}{Gauss2\+D\+Model.\+cpp}\end{DoxyCompactItemize}

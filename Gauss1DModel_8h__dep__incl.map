@@ -1,0 +1,15 @@
+<map id="Gauss1DModel.h" name="Gauss1DModel.h">
+<area shape="rect" id="node2" href="$Gauss1DModel_8cpp.html" title="The class definition and template Specializations for Gauss1DModel. " alt="" coords="89,79,220,104"/>
+<area shape="rect" id="node3" href="$Gauss1DMAP_8h.html" title="The class declaration and inline and templated functions for Gauss1DMAP. " alt="" coords="244,79,353,104"/>
+<area shape="rect" id="node12" href="$Gauss1DMLE_8h.html" title="The class declaration and inline and templated functions for Gauss1DMLE. " alt="" coords="378,79,486,104"/>
+<area shape="rect" id="node14" href="$Gauss2DsxyMAP_8h.html" title="The class declaration and inline and templated functions for Gauss2DsxyMAP. " alt="" coords="510,79,637,104"/>
+<area shape="rect" id="node4" href="$estimator__statics_8cpp.html" title="estimator_statics.cpp" alt="" coords="5,152,141,177"/>
+<area shape="rect" id="node5" href="$Gauss1DMAP_8cpp.html" title="The class definition and template Specializations for Gauss1DMAP. " alt="" coords="165,152,288,177"/>
+<area shape="rect" id="node6" href="$Gauss2DModel_8h.html" title="The class declaration and inline and templated functions for Gauss2DModel. " alt="" coords="312,152,429,177"/>
+<area shape="rect" id="node7" href="$Gauss2DModel_8cpp.html" title="The class definition and template Specializations for Gauss2DModel. " alt="" coords="161,225,292,251"/>
+<area shape="rect" id="node8" href="$Gauss2DMAP_8h.html" title="The class declaration and inline and templated functions for Gauss2DMAP. " alt="" coords="316,225,425,251"/>
+<area shape="rect" id="node10" href="$Gauss2DMLE_8h.html" title="The class declaration and inline and templated functions for Gauss2DMLE. " alt="" coords="457,225,565,251"/>
+<area shape="rect" id="node9" href="$Gauss2DMAP_8cpp.html" title="The class definition and template Specializations for Gauss2DMAP. " alt="" coords="307,299,429,324"/>
+<area shape="rect" id="node11" href="$Gauss2DMLE_8cpp.html" title="The class definition and template Specializations for Gauss2DMLE. " alt="" coords="454,299,575,324"/>
+<area shape="rect" id="node13" href="$Gauss1DMLE_8cpp.html" title="The class definition and template Specializations for Gauss1DMLE. " alt="" coords="454,152,575,177"/>
+</map>

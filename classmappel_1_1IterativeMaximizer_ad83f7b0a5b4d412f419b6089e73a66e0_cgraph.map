@@ -1,0 +1,12 @@
+<map id="mappel::IterativeMaximizer::compute_estimate" name="mappel::IterativeMaximizer::compute_estimate">
+<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aade1d8879a22dff77c2707b379b2203e" title="Return the saved theta sequence. " alt="" coords="226,5,394,57"/>
+<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer.html#a4d05ed89de53e6e73f2f13bef30862ec" title="mappel::IterativeMaximizer\l::maximize" alt="" coords="226,81,394,120"/>
+<area shape="rect" id="node4" href="$namespacemappel.html#a846ffe01da2a5333d847cbb7845861e8" title="mappel::print_image" alt="" coords="243,144,377,169"/>
+<area shape="rect" id="node7" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af2e61c659a8cc78365bd801026c2f6a9" title="mappel::IterativeMaximizer\l::MaximizerData::record_exit" alt="" coords="221,193,399,232"/>
+<area shape="rect" id="node8" href="$classmappel_1_1IterativeMaximizer.html#af5614c292f139b5032b733a8d6fdf73e" title="mappel::IterativeMaximizer\l::record_run_statistics" alt="" coords="226,256,394,295"/>
+<area shape="rect" id="node10" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a29ccc1aa8e5ecf505f4ca76f6b8b214e" title="Get the current stencil. " alt="" coords="226,319,394,357"/>
+<area shape="rect" id="node11" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac6ed5231a1ac2f4bfdd51a2800212fea" title="Get the current stencil&#39;s theta. " alt="" coords="226,381,394,420"/>
+<area shape="rect" id="node5" href="$namespacemappel.html#ab2dadb64b79f80c01086ce2c3d42e642" title="mappel::print_labeled\l_image" alt="" coords="487,137,628,176"/>
+<area shape="rect" id="node6" href="$namespacemappel.html#a88fc8fe46dcf69cc0e0861d2f6f28a4e" title="mappel::print_centered\l_title" alt="" coords="716,137,864,176"/>
+<area shape="rect" id="node9" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ac9d06c390f911f733c3912dbdcbae954" title="mappel::IterativeMaximizer\l::MaximizerData::get_backtrack_idxs" alt="" coords="447,256,668,295"/>
+</map>

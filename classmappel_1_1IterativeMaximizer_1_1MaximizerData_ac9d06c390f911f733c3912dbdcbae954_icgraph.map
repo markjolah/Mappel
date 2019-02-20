@@ -1,0 +1,6 @@
+<map id="mappel::IterativeMaximizer::MaximizerData::get_backtrack_idxs" name="mappel::IterativeMaximizer::MaximizerData::get_backtrack_idxs">
+<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer.html#af5614c292f139b5032b733a8d6fdf73e" title="mappel::IterativeMaximizer\l::record_run_statistics" alt="" coords="275,68,443,107"/>
+<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer.html#ad83f7b0a5b4d412f419b6089e73a66e0" title="mappel::IterativeMaximizer\l::compute_estimate" alt="" coords="492,5,660,44"/>
+<area shape="rect" id="node4" href="$classmappel_1_1IterativeMaximizer.html#aa45c11a399f29985fc9bd3365e809335" title="mappel::IterativeMaximizer\l::compute_estimate_debug" alt="" coords="491,68,661,107"/>
+<area shape="rect" id="node5" href="$classmappel_1_1IterativeMaximizer.html#a1999fd1fa63c803b3aad87695fc82843" title="mappel::IterativeMaximizer\l::compute_profile_estimate" alt="" coords="491,131,661,169"/>
+</map>

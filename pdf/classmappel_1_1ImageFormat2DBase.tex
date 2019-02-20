@@ -1,0 +1,625 @@
+\hypertarget{classmappel_1_1ImageFormat2DBase}{}\subsection{mappel\+:\+:Image\+Format2\+D\+Base Class Reference}
+\label{classmappel_1_1ImageFormat2DBase}\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+
+
+A virtual base class for 2D image localization objectives.  
+
+
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Image\+Format2\+D\+Base.\+h$>$}
+
+
+
+Inheritance diagram for mappel\+:\+:Image\+Format2\+D\+Base\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase__inherit__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} = uint32\+\_\+t
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_af6bae6f78398ab1eacb39726a05adeef}{Image\+PixelT} = double
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat2DBase_a23c1a9e9f1482852aa0cf4951efe7c48}{Image\+Size\+ShapeT} = arma\+::\+Col$<$ CoordT $>$
+\item 
+{\footnotesize template$<$class CoordT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat2DBase_afe9ededf04942330121003e3dd8f9311}{Image\+Size\+Vec\+ShapeT} = arma\+::\+Mat$<$ CoordT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} = \hyperlink{classmappel_1_1ImageFormat2DBase_a23c1a9e9f1482852aa0cf4951efe7c48}{Image\+Size\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_aa88536c52195a927cf32558856f05a13}{Image\+Size\+VecT} = \hyperlink{classmappel_1_1ImageFormat2DBase_afe9ededf04942330121003e3dd8f9311}{Image\+Size\+Vec\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat2DBase_ac40fc3773b5668601c63905876cca732}{Image\+ShapeT} = arma\+::\+Mat$<$ PixelT $>$
+\item 
+{\footnotesize template$<$class PixelT $>$ }\\using \hyperlink{classmappel_1_1ImageFormat2DBase_ae2e123c8a5a5ab00f89eaea04d2431cb}{Image\+Stack\+ShapeT} = arma\+::\+Cube$<$ PixelT $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}{ImageT} = \hyperlink{classmappel_1_1ImageFormat2DBase_ac40fc3773b5668601c63905876cca732}{Image\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat2DBase_af6bae6f78398ab1eacb39726a05adeef}{Image\+PixelT} $>$
+\item 
+using \hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} = \hyperlink{classmappel_1_1ImageFormat2DBase_ae2e123c8a5a5ab00f89eaea04d2431cb}{Image\+Stack\+ShapeT}$<$ \hyperlink{classmappel_1_1ImageFormat2DBase_af6bae6f78398ab1eacb39726a05adeef}{Image\+PixelT} $>$
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1}{get\+\_\+stats} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}{ImageT} \hyperlink{classmappel_1_1ImageFormat2DBase_ab5d6c4f7f3818f4652fcf8d54351c981}{make\+\_\+image} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} \hyperlink{classmappel_1_1ImageFormat2DBase_a76f8b347ce6c104973dec235398a4f32}{make\+\_\+image\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} n) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a8ac2ce73a9b353b92a688224ccc4d217}{get\+\_\+size\+\_\+image\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} \&stack) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}{ImageT} \hyperlink{classmappel_1_1ImageFormat2DBase_a22701571228f52dd6cfeac72ab18908c}{get\+\_\+image\+\_\+from\+\_\+stack} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} n) const 
+\item 
+{\footnotesize template$<$class ImT $>$ }\\void \hyperlink{classmappel_1_1ImageFormat2DBase_aaae78a9b02452eb3538af34fcdcc3ad2}{set\+\_\+image\+\_\+in\+\_\+stack} (\hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} \&stack, \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} n, const ImT \&im) const 
+\item 
+const \hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} \& \hyperlink{classmappel_1_1ImageFormat2DBase_a4497fe096f82ccb3af3c3632921081a5}{get\+\_\+size} () const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a07ad97af7e697240ee359ae6a4821a2f}{get\+\_\+size} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} idx) const 
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564}{get\+\_\+num\+\_\+pixels} () const 
+\item 
+void \hyperlink{classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372}{set\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} \&size\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1ImageFormat2DBase_aa5f3936c1c0b250fa1df17d53161a991}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}{ImageT} \&im) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a single images is correct for model size. \end{DoxyCompactList}\item 
+void \hyperlink{classmappel_1_1ImageFormat2DBase_ab40faca8bf94a6e59765da5c3185c19b}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{Image\+StackT} \&ims) const 
+\begin{DoxyCompactList}\small\item\em Check the shape of a stack of images is correct for model size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3}{check\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} \&size\+\_\+)
+\begin{DoxyCompactList}\small\item\em Check the size argument for the model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a9c29fcaf30faffc77b41ba556ebb0127}{num\+\_\+dim} =2
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a1149e8545d3cfaa40c2f3bc02e3223b2}{global\+\_\+min\+\_\+size} =3
+\item 
+static const \hyperlink{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat2DBase_a11c9bb87930f597dff17e9923b73bf5e}{global\+\_\+max\+\_\+size} =512
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_afc79fd7d2bbbc5672ff3690241c680e0}{Image\+Format2\+D\+Base} ()=default
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a86de92208eaeed6f691bf2bceaa8eb08}{Image\+Format2\+D\+Base} (const \hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} \&\hyperlink{classmappel_1_1ImageFormat2DBase_a3be77d2aa6ec9f3815322732950c2a60}{size})
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_ab0b17cc722833808a90eb9cbbf1b52ff}{Image\+Format2\+D\+Base} (const \hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \&)
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_af455479cc5fabbb1fda3dc585ef56b36}{Image\+Format2\+D\+Base} (\hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \&\&)
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \& \hyperlink{classmappel_1_1ImageFormat2DBase_af7abdfaf54b018bc3a4b2a2a4e37b451}{operator=} (const \hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \&)
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \& \hyperlink{classmappel_1_1ImageFormat2DBase_abe5d19d33ba0639b9fbcc0da8bcf4d25}{operator=} (\hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base} \&\&)
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{Image\+SizeT} \hyperlink{classmappel_1_1ImageFormat2DBase_a3be77d2aa6ec9f3815322732950c2a60}{size}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A virtual base class for 2D image localization objectives. 
+
+This class should be inherited virtually by both the model and the objective so that the common image information and functions are available in both Model and Objective classes hierarchies 
+
+Definition at line 22 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+\subsubsection{Member Typedef Documentation}
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+CoordT@{Image\+CoordT}}
+\index{Image\+CoordT@{Image\+CoordT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+CoordT}{ImageCoordT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+CoordT} =  uint32\+\_\+t}\hypertarget{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}{}\label{classmappel_1_1ImageFormat2DBase_a45e9234d63c357f34ca56c72c12b9e9c}
+Image size coordinate storage type 
+
+Definition at line 24 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+PixelT@{Image\+PixelT}}
+\index{Image\+PixelT@{Image\+PixelT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+PixelT}{ImagePixelT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+PixelT} =  double}\hypertarget{classmappel_1_1ImageFormat2DBase_af6bae6f78398ab1eacb39726a05adeef}{}\label{classmappel_1_1ImageFormat2DBase_af6bae6f78398ab1eacb39726a05adeef}
+Image pixel storage type 
+
+Definition at line 25 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+ShapeT@{Image\+ShapeT}}
+\index{Image\+ShapeT@{Image\+ShapeT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+ShapeT}{ImageShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+ShapeT} =  arma\+::\+Mat$<$PixelT$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_ac40fc3773b5668601c63905876cca732}{}\label{classmappel_1_1ImageFormat2DBase_ac40fc3773b5668601c63905876cca732}
+Shape of the data type for a single image 
+
+Definition at line 32 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Size\+ShapeT@{Image\+Size\+ShapeT}}
+\index{Image\+Size\+ShapeT@{Image\+Size\+ShapeT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Size\+ShapeT}{ImageSizeShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Size\+ShapeT} =  arma\+::\+Col$<$CoordT$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_a23c1a9e9f1482852aa0cf4951efe7c48}{}\label{classmappel_1_1ImageFormat2DBase_a23c1a9e9f1482852aa0cf4951efe7c48}
+Shape of the data type to store a single image\textquotesingle{}s coordinates 
+
+Definition at line 27 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+SizeT@{Image\+SizeT}}
+\index{Image\+SizeT@{Image\+SizeT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+SizeT}{ImageSizeT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+SizeT} =  {\bf Image\+Size\+ShapeT}$<${\bf Image\+CoordT}$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}{}\label{classmappel_1_1ImageFormat2DBase_a49cccf61eb2a768a202634d27fcd81d5}
+Data type for a single image size 
+
+Definition at line 29 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}}
+\index{Image\+Size\+Vec\+ShapeT@{Image\+Size\+Vec\+ShapeT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Size\+Vec\+ShapeT}{ImageSizeVecShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class CoordT $>$ using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Size\+Vec\+ShapeT} =  arma\+::\+Mat$<$CoordT$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_afe9ededf04942330121003e3dd8f9311}{}\label{classmappel_1_1ImageFormat2DBase_afe9ededf04942330121003e3dd8f9311}
+Shape of the data type to store a vector of image\textquotesingle{}s coordinates 
+
+Definition at line 28 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Size\+VecT@{Image\+Size\+VecT}}
+\index{Image\+Size\+VecT@{Image\+Size\+VecT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Size\+VecT}{ImageSizeVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Size\+VecT} =  {\bf Image\+Size\+Vec\+ShapeT}$<${\bf Image\+CoordT}$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_aa88536c52195a927cf32558856f05a13}{}\label{classmappel_1_1ImageFormat2DBase_aa88536c52195a927cf32558856f05a13}
+Data type for a sequence of image sizes 
+
+Definition at line 30 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}}
+\index{Image\+Stack\+ShapeT@{Image\+Stack\+ShapeT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Stack\+ShapeT}{ImageStackShapeT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class PixelT $>$ using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Stack\+ShapeT} =  arma\+::\+Cube$<$PixelT$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_ae2e123c8a5a5ab00f89eaea04d2431cb}{}\label{classmappel_1_1ImageFormat2DBase_ae2e123c8a5a5ab00f89eaea04d2431cb}
+Shape of the data type for a sequence of images 
+
+Definition at line 33 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+StackT@{Image\+StackT}}
+\index{Image\+StackT@{Image\+StackT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+StackT}{ImageStackT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+StackT} =  {\bf Image\+Stack\+ShapeT}$<${\bf Image\+PixelT}$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}{}\label{classmappel_1_1ImageFormat2DBase_a8f0276e94ff242fa4740a718642f5e14}
+Data type to represent a sequence of images 
+
+Definition at line 35 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!ImageT@{ImageT}}
+\index{ImageT@{ImageT}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{ImageT}{ImageT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Image\+Format2\+D\+Base\+::\+ImageT} =  {\bf Image\+ShapeT}$<${\bf Image\+PixelT}$>$}\hypertarget{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}{}\label{classmappel_1_1ImageFormat2DBase_a667ea5016648958e507e7db8eaa041b0}
+Data type to represent single image 
+
+Definition at line 34 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}}
+\index{Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Format2\+D\+Base()=default}{ImageFormat2DBase()=default}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Format2\+D\+Base (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [default]}}\hypertarget{classmappel_1_1ImageFormat2DBase_afc79fd7d2bbbc5672ff3690241c680e0}{}\label{classmappel_1_1ImageFormat2DBase_afc79fd7d2bbbc5672ff3690241c680e0}
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}}
+\index{Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Format2\+D\+Base(const Image\+Size\+T \&size)}{ImageFormat2DBase(const ImageSizeT &size)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Format2\+D\+Base (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a86de92208eaeed6f691bf2bceaa8eb08}{}\label{classmappel_1_1ImageFormat2DBase_a86de92208eaeed6f691bf2bceaa8eb08}
+
+
+Definition at line 13 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References check\+\_\+size().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_a86de92208eaeed6f691bf2bceaa8eb08_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}}
+\index{Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Format2\+D\+Base(const Image\+Format2\+D\+Base \&)}{ImageFormat2DBase(const ImageFormat2DBase &)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Format2\+D\+Base (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+Format2\+D\+Base} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_ab0b17cc722833808a90eb9cbbf1b52ff}{}\label{classmappel_1_1ImageFormat2DBase_ab0b17cc722833808a90eb9cbbf1b52ff}
+
+
+Definition at line 19 of file Image\+Format2\+D\+Base.\+cpp.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}}
+\index{Image\+Format2\+D\+Base@{Image\+Format2\+D\+Base}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{Image\+Format2\+D\+Base(\+Image\+Format2\+D\+Base \&\&)}{ImageFormat2DBase(ImageFormat2DBase &&)}}]{\setlength{\rightskip}{0pt plus 5cm}mappel\+::\+Image\+Format2\+D\+Base\+::\+Image\+Format2\+D\+Base (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+Format2\+D\+Base} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_af455479cc5fabbb1fda3dc585ef56b36}{}\label{classmappel_1_1ImageFormat2DBase_af455479cc5fabbb1fda3dc585ef56b36}
+
+
+Definition at line 23 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+T \&im) const }{check_image_shape(const ImageT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Image\+Format2\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf ImageT} \&}]{im}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1ImageFormat2DBase_aa5f3936c1c0b250fa1df17d53161a991}{}\label{classmappel_1_1ImageFormat2DBase_aa5f3936c1c0b250fa1df17d53161a991}
+
+
+Check the shape of a single images is correct for model size. 
+
+
+
+Definition at line 80 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
+\index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{check\+\_\+image\+\_\+shape(const Image\+Stack\+T \&ims) const }{check_image_shape(const ImageStackT &ims) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Image\+Format2\+D\+Base\+::check\+\_\+image\+\_\+shape (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{ims}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1ImageFormat2DBase_ab40faca8bf94a6e59765da5c3185c19b}{}\label{classmappel_1_1ImageFormat2DBase_ab40faca8bf94a6e59765da5c3185c19b}
+
+
+Check the shape of a stack of images is correct for model size. 
+
+
+
+Definition at line 93 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!check\+\_\+size@{check\+\_\+size}}
+\index{check\+\_\+size@{check\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{check\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{check_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Image\+Format2\+D\+Base\+::check\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3}{}\label{classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3}
+
+
+Check the size argument for the model. 
+
+
+
+Definition at line 60 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References global\+\_\+max\+\_\+size, and global\+\_\+min\+\_\+size.
+
+
+
+Referenced by Image\+Format2\+D\+Base(), and set\+\_\+size().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}}
+\index{get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+image\+\_\+from\+\_\+stack(const Image\+Stack\+T \&stack, Image\+Coord\+T n) const }{get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+ImageT} mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+image\+\_\+from\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a22701571228f52dd6cfeac72ab18908c}{}\label{classmappel_1_1ImageFormat2DBase_a22701571228f52dd6cfeac72ab18908c}
+
+
+Definition at line 106 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}}
+\index{get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+num\+\_\+pixels() const }{get_num_pixels() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+num\+\_\+pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564}{}\label{classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564}
+
+
+Definition at line 79 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+References size.
+
+
+
+Referenced by get\+\_\+stats().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+size() const }{get_size() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format2\+D\+Base\+::\+Image\+SizeT} \& mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a4497fe096f82ccb3af3c3632921081a5}{}\label{classmappel_1_1ImageFormat2DBase_a4497fe096f82ccb3af3c3632921081a5}
+
+
+Definition at line 74 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+size@{get\+\_\+size}}
+\index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+size(\+Idx\+T idx) const }{get_size(IdxT idx) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{idx}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1ImageFormat2DBase_a07ad97af7e697240ee359ae6a4821a2f}{}\label{classmappel_1_1ImageFormat2DBase_a07ad97af7e697240ee359ae6a4821a2f}
+
+
+Definition at line 41 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}}
+\index{get\+\_\+size\+\_\+image\+\_\+stack@{get\+\_\+size\+\_\+image\+\_\+stack}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+size\+\_\+image\+\_\+stack(const Image\+Stack\+T \&stack) const }{get_size_image_stack(const ImageStackT &stack) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+size\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+StackT} \&}]{stack}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a8ac2ce73a9b353b92a688224ccc4d217}{}\label{classmappel_1_1ImageFormat2DBase_a8ac2ce73a9b353b92a688224ccc4d217}
+
+
+Definition at line 99 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!get\+\_\+stats@{get\+\_\+stats}}
+\index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{get\+\_\+stats() const }{get_stats() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf StatsT} mappel\+::\+Image\+Format2\+D\+Base\+::get\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1}{}\label{classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1}
+
+
+Definition at line 103 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References get\+\_\+num\+\_\+pixels(), num\+\_\+dim, and size.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::get\+\_\+stats(), and mappel\+::\+Gauss2\+Ds\+Model\+::get\+\_\+stats().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!make\+\_\+image@{make\+\_\+image}}
+\index{make\+\_\+image@{make\+\_\+image}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{make\+\_\+image() const }{make_image() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+ImageT} mappel\+::\+Image\+Format2\+D\+Base\+::make\+\_\+image (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_ab5d6c4f7f3818f4652fcf8d54351c981}{}\label{classmappel_1_1ImageFormat2DBase_ab5d6c4f7f3818f4652fcf8d54351c981}
+
+
+Definition at line 85 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}}
+\index{make\+\_\+image\+\_\+stack@{make\+\_\+image\+\_\+stack}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{make\+\_\+image\+\_\+stack(\+Image\+Coord\+T n) const }{make_image_stack(ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base\+::\+Image\+StackT} mappel\+::\+Image\+Format2\+D\+Base\+::make\+\_\+image\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+CoordT}}]{n}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a76f8b347ce6c104973dec235398a4f32}{}\label{classmappel_1_1ImageFormat2DBase_a76f8b347ce6c104973dec235398a4f32}
+
+
+Definition at line 92 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{operator=(const Image\+Format2\+D\+Base \&)}{operator=(const ImageFormat2DBase &)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base} \& mappel\+::\+Image\+Format2\+D\+Base\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+Format2\+D\+Base} \&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_af7abdfaf54b018bc3a4b2a2a4e37b451}{}\label{classmappel_1_1ImageFormat2DBase_af7abdfaf54b018bc3a4b2a2a4e37b451}
+
+
+Definition at line 27 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References size.
+
+
+
+Referenced by mappel\+::\+Gauss2\+Ds\+M\+A\+P\+::operator=(), mappel\+::\+Gauss2\+Ds\+M\+L\+E\+::operator=(), mappel\+::\+Gauss2\+D\+M\+A\+P\+::operator=(), and mappel\+::\+Gauss2\+D\+M\+L\+E\+::operator=().
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_af7abdfaf54b018bc3a4b2a2a4e37b451_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!operator=@{operator=}}
+\index{operator=@{operator=}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{operator=(\+Image\+Format2\+D\+Base \&\&)}{operator=(ImageFormat2DBase &&)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format2\+D\+Base} \& mappel\+::\+Image\+Format2\+D\+Base\+::operator= (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+Format2\+D\+Base} \&\&}]{o}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_abe5d19d33ba0639b9fbcc0da8bcf4d25}{}\label{classmappel_1_1ImageFormat2DBase_abe5d19d33ba0639b9fbcc0da8bcf4d25}
+
+
+Definition at line 33 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References size.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}}
+\index{set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{set\+\_\+image\+\_\+in\+\_\+stack(\+Image\+Stack\+T \&stack, Image\+Coord\+T n, const Im\+T \&im) const }{set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ImT $>$ void mappel\+::\+Image\+Format2\+D\+Base\+::set\+\_\+image\+\_\+in\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{{\bf Image\+StackT} \&}]{stack, }
+\item[{{\bf Image\+CoordT}}]{n, }
+\item[{const ImT \&}]{im}
+\end{DoxyParamCaption}
+) const}\hypertarget{classmappel_1_1ImageFormat2DBase_aaae78a9b02452eb3538af34fcdcc3ad2}{}\label{classmappel_1_1ImageFormat2DBase_aaae78a9b02452eb3538af34fcdcc3ad2}
+
+
+Definition at line 113 of file Image\+Format2\+D\+Base.\+h.
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!set\+\_\+size@{set\+\_\+size}}
+\index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{set\+\_\+size(const Image\+Size\+T \&size\+\_\+)}{set_size(const ImageSizeT &size_)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Image\+Format2\+D\+Base\+::set\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\+SizeT} \&}]{size\+\_\+}
+\end{DoxyParamCaption}
+)}\hypertarget{classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372}{}\label{classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372}
+
+
+Definition at line 51 of file Image\+Format2\+D\+Base.\+cpp.
+
+
+
+References check\+\_\+size(), and size.
+
+
+
+Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+
+
+
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}}
+\index{global\+\_\+max\+\_\+size@{global\+\_\+max\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{global\+\_\+max\+\_\+size}{global_max_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::global\+\_\+max\+\_\+size =512\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a11c9bb87930f597dff17e9923b73bf5e}{}\label{classmappel_1_1ImageFormat2DBase_a11c9bb87930f597dff17e9923b73bf5e}
+Maximum size along any dimension of the image. This is insanely big to catch obvious errors 
+
+Definition at line 39 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+Referenced by check\+\_\+size().
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}}
+\index{global\+\_\+min\+\_\+size@{global\+\_\+min\+\_\+size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{global\+\_\+min\+\_\+size}{global_min_size}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::global\+\_\+min\+\_\+size =3\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a1149e8545d3cfaa40c2f3bc02e3223b2}{}\label{classmappel_1_1ImageFormat2DBase_a1149e8545d3cfaa40c2f3bc02e3223b2}
+Minimum size along any dimension of the image. 
+
+Definition at line 38 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+Referenced by check\+\_\+size().
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!num\+\_\+dim@{num\+\_\+dim}}
+\index{num\+\_\+dim@{num\+\_\+dim}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{num\+\_\+dim}{num_dim}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Image\+Format2\+D\+Base\+::\+Image\+CoordT} mappel\+::\+Image\+Format2\+D\+Base\+::num\+\_\+dim =2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a9c29fcaf30faffc77b41ba556ebb0127}{}\label{classmappel_1_1ImageFormat2DBase_a9c29fcaf30faffc77b41ba556ebb0127}
+Number of image dimensions. 
+
+Definition at line 37 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+Referenced by get\+\_\+stats().
+
+\index{mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}!size@{size}}
+\index{size@{size}!mappel\+::\+Image\+Format2\+D\+Base@{mappel\+::\+Image\+Format2\+D\+Base}}
+\paragraph[{\texorpdfstring{size}{size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+SizeT} mappel\+::\+Image\+Format2\+D\+Base\+::size\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat2DBase_a3be77d2aa6ec9f3815322732950c2a60}{}\label{classmappel_1_1ImageFormat2DBase_a3be77d2aa6ec9f3815322732950c2a60}
+Number of pixels in X dimension for 1D image 
+
+Definition at line 67 of file Image\+Format2\+D\+Base.\+h.
+
+
+
+Referenced by mappel\+::cgauss\+\_\+compute\+\_\+estimate(), mappel\+::cgauss\+\_\+compute\+\_\+estimate\+\_\+debug(), mappel\+::cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate(), check\+\_\+image\+\_\+shape(), mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivatives(), mappel\+::\+Gauss2\+D\+Model\+::debug\+\_\+internal\+\_\+sum\+\_\+model\+\_\+y(), mappel\+::\+Gauss2\+Ds\+Model\+::debug\+\_\+internal\+\_\+sum\+\_\+model\+\_\+y(), mappel\+::methods\+::expected\+\_\+information(), mappel\+::\+Gauss2\+D\+Model\+::\+Gauss2\+D\+Model(), mappel\+::\+Gauss2\+Ds\+M\+A\+P\+::\+Gauss2\+Ds\+M\+A\+P(), mappel\+::\+Gauss2\+Ds\+M\+L\+E\+::\+Gauss2\+Ds\+M\+L\+E(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Gauss2\+Ds\+Model(), get\+\_\+num\+\_\+pixels(), get\+\_\+size(), get\+\_\+stats(), mappel\+::methods\+::likelihood\+::grad(), mappel\+::methods\+::likelihood\+::grad2(), mappel\+::methods\+::likelihood\+::debug\+::grad\+\_\+components(), mappel\+::methods\+::likelihood\+::hessian(), mappel\+::methods\+::likelihood\+::debug\+::hessian\+\_\+components(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::methods\+::likelihood\+::llh(), mappel\+::methods\+::likelihood\+::debug\+::llh\+\_\+components(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), make\+\_\+image(), make\+\_\+image\+\_\+stack(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::methods\+::model\+\_\+image(), operator=(), mappel\+::methods\+::likelihood\+::rllh(), mappel\+::methods\+::likelihood\+::debug\+::rllh\+\_\+components(), set\+\_\+size(), mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size(), mappel\+::methods\+::simulate\+\_\+image(), mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model(), mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::\+Stencil(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Stencil\+::\+Stencil(), mappel\+::\+Gauss2\+D\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators(), and mappel\+::\+Gauss2\+Ds\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{ImageFormat2DBase_8h}{Image\+Format2\+D\+Base.\+h}\item 
+\hyperlink{ImageFormat2DBase_8cpp}{Image\+Format2\+D\+Base.\+cpp}\end{DoxyCompactItemize}

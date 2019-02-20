@@ -1,0 +1,13 @@
+<map id="mappel::Gauss2DsModel::get_stats" name="mappel::Gauss2DsModel::get_stats">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsModel.html#a11f03c648095b6d7dd5c38c3a5eca2dc" title="mappel::Gauss2DsModel\l::get_max_sigma" alt="" coords="226,51,386,89"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsModel.html#a46da2752c2d1ca376b72d910818e47ae" title="mappel::Gauss2DsModel\l::get_max_sigma_ratio" alt="" coords="459,5,619,44"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#af93a5f984a97e23ae1d371c980e48a41" title="mappel::Gauss2DsModel\l::get_min_sigma" alt="" coords="459,80,619,119"/>
+<area shape="rect" id="node6" href="$classmappel_1_1MCMCAdaptor2Ds.html#adc76529ede19684c1deacbeb8205fd8a" title="mappel::MCMCAdaptor2Ds\l::get_stats" alt="" coords="220,165,392,204"/>
+<area shape="rect" id="node10" href="$classmappel_1_1ImageFormat2DBase.html#a1a1e1178943bee139617b6c25e5104f1" title="mappel::ImageFormat2DBase\l::get_stats" alt="" coords="213,228,399,267"/>
+<area shape="rect" id="node12" href="$classmappel_1_1PointEmitterModel.html#a7fd2b4b01b10bb6a493a39eb72d480cb" title="mappel::PointEmitterModel\l::get_stats" alt="" coords="221,291,391,329"/>
+<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html#a0dfb473c48d177a4540d328abb03cd55" title="mappel::PointEmitterModel\l::get_ubound" alt="" coords="680,5,849,44"/>
+<area shape="rect" id="node7" href="$classmappel_1_1MCMCAdaptor2D.html#a69362d28411ba7a8ac8d4b9c95335e44" title="mappel::MCMCAdaptor2D\l::get_stats" alt="" coords="456,165,623,204"/>
+<area shape="rect" id="node8" href="$classmappel_1_1MCMCAdaptor1D.html#ad1cb677abb1a3e214c2f6fc1e1c3cb86" title="mappel::MCMCAdaptor1D\l::get_stats" alt="" coords="681,165,848,204"/>
+<area shape="rect" id="node9" href="$classmappel_1_1MCMCAdaptorBase.html#ad6054973528dfad89976882cdb50aba5" title="mappel::MCMCAdaptorBase\l::get_stats" alt="" coords="897,165,1076,204"/>
+<area shape="rect" id="node11" href="$classmappel_1_1ImageFormat2DBase.html#a4f9e0d332462ff53678c03700666a564" title="mappel::ImageFormat2DBase\l::get_num_pixels" alt="" coords="447,228,632,267"/>
+</map>

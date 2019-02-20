@@ -1,0 +1,19 @@
+<map id="mappel::istarts_with" name="mappel::istarts_with">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DsModel.html#a35300bd3e01596220b5630853da3d9ce" title="mappel::Gauss1DsModel\l::make_default_prior" alt="" coords="184,5,344,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DModel.html#a47f4b70d887066e1d73c0544e0a9690c" title="mappel::Gauss2DModel\l::make_default_prior" alt="" coords="187,68,341,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DModel.html#ab9aeff0d5e4f065e81b1d49183ca3fcb" title="mappel::Gauss1DModel\l::make_default_prior" alt="" coords="187,131,341,169"/>
+<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#a5f730333cb51b9586892cfd5bb566bf1" title="mappel::Gauss2DsModel\l::make_default_prior" alt="" coords="184,193,344,232"/>
+<area shape="rect" id="node8" href="$namespacemappel_1_1methods.html#a0f47a66f366b6e5841f1224e839ed828" title="mappel::methods::make\l_estimator" alt="" coords="188,280,340,319"/>
+<area shape="rect" id="node18" href="$PoissonGaussianNoise2DObjective_8h.html#a55b7a6399e6ffe26dc4c9c0c55b97fea" title="make_estimator" alt="" coords="209,343,319,368"/>
+<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsMAP.html#a3060b21e1ba0df3195cc8887919d44ac" title="mappel::Gauss2DsMAP\l::Gauss2DsMAP" alt="" coords="415,117,567,156"/>
+<area shape="rect" id="node7" href="$classmappel_1_1Gauss2DsMLE.html#a3151cb0e1936aaeacee80da0feb0231c" title="mappel::Gauss2DsMLE\l::Gauss2DsMLE" alt="" coords="416,180,567,219"/>
+<area shape="rect" id="node9" href="$namespacemappel_1_1methods.html#a7f4a5561497c243edaa6f55fddf0ec4e" title="mappel::methods::estimate_max" alt="" coords="392,243,591,268"/>
+<area shape="rect" id="node14" href="$namespacemappel_1_1methods_1_1debug.html#a6a5604069f158badd94b0efadc3e0e7c" title="mappel::methods::debug\l::estimate_max_debug" alt="" coords="413,292,570,331"/>
+<area shape="rect" id="node15" href="$namespacemappel_1_1methods_1_1openmp.html#aaf30517efe932ae2e79b740658c1e63e" title="mappel::methods::openmp\l::estimate_max_stack" alt="" coords="408,355,575,393"/>
+<area shape="rect" id="node17" href="$namespacemappel_1_1methods_1_1openmp.html#a22579301b567235e0f8394de0e499347" title="mappel::methods::openmp\l::estimate_profile_likelihood" alt="" coords="404,417,579,456"/>
+<area shape="rect" id="node10" href="$classmappel_1_1Estimator.html#a4406c994d5b6239e75628ea5d479bfa2" title="mappel::Estimator::\lestimate_max" alt="" coords="655,171,782,209"/>
+<area shape="rect" id="node12" href="$classmappel_1_1Gauss2DModel.html#a4bb4e53073e2c45b9a63b942214b787c" title="mappel::Gauss2DModel\l::initial_theta_estimate" alt="" coords="641,233,796,272"/>
+<area shape="rect" id="node13" href="$classmappel_1_1Gauss2DsModel.html#a70e079fd6b31bc6af5b7c10d2a0d8fb5" title="mappel::Gauss2DsModel\l::initial_theta_estimate" alt="" coords="639,296,799,335"/>
+<area shape="rect" id="node11" href="$classmappel_1_1Estimator.html#a629823fa91d4b461b2b1f607d588e558" title="mappel::Estimator::\l~Estimator" alt="" coords="847,171,973,209"/>
+<area shape="rect" id="node16" href="$classmappel_1_1Estimator.html#aa1b1c2677df2c6ea9fcf67b6a0856e46" title="mappel::Estimator::\lestimate_max_stack" alt="" coords="652,359,785,397"/>
+</map>

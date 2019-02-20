@@ -1,0 +1,151 @@
+\hypertarget{classPoissonGaussianNoise2DObjective}{}\subsection{Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$ Class Template Reference}
+\label{classPoissonGaussianNoise2DObjective}\index{Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$@{Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$}}
+
+
+A Base type for point emitter localization models that use 2d images.  
+
+
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Poisson\+Gaussian\+Noise2\+D\+Objective.\+h$>$}
+
+
+
+Inheritance diagram for Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{classPoissonGaussianNoise2DObjective__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=243pt]{classPoissonGaussianNoise2DObjective__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \hyperlink{classPoissonGaussianNoise2DObjective_a4167a20571c56d874f26f7432e5e3232}{Coord\+IdxT} = uint32\+\_\+t
+\item 
+using \hyperlink{classPoissonGaussianNoise2DObjective_a4869a86fc5712492b479c26b4d808e38}{CoordT} = arma\+::vec$<$ uint32\+\_\+t $>$
+\item 
+using \hyperlink{classPoissonGaussianNoise2DObjective_a5842f130c58c7f50fe2e44a76f6981a9}{Coord\+StackT} = arma\+::mat$<$ uint32\+\_\+t $>$
+\item 
+using \hyperlink{classPoissonGaussianNoise2DObjective_a9ee7fd979e5e5165304e224bff4d8754}{Model\+DataT} = std\+::pair$<$ ImageT, \hyperlink{classPoissonGaussianNoise2DObjective_a4869a86fc5712492b479c26b4d808e38}{CoordT} $>$
+\item 
+using \hyperlink{classPoissonGaussianNoise2DObjective_af88ce9c09fc860efefeba5569fbd5ac1}{Model\+Data\+StackT} = std\+::pair$<$ Image\+StackT, \hyperlink{classPoissonGaussianNoise2DObjective_a5842f130c58c7f50fe2e44a76f6981a9}{Coord\+StackT} $>$
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPoissonGaussianNoise2DObjective_ac7f39bbac0ce14092aa82f59fd4b697a}{Poisson\+Gaussian\+Noise2\+D\+Objective} (const Image\+Size\+VecT \&size, const ImageT \&\hyperlink{classPoissonGaussianNoise2DObjective_aa28337c212470a6a5a152e691bcb7d45}{sensor\+\_\+gain\+\_\+map}, const ImageT \&\hyperlink{classPoissonGaussianNoise2DObjective_a84c763dc1db0d927cc1f8bcecdb3b663}{sensor\+\_\+bg\+\_\+map})
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+ImageT \hyperlink{classPoissonGaussianNoise2DObjective_aa28337c212470a6a5a152e691bcb7d45}{sensor\+\_\+gain\+\_\+map}
+\item 
+ImageT \hyperlink{classPoissonGaussianNoise2DObjective_a84c763dc1db0d927cc1f8bcecdb3b663}{sensor\+\_\+bg\+\_\+map}
+\end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const String\+VecT \hyperlink{classPoissonGaussianNoise2DObjective_afc77f6a06f55c371a831f9e1ecc82ee3}{estimator\+\_\+names}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\subsubsection*{template$<$typename Model\+Base$>$\\*
+class Poisson\+Gaussian\+Noise2\+D\+Objective$<$ Model\+Base $>$}
+
+A Base type for point emitter localization models that use 2d images. 
+
+We don\textquotesingle{}t assume much here, so that it is possible to have a wide range of 2D models 
+
+Definition at line 23 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+\subsubsection{Member Typedef Documentation}
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Coord\+IdxT@{Coord\+IdxT}}
+\index{Coord\+IdxT@{Coord\+IdxT}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{Coord\+IdxT}{CoordIdxT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ using {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf Coord\+IdxT} =  uint32\+\_\+t}\hypertarget{classPoissonGaussianNoise2DObjective_a4167a20571c56d874f26f7432e5e3232}{}\label{classPoissonGaussianNoise2DObjective_a4167a20571c56d874f26f7432e5e3232}
+
+
+Definition at line 26 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Coord\+StackT@{Coord\+StackT}}
+\index{Coord\+StackT@{Coord\+StackT}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{Coord\+StackT}{CoordStackT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ using {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf Coord\+StackT} =  arma\+::mat$<$uint32\+\_\+t$>$}\hypertarget{classPoissonGaussianNoise2DObjective_a5842f130c58c7f50fe2e44a76f6981a9}{}\label{classPoissonGaussianNoise2DObjective_a5842f130c58c7f50fe2e44a76f6981a9}
+
+
+Definition at line 28 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!CoordT@{CoordT}}
+\index{CoordT@{CoordT}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{CoordT}{CoordT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ using {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf CoordT} =  arma\+::vec$<$uint32\+\_\+t$>$}\hypertarget{classPoissonGaussianNoise2DObjective_a4869a86fc5712492b479c26b4d808e38}{}\label{classPoissonGaussianNoise2DObjective_a4869a86fc5712492b479c26b4d808e38}
+
+
+Definition at line 27 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Model\+Data\+StackT@{Model\+Data\+StackT}}
+\index{Model\+Data\+StackT@{Model\+Data\+StackT}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{Model\+Data\+StackT}{ModelDataStackT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ using {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf Model\+Data\+StackT} =  std\+::pair$<$Image\+StackT,{\bf Coord\+StackT}$>$}\hypertarget{classPoissonGaussianNoise2DObjective_af88ce9c09fc860efefeba5569fbd5ac1}{}\label{classPoissonGaussianNoise2DObjective_af88ce9c09fc860efefeba5569fbd5ac1}
+Objective function data stack type\+: 2D double precision image stack, of images gain-\/corrected to approximate photons counts 
+
+Definition at line 30 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Model\+DataT@{Model\+DataT}}
+\index{Model\+DataT@{Model\+DataT}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{Model\+DataT}{ModelDataT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ using {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf Model\+DataT} =  std\+::pair$<$ImageT, {\bf CoordT}$>$}\hypertarget{classPoissonGaussianNoise2DObjective_a9ee7fd979e5e5165304e224bff4d8754}{}\label{classPoissonGaussianNoise2DObjective_a9ee7fd979e5e5165304e224bff4d8754}
+Objective function data type\+: 2D double precision image, gain-\/corrected to approximate photons counts 
+
+Definition at line 29 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{Poisson\+Gaussian\+Noise2\+D\+Objective(const Image\+Size\+Vec\+T \&size, const Image\+T \&sensor\+\_\+gain\+\_\+map, const Image\+T \&sensor\+\_\+bg\+\_\+map)}{PoissonGaussianNoise2DObjective(const ImageSizeVecT &size, const ImageT &sensor_gain_map, const ImageT &sensor_bg_map)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::{\bf Poisson\+Gaussian\+Noise2\+D\+Objective} (
+\begin{DoxyParamCaption}
+\item[{const Image\+Size\+VecT \&}]{size, }
+\item[{const ImageT \&}]{sensor\+\_\+gain\+\_\+map, }
+\item[{const ImageT \&}]{sensor\+\_\+bg\+\_\+map}
+\end{DoxyParamCaption}
+)}\hypertarget{classPoissonGaussianNoise2DObjective_ac7f39bbac0ce14092aa82f59fd4b697a}{}\label{classPoissonGaussianNoise2DObjective_ac7f39bbac0ce14092aa82f59fd4b697a}
+
+
+\subsubsection{Member Data Documentation}
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!estimator\+\_\+names@{estimator\+\_\+names}}
+\index{estimator\+\_\+names@{estimator\+\_\+names}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{estimator\+\_\+names}{estimator_names}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ const std\+::vector$<$ std\+::string $>$ {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::estimator\+\_\+names\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classPoissonGaussianNoise2DObjective_afc77f6a06f55c371a831f9e1ecc82ee3}{}\label{classPoissonGaussianNoise2DObjective_afc77f6a06f55c371a831f9e1ecc82ee3}
+
+
+Definition at line 25 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!sensor\+\_\+bg\+\_\+map@{sensor\+\_\+bg\+\_\+map}}
+\index{sensor\+\_\+bg\+\_\+map@{sensor\+\_\+bg\+\_\+map}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{sensor\+\_\+bg\+\_\+map}{sensor_bg_map}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ ImageT {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::sensor\+\_\+bg\+\_\+map}\hypertarget{classPoissonGaussianNoise2DObjective_a84c763dc1db0d927cc1f8bcecdb3b663}{}\label{classPoissonGaussianNoise2DObjective_a84c763dc1db0d927cc1f8bcecdb3b663}
+
+
+Definition at line 34 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+\index{Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}!sensor\+\_\+gain\+\_\+map@{sensor\+\_\+gain\+\_\+map}}
+\index{sensor\+\_\+gain\+\_\+map@{sensor\+\_\+gain\+\_\+map}!Poisson\+Gaussian\+Noise2\+D\+Objective@{Poisson\+Gaussian\+Noise2\+D\+Objective}}
+\paragraph[{\texorpdfstring{sensor\+\_\+gain\+\_\+map}{sensor_gain_map}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename Model\+Base $>$ ImageT {\bf Poisson\+Gaussian\+Noise2\+D\+Objective}$<$ Model\+Base $>$\+::sensor\+\_\+gain\+\_\+map}\hypertarget{classPoissonGaussianNoise2DObjective_aa28337c212470a6a5a152e691bcb7d45}{}\label{classPoissonGaussianNoise2DObjective_aa28337c212470a6a5a152e691bcb7d45}
+
+
+Definition at line 33 of file Poisson\+Gaussian\+Noise2\+D\+Objective.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{PoissonGaussianNoise2DObjective_8h}{Poisson\+Gaussian\+Noise2\+D\+Objective.\+h}\item 
+\hyperlink{PoissonGaussianNoise2DObjective_8cpp}{Poisson\+Gaussian\+Noise2\+D\+Objective.\+cpp}\end{DoxyCompactItemize}

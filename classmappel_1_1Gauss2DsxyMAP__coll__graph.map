@@ -1,0 +1,12 @@
+<map id="mappel::Gauss2DsxyMAP" name="mappel::Gauss2DsxyMAP">
+<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DModel.html" title="A base class for 1D Gaussian PSF with a fixed sigma (standard dev.) " alt="" coords="1221,149,1375,174"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="" coords="494,138,663,163"/>
+<area shape="rect" id="node8" href="$classmappel_1_1MCMCAdaptor1D.html" title="mappel::MCMCAdaptor1D" alt="" coords="821,77,988,102"/>
+<area shape="rect" id="node14" href="$classmappel_1_1MAPEstimator.html" title="A Mixin class to configure a for MLE estimation (null prior). " alt="" coords="1021,339,1168,365"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="186,243,261,269"/>
+<area shape="rect" id="node6" title="STL class. " alt="" coords="5,237,123,275"/>
+<area shape="rect" id="node7" href="$classmappel_1_1ImageFormat1DBase.html" title="A virtual base class for 2D image localization objectives. " alt="" coords="812,178,997,203"/>
+<area shape="rect" id="node12" href="$classmappel_1_1PoissonNoise1DObjective.html" title="A base class for 1D objectives with Poisson read noise. This objective function and its subclasses ar..." alt="" coords="1192,289,1404,314"/>
+<area shape="rect" id="node9" href="$classmappel_1_1MCMCAdaptorBase.html" title="mappel::MCMCAdaptorBase" alt="" coords="489,71,668,97"/>
+<area shape="rect" id="node10" title="STL class. " alt="" coords="527,333,631,358"/>
+</map>

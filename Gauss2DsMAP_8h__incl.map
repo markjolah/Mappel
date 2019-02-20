@@ -1,0 +1,24 @@
+<map id="Gauss2DsMAP.h" name="Gauss2DsMAP.h">
+<area shape="rect" id="node2" href="$Gauss2DsModel_8h.html" title="The class declaration and inline and templated functions for Gauss2DsModel. " alt="" coords="1804,79,1971,104"/>
+<area shape="rect" id="node31" href="$PoissonNoise2DObjective_8h.html" title="The class declaration and inline and templated functions for PoissonNoise2DObjective. " alt="" coords="2461,379,2679,404"/>
+<area shape="rect" id="node40" href="$MLEstimator_8h.html" title="Class declaration and inline and templated functions for MLEstimator. " alt="" coords="1166,299,1310,324"/>
+<area shape="rect" id="node41" href="$model__methods_8h.html" title="Mappel/model_methods.h" alt="" coords="1900,299,2064,324"/>
+<area shape="rect" id="node3" href="$PointEmitterModel_8h.html" title="The class declaration and inline and templated functions for PointEmitterModel. " alt="" coords="1111,379,1287,404"/>
+<area shape="rect" id="node25" href="$ImageFormat2DBase_8h.html" title="The class declaration and inline and templated functions for ImageFormat2DBase. " alt="" coords="2641,465,2833,491"/>
+<area shape="rect" id="node26" href="$MCMCAdaptor2Ds_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor2Ds. " alt="" coords="2042,152,2221,177"/>
+<area shape="rect" id="node28" href="$Gauss1DsMAP_8h.html" title="The class declaration and inline and templated functions for Gauss1DsMAP. " alt="" coords="1808,152,1967,177"/>
+<area shape="rect" id="node12" href="$util_8h.html" title="Mappel/util.h" alt="" coords="1985,619,2077,644"/>
+<area shape="rect" id="node20" href="$stencil_8h.html" title="The stencils for pixel based computations. " alt="" coords="1388,465,1499,491"/>
+<area shape="rect" id="node22" href="$rng_8h.html" title="Random number generation usign sfmt. " alt="" coords="1815,545,1909,571"/>
+<area shape="rect" id="node23" href="$display_8h.html" title="Mappel/display.h" alt="" coords="1198,465,1313,491"/>
+<area shape="rect" id="node27" href="$MCMCAdaptor2D_8h.html" title="The class declaration and inline and templated functions for MCMCAdaptor2D. " alt="" coords="2070,225,2243,251"/>
+<area shape="rect" id="node29" href="$Gauss1DsModel_8h.html" title="The class declaration and inline and templated functions for Gauss1DsModel. " alt="" coords="1777,225,1944,251"/>
+<area shape="rect" id="node30" href="$PoissonNoise1DObjective_8h.html" title="The class declaration and inline and templated functions for PoissonNoise1DObjective. " alt="" coords="2314,299,2533,324"/>
+<area shape="rect" id="node39" href="$MAPEstimator_8h.html" title="Class declaration and inline and templated functions for MAPEstimator. " alt="" coords="1273,225,1427,251"/>
+<area shape="rect" id="node32" href="$estimator_8h.html" title="The class declaration and inline and templated functions for the Estimator class hierarchy. " alt="" coords="2489,465,2616,491"/>
+<area shape="rect" id="node43" href="$mcmc_8h.html" title="Templated MCMC methods for posterior estimation. " alt="" coords="2104,465,2212,491"/>
+<area shape="rect" id="node45" href="$openmp__methods_8h.html" title="Namespaces for OpenMP parallelized versions of the mappel::model namespace functions (external method..." alt="" coords="1895,379,2069,404"/>
+<area shape="rect" id="node47" href="$model__methods__impl_8h.html" title="Mappel/model_methods\l_impl.h" alt="" coords="1523,372,1678,411"/>
+<area shape="rect" id="node49" href="$estimator__impl_8h.html" title="Mappel/estimator_impl.h" alt="" coords="1715,379,1871,404"/>
+<area shape="rect" id="node48" href="$numerical_8h.html" title="Numerical matrix operations. " alt="" coords="1523,465,1654,491"/>
+</map>

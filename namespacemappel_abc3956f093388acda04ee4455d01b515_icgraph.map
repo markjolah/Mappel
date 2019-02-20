@@ -1,0 +1,7 @@
+<map id="mappel::cholesky" name="mappel::cholesky">
+<area shape="rect" id="node2" href="$namespacemappel.html#a3ffbe5273f0e95ef18a3bc26bc207489" title="mappel::is_positive\l_definite" alt="" coords="223,36,350,75"/>
+<area shape="rect" id="node5" href="$classmappel_1_1TrustRegionMaximizer.html#af32ed521848406591d8a77d5a8abb7be" title="mappel::TrustRegionMaximizer\l::solve_restricted_step_length_newton" alt="" coords="171,99,403,137"/>
+<area shape="rect" id="node6" href="$classmappel_1_1TrustRegionMaximizer.html#a3e6778bb5392353348ffe1c1c7a775b4" title="Exactly solver the TR subproblem even for non&#45;positive definite H. " alt="" coords="191,161,383,200"/>
+<area shape="rect" id="node3" href="$classmappel_1_1QuasiNewtonMaximizer.html#ab4d32d8ba90d4355262a228753619b9f" title="mappel::QuasiNewtonMaximizer\l::maximize" alt="" coords="451,5,649,44"/>
+<area shape="rect" id="node4" href="$namespacemappel.html#ad631839d6d2c62198d21364ca379f529" title="mappel::is_negative\l_definite" alt="" coords="484,68,616,107"/>
+</map>

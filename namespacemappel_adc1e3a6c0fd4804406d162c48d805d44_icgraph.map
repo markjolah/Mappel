@@ -1,0 +1,5 @@
+<map id="mappel::generate_poisson" name="mappel::generate_poisson">
+<area shape="rect" id="node2" href="$namespacemappel_1_1methods.html#abe1122f5c810f1b41c391a7e724fd74d" title="Simulate an image at a given theta stencil, by generating Poisson noise Enabled for PoissonNoise1DObj..." alt="" coords="221,5,389,44"/>
+<area shape="rect" id="node3" href="$PoissonGaussianNoise2DObjective_8h.html#a478c3e580a937a0f89aeda93d890e17b" title="Simulate an image using the PSF model, by generating Poisson noise. " alt="" coords="251,68,360,93"/>
+<area shape="rect" id="node4" href="$namespacemappel_1_1methods.html#a4a6ea9893f28e1f5c2604d8c3e7b6852" title="Simulate an image at a given theta stencil, by generating Poisson noise Enabled for PoissonNoise1DObj..." alt="" coords="221,117,389,156"/>
+</map>

@@ -1,0 +1,79 @@
+\hypertarget{PoissonNoise2DObjective_8h}{}\subsection{Poisson\+Noise2\+D\+Objective.\+h File Reference}
+\label{PoissonNoise2DObjective_8h}\index{Poisson\+Noise2\+D\+Objective.\+h@{Poisson\+Noise2\+D\+Objective.\+h}}
+
+
+The class declaration and inline and templated functions for Poisson\+Noise2\+D\+Objective.  
+
+
+{\ttfamily \#include \char`\"{}Mappel/\+Image\+Format2\+D\+Base.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Mappel/estimator.\+h\char`\"{}}\\*
+Include dependency graph for Poisson\+Noise2\+D\+Objective.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PoissonNoise2DObjective_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{PoissonNoise2DObjective_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1PoissonNoise2DObjective}{mappel\+::\+Poisson\+Noise2\+D\+Objective}
+\begin{DoxyCompactList}\small\item\em A base class for 2D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1methods}{mappel\+::methods}
+\begin{DoxyCompactList}\small\item\em Templated functions for operating on a \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}. \end{DoxyCompactList}\item 
+ \hyperlink{namespacemappel_1_1methods_1_1likelihood}{mappel\+::methods\+::likelihood}
+\item 
+ \hyperlink{namespacemappel_1_1methods_1_1likelihood_1_1debug}{mappel\+::methods\+::likelihood\+::debug}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\Return\+If\+SubclassT$<$ ImageT$<$ Model $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_a2b9a50b06cafb7ac9d857589df8979dc}{mappel\+::methods\+::simulate\+\_\+image} (const Model \&model, const StencilT$<$ Model $>$ \&s, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model , class rng\+\_\+t $>$ }\\Return\+If\+SubclassT$<$ ImageT$<$ Model $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_a2dd4cb94fa6669d64488ed95bc1c6d02}{mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model} (const Model \&model, const ImageT$<$ Model $>$ \&model\+\_\+im, rng\+\_\+t \&rng)
+\begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ MatT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_abc7bb2a867d157f3adbb71abdd3680d2}{mappel\+::methods\+::expected\+\_\+information} (const Model \&model, const StencilT$<$ Model $>$ \&s)
+\begin{DoxyCompactList}\small\item\em Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ std\+::unique\+\_\+ptr$<$ Estimator$<$ Model $>$ $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec}{mappel\+::methods\+::make\+\_\+estimator} (Model \&model, std\+::string ename)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ double, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_a134b4c6ce6807f342f33464e99512dc6}{mappel\+::methods\+::likelihood\+::llh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ double, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_aa8cbdb607db58f763a8dc70ef48372f1}{mappel\+::methods\+::likelihood\+::rllh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ ParamT$<$ Model $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_a708debdd0c44a2bbdcc1deac7d49ab37}{mappel\+::methods\+::likelihood\+::grad} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ void, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_af0fade6d3bccc367da5d5d411ad6778b}{mappel\+::methods\+::likelihood\+::grad2} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, ParamT$<$ Model $>$ \&grad\+\_\+val, ParamT$<$ Model $>$ \&grad2\+\_\+val)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ void, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_ac16ac7a26d0773dc9c074e8ad796e161}{mappel\+::methods\+::likelihood\+::hessian} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s, ParamT$<$ Model $>$ \&grad\+\_\+val, MatT \&hess\+\_\+val)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ VecT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_1_1debug_a47e4b71af29f5c8d435e5a8880fe254a}{mappel\+::methods\+::likelihood\+::debug\+::llh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ VecT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_1_1debug_ac91e6c82e246b21c5f6dc2f9d8ce295d}{mappel\+::methods\+::likelihood\+::debug\+::rllh\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ MatT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_1_1debug_aeb75ad8daa3b69f3cf800cf38f17656d}{mappel\+::methods\+::likelihood\+::debug\+::grad\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\item 
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ CubeT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_1_1debug_ab4a28e66a2192d238960defbe85c0d4c}{mappel\+::methods\+::likelihood\+::debug\+::hessian\+\_\+components} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+The class declaration and inline and templated functions for Poisson\+Noise2\+D\+Objective. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2014-\/2019 
+\end{DoxyDate}

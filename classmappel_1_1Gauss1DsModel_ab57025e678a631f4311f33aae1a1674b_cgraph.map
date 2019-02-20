@@ -1,0 +1,5 @@
+<map id="mappel::Gauss1DsModel::set_min_sigma" name="mappel::Gauss1DsModel::set_min_sigma">
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html#a01ce8d6358acbd2575be519dff1df89b" title="mappel::PointEmitterModel\l::check_psf_sigma" alt="" coords="213,5,383,44"/>
+<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel.html#aac5607105b0014d286fd419d0f1741e6" title="mappel::Gauss1DsModel\l::get_max_sigma" alt="" coords="218,68,378,107"/>
+<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html#a737fa5857415b9830fa2e5ccdff48541" title="mappel::PointEmitterModel\l::set_lbound" alt="" coords="213,131,383,169"/>
+</map>

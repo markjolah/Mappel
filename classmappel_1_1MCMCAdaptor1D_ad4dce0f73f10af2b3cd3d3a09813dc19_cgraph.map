@@ -1,0 +1,7 @@
+<map id="mappel::MCMCAdaptor1D::MCMCAdaptor1D" name="mappel::MCMCAdaptor1D::MCMCAdaptor1D">
+<area shape="rect" id="node2" href="$classmappel_1_1PointEmitterModel.html#aeb486e8f6f6fa694e3746e84eebcf848" title="mappel::PointEmitterModel\l::get_lbound" alt="" coords="435,6,604,45"/>
+<area shape="rect" id="node3" href="$classmappel_1_1PointEmitterModel.html#a0dfb473c48d177a4540d328abb03cd55" title="mappel::PointEmitterModel\l::get_ubound" alt="" coords="435,86,604,125"/>
+<area shape="rect" id="node4" href="$classmappel_1_1MCMCAdaptor1D.html#ae79ee3845fbdd0e378f00eeebf8ccef1" title="mappel::MCMCAdaptor1D\l::set_background_mcmc\l_sampling" alt="" coords="220,32,387,84"/>
+<area shape="rect" id="node6" href="$classmappel_1_1MCMCAdaptor1D.html#ac70f768928859b1e9449b0ec1a141c4c" title="mappel::MCMCAdaptor1D\l::set_intensity_mcmc\l_sampling" alt="" coords="220,160,387,212"/>
+<area shape="rect" id="node5" href="$classmappel_1_1PointEmitterModel.html#a3282cc59d5c6010a51f671ba72997705" title="mappel::PointEmitterModel\l::get_hyperparam_value" alt="" coords="435,149,604,188"/>
+</map>
