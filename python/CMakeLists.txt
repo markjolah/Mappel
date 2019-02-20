@@ -33,9 +33,10 @@ add_custom_command(TARGET prepare_python PRE_BUILD
    COMMAND find ${CMAKE_CURRENT_SOURCE_DIR} -regex "'^.*\\(__pycache__\\|\\.py[co]\\)$$'" -print -delete
    COMMENT "Removing __pycache__")
 
-set(PYTHON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX})
-install(CODE "execute_process(COMMAND PYTHONPATH=${PYTHON_INSTALL_PATH} ./setup.py install --prefix=${CMAKE_INSTALL_PREFIX}
-                              WORKING_DIRECTORY ${PYTHON_BUILD_DIR})")
-if(OPT_TESTING)
+#set(PYTHON_INSTALL_PATH ${CMAKE_INSTALL_PREFIX})
+#install(CODE "execute_process(COMMAND PYTHONPATH=${PYTHON_INSTALL_PATH} ./setup.py install --prefix=${CMAKE_INSTALL_PREFIX}
+#                              WORKING_DIRECTORY ${PYTHON_BUILD_DIR})")
+
+if(BUILD_TESTING AND NOT CMAKE_CROSSCOMPILING)
     add_test(NAME python_mappel COMMAND python -m mappel WORKING_DIRECTORY ${PYTHON_BUILD_DIR})
 endif()
