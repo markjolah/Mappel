@@ -10,10 +10,12 @@ BUILD_PATH=${SCRIPT_DIR}/../_build/documentation
 INSTALL_PATH=${SCRIPT_DIR}/../_install.documentation
 ARGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
 ARGS="${ARGS} -DOPT_DOC=On"
+ARGS="${ARGS} -DOPT_TESTING=Off"
+ARGS="${ARGS} -DBUILD_STATIC=Off"
 
 set -ex
 rm -rf $BUILD_PATH
 
-cmake -H${SRC_PATH} -B$BUILD_PATH -DCMAKE_BUILD_TYPE=Debug -Wdev $ARGS $@
+cmake -H${SRC_PATH} -B$BUILD_PATH -DCMAKE_BUILD_TYPE=Release -Wdev $ARGS $@
 VERBOSE=1 cmake --build $BUILD_PATH --target doc -- -j$NUM_PROCS
 VERBOSE=1 cmake --build $BUILD_PATH --target pdf -- -j$NUM_PROCS
