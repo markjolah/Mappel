@@ -8,8 +8,12 @@
 %  * Objective: PoissonNoise2DObjective - Assumes Poisson noise model.
 %  * Estimator: MAPEstimator - Maximum a-posteriori likelihood function, that incorporates prior information.
 %
-% Notes: Data should be calibrated to ensure the Poisson noise assumption holds, at least approximately.
+% Notes: 
+%  * These estimators are designed to work on Poisson distributed data.
+%      * All image data should be calibrated to ensure the Poisson noise assumption holds [at least approximately].
 %
+% Methods and Properties:
+% See also Mappel.MappelBase
 
 classdef Gauss2DMAP < Mappel.MappelBase
     properties (Constant=true)

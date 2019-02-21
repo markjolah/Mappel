@@ -22,6 +22,7 @@ ARGS="${ARGS} -DBUILD_SHARED_LIBS=ON"
 ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
 ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=Off"
+ARGS="${ARGS} -DOPT_AddExternalDependency_DISABLE_TESTING=On" #Disable recursive testing. we are just testing this package.
 ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On"  # Disable finding packages in the build-tree
 
 

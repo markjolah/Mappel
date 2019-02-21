@@ -1,23 +1,38 @@
-% MappelBase.m
-% Mark J. Olah (mjo@cs.unm DOT edu)
-% 2014 - 2019
-% COPYRIGHT: See: LICENCE
-%
-% Mappel base class interface for point-emitter models.
-
 
 classdef MappelBase < MexIFace.MexIFaceMixin
+    % MappelBase.m
     %
-    % This base class implements most of the methods for each of the Mappel Models classes.  The concrete classes pass their MEX module name to
-    % the MappelBase constructor which manages the initialization of the object
+    % Mappel base class interface for all point-emitter localization models.
     %
-    % Design decisions
-    %  * All computational functions are vectorized.  We take in inputs where the
-    %    size of the last array dim represents the number of inputs to process. 
-    %    this allows the memory layout to be contiguous for in-place 
-    %    parallel thread execution.  Thus parameter vectors are column vectors, because
-    %    matlab is column-major oriented.
-
+    % This base class implements most of the methods for each of the Mappel Models classes.  
+    %
+    % 1D Models
+    %
+    %
+    % Mappel.MappelBase Properties
+    %    ImageSize -  1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+    %    PSFSigmaMin - Minimum gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+    %    PSFSigmaMax - Minimum gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+    %    Hyperparams - Vector of hyperparameters. size:[NumHyperparams,1] 
+    %    ParamNames - CellArray of model parameter names. size:[NumParams,1] These are the parameters we
+    %                 estimate.
+    %    HyperparamNames -  CellArray of model hyperparam names. size:[NumHyperparams,1].  These parameters control the prior distribution shape. 
+    %    ParamUBound - Upper-bound for each parameter (dimension). inf=unbounded above.  Controls bounded
+    %                   estimation methods.
+    %    ParamLBound - Lower-bound for each parameter (dimension). -inf=unbounded below. Controls bounded estimation methods.
+    %
+    %
+    % Mappel.MappelBase Methods
+    %  * Mappel.MappelBase.samplePrior - Sample typical parameter (theta) values from the prior using Hyperparams
+    %  * Mappel.MappelBase.simulateImage - Simulate image with noise given one or more parameter (theta) values.
+    %  * Mappel.MappelBase.estimate - Estimate the emitter parameters from a stack of images using maximum-likelihood. 
+    %  * Mappel.MappelBase.estimate - Point estimates of the model parameters from a stack of images [MLE/MAP]. 
+    %  * Mappel.MappelBase.estimatePosterior - Posterior sampling estimates for stack of images.
+    %
+    %   See also Mappel.MappelBase.samplePrior Mappel.MappelBase.simulateImage Mappel.MappelBase.estimate
+    %   Mappel.MappelBase.estimatePosterior
+    
+    
     properties (Constant=true)
         MinSize = 4; %Minimum ImageSize of an image in pixels
         EstimationMethods={'Heuristic',...          %[C++(OpenMP)] Heuristic starting point guesstimate

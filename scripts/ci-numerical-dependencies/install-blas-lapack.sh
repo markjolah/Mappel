@@ -36,7 +36,7 @@ fi
 NUM_PROCS=$(grep -c ^processor /proc/cpuinfo)
 REPOS_DIR=$WORK_DIR/$PKG_NAME
 
-CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX"
+CMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX -DCMAKE_INSTALL_LIBDIR=$INSTALL_PREFIX/lib"
 CMAKE_ARGS="${CMAKE_ARGS} -DBUILD_SHARED_LIBS=On -DBUILD_STATIC_LIBS=Off"
 CMAKE_ARGS="${CMAKE_ARGS} -DCBLAS=OFF -DLAPACKE=OFF"
 CMAKE_ARGS="${CMAKE_ARGS} ${@:2}"
@@ -53,7 +53,10 @@ cmake . -B$BUILD_PATH -DCMAKE_Fortran_COMPILER="$FC" -DCMAKE_Fortran_FLAGS="${FF
 cd $BUILD_PATH
 make all -j$NUM_PROCS
 $SUDO make install
-set +x
+set +e
+SUDO mv /usr/lib/pkgconfig/blas.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
+SUDO mv /usr/lib/pkgconfig/lapack.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
+ls -l /usr/lib/pkgconfig/
 echo "PKG_CONFIG: $PKG_CONFIG_PATH"
 echo "Modified: $($SUDO find $INSTALL_PREFIX/lib/pkgconfig $INSTALL_PREFIX/lib64/pkgconfig $INSTALL_PREFIX/x86_64-linux-gnu/lib/pkgconfig -type f -name blas.pc -print -exec rename blas.pc blas-reference${PC_SUFFIX}.pc {} \; 2> /dev/null)"
 echo "Modified: $($SUDO find $INSTALL_PREFIX/lib/pkgconfig $INSTALL_PREFIX/lib64/pkgconfig $INSTALL_PREFIX/x86_64-linux-gnu/lib/pkgconfig -type f -name lapack.pc -print -exec rename lapack.pc lapack-reference${PC_SUFFIX}.pc {} \; 2> /dev/null)"
