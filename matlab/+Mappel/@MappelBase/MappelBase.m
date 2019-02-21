@@ -671,6 +671,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             image = obj.checkImage(image);
             if nargin<3
                 estimator_algorithm = obj.DefaultEstimatorMethod;
+            else
+                estimator_algorithm = convertStringsToChars(estimator_algorithm);
             end
             if nargin<4
                 theta_init = [];

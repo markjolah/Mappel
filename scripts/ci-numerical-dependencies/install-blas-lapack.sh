@@ -54,9 +54,7 @@ cd $BUILD_PATH
 make all -j$NUM_PROCS
 $SUDO make install
 set +e
-SUDO mv /usr/lib/pkgconfig/blas.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
-SUDO mv /usr/lib/pkgconfig/lapack.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
-ls -l /usr/lib/pkgconfig/
+$SUDO mv /usr/lib/pkgconfig/blas.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
+$SUDO mv /usr/lib/pkgconfig/lapack.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
 echo "PKG_CONFIG: $PKG_CONFIG_PATH"
-echo "Modified: $($SUDO find $INSTALL_PREFIX/lib/pkgconfig $INSTALL_PREFIX/lib64/pkgconfig $INSTALL_PREFIX/x86_64-linux-gnu/lib/pkgconfig -type f -name blas.pc -print -exec rename blas.pc blas-reference${PC_SUFFIX}.pc {} \; 2> /dev/null)"
-echo "Modified: $($SUDO find $INSTALL_PREFIX/lib/pkgconfig $INSTALL_PREFIX/lib64/pkgconfig $INSTALL_PREFIX/x86_64-linux-gnu/lib/pkgconfig -type f -name lapack.pc -print -exec rename lapack.pc lapack-reference${PC_SUFFIX}.pc {} \; 2> /dev/null)"
+ls -l /usr/lib/pkgconfig/
