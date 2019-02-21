@@ -55,6 +55,6 @@ make all -j$NUM_PROCS
 $SUDO make install
 set +e
 $SUDO mv /usr/lib/pkgconfig/blas.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
-$SUDO mv /usr/lib/pkgconfig/lapack.pc /usr/lib/pkgconfig/blas-reference${PC_SUFFIX}.pc
+$SUDO mv /usr/lib/pkgconfig/lapack.pc /usr/lib/pkgconfig/lapack-reference${PC_SUFFIX}.pc
 echo "PKG_CONFIG: $PKG_CONFIG_PATH"
 ls -l /usr/lib/pkgconfig/
