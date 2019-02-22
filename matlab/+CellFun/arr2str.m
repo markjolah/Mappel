@@ -10,9 +10,9 @@ function s=arr2str(in)
         s = num2str(in);
     elseif isvector(in)
         if isinteger(in) || all(fix(in)==in)
-            nums = cellmap(@(v) sprintf('%i',v),in);
+            nums = CellFun.cellmap(@(v) sprintf('%i',v),in);
         else
-            nums = cellmap(@(v) sprintf('%#10.5g',v),in);
+            nums = CellFun.cellmap(@(v) sprintf('%#10.5g',v),in);
         end
         s = sprintf('[%s]',strjoin(nums,', '));
     else

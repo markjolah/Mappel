@@ -125,7 +125,7 @@ namespace methods {
             if(!model.theta_in_bounds(theta)) {
                 grad.fill(arma::datum::nan);
                 hess.fill(arma::datum::nan);
-                return hess;
+                return;
             }
             hessian(model, data_im, model.make_stencil(theta), grad, hess);
         }

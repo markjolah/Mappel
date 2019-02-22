@@ -235,7 +235,7 @@ Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
 
 /* Templated Overloads */
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model> >::type
+typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, ParamT<Model> >::type
 cgauss_heuristic_compute_estimate(const Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init)
 {
     auto size = model.get_size(0);
@@ -245,11 +245,11 @@ cgauss_heuristic_compute_estimate(const Model &model, const ModelDataT<Model> &i
     arma::fvec theta_est(5);
     arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
     cgauss::MLEInit_sigma(fim.memptr(),psf_sigma,size,theta_est.memptr());
-    return model.make_stencil(cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma));
+    return cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma);
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model>>::type
+typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, ParamT<Model>>::type
 cgauss_compute_estimate(Model &model, const ModelDataT<Model> &im, const ParamT<Model> &theta_init, int max_iterations)
 {
     auto size = model.get_size(0);
@@ -260,11 +260,11 @@ cgauss_compute_estimate(Model &model, const ModelDataT<Model> &im, const ParamT<
     arma::fmat fim = arma::conv_to<arma::fmat>::from(im);  //Convert image to float from double
     arma::fvec ftheta_init = cgauss::convertToCGaussCoords_sigma(theta_init,psf_sigma);
     cgauss::MLEFit_sigma(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr());
-    return model.make_stencil(cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma));
+    return cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma);
 }
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, StencilT<Model>>::type
+typename std::enable_if<std::is_base_of<Gauss2DsModel,Model>::value, ParamT<Model>>::type
 cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im, 
                        const ParamT<Model> &theta_init, int max_iterations,
                        ParamVecT<Model> &sequence)
@@ -278,7 +278,7 @@ cgauss_compute_estimate_debug(const Model &model, const ModelDataT<Model> &im,
     arma::fvec ftheta_init = cgauss::convertToCGaussCoords_sigma(theta_init,psf_sigma);
     cgauss::MLEFit_sigma_debug(fim.memptr(), psf_sigma, size, max_iterations, ftheta_init, theta_est.memptr(), sequence);
     sequence = cgauss::convertFromCGaussCoords_sigma(sequence,psf_sigma);
-    return model.make_stencil(cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma));
+    return cgauss::convertFromCGaussCoords_sigma(theta_est,psf_sigma);
 }
 
 } /* namespace mappel */

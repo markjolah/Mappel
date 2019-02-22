@@ -21,7 +21,7 @@ fitPanel_pos =   [halfw+sp, boarder, fig_sz(1)-halfw-sp, fig_sz(2)-2*boarder];
 handles.imagePanel = uipanel('Parent',guiFig,'Units','Pixels','Position',imagePanel_pos,'Title','Images');
 handles.fitPanel   = uipanel('Parent',guiFig,'Units','Pixels','Position',fitPanel_pos,'Title','Fit');
 
-Nims = size(ims,ndims(ims));
+Nims = size(ims,obj.ImageDim+1);
 curIm = []; % The current image to fit
 imageBounds = {[.5,obj.ImageSize(2)-.5],[.5,obj.ImageSize(1)-.5]}; % bounds for plotting images
 imageMax = max(ims(:));
@@ -52,9 +52,10 @@ function populateImagePanel()
     pos.slider = [boarder, boarder, panel_sz(1)-2*boarder, uH];
     top = pos.slider(2)+pos.slider(4)+2*sp;
     pos.imAxes =  [boarder, top, panel_sz(1)-2*boarder, panel_sz(2)-top-boarder];
-    
-    handles.imSlider = uicontrol('Parent',handles.imagePanel,'Style','Slider',  'Position', pos.slider,...
-                                 'Min',1,'Max',Nims,'Value',1,'SliderStep',[1/Nims,1/Nims],'Callback',@imageSlider_CB);
+    if Nims>1
+        handles.imSlider = uicontrol('Parent',handles.imagePanel,'Style','Slider',  'Position', pos.slider,...
+                             'Min',1,'Max',Nims,'Value',1,'SliderStep',[1/Nims,1/Nims],'Callback',@imageSlider_CB);
+    end
     handles.imAxes = axes('Parent',handles.imagePanel, 'Units','pixels','Position',pos.imAxes,...
                            'YDir','reverse','TickDir','out','Box','on','BoxStyle','full');
 
@@ -108,8 +109,8 @@ function fitImage()
     est_im = obj.modelImage(theta_est);
     noise_llh = obj.noiseBackgroundModelLLH(curIm);
     theoreticalSE = sqrt(crlb);
-    handles.fitEdits.eTheta.String=arr2str(theta_est');
-    handles.fitEdits.SE.String=arr2str(theoreticalSE');
+    handles.fitEdits.eTheta.String=CellFun.arr2str(theta_est');
+    handles.fitEdits.SE.String=CellFun.arr2str(theoreticalSE');
     handles.fitEdits.LLH.String=num2str(emitter_llh);
     handles.fitEdits.uniformLLH.String=num2str(uniform_llh);
     handles.fitEdits.noiseLLH.String=num2str(noise_llh);

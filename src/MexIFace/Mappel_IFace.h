@@ -270,15 +270,7 @@ void Mappel_IFace<Model>::objBoundTheta()
     // (in) theta - double [NumParams, n] stack of thetas to bound
     // (out) bounded_theta - double [NumParams, n] stack of thetas truncated to be in bounds
     checkNumArgs(1,1);
-    auto param = getMat();
-    auto bounded = makeOutputArray(param.n_rows, param.n_cols);
-    auto theta = obj->make_param();
-    #pragma omp parallel for
-    for(IdxT i=0; i<param.n_cols; i++) {
-        theta = param.col(i);
-        obj->bound_theta(theta);
-        bounded.col(i) = theta;
-    }
+    output(obj->bounded_theta_stack(getMat()));
 }
 
 template<class Model>
@@ -291,14 +283,7 @@ void Mappel_IFace<Model>::objThetaInBounds()
     // (in) theta - double [NumParams, n] stack of thetas to bound
     // (out) in_bounds - bool size:[n] vector indicating if each theta is in bounds
     checkNumArgs(1,1);
-    auto param = getMat();
-    IdxT N = param.n_cols;
-    IdxVecT ok(N);
-
-    #pragma omp parallel for
-    for(IdxT i=0; i<N; i++) ok(i) = obj->theta_in_bounds(param.col(i));
-
-    output(ok);
+    output(obj->theta_stack_in_bounds(getMat()));
 }
 
 template<class Model>

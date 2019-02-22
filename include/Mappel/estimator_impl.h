@@ -305,9 +305,15 @@ template<class Model>
 StencilT<Model> 
 CGaussHeuristicEstimator<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 
 {
-    auto est = cgauss_heuristic_compute_estimate(model,im,theta_init);
-    rllh = methods::objective::rllh(this->model, im,est);
-    return est;
+    auto theta_est = cgauss_heuristic_compute_estimate(model,im,theta_init);
+    if(!model.theta_in_bounds(theta_est)) {
+        std::ostringstream msg;
+        msg<<"CGaussHeuristicEstimator produced out-of-bounds values. Theta_init: "<<theta_init.t()<<" Theta_est:"<<theta_est.t();
+        throw NumericalError(msg.str());
+    }
+    auto est_stencil = model.make_stencil(theta_est);
+    rllh = methods::objective::rllh(this->model, im,est_stencil);
+    return est_stencil;
 }
 
 /* CGaussMLE */
@@ -332,22 +338,51 @@ StatsT CGaussMLE<Model>::get_debug_stats()
 
 template<class Model>
 StencilT<Model>
-CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 
+CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init_, double &rllh)
 {
-    auto est=cgauss_compute_estimate(model,im,theta_init,max_iterations);
-    rllh = methods::objective::rllh(model,im,est);
-    return est;
+    ParamT<Model> theta_init = theta_init_;
+    if(!model.theta_in_bounds(theta_init)) {
+        ParamT<Model> init_est = cgauss_heuristic_compute_estimate(model,im,theta_init);
+        ParamT<Model> lb = model.get_lbound()+model.bounds_epsilon;
+        ParamT<Model> ub = model.get_ubound()-model.bounds_epsilon;
+        for(IdxT i=0;i<model.get_num_params();i++)
+            if(theta_init(i)<lb(i) || theta_init(i)>ub(i))
+                theta_init(i) = init_est(i);
+    }
+    ParamT<Model> theta_est = cgauss_compute_estimate(model,im,theta_init,max_iterations);
+    if(!model.theta_in_bounds(theta_est)) {
+        StencilT<Model> init_stencil = model.make_stencil(theta_init);
+        rllh = methods::objective::rllh(model,im,init_stencil);
+        return init_stencil;
+    } else {
+        StencilT<Model> est_stencil = model.make_stencil(theta_est);
+        rllh = methods::objective::rllh(model,im,est_stencil);
+        return est_stencil;
+    }
 }
 
 template<class Model>
 StencilT<Model>
-CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
+CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init_,
                                          ParamVecT<Model> &sequence, VecT &sequence_rllh) 
 {
-    auto est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
+    ParamT<Model> theta_init = theta_init_;
+    if(!model.theta_in_bounds(theta_init)) {
+        ParamT<Model> init_est = cgauss_heuristic_compute_estimate(model,im,theta_init);
+        ParamT<Model> lb = model.get_lbound()+model.bounds_epsilon;
+        ParamT<Model> ub = model.get_ubound()-model.bounds_epsilon;
+        for(IdxT i=0;i<model.get_num_params();i++)
+            if(theta_init(i)<lb(i) || theta_init(i)>ub(i))
+                theta_init(i) = init_est(i);
+    }
+    ParamT<Model> theta_est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
     //Compute rrlh (which are not evaluated by CGauss) in parallel because debug is only ever called single threaded
     methods::objective::rllh_stack(model, im, sequence, sequence_rllh);
-    return est;
+    if(!model.theta_in_bounds(theta_est)) {
+        return model.make_stencil(theta_init);
+    } else {
+        return model.make_stencil(theta_est);
+    }
 }
 
 /* Iterative Maximizer */

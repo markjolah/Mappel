@@ -307,7 +307,7 @@ PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) c
 {
     check_param_shape(theta);
     IdxT N = theta.n_cols;
-    ParamVecT new_theta;
+    auto new_theta = make_param_stack(N);
     for(IdxT n=0; n<N; n++) new_theta.col(n) = bounded_theta(theta.col(n),epsilon);
     return new_theta;
 }
@@ -317,7 +317,7 @@ PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
 {
     check_param_shape(theta);
     IdxT N = theta.n_cols;
-    ParamVecT new_theta;
+    auto new_theta = make_param_stack(N);
     for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
     return new_theta;
 }

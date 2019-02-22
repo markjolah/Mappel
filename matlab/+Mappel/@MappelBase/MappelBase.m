@@ -1511,7 +1511,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                     varargout{1}=inf;
                     if nargout>1
                         %TODO: figure out how to make derivatives smooth
-                        [~,grad,hess] = obj.modelObjective(image,obj.boundedTheta(x),true); % Negation true
+                        [~,grad,hess] = obj.modelObjective(image,obj.boundTheta(x),true); % Negation true
                         fprintf('Theta out of bounds; %s', x)
                         varargout{2}=grad;
                         if nargout==3
@@ -1520,6 +1520,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                     end
                 end
             end
+            a=objective(theta_init);
             problem.objective = @objective;
             problem.options = opts;
             problem.x0 = theta_init;
