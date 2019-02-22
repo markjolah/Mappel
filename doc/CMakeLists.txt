@@ -15,8 +15,11 @@ if(DOXYGEN_FOUND)
     set(DOC_INSTALL_DIR share/${PROJECT_NAME}/doc)
     set(DOXYGEN_MDFILE_AS_MAINPAGE ${CMAKE_SOURCE_DIR}/README.md)
     set(DOXYGEN_INPUT ${CMAKE_SOURCE_DIR}/README.md
+                      ${CMAKE_SOURCE_DIR}/Install.md
+                      ${CMAKE_SOURCE_DIR}/doc/text
                       ${CMAKE_SOURCE_DIR}/src/libmappel
-                      ${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME})
+                      ${CMAKE_SOURCE_DIR}/include/Mappel
+                      ${CMAKE_SOURCE_DIR}/include/Mappel/OMPExceptionCatcher)
     string(REPLACE ";" " " DOXYGEN_INPUT "${DOXYGEN_INPUT}")
 
     set(DOXYGEN_PDF_DIR ${CMAKE_BINARY_DIR}/doc/html/pdf)

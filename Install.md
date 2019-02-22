@@ -1,6 +1,6 @@
-# Installation
+# Install {#Install}
 
-Mappel uses the CMake build system, and is designed to be cross-compiled from linux to other platforms (Win64, and OSX).
+
 
 Currently building has only been tested on linux hosts.
 

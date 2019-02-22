@@ -3,7 +3,7 @@ _gh-pages
 #Local Build dir-tree
 _build
 #Local install dir
-_install
+_install*
 _win64*
 _gcc4_9*
 _gcc6_5*

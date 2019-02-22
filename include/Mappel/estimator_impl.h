@@ -330,7 +330,6 @@ StatsT CGaussMLE<Model>::get_debug_stats()
     return stats;
 }
 
-
 template<class Model>
 StencilT<Model>
 CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh) 

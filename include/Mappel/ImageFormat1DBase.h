@@ -53,6 +53,7 @@ public:
     ImageCoordT get_size(IdxT idx) const;
     ImageCoordT get_num_pixels() const;
     void set_size(const ImageSizeT &size_);
+    void set_size(const arma::Col<ImageCoordT> &sz);
     void check_image_shape(const ImageT &im) const;
     void check_image_shape(const ImageStackT &ims) const;
     static void check_size(const ImageSizeT &size_);
@@ -69,6 +70,12 @@ inline
 ImageFormat1DBase::ImageSizeT  
 ImageFormat1DBase::get_size() const
 { return size; }
+
+inline
+void ImageFormat1DBase::set_size(const arma::Col<ImageCoordT> &size_)
+{
+    set_size(size_(0));
+}
 
 inline
 ImageFormat1DBase::ImageCoordT 

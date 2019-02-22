@@ -62,7 +62,8 @@ public:
     double get_psf_sigma() const;
     double get_psf_sigma(IdxT idx) const;
     void set_psf_sigma(double new_psf_sigma);
-    
+    void set_psf_sigma(const VecT &new_psf_sigma);
+
     StatsT get_stats() const;
     Stencil make_stencil(const ParamT &theta, bool compute_derivatives=true) const;
 
@@ -125,6 +126,10 @@ Gauss1DModel::make_stencil(const ParamT &theta, bool compute_derivatives) const
 inline
 double Gauss1DModel::get_psf_sigma() const
 { return psf_sigma; }
+
+inline
+void Gauss1DModel::set_psf_sigma(const VecT &new_psf_sigma)
+{ set_psf_sigma(new_psf_sigma(0)); }
 
 inline
 double Gauss1DModel::pixel_model_value(IdxT i,  const Stencil &s) const

@@ -19,15 +19,18 @@ matrix:
       #- env:
           #- MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
           #- OPT_BLAS_INT64=On
-      - env:
-          - BLAS_INT64=On OPT_PYTHON=On OPT_MATLAB=Off
-          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
-      - env:
-          - BLAS_INT64=Off OPT_PYTHON=On OPT_MATLAB=Off
-          - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+      #- env:
+          #- BLAS_INT64=On OPT_PYTHON=On OPT_MATLAB=Off
+          #- MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+      #- env:
+          #- BLAS_INT64=Off OPT_PYTHON=On OPT_MATLAB=Off
+          #- MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
       - env:
           - BLAS_INT64=On OPT_PYTHON=Off OPT_MATLAB=Off
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 && FC=/usr/bin/gfortran-7"
+      - env:
+          - BLAS_INT64=Off OPT_PYTHON=Off OPT_MATLAB=Off
+          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9 && FC=/usr/bin/gfortran-4.9"
 
       ##Documentation build
       - env: DOC=On PDFDOC=On DOPT_BLAS_INT64=Off FC=gfortran
@@ -59,7 +62,6 @@ script:
       -DOPT_BLAS_INT64=${BLAS_INT64}  \
       -DOPT_PYTHON=${OPT_PYTHON} \
       -DMAPPEL_PYTHON_EXECUTABLE=/usr/bin/python3 \
-      -DMAPPEL_PYTHON_VERSIONS=3.4
 
 deploy:
     name: Docu-Bot

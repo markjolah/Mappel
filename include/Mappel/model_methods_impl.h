@@ -49,6 +49,7 @@ namespace methods {
         double 
         llh(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         { 
+            if(!model.theta_in_bounds(theta)) return arma::datum::nan;
             return llh(model, data_im, model.make_stencil(theta,false)); //don't compute derivative stencils 
         }
       
@@ -56,6 +57,7 @@ namespace methods {
         double 
         rllh(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         { 
+            if(!model.theta_in_bounds(theta)) return arma::datum::nan;
             return rllh(model, data_im, model.make_stencil(theta,false)); //don't compute derivative stencils
         }
 
@@ -63,6 +65,11 @@ namespace methods {
         ParamT<Model> 
         grad(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         {
+            if(!model.theta_in_bounds(theta)) {
+                auto grad = model.make_param();
+                grad.fill(arma::datum::nan);
+                return grad;
+            }
             return grad(model, data_im, model.make_stencil(theta));
         }
 
@@ -70,6 +77,11 @@ namespace methods {
         ParamT<Model> 
         grad2(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         {
+            if(!model.theta_in_bounds(theta)) {
+                auto grad2 = model.make_param();
+                grad2.fill(arma::datum::nan);
+                return grad2;
+            }
             auto grad_val = model.make_param(); //Ignore un-requested value
             auto grad2_val = model.make_param();
             grad2(model, data_im, model.make_stencil(theta), grad_val, grad2_val);
@@ -88,7 +100,12 @@ namespace methods {
         MatT 
         hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         { 
-            return hessian(model,data_im, model.make_stencil(theta)); 
+           if(!model.theta_in_bounds(theta)) {
+                auto hess = model.make_param_mat();
+                hess.fill(arma::datum::nan);
+                return hess;
+            }
+            return hessian(model,data_im, model.make_stencil(theta));
         }
 
         template<class Model>
@@ -105,6 +122,11 @@ namespace methods {
         void 
         hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, ParamT<Model> &grad, MatT &hess)
         {
+            if(!model.theta_in_bounds(theta)) {
+                grad.fill(arma::datum::nan);
+                hess.fill(arma::datum::nan);
+                return hess;
+            }
             hessian(model, data_im, model.make_stencil(theta), grad, hess);
         }
         
@@ -120,6 +142,11 @@ namespace methods {
         MatT 
         negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta)
         { 
+            if(!model.theta_in_bounds(theta)) {
+                auto hess = model.make_param_mat();
+                hess.fill(arma::datum::nan);
+                return hess;
+            }
             return negative_definite_hessian(model, data_im, model.make_stencil(theta));
         }
 
@@ -138,6 +165,11 @@ namespace methods {
         negative_definite_hessian(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta,
                                   ParamT<Model> &grad, MatT &hess)
         {
+            if(!model.theta_in_bounds(theta)) {
+                grad.fill(arma::datum::nan);
+                hess.fill(arma::datum::nan);
+                return;
+            }
             negative_definite_hessian(model, data_im, model.make_stencil(theta), grad, hess);
         }
         
@@ -198,6 +230,12 @@ namespace methods {
     prior_objective(const Model &model, const ParamT<Model> &theta, 
                     double &rllh, ParamT<Model> &grad, MatT &hess)
     {
+        if(!model.theta_in_bounds(theta)) {
+            rllh = arma::datum::nan;
+            grad.fill(arma::datum::nan);
+            hess.fill(arma::datum::nan);
+            return;
+        }
         grad.zeros();
         hess.zeros();
         auto &prior = model.get_prior();
@@ -219,6 +257,12 @@ namespace methods {
     aposteriori_objective(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, 
                           double &rllh,  ParamT<Model> &grad, MatT &hess)
     {
+        if(!model.theta_in_bounds(theta)) {
+            rllh = arma::datum::nan;
+            grad.fill(arma::datum::nan);
+            hess.fill(arma::datum::nan);
+            return;
+        }
         aposteriori_objective(model,data_im,model.make_stencil(theta),rllh,grad,hess);
     }
     
@@ -227,6 +271,12 @@ namespace methods {
     likelihood_objective(const Model &model, const ModelDataT<Model> &data_im, const ParamT<Model> &theta, 
                           double &rllh,  ParamT<Model> &grad, MatT &hess)
     {
+        if(!model.theta_in_bounds(theta)) {
+            rllh = arma::datum::nan;
+            grad.fill(arma::datum::nan);
+            hess.fill(arma::datum::nan);
+            return;
+        }
         likelihood_objective(model,data_im,model.make_stencil(theta),rllh,grad,hess);
     }
 

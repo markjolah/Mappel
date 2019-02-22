@@ -25,25 +25,25 @@ namespace mappel {
 
 namespace test {
 
-template<class Model>
-typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value, typename Model::ParamT>::type
-read_theta(Model &model, int argc, const char *argv[])
-{
-    // args: x I bg
-    int n=3;
-    double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
-    int I        = argc>=n-- ? atoi(argv[n])   : -1;
-    double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-    auto theta = model.sample_prior();
-    if(x>=0) theta(0)=x;
-    if(I>=0) theta(1)=I;
-    if(bg>=0) theta(2)=bg;
-    return theta;
-}
+// template<class Model>
+// typename std::enable_if<std::is_base_of<Gauss1DModel,Model>::value, typename Model::ParamT>::type
+// read_theta(Model &model, int argc, const char *argv[])
+// {
+//     // args: x I bg
+//     int n=3;
+//     double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     int I        = argc>=n-- ? atoi(argv[n])   : -1;
+//     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+//     auto theta = model.sample_prior();
+//     if(x>=0) theta(0)=x;
+//     if(I>=0) theta(1)=I;
+//     if(bg>=0) theta(2)=bg;
+//     return theta;
+// }
 
 
 template<class Model>
-typename std::enable_if<std::is_base_of<Gauss1DsModel,Model>::value, typename Model::ParamT>::type
+typename std::enable_if<std::is_base_of<ImageFormat1DBase,Model>::value, typename Model::ParamT>::type
 read_theta(Model &model, int argc, const char *argv[])
 {
     // args: x I bg sigma
@@ -56,28 +56,29 @@ read_theta(Model &model, int argc, const char *argv[])
     if(x>=0) theta(0)=x;
     if(I>=0) theta(1)=I;
     if(bg>=0) theta(2)=bg;
-    if(sigma>=0) theta(3)=sigma;
+    if(model.get_num_params()>3 && sigma>=0) theta(3)=sigma;
     return theta;
 }
 
-// template<class Model, typename=std::enable_if<std::is_base_of<Gauss2DModel>::value>::type >
-// typename Model::ParamT read_theta(Model &model, int argc, const char *argv[])
-// {
-//     // args: x y I bg sigma
-//     int n=5;
-//     double sigma = argc>=n-- ? strtod(argv[n],NULL) : -1;
-//     double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
-//     int I        = argc>=n-- ? atoi(argv[n])   : -1;
-//     double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-//     double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
-//     auto theta=model.sample_prior();
-//     if(x>=0) theta(0)=x;
-//     if(y>=0) theta(1)=y;
-//     if(I>=0) theta(2)=I;
-//     if(bg>=0) theta(3)=bg;
-//     if(model.get_num_params()>4 && sigma>=0) theta(4)=sigma;
-//     return theta;
-// }
+template<class Model>
+typename std::enable_if<std::is_base_of<ImageFormat2DBase,Model>::value, typename Model::ParamT>::type
+read_theta(Model &model, int argc, const char *argv[])
+{
+    // args: x y I bg sigma
+    int n=5;
+    double sigma = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    double bg    = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    int I        = argc>=n-- ? atoi(argv[n])   : -1;
+    double y     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    double x     = argc>=n-- ? strtod(argv[n],NULL) : -1;
+    auto theta=model.sample_prior();
+    if(x>=0) theta(0)=x;
+    if(y>=0) theta(1)=y;
+    if(I>=0) theta(2)=I;
+    if(bg>=0) theta(3)=bg;
+    if(model.get_num_params()>4 && sigma>=0) theta(4)=sigma;
+    return theta;
+}
 
 // template<class Model>
 // typename Model::ParamT read_HS_theta(Model &model, int argc, const char *argv[])

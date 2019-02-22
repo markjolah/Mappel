@@ -1,7 +1,4 @@
 % Gauss2DMAP.m
-% Mark J. Olah (mjo@cs.unm DOT edu)
-% 2014 - 2019
-% COPYRIGHT: See: LICENCE
 %
 % A Mappel point emitter model iterface for:
 %  * Model: Gauss2DModel a 2D Gaussian PSF with fixed psf_sigma [sigmaX, sigmaY]
@@ -14,6 +11,10 @@
 %
 % Methods and Properties:
 % See also Mappel.MappelBase
+
+% Mark J. Olah (mjo@cs.unm DOT edu)
+% 2014 - 2019
+% COPYRIGHT: See: LICENCE
 
 classdef Gauss2DMAP < Mappel.MappelBase
     properties (Constant=true)
@@ -32,10 +33,11 @@ classdef Gauss2DMAP < Mappel.MappelBase
 
     methods (Access=public)
         function obj = Gauss2DMAP(imsize, psf_sigma)
-            % obj = Gauss2DMAP(imsize,psf_sigma) - Make a new Gauss2DMAP for
-            % point localization in 2D with a fixes PSF.
-            % (in) imsize: scalar int - size of image in pixels on each side (min: obj.MinSize)
-            % (in) psf_sigma: scalar double>0 - size of PSF in pixels
+            % obj = Gauss2DMAP(imsize,psf_sigma) - Make a new Gauss2DMAP
+            % (in) imsize: int size:[2] - size of image in pixels on each side [X, Y] note 
+            %                               - X is image horizontal width in pixels (#cols)
+            %                               - Y is image vertical height in pixels (#rows)
+            % (in) psf_sigma: ouble size:[2] - Gaussian PSF sigma in pixels: [sigmaX,sigmaY].
             % (out) obj - A new object      
             obj@Mappel.MappelBase(@Gauss2DMAP_IFace, imsize, psf_sigma);
             % set defaults
@@ -45,3 +47,4 @@ classdef Gauss2DMAP < Mappel.MappelBase
         end
     end %public methods
 end % classdef
+

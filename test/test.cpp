@@ -8,10 +8,13 @@
 #include "Mappel/Gauss1DsMLE.h"
 #include "Mappel/Gauss1DsMAP.h"
 
+#include "Mappel/Gauss2DMAP.h"
+#include "Mappel/Gauss2DMLE.h"
+#include "Mappel/Gauss2DsMAP.h"
+#include "Mappel/Gauss2DsMLE.h"
+
 #include "old_test_helpers.h"
-//#include "Mappel/Gauss2DMLE.h"
-// #include "Mappel/Gauss2DsMAP.h"
-// #include "Mappel/Gauss2DsMLE.h"
+
 // #include "Mappel/Blink2DsMAP.h"
 // #include "Mappel/GaussHSMAP.h"
 // #include "Mappel/GaussHSsMAP.h"
@@ -29,7 +32,7 @@ using namespace mappel;
 #define DEFAULT_NUM_IMAGES 256
 
 
-std::vector<std::string> model_names= {"Gauss1DMLE"};
+std::vector<std::string> model_names= {"Gauss1DMLE","Gauss1DMAP","Gauss1DsMLE","Gauss1DsMAP","Gauss2DMLE","Gauss2DMAP","Gauss2DsMLE","Gauss2DsMAP"};
 // std::vector<std::string> estimator_names= {"TrustRegionMaximizer", "HeuristicEstimator", "CGaussHeuristicEstimator", "CGaussMLE", "SimulatedAnnealingMaximizer"};
 std::vector<std::string> estimator_names= {"TrustRegion", "Heuristic", "Newton", "NewtonDiagonal", "SimulatedAnnealing"};
 
@@ -375,10 +378,10 @@ template<class Model>
 void test_image_template(std::string estimator_name,int argc, const char *argv[])
 {
     int n=1;
-    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageCoordT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
     cout<<"Size: "<<size<<endl;
-    typename Model::ImageSizeVecT sizes={size,size};
+    arma::Col<typename Model::ImageCoordT> sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
 
@@ -390,10 +393,10 @@ template<class Model>
 void test_image_template_sigma(std::string estimator_name,int argc, const char *argv[])
 {
     int n=1;
-    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageCoordT size = argc>=n-- ? atoi(argv[n]) : 8;
     argc-=1; argv+=1;
     cout<<"Size: "<<size<<endl;
-    typename Model::ImageSizeVecT sizes={size,size};
+    arma::Col<typename Model::ImageCoordT> sizes={size,size};
     VecT min_sigma={1.0,1.0};
     VecT max_sigma={3.0,3.0};
     cout<<"MinSigma: "<<min_sigma.t();
@@ -448,13 +451,14 @@ void test_image(int argc, const char *argv[])
         test_image_template_sigma<Gauss1DsMLE>(estimator_name,  argc, argv);
     } else if(istarts_with(model_name,"Gauss1DsMAP")) {
         test_image_template_sigma<Gauss1DsMAP>(estimator_name,  argc, argv);
-
-//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
-//         test_image_template<Gauss2DMAP>(estimator_name, argc, argv);
-//     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
-//         test_image_template<Gauss2DsMLE>(estimator_name, argc, argv);
-//     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
-//         test_image_template<Gauss2DsMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DMLE")) {
+        test_image_template<Gauss2DMLE>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DMAP")) {
+        test_image_template<Gauss2DMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DsMLE")) {
+        test_image_template_sigma<Gauss2DsMLE>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DsMAP")) {
+        test_image_template_sigma<Gauss2DsMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Blink2DsMAP")) {
 //         test_image_template<Blink2DsMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"GaussHSMAP")) {
@@ -495,12 +499,12 @@ template<class Model>
 void estimate_stack_template(std::string estimator_name, int argc, const char *argv[])
 {
     int n=2;
-    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageCoordT size = argc>=n-- ? atoi(argv[n]) : 8;
     int count                  = argc>=n-- ? atoi(argv[n]) : 1000;
     argc-=2; argv+=2;
     cout<<"Size: "<<size<<endl;
     cout<<"Count: "<<count<<endl;
-    typename Model::ImageSizeVecT sizes={size,size};
+    arma::Col<typename Model::ImageCoordT> sizes={size,size};
     VecT psf_sigma={1.0,1.0};
     Model model(sizes,psf_sigma);
     if (istarts_with(estimator_name.c_str(),"Posterior")){
@@ -516,12 +520,12 @@ template<class Model>
 void estimate_stack_template_sigma(std::string estimator_name, int argc, const char *argv[])
 {
     int n=2;
-    typename Model::ImageSizeT size = argc>=n-- ? atoi(argv[n]) : 8;
+    typename Model::ImageCoordT size = argc>=n-- ? atoi(argv[n]) : 8;
     int count                  = argc>=n-- ? atoi(argv[n]) : 1000;
     argc-=2; argv+=2;
     cout<<"Size: "<<size<<endl;
     cout<<"Count: "<<count<<endl;
-    typename Model::ImageSizeVecT sizes={size,size};
+    arma::Col<typename Model::ImageCoordT> sizes={size,size};
     VecT min_sigma={1.0,1.0};
     VecT max_sigma={3.0,3.0};
     cout<<"MinSigma: "<<min_sigma.t();
@@ -563,12 +567,14 @@ void test_speed(int argc, const char *argv[])
         estimate_stack_template_sigma<Gauss1DsMLE>(estimator_name, argc, argv);
     } else if(istarts_with(model_name,"Gauss1DsMAP")) {
         estimate_stack_template_sigma<Gauss1DsMAP>(estimator_name, argc, argv);
-//     } else if(istarts_with(model_name,"Gauss2DMAP")) {
-//         estimate_stack_template<Gauss2DMAP>(estimator_name, argc, argv);
-//     } else if(istarts_with(model_name,"Gauss2DsMLE")) {
-//         estimate_stack_template<Gauss2DsMLE>(estimator_name, argc, argv);
-//     } else if(istarts_with(model_name,"Gauss2DsMAP")) {
-//         estimate_stack_template<Gauss2DsMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DMLE")) {
+        estimate_stack_template<Gauss2DMLE>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DMAP")) {
+        estimate_stack_template<Gauss2DMAP>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DsMLE")) {
+        estimate_stack_template_sigma<Gauss2DsMLE>(estimator_name, argc, argv);
+    } else if(istarts_with(model_name,"Gauss2DsMAP")) {
+        estimate_stack_template_sigma<Gauss2DsMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"Blink2DsMAP")) {
 //         estimate_stack_template<Blink2DsMAP>(estimator_name, argc, argv);
 //     } else if(istarts_with(model_name,"GaussHSMAP")) {

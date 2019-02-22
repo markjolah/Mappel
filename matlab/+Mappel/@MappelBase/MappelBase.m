@@ -650,7 +650,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             [varargout{1:nargout}] = obj.estimatePosterior(image, theta_mle, confidence, num_samples, burnin, thin);
         end
 
-        function varargout = estimate(obj, image, estimator_algorithm, theta_init)
+        function [theta, varargout] = estimate(obj, image, estimator_algorithm, theta_init)
             % [theta, obsI, llh, stats] = obj.estimate(image, estimator_algorithm, theta_init)
             %
             % Use a multivariate constrained optimization algorithm to estimate the model parameter theta for each of
@@ -686,13 +686,13 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             end
             switch estimator_algorithm
                 case 'GPUGauss'
-                    [varargout{1:nargout}] = obj.estimate_GPUGaussMLE(image);
+                    [theta, varargout{1:nargout-1}] = obj.estimate_GPUGaussMLE(image);
                 case 'matlab-fminsearch'
-                    [varargout{1:nargout}] = obj.estimate_fminsearch(image, theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.estimate_fminsearch(image, theta_init);
                 case {'matlab-quasi-newton','matlab-trust-region-reflective','matlab-trust-region','matlab-interior-point'}
-                    [varargout{1:nargout}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm);
+                    [theta, varargout{1:nargout-1}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm);
                 otherwise
-                    [varargout{1:nargout}] = obj.call('estimate',image, estimator_algorithm, theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, estimator_algorithm, theta_init);
             end
         end
 
@@ -730,7 +730,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             end
             theta_init = obj.checkThetaInit(theta_init, sz(2)); %expand theta_init to size:[NumParams,n]
 
-            [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+            [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_parameters, fixed_values, estimator_algorithm, theta_init);
         end
 
         function varargout = estimateDebug(obj, image, estimator_algorithm, theta_init)
@@ -773,7 +773,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                     [varargout{1:nargout}] = obj.call('estimateDebug',image, estimator_algorithm, theta_init);
             end
             if nargout==6
-                varargout{6} = MexIFace.IFaceMixin.convertStatsToStructs(varargout{6});
+                varargout{6} = MexIFace.MexIFaceMixin.convertStatsToStructs(varargout{6});
             end
         end    
 
@@ -813,7 +813,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             if nargin<4
                 confidence = obj.DefaultConfidenceLevel;
             elseif confidence<=0 || confidence>=1
-                error('MappelBase:InvalidParameterValue', ['Bad confidence level for credible intervals: ', condfidence]);
+                jerror('MappelBase:InvalidParameterValue', ['Bad confidence level for credible intervals: ', confidence]);
             end
             if nargin<5 || isempty(num_samples) || num_samples<=1
                 num_samples = obj.DefaultMCMCNumSamples;
@@ -1190,7 +1190,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
 
     end% public methods
 
-    methods (Access = protected)
+    methods (Access = public)
         function [theta, llh, obsI, stats]=estimate_GPUGaussMLE(obj, image)
             if ~ispc()
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE on this archetecture');
@@ -1257,8 +1257,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (out) stats: (optional) A 1x1 struct of fitting statistics.
             max_iter=5000;
             N = size(image,3);
-            if isempty(theta_init)
-                theta_init = obj.estimate(image,'Heuristic', theta_init);
+            if nargin<3 || isempty(theta_init)
+                theta_init = obj.estimate(image,'Heuristic');
             elseif isvector(theta_init)
                 theta_init = repmat(theta_init',1,N);
             end
@@ -1270,19 +1270,33 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             problem.options = opts;
             theta = zeros(obj.NumParams, N);
             llh = zeros(1,N);
-            obsI = zeros(obj.NumParams,obj.NumParams,N);
             iterations = zeros(1,N);
             fevals = zeros(1,N);
+            
+            
+            function val = callback(x)
+                if any(x-obj.ParamLBound<1e-6) || any(obj.ParamUBound-x<1e-6)
+                    %Method 1 - Inf
+                    %val = inf;
+                    %Method 2 - bound
+                    eps = 1e-6;
+                    x = min(max(obj.ParamLBound+eps,x),obj.ParamUBound-eps);
+                    val = -obj.modelLLH(im,x);
+                else
+                    val = -obj.modelLLH(im,x);
+                end
+            end
+            
             for n=1:N
                 im = image(:,:,n);
-                problem.objective = @(x) -obj.LLH(im, x);
+                problem.objective = @callback;
                 problem.x0 = theta_init(:,n);
                 [theta(:,n), llh_opt, flag, out] = fminsearch(problem);
                 llh(n) = -llh_opt;
                 fevals(n) = out.funcCount;
                 iterations(n) = out.iterations;
-                obsI(:,:,n) = obj.observedInformation(image,theta(:,n));
             end
+            obsI = obj.observedInformation(image,theta);
             stats.method = out.algorithm;
             stats.iterations = out.iterations;
             stats.flag = flag;
@@ -1307,16 +1321,27 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             opts.OutputFcn = @output;
             problem.solver = 'fminsearch';
             problem.options = opts;
-            problem.objective = @(theta) -obj.LLH(image, theta);
-            problem.x0 = theta_init;
+            
+            function val = callback(x)
+                if any(x-obj.ParamLBound<1e-6) || any(obj.ParamUBound-x<1e-6)
+                    val = inf;
+                else
+                    val = -obj.modelLLH(image,x);
+                end
+            end
+            
+            problem.objective = @callback;
+            problem.x0 = theta_init(:);
             [theta, fval, flag, out] = fminsearch(problem);
-            obsI = obj.observed_information(image, theta);
+            obsI = obj.observedInformation(image, theta);
             llh = -fval;
             stats.method = out.algorithm;
             stats.iterations = out.iterations;
             stats.flag = flag;
             sequence = sequence(:,1:out.iterations);
-            sequence_llh = obj.LLH(image, sequence);
+            in_bounds = obj.thetaInBounds(sequence);
+            sequence_llh(in_bounds) = obj.modelLLH(image, sequence(in_bounds));
+            sequence_llh(~in_bounds) = -inf;
             stats.sequenceLen = size(sequence,2);
         end
 
@@ -1476,10 +1501,26 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                     opts.SubproblemAlgorithm = 'factorization'; % vs. 'cg' 
 %                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta), -obj.modelHessian(image,theta));% 3 arg (obj,grad,hess)
                 case 'interior-point'
-                    opts.HessianFcn = @(theta, ~) -obj.modelHessian(image,theta);
+                    opts.HessianFcn = @(theta, ~) -obj.modelHessian(image,obj.boundedTheta(theta));
 %                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta)); % 2 arg (obj,grad)
             end
-            problem.objective = @(theta) obj.modelObjective(image,theta,true);
+            function varargout = objective(x)
+                if obj.thetaInBounds(x)
+                    [varargout{1:nargout}] = obj.modelObjective(image,x,true);
+                else
+                    varargout{1}=inf;
+                    if nargout>1
+                        %TODO: figure out how to make derivatives smooth
+                        [~,grad,hess] = obj.modelObjective(image,obj.boundedTheta(x),true); % Negation true
+                        fprintf('Theta out of bounds; %s', x)
+                        varargout{2}=grad;
+                        if nargout==3
+                            varargout{3}=hess;
+                        end
+                    end
+                end
+            end
+            problem.objective = @objective;
             problem.options = opts;
             problem.x0 = theta_init;
             [theta, llh, stats.flag, stats.out] = solver(problem);

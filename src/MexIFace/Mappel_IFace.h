@@ -289,11 +289,15 @@ void Mappel_IFace<Model>::objThetaInBounds()
     // Tests parameter values (theta) to ensure they are in-bounds
     //
     // (in) theta - double [NumParams, n] stack of thetas to bound
-    // (out) in_bounds - bool.  True if all theta are in bounds.
+    // (out) in_bounds - bool size:[n] vector indicating if each theta is in bounds
     checkNumArgs(1,1);
     auto param = getMat();
-    bool ok = true;
-    for(IdxT i=0; i<param.n_cols; i++) ok &= obj->theta_in_bounds(param.col(i));
+    IdxT N = param.n_cols;
+    IdxVecT ok(N);
+
+    #pragma omp parallel for
+    for(IdxT i=0; i<N; i++) ok(i) = obj->theta_in_bounds(param.col(i));
+
     output(ok);
 }
 
@@ -449,6 +453,19 @@ void Mappel_IFace<Model>::objModelObjective()
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
     double negate_scalar = negate ? -1 : 1;
+    if(!obj->theta_in_bounds(theta)) {
+        output(arma::datum::nan);
+        auto grad = makeOutputArray(obj->get_num_params());
+        auto hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+        grad.fill(arma::datum::nan);
+        hess.fill(arma::datum::nan);
+        if(nlhs>=3) {
+            auto def_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+            def_hess.fill(arma::datum::nan);
+            if(nlhs>=4) output(arma::datum::nan);
+        }
+        return;
+    }
     auto stencil = obj->make_stencil(theta);
     double rllh = negate_scalar*methods::objective::rllh(*obj, image, stencil);
     if(negate) rllh = -rllh;
@@ -504,6 +521,19 @@ void Mappel_IFace<Model>::objModelObjectiveAPosteriori()
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
     double negate_scalar = negate ? -1 : 1;
+    if(!obj->theta_in_bounds(theta)) {
+        output(arma::datum::nan);
+        auto grad = makeOutputArray(obj->get_num_params());
+        auto hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+        grad.fill(arma::datum::nan);
+        hess.fill(arma::datum::nan);
+        if(nlhs>=3) {
+            auto def_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+            def_hess.fill(arma::datum::nan);
+            if(nlhs>=4) output(arma::datum::nan);
+        }
+        return;
+    }
     auto stencil = obj->make_stencil(theta);
 
     double rllh;
@@ -554,6 +584,19 @@ void Mappel_IFace<Model>::objModelObjectiveLikelihood()
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
     double negate_scalar = negate ? -1 : 1;
+    if(!obj->theta_in_bounds(theta)) {
+        output(arma::datum::nan);
+        auto grad = makeOutputArray(obj->get_num_params());
+        auto hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+        grad.fill(arma::datum::nan);
+        hess.fill(arma::datum::nan);
+        if(nlhs>=3) {
+            auto def_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
+            def_hess.fill(arma::datum::nan);
+            if(nlhs>=4) output(arma::datum::nan);
+        }
+        return;
+    }
     auto stencil = obj->make_stencil(theta);
 
     double rllh;
