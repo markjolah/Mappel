@@ -1,0 +1,147 @@
+\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{}\subsection{omp\+\_\+exception\+\_\+catcher\+:\+:impl\+\_\+\+:\+:O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$ Class Template Reference}
+\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+O\+M\+P\+Exception\+Catcher/\+O\+M\+P\+Exception\+Catcher.\+h$>$}
+
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45}{Strategy} \+: Int\+Type \{ \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a7b2e9a6112ae937175819b661a4c0c67}{Strategy\+::\+Do\+Not\+Try}, 
+\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45aa0bfb8e59e6c13fc8d990781f77694fe}{Strategy\+::\+Continue}, 
+\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a727b63583e01fa2b3952dab580c84dc2}{Strategy\+::\+Abort}, 
+\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a10308abc2313a8ec42d67a45a0122860}{Strategy\+::\+Rethrow\+First}
+ \}
+\end{DoxyCompactItemize}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_aca07d00c9c213ad3465e47ecaf507d3e}{O\+M\+P\+Exception\+Catcher} ()
+\item 
+\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a6b536d66aa2890adb27c045763c84931}{O\+M\+P\+Exception\+Catcher} (\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45}{Strategy} strategy\+\_\+)
+\item 
+void \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a8e3f8cc8faaec344e72d24b06c276193}{rethrow} () const 
+\item 
+{\footnotesize template$<$class Function , class... Parameters$>$ }\\void \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a60d3dfaeea152046b3d7c93a302d33e6}{run} (Function func, Parameters...\+params)
+\end{DoxyCompactItemize}
+\subsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a9e23eceb903ce74ba259ea3833b9f370}{set\+Global\+Default\+Strategy} (\hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45}{Strategy} s)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\subsubsection*{template$<$class Int\+Type = uint32\+\_\+t$>$\\*
+class omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$}
+
+
+
+Definition at line 42 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+\subsubsection{Member Enumeration Documentation}
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!Strategy@{Strategy}}
+\index{Strategy@{Strategy}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{Strategy}{Strategy}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ enum {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher\+::\+Strategy} \+: Int\+Type\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Do\+Not\+Try@{Do\+Not\+Try}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!Do\+Not\+Try@{Do\+Not\+Try}}\item[{\em 
+Do\+Not\+Try\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a7b2e9a6112ae937175819b661a4c0c67}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a7b2e9a6112ae937175819b661a4c0c67}
+}]\index{Continue@{Continue}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!Continue@{Continue}}\item[{\em 
+Continue\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45aa0bfb8e59e6c13fc8d990781f77694fe}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45aa0bfb8e59e6c13fc8d990781f77694fe}
+}]\index{Abort@{Abort}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!Abort@{Abort}}\item[{\em 
+Abort\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a727b63583e01fa2b3952dab580c84dc2}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a727b63583e01fa2b3952dab580c84dc2}
+}]\index{Rethrow\+First@{Rethrow\+First}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!Rethrow\+First@{Rethrow\+First}}\item[{\em 
+Rethrow\+First\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a10308abc2313a8ec42d67a45a0122860}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_ab73d40c948b8be83af2f416075e47a45a10308abc2313a8ec42d67a45a0122860}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 45 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}}
+\index{O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{O\+M\+P\+Exception\+Catcher()}{OMPExceptionCatcher()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ Int\+Type $>$\+::{\bf O\+M\+P\+Exception\+Catcher} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_aca07d00c9c213ad3465e47ecaf507d3e}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_aca07d00c9c213ad3465e47ecaf507d3e}
+
+
+Definition at line 50 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}}
+\index{O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{O\+M\+P\+Exception\+Catcher(\+Strategy strategy\+\_\+)}{OMPExceptionCatcher(Strategy strategy_)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ Int\+Type $>$\+::{\bf O\+M\+P\+Exception\+Catcher} (
+\begin{DoxyParamCaption}
+\item[{{\bf Strategy}}]{strategy\+\_\+}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a6b536d66aa2890adb27c045763c84931}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a6b536d66aa2890adb27c045763c84931}
+
+
+Definition at line 52 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!rethrow@{rethrow}}
+\index{rethrow@{rethrow}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{rethrow() const }{rethrow() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ void {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ Int\+Type $>$\+::rethrow (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a8e3f8cc8faaec344e72d24b06c276193}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a8e3f8cc8faaec344e72d24b06c276193}
+
+
+Definition at line 54 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+References omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::\+Rethrow\+First.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::cr\+\_\+lower\+\_\+bound\+\_\+stack(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+posterior\+\_\+credible\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+posterior\+\_\+stack(), mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::methods\+::openmp\+::expected\+\_\+information\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::grad\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::hessian\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack(), mappel\+::methods\+::openmp\+::model\+\_\+image\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::negative\+\_\+definite\+\_\+hessian\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack(), mappel\+::methods\+::openmp\+::sample\+\_\+prior\+\_\+stack(), and mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack().
+
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!run@{run}}
+\index{run@{run}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{run(\+Function func, Parameters...\+params)}{run(Function func, Parameters...params)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ template$<$class Function , class... Parameters$>$ void {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ Int\+Type $>$\+::run (
+\begin{DoxyParamCaption}
+\item[{Function}]{func, }
+\item[{Parameters...}]{params}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a60d3dfaeea152046b3d7c93a302d33e6}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a60d3dfaeea152046b3d7c93a302d33e6}
+
+
+Definition at line 57 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+References omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::\+Abort, omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::\+Continue, omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::\+Do\+Not\+Try, and omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::\+Rethrow\+First.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::cr\+\_\+lower\+\_\+bound\+\_\+stack(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+observed\+\_\+stack(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+posterior\+\_\+credible\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+posterior\+\_\+stack(), mappel\+::methods\+::openmp\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::methods\+::openmp\+::expected\+\_\+information\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::grad\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::hessian\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack(), mappel\+::methods\+::openmp\+::model\+\_\+image\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::negative\+\_\+definite\+\_\+hessian\+\_\+stack(), mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack(), mappel\+::methods\+::openmp\+::sample\+\_\+prior\+\_\+stack(), and mappel\+::methods\+::openmp\+::simulate\+\_\+image\+\_\+stack().
+
+\index{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}!set\+Global\+Default\+Strategy@{set\+Global\+Default\+Strategy}}
+\index{set\+Global\+Default\+Strategy@{set\+Global\+Default\+Strategy}!omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher@{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}}
+\paragraph[{\texorpdfstring{set\+Global\+Default\+Strategy(\+Strategy s)}{setGlobalDefaultStrategy(Strategy s)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Int\+Type = uint32\+\_\+t$>$ static void {\bf omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ Int\+Type $>$\+::set\+Global\+Default\+Strategy (
+\begin{DoxyParamCaption}
+\item[{{\bf Strategy}}]{s}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}\hypertarget{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a9e23eceb903ce74ba259ea3833b9f370}{}\label{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher_a9e23eceb903ce74ba259ea3833b9f370}
+
+
+Definition at line 49 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{OMPExceptionCatcher_8h}{O\+M\+P\+Exception\+Catcher.\+h}\end{DoxyCompactItemize}

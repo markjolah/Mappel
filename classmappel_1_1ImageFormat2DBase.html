@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -64,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -108,8 +109,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for mappel::ImageFormat2DBase:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase__inherit__graph.svg" width="656" height="208"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="classmappel_1_1ImageFormat2DBase.png" usemap="#mappel::ImageFormat2DBase_map" alt=""/>
+  <map id="mappel::ImageFormat2DBase_map" name="mappel::ImageFormat2DBase_map">
+<area href="classmappel_1_1Gauss2DModel.html" title="A base class for 2D Gaussian PSF with fixed but possibly asymmetric sigma. " alt="mappel::Gauss2DModel" shape="rect" coords="0,56,204,80"/>
+<area href="classmappel_1_1Gauss2DsModel.html" title="A base class for 2D Gaussian PSF where the gaussian sigma is controlled by a single scalar parameter ..." alt="mappel::Gauss2DsModel" shape="rect" coords="428,56,632,80"/>
+<area href="classmappel_1_1Gauss2DsxyModel.html" title="A base class for 2D Gaussian PSF with axis-aligned gaussian with free parameters for both sigma_x and..." alt="mappel::Gauss2DsxyModel" shape="rect" coords="642,56,846,80"/>
+<area href="classmappel_1_1PoissonNoise2DObjective.html" title="A base class for 2D objectives with Poisson read noise. This objective function and its subclasses ar..." alt="mappel::PoissonNoise2DObjective" shape="rect" coords="856,56,1060,80"/>
+<area href="classmappel_1_1Gauss2DMAP.html" title="A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="mappel::Gauss2DMAP" shape="rect" coords="214,112,418,136"/>
+<area href="classmappel_1_1Gauss2DMLE.html" title="A 2D Gaussian with fixed PSF under an Poisson noise assumption and maximum-likelihood objective..." alt="mappel::Gauss2DMLE" shape="rect" coords="214,168,418,192"/>
+<area href="classmappel_1_1Gauss2DsMAP.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum a-pos..." alt="mappel::Gauss2DsMAP" shape="rect" coords="642,112,846,136"/>
+<area href="classmappel_1_1Gauss2DsMLE.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum-likel..." alt="mappel::Gauss2DsMLE" shape="rect" coords="642,168,846,192"/>
+<area href="classmappel_1_1Gauss2DMAP.html" title="A 2D Gaussian with fixed PSF under an Poisson Read Noise assumption and MAP Objective. " alt="mappel::Gauss2DMAP" shape="rect" coords="1070,112,1274,136"/>
+<area href="classmappel_1_1Gauss2DMLE.html" title="A 2D Gaussian with fixed PSF under an Poisson noise assumption and maximum-likelihood objective..." alt="mappel::Gauss2DMLE" shape="rect" coords="1070,168,1274,192"/>
+<area href="classmappel_1_1Gauss2DsMAP.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum a-pos..." alt="mappel::Gauss2DsMAP" shape="rect" coords="1070,224,1274,248"/>
+<area href="classmappel_1_1Gauss2DsMLE.html" title="A 2D Gaussian with a variable scalar PSF sigma under a Poisson noise assumption using a maximum-likel..." alt="mappel::Gauss2DsMLE" shape="rect" coords="1070,280,1274,304"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -417,13 +433,6 @@ template&lt;class PixelT &gt; </div>
 
 <p>References <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00060">check_size()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a86de92208eaeed6f691bf2bceaa8eb08_cgraph.svg" width="430" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ab0b17cc722833808a90eb9cbbf1b52ff"></a>
@@ -553,13 +562,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00013">ImageFormat2DBase()</a>, and <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00051">set_size()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3_icgraph.svg" width="638" height="143"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a22701571228f52dd6cfeac72ab18908c"></a>
@@ -624,13 +626,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">size</a>.</p>
 
 <p>Referenced by <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00103">get_stats()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564_icgraph.svg" width="638" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -726,20 +721,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00268">mappel::Gauss2DModel::get_stats()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00341">mappel::Gauss2DsModel::get_stats()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1_cgraph.svg" width="430" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a1a1e1178943bee139617b6c25e5104f1_icgraph.svg" width="404" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ab5d6c4f7f3818f4652fcf8d54351c981"></a>
@@ -824,13 +805,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">size</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DsMAP_8cpp_source.html#l00051">mappel::Gauss2DsMAP::operator=()</a>, <a class="el" href="Gauss2DsMLE_8cpp_source.html#l00051">mappel::Gauss2DsMLE::operator=()</a>, <a class="el" href="Gauss2DMAP_8cpp_source.html#l00059">mappel::Gauss2DMAP::operator=()</a>, and <a class="el" href="Gauss2DMLE_8cpp_source.html#l00055">mappel::Gauss2DMLE::operator=()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_af7abdfaf54b018bc3a4b2a2a4e37b451_icgraph.svg" width="396" height="238"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -917,20 +891,6 @@ template&lt;class ImT &gt; </div>
 <p>References <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00060">check_size()</a>, and <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">size</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00115">mappel::Gauss2DModel::set_size()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00125">mappel::Gauss2DsModel::set_size()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372_cgraph.svg" width="430" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_afb0cba98e353625641646506aeb80372_icgraph.svg" width="404" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>

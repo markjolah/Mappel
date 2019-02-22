@@ -1,6 +1,0 @@
-<map id="mappel::Gauss1DsModel::set_max_sigma" name="mappel::Gauss1DsModel::set_max_sigma">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DsModel.html#a28c6e621043d53c5273e277266453de9" title="mappel::Gauss1DsModel\l::set_max_sigma" alt="" coords="213,5,373,44"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsModel.html#a85925eaef6d69c5f6b3ceeae3364dd68" title="mappel::Gauss2DsModel\l::set_max_sigma_ratio" alt="" coords="213,68,373,107"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#a63d3481174444ff7f7b603a47aa8dcc1" title="mappel::Gauss2DsModel\l::set_min_sigma" alt="" coords="213,131,373,169"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsModel.html#a8ef1bc0d4dc27247d88ff2c7300a149d" title="mappel::Gauss2DsModel\l::set_max_sigma" alt="" coords="421,68,581,107"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="mappel::IterativeMaximizer::MaximizerData::record_backtrack" name="mappel::IterativeMaximizer::MaximizerData::record_backtrack">
-<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer.html#ac033d2b23a6a861e6d7adbe35f17624e" title="mappel::IterativeMaximizer\l::backtrack" alt="" coords="221,68,389,107"/>
-<area shape="rect" id="node3" href="$classmappel_1_1NewtonDiagonalMaximizer.html#ac445064041b5c7f3c147c08a0065cd68" title="mappel::NewtonDiagonalMaximizer\l::maximize" alt="" coords="437,5,655,44"/>
-<area shape="rect" id="node4" href="$classmappel_1_1NewtonMaximizer.html#aca7e3071f17ef6f381878eb6151c86d7" title="mappel::NewtonMaximizer\l::maximize" alt="" coords="463,68,629,107"/>
-<area shape="rect" id="node5" href="$classmappel_1_1QuasiNewtonMaximizer.html#ab4d32d8ba90d4355262a228753619b9f" title="mappel::QuasiNewtonMaximizer\l::maximize" alt="" coords="447,131,645,169"/>
-</map>

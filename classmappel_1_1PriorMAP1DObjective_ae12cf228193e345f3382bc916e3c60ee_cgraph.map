@@ -1,5 +1,0 @@
-<map id="mappel::PriorMAP1DObjective::prior_grad_update" name="mappel::PriorMAP1DObjective::prior_grad_update">
-<area shape="rect" id="node2" href="$namespacemappel.html#a077bd23f694399652e8e3a3be5758688" title="mappel::beta_prior_grad" alt="" coords="250,5,407,31"/>
-<area shape="rect" id="node3" href="$namespacemappel.html#a0f4c641d9784a4688faa26c126e28fa2" title="mappel::gamma_prior_grad" alt="" coords="241,55,416,80"/>
-<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1objective.html#a8e120e5a79029803453cea5f9f2d8f67" title="mappel::methods::objective\l::grad" alt="" coords="243,104,414,143"/>
-</map>

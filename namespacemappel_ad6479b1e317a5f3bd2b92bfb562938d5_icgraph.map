@@ -1,6 +1,0 @@
-<map id="mappel::poisson_log_likelihood" name="mappel::poisson_log_likelihood">
-<area shape="rect" id="node2" href="$namespacemappel_1_1methods_1_1likelihood.html#a447a9c4b4bdcd45bed3f2df281efc5a5" title="mappel::methods::likelihood::llh" alt="" coords="189,5,384,31"/>
-<area shape="rect" id="node3" href="$namespacemappel_1_1methods_1_1likelihood_1_1debug.html#a3ebb5c59ce538767de0717dbb543547a" title="mappel::methods::likelihood\l::debug::llh_components" alt="" coords="199,55,374,93"/>
-<area shape="rect" id="node4" href="$PoissonGaussianNoise2DObjective_8h.html#a8eb230d5181ae8cf5b5b9ed794d3b64c" title="log_likelihood" alt="" coords="237,117,336,143"/>
-<area shape="rect" id="node5" href="$namespacemappel.html#ac37bf1175da6d4a80cd4cb147bfb68e2" title="Parallel log_likelihood calculations for a single image. " alt="" coords="432,111,579,149"/>
-</map>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mappel',['MAPPEL',['../index.html',1,'']]]
+  ['install',['Install',['../Install.html',1,'']]]
 ];

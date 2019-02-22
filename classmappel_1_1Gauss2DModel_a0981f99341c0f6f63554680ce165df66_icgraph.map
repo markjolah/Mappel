@@ -1,7 +1,0 @@
-<map id="mappel::Gauss2DModel::make_internal_1Dsum_estimator" name="mappel::Gauss2DModel::make_internal_1Dsum_estimator">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel.html#a07e9c13f8a164f26f337fcc0c2f70374" title="mappel::Gauss2DModel\l::debug_internal_sum\l_model_y" alt="" coords="416,18,571,70"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DModel.html#aa2247488bb3d360e323b9819ccef3429" title="mappel::Gauss2DModel\l::Gauss2DModel" alt="" coords="211,25,365,63"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DModel.html#a221f765c48f478177f150c08733e9d29" title="mappel::Gauss2DModel\l::update_internal_1Dsum\l_estimators" alt="" coords="208,87,368,139"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DModel.html#a7041d1f38f1141773b046489ce6e6b11" title="mappel::Gauss2DModel\l::set_hyperparams" alt="" coords="416,94,571,133"/>
-<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DModel.html#a41a5b18b3f3779562c0dbd19e1b6e29b" title="mappel::Gauss2DModel\l::set_prior" alt="" coords="416,157,571,195"/>
-</map>

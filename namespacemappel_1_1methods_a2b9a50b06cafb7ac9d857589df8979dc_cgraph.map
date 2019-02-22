@@ -1,5 +1,0 @@
-<map id="mappel::methods::simulate_image" name="mappel::methods::simulate_image">
-<area shape="rect" id="node2" href="$namespacemappel.html#adc1e3a6c0fd4804406d162c48d805d44" title="mappel::generate_poisson" alt="" coords="221,44,389,69"/>
-<area shape="rect" id="node3" href="$namespacemappel.html#ae776a0d92c466702788b7405a4a166e0" title="mappel::generate_poisson\l_large" alt="" coords="437,5,605,44"/>
-<area shape="rect" id="node4" href="$namespacemappel.html#af5deeb186fbcfbd0f449064cc70e8a86" title="Genrates a single poisson disributed int from distribution with mean mu. " alt="" coords="437,68,605,107"/>
-</map>

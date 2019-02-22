@@ -1,11 +1,82 @@
-M\+A\+P\+P\+EL\+: \mbox{[}M\mbox{]}aximum \mbox{[}A\mbox{]} \mbox{[}P\mbox{]}osteriori \mbox{[}P\mbox{]}oint \mbox{[}E\mbox{]}mitter \mbox{[}L\mbox{]}ocalization High-\/performance, parallel, robust, cross-\/platform point-\/emitter localization for E\+M\+C\+CD and S\+C\+M\+OS microscopy.
+Mappel is an object-\/oriented image processing library for \href{https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy}{\tt super-\/resolution localization} of Gaussian point emitters in \href{https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques}{\tt fluorescence microscopy} applications.
+\begin{DoxyItemize}
+\item Mappel uses C\+Make and builds cross-\/platform for Linux and Windows 64-\/bit.
+\item Mappel has object-\/oriented interfaces in C++, Python, and Matlab
+\item Mappel uses Open\+MP to parallelize operations over vectors of images or parameters
+\item Mappel is free-\/as-\/in-\/beer and free-\/as-\/in-\/speech! (\mbox{[}Apache-\/2.\+0\mbox{]}(L\+I\+C\+E\+N\+SE))
+\end{DoxyItemize}
+
+\subsubsection*{Documentation}
+
+The Mappel Doxygen documentation can be build with the {\ttfamily O\+P\+T\+\_\+\+D\+OC} C\+Make option and is also available on online\+:
+\begin{DoxyItemize}
+\item \href{https://markjolah.github.io/Mappel/index.html}{\tt Mappel H\+T\+ML Manual}
+\item \href{https://markjolah.github.io/Mappel/pdf/Mappel-0.0.3-reference.pdf}{\tt Mappel P\+DF Manual}
+\item \href{https://github.com/markjolah/Mappel}{\tt Mappel github repository}
+\end{DoxyItemize}
+
+\subsubsection*{Background}
+
+Point emitter localization is a process of precisely estimating the sub-\/pixel location of a single point source emitter (molecule/protein) at effective resolutions 10-\/50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from the blurry, noisy, pixelated images to the estimate of true emitter position and the estimate of the uncertainty in true position. Figure 1 shows the point emitter localization process visually utilizing realistic physical scales for a typical super-\/resolution fluorescence microscope configuration, and showing typical effective fitting resolution.
+
+
+
+{\bfseries Figure 1}\+: Effective fitting resolution in typical applications 
+
+\subsubsection*{Installation}
+
+Mappel uses the C\+Make build system, and is designed to be cross-\/compiled from linux to other platforms, primarily Win64, although future O\+SX support is planned.
+
+\subsubsection*{Dependencies}
+
+Several standard numerical packages are required to build Mappel. Most distributions should have development versions of these packages which provide the include files and other necessary development files for the packages.
 
 
 \begin{DoxyItemize}
-\item Installation Instructions
-\item \mbox{[}T\+O\+DO List / Upcoming Features \mbox{]}
+\item \href{http://arma.sourceforge.net/docs.html}{\tt {\itshape Armadillo}} -\/ A high-\/performance array library for C++.
+\item \href{http://www.boost.org/}{\tt Boost}
+\item B\+L\+AS
 \begin{DoxyItemize}
-\item Profile-\/likelihood based confidence intervals
-\item S\+C\+M\+OS Model variants with \hyperlink{classPoissonGaussianNoise2DObjective}{Poisson\+Gaussian\+Noise2\+D\+Objective} and associated classes 
+\item Requires support for 64-\/bit integers.
+\item \href{http://www.netlib.org/blas/}{\tt Netlib B\+L\+AS Reference}
+\end{DoxyItemize}
+\item L\+A\+P\+A\+CK
+\begin{DoxyItemize}
+\item Requires support for 64-\/bit integers.
+\item \href{http://www.netlib.org/lapack/}{\tt Netlib L\+A\+P\+A\+CK Reference}
 \end{DoxyItemize}
 \end{DoxyItemize}
+
+Note the {\ttfamily O\+P\+T\+\_\+\+B\+L\+A\+S\+\_\+\+I\+N\+T64} C\+Make option controls whether Armadillo uses B\+L\+AS and L\+A\+P\+A\+CK libraries that use 64-\/bit interger indexing. Matlab uses 64-\/bit by default, so linking Mappel to Matlab M\+EX libraries requires this option enabled. Many linux systems only provide 32-\/bit integer versions of B\+L\+AS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-\/bit support is difficult to provide.
+
+\paragraph*{External Projects}
+
+These packages are specialized C\+Make projects. If they are not currently installed on the development machines we use the \href{https://github.com/markjolah/UncommonCMakeModules/blob/master/AddExternalDependency.cmake}{\tt Add\+External\+Dependency.\+cmake} which will automatically download, configure, build and install to the {\ttfamily C\+M\+A\+K\+E\+\_\+\+I\+N\+S\+T\+A\+L\+L\+\_\+\+P\+R\+E\+F\+IX}, enabling their use through the normal C\+Make {\ttfamily find\+\_\+package()} system.
+
+
+\begin{DoxyItemize}
+\item \href{https://markjolah.github.iom/BacktraceException}{\tt Backtrace\+Exception} -\/ A library to provide debugging output on exception calls. Important for Matlab debugging.
+\item \href{https://markjolah.github.io/ParallelRngManager}{\tt Parallel\+Rng\+Manager} -\/ A simple manager for easily deploying a set of R\+NG parallelized over a set number of threads, using the T\+R\+NG parallel R\+NG library.
+\item \href{https:///markjolah.github.io/ParallelRngManager}{\tt Prior\+Hessian} -\/ The Prior\+Hessian library allows fast computation of log-\/likelihood and derivatives for composite priors.
+\end{DoxyItemize}
+
+\subsection*{Model classes}
+
+Mappel provides model objects that correspond to different fitting-\/modes (psf-\/models). Mappel\textquotesingle{}s core is a C++ library {\ttfamily libmappel.\+so} that uses Open\+MP to automatically parallelize localizations over multiple images. Mappel also provides detailed object-\/oriented interfaces for Python and Matlab, using the same concept of a Model class to represent each class of psf fitting models.
+
+\subsubsection*{Computations available}
+
+
+\begin{DoxyItemize}
+\item {\ttfamily llh} -\/ log-\/likelihood (log of pdf)
+\item {\ttfamily rllh} -\/ relative log-\/likelihood (log of pdf without constant terms)
+\item {\ttfamily grad} -\/ derivative of log-\/likelihood (or equivalently of relative-\/llh)
+\item {\ttfamily grad2} -\/ 2nd-\/derivative of log-\/likelihood
+\item {\ttfamily hessian} -\/ hessian of log-\/likelihood
+\end{DoxyItemize}
+
+\subsection*{Design Notes}
+
+\subsubsection*{Static Polymorphism}
+
+The Mappel library is designed using static polymorphism (templates), and as such avoids virtual functions for small-\/grained tasks, and instead uses templates, which allow many small functions to be inlined. This aggressive inlining by the compiler produces log-\/likelihood, gradient, and hessian functions that are nearly as fast as hand-\/coded functions. 

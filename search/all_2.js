@@ -31,6 +31,7 @@ var searchData=
   ['compute_5finitial_5ftrust_5fradius',['compute_initial_trust_radius',['../classmappel_1_1TrustRegionMaximizer.html#aad1464c6bd9566f571d32dd9d10a2f78',1,'mappel::TrustRegionMaximizer']]],
   ['compute_5fmax_5fsigma_5fratio',['compute_max_sigma_ratio',['../classmappel_1_1Gauss2DsModel.html#ad4bdfddccbc2a1053ac1f10199a4cb3b',1,'mappel::Gauss2DsModel::compute_max_sigma_ratio()'],['../classmappel_1_1Gauss2DsxyModel.html#ae4ba94f1d33b7c4e33300eb72c8e0f0d',1,'mappel::Gauss2DsxyModel::compute_max_sigma_ratio()']]],
   ['compute_5fprofile_5festimate',['compute_profile_estimate',['../classmappel_1_1Estimator.html#a273f65624e06688cd4b1126e3e7556ae',1,'mappel::Estimator::compute_profile_estimate()'],['../classmappel_1_1IterativeMaximizer.html#a1999fd1fa63c803b3aad87695fc82843',1,'mappel::IterativeMaximizer::compute_profile_estimate()']]],
+  ['continue',['Continue',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#ab73d40c948b8be83af2f416075e47a45aa0bfb8e59e6c13fc8d990781f77694fe',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]],
   ['convergence_5ftest',['convergence_test',['../classmappel_1_1IterativeMaximizer.html#aef9b61d66d785a1a06dd2c75c3166435',1,'mappel::IterativeMaximizer']]],
   ['cooling_5frate',['cooling_rate',['../classmappel_1_1SimulatedAnnealingMaximizer.html#af67fa796254c7b027de1a44b5d33afcb',1,'mappel::SimulatedAnnealingMaximizer']]],
   ['coordidxt',['CoordIdxT',['../classPoissonGaussianNoise2DObjective.html#a4167a20571c56d874f26f7432e5e3232',1,'PoissonGaussianNoise2DObjective']]],

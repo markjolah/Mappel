@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gradratio',['GradRatio',['../classmappel_1_1IterativeMaximizer.html#a5dc8660cf33abf3f3a576f051466521ca8d0cc41d71102a7952fefe3c63244fd4',1,'mappel::IterativeMaximizer']]]
+  ['donottry',['DoNotTry',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#ab73d40c948b8be83af2f416075e47a45a7b2e9a6112ae937175819b661a4c0c67',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]]
 ];

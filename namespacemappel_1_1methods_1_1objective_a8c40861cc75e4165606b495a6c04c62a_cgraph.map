@@ -1,7 +1,0 @@
-<map id="mappel::methods::objective::negative_definite_hessian" name="mappel::methods::objective::negative_definite_hessian">
-<area shape="rect" id="node2" href="$namespacemappel.html#af0d85d0ac01f8397a555efb5912fc2ea" title="mappel::cholesky_make\l_negative_definite" alt="" coords="233,33,388,72"/>
-<area shape="rect" id="node6" href="$namespacemappel_1_1methods_1_1objective.html#afbf93fa446606620d01747af3684f62d" title="mappel::methods::objective\l::hessian" alt="" coords="225,96,396,135"/>
-<area shape="rect" id="node3" href="$namespacemappel.html#a2f4256e721d1f22f2d72817ba3d2540d" title="mappel::cholesky_convert\l_full_matrix" alt="" coords="447,5,611,44"/>
-<area shape="rect" id="node5" href="$namespacemappel.html#a5b0ad6d46ef0173ae9e44a0ff9af7f0b" title="mappel::modified_cholesky" alt="" coords="444,68,615,93"/>
-<area shape="rect" id="node4" href="$namespacemappel.html#a7332bb151bb9ea23be4af80743009954" title="mappel::copy_Usym_mat" alt="" coords="663,12,823,37"/>
-</map>

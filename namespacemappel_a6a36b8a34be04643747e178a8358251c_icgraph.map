@@ -1,5 +1,0 @@
-<map id="mappel::beta_prior_grad2" name="mappel::beta_prior_grad2">
-<area shape="rect" id="node2" href="$classmappel_1_1PriorMAP1DObjective.html#af21177beb6afa9a865289f4d49362d55" title="mappel::PriorMAP1DObjective\l::prior_grad2_update" alt="" coords="179,5,367,44"/>
-<area shape="rect" id="node4" href="$classmappel_1_1PriorMAP1DObjective.html#af7dd7f0d9c0ccb34b988e63bd356dcfb" title="mappel::PriorMAP1DObjective\l::prior_hess_update" alt="" coords="179,68,367,107"/>
-<area shape="rect" id="node3" href="$classmappel_1_1PriorMAP1DObjective.html#ac5b20bb93fe2f2eddd75d19bf34283c7" title="mappel::PriorMAP1DObjective\l::set_hyperparameters" alt="" coords="415,37,603,76"/>
-</map>

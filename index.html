@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -80,15 +81,63 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MAPPEL </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>MAPPEL: [M]aximum [A] [P]osteriori [P]oint [E]mitter [L]ocalization High-performance, parallel, robust, cross-platform point-emitter localization for EMCCD and SCMOS microscopy.</p>
+<div class="textblock"><p>Mappel is an object-oriented image processing library for <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy">super-resolution localization</a> of Gaussian point emitters in <a href="https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques">fluorescence microscopy</a> applications.</p><ul>
+<li>Mappel uses CMake and builds cross-platform for Linux and Windows 64-bit.</li>
+<li>Mappel has object-oriented interfaces in C++, Python, and Matlab</li>
+<li>Mappel uses OpenMP to parallelize operations over vectors of images or parameters</li>
+<li>Mappel is free-as-in-beer and free-as-in-speech! ([Apache-2.0](LICENSE))</li>
+</ul>
+<h2>Documentation</h2>
+<p>The Mappel Doxygen documentation can be build with the <code>OPT_DOC</code> CMake option and is also available on online:</p><ul>
+<li><a href="https://markjolah.github.io/Mappel/index.html">Mappel HTML Manual</a></li>
+<li><a href="https://markjolah.github.io/Mappel/pdf/Mappel-0.0.3-reference.pdf">Mappel PDF Manual</a></li>
+<li><a href="https://github.com/markjolah/Mappel">Mappel github repository</a></li>
+</ul>
+<h2>Background</h2>
+<p>Point emitter localization is a process of precisely estimating the sub-pixel location of a single point source emitter (molecule/protein) at effective resolutions 10-50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from the blurry, noisy, pixelated images to the estimate of true emitter position and the estimate of the uncertainty in true position. Figure 1 shows the point emitter localization process visually utilizing realistic physical scales for a typical super-resolution fluorescence microscope configuration, and showing typical effective fitting resolution.</p>
+<div class="image">
+<img src="https://raw.githubusercontent.com/markjolah/Mappel/master/doc/images/fitting_resolution.png"  alt="Fig 1: Effective fitting resolution in typical applications" width="550"/>
+</div>
+<p><b>Figure 1</b>: Effective fitting resolution in typical applications </p>
+<h2>Installation</h2>
+<p>Mappel uses the CMake build system, and is designed to be cross-compiled from linux to other platforms, primarily Win64, although future OSX support is planned.</p>
+<h2>Dependencies</h2>
+<p>Several standard numerical packages are required to build Mappel. Most distributions should have development versions of these packages which provide the include files and other necessary development files for the packages.</p>
 <ul>
-<li>Installation Instructions</li>
-<li>[TODO List / Upcoming Features ]<ul>
-<li>Profile-likelihood based confidence intervals</li>
-<li>SCMOS Model variants with <a class="el" href="classPoissonGaussianNoise2DObjective.html" title="A Base type for point emitter localization models that use 2d images. ">PoissonGaussianNoise2DObjective</a> and associated classes </li>
+<li><a href="http://arma.sourceforge.net/docs.html"><em>Armadillo</em></a> - A high-performance array library for C++.</li>
+<li><a href="http://www.boost.org/">Boost</a></li>
+<li>BLAS<ul>
+<li>Requires support for 64-bit integers.</li>
+<li><a href="http://www.netlib.org/blas/">Netlib BLAS Reference</a></li>
+</ul>
+</li>
+<li>LAPACK<ul>
+<li>Requires support for 64-bit integers.</li>
+<li><a href="http://www.netlib.org/lapack/">Netlib LAPACK Reference</a></li>
 </ul>
 </li>
 </ul>
+<p>Note the <code>OPT_BLAS_INT64</code> CMake option controls whether Armadillo uses BLAS and LAPACK libraries that use 64-bit interger indexing. Matlab uses 64-bit by default, so linking Mappel to Matlab MEX libraries requires this option enabled. Many linux systems only provide 32-bit integer versions of BLAS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-bit support is difficult to provide.</p>
+<h3>External Projects</h3>
+<p>These packages are specialized CMake projects. If they are not currently installed on the development machines we use the <a href="https://github.com/markjolah/UncommonCMakeModules/blob/master/AddExternalDependency.cmake">AddExternalDependency.cmake</a> which will automatically download, configure, build and install to the <code>CMAKE_INSTALL_PREFIX</code>, enabling their use through the normal CMake <code>find_package()</code> system.</p>
+<ul>
+<li><a href="https://markjolah.github.iom/BacktraceException">BacktraceException</a> - A library to provide debugging output on exception calls. Important for Matlab debugging.</li>
+<li><a href="https://markjolah.github.io/ParallelRngManager">ParallelRngManager</a> - A simple manager for easily deploying a set of RNG parallelized over a set number of threads, using the TRNG parallel RNG library.</li>
+<li><a href="https:///markjolah.github.io/ParallelRngManager">PriorHessian</a> - The PriorHessian library allows fast computation of log-likelihood and derivatives for composite priors.</li>
+</ul>
+<h1>Model classes</h1>
+<p>Mappel provides model objects that correspond to different fitting-modes (psf-models). Mappel's core is a C++ library <code>libmappel.so</code> that uses OpenMP to automatically parallelize localizations over multiple images. Mappel also provides detailed object-oriented interfaces for Python and Matlab, using the same concept of a Model class to represent each class of psf fitting models.</p>
+<h2>Computations available</h2>
+<ul>
+<li><code>llh</code> - log-likelihood (log of pdf)</li>
+<li><code>rllh</code> - relative log-likelihood (log of pdf without constant terms)</li>
+<li><code>grad</code> - derivative of log-likelihood (or equivalently of relative-llh)</li>
+<li><code>grad2</code> - 2nd-derivative of log-likelihood</li>
+<li><code>hessian</code> - hessian of log-likelihood</li>
+</ul>
+<h1>Design Notes</h1>
+<h2>Static Polymorphism</h2>
+<p>The Mappel library is designed using static polymorphism (templates), and as such avoids virtual functions for small-grained tasks, and instead uses templates, which allow many small functions to be inlined. This aggressive inlining by the compiler produces log-likelihood, gradient, and hessian functions that are nearly as fast as hand-coded functions. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

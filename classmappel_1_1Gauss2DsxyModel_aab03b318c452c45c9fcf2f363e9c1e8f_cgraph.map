@@ -1,6 +1,0 @@
-<map id="mappel::Gauss2DsxyModel::make_stencil" name="mappel::Gauss2DsxyModel::make_stencil">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#ae006204abb79ef7892843f978b37d1ff" title="mappel::Gauss2DsxyModel\l::Stencil::Stencil" alt="" coords="225,5,397,44"/>
-<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html#ad50dfc29b6e7167fb4caf8683353079d" title="mappel::PointEmitterModel\l::theta_in_bounds" alt="" coords="227,68,396,107"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a52379932618469a171c7ecde691fa36a" title="mappel::Gauss2DsxyModel\l::Stencil::compute_derivatives" alt="" coords="445,5,629,44"/>
-<area shape="rect" id="node5" href="$classmappel_1_1PointEmitterModel.html#a97a868e842302f670ed9f9bd49416771" title="mappel::PointEmitterModel\l::check_param_shape" alt="" coords="453,68,622,107"/>
-</map>

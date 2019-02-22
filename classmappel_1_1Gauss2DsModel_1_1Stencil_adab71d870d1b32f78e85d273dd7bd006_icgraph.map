@@ -1,7 +1,0 @@
-<map id="mappel::Gauss2DsModel::Stencil::sigmaX" name="mappel::Gauss2DsModel::Stencil::sigmaX">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#ab11c806f8335bbafeb3db7476526680d" title="mappel::Gauss2DsModel\l::Stencil::compute_derivatives" alt="" coords="213,5,397,44"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#a924f5f8d4524831f1ef50041b85a842f" title="mappel::Gauss2DsModel\l::Stencil::Stencil" alt="" coords="445,35,605,73"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsModel.html#a3775c60f914e1873ecfcd67c64fbc1e8" title="mappel::Gauss2DsModel\l::pixel_grad2" alt="" coords="225,120,385,159"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#a4f80f81e88e02ce3be7c6e5052236ae2" title="mappel::Gauss2DsModel\l::pixel_hess" alt="" coords="225,183,385,221"/>
-<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel.html#abc9ec137a0cf5238a34b9c041e3fc3a5" title="pixel derivative inner loop calculations. " alt="" coords="225,245,385,284"/>
-</map>

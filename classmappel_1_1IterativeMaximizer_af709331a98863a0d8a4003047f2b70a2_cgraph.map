@@ -1,6 +1,0 @@
-<map id="mappel::IterativeMaximizer::clear_stats" name="mappel::IterativeMaximizer::clear_stats">
-<area shape="rect" id="node2" href="$classmappel_1_1ThreadedEstimator.html#a8acce3a5a89128403c97b53bc3698d61" title="mappel::ThreadedEstimator\l::clear_stats" alt="" coords="221,68,395,107"/>
-<area shape="rect" id="node3" href="$namespacemappel.html#a9a33407dfb369f92a6679b66aa6108da" title="mappel::cgauss_heuristic\l_compute_estimate" alt="" coords="447,5,609,44"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Estimator.html#a2181f8c34bfc89b5b6b491f4db63a4d8" title="mappel::Estimator::\lclear_stats" alt="" coords="465,68,591,107"/>
-<area shape="rect" id="node5" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="443,131,613,169"/>
-</map>

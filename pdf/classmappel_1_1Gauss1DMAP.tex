@@ -9,22 +9,10 @@ A 1D Gaussian with fixed P\+SF under an Poisson Read Noise assumption and M\+AP 
 
 {\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Gauss1\+D\+M\+A\+P.\+h$>$}
 
-
-
-Inheritance diagram for mappel\+:\+:Gauss1\+D\+M\+AP\+:\nopagebreak
-\begin{figure}[H]
+Inheritance diagram for mappel\+:\+:Gauss1\+D\+M\+AP\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DMAP__inherit__graph}
-\end{center}
-\end{figure}
-
-
-Collaboration diagram for mappel\+:\+:Gauss1\+D\+M\+AP\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DMAP__coll__graph}
+\includegraphics[height=2.113208cm]{classmappel_1_1Gauss1DMAP}
 \end{center}
 \end{figure}
 \subsubsection*{Public Types}
@@ -84,6 +72,8 @@ double \hyperlink{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}
 double \hyperlink{classmappel_1_1Gauss1DModel_ae7bd64fb97894f9657be0a4b542aa3c6}{get\+\_\+psf\+\_\+sigma} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} idx) const 
 \item 
 void \hyperlink{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8}{set\+\_\+psf\+\_\+sigma} (double new\+\_\+psf\+\_\+sigma)
+\item 
+void \hyperlink{classmappel_1_1Gauss1DModel_accb0aad54534660e5acd2d6fc01268f1}{set\+\_\+psf\+\_\+sigma} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&new\+\_\+psf\+\_\+sigma)
 \item 
 \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9}{get\+\_\+stats} () const 
 \item 
@@ -206,6 +196,8 @@ void \hyperlink{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade
 \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{get\+\_\+num\+\_\+pixels} () const 
 \item 
 void \hyperlink{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{set\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}{set\+\_\+size} (const arma\+::\+Col$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$ \&sz)
 \item 
 void \hyperlink{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im) const 
 \begin{DoxyCompactList}\small\item\em Check the shape of a single images is correct for model size. \end{DoxyCompactList}\item 
@@ -540,17 +532,6 @@ Definition at line 247 of file Point\+Emitter\+Model.\+cpp.
 
 References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Point\+Emitter\+Model\+::ubound.
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85_cgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!bounded\+\_\+theta@{bounded\+\_\+theta}}
 \index{bounded\+\_\+theta@{bounded\+\_\+theta}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{bounded\+\_\+theta(const Param\+T \&theta, double epsilon=bounds\+\_\+epsilon) const }{bounded_theta(const ParamT &theta, double epsilon=bounds_epsilon) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta (
@@ -571,28 +552,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), m
 
 Referenced by mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!bounded\+\_\+theta\+\_\+stack@{bounded\+\_\+theta\+\_\+stack}}
 \index{bounded\+\_\+theta\+\_\+stack@{bounded\+\_\+theta\+\_\+stack}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{bounded\+\_\+theta\+\_\+stack(const Param\+Vec\+T \&theta, double epsilon=bounds\+\_\+epsilon) const }{bounded_theta_stack(const ParamVecT &theta, double epsilon=bounds_epsilon) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack (
@@ -608,17 +567,6 @@ Definition at line 306 of file Point\+Emitter\+Model.\+cpp.
 
 
 References mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), and mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
 \index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -677,18 +625,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
 
 Referenced by mappel\+::\+Point\+Emitter\+Model\+::bound\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::bounded\+\_\+theta\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta(), mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds().
 
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}}
 \index{check\+\_\+param\+\_\+shape@{check\+\_\+param\+\_\+shape}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{check\+\_\+param\+\_\+shape(const Param\+Vec\+T \&theta) const }{check_param_shape(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape (
@@ -722,18 +658,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+max\+\_\+psf\+\_\+si
 
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::\+Gauss1\+D\+Model(), mappel\+::\+Gauss2\+D\+Model\+::\+Gauss2\+D\+Model(), mappel\+::\+Gauss2\+Ds\+Model\+::\+Gauss2\+Ds\+Model(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+min\+\_\+sigma(), mappel\+::\+Gauss1\+D\+Model\+::set\+\_\+psf\+\_\+sigma(), and mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}}
 \index{check\+\_\+psf\+\_\+sigma@{check\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -772,17 +696,6 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::global\+\_\+max\+\_\+size, and
 
 
 Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::\+Image\+Format1\+D\+Base(), and mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+hyperparam\+\_\+index@{get\+\_\+hyperparam\+\_\+index}}
 \index{get\+\_\+hyperparam\+\_\+index@{get\+\_\+hyperparam\+\_\+index}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -833,17 +746,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::prior.
 
 Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
 
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+hyperparams@{get\+\_\+hyperparams}}
 \index{get\+\_\+hyperparams@{get\+\_\+hyperparams}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{get\+\_\+hyperparams() const }{get_hyperparams() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+ParamT} mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+hyperparams (
@@ -869,7 +771,7 @@ References mappel\+::\+Point\+Emitter\+Model\+::prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{}\label{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}
 
 
-Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+lbound@{get\+\_\+lbound}}
 \index{get\+\_\+lbound@{get\+\_\+lbound}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -889,17 +791,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::lbound.
 
 
 Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}}
 \index{get\+\_\+mcmc\+\_\+num\+\_\+phases@{get\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -970,7 +861,7 @@ References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{}\label{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}
 
 
-Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 82 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -979,17 +870,6 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::size.
 
 
 Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+param\+\_\+names@{get\+\_\+param\+\_\+names}}
 \index{get\+\_\+param\+\_\+names@{get\+\_\+param\+\_\+names}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1025,18 +905,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::prior.
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators(), and mappel\+::\+Gauss2\+Ds\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\+\_\+estimators().
 
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+prior@{get\+\_\+prior}}
 \index{get\+\_\+prior@{get\+\_\+prior}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{get\+\_\+prior() const }{get_prior() const }}]{\setlength{\rightskip}{0pt plus 5cm}const Composite\+Dist \& mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+prior (
@@ -1061,7 +929,7 @@ References mappel\+::\+Point\+Emitter\+Model\+::prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}{}\label{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192}
 
 
-Definition at line 126 of file Gauss1\+D\+Model.\+h.
+Definition at line 127 of file Gauss1\+D\+Model.\+h.
 
 
 
@@ -1070,17 +938,6 @@ References mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma.
 
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+stats().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a8786ff874e58de054ab3633a5f201192_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}}
 \index{get\+\_\+psf\+\_\+sigma@{get\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1136,7 +993,7 @@ References mappel\+::rng\+\_\+manager.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{}\label{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}
 
 
-Definition at line 70 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 71 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -1145,17 +1002,6 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::size.
 
 
 Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+size@{get\+\_\+size}}
 \index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1181,7 +1027,7 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::size.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{}\label{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}
 
 
-Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+stats@{get\+\_\+stats}}
 \index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1197,17 +1043,6 @@ Definition at line 178 of file Gauss1\+D\+Model.\+cpp.
 
 
 References mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+psf\+\_\+sigma(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::get\+\_\+stats(), mappel\+::\+Image\+Format1\+D\+Base\+::get\+\_\+stats(), and mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a61904b6e14e7429ee58175cb54259ed9_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!get\+\_\+ubound@{get\+\_\+ubound}}
 \index{get\+\_\+ubound@{get\+\_\+ubound}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1227,18 +1062,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::ubound.
 
 
 Referenced by mappel\+::\+Gauss2\+Dsxy\+Model\+::get\+\_\+max\+\_\+sigma\+\_\+ratio(), mappel\+::\+Gauss2\+Ds\+Model\+::get\+\_\+max\+\_\+sigma\+\_\+ratio(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::\+M\+C\+M\+C\+Adaptor2\+D(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio().
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!has\+\_\+hyperparam@{has\+\_\+hyperparam}}
 \index{has\+\_\+hyperparam@{has\+\_\+hyperparam}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1268,22 +1091,11 @@ Fast, heuristic estimate of initial theta.
 
 
 
-Definition at line 164 of file Gauss1\+D\+Model.\+h.
+Definition at line 169 of file Gauss1\+D\+Model.\+h.
 
 
 
 References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::theta.
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a055a3bd9bc0ff8540a48a1c6f50ec523_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}}
 \index{initial\+\_\+theta\+\_\+estimate@{initial\+\_\+theta\+\_\+estimate}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1301,18 +1113,6 @@ Definition at line 207 of file Gauss1\+D\+Model.\+cpp.
 
 References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::bg(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+stencil(), mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params, and mappel\+::\+Image\+Format1\+D\+Base\+::size.
 
-
-
-Here is the call graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a4c4e01a489a6d8f7b119dd50b51610c2_cgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+default\+\_\+prior@{make\+\_\+default\+\_\+prior}}
 \index{make\+\_\+default\+\_\+prior@{make\+\_\+default\+\_\+prior}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+default\+\_\+prior(\+Idx\+T size, const std\+::string \&prior\+\_\+type)}{make_default_prior(IdxT size, const std::string &prior_type)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior (
@@ -1328,18 +1128,6 @@ Definition at line 59 of file Gauss1\+D\+Model.\+cpp.
 
 
 References mappel\+::istarts\+\_\+with(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), and mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position().
-
-
-
-Here is the call graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab9aeff0d5e4f065e81b1d49183ca3fcb_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position}}
 \index{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1360,28 +1148,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a539665592706f1d18966ce7fff974f92_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position}}
 \index{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(\+Idx\+T size)}{make_default_prior_normal_position(IdxT size)}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position (
@@ -1401,28 +1167,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a456b984f2309b0d5a72516361e4e18d0_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+image@{make\+\_\+image}}
 \index{make\+\_\+image@{make\+\_\+image}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+image() const }{make_image() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::make\+\_\+image (
@@ -1432,7 +1176,7 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{}\label{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}
 
 
-Definition at line 80 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -1447,7 +1191,7 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::size.
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{}\label{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}
 
 
-Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -1471,17 +1215,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params.
 
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Dsxy\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss1\+Ds\+Model\+::pixel\+\_\+hess\+\_\+update(), mappel\+::\+Gauss2\+D\+Model\+::pixel\+\_\+hess\+\_\+update(), and mappel\+::\+Gauss2\+Ds\+Model\+::pixel\+\_\+hess\+\_\+update().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+param@{make\+\_\+param}}
 \index{make\+\_\+param@{make\+\_\+param}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1614,29 +1347,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a808fde22a0fb00140b4ba60e7df685eb_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}}
 \index{make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+intensity(double mean=default\+\_\+mean\+\_\+\+I, double kappa=default\+\_\+intensity\+\_\+kappa)}{make_prior_component_intensity(double mean=default_mean_I, double kappa=default_intensity_kappa)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity (
@@ -1657,18 +1367,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+max\+\_\+I.
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
 
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}}
 \index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta(\+Idx\+T size, double pos\+\_\+beta=default\+\_\+beta\+\_\+pos)}{make_prior_component_position_beta(IdxT size, double pos_beta=default_beta_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta (
@@ -1684,18 +1382,6 @@ Definition at line 91 of file Point\+Emitter\+Model.\+cpp.
 
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position().
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}}
 \index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1713,18 +1399,6 @@ Definition at line 84 of file Point\+Emitter\+Model.\+cpp.
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
 
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}}
 \index{make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+sigma(double min\+\_\+sigma, double max\+\_\+sigma, double alpha=default\+\_\+alpha\+\_\+sigma)}{make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=default_alpha_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+sigma (
@@ -1741,18 +1415,6 @@ Definition at line 103 of file Point\+Emitter\+Model.\+cpp.
 
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+prior\+\_\+normal\+\_\+position().
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+prior\+\_\+normal\+\_\+position}}
 \index{make\+\_\+prior\+\_\+normal\+\_\+position@{make\+\_\+prior\+\_\+normal\+\_\+position}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1777,29 +1439,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+
 
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+internal\+\_\+1\+Dsum\+\_\+estimator().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_ab4fc9aafd94b2dd6532ef71f2ea47619_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!make\+\_\+stencil@{make\+\_\+stencil}}
 \index{make\+\_\+stencil@{make\+\_\+stencil}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1833,7 +1472,7 @@ A new \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Stencil} object ready t
 \end{DoxyReturn}
 
 
-Definition at line 115 of file Gauss1\+D\+Model.\+h.
+Definition at line 116 of file Gauss1\+D\+Model.\+h.
 
 
 
@@ -1842,29 +1481,6 @@ References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+Stencil(), and mappel\
 
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate().
-
-
-
-Here is the call graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a3068438846f29467b2df5a8504151c20_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!operator=@{operator=}}
 \index{operator=@{operator=}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1881,17 +1497,6 @@ Definition at line 51 of file Gauss1\+D\+M\+A\+P.\+cpp.
 
 References mappel\+::\+M\+A\+P\+Estimator\+::operator=(), mappel\+::\+Poisson\+Noise1\+D\+Objective\+::operator=(), mappel\+::\+Gauss1\+D\+Model\+::operator=(), and mappel\+::\+Point\+Emitter\+Model\+::operator=().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DMAP_afec3cf3e6adcd8b73100e9dc121198b7_cgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!operator=@{operator=}}
 \index{operator=@{operator=}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{operator=(\+Gauss1\+D\+M\+A\+P \&\&o)}{operator=(Gauss1DMAP &&o)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gauss1\+D\+M\+AP} \& mappel\+::\+Gauss1\+D\+M\+A\+P\+::operator= (
@@ -1907,17 +1512,6 @@ Definition at line 62 of file Gauss1\+D\+M\+A\+P.\+cpp.
 
 References mappel\+::\+M\+A\+P\+Estimator\+::operator=(), mappel\+::\+Poisson\+Noise1\+D\+Objective\+::operator=(), mappel\+::\+Gauss1\+D\+Model\+::operator=(), and mappel\+::\+Point\+Emitter\+Model\+::operator=().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DMAP_af33c269d5aa6f135c2c0efd026f9cf56_cgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!pixel\+\_\+grad@{pixel\+\_\+grad}}
 \index{pixel\+\_\+grad@{pixel\+\_\+grad}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{pixel\+\_\+grad(\+Idx\+T i, const Stencil \&s, Param\+T \&pgrad) const }{pixel_grad(IdxT i, const Stencil &s, ParamT &pgrad) const }}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+grad (
@@ -1929,7 +1523,7 @@ Here is the call graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55}{}\label{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55}
 
 
-Definition at line 136 of file Gauss1\+D\+Model.\+h.
+Definition at line 141 of file Gauss1\+D\+Model.\+h.
 
 
 
@@ -1938,28 +1532,6 @@ References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+DX, mappel\+::\+Gauss1
 
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+hess\+\_\+update().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_ae17d888bf89ea80c39c9839144015b55_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!pixel\+\_\+grad2@{pixel\+\_\+grad2}}
 \index{pixel\+\_\+grad2@{pixel\+\_\+grad2}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -1972,22 +1544,11 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3}{}\label{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3}
 
 
-Definition at line 145 of file Gauss1\+D\+Model.\+h.
+Definition at line 150 of file Gauss1\+D\+Model.\+h.
 
 
 
 References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma.
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_aeb6090ca6812629d8b719ed9a45cf7f3_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!pixel\+\_\+hess@{pixel\+\_\+hess}}
 \index{pixel\+\_\+hess@{pixel\+\_\+hess}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2000,22 +1561,11 @@ Here is the call graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a}{}\label{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a}
 
 
-Definition at line 154 of file Gauss1\+D\+Model.\+h.
+Definition at line 159 of file Gauss1\+D\+Model.\+h.
 
 
 
 References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+DX, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma.
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a407773f7ffe464018fbaa18e8c8fe22a_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!pixel\+\_\+hess\+\_\+update@{pixel\+\_\+hess\+\_\+update}}
 \index{pixel\+\_\+hess\+\_\+update@{pixel\+\_\+hess\+\_\+update}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2041,17 +1591,6 @@ Definition at line 191 of file Gauss1\+D\+Model.\+cpp.
 
 References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+param(), mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+grad(), and mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma.
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a6b0a57e7620ef80030c94903aae5954f_cgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!pixel\+\_\+model\+\_\+value@{pixel\+\_\+model\+\_\+value}}
 \index{pixel\+\_\+model\+\_\+value@{pixel\+\_\+model\+\_\+value}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{pixel\+\_\+model\+\_\+value(\+Idx\+T i, const Stencil \&s) const }{pixel_model_value(IdxT i, const Stencil &s) const }}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::pixel\+\_\+model\+\_\+value (
@@ -2062,22 +1601,11 @@ Here is the call graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439}{}\label{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439}
 
 
-Definition at line 130 of file Gauss1\+D\+Model.\+h.
+Definition at line 135 of file Gauss1\+D\+Model.\+h.
 
 
 
 References mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::bg(), mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::\+I(), and mappel\+::\+Gauss1\+D\+Model\+::\+Stencil\+::X.
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_af26feda273232841ae28b85b0dbab439_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!reflected\+\_\+theta@{reflected\+\_\+theta}}
 \index{reflected\+\_\+theta@{reflected\+\_\+theta}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2098,28 +1626,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), m
 
 Referenced by mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!reflected\+\_\+theta\+\_\+stack@{reflected\+\_\+theta\+\_\+stack}}
 \index{reflected\+\_\+theta\+\_\+stack@{reflected\+\_\+theta\+\_\+stack}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{reflected\+\_\+theta\+\_\+stack(const Param\+Vec\+T \&theta) const }{reflected_theta_stack(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Point\+Emitter\+Model\+::\+Param\+VecT} mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta\+\_\+stack (
@@ -2134,17 +1640,6 @@ Definition at line 316 of file Point\+Emitter\+Model.\+cpp.
 
 
 References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), and mappel\+::\+Point\+Emitter\+Model\+::reflected\+\_\+theta().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f_cgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!rename\+\_\+hyperparam@{rename\+\_\+hyperparam}}
 \index{rename\+\_\+hyperparam@{rename\+\_\+hyperparam}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2228,28 +1723,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_
 
 Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+bounds@{set\+\_\+bounds}}
 \index{set\+\_\+bounds@{set\+\_\+bounds}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{set\+\_\+bounds(const Param\+T \&lbound, const Param\+T \&ubound)}{set_bounds(const ParamT &lbound, const ParamT &ubound)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+bounds (
@@ -2318,17 +1791,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::prior.
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+hyperparams(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+hyperparams().
 
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}}
 \index{set\+\_\+image\+\_\+in\+\_\+stack@{set\+\_\+image\+\_\+in\+\_\+stack}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{set\+\_\+image\+\_\+in\+\_\+stack(\+Image\+Stack\+T \&stack, Image\+Coord\+T n, const Im\+T \&im) const }{set_image_in_stack(ImageStackT &stack, ImageCoordT n, const ImT &im) const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ImT $>$ void Image\+Format1\+D\+Base\+::set\+\_\+image\+\_\+in\+\_\+stack (
@@ -2340,7 +1802,7 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{}\label{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}
 
 
-Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 115 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+intensity\+\_\+mcmc\+\_\+sampling@{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling}}
 \index{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling@{set\+\_\+intensity\+\_\+mcmc\+\_\+sampling}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2361,28 +1823,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+mean\+\_\+I, mappel
 
 Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+lbound@{set\+\_\+lbound}}
 \index{set\+\_\+lbound@{set\+\_\+lbound}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{set\+\_\+lbound(const Param\+T \&lbound)}{set_lbound(const ParamT &lbound)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+lbound (
@@ -2402,17 +1842,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon, mappel\+::\
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma().
 
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}}
 \index{set\+\_\+mcmc\+\_\+num\+\_\+phases@{set\+\_\+mcmc\+\_\+num\+\_\+phases}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{set\+\_\+mcmc\+\_\+num\+\_\+phases(\+Idx\+T num\+\_\+phases)}{set_mcmc_num_phases(IdxT num_phases)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::set\+\_\+mcmc\+\_\+num\+\_\+phases (
@@ -2431,17 +1860,6 @@ References mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::num\+\_\+phases.
 
 
 Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::\+M\+C\+M\+C\+Adaptor1\+Ds(), and mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::\+M\+C\+M\+C\+Adaptor2\+Ds().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}}
 \index{set\+\_\+mcmc\+\_\+sigma\+\_\+scale@{set\+\_\+mcmc\+\_\+sigma\+\_\+scale}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2492,17 +1910,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::lbound, mappel\+::\+Point\+Emitt
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+prior(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+prior().
 
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+prior@{set\+\_\+prior}}
 \index{set\+\_\+prior@{set\+\_\+prior}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{set\+\_\+prior(const Composite\+Dist \&prior\+\_\+)}{set_prior(const CompositeDist &prior_)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+prior (
@@ -2535,29 +1942,22 @@ References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+psf\+\_\+sigma(), and
 
 
 
-Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
+Referenced by mappel\+::\+Gauss1\+D\+Model\+::set\+\_\+psf\+\_\+sigma(), and mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
+
+\index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+psf\+\_\+sigma@{set\+\_\+psf\+\_\+sigma}}
+\index{set\+\_\+psf\+\_\+sigma@{set\+\_\+psf\+\_\+sigma}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
+\paragraph[{\texorpdfstring{set\+\_\+psf\+\_\+sigma(const Vec\+T \&new\+\_\+psf\+\_\+sigma)}{set_psf_sigma(const VecT &new_psf_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::\+Gauss1\+D\+Model\+::set\+\_\+psf\+\_\+sigma (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{new\+\_\+psf\+\_\+sigma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_accb0aad54534660e5acd2d6fc01268f1}{}\label{classmappel_1_1Gauss1DModel_accb0aad54534660e5acd2d6fc01268f1}
+
+
+Definition at line 131 of file Gauss1\+D\+Model.\+h.
 
 
 
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=348pt]{classmappel_1_1Gauss1DModel_a5c09d4cf98de58fb67d881b560e6a3e8_icgraph}
-\end{center}
-\end{figure}
-
+References mappel\+::\+Gauss1\+D\+Model\+::set\+\_\+psf\+\_\+sigma().
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+rng\+\_\+seed@{set\+\_\+rng\+\_\+seed}}
 \index{set\+\_\+rng\+\_\+seed@{set\+\_\+rng\+\_\+seed}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2591,29 +1991,22 @@ References mappel\+::\+Image\+Format1\+D\+Base\+::check\+\_\+size(), and mappel\
 
 
 
-Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+Referenced by mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size(), mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+
+\index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+size@{set\+\_\+size}}
+\index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
+\paragraph[{\texorpdfstring{set\+\_\+size(const arma\+::\+Col$<$ Image\+Coord\+T $>$ \&sz)}{set_size(const arma::Col< ImageCoordT > &sz)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::set\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const arma\+::\+Col$<$ {\bf Image\+CoordT} $>$ \&}]{sz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}{}\label{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}
+
+
+Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
 
 
 
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_icgraph}
-\end{center}
-\end{figure}
-
+References mappel\+::\+Image\+Format1\+D\+Base\+::set\+\_\+size().
 
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!set\+\_\+ubound@{set\+\_\+ubound}}
 \index{set\+\_\+ubound@{set\+\_\+ubound}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
@@ -2634,18 +2027,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon, mappel\+::\
 
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio().
 
-
-
-Here is the caller graph for this function\+:
-\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!theta\+\_\+in\+\_\+bounds@{theta\+\_\+in\+\_\+bounds}}
 \index{theta\+\_\+in\+\_\+bounds@{theta\+\_\+in\+\_\+bounds}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{theta\+\_\+in\+\_\+bounds(const Param\+T \&theta) const }{theta_in_bounds(const ParamT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}bool mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds (
@@ -2665,28 +2046,6 @@ References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), m
 
 Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss2\+Ds\+Model\+::initial\+\_\+theta\+\_\+estimate(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+Dsxy\+Model\+::make\+\_\+stencil(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+stencil(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}!theta\+\_\+stack\+\_\+in\+\_\+bounds@{theta\+\_\+stack\+\_\+in\+\_\+bounds}}
 \index{theta\+\_\+stack\+\_\+in\+\_\+bounds@{theta\+\_\+stack\+\_\+in\+\_\+bounds}!mappel\+::\+Gauss1\+D\+M\+AP@{mappel\+::\+Gauss1\+D\+M\+AP}}
 \paragraph[{\texorpdfstring{theta\+\_\+stack\+\_\+in\+\_\+bounds(const Param\+Vec\+T \&theta) const }{theta_stack_in_bounds(const ParamVecT &theta) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Bool\+VecT} mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+stack\+\_\+in\+\_\+bounds (
@@ -2701,17 +2060,6 @@ Definition at line 296 of file Point\+Emitter\+Model.\+cpp.
 
 
 References mappel\+::\+Point\+Emitter\+Model\+::check\+\_\+param\+\_\+shape(), and mappel\+::\+Point\+Emitter\+Model\+::theta\+\_\+in\+\_\+bounds().
-
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8_cgraph}
-\end{center}
-\end{figure}
-
 
 
 
@@ -3011,7 +2359,7 @@ Referenced by mappel\+::\+Gauss1\+D\+Model\+::operator=().
 \paragraph[{\texorpdfstring{psf\+\_\+sigma}{psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::\+Gauss1\+D\+Model\+::psf\+\_\+sigma\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}{}\label{classmappel_1_1Gauss1DModel_a62c6b2a5d8ab5f5596504a19daed66b2}
 Standard deviation of the fixed-\/sigma 1D Gaussian P\+SF in pixels 
 
-Definition at line 89 of file Gauss1\+D\+Model.\+h.
+Definition at line 90 of file Gauss1\+D\+Model.\+h.
 
 
 
@@ -3033,7 +2381,7 @@ Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor\+Base\+::get\+\_\+mcmc\+\_\+sigma\
 \paragraph[{\texorpdfstring{size}{size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+SizeT} mappel\+::\+Image\+Format1\+D\+Base\+::size\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{}\label{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}
 Number of pixels in X dimension for 1D image 
 
-Definition at line 64 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 65 of file Image\+Format1\+D\+Base.\+h.
 
 
 

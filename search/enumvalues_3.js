@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['maxbacktracks',['MaxBacktracks',['../classmappel_1_1IterativeMaximizer.html#a5dc8660cf33abf3f3a576f051466521ca9e5d3183756d69b44432394db6b6fd86',1,'mappel::IterativeMaximizer']]],
-  ['maxiter',['MaxIter',['../classmappel_1_1IterativeMaximizer.html#a5dc8660cf33abf3f3a576f051466521cabbf52264f7a6e91c48a242f95aeed3db',1,'mappel::IterativeMaximizer']]]
+  ['error',['Error',['../classmappel_1_1IterativeMaximizer.html#a5dc8660cf33abf3f3a576f051466521ca902b0d55fddef6f8d651fe1035b7d4bd',1,'mappel::IterativeMaximizer']]]
 ];

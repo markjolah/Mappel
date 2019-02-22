@@ -1,6 +1,0 @@
-<map id="mappel::SimulatedAnnealingMaximizer::anneal" name="mappel::SimulatedAnnealingMaximizer::anneal">
-<area shape="rect" id="node2" href="$classmappel_1_1IterativeMaximizer.html#a452cb0415d5b30de4176fcb63bf4c58b" title="Perform a local maximization to finish off a simulated annealing run. " alt="" coords="235,36,403,75"/>
-<area shape="rect" id="node5" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="233,99,404,137"/>
-<area shape="rect" id="node3" href="$classmappel_1_1IterativeMaximizer.html#a4d05ed89de53e6e73f2f13bef30862ec" title="mappel::IterativeMaximizer\l::maximize" alt="" coords="452,5,620,44"/>
-<area shape="rect" id="node4" href="$classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a29ccc1aa8e5ecf505f4ca76f6b8b214e" title="Get the current stencil. " alt="" coords="452,68,620,107"/>
-</map>

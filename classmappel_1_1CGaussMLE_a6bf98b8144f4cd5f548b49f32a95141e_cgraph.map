@@ -1,6 +1,0 @@
-<map id="mappel::CGaussMLE::compute_estimate_debug" name="mappel::CGaussMLE::compute_estimate_debug">
-<area shape="rect" id="node2" href="$namespacemappel.html#a221fb6e708648c7d730b4880d4961cf9" title="mappel::cgauss_compute\l_estimate_debug" alt="" coords="221,5,384,44"/>
-<area shape="rect" id="node3" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#a8223d746bf91530f8cff4ec168e50b1d" title="Parallel relative log_likelihood calculations for a stack of images. " alt="" coords="217,68,388,107"/>
-<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#afc8658d8593725d7de99dc533fa74274" title="mappel::methods::objective\l::openmp::rllh_stack" alt="" coords="436,36,607,75"/>
-<area shape="rect" id="node5" href="$namespacemappel_1_1methods_1_1objective.html#a293c23ed6a623e59477bb67b6e40f5ad" title="mappel::methods::objective\l::rllh" alt="" coords="436,99,607,137"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="mappel::fill_DXS2_stencil" name="mappel::fill_DXS2_stencil">
-<area shape="rect" id="node2" href="$namespacemappel.html#aef14b765af6f9b85d93f42ab8b84311b" title="mappel::make_DXS2_stencil" alt="" coords="216,44,396,69"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel_1_1Stencil.html#a9e8b6059b84e28bea0ba3496bc95e7ce" title="mappel::Gauss1DsModel\l::Stencil::compute_derivatives" alt="" coords="444,5,628,44"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#ab11c806f8335bbafeb3db7476526680d" title="mappel::Gauss2DsModel\l::Stencil::compute_derivatives" alt="" coords="444,68,628,107"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss1DsModel_1_1Stencil.html#ae4f12261a80d8ed1a2d3652c0e7b629b" title="mappel::Gauss1DsModel\l::Stencil::Stencil" alt="" coords="676,5,836,44"/>
-<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel_1_1Stencil.html#a924f5f8d4524831f1ef50041b85a842f" title="mappel::Gauss2DsModel\l::Stencil::Stencil" alt="" coords="676,68,836,107"/>
-</map>

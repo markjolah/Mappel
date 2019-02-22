@@ -9,13 +9,10 @@ A virtual base class for 2D image localization objectives.
 
 {\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/\+Image\+Format1\+D\+Base.\+h$>$}
 
-
-
-Inheritance diagram for mappel\+:\+:Image\+Format1\+D\+Base\+:\nopagebreak
-\begin{figure}[H]
+Inheritance diagram for mappel\+:\+:Image\+Format1\+D\+Base\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase__inherit__graph}
+\includegraphics[height=3.081761cm]{classmappel_1_1ImageFormat1DBase}
 \end{center}
 \end{figure}
 \subsubsection*{Public Types}
@@ -63,6 +60,8 @@ using \hyperlink{classmappel_1_1ImageFormat1DBase_a81e3246d1c5c37ebf9077b7b5bd25
 \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} \hyperlink{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{get\+\_\+num\+\_\+pixels} () const 
 \item 
 void \hyperlink{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7}{set\+\_\+size} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a6456bab2b26702022ee32ae19e90dcac}{Image\+SizeT} \&size\+\_\+)
+\item 
+void \hyperlink{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}{set\+\_\+size} (const arma\+::\+Col$<$ \hyperlink{classmappel_1_1ImageFormat1DBase_a82ab3168eb1a87eaeb3e7c919188e9fc}{Image\+CoordT} $>$ \&sz)
 \item 
 void \hyperlink{classmappel_1_1ImageFormat1DBase_af308ca86f413f65e72ea7b8c890bd87a}{check\+\_\+image\+\_\+shape} (const \hyperlink{classmappel_1_1ImageFormat1DBase_a521a1ff391a52a636fac4aac7c7ba02c}{ImageT} \&im) const 
 \begin{DoxyCompactList}\small\item\em Check the shape of a single images is correct for model size. \end{DoxyCompactList}\item 
@@ -203,17 +202,6 @@ References check\+\_\+size().
 
 
 
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a3421dcd0e869657e8ff430bf37fdc1b8_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
 \subsubsection{Member Function Documentation}
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}}
 \index{check\+\_\+image\+\_\+shape@{check\+\_\+image\+\_\+shape}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -276,17 +264,6 @@ References global\+\_\+max\+\_\+size, and global\+\_\+min\+\_\+size.
 
 Referenced by Image\+Format1\+D\+Base(), and set\+\_\+size().
 
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a2eb986335c4d1405de65217456735ba4_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}}
 \index{get\+\_\+image\+\_\+from\+\_\+stack@{get\+\_\+image\+\_\+from\+\_\+stack}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
 \paragraph[{\texorpdfstring{get\+\_\+image\+\_\+from\+\_\+stack(const Image\+Stack\+T \&stack, Image\+Coord\+T n) const }{get_image_from_stack(const ImageStackT &stack, ImageCoordT n) const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::get\+\_\+image\+\_\+from\+\_\+stack (
@@ -297,7 +274,7 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}{}\label{classmappel_1_1ImageFormat1DBase_a92d3d803a82402adcca516b53e8d5100}
 
 
-Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}}
 \index{get\+\_\+num\+\_\+pixels@{get\+\_\+num\+\_\+pixels}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -308,7 +285,7 @@ Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}{}\label{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96}
 
 
-Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 82 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -317,17 +294,6 @@ References size.
 
 
 Referenced by get\+\_\+stats().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_a96644883bef9d230eea893ece4578e96_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!get\+\_\+size@{get\+\_\+size}}
 \index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -338,7 +304,7 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}{}\label{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c}
 
 
-Definition at line 70 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 71 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -347,17 +313,6 @@ References size.
 
 
 Referenced by get\+\_\+stats().
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_aea1194302eccc0d8ad62394176aa6b0c_icgraph}
-\end{center}
-\end{figure}
-
 
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!get\+\_\+size@{get\+\_\+size}}
 \index{get\+\_\+size@{get\+\_\+size}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -383,7 +338,7 @@ References size.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}{}\label{classmappel_1_1ImageFormat1DBase_afa0e79b58955f5ecfd39c8f8d06f22ad}
 
 
-Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 101 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!get\+\_\+stats@{get\+\_\+stats}}
 \index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -404,28 +359,6 @@ References get\+\_\+num\+\_\+pixels(), get\+\_\+size(), and num\+\_\+dim.
 
 Referenced by mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+stats(), and mappel\+::\+Gauss1\+Ds\+Model\+::get\+\_\+stats().
 
-
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ac6b74b16ce0a764516cc2686ee8cd60f_icgraph}
-\end{center}
-\end{figure}
-
-
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!make\+\_\+image@{make\+\_\+image}}
 \index{make\+\_\+image@{make\+\_\+image}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
 \paragraph[{\texorpdfstring{make\+\_\+image() const }{make_image() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+Format1\+D\+Base\+::\+ImageT} Image\+Format1\+D\+Base\+::make\+\_\+image (
@@ -435,7 +368,7 @@ Here is the caller graph for this function\+:\nopagebreak
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}{}\label{classmappel_1_1ImageFormat1DBase_afa59b2dd9ba997262fa17ef7d1122996}
 
 
-Definition at line 80 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -450,7 +383,7 @@ References size.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}{}\label{classmappel_1_1ImageFormat1DBase_ab2c4470c335a6abb2d3b9c442339ca0c}
 
 
-Definition at line 87 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 94 of file Image\+Format1\+D\+Base.\+h.
 
 
 
@@ -467,7 +400,7 @@ References size.
 ) const}\hypertarget{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}{}\label{classmappel_1_1ImageFormat1DBase_a90fcfb6e39374e4372ec1cedf3c2cb91}
 
 
-Definition at line 108 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 115 of file Image\+Format1\+D\+Base.\+h.
 
 \index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!set\+\_\+size@{set\+\_\+size}}
 \index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
@@ -486,29 +419,22 @@ References check\+\_\+size(), and size.
 
 
 
-Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+Referenced by set\+\_\+size(), mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+size(), and mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+size().
+
+\index{mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}!set\+\_\+size@{set\+\_\+size}}
+\index{set\+\_\+size@{set\+\_\+size}!mappel\+::\+Image\+Format1\+D\+Base@{mappel\+::\+Image\+Format1\+D\+Base}}
+\paragraph[{\texorpdfstring{set\+\_\+size(const arma\+::\+Col$<$ Image\+Coord\+T $>$ \&sz)}{set_size(const arma::Col< ImageCoordT > &sz)}}]{\setlength{\rightskip}{0pt plus 5cm}void Image\+Format1\+D\+Base\+::set\+\_\+size (
+\begin{DoxyParamCaption}
+\item[{const arma\+::\+Col$<$ {\bf Image\+CoordT} $>$ \&}]{sz}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}{}\label{classmappel_1_1ImageFormat1DBase_ae35eebe826c2ffdb6e0b599806c88667}
+
+
+Definition at line 75 of file Image\+Format1\+D\+Base.\+h.
 
 
 
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_cgraph}
-\end{center}
-\end{figure}
-
-
-
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{classmappel_1_1ImageFormat1DBase_ad169407f15bd43b0cec18fa2c88725b7_icgraph}
-\end{center}
-\end{figure}
-
+References set\+\_\+size().
 
 
 
@@ -551,7 +477,7 @@ Referenced by get\+\_\+stats().
 \paragraph[{\texorpdfstring{size}{size}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Image\+SizeT} mappel\+::\+Image\+Format1\+D\+Base\+::size\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}{}\label{classmappel_1_1ImageFormat1DBase_a8941b4d028e4dd881146a7c1b9039bb1}
 Number of pixels in X dimension for 1D image 
 
-Definition at line 64 of file Image\+Format1\+D\+Base.\+h.
+Definition at line 65 of file Image\+Format1\+D\+Base.\+h.
 
 
 

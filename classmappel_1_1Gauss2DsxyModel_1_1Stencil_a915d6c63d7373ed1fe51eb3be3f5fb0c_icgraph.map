@@ -1,6 +1,0 @@
-<map id="mappel::Gauss2DsxyModel::Stencil::I" name="mappel::Gauss2DsxyModel::Stencil::I">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsxyModel.html#a1179b3bbddd0d4576f33d9c7b85a568f" title="mappel::Gauss2DsxyModel\l::pixel_grad" alt="" coords="225,5,397,44"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsxyModel.html#a3a737037fec228c1db32b3fe1e401a88" title="mappel::Gauss2DsxyModel\l::pixel_grad2" alt="" coords="225,68,397,107"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsxyModel.html#afd8fc48f6b25ea719d2a654deb514851" title="mappel::Gauss2DsxyModel\l::pixel_hess" alt="" coords="225,131,397,169"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsxyModel.html#ab6f301629764ec9a20d09b1113f9cd81" title="mappel::Gauss2DsxyModel\l::pixel_model_value" alt="" coords="225,193,397,232"/>
-</map>

@@ -1,5 +1,0 @@
-<map id="mappel::Gauss2DsxyModel::pixel_hess" name="mappel::Gauss2DsxyModel::pixel_hess">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a915d6c63d7373ed1fe51eb3be3f5fb0c" title="mappel::Gauss2DsxyModel\l::Stencil::I" alt="" coords="225,5,397,44"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a9bcd6fccedc0d6f7fe0ce943c157a4db" title="mappel::Gauss2DsxyModel\l::Stencil::sigmaX" alt="" coords="225,68,397,107"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a3f615b479cb08bcc5532bdee1473ec37" title="mappel::Gauss2DsxyModel\l::Stencil::sigmaY" alt="" coords="225,131,397,169"/>
-</map>

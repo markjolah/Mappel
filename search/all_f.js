@@ -15,6 +15,8 @@ var searchData=
   ['rename_5fhyperparam',['rename_hyperparam',['../classmappel_1_1PointEmitterModel.html#a447c83f0769e6dea2bfad68d957287d0',1,'mappel::PointEmitterModel']]],
   ['restore_5fstencil',['restore_stencil',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a5f65e52de343dbd012c3b3a7b463b792',1,'mappel::IterativeMaximizer::MaximizerData']]],
   ['restrict_5fvalue_5frange',['restrict_value_range',['../namespacemappel.html#a8f4c92d0dd53d394b53df80013d8d730',1,'mappel']]],
+  ['rethrow',['rethrow',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#a8e3f8cc8faaec344e72d24b06c276193',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]],
+  ['rethrowfirst',['RethrowFirst',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#ab73d40c948b8be83af2f416075e47a45a10308abc2313a8ec42d67a45a0122860',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]],
   ['returnifsubclasst',['ReturnIfSubclassT',['../namespacemappel.html#a3b77d227658ba3ba9e16fea6fa6e626d',1,'mappel']]],
   ['rho_5fcauchy_5fmin',['rho_cauchy_min',['../classmappel_1_1TrustRegionMaximizer.html#aff3b0746e84ccdcbeadeb92bf36fe63d',1,'mappel::TrustRegionMaximizer']]],
   ['rho_5fobj_5fmin',['rho_obj_min',['../classmappel_1_1TrustRegionMaximizer.html#a2b483473663b4fd9f6c75dfbc19c4c3e',1,'mappel::TrustRegionMaximizer']]],
@@ -30,5 +32,6 @@ var searchData=
   ['rng_2ecpp',['rng.cpp',['../rng_8cpp.html',1,'']]],
   ['rng_2eh',['rng.h',['../rng_8h.html',1,'']]],
   ['rng_5fmanager',['rng_manager',['../namespacemappel.html#abe2a4321a80f2384995f3c288131d4c0',1,'mappel']]],
-  ['rngseedt',['RngSeedT',['../namespacemappel.html#a318bca259a7add5979160939a3f4e60b',1,'mappel']]]
+  ['rngseedt',['RngSeedT',['../namespacemappel.html#a318bca259a7add5979160939a3f4e60b',1,'mappel']]],
+  ['run',['run',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#a60d3dfaeea152046b3d7c93a302d33e6',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]]
 ];

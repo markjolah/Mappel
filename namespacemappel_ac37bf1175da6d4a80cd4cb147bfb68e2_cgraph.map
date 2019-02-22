@@ -1,6 +1,0 @@
-<map id="mappel::log_likelihood_stack" name="mappel::log_likelihood_stack">
-<area shape="rect" id="node2" href="$namespacemappel_1_1methods_1_1objective_1_1openmp.html#ac3b3259220fa0dad56adb3db28711c55" title="Parallel log_likelihood calculations for a single image. " alt="" coords="200,5,371,44"/>
-<area shape="rect" id="node3" href="$PoissonGaussianNoise2DObjective_8h.html#a8eb230d5181ae8cf5b5b9ed794d3b64c" title="log_likelihood" alt="" coords="236,68,335,93"/>
-<area shape="rect" id="node4" href="$namespacemappel_1_1methods_1_1objective.html#a94105ec313ae34d4b30ef78369056eaa" title="mappel::methods::objective::llh" alt="" coords="419,40,609,65"/>
-<area shape="rect" id="node5" href="$namespacemappel.html#ad6479b1e317a5f3bd2b92bfb562938d5" title="mappel::poisson_log\l_likelihood" alt="" coords="446,89,582,128"/>
-</map>

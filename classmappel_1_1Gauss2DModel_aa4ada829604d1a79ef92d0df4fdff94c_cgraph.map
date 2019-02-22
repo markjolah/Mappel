@@ -1,5 +1,0 @@
-<map id="mappel::Gauss2DModel::pixel_hess_update" name="mappel::Gauss2DModel::pixel_hess_update">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss2DModel_1_1Stencil.html#aac7254dbe4ed3e2dd928ab29779f570d" title="mappel::Gauss2DModel\l::Stencil::I" alt="" coords="425,28,580,67"/>
-<area shape="rect" id="node3" href="$classmappel_1_1PointEmitterModel.html#a1cd8ff64ce4132b6eaa8655696885749" title="mappel::PointEmitterModel\l::make_param" alt="" coords="208,25,377,64"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DModel.html#ae1c726836b5e437721a73183fbf349d7" title="mappel::Gauss2DModel\l::pixel_grad" alt="" coords="215,88,370,127"/>
-</map>

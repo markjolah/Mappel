@@ -39,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -64,7 +65,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -109,13 +110,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="dynheader">
 Inheritance diagram for mappel::Gauss2DMLE:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DMLE__inherit__graph.svg" width="614" height="330"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for mappel::Gauss2DMLE:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DMLE__coll__graph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
+ <div class="center">
+  <img src="classmappel_1_1Gauss2DMLE.png" usemap="#mappel::Gauss2DMLE_map" alt=""/>
+  <map id="mappel::Gauss2DMLE_map" name="mappel::Gauss2DMLE_map">
+<area href="classmappel_1_1Gauss2DModel.html" title="A base class for 2D Gaussian PSF with fixed but possibly asymmetric sigma. " alt="mappel::Gauss2DModel" shape="rect" coords="214,168,418,192"/>
+<area href="classmappel_1_1PoissonNoise2DObjective.html" title="A base class for 2D objectives with Poisson read noise. This objective function and its subclasses ar..." alt="mappel::PoissonNoise2DObjective" shape="rect" coords="642,168,846,192"/>
+<area href="classmappel_1_1MLEstimator.html" title="A Mixin class to configure a for MLE estimation (null prior). " alt="mappel::MLEstimator" shape="rect" coords="856,168,1060,192"/>
+<area href="classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="mappel::PointEmitterModel" shape="rect" coords="0,112,204,136"/>
+<area href="classmappel_1_1ImageFormat2DBase.html" title="A virtual base class for 2D image localization objectives. " alt="mappel::ImageFormat2DBase" shape="rect" coords="214,112,418,136"/>
+<area href="classmappel_1_1MCMCAdaptor2D.html" alt="mappel::MCMCAdaptor2D" shape="rect" coords="428,112,632,136"/>
+<area href="classmappel_1_1ImageFormat2DBase.html" title="A virtual base class for 2D image localization objectives. " alt="mappel::ImageFormat2DBase" shape="rect" coords="642,112,846,136"/>
+<area href="classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="mappel::PointEmitterModel" shape="rect" coords="856,112,1060,136"/>
+<area href="classmappel_1_1MCMCAdaptor1D.html" alt="mappel::MCMCAdaptor1D" shape="rect" coords="428,56,632,80"/>
+<area href="classmappel_1_1PointEmitterModel.html" title="A virtual Base type for point emitter localization models. " alt="mappel::PointEmitterModel" shape="rect" coords="321,0,525,24"/>
+<area href="classmappel_1_1MCMCAdaptorBase.html" alt="mappel::MCMCAdaptorBase" shape="rect" coords="535,0,739,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -1082,13 +1092,6 @@ template&lt;class PixelT &gt; </div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00166">mappel::PointEmitterModel::check_param_shape()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::lbound</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00146">mappel::PointEmitterModel::num_params</a>, and <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::ubound</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85_cgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ac342b21db8970dfa0b2809ffe5e73d06"></a>
@@ -1129,20 +1132,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="PointEmitterModel_8cpp_source.html#l00306">mappel::PointEmitterModel::bounded_theta_stack()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_cgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06_icgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a6671c06d391ae9a09dd5de78dcc636fe"></a>
@@ -1180,13 +1169,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="PointEmitterModel_8cpp_source.html#l00306">306</a> of file <a class="el" href="PointEmitterModel_8cpp_source.html">PointEmitterModel.cpp</a>.</p>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00264">mappel::PointEmitterModel::bounded_theta()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00166">mappel::PointEmitterModel::check_param_shape()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe_cgraph.svg" width="615" height="79"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -1278,13 +1260,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="PointEmitterModel_8cpp_source.html#l00247">mappel::PointEmitterModel::bound_theta()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00264">mappel::PointEmitterModel::bounded_theta()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00306">mappel::PointEmitterModel::bounded_theta_stack()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00275">mappel::PointEmitterModel::reflected_theta()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00316">mappel::PointEmitterModel::reflected_theta_stack()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00256">mappel::PointEmitterModel::theta_in_bounds()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00296">mappel::PointEmitterModel::theta_stack_in_bounds()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a54b341a9bc0e32e2c8bbfe4ec0d8c9a1"></a>
@@ -1342,13 +1317,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00054">mappel::PointEmitterModel::global_max_psf_sigma</a>, and <a class="el" href="PointEmitterModel_8h_source.html#l00053">mappel::PointEmitterModel::global_min_psf_sigma</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss1DModel_8cpp_source.html#l00012">mappel::Gauss1DModel::Gauss1DModel()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00012">mappel::Gauss2DModel::Gauss2DModel()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00012">mappel::Gauss2DsModel::Gauss2DsModel()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00135">mappel::Gauss1DsModel::set_max_sigma()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00155">mappel::Gauss2DsModel::set_max_sigma()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00122">mappel::Gauss1DsModel::set_min_sigma()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00137">mappel::Gauss2DsModel::set_min_sigma()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00125">mappel::Gauss1DModel::set_psf_sigma()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00123">mappel::Gauss2DModel::set_psf_sigma()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -1410,13 +1378,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00013">mappel::ImageFormat2DBase::ImageFormat2DBase()</a>, and <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00051">mappel::ImageFormat2DBase::set_size()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a9c90f6a165348629be4bcf956e3010f3_icgraph.svg" width="638" height="143"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a74584ea8a12deee6fe3ec3343228f920"></a>
@@ -1470,14 +1431,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DModel_8h_source.html#l00090">90</a> of file <a class="el" href="Gauss2DModel_8h_source.html">Gauss2DModel.h</a>.</p>
 
 <p>References <a class="el" href="Gauss2DModel_8cpp_source.html#l00012">mappel::Gauss2DModel::Gauss2DModel()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00062">mappel::Gauss2DModel::make_internal_1Dsum_estimator()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00038">mappel::Gauss2DModel::operator=()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00145">mappel::PointEmitterModel::prior</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a07e9c13f8a164f26f337fcc0c2f70374_cgraph.svg" width="100%" height="499"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
 
 </div>
 </div>
@@ -1563,13 +1516,6 @@ Here is the call graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00145">mappel::PointEmitterModel::prior</a>.</p>
 
 <p>Referenced by <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00081">mappel::MCMCAdaptor1D::set_background_mcmc_sampling()</a>, and <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00065">mappel::MCMCAdaptor1D::set_intensity_mcmc_sampling()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705_icgraph.svg" width="610" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -1662,13 +1608,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::lbound</a>.</p>
 
 <p>Referenced by <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00014">mappel::MCMCAdaptor1D::MCMCAdaptor1D()</a>, <a class="el" href="MCMCAdaptor2D_8cpp_source.html#l00014">mappel::MCMCAdaptor2D::MCMCAdaptor2D()</a>, and <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00081">mappel::MCMCAdaptor1D::set_background_mcmc_sampling()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848_icgraph.svg" width="610" height="146"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -1807,13 +1746,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00103">mappel::ImageFormat2DBase::get_stats()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1ImageFormat2DBase_a4f9e0d332462ff53678c03700666a564_icgraph.svg" width="638" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="aa910d1137d808041c0601f2dd3db96f0"></a>
@@ -1870,14 +1802,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00100">mappel::Gauss2DsModel::update_internal_1Dsum_estimators()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9_icgraph.svg" width="596" height="390"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a239826b8e6b914c0cdaa293f1f5ddfd4"></a>
@@ -1933,13 +1857,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00268">mappel::Gauss2DModel::get_stats()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a8c486209390a402c96e6816b794cd0e6_icgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -2131,13 +2048,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00142">mappel::Gauss2DModel::get_psf_sigma()</a>, <a class="el" href="MCMCAdaptor2D_8cpp_source.html#l00051">mappel::MCMCAdaptor2D::get_stats()</a>, <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00103">mappel::ImageFormat2DBase::get_stats()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00124">mappel::PointEmitterModel::get_stats()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a8aecb8960e94b03499110e08f5d18c7f_cgraph.svg" width="100%" height="478"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a0dfb473c48d177a4540d328abb03cd55"></a>
@@ -2166,13 +2076,6 @@ Here is the call graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::ubound</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DsxyModel_8h_source.html#l00135">mappel::Gauss2DsxyModel::get_max_sigma_ratio()</a>, <a class="el" href="Gauss2DsModel_8h_source.html#l00140">mappel::Gauss2DsModel::get_max_sigma_ratio()</a>, <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00014">mappel::MCMCAdaptor1D::MCMCAdaptor1D()</a>, <a class="el" href="MCMCAdaptor2D_8cpp_source.html#l00014">mappel::MCMCAdaptor2D::MCMCAdaptor2D()</a>, <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00081">mappel::MCMCAdaptor1D::set_background_mcmc_sampling()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00176">mappel::Gauss2DsModel::set_max_sigma_ratio()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -2234,20 +2137,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8h_source.html#l00201">mappel::Gauss2DModel::initial_theta_estimate()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a41572cfae5f8f77ee731a291848fc1c4_cgraph.svg" width="383" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a41572cfae5f8f77ee731a291848fc1c4_icgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ae058886a3f8328a340ea8fe2332113dd"></a>
@@ -2285,13 +2174,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DModel_8h_source.html#l00201">201</a> of file <a class="el" href="Gauss2DModel_8h_source.html">Gauss2DModel.h</a>.</p>
 
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00049">mappel::PointEmitterModel::DefaultSeperableInitEstimator</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00194">mappel::Gauss2DModel::initial_theta_estimate()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_ae058886a3f8328a340ea8fe2332113dd_cgraph.svg" width="586" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -2335,15 +2217,7 @@ Here is the call graph for this function:</div>
 
 <p>Definition at line <a class="el" href="Gauss2DModel_8cpp_source.html#l00303">303</a> of file <a class="el" href="Gauss2DModel_8cpp_source.html">Gauss2DModel.cpp</a>.</p>
 
-<p>References <a class="el" href="Gauss2DModel_8h_source.html#l00044">mappel::Gauss2DModel::Stencil::bg()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00273">mappel::methods::estimate_max()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::lbound</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00131">mappel::Gauss2DModel::make_stencil()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00146">mappel::PointEmitterModel::num_params</a>, <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00256">mappel::PointEmitterModel::theta_in_bounds()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::ubound</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00105">mappel::Gauss2DModel::x_model</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a4bb4e53073e2c45b9a63b942214b787c_cgraph.svg" width="100%" height="511"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
+<p>References <a class="el" href="Gauss2DModel_8h_source.html#l00044">mappel::Gauss2DModel::Stencil::bg()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00323">mappel::methods::estimate_max()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::lbound</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00131">mappel::Gauss2DModel::make_stencil()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00146">mappel::PointEmitterModel::num_params</a>, <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00256">mappel::PointEmitterModel::theta_in_bounds()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::ubound</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00105">mappel::Gauss2DModel::x_model</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
 
 </div>
 </div>
@@ -2383,14 +2257,6 @@ Here is the call graph for this function:</div>
 
 <p>References <a class="el" href="util_8cpp_source.html#l00021">mappel::istarts_with()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00171">mappel::Gauss2DModel::make_default_prior_beta_position()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00182">mappel::Gauss2DModel::make_default_prior_normal_position()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a47f4b70d887066e1d73c0544e0a9690c_cgraph.svg" width="586" height="226"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a47208116565b1960bc0bd84ee91dee1d"></a>
@@ -2421,20 +2287,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00150">mappel::Gauss2DModel::make_default_prior()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a47208116565b1960bc0bd84ee91dee1d_cgraph.svg" width="383" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a47208116565b1960bc0bd84ee91dee1d_icgraph.svg" width="368" height="63"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a22735422ebc24803eb51f2be72a67009"></a>
@@ -2464,20 +2316,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00061">mappel::PointEmitterModel::default_pixel_mean_bg</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00097">mappel::PointEmitterModel::make_prior_component_intensity()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00084">mappel::PointEmitterModel::make_prior_component_position_normal()</a>, and <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00150">mappel::Gauss2DModel::make_default_prior()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a22735422ebc24803eb51f2be72a67009_cgraph.svg" width="383" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a22735422ebc24803eb51f2be72a67009_icgraph.svg" width="368" height="63"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -2586,21 +2424,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8h_source.html#l00090">mappel::Gauss2DModel::debug_internal_sum_model_y()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00012">mappel::Gauss2DModel::Gauss2DModel()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a0981f99341c0f6f63554680ce165df66_cgraph.svg" width="616" height="215"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a0981f99341c0f6f63554680ce165df66_icgraph.svg" width="576" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a1cd8ff64ce4132b6eaa8655696885749"></a>
@@ -2628,14 +2451,7 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00146">mappel::PointEmitterModel::num_params</a>.</p>
 
-<p>Referenced by <a class="el" href="Gauss1DModel_8h_source.html#l00164">mappel::Gauss1DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DsModel_8h_source.html#l00173">mappel::Gauss1DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00194">mappel::Gauss2DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsxyModel_8h_source.html#l00222">mappel::Gauss2DsxyModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsModel_8h_source.html#l00224">mappel::Gauss2DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00191">mappel::Gauss1DModel::pixel_hess_update()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00211">mappel::Gauss1DsModel::pixel_hess_update()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00282">mappel::Gauss2DModel::pixel_hess_update()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00358">mappel::Gauss2DsModel::pixel_hess_update()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749_icgraph.svg" width="620" height="551"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
+<p>Referenced by <a class="el" href="Gauss1DModel_8h_source.html#l00169">mappel::Gauss1DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DsModel_8h_source.html#l00173">mappel::Gauss1DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00194">mappel::Gauss2DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsxyModel_8h_source.html#l00222">mappel::Gauss2DsxyModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsModel_8h_source.html#l00224">mappel::Gauss2DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00191">mappel::Gauss1DModel::pixel_hess_update()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00211">mappel::Gauss1DsModel::pixel_hess_update()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00282">mappel::Gauss2DModel::pixel_hess_update()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00358">mappel::Gauss2DsModel::pixel_hess_update()</a>.</p>
 
 </div>
 </div>
@@ -2928,13 +2744,6 @@ template&lt;class FillT &gt; </div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00097">mappel::PointEmitterModel::make_prior_component_intensity()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00091">mappel::PointEmitterModel::make_prior_component_position_beta()</a>, and <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a78470247a902315915ad8af1770ea466_cgraph.svg" width="399" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a4517e887a22007bd2e03650dcb853c92"></a>
@@ -2975,14 +2784,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00072">mappel::Gauss1DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00171">mappel::Gauss2DModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00080">mappel::Gauss1DModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00230">mappel::Gauss2DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00182">mappel::Gauss2DModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00083">mappel::Gauss1DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00090">mappel::Gauss1DModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00243">mappel::Gauss2DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00193">mappel::Gauss2DModel::make_prior_beta_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00094">mappel::Gauss1DsModel::make_prior_beta_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00101">mappel::Gauss1DModel::make_prior_beta_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00255">mappel::Gauss2DsModel::make_prior_beta_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00206">mappel::Gauss2DModel::make_prior_normal_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00108">mappel::Gauss1DsModel::make_prior_normal_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00114">mappel::Gauss1DModel::make_prior_normal_position()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00271">mappel::Gauss2DsModel::make_prior_normal_position()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ad4d563dd11df8c3daf83890374807185"></a>
@@ -3021,14 +2822,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00072">mappel::Gauss1DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00171">mappel::Gauss2DModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00080">mappel::Gauss1DModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00230">mappel::Gauss2DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00094">mappel::Gauss1DsModel::make_prior_beta_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00193">mappel::Gauss2DModel::make_prior_beta_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00101">mappel::Gauss1DModel::make_prior_beta_position()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00255">mappel::Gauss2DsModel::make_prior_beta_position()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ab99350cf74097c558f7a93b79e7a44c3"></a>
@@ -3066,14 +2859,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="PointEmitterModel_8cpp_source.html#l00084">84</a> of file <a class="el" href="PointEmitterModel_8cpp_source.html">PointEmitterModel.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00083">mappel::Gauss1DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00182">mappel::Gauss2DModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00090">mappel::Gauss1DModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00243">mappel::Gauss2DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00206">mappel::Gauss2DModel::make_prior_normal_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00108">mappel::Gauss1DsModel::make_prior_normal_position()</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00114">mappel::Gauss1DModel::make_prior_normal_position()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00271">mappel::Gauss2DsModel::make_prior_normal_position()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
 
 </div>
 </div>
@@ -3118,13 +2903,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="PointEmitterModel_8cpp_source.html#l00103">103</a> of file <a class="el" href="PointEmitterModel_8cpp_source.html">PointEmitterModel.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00072">mappel::Gauss1DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00230">mappel::Gauss2DsModel::make_default_prior_beta_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00083">mappel::Gauss1DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00243">mappel::Gauss2DsModel::make_default_prior_normal_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00094">mappel::Gauss1DsModel::make_prior_beta_position()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00255">mappel::Gauss2DsModel::make_prior_beta_position()</a>, <a class="el" href="Gauss1DsModel_8cpp_source.html#l00108">mappel::Gauss1DsModel::make_prior_normal_position()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00271">mappel::Gauss2DsModel::make_prior_normal_position()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -3194,13 +2972,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00097">mappel::PointEmitterModel::make_prior_component_intensity()</a>, <a class="el" href="PointEmitterModel_8cpp_source.html#l00084">mappel::PointEmitterModel::make_prior_component_position_normal()</a>, and <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_af60537cc3f45472202602e95d1e75f65_cgraph.svg" width="414" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a584652e2d4ac0b27e870a21150c035a2"></a>
@@ -3255,20 +3026,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00303">mappel::Gauss2DModel::initial_theta_estimate()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a584652e2d4ac0b27e870a21150c035a2_cgraph.svg" width="100%" height="416"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a584652e2d4ac0b27e870a21150c035a2_icgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a31e347e3ff70644f76a5ffd69656a43f"></a>
@@ -3289,13 +3046,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="MLEstimator_8h_source.html#l00027">mappel::MLEstimator::operator=()</a>, <a class="el" href="PoissonNoise2DObjective_8cpp_source.html#l00027">mappel::PoissonNoise2DObjective::operator=()</a>, <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00027">mappel::ImageFormat2DBase::operator=()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00038">mappel::Gauss2DModel::operator=()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00060">mappel::PointEmitterModel::operator=()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DMLE_a31e347e3ff70644f76a5ffd69656a43f_cgraph.svg" width="100%" height="525"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a16b8972877dbf56364a48f8816945537"></a>
@@ -3315,13 +3065,6 @@ Here is the call graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DMLE_8cpp_source.html#l00066">66</a> of file <a class="el" href="Gauss2DMLE_8cpp_source.html">Gauss2DMLE.cpp</a>.</p>
 
 <p>References <a class="el" href="MLEstimator_8h_source.html#l00027">mappel::MLEstimator::operator=()</a>, <a class="el" href="PoissonNoise2DObjective_8cpp_source.html#l00027">mappel::PoissonNoise2DObjective::operator=()</a>, <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00027">mappel::ImageFormat2DBase::operator=()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00038">mappel::Gauss2DModel::operator=()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00060">mappel::PointEmitterModel::operator=()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DMLE_a16b8972877dbf56364a48f8816945537_cgraph.svg" width="100%" height="525"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -3375,20 +3118,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00282">mappel::Gauss2DModel::pixel_hess_update()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_ae1c726836b5e437721a73183fbf349d7_cgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_ae1c726836b5e437721a73183fbf349d7_icgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a608d40cbec10a7dcfd82913c619748ae"></a>
@@ -3439,13 +3168,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DXS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DYS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::X</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::Y</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a608d40cbec10a7dcfd82913c619748ae_cgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a8d9e4d4cb049e5ebf2649fd073060191"></a>
@@ -3495,13 +3217,6 @@ Here is the call graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DModel_8h_source.html#l00181">181</a> of file <a class="el" href="Gauss2DModel_8h_source.html">Gauss2DModel.h</a>.</p>
 
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00036">mappel::Gauss2DModel::Stencil::DX</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DXS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00036">mappel::Gauss2DModel::Stencil::DY</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DYS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::X</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::Y</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a8d9e4d4cb049e5ebf2649fd073060191_cgraph.svg" width="368" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -3573,13 +3288,6 @@ Here is the call graph for this function:</div>
 
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00036">mappel::Gauss2DModel::Stencil::DX</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DXS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00036">mappel::Gauss2DModel::Stencil::DY</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00037">mappel::Gauss2DModel::Stencil::DYS</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00164">mappel::PointEmitterModel::make_param()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00159">mappel::Gauss2DModel::pixel_grad()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::X</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::Y</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_aa4ada829604d1a79ef92d0df4fdff94c_cgraph.svg" width="586" height="132"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a13cf02af379a7b2f7060008a9a7dfc82"></a>
@@ -3624,13 +3332,6 @@ Here is the call graph for this function:</div>
 
 <p>References <a class="el" href="Gauss2DModel_8h_source.html#l00044">mappel::Gauss2DModel::Stencil::bg()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00043">mappel::Gauss2DModel::Stencil::I()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::X</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00035">mappel::Gauss2DModel::Stencil::Y</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a13cf02af379a7b2f7060008a9a7dfc82_cgraph.svg" width="368" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a7dd386776870462e8f20c646b6fed1e3"></a>
@@ -3661,20 +3362,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="PointEmitterModel_8cpp_source.html#l00316">mappel::PointEmitterModel::reflected_theta_stack()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_cgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3_icgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ae24c17017ff5e37e1dd9ea9a1aeefa7f"></a>
@@ -3702,13 +3389,6 @@ Here is the caller graph for this function:</div>
 <p>Definition at line <a class="el" href="PointEmitterModel_8cpp_source.html#l00316">316</a> of file <a class="el" href="PointEmitterModel_8cpp_source.html">PointEmitterModel.cpp</a>.</p>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00166">mappel::PointEmitterModel::check_param_shape()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00275">mappel::PointEmitterModel::reflected_theta()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f_cgraph.svg" width="615" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -3879,20 +3559,6 @@ template&lt;class RngT &gt; </div>
 
 <p>Referenced by <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00014">mappel::MCMCAdaptor1D::MCMCAdaptor1D()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_cgraph.svg" width="395" height="175"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1MCMCAdaptor1D_ae79ee3845fbdd0e378f00eeebf8ccef1_icgraph.svg" width="392" height="63"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a31f139d9eb58f210f3359a9f5be9dd15"></a>
@@ -4027,14 +3693,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00220">mappel::PointEmitterModel::set_hyperparams()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a7041d1f38f1141773b046489ce6e6b11_cgraph.svg" width="100%" height="476"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="aaae78a9b02452eb3538af34fcdcc3ad2"></a>
@@ -4109,20 +3767,6 @@ template&lt;class ImT &gt; </div>
 
 <p>Referenced by <a class="el" href="MCMCAdaptor1D_8cpp_source.html#l00014">mappel::MCMCAdaptor1D::MCMCAdaptor1D()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_cgraph.svg" width="395" height="63"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1MCMCAdaptor1D_ac70f768928859b1e9449b0ec1a141c4c_icgraph.svg" width="392" height="63"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a737fa5857415b9830fa2e5ccdff48541"></a>
@@ -4153,13 +3797,6 @@ Here is the caller graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00122">mappel::Gauss1DsModel::set_min_sigma()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541_icgraph.svg" width="596" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ad6c75e327e8732abc2654492f372563a"></a>
@@ -4189,13 +3826,6 @@ Here is the caller graph for this function:</div>
 <p>References <a class="el" href="MCMCAdaptorBase_8h_source.html#l00029">mappel::MCMCAdaptorBase::num_phases</a>.</p>
 
 <p>Referenced by <a class="el" href="MCMCAdaptor1Ds_8cpp_source.html#l00014">mappel::MCMCAdaptor1Ds::MCMCAdaptor1Ds()</a>, and <a class="el" href="MCMCAdaptor2Ds_8cpp_source.html#l00014">mappel::MCMCAdaptor2Ds::MCMCAdaptor2Ds()</a>.</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1MCMCAdaptorBase_ad6c75e327e8732abc2654492f372563a_icgraph.svg" width="410" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -4281,14 +3911,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00157">mappel::PointEmitterModel::set_prior()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a41a5b18b3f3779562c0dbd19e1b6e29b_cgraph.svg" width="100%" height="476"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a3c9d7cb15022f51ee4138feff10f930c"></a>
@@ -4316,14 +3938,6 @@ Here is the call graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DModel_8cpp_source.html#l00103">103</a> of file <a class="el" href="Gauss2DModel_8cpp_source.html">Gauss2DModel.cpp</a>.</p>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00157">mappel::PointEmitterModel::set_prior()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00091">mappel::Gauss2DModel::update_internal_1Dsum_estimators()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a3c9d7cb15022f51ee4138feff10f930c_cgraph.svg" width="100%" height="476"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
-</p>
 
 </div>
 </div>
@@ -4378,13 +3992,6 @@ Here is the call graph for this function:</div>
 <p>Definition at line <a class="el" href="Gauss2DModel_8cpp_source.html#l00123">123</a> of file <a class="el" href="Gauss2DModel_8cpp_source.html">Gauss2DModel.cpp</a>.</p>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00184">mappel::PointEmitterModel::check_psf_sigma()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="Gauss1DModel_8cpp_source.html#l00125">mappel::Gauss1DModel::set_psf_sigma()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00105">mappel::Gauss2DModel::x_model</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_abe39c2b7eb4eaaca9e67cdf6cfe441dc_cgraph.svg" width="586" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>
@@ -4442,13 +4049,6 @@ Here is the call graph for this function:</div>
 
 <p>References <a class="el" href="ImageFormat2DBase_8cpp_source.html#l00051">mappel::ImageFormat2DBase::set_size()</a>, <a class="el" href="ImageFormat1DBase_8cpp_source.html#l00030">mappel::ImageFormat1DBase::set_size()</a>, <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00105">mappel::Gauss2DModel::x_model</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a8d92d03d6801a59de097d599c798dc79_cgraph.svg" width="632" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a7363961cc405e585b39e81a7ad85c8d6"></a>
@@ -4479,13 +4079,6 @@ Here is the call graph for this function:</div>
 
 <p>Referenced by <a class="el" href="Gauss1DsModel_8cpp_source.html#l00135">mappel::Gauss1DsModel::set_max_sigma()</a>, and <a class="el" href="Gauss2DsModel_8cpp_source.html#l00176">mappel::Gauss2DsModel::set_max_sigma_ratio()</a>.</p>
 
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6_icgraph.svg" width="100%" height="431"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="ad50dfc29b6e7167fb4caf8683353079d"></a>
@@ -4514,21 +4107,7 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00166">mappel::PointEmitterModel::check_param_shape()</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::lbound</a>, <a class="el" href="PointEmitterModel_8h_source.html#l00146">mappel::PointEmitterModel::num_params</a>, and <a class="el" href="PointEmitterModel_8h_source.html#l00148">mappel::PointEmitterModel::ubound</a>.</p>
 
-<p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00303">mappel::Gauss2DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00385">mappel::Gauss2DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DModel_8h_source.html#l00115">mappel::Gauss1DModel::make_stencil()</a>, <a class="el" href="Gauss1DsModel_8h_source.html#l00123">mappel::Gauss1DsModel::make_stencil()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00131">mappel::Gauss2DModel::make_stencil()</a>, <a class="el" href="Gauss2DsxyModel_8h_source.html#l00157">mappel::Gauss2DsxyModel::make_stencil()</a>, <a class="el" href="Gauss2DsModel_8h_source.html#l00162">mappel::Gauss2DsModel::make_stencil()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00296">mappel::PointEmitterModel::theta_stack_in_bounds()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_cgraph.svg" width="398" height="50"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d_icgraph.svg" width="608" height="454"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
+<p>Referenced by <a class="el" href="Gauss2DModel_8cpp_source.html#l00303">mappel::Gauss2DModel::initial_theta_estimate()</a>, <a class="el" href="Gauss2DsModel_8cpp_source.html#l00385">mappel::Gauss2DsModel::initial_theta_estimate()</a>, <a class="el" href="Gauss1DModel_8h_source.html#l00116">mappel::Gauss1DModel::make_stencil()</a>, <a class="el" href="Gauss1DsModel_8h_source.html#l00123">mappel::Gauss1DsModel::make_stencil()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00131">mappel::Gauss2DModel::make_stencil()</a>, <a class="el" href="Gauss2DsxyModel_8h_source.html#l00157">mappel::Gauss2DsxyModel::make_stencil()</a>, <a class="el" href="Gauss2DsModel_8h_source.html#l00162">mappel::Gauss2DsModel::make_stencil()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00296">mappel::PointEmitterModel::theta_stack_in_bounds()</a>.</p>
 
 </div>
 </div>
@@ -4558,13 +4137,6 @@ Here is the caller graph for this function:</div>
 
 <p>References <a class="el" href="PointEmitterModel_8cpp_source.html#l00166">mappel::PointEmitterModel::check_param_shape()</a>, and <a class="el" href="PointEmitterModel_8cpp_source.html#l00256">mappel::PointEmitterModel::theta_in_bounds()</a>.</p>
 
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8_cgraph.svg" width="615" height="78"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
-
 </div>
 </div>
 <a class="anchor" id="a221f765c48f478177f150c08733e9d29"></a>
@@ -4593,20 +4165,6 @@ Here is the call graph for this function:</div>
 <p>References <a class="el" href="PointEmitterModel_8h_source.html#l00200">mappel::PointEmitterModel::get_prior()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00062">mappel::Gauss2DModel::make_internal_1Dsum_estimator()</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00104">mappel::Gauss2DModel::psf_sigma</a>, <a class="el" href="ImageFormat2DBase_8h_source.html#l00067">mappel::ImageFormat2DBase::size</a>, <a class="el" href="Gauss2DModel_8h_source.html#l00105">mappel::Gauss2DModel::x_model</a>, and <a class="el" href="Gauss2DModel_8h_source.html#l00106">mappel::Gauss2DModel::y_model</a>.</p>
 
 <p>Referenced by <a class="el" href="Gauss2DModel_8h_source.html#l00090">mappel::Gauss2DModel::debug_internal_sum_model_y()</a>, <a class="el" href="Gauss2DModel_8cpp_source.html#l00109">mappel::Gauss2DModel::set_hyperparams()</a>, and <a class="el" href="Gauss2DModel_8cpp_source.html#l00097">mappel::Gauss2DModel::set_prior()</a>.</p>
-
-<p><div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a221f765c48f478177f150c08733e9d29_cgraph.svg" width="100%" height="461"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
-</div>
-</p>
-
-<p><div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmappel_1_1Gauss2DModel_a221f765c48f478177f150c08733e9d29_icgraph.svg" width="374" height="188"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</p>
 
 </div>
 </div>

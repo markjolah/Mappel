@@ -1,9 +1,0 @@
-<map id="mappel::Gauss1DsModel::make_default_prior" name="mappel::Gauss1DsModel::make_default_prior">
-<area shape="rect" id="node2" href="$namespacemappel.html#a610296a93ba507763bc770d39049f323" title="mappel::istarts_with" alt="" coords="228,29,359,55"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel.html#ad0bdb31a8bcc5a83e9f8653d0ad238ff" title="mappel::Gauss1DsModel\l::make_default_prior\l_beta_position" alt="" coords="213,155,373,207"/>
-<area shape="rect" id="node7" href="$classmappel_1_1Gauss1DsModel.html#ace3513b4d77a0e29488f8ff4a66f64cf" title="mappel::Gauss1DsModel\l::make_default_prior\l_normal_position" alt="" coords="213,79,373,131"/>
-<area shape="rect" id="node4" href="$classmappel_1_1PointEmitterModel.html#a4517e887a22007bd2e03650dcb853c92" title="mappel::PointEmitterModel\l::make_prior_component\l_intensity" alt="" coords="436,81,605,133"/>
-<area shape="rect" id="node5" href="$classmappel_1_1PointEmitterModel.html#ad4d563dd11df8c3daf83890374807185" title="mappel::PointEmitterModel\l::make_prior_component\l_position_beta" alt="" coords="436,220,605,272"/>
-<area shape="rect" id="node6" href="$classmappel_1_1PointEmitterModel.html#a6fa9641db2d58329c5225e76427e3219" title="mappel::PointEmitterModel\l::make_prior_component_sigma" alt="" coords="421,157,620,196"/>
-<area shape="rect" id="node8" href="$classmappel_1_1PointEmitterModel.html#ab99350cf74097c558f7a93b79e7a44c3" title="mappel::PointEmitterModel\l::make_prior_component\l_position_normal" alt="" coords="436,5,605,57"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="mappel::PointEmitterModel::set_ubound" name="mappel::PointEmitterModel::set_ubound">
-<area shape="rect" id="node2" href="$classmappel_1_1Gauss1DsModel.html#abcaaecd43be1f8c005b65e74482a7d86" title="mappel::Gauss1DsModel\l::set_max_sigma" alt="" coords="223,69,383,108"/>
-<area shape="rect" id="node4" href="$classmappel_1_1Gauss2DsModel.html#a85925eaef6d69c5f6b3ceeae3364dd68" title="mappel::Gauss2DsModel\l::set_max_sigma_ratio" alt="" coords="431,131,591,169"/>
-<area shape="rect" id="node3" href="$classmappel_1_1Gauss1DsModel.html#a28c6e621043d53c5273e277266453de9" title="mappel::Gauss1DsModel\l::set_max_sigma" alt="" coords="431,5,591,44"/>
-<area shape="rect" id="node6" href="$classmappel_1_1Gauss2DsModel.html#a63d3481174444ff7f7b603a47aa8dcc1" title="mappel::Gauss2DsModel\l::set_min_sigma" alt="" coords="431,68,591,107"/>
-<area shape="rect" id="node5" href="$classmappel_1_1Gauss2DsModel.html#a8ef1bc0d4dc27247d88ff2c7300a149d" title="mappel::Gauss2DsModel\l::set_max_sigma" alt="" coords="639,131,799,169"/>
-</map>
