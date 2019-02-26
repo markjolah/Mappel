@@ -14,7 +14,7 @@ ARGS="${ARGS} -DOPT_TESTING=Off"
 ARGS="${ARGS} -DBUILD_STATIC=Off"
 
 set -ex
-rm -rf $BUILD_PATH
+#rm -rf $BUILD_PATH
 
 cmake -H${SRC_PATH} -B$BUILD_PATH -DCMAKE_BUILD_TYPE=Release -Wdev $ARGS $@
 VERBOSE=1 cmake --build $BUILD_PATH --target doc -- -j$NUM_PROCS

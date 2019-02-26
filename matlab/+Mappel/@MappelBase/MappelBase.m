@@ -288,24 +288,24 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function image = simulateDipImage(obj, varargin)
             % image = obj.simulateDipImage(theta, count)
             %
-            % Requires: dip_image package.
-            % This just calls obj.simulateImage(theta), then rotates the image so that x
-            % goes from left to right, and returns a DIP image (or image sequence.)
+            % Requires: dip_image package. This just calls obj.simulateImage(theta), then rotates the
+            % image so that x goes from left to right, and returns a DIP image (or image sequence.)
             %
             % (in) theta: size:[NumParams, 1] or [NumParams, n] double theta value.
-            % (in) count: (optional) the number of independent images to generate. Only used if theta is a single parameter.
+            % (in) count: (optional) the number of independent images to generate. 
+            %             Only used if theta is a single parameter.
             % (out) image: a dim_images object holding a stack of n images all sampled with params theta
             image = dip_image(obj.simulateImage(varargin{:}));
         end
 
-        function llh = modelLLH(obj, image, theta)
-            % llh = obj.modelLLH(image, theta)
+        function rllh = modelLLH(obj, image, theta)
+            % rllh = obj.modelLLH(image, theta)
             %
-            % This takes in a N images and M thetas.  If M=N=1,
-            % then we return a single LLH.  If there are N=1 images
-            % and M>1 thetas, we return M LLHs of the same image with each of 
-            % the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
-            % then we return N LLHs for each of the images given theta
+            % Compute the relative-log-likelihood of the images a the given thetas. This takes in a N
+            % images and M thetas.  If M=N=1, then we return a single LLH.  If there are N=1 images and
+            % M>1 thetas, we return M LLHs of the same image with each of the thetas.  Otherwise, if
+            % there is M=1 thetas and N>1 images, then we return N LLHs for each of the images given
+            % theta
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
@@ -321,11 +321,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function grad = modelGrad(obj, image, theta)
             % grad = obj.modelGrad(image, theta) - Compute the model gradiant.
             %
-            % This takes in a N images and M thetas.  If M=N=1,
-            % then we return a single Grad.  If there are N=1 images
-            % and M>1 thetas, we return M Grads of the same image with each of 
-            % the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
-            % then we return N Grads for each of the images given theta
+            % This takes in a N images and M thetas.  If M=N=1, then we return a single Grad.  If there
+            % are N=1 images and M>1 thetas, we return M Grads of the same image with each of the thetas.
+            % Otherwise, if there is M=1 thetas and N>1 images, then we return N Grads for each of the
+            % images given theta
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
@@ -341,11 +340,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function hess = modelHessian(obj, image, theta)
             % hess = obj.modelHessian(image, theta) - Compute the model hessian
             %
-            % This takes in a N images and M thetas.  If M=N=1,
-            % then we return a single Hessian.  If there are N=1 images
-            % and M>1 thetas, we return M Hessian of the same image with each of 
-            % the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
-            % then we return N Hessians for each of the images given theta
+            % This takes in a N images and M thetas.  If M=N=1, then we return a single Hessian.  If
+            % there are N=1 images and M>1 thetas, we return M Hessian of the same image with each of the
+            % thetas.  Otherwise, if there is M=1 thetas and N>1 images, then we return N Hessians for
+            % each of the images given theta
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
@@ -361,12 +359,11 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function definite_hess = modelHessianNegativeDefinite(obj, image, theta)
             % definite_hess = obj.modelHessianNegativeDefinite(image, theta)
             %
-            % Compute a negative definite approximation to the model hessian at theta.
-            % This takes in a N images and M thetas.  If M=N=1, 
-            % then we return a single Hessian.  If there are N=1 images
-            % and M>1 thetas, we return M Hessian of the same image with each of 
-            % the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
-            % then we return N Hessians for each of the images given theta
+            % Compute a negative definite approximation to the model hessian at theta. This takes in a N
+            % images and M thetas.  If M=N=1, then we return a single Hessian.  If there are N=1 images
+            % and M>1 thetas, we return M Hessian of the same image with each of the thetas.  Otherwise,
+            % if there is M=1 thetas and N>1 images, then we return N Hessians for each of the images
+            % given theta
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
@@ -378,20 +375,22 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function varargout = modelObjective(obj, image, theta, negate)
             % [rllh,grad,hess,definite_hess,llh] = obj.modelObjective(image, theta, negate)
             %
-            % The model objective is simply the log-likelihood for MLE models, and the sum of the log-likelihood an log-prior for MAP models.
+            % The model objective is simply the log-likelihood for MLE models, and the sum of the
+            % log-likelihood an log-prior for MAP models.
             %
-            % A convenience function for objective based optimization.  Works on a single image and single theta and shares the
-            % stencil to compute the LLH,Grad,Hessian as the 3 default outputs, with a Negative(Positive) definite
-            % approximation to the hessian as the 4th output argument.  All output arguments after the first are optional and not
-            % requesting them will cause the C++ code to not compute them at all.
+            % A convenience function for objective based optimization.  Works on a single image and
+            % single theta and shares the stencil to compute the LLH,Grad,Hessian as the 3 default
+            % outputs, with a Negative(Positive) definite approximation to the hessian as the 4th output
+            % argument.  All output arguments after the first are optional and not requesting them will
+            % cause the C++ code to not compute them at all.
             %
-            % Calling all these functions in one group allows faster use with matlab optimization.
-            % Also we omit any explicit checking of inputs to speed up calls to objectives.
+            % Calling all these functions in one group allows faster use with matlab optimization. Also
+            % we omit any explicit checking of inputs to speed up calls to objectives.
             %
-            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad, Hessian are all
-            % defined for a maximization problem where the hessian will be negative definite around the maximum.  To convert
-            % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
-            % negative- or positive-definite.
+            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad,
+            % Hessian are all defined for a maximization problem where the hessian will be negative
+            % definite around the maximum.  To convert to the inverse minimization problem set the negate
+            % flag.  This flag also affects weather the 4th argument is negative- or positive-definite.
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
@@ -413,18 +412,19 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % This is always an a-posteriori (MAP) objective irrespective of the model type (MLE / MAP).
             %
-            % A convenience function for objective based optimization.  Works on a single image and single theta and shares the
-            % stencil to compute the LLH,Grad,Hessian as the 3 default outputs, with a Negative(Positive) definite
-            % approximation to the hessian as the 4th output argument.  All output arguments after the first are optional and not
-            % requesting them will cause the C++ code to not compute them at all.
+            % A convenience function for objective based optimization.  Works on a single image and
+            % single theta and shares the stencil to compute the LLH,Grad,Hessian as the 3 default
+            % outputs, with a Negative(Positive) definite approximation to the hessian as the 4th output
+            % argument.  All output arguments after the first are optional and not requesting them will
+            % cause the C++ code to not compute them at all.
             %
-            % Calling all these functions in one group allows faster use with matlab optimization.
-            % Also we omit any explicit checking of inputs to speed up calls to objectives.
+            % Calling all these functions in one group allows faster use with matlab optimization. Also
+            % we omit any explicit checking of inputs to speed up calls to objectives.
             %
-            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad, Hessian are all
-            % defined for a maximization problem where the hessian will be negative definite around the maximum.  To convert
-            % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
-            % negative- or positive-definite.
+            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad,
+            % Hessian are all defined for a maximization problem where the hessian will be negative
+            % definite around the maximum.  To convert to the inverse minimization problem set the negate
+            % flag.  This flag also affects weather the 4th argument is negative- or positive-definite.
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
@@ -444,20 +444,22 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function varargout = modelObjectiveLikelihood(obj, image, theta, negate)
             % [rllh, grad, hess, definite_hess] = obj.modelObjectiveLikelihood(image, theta, negate)
             %
-            % This is always a pure likelihood (MLE) objective irrespective of the model type (MLE / MAP).
+            % This is always a pure likelihood (MLE) objective irrespective of the model type (MLE /
+            % MAP).
             %
-            % A convenience function for objective based optimization.  Works on a single image and single theta and shares the
-            % stencil to compute the LLH,Grad,Hessian as the 3 default outputs, with a Negative(Positive) definite
-            % approximation to the hessian as the 4th output argument.  All output arguments after the first are optional and not
-            % requesting them will cause the C++ code to not compute them at all.
+            % A convenience function for objective based optimization.  Works on a single image and
+            % single theta and shares the stencil to compute the LLH,Grad,Hessian as the 3 default
+            % outputs, with a Negative(Positive) definite approximation to the hessian as the 4th output
+            % argument.  All output arguments after the first are optional and not requesting them will
+            % cause the C++ code to not compute them at all.
             %
-            % Calling all these functions in one group allows faster use with matlab optimization.
-            % Also we omit any explicit checking of inputs to speed up calls to objectives.
+            % Calling all these functions in one group allows faster use with matlab optimization. Also
+            % we omit any explicit checking of inputs to speed up calls to objectives.
             %
-            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad, Hessian are all
-            % defined for a maximization problem where the hessian will be negative definite around the maximum.  To convert
-            % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
-            % negative- or positive-definite.
+            % These models treat maximum likelihood estimation as a maximization problem, so LLH, Grad,
+            % Hessian are all defined for a maximization problem where the hessian will be negative
+            % definite around the maximum.  To convert to the inverse minimization problem set the negate
+            % flag.  This flag also affects weather the 4th argument is negative- or positive-definite.
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
@@ -477,20 +479,22 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function varargout = modelObjectivePrior(obj, theta, negate)
             % [rllh, grad, hess, definite_hess] = obj.modelObjectiveLPrior(theta, negate)
             %
-            % This is always pure prior likelihood objective irrespective of the model type (MLE / MAP).  The prior does not depend on the image data.
+            % This is always pure prior likelihood objective irrespective of the model type (MLE / MAP).
+            % The prior does not depend on the image data.
             %
-            % A convenience function for objective based optimization.  Works on a single image and single theta and shares the
-            % stencil to compute the LLH,Grad,Hessian as the 3 default outputs, with a Negative(Positive) definite
-            % approximation to the hessian as the 4th output argument.  All output arguments after the first are optional and not
-            % requesting them will cause the C++ code to not compute them at all.
+            % A convenience function for objective based optimization.  Works on a single image and
+            % single theta and shares the stencil to compute the LLH,Grad,Hessian as the 3 default
+            % outputs, with a Negative(Positive) definite approximation to the hessian as the 4th output
+            % argument.  All output arguments after the first are optional and not requesting them will
+            % cause the C++ code to not compute them at all.
             %
-            % Calling all these functions in one group allows faster use with matlab optimization.
-            % Also we omit any explicit checking of inputs to speed up calls to objectives.
+            % Calling all these functions in one group allows faster use with matlab optimization. Also
+            % we omit any explicit checking of inputs to speed up calls to objectives.
             %
-            % These models treat Maximum Likelihood estimation as a maximization problem, so LLH, Grad, Hessian are all
-            % defined for a maximization problem where the hessian will be negative definite around the maximum.  To convert
-            % to the inverse minimization problem set the negate flag.  This flag also affects weather the 4th argument is
-            % negative- or positive-definite.
+            % These models treat Maximum Likelihood estimation as a maximization problem, so LLH, Grad,
+            % Hessian are all defined for a maximization problem where the hessian will be negative
+            % definite around the maximum.  To convert to the inverse minimization problem set the negate
+            % flag.  This flag also affects weather the 4th argument is negative- or positive-definite.
             %
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
@@ -510,17 +514,21 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % [llh_components, grad_components, hess_components] = obj.modelObjectiveComponents(image, theta)
             %
             % [DEBUGGING]
-            %  Component-wise break down of model objective into individual contributions from pixels and model components.
-            %  Each pixel that is not NAN (as well as the prior for MAP models) will contribute linearly to the overall log-likelihood objective.
-            %  Because their probabilities are multiplied in the model, their log-likelihoods are summed.  Here each individual pixel and the prior
-            %  will have their individual values returned
-            % NumComponets is prod(ImageSize) for MLE models and prod(ImageSize)+NumParams for MAP models where each of the final components corresponds to a single parameter in the
+            %  Component-wise break down of model objective into individual contributions from pixels and
+            %  model components. Each pixel that is not NAN (as well as the prior for MAP models) will
+            %  contribute linearly to the overall log-likelihood objective. Because their probabilities
+            %  are multiplied in the model, their log-likelihoods are summed.  Here each individual pixel
+            %  and the prior will have their individual values returned
+            % NumComponets is prod(ImageSize) for MLE models and prod(ImageSize)+NumParams for MAP models
+            % where each of the final components corresponds to a single parameter in the
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (out) llh: log likelihood components size:[1,NumComponents]
-            % (out) grad: (optional) components of grad of log likelihood size:[NumParams,NumComponents*]  * there is only a single extra grad component added for prior in MAP models.
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams,NumComponents*] * there is only a single extra hess component added for prior in MAP models.
+            % (out) grad: (optional) components of grad of log likelihood size:[NumParams,NumComponents*]  
+            %             * there is only a single extra grad component added for prior in MAP models.
+            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams,NumComponents*] 
+            %             * there is only a single extra hess component added for prior in MAP models.
             [varargout{1:nargout}] = obj.call('modelObjectiveComponents', image, theta);
         end
 
@@ -537,8 +545,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function crlb = CRLB(obj, theta)
             % crlb = obj.CRLB(theta) - Compute the Cramer-Rao Lower Bound at theta
             %
-            % computed as the diagonal of the inverse of the fisher information, I(theta).  I(theta) should be positive definite at the maximum.
-            % The CRLB is a lower bounds on the variance at theta for any unbiased estimator.
+            % computed as the diagonal of the inverse of the fisher information, I(theta).  I(theta)
+            % should be positive definite at the maximum. The CRLB is a lower bounds on the variance at
+            % theta for any unbiased estimator.
             %
             % (in) theta: size:[NumParams, n] stack of theta values
             % (out) crlb: size:[NumParams, n] stack of the Cramer-Rao lower bound on the variances of each parameter.
@@ -587,8 +596,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function [expected_lb, expected_ub] = errorBoundsExpected(obj, theta_mle, confidence)
             % [expected_lb, expected_ub] = obj.errorBoundsExpected(theta_mle, confidence)
             %
-            % Compute the error bounds using the expected (Fisher) information at the MLE estimate.  This is independent of the image, assuming
-            % Gaussian error with variance given by CRLB.
+            % Compute the error bounds using the expected (Fisher) information at the MLE estimate.  This
+            % is independent of the image, assuming Gaussian error with variance given by CRLB.
             %
             % (in) theta_mle: the theta MLE's to estimate error bounds for. size:[NumParams,N]
             % (in) confidence: (optional)  desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
@@ -699,8 +708,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function varargout = estimateProfileLikelihood(obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
             % [profile_likelihood, profile_parameters, stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
             %
-            % Compute the profile likelihood for a single image and single parameter, over a range of values.  For each value, the parameter
-            % of interest is fixed and the other parameters are optimized with the estimator_algorithm in parallel with OpenMP.
+            % Compute the profile likelihood for a single image and single parameter, over a range of
+            % values.  For each value, the parameter of interest is fixed and the other parameters are
+            % optimized with the estimator_algorithm in parallel with OpenMP.
             %
             % (in) image: a single images
             % (in) fixed_parameters: uint64 [NParams,1] 0=free 1=fixed.  At least one paramer must be fixed and at least one parameter must be free.
@@ -737,6 +747,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % [theta, obsI, llh, stats, sample, sample_rllh] = estimatedebug(image, estimator_algorithm, theta_init)
             %
             % Debugging routine.  Works for a single image.  Returns entire sequence of evaluated points and their llh.
+            % The first entry of the evaluated_seq is theta_init.  The last entry may or may not be
+            % theta_est.  It is strictly a sequence of evaluated thetas so that the lenght of the
+            % evaluated_seq is the same as the number of RLLH evaluations performed by the maximization
+            % algorithm.
             %
             % (in) image: a size:[flip(ImageSize)] image
             % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
@@ -746,8 +760,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (out) theta: size:[NumParams,1] estimated theta value
             % (out) rllh: a (1 X 1) double of the relative log likelihood at each theta estimate.
             % (out) obsI:  size:[NumParams,NumParams] the observed information at theta
-            % (out) sample: A (NumParams X n) array of thetas that were searched as part of the maximization process
-            % (out) sample_rllh: A (1 X n) array of relative log likelihoods at each sample theta
+            % (out) evaluated_seq: A (NumParams X n) sequence of parameter values at which the model was
+            %                      evaluated in the course of the maximization algorithm.
+            % (out) evaluated_seq_rllh: A (1 X n) array of relative log likelihoods at each evaluated theta
             % (out) stats: A 1x1 struct of fitting statistics.
             image=obj.checkImage(image);
             if nargin==2
@@ -778,15 +793,21 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         end    
 
         function varargout = estimatePosterior(obj, image, theta_init, confidence, num_samples, burnin, thin)
-            % [posterior_mean, credible_lb, credible_ub, posterior_cov, mcmc_samples]
+            % [posterior_mean, credible_lb, credible_ub, posterior_cov, mcmc_samples, mcmc_samples_rllh]
             %      = obj.estimatePosterior(image, theta_init, confidence, num_samples, burnin, thin)
             %
-            % Use MCMC sampling to sample from the posterior distribution and estimate the posterior_mean, credible interval upper and lower bounds for each parameter
-            % and posterior covariance. Optionally returns mcmc-posterior sample for further post-processing.
+            % Use MCMC sampling to sample from the posterior distribution and estimate the posterior
+            % mean, a credible interval for upper and lower bounds on each parameter, and posterior
+            % covariance. Optionally also returns the entire mcmc-posterior sample for further
+            % post-processing, along with the rllh at each sample.  Optional arguments are only computed
+            % if required.
             %
             % MCMC sampling can be controlled with the optional num_samples, burnin, and thin arguments.
             %
-            % Confidence sets the confidence interval with for the credible interval lb and ub.  These are per parameter credible intervals.
+            % The confidence parameter sets the confidence-level for the credible interval bounds.  The
+            % credible intervals bounds are per-parameter, i.e, each parameter at index i is individually
+            % estimated to have a credible interval from lb(i) to ub(i), using the sample to integrate
+            % out the other parameters.
             %
             % (in) image: a stack of n images to estimate
             % (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
@@ -802,7 +823,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (out) credible_ub: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
             % (out) posterior_cov: (optional) size:[NumParams,NumParams,n] posterior covariance matrices for each image
             % (out) mcmc_samples: (optional) size:[NumParams,max_samples,n] complete sequence of posterior samples generated by MCMC for each image
-            % (out) mcmc_sample_llh: (optional) size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC each column corresponds to an image.
+            % (out) mcmc_samples_rllh: (optional) size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC. Each column corresponds to an image.
 
             image = obj.checkImage(image);
             nIms = size(image, obj.ImageDim+1);
@@ -830,10 +851,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         end
 
         function varargout = estimatePosteriorDebug(obj, image, theta_init, num_samples)
-            % [sample, sample_llh, candidates, candidate_llh] = obj.estimatePosteriorDebug(image, theta_init, num_samples)
+            % [sample, sample_rllh, candidates, candidate_rllh] = obj.estimatePosteriorDebug(image, theta_init, num_samples)
             %
-            % Debugging routine.  Works on a single image.  Get out the exact MCMC sample sequence, as well as the candidate sequence.
-            % Does not do burnin or thinning.
+            % Debugging routine.  Works on a single image.  Get out the exact MCMC sample sequence, as
+            % well as the candidate sequence. Does not do burnin or thinning.
             %
             % (in) image: a sinle images to estimate
             % (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
@@ -841,9 +862,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %                   should be auto estimated.
             % (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
             % (out) sample: A size:[NumParams,num_samples] array of thetas samples
-            % (out) sample_llh: A size:[1,num_samples] array of log likelihoods at each sample theta
+            % (out) sample_rllh: A size:[1,num_samples] array of relative log likelihoods at each sample theta
             % (out) candidates: (optional) size:[NumParams, num_samples] array of candidate thetas
-            % (out) candidate_llh: (optional) A size:[1, num_samples] array of log likelihoods at each candidate theta
+            % (out) candidate_rllh: (optional) A size:[1, num_samples] array of relative log likelihoods at each candidate theta
             image=obj.checkImage(image);
             if nargin<3
                 theta_init = [];

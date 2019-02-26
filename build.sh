@@ -1,9 +1,12 @@
-##!/bin/bash
-# build.sh
+#!/bin/bash
+# build.sh <cmake-args...>
 #
-# Release and Debug build to local install prefix with build-tree export
+# Mappel default build script.
 #
-# For safety only delete the _install if and only if INSTALL_PATH hasn't been modified.
+# Clean release-only build to local install prefix with build-tree export support.
+# Cleans up build and install directories.  For safety, deletes the install dir
+# if and only if INSTALL_PATH hasn't been modified from the default "_install"
+
 
 INSTALL_PATH=_install
 BUILD_PATH=_build
@@ -12,22 +15,21 @@ NUM_PROCS=`grep -c ^processor /proc/cpuinfo`
 ARGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
 ARGS="${ARGS} -DBUILD_STATIC_LIBS=ON"
 ARGS="${ARGS} -DBUILD_SHARED_LIBS=ON"
+ARGS="${ARGS} -DOPT_DOC=Off"
 ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
-ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=Off"
-ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On"
-ARGS="${ARGS} -DOPT_BLAS_INT64=Off"
+ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=On"
+ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=Off"
+ARGS="${ARGS} -DOPT_BLAS_INT64=ON"
+ARGS="${ARGS} -DOPT_MATLAB=Off"  #Can only be enabled if older gcc is available
 ARGS="${ARGS} -DOPT_PYTHON=On"
-ARGS="${ARGS} -DOPT_MATLAB=Off"  #Can only be enabled if older gcc is availible
 
 set -ex
 
 if [ "$INSTALL_PATH" == "_install" ]; then
     rm -rf _install
 fi
-rm -rf $BUILD_PATH/Debug
+
 rm -rf $BUILD_PATH/Release
-cmake -H. -B$BUILD_PATH/Debug -DCMAKE_BUILD_TYPE=Debug ${ARGS}
-cmake --build $BUILD_PATH/Debug --target install -- -j${NUM_PROCS}
 cmake -H. -B$BUILD_PATH/Release -DCMAKE_BUILD_TYPE=Release ${ARGS}
 cmake --build $BUILD_PATH/Release --target install -- -j${NUM_PROCS}

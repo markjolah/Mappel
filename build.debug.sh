@@ -1,5 +1,8 @@
 #!/bin/bash
 # build.debug.sh <cmake args ...>
+#
+# Mappel example debug build script.
+#
 # Debug-only build to local install prefix with build-tree export
 
 INSTALL_PATH=_install
@@ -13,12 +16,13 @@ ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
 ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=On"
 ARGS="${ARGS} -DOPT_BLAS_INT64=On"
 ARGS="${ARGS} -DOPT_MATLAB=Off"
-ARGS="${ARGS} -DOPT_PYTHON=Off"
+ARGS="${ARGS} -DOPT_PYTHON=On"
 ARGS="${ARGS} -DOPT_DOC=Off"
 ARGS="${ARGS} -DOPT_EXAMPLES=On"
 ARGS="${ARGS} -DOPT_PROFILE=Off"
 
 set -ex
-rm -rf $BUILD_PATH $INSTALL_PATH
+#rm -rf $BUILD_PATH
 cmake -H. -B$BUILD_PATH -DCMAKE_BUILD_TYPE=Debug -Wdev ${ARGS} $@
 VERBOSE=1 cmake --build $BUILD_PATH --target all -- -j${NUM_PROCS}
+#VERBOSE=1 cmake --build $BUILD_PATH --target install -- -j${NUM_PROCS}

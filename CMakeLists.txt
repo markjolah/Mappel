@@ -56,7 +56,6 @@ list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake/UncommonCMakeMod
 ### Dependencies
 #External depenency integration
 include(AddExternalDependency)
-set(EXTERNAL_DEPENDENCY_TESTING_VARS  BUILD_TESTING )
 if(OPT_BLAS_INT64)
     set(BLAS_INT_COMPONENT BLAS_INT64)
 else()
