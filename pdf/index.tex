@@ -1,7 +1,7 @@
-Mappel is an object-\/oriented image processing library for \href{https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy}{\tt super-\/resolution localization} of Gaussian point emitters in \href{https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques}{\tt fluorescence microscopy} applications.
+Mappel is an object-\/oriented image processing library for high-\/performance \href{https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy}{\tt super-\/resolution localization} of Gaussian point emitters in \href{https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques}{\tt fluorescence microscopy} applications.
 \begin{DoxyItemize}
 \item Mappel uses C\+Make and builds cross-\/platform for Linux and Windows 64-\/bit.
-\item Mappel has object-\/oriented interfaces in C++, Python, and Matlab
+\item Mappel provides object-\/oriented interfaces for C++, Python, and Matlab.
 \item Mappel uses Open\+MP to parallelize operations over vectors of images or parameters
 \item Mappel is free-\/as-\/in-\/beer and free-\/as-\/in-\/speech! (\mbox{[}Apache-\/2.\+0\mbox{]}(L\+I\+C\+E\+N\+SE))
 \end{DoxyItemize}
@@ -17,15 +17,39 @@ The Mappel Doxygen documentation can be build with the {\ttfamily O\+P\+T\+\_\+\
 
 \subsubsection*{Background}
 
-Point emitter localization is a process of precisely estimating the sub-\/pixel location of a single point source emitter (molecule/protein) at effective resolutions 10-\/50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from the blurry, noisy, pixelated images to the estimate of true emitter position and the estimate of the uncertainty in true position. Figure 1 shows the point emitter localization process visually utilizing realistic physical scales for a typical super-\/resolution fluorescence microscope configuration, and showing typical effective fitting resolution.
+Point emitter localization is a process of precisely estimating the sub-\/pixel location of a single point source emitters (molecules/proteins) at effective resolutions 10-\/50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from blurry, noisy, pixelated images to a sub-\/pixel estimate of true emitter position as well as the uncertainty in that estimate. Figure 1 shows the point emitter localization process with realistic physical values for a typical super-\/resolution fluorescence microscope configuration.
 
-
+\href{https://raw.githubusercontent.com/markjolah/Mappel/master/doc/images/mappel_fitting_resolution.png}{\tt }
 
 {\bfseries Figure 1}\+: Effective fitting resolution in typical applications 
 
+\paragraph*{Applications}
+
+
+\begin{DoxyItemize}
+\item Stochastic super-\/resolution reconstruction with \href{https://en.wikipedia.org/wiki/Photoactivated_localization_microscopy}{\tt P\+A\+LM} and \href{https://en.wikipedia.org/wiki/Super-resolution_microscopy#Direct_stochastical_optical_reconstruction_microscopy_(dSTORM)}{\tt d\+S\+T\+O\+RM} florescence microscopy techniques.
+\item \href{https://en.wikipedia.org/wiki/Single-particle_tracking}{\tt Single particle tracking (S\+PT)}
+\begin{DoxyItemize}
+\item The \href{https://markjolah.github.io/RPT}{\tt {\itshape Robust Particle Tracking} (R\+PT)} library uses Mappel for the localization phase of tracking.
+\end{DoxyItemize}
+\item \href{https://iopscience.iop.org/article/10.1088/1367-2630/aa5f74}{\tt Nano-\/structure optical measurements} and alignment.
+\item Accurate estimation of fluorophore emitter intensity over time.
+\end{DoxyItemize}
+
+\paragraph*{Performance}
+
+Emitter localization applications, especially S\+PT and super-\/resolution imaging, can require millions of emitter estimations per dataset. This demand is only increasing with the drive towards larger E\+M\+C\+CD and S\+C\+M\+OS sensors and longer experiments at higher frame-\/rates. Speed becomes even more crucial for these applications when batch processing dozens of large data files.
+
+
+\begin{DoxyItemize}
+\item Mappel runs all image oriented computations in parallel using Open\+MP making full use the system hardware concurrency.
+\item Mappel is fast. It can easily localize 10$^\wedge$4 emitters/sec/core on modern consumer hardware
+\item Small and medium-\/sized datasets using Mappel can work well on laptops allowing interactive Matlab applications like \href{https://markjolah.github.io/RPT}{\tt R\+PT} to be used from nearly any machine.
+\end{DoxyItemize}
+
 \subsubsection*{Installation}
 
-Mappel uses the C\+Make build system, and is designed to be cross-\/compiled from linux to other platforms, primarily Win64, although future O\+SX support is planned.
+Mappel uses the \href{https://cmake.org/cmake/help/latest/}{\tt C\+Make} build system, and is designed to be cross-\/compiled from linux to other platforms, primarily Win64, although future O\+SX support is planned.
 
 \subsubsection*{Dependencies}
 
@@ -47,7 +71,7 @@ Several standard numerical packages are required to build Mappel. Most distribut
 \end{DoxyItemize}
 \end{DoxyItemize}
 
-Note the {\ttfamily O\+P\+T\+\_\+\+B\+L\+A\+S\+\_\+\+I\+N\+T64} C\+Make option controls whether Armadillo uses B\+L\+AS and L\+A\+P\+A\+CK libraries that use 64-\/bit interger indexing. Matlab uses 64-\/bit by default, so linking Mappel to Matlab M\+EX libraries requires this option enabled. Many linux systems only provide 32-\/bit integer versions of B\+L\+AS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-\/bit support is difficult to provide.
+Note the {\ttfamily O\+P\+T\+\_\+\+B\+L\+A\+S\+\_\+\+I\+N\+T64} C\+Make option controls whether Armadillo uses B\+L\+AS and L\+A\+P\+A\+CK libraries that use 64-\/bit integer indexing. Matlab uses 64-\/bit by default, so linking Mappel to Matlab M\+EX libraries requires this option enabled. Many linux systems only provide 32-\/bit integer versions of B\+L\+AS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-\/bit support is difficult to provide.
 
 \paragraph*{External Projects}
 

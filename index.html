@@ -81,9 +81,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">MAPPEL </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Mappel is an object-oriented image processing library for <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy">super-resolution localization</a> of Gaussian point emitters in <a href="https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques">fluorescence microscopy</a> applications.</p><ul>
+<div class="textblock"><p>Mappel is an object-oriented image processing library for high-performance <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#Localization_microscopy">super-resolution localization</a> of Gaussian point emitters in <a href="https://en.wikipedia.org/wiki/Fluorescence_microscope#Sub-diffraction_techniques">fluorescence microscopy</a> applications.</p><ul>
 <li>Mappel uses CMake and builds cross-platform for Linux and Windows 64-bit.</li>
-<li>Mappel has object-oriented interfaces in C++, Python, and Matlab</li>
+<li>Mappel provides object-oriented interfaces for C++, Python, and Matlab.</li>
 <li>Mappel uses OpenMP to parallelize operations over vectors of images or parameters</li>
 <li>Mappel is free-as-in-beer and free-as-in-speech! ([Apache-2.0](LICENSE))</li>
 </ul>
@@ -94,13 +94,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li><a href="https://github.com/markjolah/Mappel">Mappel github repository</a></li>
 </ul>
 <h2>Background</h2>
-<p>Point emitter localization is a process of precisely estimating the sub-pixel location of a single point source emitter (molecule/protein) at effective resolutions 10-50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from the blurry, noisy, pixelated images to the estimate of true emitter position and the estimate of the uncertainty in true position. Figure 1 shows the point emitter localization process visually utilizing realistic physical scales for a typical super-resolution fluorescence microscope configuration, and showing typical effective fitting resolution.</p>
-<div class="image">
-<img src="https://raw.githubusercontent.com/markjolah/Mappel/master/doc/images/fitting_resolution.png"  alt="Fig 1: Effective fitting resolution in typical applications" width="550"/>
-</div>
+<p>Point emitter localization is a process of precisely estimating the sub-pixel location of a single point source emitters (molecules/proteins) at effective resolutions 10-50 times smaller than the fundamental diffraction limit for optical microscopes. Operationally, this is the process of going from blurry, noisy, pixelated images to a sub-pixel estimate of true emitter position as well as the uncertainty in that estimate. Figure 1 shows the point emitter localization process with realistic physical values for a typical super-resolution fluorescence microscope configuration.</p>
+<p><a href="https://raw.githubusercontent.com/markjolah/Mappel/master/doc/images/mappel_fitting_resolution.png" title="full size image"></a></p>
 <p><b>Figure 1</b>: Effective fitting resolution in typical applications </p>
+<h3>Applications</h3>
+<ul>
+<li>Stochastic super-resolution reconstruction with <a href="https://en.wikipedia.org/wiki/Photoactivated_localization_microscopy">PALM</a> and <a href="https://en.wikipedia.org/wiki/Super-resolution_microscopy#Direct_stochastical_optical_reconstruction_microscopy_(dSTORM)">dSTORM</a> florescence microscopy techniques.</li>
+<li><a href="https://en.wikipedia.org/wiki/Single-particle_tracking">Single particle tracking (SPT)</a><ul>
+<li>The <a href="https://markjolah.github.io/RPT"><em>Robust Particle Tracking</em> (RPT)</a> library uses Mappel for the localization phase of tracking.</li>
+</ul>
+</li>
+<li><a href="https://iopscience.iop.org/article/10.1088/1367-2630/aa5f74">Nano-structure optical measurements</a> and alignment.</li>
+<li>Accurate estimation of fluorophore emitter intensity over time.</li>
+</ul>
+<h3>Performance</h3>
+<p>Emitter localization applications, especially SPT and super-resolution imaging, can require millions of emitter estimations per dataset. This demand is only increasing with the drive towards larger EMCCD and SCMOS sensors and longer experiments at higher frame-rates. Speed becomes even more crucial for these applications when batch processing dozens of large data files.</p>
+<ul>
+<li>Mappel runs all image oriented computations in parallel using OpenMP making full use the system hardware concurrency.</li>
+<li>Mappel is fast. It can easily localize 10^4 emitters/sec/core on modern consumer hardware</li>
+<li>Small and medium-sized datasets using Mappel can work well on laptops allowing interactive Matlab applications like <a href="https://markjolah.github.io/RPT">RPT</a> to be used from nearly any machine.</li>
+</ul>
 <h2>Installation</h2>
-<p>Mappel uses the CMake build system, and is designed to be cross-compiled from linux to other platforms, primarily Win64, although future OSX support is planned.</p>
+<p>Mappel uses the <a href="https://cmake.org/cmake/help/latest/">CMake</a> build system, and is designed to be cross-compiled from linux to other platforms, primarily Win64, although future OSX support is planned.</p>
 <h2>Dependencies</h2>
 <p>Several standard numerical packages are required to build Mappel. Most distributions should have development versions of these packages which provide the include files and other necessary development files for the packages.</p>
 <ul>
@@ -117,7 +132,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 </li>
 </ul>
-<p>Note the <code>OPT_BLAS_INT64</code> CMake option controls whether Armadillo uses BLAS and LAPACK libraries that use 64-bit interger indexing. Matlab uses 64-bit by default, so linking Mappel to Matlab MEX libraries requires this option enabled. Many linux systems only provide 32-bit integer versions of BLAS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-bit support is difficult to provide.</p>
+<p>Note the <code>OPT_BLAS_INT64</code> CMake option controls whether Armadillo uses BLAS and LAPACK libraries that use 64-bit integer indexing. Matlab uses 64-bit by default, so linking Mappel to Matlab MEX libraries requires this option enabled. Many linux systems only provide 32-bit integer versions of BLAS and Lapack, and the option can be disabled if Matlab support is not a concern and 64-bit support is difficult to provide.</p>
 <h3>External Projects</h3>
 <p>These packages are specialized CMake projects. If they are not currently installed on the development machines we use the <a href="https://github.com/markjolah/UncommonCMakeModules/blob/master/AddExternalDependency.cmake">AddExternalDependency.cmake</a> which will automatically download, configure, build and install to the <code>CMAKE_INSTALL_PREFIX</code>, enabling their use through the normal CMake <code>find_package()</code> system.</p>
 <ul>

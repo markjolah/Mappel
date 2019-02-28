@@ -1,27 +1,4 @@
 var searchData=
 [
-  ['t_5finit',['T_init',['../classmappel_1_1SimulatedAnnealingMaximizer.html#a5a697acb3663ef6aad85157cce00080e',1,'mappel::SimulatedAnnealingMaximizer']]],
-  ['term_5fblack',['TERM_BLACK',['../namespacemappel.html#a448ca8ea08b3b9cdf522884ac004d901',1,'mappel']]],
-  ['term_5fblue',['TERM_BLUE',['../namespacemappel.html#a04365b9f87e9c572c79e2da4ff4a0378',1,'mappel']]],
-  ['term_5fcyan',['TERM_CYAN',['../namespacemappel.html#ad7696c53e61084d23f8532598b261c36',1,'mappel']]],
-  ['term_5fdim_5fblack',['TERM_DIM_BLACK',['../namespacemappel.html#a233d1d0ed4c3957ba68364c5d9f6f45e',1,'mappel']]],
-  ['term_5fdim_5fblue',['TERM_DIM_BLUE',['../namespacemappel.html#a81976972f9e20d3f3ec3e541302bf465',1,'mappel']]],
-  ['term_5fdim_5fcyan',['TERM_DIM_CYAN',['../namespacemappel.html#ad168ab0229814251071c6680e9792b0f',1,'mappel']]],
-  ['term_5fdim_5fgreen',['TERM_DIM_GREEN',['../namespacemappel.html#af35fa592f92c75d4190e1b5aff9fbcfe',1,'mappel']]],
-  ['term_5fdim_5fmagenta',['TERM_DIM_MAGENTA',['../namespacemappel.html#add36264e8025d4db88e03897ecda89b5',1,'mappel']]],
-  ['term_5fdim_5fred',['TERM_DIM_RED',['../namespacemappel.html#ad0396f6c4c69571a8d774588bfd6a1bd',1,'mappel']]],
-  ['term_5fdim_5fwhite',['TERM_DIM_WHITE',['../namespacemappel.html#a15d16c02d9b595b272213768978e691b',1,'mappel']]],
-  ['term_5fdim_5fyellow',['TERM_DIM_YELLOW',['../namespacemappel.html#af34f15f5200f5711a39b0dd715907f61',1,'mappel']]],
-  ['term_5fgreen',['TERM_GREEN',['../namespacemappel.html#a7beb463b118be1cd8c591eaf053d7f5c',1,'mappel']]],
-  ['term_5fmagenta',['TERM_MAGENTA',['../namespacemappel.html#a2b80f7559dbf8fd1650220f75db541b2',1,'mappel']]],
-  ['term_5fred',['TERM_RED',['../namespacemappel.html#ab22998f4999661d300fe1f1e2bc615a2',1,'mappel']]],
-  ['term_5fwhite',['TERM_WHITE',['../namespacemappel.html#aa0d4a391df8c98076fb8d02fe34ce24c',1,'mappel']]],
-  ['term_5fyellow',['TERM_YELLOW',['../namespacemappel.html#ae85ff1ec27541515a29ca8b7301866dd',1,'mappel']]],
-  ['theta',['theta',['../classmappel_1_1Gauss1DModel_1_1Stencil.html#a2428fa45a83396cad7861fbeea44a86a',1,'mappel::Gauss1DModel::Stencil::theta()'],['../classmappel_1_1Gauss1DsModel_1_1Stencil.html#ab1acb6728b521c0ba62d06bc9a92ae79',1,'mappel::Gauss1DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DModel_1_1Stencil.html#ac9ce60b33fe2235ebbb80dd9d90a49ad',1,'mappel::Gauss2DModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsModel_1_1Stencil.html#af3639dad603ce4b9ed94bfcd25f95cab',1,'mappel::Gauss2DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a73791bb1fd46a0af05bd477ca8455ed3',1,'mappel::Gauss2DsxyModel::Stencil::theta()']]],
-  ['theta_5fseq',['theta_seq',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a2c8a2c8724b6f507cd8d4a2b6310324f',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['total_5fbacktracks',['total_backtracks',['../classmappel_1_1IterativeMaximizer.html#a752717a4e69ba7cd44a6167d0cbdb242',1,'mappel::IterativeMaximizer']]],
-  ['total_5fder_5fevals',['total_der_evals',['../classmappel_1_1IterativeMaximizer.html#a76de3653a5f2c200ad6865372eb9c154',1,'mappel::IterativeMaximizer']]],
-  ['total_5ffun_5fevals',['total_fun_evals',['../classmappel_1_1IterativeMaximizer.html#afbb76db27b845efa8e958611dd3c8d3c',1,'mappel::IterativeMaximizer']]],
-  ['total_5fiterations',['total_iterations',['../classmappel_1_1IterativeMaximizer.html#a8d344b09841e61cc726dc430d8451044',1,'mappel::IterativeMaximizer']]],
-  ['total_5fwalltime',['total_walltime',['../classmappel_1_1Estimator.html#a5a408458a111c5222193871fa6bb6644',1,'mappel::Estimator']]]
+  ['ubound',['ubound',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a222f9843c94b82c5ee9ad7c8af04ab52',1,'mappel::IterativeMaximizer::MaximizerData::ubound()'],['../classmappel_1_1PointEmitterModel.html#a35b883e84b6a2e0093bdf482c623beef',1,'mappel::PointEmitterModel::ubound()']]]
 ];

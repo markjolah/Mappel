@@ -90,7 +90,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -120,6 +122,24 @@ Inheritance diagram for mappel::Estimator&lt; Model &gt;:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a6d599915907ba4d0607fcb958d231edc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edc">ExitCode</a> : IdxT { <br />
+&#160;&#160;<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69">ExitCode::Unassigned</a> = 8, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db">ExitCode::MaxIter</a> = 7, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86">ExitCode::MaxBacktracks</a> = 6, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81">ExitCode::TrustRegionRadius</a> = 5, 
+<br />
+&#160;&#160;<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4">ExitCode::GradRatio</a> = 4, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338">ExitCode::FunctionChange</a> = 3, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0">ExitCode::StepSize</a> = 2, 
+<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38">ExitCode::Success</a> = 1, 
+<br />
+&#160;&#160;<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd">ExitCode::Error</a> = 0
+<br />
+ }</td></tr>
+<tr class="separator:a6d599915907ba4d0607fcb958d231edc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a03177042591f1ffbaf377765b5486824"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a03177042591f1ffbaf377765b5486824">Estimator</a> (Model &amp;_model)</td></tr>
@@ -159,6 +179,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2181f8c34bfc89b5b6b491f4db63a4d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a2181f8c34bfc89b5b6b491f4db63a4d8">clear_stats</a> ()</td></tr>
 <tr class="separator:a2181f8c34bfc89b5b6b491f4db63a4d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:afcec036c4d78c12d427e0a733a00a48e"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#afcec036c4d78c12d427e0a733a00a48e">NumExitCodes</a> = 9</td></tr>
+<tr class="separator:afcec036c4d78c12d427e0a733a00a48e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aa8b8c7f835056c94de1f21bff2ef205b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacemappel.html#a3a06598240007876f8c4bf834ad86197">StencilT</a>&lt; Model &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">compute_estimate</a> (const <a class="el" href="namespacemappel.html#a97f050df953605381ae9c901c3b125f1">ModelDataT</a>&lt; Model &gt; &amp;im, const <a class="el" href="namespacemappel.html#a667925cb0d6c0e49f2f035cc5a9a6857">ParamT</a>&lt; Model &gt; &amp;theta_init, double &amp;rllh)=0</td></tr>
@@ -172,6 +197,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a273f65624e06688cd4b1126e3e7556ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50125572d3b87ebcf1ffb27a8d8c643d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a50125572d3b87ebcf1ffb27a8d8c643d">record_walltime</a> (ClockT::time_point start_walltime, int nimages)</td></tr>
 <tr class="separator:a50125572d3b87ebcf1ffb27a8d8c643d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfde3944bbb9d4af107fbafb543f2376"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#abfde3944bbb9d4af107fbafb543f2376">record_exit_code</a> (<a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edc">ExitCode</a> code)=0</td></tr>
+<tr class="separator:abfde3944bbb9d4af107fbafb543f2376"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -181,6 +208,8 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:ab15b88435d6c50a68fac84465d950b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a408458a111c5222193871fa6bb6644"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a5a408458a111c5222193871fa6bb6644">total_walltime</a> = 0.</td></tr>
 <tr class="separator:a5a408458a111c5222193871fa6bb6644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a490b648fdbd7ddae7ce41fbf26e29b48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacemappel.html#ac63743dcd42180127307cd0e4ecdd784">IdxVecT</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmappel_1_1Estimator.html#a490b648fdbd7ddae7ce41fbf26e29b48">exit_counts</a></td></tr>
+<tr class="separator:a490b648fdbd7ddae7ce41fbf26e29b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -194,8 +223,8 @@ class mappel::Estimator&lt; Model &gt;</h3>
 
 
 <p>Definition at line <a class="el" href="estimator_8h_source.html#l00037">37</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a03177042591f1ffbaf377765b5486824"></a>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a class="anchor" id="a6d599915907ba4d0607fcb958d231edc"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -205,6 +234,48 @@ template&lt;class Model &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
+          <td class="memname">enum <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edc">mappel::Estimator::ExitCode</a> : <a class="el" href="namespacemappel.html#ab17ec0f30b61ece292439d7ece81d3a8">IdxT</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69"></a>Unassigned&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db"></a>MaxIter&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86"></a>MaxBacktracks&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81"></a>TrustRegionRadius&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4"></a>GradRatio&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338"></a>FunctionChange&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0"></a>StepSize&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38"></a>Success&#160;</td><td class="fielddoc">
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc">
+</td></tr>
+</table>
+
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00040">40</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a03177042591f1ffbaf377765b5486824"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Model &gt; </div>
+      <table class="memname">
+        <tr>
           <td class="memname"><a class="el" href="classmappel_1_1Estimator.html">mappel::Estimator</a>&lt; Model &gt;::<a class="el" href="classmappel_1_1Estimator.html">Estimator</a> </td>
           <td>(</td>
           <td class="paramtype">Model &amp;&#160;</td>
@@ -212,14 +283,9 @@ template&lt;class Model &gt; </div>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00039">39</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00044">44</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
 </div>
 </div>
@@ -246,9 +312,9 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00040">40</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00052">52</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>References <a class="el" href="estimator__impl_8h_source.html#l00168">mappel::Estimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00192">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00151">mappel::Estimator&lt; Model &gt;::compute_profile_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00059">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, <a class="el" href="estimator__impl_8h_source.html#l00117">mappel::Estimator&lt; Model &gt;::estimate_max_debug()</a>, <a class="el" href="classmappel_1_1Estimator.html#a50c0cdffa2b5e7c45180a92dd3b34073">mappel::Estimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="classmappel_1_1Estimator.html#aa86d466843e5dae1e2eaaecb98012ff4">mappel::Estimator&lt; Model &gt;::estimate_profile_stack()</a>, <a class="el" href="classmappel_1_1Estimator.html#a64b26c846a0e995fe16cd56cbead9f99">mappel::Estimator&lt; Model &gt;::get_debug_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00045">mappel::Estimator&lt; Model &gt;::get_model()</a>, <a class="el" href="estimator__impl_8h_source.html#l00159">mappel::Estimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="classmappel_1_1Estimator.html#a403f11575f81e47095e57cc403fd760d">mappel::Estimator&lt; Model &gt;::name()</a>, <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>, <a class="el" href="openmp__methods_8h_source.html#l00478">mappel::methods::objective::openmp::rllh_stack()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00049">mappel::Estimator&lt; Model &gt;::set_model()</a>.</p>
+<p>References <a class="el" href="estimator__impl_8h_source.html#l00218">mappel::Estimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00242">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00192">mappel::Estimator&lt; Model &gt;::compute_profile_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00064">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, <a class="el" href="estimator__impl_8h_source.html#l00158">mappel::Estimator&lt; Model &gt;::estimate_max_debug()</a>, <a class="el" href="classmappel_1_1Estimator.html#a50c0cdffa2b5e7c45180a92dd3b34073">mappel::Estimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="classmappel_1_1Estimator.html#aa86d466843e5dae1e2eaaecb98012ff4">mappel::Estimator&lt; Model &gt;::estimate_profile_stack()</a>, <a class="el" href="classmappel_1_1Estimator.html#a64b26c846a0e995fe16cd56cbead9f99">mappel::Estimator&lt; Model &gt;::get_debug_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00050">mappel::Estimator&lt; Model &gt;::get_model()</a>, <a class="el" href="estimator__impl_8h_source.html#l00200">mappel::Estimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="classmappel_1_1Estimator.html#a403f11575f81e47095e57cc403fd760d">mappel::Estimator&lt; Model &gt;::name()</a>, <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>, <a class="el" href="openmp__methods_8h_source.html#l00478">mappel::methods::objective::openmp::rllh_stack()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00054">mappel::Estimator&lt; Model &gt;::set_model()</a>.</p>
 
 </div>
 </div>
@@ -278,9 +344,11 @@ template&lt;class Model &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#af709331a98863a0d8a4003047f2b70a2">mappel::IterativeMaximizer&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1ThreadedEstimator.html#a8acce3a5a89128403c97b53bc3698d61">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00168">168</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00218">218</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00287">mappel::ThreadedEstimator&lt; Model &gt;::clear_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00114">mappel::Estimator&lt; Model &gt;::exit_counts</a>, <a class="el" href="estimator_8h_source.html#l00112">mappel::Estimator&lt; Model &gt;::num_estimations</a>, and <a class="el" href="estimator_8h_source.html#l00113">mappel::Estimator&lt; Model &gt;::total_walltime</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00378">mappel::ThreadedEstimator&lt; Model &gt;::clear_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -326,7 +394,7 @@ template&lt;class Model &gt; </div>
 
 <p>Implemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#ad83f7b0a5b4d412f419b6089e73a66e0">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1SimulatedAnnealingMaximizer.html#a8a0c6b0ee9c50254b71577ddb191122b">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1CGaussMLE.html#aa4e4761873c14cfe848f04ec8dc896d6">mappel::CGaussMLE&lt; Model &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00137">mappel::HeuristicEstimator&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00147">mappel::CGaussHeuristicEstimator&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00164">mappel::CGaussMLE&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00183">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::SimulatedAnnealingMaximizer()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00183">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00242">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00090">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, <a class="el" href="estimator__impl_8h_source.html#l00285">mappel::ThreadedEstimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="estimator_8h_source.html#l00156">mappel::HeuristicEstimator&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00168">mappel::CGaussHeuristicEstimator&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00184">mappel::CGaussMLE&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00206">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::name()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -384,9 +452,9 @@ template&lt;class Model &gt; </div>
 
 <p>Default base class implementation computes rllh and obsI seperately from stencil This should be overridden by <a class="el" href="classmappel_1_1Estimator.html">Estimator</a> subclasses that already have access to this information. </p>
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00142">142</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00183">183</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00316">mappel::methods::observed_information()</a>.</p>
+<p>References <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>, and <a class="el" href="model__methods__impl_8h_source.html#l00316">mappel::methods::observed_information()</a>.</p>
 
 </div>
 </div>
@@ -431,7 +499,7 @@ template&lt;class Model &gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -439,9 +507,11 @@ template&lt;class Model &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#aa45c11a399f29985fc9bd3365e809335">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1SimulatedAnnealingMaximizer.html#a146eedb2f0e4b4a6839c16b288ab7f75">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1CGaussMLE.html#a6bf98b8144f4cd5f548b49f32a95141e">mappel::CGaussMLE&lt; Model &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00192">192</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00242">242</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00164">mappel::CGaussMLE&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00183">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::SimulatedAnnealingMaximizer()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>References <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd">mappel::Estimator&lt; Model &gt;::Error</a>, <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>, <a class="el" href="display_8cpp_source.html#l00139">mappel::print_image()</a>, and <a class="el" href="classmappel_1_1Estimator.html#abfde3944bbb9d4af107fbafb543f2376">mappel::Estimator&lt; Model &gt;::record_exit_code()</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00158">mappel::Estimator&lt; Model &gt;::estimate_max_debug()</a>, <a class="el" href="estimator_8h_source.html#l00184">mappel::CGaussMLE&lt; Model &gt;::name()</a>, <a class="el" href="estimator_8h_source.html#l00206">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::name()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -499,11 +569,11 @@ template&lt;class Model &gt; </div>
 
 <p>Reimplemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#a1999fd1fa63c803b3aad87695fc82843">mappel::IterativeMaximizer&lt; Model &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00151">151</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00192">192</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="classmappel_1_1Estimator.html#a403f11575f81e47095e57cc403fd760d">mappel::Estimator&lt; Model &gt;::name()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00323">mappel::ThreadedEstimator&lt; Model &gt;::estimate_profile_stack()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -523,11 +593,11 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00059">59</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00064">64</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00323">mappel::methods::estimate_max()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00073">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -557,9 +627,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00077">77</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00082">82</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00323">mappel::methods::estimate_max()</a>, and <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>.</p>
+<p>References <a class="el" href="estimator__impl_8h_source.html#l00064">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, and <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>.</p>
 
 </div>
 </div>
@@ -589,9 +659,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00068">68</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00073">73</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00323">mappel::methods::estimate_max()</a>.</p>
+<p>References <a class="el" href="estimator__impl_8h_source.html#l00064">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, and <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
 
 </div>
 </div>
@@ -627,7 +697,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00085">85</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00090">90</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+
+<p>References <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd">mappel::Estimator&lt; Model &gt;::Error</a>, <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>, <a class="el" href="display_8cpp_source.html#l00139">mappel::print_image()</a>, <a class="el" href="classmappel_1_1Estimator.html#abfde3944bbb9d4af107fbafb543f2376">mappel::Estimator&lt; Model &gt;::record_exit_code()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00266">mappel::Estimator&lt; Model &gt;::record_walltime()</a>.</p>
 
 </div>
 </div>
@@ -669,9 +741,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00097">97</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00119">119</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00323">mappel::methods::estimate_max()</a>.</p>
+<p>References <a class="el" href="estimator__impl_8h_source.html#l00064">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, and <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
 
 </div>
 </div>
@@ -719,7 +791,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00106">106</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00128">128</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+
+<p>References <a class="el" href="classmappel_1_1Estimator.html#aa8b8c7f835056c94de1f21bff2ef205b">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd">mappel::Estimator&lt; Model &gt;::Error</a>, <a class="el" href="display_8cpp_source.html#l00139">mappel::print_image()</a>, <a class="el" href="classmappel_1_1Estimator.html#abfde3944bbb9d4af107fbafb543f2376">mappel::Estimator&lt; Model &gt;::record_exit_code()</a>, <a class="el" href="estimator__impl_8h_source.html#l00266">mappel::Estimator&lt; Model &gt;::record_walltime()</a>, and <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>.</p>
 
 </div>
 </div>
@@ -779,11 +853,11 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00117">117</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00158">158</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="model__methods__impl_8h_source.html#l00316">mappel::methods::observed_information()</a>, and <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>.</p>
+<p>References <a class="el" href="estimator__impl_8h_source.html#l00242">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>, <a class="el" href="model__methods__impl_8h_source.html#l00316">mappel::methods::observed_information()</a>, <a class="el" href="estimator__impl_8h_source.html#l00266">mappel::Estimator&lt; Model &gt;::record_walltime()</a>, and <a class="el" href="MAPEstimator_8h_source.html#l00048">mappel::methods::objective::rllh()</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -841,7 +915,7 @@ template&lt;class Model &gt; </div>
 
 <p>Implemented in <a class="el" href="classmappel_1_1ThreadedEstimator.html#afb7a2e27b4e8dcc2fa604f83344461fe">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00170">mappel::Estimator&lt; Model &gt;::estimate_max_stack()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -883,9 +957,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00129">129</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00170">170</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>References <a class="el" href="openmp__methods_8h_source.html#l00165">mappel::methods::openmp::estimate_max_stack()</a>.</p>
+<p>References <a class="el" href="classmappel_1_1Estimator.html#a50c0cdffa2b5e7c45180a92dd3b34073">mappel::Estimator&lt; Model &gt;::estimate_max_stack()</a>, and <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
 
 </div>
 </div>
@@ -949,7 +1023,7 @@ template&lt;class Model &gt; </div>
 
 <p>Implemented in <a class="el" href="classmappel_1_1ThreadedEstimator.html#aebbf686f95be1331ff85cecd5a3c97db">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -976,9 +1050,9 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#a1d9c29b69f468200a90bcd68adfb5643">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussMLE.html#aaff3681877cb75e6776be5325adcfea0">mappel::CGaussMLE&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1ThreadedEstimator.html#ab281b131d160352ee949dd33d49cf55e">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#a1d9c29b69f468200a90bcd68adfb5643">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1SimulatedAnnealingMaximizer.html#a72a7ee87c7294976b673dcb89b89a373">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussMLE.html#aaff3681877cb75e6776be5325adcfea0">mappel::CGaussMLE&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussHeuristicEstimator.html#af3833f7687973da8acd83674fabf4b16">mappel::CGaussHeuristicEstimator&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1HeuristicEstimator.html#a6926009475af3b1dae9043d32cfa6d88">mappel::HeuristicEstimator&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1ThreadedEstimator.html#ab281b131d160352ee949dd33d49cf55e">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00158">mappel::CGaussMLE&lt; Model &gt;::CGaussMLE()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00164">mappel::CGaussHeuristicEstimator&lt; Model &gt;::CGaussHeuristicEstimator()</a>, <a class="el" href="estimator_8h_source.html#l00179">mappel::CGaussMLE&lt; Model &gt;::CGaussMLE()</a>, <a class="el" href="estimator_8h_source.html#l00152">mappel::HeuristicEstimator&lt; Model &gt;::HeuristicEstimator()</a>, <a class="el" href="estimator_8h_source.html#l00202">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::SimulatedAnnealingMaximizer()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -997,9 +1071,11 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00045">45</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00050">50</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -1026,11 +1102,13 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#a22783dc49fb4fd6e754b0d0ee161c543">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussMLE.html#aafbdebb21652be135801911007d3568b">mappel::CGaussMLE&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1ThreadedEstimator.html#ab216e13ec19785839bc73caf7fac1c91">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classmappel_1_1IterativeMaximizer.html#a22783dc49fb4fd6e754b0d0ee161c543">mappel::IterativeMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1SimulatedAnnealingMaximizer.html#ab51d52418cec2fe9cfbf7382a8cfd486">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussMLE.html#aafbdebb21652be135801911007d3568b">mappel::CGaussMLE&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussHeuristicEstimator.html#a2a76627a8d218e6f8fe5df35b429ae71">mappel::CGaussHeuristicEstimator&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1HeuristicEstimator.html#a4417718491c7d3d8f78bd3ba5518307b">mappel::HeuristicEstimator&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1ThreadedEstimator.html#ab216e13ec19785839bc73caf7fac1c91">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00159">159</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00200">200</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00158">mappel::CGaussMLE&lt; Model &gt;::CGaussMLE()</a>, <a class="el" href="estimator__impl_8h_source.html#l00271">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00175">mappel::operator&lt;&lt;()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>References <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd">mappel::Estimator&lt; Model &gt;::Error</a>, <a class="el" href="estimator_8h_source.html#l00114">mappel::Estimator&lt; Model &gt;::exit_counts</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338">mappel::Estimator&lt; Model &gt;::FunctionChange</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4">mappel::Estimator&lt; Model &gt;::GradRatio</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86">mappel::Estimator&lt; Model &gt;::MaxBacktracks</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db">mappel::Estimator&lt; Model &gt;::MaxIter</a>, <a class="el" href="estimator_8h_source.html#l00112">mappel::Estimator&lt; Model &gt;::num_estimations</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0">mappel::Estimator&lt; Model &gt;::StepSize</a>, <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38">mappel::Estimator&lt; Model &gt;::Success</a>, <a class="el" href="estimator_8h_source.html#l00113">mappel::Estimator&lt; Model &gt;::total_walltime</a>, and <a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81">mappel::Estimator&lt; Model &gt;::TrustRegionRadius</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00164">mappel::CGaussHeuristicEstimator&lt; Model &gt;::CGaussHeuristicEstimator()</a>, <a class="el" href="estimator_8h_source.html#l00179">mappel::CGaussMLE&lt; Model &gt;::CGaussMLE()</a>, <a class="el" href="estimator__impl_8h_source.html#l00361">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="estimator_8h_source.html#l00152">mappel::HeuristicEstimator&lt; Model &gt;::HeuristicEstimator()</a>, <a class="el" href="estimator_8h_source.html#l00202">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::SimulatedAnnealingMaximizer()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -1059,7 +1137,37 @@ template&lt;class Model &gt; </div>
 
 <p>Implemented in <a class="el" href="classmappel_1_1TrustRegionMaximizer.html#ac30ffdcd3f25cd0cbb066cdb5d28082a">mappel::TrustRegionMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1QuasiNewtonMaximizer.html#ae73faf020acbbe1fbf3743ebf8860a38">mappel::QuasiNewtonMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1NewtonMaximizer.html#aa3383487285e0268946005ddc14a0358">mappel::NewtonMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1NewtonDiagonalMaximizer.html#af8c0db30eb3acfdedef1f17dfcefb6e9">mappel::NewtonDiagonalMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1SimulatedAnnealingMaximizer.html#aac0fdc481666bf76ec4387c9c57c9e71">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussMLE.html#af18f123ff581a8ef7332c38d66c6bd42">mappel::CGaussMLE&lt; Model &gt;</a>, <a class="el" href="classmappel_1_1CGaussHeuristicEstimator.html#aaff25d03e3c0f6f41d72f161c4d2f78a">mappel::CGaussHeuristicEstimator&lt; Model &gt;</a>, and <a class="el" href="classmappel_1_1HeuristicEstimator.html#a6c9efb24639627b3f3b3eb151e02d43b">mappel::HeuristicEstimator&lt; Model &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00151">mappel::Estimator&lt; Model &gt;::compute_profile_estimate()</a>, and <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abfde3944bbb9d4af107fbafb543f2376"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Model &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classmappel_1_1Estimator.html">mappel::Estimator</a>&lt; Model &gt;::record_exit_code </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edc">ExitCode</a>&#160;</td>
+          <td class="paramname"><em>code</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classmappel_1_1ThreadedEstimator.html#a8fefc448211f9caa3612ba4f34b006ab">mappel::ThreadedEstimator&lt; Model &gt;</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00242">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00090">mappel::Estimator&lt; Model &gt;::estimate_max()</a>.</p>
 
 </div>
 </div>
@@ -1097,9 +1205,11 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00203">203</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00266">266</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00222">mappel::ThreadedEstimator&lt; Model &gt;::estimate_max_stack()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00246">mappel::ThreadedEstimator&lt; Model &gt;::estimate_profile_stack()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00112">mappel::Estimator&lt; Model &gt;::num_estimations</a>, and <a class="el" href="estimator_8h_source.html#l00113">mappel::Estimator&lt; Model &gt;::total_walltime</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00090">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, <a class="el" href="estimator__impl_8h_source.html#l00158">mappel::Estimator&lt; Model &gt;::estimate_max_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00285">mappel::ThreadedEstimator&lt; Model &gt;::estimate_max_stack()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00323">mappel::ThreadedEstimator&lt; Model &gt;::estimate_profile_stack()</a>.</p>
 
 </div>
 </div>
@@ -1119,9 +1229,11 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00049">49</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator__impl_8h_source.html#l00054">54</a> of file <a class="el" href="estimator__impl_8h_source.html">estimator_impl.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00040">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>References <a class="el" href="estimator_8h_source.html#l00109">mappel::Estimator&lt; Model &gt;::model</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00052">mappel::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
 
 </div>
 </div>
@@ -1165,6 +1277,32 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a490b648fdbd7ddae7ce41fbf26e29b48"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Model &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacemappel.html#ac63743dcd42180127307cd0e4ecdd784">IdxVecT</a> <a class="el" href="classmappel_1_1Estimator.html">mappel::Estimator</a>&lt; Model &gt;::exit_counts</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00114">114</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00218">mappel::Estimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00200">mappel::Estimator&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00386">mappel::ThreadedEstimator&lt; Model &gt;::record_exit_code()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8322546d87ccdf01f8b0dcd9dae509f0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1185,9 +1323,9 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00097">97</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00109">109</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01354">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::anneal()</a>, <a class="el" href="estimator__impl_8h_source.html#l00530">mappel::IterativeMaximizer&lt; Model &gt;::backtrack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00287">mappel::ThreadedEstimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00341">mappel::CGaussMLE&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l01335">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00628">mappel::IterativeMaximizer&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00366">mappel::CGaussMLE&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l01344">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00653">mappel::IterativeMaximizer&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00672">mappel::IterativeMaximizer&lt; Model &gt;::compute_profile_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00222">mappel::ThreadedEstimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00246">mappel::ThreadedEstimator&lt; Model &gt;::estimate_profile_stack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00690">mappel::IterativeMaximizer&lt; Model &gt;::local_maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00699">mappel::NewtonDiagonalMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00736">mappel::NewtonMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00787">mappel::QuasiNewtonMaximizer&lt; Model &gt;::maximize()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00862">mappel::TrustRegionMaximizer&lt; Model &gt;::maximize()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01552">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::anneal()</a>, <a class="el" href="estimator__impl_8h_source.html#l00647">mappel::IterativeMaximizer&lt; Model &gt;::backtrack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00183">mappel::Estimator&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00471">mappel::CGaussMLE&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l01532">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00753">mappel::IterativeMaximizer&lt; Model &gt;::compute_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00242">mappel::Estimator&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00498">mappel::CGaussMLE&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l01541">mappel::SimulatedAnnealingMaximizer&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00768">mappel::IterativeMaximizer&lt; Model &gt;::compute_estimate_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00192">mappel::Estimator&lt; Model &gt;::compute_profile_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00797">mappel::IterativeMaximizer&lt; Model &gt;::compute_profile_estimate()</a>, <a class="el" href="estimator__impl_8h_source.html#l00064">mappel::Estimator&lt; Model &gt;::estimate_max()</a>, <a class="el" href="estimator__impl_8h_source.html#l00158">mappel::Estimator&lt; Model &gt;::estimate_max_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00170">mappel::Estimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00285">mappel::ThreadedEstimator&lt; Model &gt;::estimate_max_stack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00323">mappel::ThreadedEstimator&lt; Model &gt;::estimate_profile_stack()</a>, <a class="el" href="estimator__impl_8h_source.html#l00414">mappel::HeuristicEstimator&lt; Model &gt;::get_debug_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00050">mappel::Estimator&lt; Model &gt;::get_model()</a>, <a class="el" href="estimator__impl_8h_source.html#l00811">mappel::IterativeMaximizer&lt; Model &gt;::local_maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00820">mappel::NewtonDiagonalMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00857">mappel::NewtonMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00933">mappel::QuasiNewtonMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l01059">mappel::TrustRegionMaximizer&lt; Model &gt;::maximize()</a>, <a class="el" href="estimator__impl_8h_source.html#l00386">mappel::ThreadedEstimator&lt; Model &gt;::record_exit_code()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00054">mappel::Estimator&lt; Model &gt;::set_model()</a>.</p>
 
 </div>
 </div>
@@ -1211,9 +1349,33 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00100">100</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00112">112</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00271">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00459">mappel::IterativeMaximizer&lt; Model &gt;::get_stats()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00218">mappel::Estimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00200">mappel::Estimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00361">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00588">mappel::IterativeMaximizer&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00266">mappel::Estimator&lt; Model &gt;::record_walltime()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="afcec036c4d78c12d427e0a733a00a48e"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Model &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int <a class="el" href="classmappel_1_1Estimator.html">mappel::Estimator</a>&lt; Model &gt;::NumExitCodes = 9</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00039">39</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
 </div>
 </div>
@@ -1237,9 +1399,9 @@ template&lt;class Model &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00101">101</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00113">113</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00271">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00218">mappel::Estimator&lt; Model &gt;::clear_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00200">mappel::Estimator&lt; Model &gt;::get_stats()</a>, <a class="el" href="estimator__impl_8h_source.html#l00361">mappel::ThreadedEstimator&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00266">mappel::Estimator&lt; Model &gt;::record_walltime()</a>.</p>
 
 </div>
 </div>

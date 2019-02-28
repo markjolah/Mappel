@@ -7,6 +7,5 @@ var searchData=
   ['eta_5fsigma',['eta_sigma',['../classmappel_1_1MCMCAdaptor1Ds.html#adecf7d63c176c03493f914b544895c1c',1,'mappel::MCMCAdaptor1Ds::eta_sigma()'],['../classmappel_1_1MCMCAdaptor2Ds.html#ae5305087fd5abee9b38324be42d57a70',1,'mappel::MCMCAdaptor2Ds::eta_sigma()']]],
   ['eta_5fx',['eta_x',['../classmappel_1_1MCMCAdaptor1D.html#ae5787e38c9cef6168acf6fc5d3216693',1,'mappel::MCMCAdaptor1D']]],
   ['eta_5fy',['eta_y',['../classmappel_1_1MCMCAdaptor2D.html#a8e49652147538fe2a12943522f1a8b30',1,'mappel::MCMCAdaptor2D']]],
-  ['exit_5fcode',['exit_code',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#abf4f25be02f47143a077c7ac6419aed6',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['exit_5fcounts',['exit_counts',['../classmappel_1_1IterativeMaximizer.html#a8a3554d07f510ab9e68d884307f937cc',1,'mappel::IterativeMaximizer']]]
+  ['exit_5fcounts',['exit_counts',['../classmappel_1_1Estimator.html#a490b648fdbd7ddae7ce41fbf26e29b48',1,'mappel::Estimator']]]
 ];

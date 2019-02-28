@@ -844,7 +844,7 @@ References mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, and mappel\+::\+Image
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), and mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug().
+Referenced by mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), and mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
 
 \index{mappel@{mappel}!cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate@{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate}}
 \index{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate@{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate}!mappel@{mappel}}
@@ -947,7 +947,7 @@ References copy\+\_\+\+Usym\+\_\+mat().
 
 
 
-Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), and cholesky\+\_\+make\+\_\+positive\+\_\+definite().
+Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+make\+\_\+positive\+\_\+definite(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel@{mappel}!cholesky\+\_\+convert\+\_\+lower\+\_\+triangular@{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular}}
 \index{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular@{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular}!mappel@{mappel}}
@@ -1022,7 +1022,7 @@ Definition at line 184 of file numerical.\+cpp.
 
 
 
-Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
+Referenced by mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
 
 \index{mappel@{mappel}!copy\+\_\+\+Lsym\+\_\+mat@{copy\+\_\+\+Lsym\+\_\+mat}}
 \index{copy\+\_\+\+Lsym\+\_\+mat@{copy\+\_\+\+Lsym\+\_\+mat}!mappel@{mappel}}
@@ -1048,7 +1048,7 @@ Definition at line 13 of file numerical.\+cpp.
 
 
 
-Referenced by cholesky\+\_\+convert\+\_\+full\+\_\+matrix().
+Referenced by cholesky\+\_\+convert\+\_\+full\+\_\+matrix(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel@{mappel}!copy\+\_\+\+Usym\+\_\+mat\+\_\+stack@{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack}}
 \index{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack@{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack}!mappel@{mappel}}
@@ -2130,7 +2130,7 @@ Definition at line 127 of file numerical.\+cpp.
 
 
 
-Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), and cholesky\+\_\+make\+\_\+positive\+\_\+definite().
+Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+make\+\_\+positive\+\_\+definite(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel@{mappel}!normal\+\_\+prior\+\_\+grad@{normal\+\_\+prior\+\_\+grad}}
 \index{normal\+\_\+prior\+\_\+grad@{normal\+\_\+prior\+\_\+grad}!mappel@{mappel}}
@@ -2243,22 +2243,6 @@ Referenced by make\+\_\+unique().
 
 \index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, Estimator$<$ Model $>$ \&estimator)}{operator<<(std::ostream &out, Estimator< Model > &estimator)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::ostream\& mappel\+::operator$<$$<$ (
-\begin{DoxyParamCaption}
-\item[{std\+::ostream \&}]{out, }
-\item[{{\bf Estimator}$<$ Model $>$ \&}]{estimator}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}{}\label{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}
-
-
-Definition at line 175 of file estimator\+\_\+impl.\+h.
-
-
-
-References mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats().
-
-\index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
-\index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, const Gauss1\+Ds\+Model\+::\+Stencil \&s)}{operator<<(std::ostream &out, const Gauss1DsModel::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& mappel\+::operator$<$$<$ (
 \begin{DoxyParamCaption}
 \item[{std\+::ostream \&}]{out, }
@@ -2272,6 +2256,18 @@ Definition at line 182 of file Gauss1\+Ds\+Model.\+cpp.
 
 
 References mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::derivatives\+\_\+computed, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::dx, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+DX, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+D\+XS, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+D\+X\+S2, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+D\+X\+SX, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+Gx, print\+\_\+vec\+\_\+row(), T\+E\+R\+M\+\_\+\+B\+L\+UE, T\+E\+R\+M\+\_\+\+C\+Y\+AN, T\+E\+R\+M\+\_\+\+W\+H\+I\+TE, mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::theta, and mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::X.
+
+\index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, Estimator$<$ Model $>$ \&estimator)}{operator<<(std::ostream &out, Estimator< Model > &estimator)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::ostream\& mappel\+::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{{\bf Estimator}$<$ Model $>$ \&}]{estimator}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}{}\label{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}
+
+
+Definition at line 226 of file estimator\+\_\+impl.\+h.
 
 \index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
@@ -2389,7 +2385,7 @@ References print\+\_\+labeled\+\_\+image().
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
 
 \index{mappel@{mappel}!print\+\_\+image@{print\+\_\+image}}
 \index{print\+\_\+image@{print\+\_\+image}!mappel@{mappel}}

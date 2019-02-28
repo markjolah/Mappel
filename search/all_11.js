@@ -31,5 +31,5 @@ var searchData=
   ['total_5fwalltime',['total_walltime',['../classmappel_1_1Estimator.html#a5a408458a111c5222193871fa6bb6644',1,'mappel::Estimator']]],
   ['trustregionmaximizer',['TrustRegionMaximizer',['../classmappel_1_1TrustRegionMaximizer.html',1,'mappel']]],
   ['trustregionmaximizer',['TrustRegionMaximizer',['../classmappel_1_1TrustRegionMaximizer.html#a9d9002121c30cbcb3eb2833a84a6e623',1,'mappel::TrustRegionMaximizer']]],
-  ['trustregionradius',['TrustRegionRadius',['../classmappel_1_1IterativeMaximizer.html#a5dc8660cf33abf3f3a576f051466521caadd208e6fbd6ef5ab84a287f259c3b81',1,'mappel::IterativeMaximizer']]]
+  ['trustregionradius',['TrustRegionRadius',['../classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81',1,'mappel::Estimator']]]
 ];

@@ -2,7 +2,7 @@ var searchData=
 [
   ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
   ['record_5fbacktrack',['record_backtrack',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a8c82784b23315be8f74b968ee4188388',1,'mappel::IterativeMaximizer::MaximizerData::record_backtrack(double rejected_rllh)'],['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#ae60e71250e72ce3ce5cad912df8f16cf',1,'mappel::IterativeMaximizer::MaximizerData::record_backtrack(const ParamT&lt; Model &gt; &amp;rejected_theta, double rejected_rllh)']]],
-  ['record_5fexit',['record_exit',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af2e61c659a8cc78365bd801026c2f6a9',1,'mappel::IterativeMaximizer::MaximizerData']]],
+  ['record_5fexit_5fcode',['record_exit_code',['../classmappel_1_1Estimator.html#abfde3944bbb9d4af107fbafb543f2376',1,'mappel::Estimator::record_exit_code()'],['../classmappel_1_1ThreadedEstimator.html#a8fefc448211f9caa3612ba4f34b006ab',1,'mappel::ThreadedEstimator::record_exit_code()']]],
   ['record_5fiteration',['record_iteration',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a1096048bf29ccbc45e4a60dc6cbf7b2c',1,'mappel::IterativeMaximizer::MaximizerData::record_iteration()'],['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a9eca9cd87534fa88ff6b1116853123d0',1,'mappel::IterativeMaximizer::MaximizerData::record_iteration(const ParamT&lt; Model &gt; &amp;accepted_theta)']]],
   ['record_5frun_5fstatistics',['record_run_statistics',['../classmappel_1_1IterativeMaximizer.html#af5614c292f139b5032b733a8d6fdf73e',1,'mappel::IterativeMaximizer']]],
   ['record_5fwalltime',['record_walltime',['../classmappel_1_1Estimator.html#a50125572d3b87ebcf1ffb27a8d8c643d',1,'mappel::Estimator']]],

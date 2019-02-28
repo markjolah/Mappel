@@ -15,16 +15,18 @@ Inheritance diagram for mappel\+:\+:Quasi\+Newton\+Maximizer$<$ Model $>$\+:\beg
 \item 
 using \hyperlink{classmappel_1_1QuasiNewtonMaximizer_a558d3c5e494648dcb756de6a2779402e}{Maximizer\+Data} = typename \hyperlink{classmappel_1_1IterativeMaximizer}{Iterative\+Maximizer}$<$ Model $>$\+::\hyperlink{classmappel_1_1QuasiNewtonMaximizer_a558d3c5e494648dcb756de6a2779402e}{Maximizer\+Data}
 \item 
-enum \hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521c}{Exit\+Code} \+: IdxT \{ \\*
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca3476bf9c3af766198bfbd4f065a51e69}{Exit\+Code\+::\+Unassigned} = 99, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521cabbf52264f7a6e91c48a242f95aeed3db}{Exit\+Code\+::\+Max\+Iter} = 6, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca9e5d3183756d69b44432394db6b6fd86}{Exit\+Code\+::\+Max\+Backtracks} = 5, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521caadd208e6fbd6ef5ab84a287f259c3b81}{Exit\+Code\+::\+Trust\+Region\+Radius} = 4, 
+enum \hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{Exit\+Code} \+: IdxT \{ \\*
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}{Exit\+Code\+::\+Unassigned} = 8, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}{Exit\+Code\+::\+Max\+Iter} = 7, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}{Exit\+Code\+::\+Max\+Backtracks} = 6, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}{Exit\+Code\+::\+Trust\+Region\+Radius} = 5, 
 \\*
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d0cc41d71102a7952fefe3c63244fd4}{Exit\+Code\+::\+Grad\+Ratio} = 3, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d75b053f108781c02ac7c22facc4338}{Exit\+Code\+::\+Function\+Change} = 2, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca071449462d0c247e47313eb8c3129dd0}{Exit\+Code\+::\+Step\+Size} = 1, 
-\hyperlink{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca902b0d55fddef6f8d651fe1035b7d4bd}{Exit\+Code\+::\+Error} = 0
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}{Exit\+Code\+::\+Grad\+Ratio} = 4, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}{Exit\+Code\+::\+Function\+Change} = 3, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}{Exit\+Code\+::\+Step\+Size} = 2, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}{Exit\+Code\+::\+Success} = 1, 
+\\*
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}{Exit\+Code\+::\+Error} = 0
  \}
 \end{DoxyCompactItemize}
 \subsubsection*{Public Member Functions}
@@ -77,7 +79,7 @@ void \hyperlink{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}{esti
 \subsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-static constexpr int \hyperlink{classmappel_1_1IterativeMaximizer_a04888d87aa205d54e7cae5a97d1c1e75}{Num\+Exit\+Codes} = 7
+static constexpr int \hyperlink{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}{Num\+Exit\+Codes} = 9
 \end{DoxyCompactItemize}
 \subsubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -100,6 +102,8 @@ bool \hyperlink{classmappel_1_1IterativeMaximizer_ac033d2b23a6a861e6d7adbe35f176
 \item 
 bool \hyperlink{classmappel_1_1IterativeMaximizer_aef9b61d66d785a1a06dd2c75c3166435}{convergence\+\_\+test} (\hyperlink{classmappel_1_1QuasiNewtonMaximizer_a558d3c5e494648dcb756de6a2779402e}{Maximizer\+Data} \&data)
 \item 
+void \hyperlink{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}{record\+\_\+exit\+\_\+code} (\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{Exit\+Code} code)
+\item 
 void \hyperlink{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}{record\+\_\+walltime} (Clock\+T\+::time\+\_\+point start\+\_\+walltime, int nimages)
 \end{DoxyCompactItemize}
 \subsubsection*{Protected Attributes}
@@ -107,9 +111,9 @@ void \hyperlink{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}{reco
 \item 
 int \hyperlink{classmappel_1_1IterativeMaximizer_ac888935f332b069836a559f44cd267c7}{max\+\_\+iterations}
 \item 
-double \hyperlink{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}{epsilon} = sqrt(std\+::numeric\+\_\+limits$<$double$>$\+::epsilon())
+double \hyperlink{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}{epsilon} = 1e-\/6
 \item 
-double \hyperlink{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}{delta} = sqrt(std\+::numeric\+\_\+limits$<$double$>$\+::\hyperlink{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}{epsilon}())
+double \hyperlink{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}{delta} = 1e-\/6
 \item 
 double \hyperlink{classmappel_1_1IterativeMaximizer_a871576ad8b418a1f05df6a9eba2c60ab}{lambda\+\_\+min} = 0.\+05
 \item 
@@ -125,8 +129,6 @@ int \hyperlink{classmappel_1_1IterativeMaximizer_afbb76db27b845efa8e958611dd3c8d
 \item 
 int \hyperlink{classmappel_1_1IterativeMaximizer_a76de3653a5f2c200ad6865372eb9c154}{total\+\_\+der\+\_\+evals} = 0
 \item 
-\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1IterativeMaximizer_a8a3554d07f510ab9e68d884307f937cc}{exit\+\_\+counts}
-\item 
 \hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1IterativeMaximizer_a80280950668483fccde55616ecc38b7b}{last\+\_\+backtrack\+\_\+idxs}
 \item 
 int \hyperlink{classmappel_1_1ThreadedEstimator_a31391f8aaab3484f58bfdedbdb22be42}{max\+\_\+threads}
@@ -140,6 +142,8 @@ Model \& \hyperlink{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}{
 int \hyperlink{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}{num\+\_\+estimations} = 0
 \item 
 double \hyperlink{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}{total\+\_\+walltime} = 0.
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}{exit\+\_\+counts}
 \end{DoxyCompactItemize}
 
 
@@ -149,7 +153,7 @@ class mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$}
 
 
 
-Definition at line 350 of file estimator.\+h.
+Definition at line 361 of file estimator.\+h.
 
 
 
@@ -159,38 +163,40 @@ Definition at line 350 of file estimator.\+h.
 \paragraph[{\texorpdfstring{Maximizer\+Data}{MaximizerData}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Quasi\+Newton\+Maximizer}$<$ Model $>$\+::{\bf Maximizer\+Data} =  typename {\bf Iterative\+Maximizer}$<$Model$>$\+::{\bf Maximizer\+Data}}\hypertarget{classmappel_1_1QuasiNewtonMaximizer_a558d3c5e494648dcb756de6a2779402e}{}\label{classmappel_1_1QuasiNewtonMaximizer_a558d3c5e494648dcb756de6a2779402e}
 
 
-Definition at line 352 of file estimator.\+h.
+Definition at line 363 of file estimator.\+h.
 
 
 
 \subsubsection{Member Enumeration Documentation}
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Exit\+Code@{Exit\+Code}}
 \index{Exit\+Code@{Exit\+Code}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
-\paragraph[{\texorpdfstring{Exit\+Code}{ExitCode}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ enum {\bf mappel\+::\+Iterative\+Maximizer\+::\+Exit\+Code} \+: {\bf IdxT}\hspace{0.3cm}{\ttfamily [strong]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521c}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521c}
+\paragraph[{\texorpdfstring{Exit\+Code}{ExitCode}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ enum {\bf mappel\+::\+Estimator\+::\+Exit\+Code} \+: {\bf IdxT}\hspace{0.3cm}{\ttfamily [strong]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}
 \begin{Desc}
 \item[Enumerator]\par
 \begin{description}
 \index{Unassigned@{Unassigned}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Unassigned@{Unassigned}}\item[{\em 
-Unassigned\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca3476bf9c3af766198bfbd4f065a51e69}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca3476bf9c3af766198bfbd4f065a51e69}
+Unassigned\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}
 }]\index{Max\+Iter@{Max\+Iter}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Max\+Iter@{Max\+Iter}}\item[{\em 
-Max\+Iter\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521cabbf52264f7a6e91c48a242f95aeed3db}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521cabbf52264f7a6e91c48a242f95aeed3db}
+Max\+Iter\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}
 }]\index{Max\+Backtracks@{Max\+Backtracks}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Max\+Backtracks@{Max\+Backtracks}}\item[{\em 
-Max\+Backtracks\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca9e5d3183756d69b44432394db6b6fd86}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca9e5d3183756d69b44432394db6b6fd86}
+Max\+Backtracks\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}
 }]\index{Trust\+Region\+Radius@{Trust\+Region\+Radius}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Trust\+Region\+Radius@{Trust\+Region\+Radius}}\item[{\em 
-Trust\+Region\+Radius\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521caadd208e6fbd6ef5ab84a287f259c3b81}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521caadd208e6fbd6ef5ab84a287f259c3b81}
+Trust\+Region\+Radius\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}
 }]\index{Grad\+Ratio@{Grad\+Ratio}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Grad\+Ratio@{Grad\+Ratio}}\item[{\em 
-Grad\+Ratio\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d0cc41d71102a7952fefe3c63244fd4}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d0cc41d71102a7952fefe3c63244fd4}
+Grad\+Ratio\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}
 }]\index{Function\+Change@{Function\+Change}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Function\+Change@{Function\+Change}}\item[{\em 
-Function\+Change\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d75b053f108781c02ac7c22facc4338}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca8d75b053f108781c02ac7c22facc4338}
+Function\+Change\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}
 }]\index{Step\+Size@{Step\+Size}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Step\+Size@{Step\+Size}}\item[{\em 
-Step\+Size\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca071449462d0c247e47313eb8c3129dd0}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca071449462d0c247e47313eb8c3129dd0}
+Step\+Size\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}
+}]\index{Success@{Success}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Success@{Success}}\item[{\em 
+Success\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}
 }]\index{Error@{Error}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Error@{Error}}\item[{\em 
-Error\hypertarget{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca902b0d55fddef6f8d651fe1035b7d4bd}{}\label{classmappel_1_1IterativeMaximizer_a5dc8660cf33abf3f3a576f051466521ca902b0d55fddef6f8d651fe1035b7d4bd}
+Error\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}
 }]\end{description}
 \end{Desc}
 
 
-Definition at line 198 of file estimator.\+h.
+Definition at line 40 of file estimator.\+h.
 
 
 
@@ -205,7 +211,7 @@ Definition at line 198 of file estimator.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1QuasiNewtonMaximizer_ac24e592534b2022feab101f00b7385df}{}\label{classmappel_1_1QuasiNewtonMaximizer_ac24e592534b2022feab101f00b7385df}
 
 
-Definition at line 354 of file estimator.\+h.
+Definition at line 365 of file estimator.\+h.
 
 
 
@@ -219,11 +225,11 @@ Definition at line 354 of file estimator.\+h.
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_ac033d2b23a6a861e6d7adbe35f17624e}{}\label{classmappel_1_1IterativeMaximizer_ac033d2b23a6a861e6d7adbe35f17624e}
 
 
-Definition at line 530 of file estimator\+\_\+impl.\+h.
+Definition at line 647 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::alpha, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::fixed\+\_\+parameter\+\_\+scalar, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::grad, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::has\+\_\+fixed\+\_\+parameters, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::im, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Max\+Backtracks, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::restore\+\_\+stencil(), mappel\+::methods\+::objective\+::rllh(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+stencil(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::saved\+\_\+theta(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+stencil(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::step.
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::alpha, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::free\+\_\+parameters, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::grad, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::im, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::num\+\_\+fixed\+\_\+parameters, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+backtrack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+iteration(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::restore\+\_\+stencil(), mappel\+::methods\+::objective\+::rllh(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+stencil(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::saved\+\_\+theta(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+stencil(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::step.
 
 
 
@@ -242,11 +248,11 @@ Reimplemented from \hyperlink{classmappel_1_1ThreadedEstimator_a8acce3a5a8912840
 
 
 
-Definition at line 504 of file estimator\+\_\+impl.\+h.
+Definition at line 625 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::exit\+\_\+counts, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
+References mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!compute\+\_\+estimate@{compute\+\_\+estimate}}
 \index{compute\+\_\+estimate@{compute\+\_\+estimate}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -265,11 +271,11 @@ Default base class implementation computes rllh and obsI seperately from stencil
 
 
 
-Definition at line 142 of file estimator\+\_\+impl.\+h.
+Definition at line 183 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::observed\+\_\+information().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::model, and mappel\+::methods\+::observed\+\_\+information().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!compute\+\_\+estimate@{compute\+\_\+estimate}}
 \index{compute\+\_\+estimate@{compute\+\_\+estimate}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -286,11 +292,11 @@ Implements \hyperlink{classmappel_1_1Estimator_aa8b8c7f835056c94de1f21bff2ef205b
 
 
 
-Definition at line 628 of file estimator\+\_\+impl.\+h.
+Definition at line 753 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Error, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::print\+\_\+image(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta().
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!compute\+\_\+estimate\+\_\+debug@{compute\+\_\+estimate\+\_\+debug}}
 \index{compute\+\_\+estimate\+\_\+debug@{compute\+\_\+estimate\+\_\+debug}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -308,11 +314,11 @@ Reimplemented from \hyperlink{classmappel_1_1Estimator_a29c41d423941e8b86add3e49
 
 
 
-Definition at line 653 of file estimator\+\_\+impl.\+h.
+Definition at line 768 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Error, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence\+\_\+rllh(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil().
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+theta\+\_\+sequence\+\_\+rllh(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::print\+\_\+image(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::stencil().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!compute\+\_\+profile\+\_\+estimate@{compute\+\_\+profile\+\_\+estimate}}
 \index{compute\+\_\+profile\+\_\+estimate@{compute\+\_\+profile\+\_\+estimate}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -331,11 +337,11 @@ Reimplemented from \hyperlink{classmappel_1_1Estimator_a273f65624e06688cd4b1126e
 
 
 
-Definition at line 672 of file estimator\+\_\+impl.\+h.
+Definition at line 797 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Error, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+fixed\+\_\+parameters(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta().
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::set\+\_\+fixed\+\_\+parameters(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!convergence\+\_\+test@{convergence\+\_\+test}}
 \index{convergence\+\_\+test@{convergence\+\_\+test}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -346,15 +352,15 @@ References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Error, mappel\+::\
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_aef9b61d66d785a1a06dd2c75c3166435}{}\label{classmappel_1_1IterativeMaximizer_aef9b61d66d785a1a06dd2c75c3166435}
 
 
-Definition at line 606 of file estimator\+\_\+impl.\+h.
+Definition at line 731 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::delta, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::epsilon, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::fixed\+\_\+parameter\+\_\+scalar, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Function\+Change, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::grad, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::has\+\_\+fixed\+\_\+parameters, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::record\+\_\+exit(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::saved\+\_\+theta(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Step\+Size, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta().
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::delta, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::epsilon, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::free\+\_\+parameters, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::grad, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::num\+\_\+fixed\+\_\+parameters, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::rllh, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::saved\+\_\+theta(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::theta().
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -365,15 +371,15 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mapp
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a4406c994d5b6239e75628ea5d479bfa2}{}\label{classmappel_1_1Estimator_a4406c994d5b6239e75628ea5d479bfa2}
 
 
-Definition at line 59 of file estimator\+\_\+impl.\+h.
+Definition at line 64 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
-Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -385,11 +391,11 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aa8aa62047bfc28b1df3a9261da4f38a1}{}\label{classmappel_1_1Estimator_aa8aa62047bfc28b1df3a9261da4f38a1}
 
 
-Definition at line 77 of file estimator\+\_\+impl.\+h.
+Definition at line 82 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max(), and mappel\+::methods\+::objective\+::rllh().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::methods\+::objective\+::rllh().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -401,11 +407,11 @@ References mappel\+::methods\+::estimate\+\_\+max(), and mappel\+::methods\+::ob
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_ab1be1fb34a71f9a46700c9d455fd5daf}{}\label{classmappel_1_1Estimator_ab1be1fb34a71f9a46700c9d455fd5daf}
 
 
-Definition at line 68 of file estimator\+\_\+impl.\+h.
+Definition at line 73 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -418,7 +424,11 @@ References mappel\+::methods\+::estimate\+\_\+max().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a2544f56248cb0f0763c964ddfaad32cc}{}\label{classmappel_1_1Estimator_a2544f56248cb0f0763c964ddfaad32cc}
 
 
-Definition at line 85 of file estimator\+\_\+impl.\+h.
+Definition at line 90 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::print\+\_\+image(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -432,11 +442,11 @@ Definition at line 85 of file estimator\+\_\+impl.\+h.
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a79f2d1c46789fed681985bb670e5ca37}{}\label{classmappel_1_1Estimator_a79f2d1c46789fed681985bb670e5ca37}
 
 
-Definition at line 97 of file estimator\+\_\+impl.\+h.
+Definition at line 119 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -451,7 +461,11 @@ References mappel\+::methods\+::estimate\+\_\+max().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a8f85cf26c72c34d0071ccd2f8bb56abd}{}\label{classmappel_1_1Estimator_a8f85cf26c72c34d0071ccd2f8bb56abd}
 
 
-Definition at line 106 of file estimator\+\_\+impl.\+h.
+Definition at line 128 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::print\+\_\+image(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::rllh().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
 \index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -468,11 +482,11 @@ Definition at line 106 of file estimator\+\_\+impl.\+h.
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}{}\label{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}
 
 
-Definition at line 117 of file estimator\+\_\+impl.\+h.
+Definition at line 158 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::observed\+\_\+information(), and mappel\+::methods\+::objective\+::rllh().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::methods\+::observed\+\_\+information(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::rllh().
 
 
 
@@ -490,11 +504,11 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aa1b1c2677df2c6ea9fcf67b6a0856e46}{}\label{classmappel_1_1Estimator_aa1b1c2677df2c6ea9fcf67b6a0856e46}
 
 
-Definition at line 129 of file estimator\+\_\+impl.\+h.
+Definition at line 170 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}}
 \index{estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -513,11 +527,11 @@ Implements \hyperlink{classmappel_1_1Estimator_a50c0cdffa2b5e7c45180a92dd3b34073
 
 
 
-Definition at line 222 of file estimator\+\_\+impl.\+h.
+Definition at line 285 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::rethrow(), and omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::run().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::print\+\_\+image(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!estimate\+\_\+profile\+\_\+stack@{estimate\+\_\+profile\+\_\+stack}}
 \index{estimate\+\_\+profile\+\_\+stack@{estimate\+\_\+profile\+\_\+stack}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -537,11 +551,11 @@ Implements \hyperlink{classmappel_1_1Estimator_aa86d466843e5dae1e2eaaecb98012ff4
 
 
 
-Definition at line 246 of file estimator\+\_\+impl.\+h.
+Definition at line 323 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::rethrow(), and omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::run().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::print\+\_\+image(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}}
 \index{get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -556,7 +570,7 @@ Reimplemented from \hyperlink{classmappel_1_1ThreadedEstimator_ab281b131d160352e
 
 
 
-Definition at line 488 of file estimator\+\_\+impl.\+h.
+Definition at line 609 of file estimator\+\_\+impl.\+h.
 
 
 
@@ -571,7 +585,11 @@ References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+:
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a6c0b757d89033d70bdf03ad1fe6b03da}{}\label{classmappel_1_1Estimator_a6c0b757d89033d70bdf03ad1fe6b03da}
 
 
-Definition at line 45 of file estimator\+\_\+impl.\+h.
+Definition at line 50 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
@@ -590,15 +608,15 @@ Reimplemented from \hyperlink{classmappel_1_1ThreadedEstimator_ab216e13ec1978583
 
 
 
-Definition at line 459 of file estimator\+\_\+impl.\+h.
+Definition at line 588 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::delta, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::epsilon, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Error, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::exit\+\_\+counts, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Function\+Change, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Grad\+Ratio, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Max\+Backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Max\+Iter, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Step\+Size, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Trust\+Region\+Radius.
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::delta, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::epsilon, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
+Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!local\+\_\+maximize@{local\+\_\+maximize}}
 \index{local\+\_\+maximize@{local\+\_\+maximize}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -616,7 +634,7 @@ Perform a local maximization to finish off a simulated annealing run.
 
 
 
-Definition at line 690 of file estimator\+\_\+impl.\+h.
+Definition at line 811 of file estimator\+\_\+impl.\+h.
 
 
 
@@ -646,11 +664,11 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+esti
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1QuasiNewtonMaximizer_ab4d32d8ba90d4355262a228753619b9f}{}\label{classmappel_1_1QuasiNewtonMaximizer_ab4d32d8ba90d4355262a228753619b9f}
 
 
-Definition at line 787 of file estimator\+\_\+impl.\+h.
+Definition at line 933 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::methods\+::objective\+::grad(), mappel\+::methods\+::objective\+::hessian(), mappel\+::is\+\_\+positive\+\_\+definite(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, and mappel\+::\+Estimator$<$ Model $>$\+::model.
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::delta, mappel\+::methods\+::objective\+::grad(), mappel\+::methods\+::objective\+::hessian(), mappel\+::is\+\_\+positive\+\_\+definite(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::max\+\_\+iterations, mappel\+::\+Estimator$<$ Model $>$\+::model, and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!mean\+\_\+backtracks@{mean\+\_\+backtracks}}
 \index{mean\+\_\+backtracks@{mean\+\_\+backtracks}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -693,7 +711,30 @@ Implements \hyperlink{classmappel_1_1Estimator_a403f11575f81e47095e57cc403fd760d
 
 
 
-Definition at line 357 of file estimator.\+h.
+Definition at line 368 of file estimator.\+h.
+
+\index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}}
+\index{record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
+\paragraph[{\texorpdfstring{record\+\_\+exit\+\_\+code(\+Exit\+Code code)}{record_exit_code(ExitCode code)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::record\+\_\+exit\+\_\+code (
+\begin{DoxyParamCaption}
+\item[{{\bf Exit\+Code}}]{code}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}{}\label{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}
+
+
+Implements \hyperlink{classmappel_1_1Estimator_abfde3944bbb9d4af107fbafb543f2376}{mappel\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 386 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::exit\+\_\+counts, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, and mappel\+::methods\+::objective\+::rllh().
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!record\+\_\+run\+\_\+statistics@{record\+\_\+run\+\_\+statistics}}
 \index{record\+\_\+run\+\_\+statistics@{record\+\_\+run\+\_\+statistics}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -704,11 +745,11 @@ Definition at line 357 of file estimator.\+h.
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_af5614c292f139b5032b733a8d6fdf73e}{}\label{classmappel_1_1IterativeMaximizer_af5614c292f139b5032b733a8d6fdf73e}
 
 
-Definition at line 517 of file estimator\+\_\+impl.\+h.
+Definition at line 636 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::exit\+\_\+code, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::exit\+\_\+counts, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+backtrack\+\_\+idxs(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::last\+\_\+backtrack\+\_\+idxs, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+seq, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
+References mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::get\+\_\+backtrack\+\_\+idxs(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::last\+\_\+backtrack\+\_\+idxs, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::n\+Iterations, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::save\+\_\+seq, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+backtracks, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
 
 
 
@@ -724,11 +765,15 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+esti
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}{}\label{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}
 
 
-Definition at line 203 of file estimator\+\_\+impl.\+h.
+Definition at line 266 of file estimator\+\_\+impl.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
+References mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, and mappel\+::\+Estimator$<$ Model $>$\+::total\+\_\+walltime.
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!set\+\_\+model@{set\+\_\+model}}
 \index{set\+\_\+model@{set\+\_\+model}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
@@ -739,7 +784,11 @@ Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aacade4f66038545ad196edf7e8596187}{}\label{classmappel_1_1Estimator_aacade4f66038545ad196edf7e8596187}
 
 
-Definition at line 49 of file estimator\+\_\+impl.\+h.
+Definition at line 54 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
@@ -753,7 +802,7 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 \paragraph[{\texorpdfstring{alpha}{alpha}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::alpha = 1e-\/4\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_ae8a6d8e5c263fa60aaf39fbf96cd6c48}{}\label{classmappel_1_1IterativeMaximizer_ae8a6d8e5c263fa60aaf39fbf96cd6c48}
 
 
-Definition at line 232 of file estimator.\+h.
+Definition at line 245 of file estimator.\+h.
 
 
 
@@ -761,43 +810,43 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), and 
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!delta@{delta}}
 \index{delta@{delta}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
-\paragraph[{\texorpdfstring{delta}{delta}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::delta = sqrt(std\+::numeric\+\_\+limits$<$double$>$\+::{\bf epsilon}())\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}{}\label{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}
+\paragraph[{\texorpdfstring{delta}{delta}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::delta = 1e-\/6\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}{}\label{classmappel_1_1IterativeMaximizer_a0aab5231009711a55325adbeb7d5f282}
 
 
-Definition at line 229 of file estimator.\+h.
+Definition at line 242 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!epsilon@{epsilon}}
 \index{epsilon@{epsilon}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
-\paragraph[{\texorpdfstring{epsilon}{epsilon}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::epsilon = sqrt(std\+::numeric\+\_\+limits$<$double$>$\+::epsilon())\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}{}\label{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}
+\paragraph[{\texorpdfstring{epsilon}{epsilon}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::epsilon = 1e-\/6\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}{}\label{classmappel_1_1IterativeMaximizer_ae727ea0e3cab3924d21ebe9c12fec314}
 
 
-Definition at line 228 of file estimator.\+h.
+Definition at line 241 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!exit\+\_\+counts@{exit\+\_\+counts}}
 \index{exit\+\_\+counts@{exit\+\_\+counts}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
-\paragraph[{\texorpdfstring{exit\+\_\+counts}{exit_counts}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::exit\+\_\+counts\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a8a3554d07f510ab9e68d884307f937cc}{}\label{classmappel_1_1IterativeMaximizer_a8a3554d07f510ab9e68d884307f937cc}
+\paragraph[{\texorpdfstring{exit\+\_\+counts}{exit_counts}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Estimator}$<$ Model $>$\+::exit\+\_\+counts\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}{}\label{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}
 
 
-Definition at line 240 of file estimator.\+h.
+Definition at line 114 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!lambda\+\_\+min@{lambda\+\_\+min}}
 \index{lambda\+\_\+min@{lambda\+\_\+min}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{lambda\+\_\+min}{lambda_min}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::lambda\+\_\+min = 0.\+05\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a871576ad8b418a1f05df6a9eba2c60ab}{}\label{classmappel_1_1IterativeMaximizer_a871576ad8b418a1f05df6a9eba2c60ab}
 
 
-Definition at line 231 of file estimator.\+h.
+Definition at line 244 of file estimator.\+h.
 
 
 
@@ -808,7 +857,7 @@ Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+re
 \paragraph[{\texorpdfstring{last\+\_\+backtrack\+\_\+idxs}{last_backtrack_idxs}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::last\+\_\+backtrack\+\_\+idxs\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a80280950668483fccde55616ecc38b7b}{}\label{classmappel_1_1IterativeMaximizer_a80280950668483fccde55616ecc38b7b}
 
 
-Definition at line 242 of file estimator.\+h.
+Definition at line 255 of file estimator.\+h.
 
 
 
@@ -819,7 +868,7 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+debug\+\
 \paragraph[{\texorpdfstring{max\+\_\+backtracks}{max_backtracks}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::max\+\_\+backtracks = 8\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a72148f311140be63ded9794921a7c112}{}\label{classmappel_1_1IterativeMaximizer_a72148f311140be63ded9794921a7c112}
 
 
-Definition at line 233 of file estimator.\+h.
+Definition at line 246 of file estimator.\+h.
 
 
 
@@ -830,58 +879,58 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mapp
 \paragraph[{\texorpdfstring{max\+\_\+iterations}{max_iterations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::max\+\_\+iterations\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_ac888935f332b069836a559f44cd267c7}{}\label{classmappel_1_1IterativeMaximizer_ac888935f332b069836a559f44cd267c7}
 
 
-Definition at line 225 of file estimator.\+h.
+Definition at line 238 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!max\+\_\+threads@{max\+\_\+threads}}
 \index{max\+\_\+threads@{max\+\_\+threads}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{max\+\_\+threads}{max_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::max\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ThreadedEstimator_a31391f8aaab3484f58bfdedbdb22be42}{}\label{classmappel_1_1ThreadedEstimator_a31391f8aaab3484f58bfdedbdb22be42}
 
 
-Definition at line 127 of file estimator.\+h.
+Definition at line 142 of file estimator.\+h.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!model@{model}}
 \index{model@{model}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{model}{model}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ Model\& {\bf mappel\+::\+Estimator}$<$ Model $>$\+::model\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}{}\label{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}
 
 
-Definition at line 97 of file estimator.\+h.
+Definition at line 109 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+model(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::set\+\_\+model().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!mtx@{mtx}}
 \index{mtx@{mtx}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{mtx}{mtx}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::mutex {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::mtx\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ThreadedEstimator_a4538fd0860243430bfd47e8064c8cfe4}{}\label{classmappel_1_1ThreadedEstimator_a4538fd0860243430bfd47e8064c8cfe4}
 
 
-Definition at line 129 of file estimator.\+h.
+Definition at line 144 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!num\+\_\+estimations@{num\+\_\+estimations}}
 \index{num\+\_\+estimations@{num\+\_\+estimations}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{num\+\_\+estimations}{num_estimations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Estimator}$<$ Model $>$\+::num\+\_\+estimations = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}{}\label{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}
 
 
-Definition at line 100 of file estimator.\+h.
+Definition at line 112 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!num\+\_\+threads@{num\+\_\+threads}}
 \index{num\+\_\+threads@{num\+\_\+threads}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{num\+\_\+threads}{num_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::num\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1ThreadedEstimator_a6afa05d7d971f3317ce1602de853123b}{}\label{classmappel_1_1ThreadedEstimator_a6afa05d7d971f3317ce1602de853123b}
 
 
-Definition at line 128 of file estimator.\+h.
+Definition at line 143 of file estimator.\+h.
 
 
 
@@ -889,17 +938,17 @@ Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats()
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!Num\+Exit\+Codes@{Num\+Exit\+Codes}}
 \index{Num\+Exit\+Codes@{Num\+Exit\+Codes}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
-\paragraph[{\texorpdfstring{Num\+Exit\+Codes}{NumExitCodes}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ constexpr int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::Num\+Exit\+Codes = 7\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a04888d87aa205d54e7cae5a97d1c1e75}{}\label{classmappel_1_1IterativeMaximizer_a04888d87aa205d54e7cae5a97d1c1e75}
+\paragraph[{\texorpdfstring{Num\+Exit\+Codes}{NumExitCodes}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ constexpr int {\bf mappel\+::\+Estimator}$<$ Model $>$\+::Num\+Exit\+Codes = 9\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}{}\label{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}
 
 
-Definition at line 197 of file estimator.\+h.
+Definition at line 39 of file estimator.\+h.
 
 \index{mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}!total\+\_\+backtracks@{total\+\_\+backtracks}}
 \index{total\+\_\+backtracks@{total\+\_\+backtracks}!mappel\+::\+Quasi\+Newton\+Maximizer@{mappel\+::\+Quasi\+Newton\+Maximizer}}
 \paragraph[{\texorpdfstring{total\+\_\+backtracks}{total_backtracks}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::total\+\_\+backtracks = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a752717a4e69ba7cd44a6167d0cbdb242}{}\label{classmappel_1_1IterativeMaximizer_a752717a4e69ba7cd44a6167d0cbdb242}
 
 
-Definition at line 237 of file estimator.\+h.
+Definition at line 250 of file estimator.\+h.
 
 
 
@@ -910,7 +959,7 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(
 \paragraph[{\texorpdfstring{total\+\_\+der\+\_\+evals}{total_der_evals}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::total\+\_\+der\+\_\+evals = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a76de3653a5f2c200ad6865372eb9c154}{}\label{classmappel_1_1IterativeMaximizer_a76de3653a5f2c200ad6865372eb9c154}
 
 
-Definition at line 239 of file estimator.\+h.
+Definition at line 252 of file estimator.\+h.
 
 
 
@@ -921,7 +970,7 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(
 \paragraph[{\texorpdfstring{total\+\_\+fun\+\_\+evals}{total_fun_evals}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::total\+\_\+fun\+\_\+evals = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_afbb76db27b845efa8e958611dd3c8d3c}{}\label{classmappel_1_1IterativeMaximizer_afbb76db27b845efa8e958611dd3c8d3c}
 
 
-Definition at line 238 of file estimator.\+h.
+Definition at line 251 of file estimator.\+h.
 
 
 
@@ -932,7 +981,7 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(
 \paragraph[{\texorpdfstring{total\+\_\+iterations}{total_iterations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Iterative\+Maximizer}$<$ Model $>$\+::total\+\_\+iterations = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1IterativeMaximizer_a8d344b09841e61cc726dc430d8451044}{}\label{classmappel_1_1IterativeMaximizer_a8d344b09841e61cc726dc430d8451044}
 
 
-Definition at line 236 of file estimator.\+h.
+Definition at line 249 of file estimator.\+h.
 
 
 
@@ -943,11 +992,11 @@ Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(
 \paragraph[{\texorpdfstring{total\+\_\+walltime}{total_walltime}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Estimator}$<$ Model $>$\+::total\+\_\+walltime = 0.\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}{}\label{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}
 
 
-Definition at line 101 of file estimator.\+h.
+Definition at line 113 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 
 

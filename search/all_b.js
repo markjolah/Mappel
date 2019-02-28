@@ -17,7 +17,9 @@ var searchData=
   ['notimplementederror',['NotImplementedError',['../structmappel_1_1NotImplementedError.html',1,'mappel']]],
   ['num_5fdim',['num_dim',['../classmappel_1_1ImageFormat1DBase.html#af81159de9010c3618d2f69349c1f2368',1,'mappel::ImageFormat1DBase::num_dim()'],['../classmappel_1_1ImageFormat2DBase.html#a9c29fcaf30faffc77b41ba556ebb0127',1,'mappel::ImageFormat2DBase::num_dim()']]],
   ['num_5festimations',['num_estimations',['../classmappel_1_1Estimator.html#ab15b88435d6c50a68fac84465d950b12',1,'mappel::Estimator']]],
+  ['num_5ffixed_5fparameters',['num_fixed_parameters',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a879d1d118434be05d354e894c422cb92',1,'mappel::IterativeMaximizer::MaximizerData']]],
   ['num_5fhyperparams',['num_hyperparams',['../classmappel_1_1PointEmitterModel.html#ab2423214fdd81c8212118770b5b17b1f',1,'mappel::PointEmitterModel']]],
+  ['num_5fiterations',['num_iterations',['../classmappel_1_1CGaussMLE.html#a459a28314464b8cd80ff2e4d08dbbeb6',1,'mappel::CGaussMLE::num_iterations()'],['../classmappel_1_1SimulatedAnnealingMaximizer.html#aa116767bae33acaa107913067013e26d',1,'mappel::SimulatedAnnealingMaximizer::num_iterations()']]],
   ['num_5foversample',['num_oversample',['../namespacemappel_1_1mcmc.html#a29219ed7564edad6489889dc2ec2a0d6',1,'mappel::mcmc']]],
   ['num_5fparams',['num_params',['../classmappel_1_1PointEmitterModel.html#a9af0484391bd6021ddc04ac666ab49ad',1,'mappel::PointEmitterModel']]],
   ['num_5fphases',['num_phases',['../classmappel_1_1MCMCAdaptorBase.html#a44b90a984ace712584074dc17831fe25',1,'mappel::MCMCAdaptorBase']]],
@@ -26,5 +28,5 @@ var searchData=
   ['numerical_2eh',['numerical.h',['../numerical_8h.html',1,'']]],
   ['numericalerror',['NumericalError',['../structmappel_1_1NumericalError.html#ab82f79710238ed6d9710b53459b28e40',1,'mappel::NumericalError']]],
   ['numericalerror',['NumericalError',['../structmappel_1_1NumericalError.html',1,'mappel']]],
-  ['numexitcodes',['NumExitCodes',['../classmappel_1_1IterativeMaximizer.html#a04888d87aa205d54e7cae5a97d1c1e75',1,'mappel::IterativeMaximizer']]]
+  ['numexitcodes',['NumExitCodes',['../classmappel_1_1Estimator.html#afcec036c4d78c12d427e0a733a00a48e',1,'mappel::Estimator']]]
 ];

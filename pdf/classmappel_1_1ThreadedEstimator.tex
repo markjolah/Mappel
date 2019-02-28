@@ -10,6 +10,23 @@ Inheritance diagram for mappel\+:\+:Threaded\+Estimator$<$ Model $>$\+:\begin{fi
 \includegraphics[height=1.274175cm]{classmappel_1_1ThreadedEstimator}
 \end{center}
 \end{figure}
+\subsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{Exit\+Code} \+: IdxT \{ \\*
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}{Exit\+Code\+::\+Unassigned} = 8, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}{Exit\+Code\+::\+Max\+Iter} = 7, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}{Exit\+Code\+::\+Max\+Backtracks} = 6, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}{Exit\+Code\+::\+Trust\+Region\+Radius} = 5, 
+\\*
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}{Exit\+Code\+::\+Grad\+Ratio} = 4, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}{Exit\+Code\+::\+Function\+Change} = 3, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}{Exit\+Code\+::\+Step\+Size} = 2, 
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}{Exit\+Code\+::\+Success} = 1, 
+\\*
+\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}{Exit\+Code\+::\+Error} = 0
+ \}
+\end{DoxyCompactItemize}
 \subsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -47,8 +64,15 @@ void \hyperlink{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}{esti
 \item 
 void \hyperlink{classmappel_1_1Estimator_aa1b1c2677df2c6ea9fcf67b6a0856e46}{estimate\+\_\+max\+\_\+stack} (const \hyperlink{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{Model\+Data\+StackT}$<$ Model $>$ \&im\+\_\+stack, \hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \&theta\+\_\+est\+\_\+stack, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&rllh\+\_\+stack, \hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \&obs\+I\+\_\+stack)
 \end{DoxyCompactItemize}
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr int \hyperlink{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}{Num\+Exit\+Codes} = 9
+\end{DoxyCompactItemize}
 \subsubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}{record\+\_\+exit\+\_\+code} (\hyperlink{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{Exit\+Code} code)
 \item 
 virtual \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \hyperlink{classmappel_1_1Estimator_aa8b8c7f835056c94de1f21bff2ef205b}{compute\+\_\+estimate} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&im, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, double \&rllh)=0
 \item 
@@ -74,6 +98,8 @@ Model \& \hyperlink{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}{
 int \hyperlink{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}{num\+\_\+estimations} = 0
 \item 
 double \hyperlink{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}{total\+\_\+walltime} = 0.
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}{exit\+\_\+counts}
 \end{DoxyCompactItemize}
 
 
@@ -83,7 +109,40 @@ class mappel\+::\+Threaded\+Estimator$<$ Model $>$}
 
 We avoid combining \hyperlink{classmappel_1_1Estimator}{Estimator} and \hyperlink{classmappel_1_1ThreadedEstimator}{Threaded\+Estimator} classes so that a future G\+PU implementation can inherit directly from \hyperlink{classmappel_1_1Estimator}{Estimator} as it will present a differnt method for estimate\+\_\+stack pure virtual member function. For now all other (C\+PU) estimators inherit from \hyperlink{classmappel_1_1ThreadedEstimator}{Threaded\+Estimator}. 
 
-Definition at line 113 of file estimator.\+h.
+Definition at line 127 of file estimator.\+h.
+
+
+
+\subsubsection{Member Enumeration Documentation}
+\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Exit\+Code@{Exit\+Code}}
+\index{Exit\+Code@{Exit\+Code}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
+\paragraph[{\texorpdfstring{Exit\+Code}{ExitCode}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ enum {\bf mappel\+::\+Estimator\+::\+Exit\+Code} \+: {\bf IdxT}\hspace{0.3cm}{\ttfamily [strong]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edc}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Unassigned@{Unassigned}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Unassigned@{Unassigned}}\item[{\em 
+Unassigned\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca3476bf9c3af766198bfbd4f065a51e69}
+}]\index{Max\+Iter@{Max\+Iter}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Max\+Iter@{Max\+Iter}}\item[{\em 
+Max\+Iter\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcabbf52264f7a6e91c48a242f95aeed3db}
+}]\index{Max\+Backtracks@{Max\+Backtracks}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Max\+Backtracks@{Max\+Backtracks}}\item[{\em 
+Max\+Backtracks\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca9e5d3183756d69b44432394db6b6fd86}
+}]\index{Trust\+Region\+Radius@{Trust\+Region\+Radius}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Trust\+Region\+Radius@{Trust\+Region\+Radius}}\item[{\em 
+Trust\+Region\+Radius\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edcaadd208e6fbd6ef5ab84a287f259c3b81}
+}]\index{Grad\+Ratio@{Grad\+Ratio}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Grad\+Ratio@{Grad\+Ratio}}\item[{\em 
+Grad\+Ratio\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d0cc41d71102a7952fefe3c63244fd4}
+}]\index{Function\+Change@{Function\+Change}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Function\+Change@{Function\+Change}}\item[{\em 
+Function\+Change\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338}
+}]\index{Step\+Size@{Step\+Size}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Step\+Size@{Step\+Size}}\item[{\em 
+Step\+Size\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca071449462d0c247e47313eb8c3129dd0}
+}]\index{Success@{Success}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Success@{Success}}\item[{\em 
+Success\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca505a83f220c02df2f85c3810cd9ceb38}
+}]\index{Error@{Error}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Error@{Error}}\item[{\em 
+Error\hypertarget{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}{}\label{classmappel_1_1Estimator_a6d599915907ba4d0607fcb958d231edca902b0d55fddef6f8d651fe1035b7d4bd}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 40 of file estimator.\+h.
 
 
 
@@ -97,7 +156,7 @@ Definition at line 113 of file estimator.\+h.
 )}\hypertarget{classmappel_1_1ThreadedEstimator_a38c404495524da7bc9ea8715e7f6a4f6}{}\label{classmappel_1_1ThreadedEstimator_a38c404495524da7bc9ea8715e7f6a4f6}
 
 
-Definition at line 213 of file estimator\+\_\+impl.\+h.
+Definition at line 276 of file estimator\+\_\+impl.\+h.
 
 
 
@@ -119,11 +178,11 @@ Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_af709331a98863a0d8
 
 
 
-Definition at line 287 of file estimator\+\_\+impl.\+h.
+Definition at line 378 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, and mappel\+::methods\+::objective\+::rllh().
+References mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads.
 
 
 
@@ -144,7 +203,7 @@ Implemented in \hyperlink{classmappel_1_1IterativeMaximizer_ad83f7b0a5b4d412f419
 
 
 
-Referenced by mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::name(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::\+Simulated\+Annealing\+Maximizer(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::name(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::name(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!compute\+\_\+estimate@{compute\+\_\+estimate}}
 \index{compute\+\_\+estimate@{compute\+\_\+estimate}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -163,11 +222,11 @@ Default base class implementation computes rllh and obsI seperately from stencil
 
 
 
-Definition at line 142 of file estimator\+\_\+impl.\+h.
+Definition at line 183 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::observed\+\_\+information().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::model, and mappel\+::methods\+::observed\+\_\+information().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!compute\+\_\+estimate\+\_\+debug@{compute\+\_\+estimate\+\_\+debug}}
 \index{compute\+\_\+estimate\+\_\+debug@{compute\+\_\+estimate\+\_\+debug}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -178,18 +237,22 @@ References mappel\+::methods\+::observed\+\_\+information().
 \item[{{\bf Param\+VecT}$<$ Model $>$ \&}]{sequence, }
 \item[{{\bf VecT} \&}]{sequence\+\_\+rllh}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a29c41d423941e8b86add3e493cb1375e}{}\label{classmappel_1_1Estimator_a29c41d423941e8b86add3e493cb1375e}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a29c41d423941e8b86add3e493cb1375e}{}\label{classmappel_1_1Estimator_a29c41d423941e8b86add3e493cb1375e}
 Estimators that produce a sequence of results (e.\+g. Iterative\+Estimators) can override this dummy debug implementation. 
 
 Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_aa45c11a399f29985fc9bd3365e809335}{mappel\+::\+Iterative\+Maximizer$<$ Model $>$}, \hyperlink{classmappel_1_1SimulatedAnnealingMaximizer_a146eedb2f0e4b4a6839c16b288ab7f75}{mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$}, and \hyperlink{classmappel_1_1CGaussMLE_a6bf98b8144f4cd5f548b49f32a95141e}{mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}.
 
 
 
-Definition at line 192 of file estimator\+\_\+impl.\+h.
+Definition at line 242 of file estimator\+\_\+impl.\+h.
 
 
 
-Referenced by mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::name(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::\+Simulated\+Annealing\+Maximizer(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::print\+\_\+image(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::name(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::name(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!compute\+\_\+profile\+\_\+estimate@{compute\+\_\+profile\+\_\+estimate}}
 \index{compute\+\_\+profile\+\_\+estimate@{compute\+\_\+profile\+\_\+estimate}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -208,15 +271,15 @@ Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_a1999fd1fa63c803b3
 
 
 
-Definition at line 151 of file estimator\+\_\+impl.\+h.
+Definition at line 192 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::name().
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
-Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -227,15 +290,15 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a4406c994d5b6239e75628ea5d479bfa2}{}\label{classmappel_1_1Estimator_a4406c994d5b6239e75628ea5d479bfa2}
 
 
-Definition at line 59 of file estimator\+\_\+impl.\+h.
+Definition at line 64 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
-Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -247,11 +310,11 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aa8aa62047bfc28b1df3a9261da4f38a1}{}\label{classmappel_1_1Estimator_aa8aa62047bfc28b1df3a9261da4f38a1}
 
 
-Definition at line 77 of file estimator\+\_\+impl.\+h.
+Definition at line 82 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max(), and mappel\+::methods\+::objective\+::rllh().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::methods\+::objective\+::rllh().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -263,11 +326,11 @@ References mappel\+::methods\+::estimate\+\_\+max(), and mappel\+::methods\+::ob
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_ab1be1fb34a71f9a46700c9d455fd5daf}{}\label{classmappel_1_1Estimator_ab1be1fb34a71f9a46700c9d455fd5daf}
 
 
-Definition at line 68 of file estimator\+\_\+impl.\+h.
+Definition at line 73 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -280,7 +343,11 @@ References mappel\+::methods\+::estimate\+\_\+max().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a2544f56248cb0f0763c964ddfaad32cc}{}\label{classmappel_1_1Estimator_a2544f56248cb0f0763c964ddfaad32cc}
 
 
-Definition at line 85 of file estimator\+\_\+impl.\+h.
+Definition at line 90 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::print\+\_\+image(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -294,11 +361,11 @@ Definition at line 85 of file estimator\+\_\+impl.\+h.
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a79f2d1c46789fed681985bb670e5ca37}{}\label{classmappel_1_1Estimator_a79f2d1c46789fed681985bb670e5ca37}
 
 
-Definition at line 97 of file estimator\+\_\+impl.\+h.
+Definition at line 119 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::estimate\+\_\+max().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max@{estimate\+\_\+max}}
 \index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -313,7 +380,11 @@ References mappel\+::methods\+::estimate\+\_\+max().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a8f85cf26c72c34d0071ccd2f8bb56abd}{}\label{classmappel_1_1Estimator_a8f85cf26c72c34d0071ccd2f8bb56abd}
 
 
-Definition at line 106 of file estimator\+\_\+impl.\+h.
+Definition at line 128 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::print\+\_\+image(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::rllh().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
 \index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -330,11 +401,11 @@ Definition at line 106 of file estimator\+\_\+impl.\+h.
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}{}\label{classmappel_1_1Estimator_a4a581372a320f1c13eeffacf6309911b}
 
 
-Definition at line 117 of file estimator\+\_\+impl.\+h.
+Definition at line 158 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::observed\+\_\+information(), and mappel\+::methods\+::objective\+::rllh().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::methods\+::observed\+\_\+information(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::rllh().
 
 
 
@@ -352,11 +423,11 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aa1b1c2677df2c6ea9fcf67b6a0856e46}{}\label{classmappel_1_1Estimator_aa1b1c2677df2c6ea9fcf67b6a0856e46}
 
 
-Definition at line 129 of file estimator\+\_\+impl.\+h.
+Definition at line 170 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::methods\+::openmp\+::estimate\+\_\+max\+\_\+stack().
+References mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}}
 \index{estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -375,11 +446,11 @@ Implements \hyperlink{classmappel_1_1Estimator_a50c0cdffa2b5e7c45180a92dd3b34073
 
 
 
-Definition at line 222 of file estimator\+\_\+impl.\+h.
+Definition at line 285 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::rethrow(), and omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::run().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::print\+\_\+image(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!estimate\+\_\+profile\+\_\+stack@{estimate\+\_\+profile\+\_\+stack}}
 \index{estimate\+\_\+profile\+\_\+stack@{estimate\+\_\+profile\+\_\+stack}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -399,11 +470,11 @@ Implements \hyperlink{classmappel_1_1Estimator_aa86d466843e5dae1e2eaaecb98012ff4
 
 
 
-Definition at line 246 of file estimator\+\_\+impl.\+h.
+Definition at line 323 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::rethrow(), and omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$\+::run().
+References mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::\+Error, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::print\+\_\+image(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}}
 \index{get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -418,11 +489,11 @@ Implements \hyperlink{classmappel_1_1Estimator_a64b26c846a0e995fe16cd56cbead9f99
 
 
 
-Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_a1d9c29b69f468200a90bcd68adfb5643}{mappel\+::\+Iterative\+Maximizer$<$ Model $>$}, and \hyperlink{classmappel_1_1CGaussMLE_aaff3681877cb75e6776be5325adcfea0}{mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}.
+Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_a1d9c29b69f468200a90bcd68adfb5643}{mappel\+::\+Iterative\+Maximizer$<$ Model $>$}, \hyperlink{classmappel_1_1SimulatedAnnealingMaximizer_a72a7ee87c7294976b673dcb89b89a373}{mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$}, \hyperlink{classmappel_1_1CGaussMLE_aaff3681877cb75e6776be5325adcfea0}{mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}, \hyperlink{classmappel_1_1CGaussHeuristicEstimator_af3833f7687973da8acd83674fabf4b16}{mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$}, and \hyperlink{classmappel_1_1HeuristicEstimator_a6926009475af3b1dae9043d32cfa6d88}{mappel\+::\+Heuristic\+Estimator$<$ Model $>$}.
 
 
 
-Definition at line 281 of file estimator\+\_\+impl.\+h.
+Definition at line 372 of file estimator\+\_\+impl.\+h.
 
 
 
@@ -437,7 +508,11 @@ References mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats().
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a6c0b757d89033d70bdf03ad1fe6b03da}{}\label{classmappel_1_1Estimator_a6c0b757d89033d70bdf03ad1fe6b03da}
 
 
-Definition at line 45 of file estimator\+\_\+impl.\+h.
+Definition at line 50 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
@@ -456,19 +531,19 @@ Reimplemented from \hyperlink{classmappel_1_1Estimator_a876af9a1a1a6bf174c63716f
 
 
 
-Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_a22783dc49fb4fd6e754b0d0ee161c543}{mappel\+::\+Iterative\+Maximizer$<$ Model $>$}, and \hyperlink{classmappel_1_1CGaussMLE_aafbdebb21652be135801911007d3568b}{mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}.
+Reimplemented in \hyperlink{classmappel_1_1IterativeMaximizer_a22783dc49fb4fd6e754b0d0ee161c543}{mappel\+::\+Iterative\+Maximizer$<$ Model $>$}, \hyperlink{classmappel_1_1SimulatedAnnealingMaximizer_ab51d52418cec2fe9cfbf7382a8cfd486}{mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$}, \hyperlink{classmappel_1_1CGaussMLE_aafbdebb21652be135801911007d3568b}{mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}, \hyperlink{classmappel_1_1CGaussHeuristicEstimator_a2a76627a8d218e6f8fe5df35b429ae71}{mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$}, and \hyperlink{classmappel_1_1HeuristicEstimator_a4417718491c7d3d8f78bd3ba5518307b}{mappel\+::\+Heuristic\+Estimator$<$ Model $>$}.
 
 
 
-Definition at line 271 of file estimator\+\_\+impl.\+h.
+Definition at line 361 of file estimator\+\_\+impl.\+h.
 
 
 
-References mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, and mappel\+::\+Estimator$<$ Model $>$\+::total\+\_\+walltime.
+References mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, and mappel\+::\+Estimator$<$ Model $>$\+::total\+\_\+walltime.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
+Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!name@{name}}
 \index{name@{name}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -483,7 +558,30 @@ Implemented in \hyperlink{classmappel_1_1TrustRegionMaximizer_ac30ffdcd3f25cd0cb
 
 
 
-Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+
+\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}}
+\index{record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
+\paragraph[{\texorpdfstring{record\+\_\+exit\+\_\+code(\+Exit\+Code code)}{record_exit_code(ExitCode code)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::record\+\_\+exit\+\_\+code (
+\begin{DoxyParamCaption}
+\item[{{\bf Exit\+Code}}]{code}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}\hypertarget{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}{}\label{classmappel_1_1ThreadedEstimator_a8fefc448211f9caa3612ba4f34b006ab}
+
+
+Implements \hyperlink{classmappel_1_1Estimator_abfde3944bbb9d4af107fbafb543f2376}{mappel\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 386 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::exit\+\_\+counts, mappel\+::\+Estimator$<$ Model $>$\+::model, mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, and mappel\+::methods\+::objective\+::rllh().
+
+
+
+Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!record\+\_\+walltime@{record\+\_\+walltime}}
 \index{record\+\_\+walltime@{record\+\_\+walltime}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -495,11 +593,15 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+es
 )\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}{}\label{classmappel_1_1Estimator_a50125572d3b87ebcf1ffb27a8d8c643d}
 
 
-Definition at line 203 of file estimator\+\_\+impl.\+h.
+Definition at line 266 of file estimator\+\_\+impl.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
+References mappel\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, and mappel\+::\+Estimator$<$ Model $>$\+::total\+\_\+walltime.
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!set\+\_\+model@{set\+\_\+model}}
 \index{set\+\_\+model@{set\+\_\+model}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
@@ -510,7 +612,11 @@ Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_aacade4f66038545ad196edf7e8596187}{}\label{classmappel_1_1Estimator_aacade4f66038545ad196edf7e8596187}
 
 
-Definition at line 49 of file estimator\+\_\+impl.\+h.
+Definition at line 54 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::\+Estimator$<$ Model $>$\+::model.
 
 
 
@@ -519,67 +625,85 @@ Referenced by mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
 
 
 \subsubsection{Member Data Documentation}
+\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!exit\+\_\+counts@{exit\+\_\+counts}}
+\index{exit\+\_\+counts@{exit\+\_\+counts}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
+\paragraph[{\texorpdfstring{exit\+\_\+counts}{exit_counts}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::\+Estimator}$<$ Model $>$\+::exit\+\_\+counts\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}{}\label{classmappel_1_1Estimator_a490b648fdbd7ddae7ce41fbf26e29b48}
+
+
+Definition at line 114 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
+
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!max\+\_\+threads@{max\+\_\+threads}}
 \index{max\+\_\+threads@{max\+\_\+threads}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{max\+\_\+threads}{max_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::max\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ThreadedEstimator_a31391f8aaab3484f58bfdedbdb22be42}{}\label{classmappel_1_1ThreadedEstimator_a31391f8aaab3484f58bfdedbdb22be42}
 
 
-Definition at line 127 of file estimator.\+h.
+Definition at line 142 of file estimator.\+h.
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!model@{model}}
 \index{model@{model}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{model}{model}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ Model\& {\bf mappel\+::\+Estimator}$<$ Model $>$\+::model\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}{}\label{classmappel_1_1Estimator_a8322546d87ccdf01f8b0dcd9dae509f0}
 
 
-Definition at line 97 of file estimator.\+h.
+Definition at line 109 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+model(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Estimator$<$ Model $>$\+::set\+\_\+model().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!mtx@{mtx}}
 \index{mtx@{mtx}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{mtx}{mtx}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::mutex {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::mtx\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ThreadedEstimator_a4538fd0860243430bfd47e8064c8cfe4}{}\label{classmappel_1_1ThreadedEstimator_a4538fd0860243430bfd47e8064c8cfe4}
 
 
-Definition at line 129 of file estimator.\+h.
+Definition at line 144 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!num\+\_\+estimations@{num\+\_\+estimations}}
 \index{num\+\_\+estimations@{num\+\_\+estimations}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{num\+\_\+estimations}{num_estimations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Estimator}$<$ Model $>$\+::num\+\_\+estimations = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}{}\label{classmappel_1_1Estimator_ab15b88435d6c50a68fac84465d950b12}
 
 
-Definition at line 100 of file estimator.\+h.
+Definition at line 112 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!num\+\_\+threads@{num\+\_\+threads}}
 \index{num\+\_\+threads@{num\+\_\+threads}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{num\+\_\+threads}{num_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::\+Threaded\+Estimator}$<$ Model $>$\+::num\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1ThreadedEstimator_a6afa05d7d971f3317ce1602de853123b}{}\label{classmappel_1_1ThreadedEstimator_a6afa05d7d971f3317ce1602de853123b}
 
 
-Definition at line 128 of file estimator.\+h.
+Definition at line 143 of file estimator.\+h.
 
 
 
 Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats().
+
+\index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!Num\+Exit\+Codes@{Num\+Exit\+Codes}}
+\index{Num\+Exit\+Codes@{Num\+Exit\+Codes}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
+\paragraph[{\texorpdfstring{Num\+Exit\+Codes}{NumExitCodes}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ constexpr int {\bf mappel\+::\+Estimator}$<$ Model $>$\+::Num\+Exit\+Codes = 9\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}{}\label{classmappel_1_1Estimator_afcec036c4d78c12d427e0a733a00a48e}
+
+
+Definition at line 39 of file estimator.\+h.
 
 \index{mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}!total\+\_\+walltime@{total\+\_\+walltime}}
 \index{total\+\_\+walltime@{total\+\_\+walltime}!mappel\+::\+Threaded\+Estimator@{mappel\+::\+Threaded\+Estimator}}
 \paragraph[{\texorpdfstring{total\+\_\+walltime}{total_walltime}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::\+Estimator}$<$ Model $>$\+::total\+\_\+walltime = 0.\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}{}\label{classmappel_1_1Estimator_a5a408458a111c5222193871fa6bb6644}
 
 
-Definition at line 101 of file estimator.\+h.
+Definition at line 113 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats().
+Referenced by mappel\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
 
 
 
