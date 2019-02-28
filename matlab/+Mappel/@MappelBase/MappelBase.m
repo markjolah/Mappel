@@ -298,10 +298,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             image = dip_image(obj.simulateImage(varargin{:}));
         end
 
-        function rllh = modelLLH(obj, image, theta)
-            % rllh = obj.modelLLH(image, theta)
+        function llh = modelLLH(obj, image, theta)
+            % llh = obj.modelLLH(image, theta)
             %
-            % Compute the relative-log-likelihood of the images a the given thetas. This takes in a N
+            % Compute the log-likelihood of the images a the given thetas. This takes in a N
             % images and M thetas.  If M=N=1, then we return a single LLH.  If there are N=1 images and
             % M>1 thetas, we return M LLHs of the same image with each of the thetas.  Otherwise, if
             % there is M=1 thetas and N>1 images, then we return N LLHs for each of the images given
@@ -316,6 +316,26 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                 error('MappelBase:LLH','image and theta must match dims');
             end
             llh = obj.call('modelLLH', image, theta);
+        end
+        
+        function rllh = modelRLLH(obj, image, theta)
+            % rllh = obj.modelRLLH(image, theta)
+            %
+            % Compute the relative-log-likelihood of the images a the given thetas. This takes in a N
+            % images and M thetas.  If M=N=1, then we return a single LLH.  If there are N=1 images and
+            % M>1 thetas, we return M LLHs of the same image with each of the thetas.  Otherwise, if
+            % there is M=1 thetas and N>1 images, then we return N LLHs for each of the images given
+            % theta
+            %
+            % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
+            % (in) theta: A size:[NumParams, M] stack of theta values
+            % (out) llh: size:[1,max(M,N)] double of relative log-likelihoods
+            theta = obj.checkTheta(theta);
+            image = obj.checkImage(image);
+            if size(image,obj.ImageDim+1) ~= size(theta,2) && size(theta,2)~=1 && ~ismatrix(image)
+                error('MappelBase:RLLH','image and theta must match dims');
+            end
+            rllh = obj.call('modelRLLH', image, theta);
         end
         
         function grad = modelGrad(obj, image, theta)
@@ -604,10 +624,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (out) expected_lb: the expected-information-based confidence interval lower bound for parameters for each theta, size:[NumParams,N]
             % (out) expected_ub: the expected-information-based confidence interval upper bound for parameters for each theta, size:[NumParams,N]
             theta_mle = obj.checkTheta(theta_mle);
-            if nargin<4
+            if nargin<3
                 confidence = obj.DefaultConfidenceLevel;
             end
-            [expected_lb, expected_ub] = obj.call('errorBoundsExpected',image, theta_mle, confidence);
+            [expected_lb, expected_ub] = obj.call('errorBoundsExpected', theta_mle, confidence);
         end
 
         function [profile_lb, profile_ub, theta_mle_out] = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, estimator_algorithm, params_to_estimate)
@@ -729,16 +749,16 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             if nargin<6
                 theta_init = [];
             end
-            fixed_parameters = unit64(fixed_parameters~=0);
+            fixed_parameters = uint64(fixed_parameters~=0);
             Nfixed = sum(fixed_parameters);
-            if Nfixed<1 || Nfixed>obj.Nparams
-                error('MappelBase','InvalidValue','fixed_parameters should have at least one fixed and at least one free parameter');
+            if Nfixed<1 || Nfixed>obj.NumParams
+                error('MappelBase:InvalidValue','fixed_parameters should have at least one fixed and at least one free parameter');
             end
-            fixed_values_sz = size(vfixed_alues);
+            fixed_values_sz = size(fixed_values);
             if fixed_values_sz(1) ~= Nfixed
-                error('MappelBase','InvalidSize','fixed_values must have one row for each parameter indicated in fixed_parameters');
+                error('MappelBase:InvalidSize','fixed_values must have one row for each parameter indicated in fixed_parameters');
             end
-            theta_init = obj.checkThetaInit(theta_init, sz(2)); %expand theta_init to size:[NumParams,n]
+            theta_init = obj.checkThetaInit(theta_init, fixed_values_sz(2)); %expand theta_init to size:[NumParams,n]
 
             [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_parameters, fixed_values, estimator_algorithm, theta_init);
         end
@@ -1325,7 +1345,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             stats.fevals = fevals;
         end
 
-        function [theta, obsI, llh, stats, sequence, sequence_llh] = estimateDebug_fminsearch(obj, image, theta_init)
+        function [theta, obsI, llh, sequence, sequence_llh,stats] = estimateDebug_fminsearch(obj, image, theta_init)
             max_iter=5000;
             sequence=zeros(obj.NumParams, max_iter);
             function stop = output(theta, opt, state)
@@ -1361,7 +1381,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             stats.flag = flag;
             sequence = sequence(:,1:out.iterations);
             in_bounds = obj.thetaInBounds(sequence);
-            sequence_llh(in_bounds) = obj.modelLLH(image, sequence(in_bounds));
+            sequence_llh(in_bounds) = obj.modelRLLH(image, sequence(:,in_bounds));
             sequence_llh(~in_bounds) = -inf;
             stats.sequenceLen = size(sequence,2);
         end
@@ -1451,7 +1471,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             stats.flags = flags;
         end
 
-        function [theta, llh, obsI, stats, sequence, sequence_llh] = estimateDebug_toolbox(obj, image, theta_init, algorithm)
+        function [theta, llh, obsI, sequence, sequence_llh, stats] = estimateDebug_toolbox(obj, image, theta_init, algorithm)
             %
             % Requires: matlab optimization toolbox
             %
@@ -1522,7 +1542,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                     opts.SubproblemAlgorithm = 'factorization'; % vs. 'cg' 
 %                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta), -obj.modelHessian(image,theta));% 3 arg (obj,grad,hess)
                 case 'interior-point'
-                    opts.HessianFcn = @(theta, ~) -obj.modelHessian(image,obj.boundedTheta(theta));
+                    opts.HessianFcn = @(theta, ~) -obj.modelHessian(image,obj.boundTheta(theta));
 %                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta)); % 2 arg (obj,grad)
             end
             function varargout = objective(x)
@@ -1551,12 +1571,18 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             stats.algorithm = algorithm;
             stats.iterations = stats.out.iterations;
             sequence(:,stats.iterations+1:end)=[];
-            sequence_llh = obj.LLH(image,sequence);
+            sequence_llh = obj.modelRLLH(image,sequence);
         end
 
 
     end % protected methods
-
+    
+    methods (Access=public)
+        function definiteM = choleskyMakePositiveDefinite(obj,M)
+            definiteM = obj.callstatic('positiveDefiniteCholeskyApprox',M);
+        end
+    end
+    
     methods (Static = true)
         function [C,D]=cholesky(A)
             [valid, C, d] = MappelBase.callstatic('cholesky',A);
@@ -1579,9 +1605,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             definiteM = MappelBase.callstatic('negativeDefiniteCholeskyApprox',M);
         end
 
-        function definiteM = choleskyMakePositiveDefinite(M)
-            definiteM = MappelBase.callstatic('positiveDefiniteCholeskyApprox',M);
-        end
+        
 
         function fig = viewDipImage(image, fig)
             if nargin==1

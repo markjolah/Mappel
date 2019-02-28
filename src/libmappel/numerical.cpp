@@ -100,7 +100,7 @@ bool cholesky(arma::mat &A)
     //Cholesky decomposition format on output.  This way we keep the original matrix arround in
     //the upper triangle while we write the decomposition into the lower triangle.  Cool!
     //We are using the Gill Murray Wright 1981 method although a superior but more complex version
-    //bu Schandel and Eskow 1999 exists too that we should eventually implement.
+    //by Schandel and Eskow 1999 exists too that we should eventually implement.
     int size=static_cast<int>(A.n_rows);
     arma::vec v(size-1);
     for(int j=0;j<size;j++) {

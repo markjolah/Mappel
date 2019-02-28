@@ -19,7 +19,7 @@ ARGS="${ARGS} -DOPT_DOC=Off"
 ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
 ARGS="${ARGS} -DOPT_EXPORT_BUILD_TREE=On"
-ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=Off"
+ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On" #Otherwise dependencies found in build directories won't be found in install tree unless LD_LIBRARY_PATH is modified
 ARGS="${ARGS} -DOPT_BLAS_INT64=ON"
 ARGS="${ARGS} -DOPT_MATLAB=Off"  #Can only be enabled if older gcc is available
 ARGS="${ARGS} -DOPT_PYTHON=On"

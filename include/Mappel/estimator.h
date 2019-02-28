@@ -36,7 +36,19 @@ static const int DEFAULT_CGAUSS_ITERATIONS=50;
 template<class Model>
 class Estimator{
 public:
-    Estimator(Model &_model) : model(_model) {}
+    static constexpr int NumExitCodes = 9;
+    enum class ExitCode : IdxT {Unassigned= 8, //Logical error if this is still set
+                                MaxIter = 7,        //Max iterations exceeded. Did not converge.
+                                MaxBacktracks = 6,  //Backtracking failed.  Likely converged successfully.
+                                TrustRegionRadius = 5,//Trust region size was less than epsilon.  Converged successfully.
+                                GradRatio = 4,      //Grad ratio was less than epsilon.  Converged successfully.
+                                FunctionChange = 3, //Function value change was less than epsilon.  Converged successfully.
+                                StepSize = 2,       //Step size was less than delta.  Converged successfully.
+                                Success = 1,  //Successful completion
+                                Error = 0           //A Numerical Error was caught.  Did not converge.
+                                };
+
+    Estimator(Model &_model);
     virtual ~Estimator() {}
 
     virtual std::string name() const =0;
@@ -99,8 +111,10 @@ protected:
     /* statistics */
     int num_estimations = 0;
     double total_walltime = 0.;
+    IdxVecT exit_counts; //Vector
 
     void record_walltime(ClockT::time_point start_walltime, int nimages);
+    virtual void record_exit_code(ExitCode code)=0;
 };
 
 /**
@@ -123,10 +137,13 @@ public:
     void clear_stats();
 
 protected:
+    using typename Estimator<Model>::ExitCode;
     using Estimator<Model>::model;
     int max_threads;
     int num_threads;
     std::mutex mtx;
+
+    void record_exit_code(ExitCode code);
 };
 
 template<class Model>
@@ -134,6 +151,8 @@ class HeuristicEstimator : public ThreadedEstimator<Model> {
 public:
     HeuristicEstimator(Model &model) : ThreadedEstimator<Model>(model) {}
 
+    StatsT get_stats();
+    StatsT get_debug_stats();
     std::string name() const {return "HeuristicEstimator";}
 private:
     StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
@@ -143,7 +162,9 @@ template<class Model>
 class CGaussHeuristicEstimator : public ThreadedEstimator<Model> {
 public:
     CGaussHeuristicEstimator(Model &model) : ThreadedEstimator<Model>(model) {}
-    
+
+    StatsT get_stats();
+    StatsT get_debug_stats();
     std::string name() const {return "CGaussHeuristicEstimator";}
 private:
     using Estimator<Model>::model;
@@ -154,13 +175,12 @@ private:
 template<class Model>
 class CGaussMLE : public ThreadedEstimator<Model> {
 public:
-    int max_iterations;
-    CGaussMLE(Model &model, int max_iterations=DEFAULT_CGAUSS_ITERATIONS)
-        : ThreadedEstimator<Model>(model), max_iterations(max_iterations) {}
+    int num_iterations;
+    CGaussMLE(Model &model, int num_iterations=DEFAULT_CGAUSS_ITERATIONS)
+        : ThreadedEstimator<Model>(model), num_iterations(num_iterations) {}
 
     StatsT get_stats();
     StatsT get_debug_stats();
-
     std::string name() const {return "CGaussMLE";}
 protected:
     /* These bring in non-depended names from base classes (only necessary because we are templated) */
@@ -177,12 +197,16 @@ class SimulatedAnnealingMaximizer : public ThreadedEstimator<Model> {
 public:    
     double T_init=100.;
     double cooling_rate=1.02;
-    int max_iterations=500;
+    int num_iterations=500;
 
-    std::string name() const {return "SimulatedAnnealingMaximizer";}
     SimulatedAnnealingMaximizer(Model &model) : ThreadedEstimator<Model>(model) {}
+
+    StatsT get_stats();
+    StatsT get_debug_stats();
+    std::string name() const {return "SimulatedAnnealingMaximizer";}
 protected:
     using Estimator<Model>::model;
+    using ThreadedEstimator<Model>::mtx;
 
     StencilT<Model> compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh);
     StencilT<Model> compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
@@ -194,17 +218,6 @@ protected:
 template<class Model>
 class IterativeMaximizer : public ThreadedEstimator<Model> {
 public:
-    static constexpr int NumExitCodes = 7;
-    enum class ExitCode : IdxT { Unassigned= 99, //Logical error if this is still set
-                          MaxIter = 6,        //Max iterations exceeded. Did not converge.
-                          MaxBacktracks = 5,  //Backtracking failed.  Likely converged successfully.
-                          TrustRegionRadius = 4,//Trust region size was less than epsilon.  Converged successfully.
-                          GradRatio = 3,      //Grad ratio was less than epsilon.  Converged successfully.
-                          FunctionChange = 2, //Function value change was less than epsilon.  Converged successfully.
-                          StepSize = 1,       //Step size was less than delta.  Converged successfully. 
-                          Error = 0           //A Numerical Error was caught.  Did not converge.
-                        }; 
-
     IterativeMaximizer(Model &model, int max_iterations=DEFAULT_ITERATIONS);
 
     /* Statistics */
@@ -225,8 +238,8 @@ protected:
     int max_iterations;
 
     /* These parameters control the adaptive convergence testing */
-    double epsilon = sqrt(std::numeric_limits<double>::epsilon()); //tolerance for fval
-    double delta = sqrt(std::numeric_limits<double>::epsilon()); // tolerance for relative step size
+    double epsilon = 1e-6; //tolerance for fval
+    double delta = 1e-6; // tolerance for relative step size
     /* These parameters control backtracking */
     double lambda_min = 0.05; //What is the minimum proportion of the step to take
     double alpha = 1e-4; //How much drop in f-val do we expect for the step to be OK?
@@ -237,7 +250,7 @@ protected:
     int total_backtracks = 0;
     int total_fun_evals = 0;
     int total_der_evals = 0;
-    IdxVecT exit_counts;
+
     /* Debug Statistics: Only active in debug mode when data.save_seq==true */
     IdxVecT last_backtrack_idxs;
 
@@ -251,12 +264,9 @@ protected:
         int nBacktracks=0;
         int nIterations=0;
         bool save_seq;
-        ExitCode exit_code=ExitCode::Unassigned;
         MaximizerData(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &s,
                       bool save_seq=false, int max_seq_len=0);
 
-        void record_exit(ExitCode code);
-        /** @brief Record an iteration point (derivatives computed) Using the saved theta as the default. */
         void record_iteration() {record_iteration(theta());}
         /** @brief Record an iteration point (derivatives computed) */
         void record_iteration(const ParamT<Model> &accepted_theta);
@@ -290,8 +300,9 @@ protected:
         ParamT<Model>& saved_theta() {return current_stencil ? s1.theta : s0.theta;}
         int getIteration() const {return seq_len;}
         void set_fixed_parameters(const IdxVecT &fixed_parameters);
-        VecT fixed_parameter_scalar;
-        bool has_fixed_parameters=false; //True for profile likelihood maximization
+        VecT free_parameters; //
+        IdxT num_fixed_parameters=0; //True for profile likelihood maximization
+        IdxVecT fixed_idxs;
     protected:
 
         StencilT<Model> s0,s1; //These two stencils will be alternated as the current and old stencil points

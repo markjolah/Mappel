@@ -459,7 +459,8 @@ classdef GUIBuilder < handle
             if nargin==3
                 labelMargin=zeros(1,4);
             end
-            if ~isempty(imageSize) 
+            if ~isempty(imageSize)
+                imageSize=double(imageSize);
                 inset = axesH.TightInset;
                 inset = inset + labelMargin;
                 tot_inset = inset(1:2)+inset(3:4); %Total inset ammount in [x y]

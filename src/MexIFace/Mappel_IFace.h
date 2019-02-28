@@ -54,6 +54,7 @@ protected:
     void objSimulateImage();
     
     void objModelLLH();
+    void objModelRLLH();
     void objModelGrad();
     void objModelHessian();
     
@@ -155,6 +156,7 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["simulateImage"] = std::bind(&Mappel_IFace::objSimulateImage, this);
     
     methodmap["modelLLH"] = std::bind(&Mappel_IFace::objModelLLH, this);
+    methodmap["modelRLLH"] = std::bind(&Mappel_IFace::objModelRLLH, this);
     methodmap["modelGrad"] = std::bind(&Mappel_IFace::objModelGrad, this);
     methodmap["modelHessian"] = std::bind(&Mappel_IFace::objModelHessian, this);
 
@@ -351,9 +353,9 @@ void Mappel_IFace<Model>::objModelLLH()
 {
     // llh = obj.modelLLH(image, theta)
     //
-    // This takes in a N images and M thetas.  If M=N=1, 
+    // This takes in a N images and M thetas.  If M=N=1,
     // then we return a single LLH.  If there are N=1 images
-    // and M>1 thetas, we return M LLHs of the same image with each of 
+    // and M>1 thetas, we return M LLHs of the same image with each of
     // the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
     // then we return N LLHs for each of the images given theta
     //
@@ -366,6 +368,28 @@ void Mappel_IFace<Model>::objModelLLH()
     auto count = std::max(theta_stack.n_cols, static_cast<IdxT>(obj->get_size_image_stack(image_stack)));
     auto llh_stack = makeOutputArray(count);
     methods::objective::llh_stack(*obj, image_stack, theta_stack, llh_stack);
+}
+
+template<class Model>
+void Mappel_IFace<Model>::objModelRLLH()
+{
+    // rllh = obj.modelRLLH(image, theta)
+    //
+    // This takes in a N images and M thetas.  If M=N=1, 
+    // then we return a single RLLH.  If there are N=1 images
+    // and M>1 thetas, we return M RLLHs of the same image with each of
+    // the thetas.  Otherwise, if there is M=1 thetas and N>1 images,
+    // then we return N RLLHs for each of the images given theta
+    //
+    // (in) image: double size:[imsize... ,n] image stack
+    // (in) theta: double size:[NumParams, n] stack of theta values
+    // (out) llh: a (1 X max(M,N)) double of relative log_likelihoods
+    checkNumArgs(1,2);
+    auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
+    auto theta_stack = getMat();
+    auto count = std::max(theta_stack.n_cols, static_cast<IdxT>(obj->get_size_image_stack(image_stack)));
+    auto rllh_stack = makeOutputArray(count);
+    methods::objective::rllh_stack(*obj, image_stack, theta_stack, rllh_stack);
 }
 
 template<class Model>
@@ -753,17 +777,17 @@ void Mappel_IFace<Model>::objEstimateDebug()
     auto method_name = getString();
     auto theta_init = getVec();
 
-    auto theta = obj->make_param();
-    double rllh;
+    auto theta_max = obj->make_param();
+    double max_rllh;
     auto obsI = obj->make_param_mat();
     MatT sequence;
     VecT sequence_rllh;
     StatsT stats;
-    methods::estimate_max_debug(*obj, image, method_name, theta, rllh, obsI, sequence, sequence_rllh, stats);
+    methods::estimate_max_debug(*obj, image, method_name, theta_init, theta_max, max_rllh, obsI, sequence, sequence_rllh, stats);
 
     //Write output
-    output(theta);
-    output(rllh);
+    output(theta_max);
+    output(max_rllh);
     output(obsI);
     output(sequence);
     output(sequence_rllh);
@@ -798,7 +822,7 @@ void Mappel_IFace<Model>::objEstimateProfileLikelihood()
     auto fixed_values = getMat();
     auto estimator_algorithm = getString();
     auto theta_init = getMat();
-    auto N = fixed_values.n_rows;
+    auto N = fixed_values.n_cols;
     auto profile_llh = makeOutputArray(N);
     auto profile_parameters = makeOutputArray(obj->get_num_params(),N);
     if(nlhs<3) {

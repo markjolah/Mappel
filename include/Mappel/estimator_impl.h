@@ -40,6 +40,11 @@
  */
 
 namespace mappel {
+template<class Model>
+Estimator<Model>::Estimator(Model &_model)
+    : model(_model),
+      exit_counts(NumExitCodes,arma::fill::zeros)
+{ }
 
 template<class Model>
 Model& Estimator<Model>::get_model()
@@ -84,10 +89,27 @@ template<class Model>
 StencilT<Model>
 Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
-    auto start_walltime = ClockT::now();
-    StencilT<Model> est = compute_estimate(im, theta_init, rllh);
-    record_walltime(start_walltime, 1);
-    return est;
+    try {
+        auto start_walltime = ClockT::now();
+        StencilT<Model> est = compute_estimate(im, theta_init, rllh);
+        record_walltime(start_walltime, 1);
+        return est;
+    } catch(std::exception &err) {
+        #ifdef DEBUG
+            std::cout<<"std::exception: "<<err.what()<<std::endl;
+            std::cout<<"Theta init: "<<theta_init.t();
+            print_image(std::cout,im);
+        #endif
+        record_exit_code(ExitCode::Error);
+    } catch(...) {
+        #ifdef DEBUG
+            std::cout<<"Unknown exception"<<std::endl;
+            std::cout<<"Theta init: "<<theta_init.t();
+            print_image(std::cout,im);
+        #endif
+        record_exit_code(ExitCode::Error);
+    }
+    return model.make_stencil(theta_init); //Error
 }
 
 /* Option 2: Single Image - Estimator returns theta, crlb and llh  at the optimum point.
@@ -106,9 +128,28 @@ template<class Model>
 void Estimator<Model>::estimate_max(const ModelDataT<Model> &im, const ParamT<Model> &theta_init,
                                     ParamT<Model> &theta, double &rllh, MatT &obsI)
 {
-    auto start_walltime = ClockT::now();
-    compute_estimate(im, theta_init, theta, rllh, obsI);
-    record_walltime(start_walltime, 1);
+    try {
+        auto start_walltime = ClockT::now();
+        compute_estimate(im, theta_init, theta, rllh, obsI);
+        record_walltime(start_walltime, 1);
+    } catch(std::exception &err) {
+        #ifdef DEBUG
+            std::cout<<"std::exception: "<<err.what()<<std::endl;
+            std::cout<<"Theta init: "<<theta_init.t();
+            print_image(std::cout,im);
+        #endif
+        record_exit_code(ExitCode::Error);
+    } catch(...) {
+        #ifdef DEBUG
+            std::cout<<"Unknown exception"<<std::endl;
+            std::cout<<"Theta init: "<<theta_init.t();
+            print_image(std::cout,im);
+        #endif
+        record_exit_code(ExitCode::Error);
+    }
+    theta = theta_init;
+    rllh = methods::objective::rllh(im,theta_init);
+    obsI.zeros();
 }
 
 /* Option 3: Single Image Debug mode - Estimator returns theta, rllh and obsI  at the optimum point.
@@ -161,6 +202,15 @@ StatsT Estimator<Model>::get_stats()
     StatsT stats;
     stats["num_estimations"] = num_estimations;
     stats["total_walltime"] = total_walltime;
+    stats["mean_walltime"] = total_walltime/num_estimations;
+    stats["num_exit_error"] = exit_counts(static_cast<IdxT>(ExitCode::Error));
+    stats["num_exit_success"] = exit_counts(static_cast<IdxT>(ExitCode::Success));
+    stats["num_exit_max_iter"] = exit_counts(static_cast<IdxT>(ExitCode::MaxIter));
+    stats["num_exit_max_backtracks"] = exit_counts(static_cast<IdxT>(ExitCode::MaxBacktracks));
+    stats["num_exit_function_value_change"] = exit_counts(static_cast<IdxT>(ExitCode::FunctionChange));
+    stats["num_exit_step_size_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::StepSize));
+    stats["num_exit_grad_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::GradRatio));
+    stats["num_exit_trust_region_radius"] = exit_counts(static_cast<IdxT>(ExitCode::TrustRegionRadius));
     return stats;
 }
 
@@ -169,6 +219,7 @@ void Estimator<Model>::clear_stats()
 {
     num_estimations = 0;
     total_walltime = 0.;
+    exit_counts.zeros();
 }
 
 template<class Model>
@@ -187,16 +238,28 @@ std::ostream& operator<<(std::ostream &out, Estimator<Model> &estimator)
  * dummy debug implementation.
  */
 template<class Model>
-inline
 StencilT<Model>
 Estimator<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
                                          ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
-    sequence = model.make_param_stack(1);
-    sequence_rllh.set_size(1);
-    auto est = compute_estimate(im,theta_init,sequence_rllh(0));
-    sequence.col(0) = est.theta;
-    return est;
+    try {
+        sequence = model.make_param_stack(1);
+        sequence_rllh.set_size(1);
+        auto est = compute_estimate(im,theta_init,sequence_rllh(0));
+        sequence.col(0) = est.theta;
+        return est;
+    } catch(std::exception &err) {
+        std::cout<<"std::exception: "<<err.what()<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_image(std::cout,im);
+        record_exit_code(ExitCode::Error);
+    } catch(...) {
+        std::cout<<"Unknown exception"<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_image(std::cout,im);
+        record_exit_code(ExitCode::Error);
+    }
+    return model.make_stencil(theta_init);
 }
 
 template<class Model>
@@ -224,21 +287,35 @@ void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT<Model> &
 {
     auto start_walltime=ClockT::now();
     IdxT Nimages = model.get_size_image_stack(im_stack);
-    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         if(omp_get_thread_num()==0) num_threads = omp_get_num_threads();
         auto theta_est = model.make_param();
         auto obsI = model.make_param_mat();
         #pragma omp for
-        for(IdxT n=0; n<Nimages; n++)
-            catcher.run([&]{
-                this->compute_estimate(model.get_image_from_stack(im_stack,n), theta_init_stack.col(n), theta_est, rllh_stack(n), obsI);
+        for(IdxT n=0; n<Nimages; n++) {
+            auto im = model.get_image_from_stack(im_stack,n);
+            try {
+                this->compute_estimate(im, theta_init_stack.col(n), theta_est, rllh_stack(n), obsI);
                 theta_est_stack.col(n) = theta_est;
                 obsI_stack.slice(n) = obsI;
-            });
-    } 
-    catcher.rethrow();
+            } catch(std::exception &err) {
+                #ifdef DEBUG
+                    std::cout<<"std::exception: "<<err.what()<<std::endl;
+                    std::cout<<"Theta init: "<<theta_init_stack.col(n).t();
+                    print_image(std::cout,im);
+                #endif
+                record_exit_code(ExitCode::Error);
+            } catch(...) {
+                #ifdef DEBUG
+                    std::cout<<"Unknown exception"<<std::endl;
+                    std::cout<<"Theta init: "<<theta_init_stack.col(n).t();
+                    print_image(std::cout,im);
+                #endif
+                record_exit_code(ExitCode::Error);
+            }
+        }
+    }
     this->record_walltime(start_walltime, Nimages);
 }
 
@@ -251,25 +328,39 @@ void ThreadedEstimator<Model>::estimate_profile_stack(const ModelDataT<Model> &d
     IdxT Nvalues = fixed_values.n_cols;
     auto fixed_theta_init = theta_init;
     for(IdxT n=0, m=0; n<model.get_num_params(); n++) if(fixed_parameters(n)) fixed_theta_init.row(n) = fixed_values.row(m++);
-    omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
         if(omp_get_thread_num()==0) num_threads = omp_get_num_threads();
         auto theta_est = model.make_param();
         #pragma omp for
-        for(IdxT n=0; n<Nvalues; n++)
-            catcher.run([&]{
+        for(IdxT n=0; n<Nvalues; n++){
+            try {
                 this->compute_profile_estimate(data, fixed_theta_init.col(n), fixed_parameters, theta_est, profile_likelihood(n));
                 profile_parameters.col(n) = theta_est;
-            });
+            } catch(std::exception &err) {
+                #ifdef DEBUG
+                    std::cout<<"std::exception: "<<err.what()<<std::endl;
+                    std::cout<<"Fixed Theta init: "<<fixed_theta_init.col(n);
+                    print_image(std::cout,data);
+                #endif
+                record_exit_code(ExitCode::Error);
+            } catch(...) {
+                #ifdef DEBUG
+                    std::cout<<"Unknown exception"<<std::endl;
+                    std::cout<<"Fixed Theta init: "<<fixed_theta_init.col(n);
+                    print_image(std::cout,data);
+                #endif
+                record_exit_code(ExitCode::Error);
+            }
+        }
     }
-    catcher.rethrow();
     this->record_walltime(start_walltime, Nvalues);
 }
 
 template<class Model>
 StatsT ThreadedEstimator<Model>::get_stats()
 {
+    std::lock_guard<std::mutex> lock(mtx);
     auto stats = Estimator<Model>::get_stats();
     stats["num_threads"] = num_threads;
     stats["total_thread_time"] = num_threads*this->total_walltime;
@@ -286,8 +377,16 @@ StatsT ThreadedEstimator<Model>::get_debug_stats()
 template<class Model>
 void ThreadedEstimator<Model>::clear_stats()
 {
+    std::lock_guard<std::mutex> lock(mtx);
     Estimator<Model>::clear_stats();
     num_threads=1;
+}
+
+template<class Model>
+void ThreadedEstimator<Model>::record_exit_code(ExitCode code)
+{
+    std::lock_guard<std::mutex> lock(mtx);
+    this->exit_counts(static_cast<IdxT>(code))++;
 }
 
 /* HeuristicEstimator */
@@ -295,9 +394,26 @@ template<class Model>
 StencilT<Model> 
 HeuristicEstimator<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, double &rllh)
 {
-    auto est = Estimator<Model>::model.initial_theta_estimate(im,theta_init);
+    auto est = this->model.initial_theta_estimate(im,theta_init);
     rllh = methods::objective::rllh(this->model, im,est);
+    this->record_exit_code(Estimator<Model>::ExitCode::Success);
     return est;
+}
+
+template<class Model>
+StatsT HeuristicEstimator<Model>::get_stats()
+{
+    auto stats = ThreadedEstimator<Model>::get_stats();
+    stats["num_iterations"] = 1;
+    stats["num_fun_evals"] = 0;
+    stats["num_der_evals"] = 0;
+    return stats;
+}
+
+template<class Model>
+StatsT HeuristicEstimator<Model>::get_debug_stats()
+{
+    return get_stats();
 }
 
 /* CGaussHeuristicEstimator */
@@ -313,7 +429,24 @@ CGaussHeuristicEstimator<Model>::compute_estimate(const ModelDataT<Model> &im, c
     }
     auto est_stencil = model.make_stencil(theta_est);
     rllh = methods::objective::rllh(this->model, im,est_stencil);
+    this->record_exit_code(Estimator<Model>::ExitCode::Success);
     return est_stencil;
+}
+
+template<class Model>
+StatsT CGaussHeuristicEstimator<Model>::get_stats()
+{
+    auto stats = ThreadedEstimator<Model>::get_stats();
+    stats["num_iterations"] = 1;
+    stats["num_fun_evals"] = 0;
+    stats["num_der_evals"] = 0;
+    return stats;
+}
+
+template<class Model>
+StatsT CGaussHeuristicEstimator<Model>::get_debug_stats()
+{
+    return get_stats();
 }
 
 /* CGaussMLE */
@@ -321,19 +454,16 @@ template<class Model>
 StatsT CGaussMLE<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
-    stats["mean_iterations"] = max_iterations;
-    stats["mean_backtracks"] = 0;
-    stats["mean_fun_evals"] = 0;
-    stats["mean_der_evals"] = max_iterations;
+    stats["num_iterations"] = num_iterations;
+    stats["num_fun_evals"] = 1;
+    stats["num_der_evals"] = num_iterations;
     return stats;
 }
 
 template<class Model>
 StatsT CGaussMLE<Model>::get_debug_stats()
 {
-    StatsT stats =  CGaussMLE<Model>::get_stats();
-    stats["debugIterative"] = 0; //No backtracks so no need to notate them
-    return stats;
+    return get_stats();
 }
 
 template<class Model>
@@ -349,14 +479,16 @@ CGaussMLE<Model>::compute_estimate(const ModelDataT<Model> &im, const ParamT<Mod
             if(theta_init(i)<lb(i) || theta_init(i)>ub(i))
                 theta_init(i) = init_est(i);
     }
-    ParamT<Model> theta_est = cgauss_compute_estimate(model,im,theta_init,max_iterations);
+    ParamT<Model> theta_est = cgauss_compute_estimate(model,im,theta_init,num_iterations);
     if(!model.theta_in_bounds(theta_est)) {
         StencilT<Model> init_stencil = model.make_stencil(theta_init);
         rllh = methods::objective::rllh(model,im,init_stencil);
+        this->record_exit_code(Estimator<Model>::ExitCode::Error);
         return init_stencil;
     } else {
         StencilT<Model> est_stencil = model.make_stencil(theta_est);
         rllh = methods::objective::rllh(model,im,est_stencil);
+        this->record_exit_code(Estimator<Model>::ExitCode::Success);
         return est_stencil;
     }
 }
@@ -375,12 +507,14 @@ CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const Para
             if(theta_init(i)<lb(i) || theta_init(i)>ub(i))
                 theta_init(i) = init_est(i);
     }
-    ParamT<Model> theta_est = cgauss_compute_estimate_debug(model,im,theta_init,max_iterations,sequence);
+    ParamT<Model> theta_est = cgauss_compute_estimate_debug(model,im,theta_init,num_iterations,sequence);
     //Compute rrlh (which are not evaluated by CGauss) in parallel because debug is only ever called single threaded
     methods::objective::rllh_stack(model, im, sequence, sequence_rllh);
     if(!model.theta_in_bounds(theta_est)) {
+        this->record_exit_code(Estimator<Model>::ExitCode::Error);
         return model.make_stencil(theta_init);
     } else {
+        this->record_exit_code(Estimator<Model>::ExitCode::Success);
         return model.make_stencil(theta_est);
     }
 }
@@ -390,8 +524,7 @@ CGaussMLE<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const Para
 template<class Model>
 IterativeMaximizer<Model>::IterativeMaximizer(Model &model, int max_iterations)
     : ThreadedEstimator<Model>(model), 
-      max_iterations(max_iterations),
-      exit_counts(NumExitCodes,arma::fill::zeros)
+      max_iterations(max_iterations)
 {}
 
 template<class Model>
@@ -443,23 +576,19 @@ void IterativeMaximizer<Model>::MaximizerData::record_backtrack(const ParamT<Mod
 }
 
 template<class Model>
-void IterativeMaximizer<Model>::MaximizerData::record_exit(ExitCode code)
-{
-    exit_code = code;
-}
-
-template<class Model>
 void IterativeMaximizer<Model>::MaximizerData::set_fixed_parameters(const IdxVecT &fixed_parameters_)
 {
-    has_fixed_parameters = true;
-    fixed_parameter_scalar = arma::conv_to<VecT>::from(fixed_parameters_==0);
+    num_fixed_parameters = arma::sum(fixed_parameters_);
+    std::cout<<"<<<***>>> Setting MaximizerData Fixed Parameters: "<<fixed_parameters_.t();
+    free_parameters = arma::conv_to<VecT>::from(fixed_parameters_==0);
+    if(num_fixed_parameters) fixed_idxs = arma::find(fixed_parameters_);
 }
 
 template<class Model>
 StatsT IterativeMaximizer<Model>::get_stats()
 {
     auto stats = ThreadedEstimator<Model>::get_stats();
-    mtx.lock();
+    std::lock_guard<std::mutex> lock(mtx);
     double N = static_cast<double>(this->num_estimations);
     stats["total_iterations"] = total_iterations;
     stats["total_backtracks"] = total_backtracks;
@@ -473,14 +602,6 @@ StatsT IterativeMaximizer<Model>::get_stats()
     stats["const_step_size_delta"] = delta;
     stats["const_max_iterations"] = max_iterations;
     stats["const_max_backtracks"] = max_backtracks;
-    stats["num_exit_error"] = exit_counts(static_cast<IdxT>(ExitCode::Error));
-    stats["num_exit_max_iter"] = exit_counts(static_cast<IdxT>(ExitCode::MaxIter));
-    stats["num_exit_max_backtracks"] = exit_counts(static_cast<IdxT>(ExitCode::MaxBacktracks));
-    stats["num_exit_function_value_change"] = exit_counts(static_cast<IdxT>(ExitCode::FunctionChange));
-    stats["num_exit_step_size_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::StepSize));
-    stats["num_exit_grad_ratio"] = exit_counts(static_cast<IdxT>(ExitCode::GradRatio));
-    stats["num_exit_trust_region_radius"] = exit_counts(static_cast<IdxT>(ExitCode::TrustRegionRadius));
-    mtx.unlock();
     return stats;
 }
 
@@ -504,26 +625,22 @@ template<class Model>
 void IterativeMaximizer<Model>::clear_stats()
 {
     ThreadedEstimator<Model>::clear_stats();
-    mtx.lock();
+    std::lock_guard<std::mutex> lock(mtx);
     total_iterations = 0;
     total_backtracks = 0;
     total_fun_evals = 0;
     total_der_evals = 0;
-    exit_counts.zeros();
-    mtx.unlock();
 }
 
 template<class Model>
 void IterativeMaximizer<Model>::record_run_statistics(const MaximizerData &data)
 {
-    mtx.lock();
+    std::lock_guard<std::mutex> lock(mtx);
     total_iterations += data.nIterations;
     total_backtracks += data.nBacktracks;
     total_fun_evals += data.nIterations + data.nBacktracks;
     total_der_evals += data.nIterations;
-    exit_counts(static_cast<IdxT>(data.exit_code))++;  // Record exit code
     if(data.save_seq) last_backtrack_idxs = data.get_backtrack_idxs(); //Store the backtracks for debugging...
-    mtx.unlock();
 }
 
 template<class Model>
@@ -536,7 +653,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         msg<<"Step is not finite: "<<data.step.t();
         throw NumericalError(msg.str());
     }
-    if( (data.has_fixed_parameters && arma::dot(data.grad%data.fixed_parameter_scalar, data.step)<=0) ||
+    if( (data.num_fixed_parameters && arma::dot(data.grad%data.free_parameters, data.step)<=0) ||
         arma::dot(data.grad, data.step)<=0){
         //We are maximizing so we should be moving in direction of gradient not away
         std::ostringstream msg;
@@ -555,7 +672,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
 //         std::cout<<" Step: "<<data.step.t();
 //         std::cout<<" Lambda:"<<lambda<<"\n Scaled Step:"<<(lambda*data.step).t();
 //         std::cout<<" Proposed Theta: "<<new_theta.t();
-//         printf(" CurrentRLLH:%.9g ProposedRLLH:%.9g Delta(prop-cur):%.9g\n",data.rllh,can_rllh,can_rllh-data.rllh);
+//         std::cout<<std::setprecision(15)<<" CurrentRLLH:"<<data.rllh<<" ProposedRLLH:"<<can_rllh<<" can+rllh-data.rllh:"<<can_rllh-data.rllh<<std::endl;
 
         bool in_bounds = model.theta_in_bounds(new_theta);
         if(!in_bounds) {
@@ -571,21 +688,29 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         }
 
         double old_lambda = lambda; //save old lambda
-        double linear_step = data.has_fixed_parameters ? lambda*arma::dot(data.grad%data.fixed_parameter_scalar, data.step) :
-                             lambda*arma::dot(data.grad, data.step); //The amount we would go down if linear in grad
-        if (can_rllh >= data.rllh + alpha*linear_step) { //Must be a sufficient increase (convergence criteria)
+        //linear_step - The amount we improve if model was truly linear using computed grad at theta
+//         std::cout<<" #Fixed?:"<<data.num_fixed_parameters<<" Fixed parameters scalar: "<<data.free_parameters.t();
+        double linear_step = data.num_fixed_parameters ? lambda*arma::dot(data.grad%data.free_parameters, data.step) :
+                                                         lambda*arma::dot(data.grad, data.step);
+        double minimum_increase=alpha*linear_step;
+        if(data.rllh + minimum_increase==data.rllh) minimum_increase=linear_step; //step is too small to scale.
+//         std::cout<<std::setprecision(16)<<" Linear Step: "<<linear_step<< " minimum_increase:"<<minimum_increase<<std::endl;
+        if (can_rllh > data.rllh + minimum_increase) { //Must be a sufficient increase (convergence criteria)
             //Success - Found a new point which is slightly better than where we were before, so update rllh
+//             std::cout<<"Success - Found a new point which is slightly better."<<std::endl;
             data.rllh = can_rllh; //We have not yet changed data.rllh that is still the old rllh
             data.stencil().compute_derivatives(); //Now we commit to the expense of computing derivatives
             data.record_iteration();  //Record a successful point
             return false; //Tell caller to continue optimizing
         } else {
+//             std::cout<<"Backtrack: delta:"<< can_rllh - (data.rllh + minimum_increase)<<std::endl;
             data.record_backtrack(can_rllh); //Record a failed (backtracked) (unaccepted) point.
             if (convergence_test(data)) {
                 //We converged at original iteration point.  Unable to improve by backtracking on step direction.
                 //Original step was too large to converge, after backtracking it (or fun-val) became small enough to converge
                 data.restore_stencil(); //Restore back to original point
-                return true; 
+//                 std::cout<<"Converged to original point:"<<data.theta()<<" rllh:"<<std::setprecision(15)<<data.rllh<<std::endl;
+                return true; //Tell caller to stop iterating
             } else {
                 //Perform Backtrack using a quadratic approximation
                 double new_lambda = -.5*lambda*linear_step/(can_rllh - data.rllh - linear_step); //The minimum of a quad approx using cllh and linear_step
@@ -598,7 +723,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
     //Backtracking failed to converge in max_backtracks steps.
     //But we otherwise did not meet convergence criteria.
     data.restore_stencil();
-    data.record_exit(ExitCode::MaxBacktracks);
+    this->record_exit_code(Estimator<Model>::ExitCode::MaxBacktracks);
     return true; //Tell caller to stop and return the original theta. Backtracking failed to improve it.
 }
 
@@ -609,13 +734,13 @@ bool IterativeMaximizer<Model>::convergence_test(MaximizerData &data)
     auto ntheta = data.theta();  //new theta
     auto otheta = data.saved_theta(); //old theta
     double step_size_ratio = norm(otheta-ntheta,2)/std::max(norm(otheta,2),norm(ntheta,2));
-    double function_change_ratio = data.has_fixed_parameters ? norm(data.grad%data.fixed_parameter_scalar,2)/fabs(data.rllh) :
-                                   norm(data.grad,2)/fabs(data.rllh);
+    double function_change_ratio = data.num_fixed_parameters ? norm(data.grad%data.free_parameters,2)/fabs(data.rllh) :
+                                                               norm(data.grad,2)/fabs(data.rllh);
     if(step_size_ratio <= delta){
-        data.record_exit(ExitCode::StepSize);
+        this->record_exit_code(Estimator<Model>::ExitCode::StepSize);
         return true; //Tell caller to stop iterating we have converged
     } else if(function_change_ratio <= epsilon) {
-        data.record_exit(ExitCode::FunctionChange);
+        this->record_exit_code(Estimator<Model>::ExitCode::FunctionChange);
         return true; //Tell caller to stop iterating we have converged
     } else {
         return false; //Keep iterating
@@ -631,18 +756,8 @@ IterativeMaximizer<Model>::compute_estimate(const ModelDataT<Model> &im, const P
     if(!theta_init_stencil.derivatives_computed) 
         throw LogicalError("Stencil has no computed derivatives");
     MaximizerData data(model, im, theta_init_stencil);
-    try {
-        maximize(data);
-    } catch (NumericalError &err) {
-        #ifdef DEBUG
-            std::cout<<"Numerical Error: "<<err.what()<<std::endl;
-            std::cout<<"Theta init: "<<theta_init.t();
-            std::cout<<"Theta: "<<data.theta().t();
-            std::cout<<"Thetas: "<<data.get_theta_sequence();
-            print_image(std::cout,im);
-        #endif
-        data.record_exit(ExitCode::Error);
-    }
+    maximize(data);
+
     record_run_statistics(data);
     rllh = data.rllh;
     return data.stencil();
@@ -653,19 +768,29 @@ StencilT<Model>
 IterativeMaximizer<Model>::compute_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init, 
                                                   ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
-    auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
-    if(!theta_init_stencil.derivatives_computed)  throw LogicalError("Stencil has no computed derivatives");
-    MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
     try {
+        std::cout<<"Theta init:"<<theta_init.t()<<std::endl;
+        auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
+        if(!theta_init_stencil.derivatives_computed)  throw LogicalError("Stencil has no computed derivatives");
+        std::cout<<"Modified Theta init:"<<theta_init_stencil.theta.t()<<std::endl;
+        MaximizerData data(model, im, theta_init_stencil, true, max_iterations*max_backtracks+1);
         maximize(data);
-    } catch (NumericalError &err) {
-        data.record_exit(ExitCode::Error);
-        std::cout<<"Caught NumericalError: "<<err.what()<<std::endl;
+        sequence = data.get_theta_sequence();
+        sequence_rllh = data.get_theta_sequence_rllh();
+        record_run_statistics(data);
+        return data.stencil();
+    } catch(std::exception &err) {
+        std::cout<<"std::exception: "<<err.what()<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_image(std::cout,im);
+        this->record_exit_code(Estimator<Model>::ExitCode::Error);
+    } catch(...) {
+        std::cout<<"Unknown exception"<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_image(std::cout,im);
+        this->record_exit_code(Estimator<Model>::ExitCode::Error);
     }
-    sequence = data.get_theta_sequence();
-    sequence_rllh = data.get_theta_sequence_rllh();
-    record_run_statistics(data);
-    return data.stencil();
+    return model.make_stencil(theta_init); //Error
 }
 
 template<class Model>
@@ -675,11 +800,7 @@ void IterativeMaximizer<Model>::compute_profile_estimate(const ModelDataT<Model>
     if(!theta_init_stencil.derivatives_computed)  throw LogicalError("Stencil has no computed derivatives");
     MaximizerData data(model, im, theta_init_stencil);
     data.set_fixed_parameters(fixed_parameters);
-    try {
-        maximize(data);
-    } catch (NumericalError &err) {
-        data.record_exit(ExitCode::Error);
-    }
+    maximize(data);
     record_run_statistics(data);
     rllh = data.rllh;
     theta_est = data.theta();
@@ -698,8 +819,6 @@ void IterativeMaximizer<Model>::local_maximize(const ModelDataT<Model> &im, cons
 template<class Model>
 void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
 {
-    double epsilon=0;
-    double delta=0.1;
     auto grad2 = model.make_param();
     for(int n=0; n<this->max_iterations; n++) { //Main optimization loop
         methods::objective::grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
@@ -710,25 +829,27 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
 //             std::cout<<"Grad: "<<data.grad.t();
 //             std::cout<<"Grad2:"<<grad2.t();
 //             std::cout<<"Step:"<<data.step.t();
-//             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
-
+//             std::cout<<"#fixed params: "<<data.num_fixed_parameters<<" free_parameters:"<<data.free_parameters.t();
         //Grad2 should be negative
         double max_val = arma::max(grad2);
-        grad2 -= max_val + delta;
+//         std::cout<<"Grad2 max_val: "<<max_val<<"\n";
+        if(max_val>=0) {
+            grad2 -= max_val+1e-8;
+//             std::cout<<"Grad2Corrected:"<<grad2.t();
+        }
         data.step = -data.grad/grad2;
-        if(data.has_fixed_parameters) data.step %= data.fixed_parameter_scalar; //Zero-out any gradient along fixed_parameters preventing a step
+        if(data.num_fixed_parameters) data.step %= data.free_parameters; //Zero-out any gradient along fixed_parameters preventing a step
 
-//             std::cout<<"max_val: "<<max_val<<"\n";
-//             std::cout<<"Grad2Correct:"<<grad2.t();
 //             std::cout<<"Step:"<<data.step.t();
 //             std::cout<<"<Step,Grad>:"<<arma::dot(data.step,data.grad)<<"\n";
 
-        if((data.has_fixed_parameters && arma::dot(data.step,data.grad%data.fixed_parameter_scalar)<=epsilon) ||
-            arma::dot(data.step,data.grad)<=epsilon)
+        if((data.num_fixed_parameters && arma::dot(data.step,data.grad%data.free_parameters)<=0) ||
+            arma::dot(data.step,data.grad)<=0)
             throw NumericalError("Unable to correct grad2 in NewtonDiagonal");
-        if(this->backtrack(data) || this->convergence_test(data)) return;  //Converged or gave up trying
+        bool termination_condition = this->backtrack(data); // Do backtracking line search and check for termination
+        if(termination_condition) return;  //Converged or gave up trying
     }
-    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
+    this->record_exit_code(Estimator<Model>::ExitCode::MaxIter);
 }
 
 
@@ -739,12 +860,15 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
     auto C = model.make_param_mat();
     auto Cstep = model.make_param();
     for(int n=0; n < this->max_iterations; n++) { //Main optimization loop
+//         std::cout<<"\n{Newton ITER:"<<n<<"}\n";
+//         std::cout<<"fixed params: "<<data.num_fixed_parameters<<" free_parameters:"<<data.free_parameters.t();
+
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
         data.step = arma::solve(arma::symmatu(hess), -data.grad);
         C=-hess;
         
-//         copy_Usym_mat(C);
-//         std::cout<<"{Newton ITER:"<<n<<"}\n";
+        copy_Usym_mat(C);
+        //Grad2 should be negative
 //         std::cout.precision(15);
 //         data.theta().t().raw_print(std::cout," Theta:");
 //         std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
@@ -753,13 +877,14 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"Hess:\n"<<arma::symmatu(hess);
 //         std::cout<<"Positive-definite:"<<is_positive_definite(C)<<"\n";
         
-//         modified_cholesky(C);
-//         Cstep = cholesky_solve(C,data.grad);//Drop - sign on grad since C=-hess
+        modified_cholesky(C);
+        Cstep = cholesky_solve(C,data.grad);//Drop - sign on grad since C=-hess
 
-
-//         auto Cfull = C;
-//         cholesky_convert_full_matrix(Cfull);
+        auto Cfull = C;
+        cholesky_convert_full_matrix(Cfull);
+//         MatT Gfull = arma::inv(Cfull);
 //         std::cout<<"C:\n"<<Cfull;
+//         std::cout<<"G:\n"<<Gfull;
 //         std::cout<<"HessStep: "<<data.step.t();
 //         std::cout<<"HessStepDir: "<<arma::normalise(data.step).t();
 //         std::cout<<"HessStepDotGrad: "<<(arma::dot(arma::normalise(data.step),arma::normalise(data.grad)))<<"\n";
@@ -771,66 +896,138 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 
         data.step = Cstep;
         if(!data.step.is_finite()) throw NumericalError("Bad data_step!");
-        if(data.has_fixed_parameters) {
+        if(data.num_fixed_parameters) {
             //Modify newton step to account for fixed parameters step += inv(H)*fixed_grad
-            ParamT<Model> fixed_grad = data.grad%(1-data.fixed_parameter_scalar);
-            data.step += arma::solve(arma::symmatu(hess), fixed_grad);
+//             std::cout.precision(15);
+//             data.free_parameters.t().raw_print(std::cout,"*** free_parameters:");
+//             data.step.t().raw_print(std::cout,"*** newton step:");
+
+            MatT G = arma::inv(Cfull);
+            MatT K = G.cols(data.fixed_idxs);
+            MatT Z = arma::inv(G.submat(data.fixed_idxs,data.fixed_idxs));
+            VecT b = data.step.elem(data.fixed_idxs);
+            VecT delta = K*Z*b;
+            data.step -= delta;
+
+//             (G*-data.grad).raw_print(std::cout,"*** comp newton step:");
+//             G.raw_print(std::cout,"*** G:");
+//             K.raw_print(std::cout,"*** K:");
+//             Z.raw_print(std::cout,"*** Z:");
+//             b.raw_print(std::cout,"*** b:");
+//             delta.raw_print(std::cout,"*** delta:");
+//             data.step.elem(data.fixed_idxs).zeros();
+//             data.step.t().raw_print(std::cout,"*** mod_step:");
+//             std::cout<<"*** <grad|step>: "<<arma::dot(data.step,data.grad%data.free_parameters)<<std::endl;
         }
 
-        if(arma::dot(data.grad, data.step)<=0) throw NumericalError("Not an ascent direction!");
-        if(this->backtrack(data) || this->convergence_test(data))  return; //Backing up did not help.  Just quit.
+        if((data.num_fixed_parameters && arma::dot(data.step,data.grad%data.free_parameters)<=0) ||
+            arma::dot(data.step,data.grad)<=0) throw NumericalError("Not an ascent direction!");
+        bool termination_condition = this->backtrack(data); // Do backtracking line search and check for termination
+        if(termination_condition) return;  //Converged or gave up trying
+
     }
-    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
+    this->record_exit_code(Estimator<Model>::ExitCode::MaxIter);
 }
 
 template<class Model>
 void QuasiNewtonMaximizer<Model>::maximize(MaximizerData &data)
 {
     auto grad_old=model.make_param();
-    auto H=model.make_param_mat(); //This is our approximate hessian
+    auto G=model.make_param_mat(); //Maintain G^{-1}=-H as positive definite.
     for(int n=0; n < this->max_iterations; n++) { //Main optimization loop
+        std::cout<<"{QuasiNewton}: iter:"<<n<<std::endl;
+        std::cout<<"data.theta:"<<data.theta().t()<<std::endl;
         if(n==0) {
             auto hess=model.make_param_mat();
             methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
-            if(is_positive_definite(-hess)) {
-                H=arma::inv(arma::symmatu(hess));
-            } else {
-                H=-arma::eye(model.get_num_params(), model.get_num_params());
+            //
+            G=-arma::inv(arma::symmatu(hess));
+            if(!is_positive_definite(G)) {
+                G=arma::eye(model.get_num_params(), model.get_num_params());
             }
         } else {
+            //Approx H
+//             data.grad = methods::objective::grad(model, data.im, data.stencil());
+//             ParamT<Model> delta_grad = data.grad-grad_old;
+//             double rho =1./arma::dot(delta_grad, data.step);
+//             MatT K=rho*data.step*delta_grad.t();//This is our approximate inverse hessian
+//             K.diag()-=1;
+//             H=K*H*K.t()+rho*data.step*data.step.t();
+
             //BFGS update
             data.grad = methods::objective::grad(model, data.im, data.stencil());
-            ParamT<Model> delta_grad = data.grad-grad_old;
-            ParamT<Model> q = H*delta_grad;
-            double rho =1./arma::dot(delta_grad, data.step);
+            ParamT<Model> delta_grad = -(data.grad-grad_old); //account for grad being negative in maximization
+            ParamT<Model> q = G*delta_grad;
+            double rho =fabs(1./arma::dot(delta_grad, data.step));
             double gamma =1./arma::dot(delta_grad,q);
-            ParamT<Model> u = rho*data.step - gamma*delta_grad;
-            H += rho*data.step*data.step.t() - gamma*q*q.t() + 1/gamma * u*u.t();
+            ParamT<Model> u = rho*data.step - gamma*q;
+
+//             std::cout<<"G:\n"<<G;
+//             std::cout<<"data.step:"<<data.step.t()<<std::endl;
+//             std::cout<<"data.grad:"<<data.grad.t()<<std::endl;
+//             std::cout<<"delta_grad:"<<delta_grad<<std::endl;
+//             std::cout<<"u:"<<u.t()<<std::endl;
+//             std::cout<<"gamma:"<<gamma<<std::endl;
+//             std::cout<<"rho:"<<rho<<std::endl;
+
+            G += rho*data.step*data.step.t() - gamma*q*q.t() + 1/gamma * u*u.t();
+//             G += rho*data.step*data.step.t() - gamma*q*q.t();
+//             std::cout<<"new G:\n"<<G;
         }
-//         if(!is_positive_definite(-H)) {
-//             VecT lambda_H;
-//             MatT Q_H;
-//             arma::eig_sym(lambda_H,Q_H, arma::symmatu(H)); //Compute eigendecomposition of symmertic matrix H
+
+        if(!is_positive_definite(G)) {
+//             VecT lambda_G;
+//             MatT Q_G;
+//             arma::eig_sym(lambda_G,Q_G, arma::symmatu(G)); //Compute eigendecomposition of symmertic matrix H
 //             std::cout<<"{QuasiNewton ITER:"<<n<<"}\n";
 //             std::cout<<"Theta:"<<data.theta().t();
 //             std::cout<<"RLLH: "<<methods::objective::rllh(model, data.im, data.stencil())<<"\n";
 //             std::cout<<"Grad: "<<data.grad.t();
-//             std::cout<<"Hinv:\n"<<inv(H);
-//             std::cout<<"H:\n"<<H;
-//             std::cout<<"Lambda(H):"<<lambda_H.t();
-//             throw NumericalError("QuasiNewton: H not positive_definite");
-//         }
-        data.step=-H*data.grad;
+//             std::cout<<"Ginv:\n"<<inv(G);
+//             std::cout<<"G:\n"<<G;
+//             std::cout<<"Lambda(G):"<<lambda_G.t();
+            G=arma::eye(model.get_num_params(), model.get_num_params());
+        }
+        data.step=G*data.grad;
+//         std::cout<<"new data.step:"<<data.step.t()<<std::endl;
+//         std::cout<<"data.grad:"<<data.grad.t()<<std::endl;
+//         std::cout<<"arma::dot(data.grad, data.step):"<<arma::dot(data.grad, data.step)<<std::endl;
         if(!data.step.is_finite()) throw NumericalError("QuasiNewton: step is non-finite");
 
-//         if(arma::dot(data.grad, data.step)<=0) throw Numerical("QuasiNewton: step is not a ascent direction");
+
+        if(data.num_fixed_parameters) {
+            //Modify newton step to account for fixed parameters step += inv(H)*fixed_grad
+//             std::cout.precision(15);
+//             data.free_parameters.t().raw_print(std::cout,"*** free_parameters:");
+//             data.step.t().raw_print(std::cout,"*** newton step:");
+
+            MatT K = G.cols(data.fixed_idxs);
+            MatT Z = arma::inv(G.submat(data.fixed_idxs,data.fixed_idxs));
+            VecT b = data.step.elem(data.fixed_idxs);
+            VecT delta = K*Z*b;
+            data.step -= delta;
+
+//             (G*-data.grad).raw_print(std::cout,"*** comp newton step:");
+//             G.raw_print(std::cout,"*** G:");
+//             K.raw_print(std::cout,"*** K:");
+//             Z.raw_print(std::cout,"*** Z:");
+//             b.raw_print(std::cout,"*** b:");
+//             delta.raw_print(std::cout,"*** delta:");
+//             data.step.elem(data.fixed_idxs).zeros();
+//             data.step.t().raw_print(std::cout,"*** mod_step:");
+//             std::cout<<"*** <grad|step>: "<<arma::dot(data.step,data.grad%data.free_parameters)<<std::endl;
+        }
+
+        if(arma::dot(data.grad, data.step)<=0) throw NumericalError("QuasiNewton: step is not a ascent direction");
 
         grad_old=data.grad;
-        if(this->backtrack(data) || this->convergence_test(data))  return; //Backing up did not help.  Just quit.
+
+        bool termination_condition = this->backtrack(data);
+        if(termination_condition) return;  //Converged or gave up trying
 
         data.step = data.theta()-data.saved_theta();//If we backtracked then the step may have changed
     }
-    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
+    this->record_exit_code(Estimator<Model>::ExitCode::MaxIter);
 }
 
 
@@ -1000,24 +1197,24 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
 //         std::cout<<"   new TrustRadius:"<<delta<<"\n";
         //Test for convergence
         if(delta < 8*this->epsilon) {
-            data.record_exit(IterativeMaximizer<Model>::ExitCode::TrustRegionRadius);
+            this->record_exit_code(Estimator<Model>::ExitCode::TrustRegionRadius);
             return;
         }
         double grad_ratio = arma::norm(data.grad) / std::fabs(data.rllh);
         if( grad_ratio < this->epsilon) {
-            data.record_exit(IterativeMaximizer<Model>::ExitCode::GradRatio);
+            this->record_exit_code(Estimator<Model>::ExitCode::GradRatio);
             return;
         }
         if(success) {
             double step_size_ratio =  (arma::norm(data.theta() - data.saved_theta()) / 
                                         std::max(arma::norm(data.theta()),arma::norm(data.saved_theta())));
             if(step_size_ratio < this->epsilon){
-                data.record_exit(IterativeMaximizer<Model>::ExitCode::StepSize);
+                this->record_exit_code(Estimator<Model>::ExitCode::StepSize);
                 return;
             }
         }
     }
-    data.record_exit(IterativeMaximizer<Model>::ExitCode::MaxIter);
+    this->record_exit_code(Estimator<Model>::ExitCode::MaxIter);
 }
 
 /**
@@ -1345,6 +1542,7 @@ SimulatedAnnealingMaximizer<Model>::compute_estimate_debug(const ModelDataT<Mode
                                                            ParamVecT<Model> &sequence, VecT &sequence_rllh)
 {
     double rllh;
+
     return anneal(im, model.initial_theta_estimate(im,theta_init), rllh, sequence, sequence_rllh);
 }
 
@@ -1357,10 +1555,9 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
     auto &rng = model.get_rng_generator();
     UniformDistT uniform;
     NewtonDiagonalMaximizer<Model> tr_max(model);
-//     TrustRegionMaximizer<Model> tr_max(model);
-    int niters = max_iterations;
-    sequence = model.make_param_stack(niters+1);
-    sequence_rllh.set_size(niters+1);
+//    TrustRegionMaximizer<Model> tr_max(model);
+    sequence = model.make_param_stack(num_iterations+1);
+    sequence_rllh.set_size(num_iterations+1);
     sequence.col(0)=theta_init.theta;
     sequence_rllh(0)=methods::objective::rllh(model, im, theta_init);
     double max_rllh = sequence_rllh(0);
@@ -1368,7 +1565,7 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
     StencilT<Model> max_s;
     double T = T_init; //Temperature
     int naccepted=1;
-    for(int n=1; n<niters; n++){
+    for(int n=1; n<num_iterations; n++){
         ParamT<Model> can_theta = sequence.col(naccepted-1);
         model.sample_mcmc_candidate(n, can_theta);
         if(!model.theta_in_bounds(can_theta)) { //OOB
@@ -1387,10 +1584,11 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
             max_idx = naccepted;
         }
         naccepted++;
-        if(naccepted >= niters+1) throw LogicalError("Iteration error in simulated annealing");
+        if(naccepted >= num_iterations+1) throw LogicalError("Iteration error in simulated annealing");
     }
 
     //Run a  maximization
+    //local_maximize will set an ExitCode or throw an exceptions which will be caught up-stack
     tr_max.local_maximize(im, model.make_stencil(sequence.col(max_idx)), max_s, max_rllh);
     //Fixup sequence to return
     sequence.resize(sequence.n_rows, naccepted+1);
@@ -1398,8 +1596,28 @@ SimulatedAnnealingMaximizer<Model>::anneal(const ModelDataT<Model> &im, const St
     sequence_rllh.resize(naccepted+1);
     sequence_rllh(naccepted) = max_rllh;
     theta_max_rllh = max_rllh;
+
     return max_s;
 }
+
+template<class Model>
+StatsT SimulatedAnnealingMaximizer<Model>::get_stats()
+{
+    auto stats = ThreadedEstimator<Model>::get_stats();
+    stats["const_T_init"] = T_init;
+    stats["const_cooling_rate"] = cooling_rate;
+    stats["num_iterations"] = num_iterations;
+    stats["num_fun_evals"] = num_iterations;
+    stats["num_der_evals"] = 1;
+    return stats;
+}
+
+template<class Model>
+StatsT SimulatedAnnealingMaximizer<Model>::get_debug_stats()
+{
+    return get_stats();
+}
+
 
 } /* namespace mappel */
 
