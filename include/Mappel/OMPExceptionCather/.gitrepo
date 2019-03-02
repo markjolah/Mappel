@@ -6,7 +6,7 @@
 [subrepo]
 	remote = https://github.com/markjolah/OMPExceptionCatcher
 	branch = master
-	commit = b1814fad8c00d37f92af585cd0eedb6db1e3ae4b
-	parent = 13f4dd94f75e20fc7c3dfa96835ed22b363cc0a9
+	commit = ff1544873d69c16518074d0b4f076e6346b09a65
+	parent = c6b2c60cb1e549fa3933e457aa6890a5901b7b23
 	method = merge
 	cmdver = 0.4.0
