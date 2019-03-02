@@ -7,7 +7,7 @@
 # Copyright 2014-2019
 # Licensed under the Apache License, Version 2.0
 # https://www.apache.org/licenses/LICENSE-2.0
-# See: LICENCE file
+# See: LICENSE file
 
 cmake_minimum_required( VERSION 3.9 )
 project(Mappel VERSION 0.0.3 LANGUAGES CXX)
@@ -69,7 +69,8 @@ add_external_dependency(NAME BacktraceException URL ${BacktraceExceptionURL} VAR
 set(ParallelRngManagerURL https://github.com/markjolah/ParallelRngManager.git CACHE STRING "URL of ParallelRngManager library dependency")
 add_external_dependency(NAME ParallelRngManager URL ${ParallelRngManagerURL} VARS OPT_INSTALL_TESTING)
 
-#PriorHessian allows for hessians of prior distirbutions
+#PriorHessian allows for computation of Hessians of prior distributions
+# - PriorHessian has BLAS/LAPACK dependencies.  Must have the same BLAS_INT_COMPONENT settings as this package.
 set(PriorHessianURL https://github.com/markjolah/PriorHessian.git CACHE STRING "URL of PriorHessian library dependency")
 add_external_dependency(NAME PriorHessian URL ${PriorHessianURL}
                         VARS OPT_INSTALL_TESTING OPT_BLAS_INT64
@@ -81,11 +82,6 @@ if(OPT_MATLAB)
 endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
-if(OPT_BLAS_INT64)
-    set(ARMADILLO_BLASINT INT64) #Enable INT64 interface for armadillo, Blas and Lapack
-else()
-    set(ARMADILLO_BLASINT INT32)
-endif()
 find_package(BLAS REQUIRED COMPONENTS ${BLAS_INT_COMPONENT})
 find_package(LAPACK REQUIRED COMPONENTS ${BLAS_INT_COMPONENT})
 find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 ${BLAS_INT_COMPONENT})
@@ -110,29 +106,34 @@ set(EXPORTED_FIND_MODULES cmake/UncommonCMakeModules/FindArmadillo.cmake
                           cmake/UncommonCMakeModules/FindBLAS.cmake
                           cmake/UncommonCMakeModules/FindLAPACK.cmake
                           cmake/UncommonCMakeModules/MakePkgConfigTarget.cmake)
-export_package_wizzard(PROVIDED_COMPONENTS ${BLAS_INT_COMPONENT}
+export_package_wizzard(PROVIDED_COMPONENTS ${BLAS_INT_COMPONENT} #Propagate BLAS integer size dependency
                        FIND_MODULES ${EXPORTED_FIND_MODULES})
 
+### Main C++ library
 add_subdirectory(src/libmappel) #Main library
 
+### C++ Testing
 if(BUILD_TESTING)
     include(CTest)
     enable_testing()
     add_subdirectory(test)
 endif()
 
+### Matlab MexIFace interface
 if(OPT_MATLAB)
     message(STATUS "*** Matlab MEX Modules Enabled ***")
     add_subdirectory(src/MexIFace) #MATLAB Modules
     mexiface_configure_install(EXPORT_BUILD_TREE "${OPT_EXPORT_BUILD_TREE}") #Matlab code and startupTracker.m configure and install
 endif()
 
+### Python pybind11 interface
 if(OPT_PYTHON)
     message(STATUS "*** Python Libraries Enabled ***")
     add_subdirectory(src/python) #C++ interface source code
     add_subdirectory(python) #python source code
 endif()
 
+### C++ Examples
 if(OPT_EXAMPLES)
     message(STATUS "*** C++ Example Programs Enabled ***")
     add_subdirectory(examples) #C++ example libraries
@@ -142,4 +143,3 @@ endif()
 if(OPT_DOC)
     add_subdirectory(doc)
 endif()
-

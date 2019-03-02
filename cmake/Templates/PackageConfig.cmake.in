@@ -11,8 +11,8 @@ list(INSERT CMAKE_MODULE_PATH 0 ${PACKAGE_FIND_MODULES_PATH})
 find_package(BLAS REQUIRED COMPONENTS @ARMADILLO_INT64_COMPONENT@)
 find_package(LAPACK REQUIRED COMPONENTS @ARMADILLO_INT64_COMPONENT@)
 find_package(Armadillo REQUIRED COMPONENTS BLAS LAPACK CXX11 @ARMADILLO_INT64_COMPONENT@)
-list(REMOVE_AT CMAKE_MODULE_PATH 0)
-#Default CMAKE Find Modules
+list(REMOVE_AT CMAKE_MODULE_PATH 0) #Back to Default CMAKE Find Modules
+
 find_dependency(BacktraceException)
 find_dependency(ParallelRngManager)
 find_dependency(PriorHessian)

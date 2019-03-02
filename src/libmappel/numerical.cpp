@@ -8,7 +8,7 @@
 
 namespace mappel {
     
-//const double CholeskyDelta = 1e-6; //Minimum we will let a diagonal element be in the modified cholesky algorithm
+//const double CholeskyDelta = 1e-6; //Minimum we will let a diagonal element be in the modified Cholesky algorithm
 
 void copy_Usym_mat(arma::mat &usym)
 {
@@ -93,14 +93,17 @@ void cholesky_convert_full_matrix(arma::mat &chol)
 }
 
 
-
+/** Convert full or upper-triangular symmetric matrix to lower-triangular cholesky decomposition inplace
+ *
+ * No error checking is performed
+ *
+ * @param[in,out] Positive definite square symmetric matrix to convert
+ */
 bool cholesky(arma::mat &A)
 {
     //A comes in as upper triangular symmetric, but is converted to a lower triangular
-    //Cholesky decomposition format on output.  This way we keep the original matrix arround in
+    //Cholesky decomposition format on output.  This way we keep the original matrix around in
     //the upper triangle while we write the decomposition into the lower triangle.  Cool!
-    //We are using the Gill Murray Wright 1981 method although a superior but more complex version
-    //by Schandel and Eskow 1999 exists too that we should eventually implement.
     int size=static_cast<int>(A.n_rows);
     arma::vec v(size-1);
     for(int j=0;j<size;j++) {
@@ -127,7 +130,7 @@ bool cholesky(arma::mat &A)
 bool modified_cholesky(arma::mat &A)
 {
     //A comes in as upper triangular symmetric, but is converted to a lower triangular
-    //Cholesky decomposition format on output.  This way we keep the original matrix arround in
+    //Cholesky decomposition format on output.  This way we keep the original matrix around in
     //the upper triangle while we write the decomposition into the lower triangle.  Cool!
     //We are using the Gill Murray Wright 1981 method although a superior but more complex version
     //bu Schandel and Eskow 1999 exists too that we should eventually implement.
@@ -136,7 +139,7 @@ bool modified_cholesky(arma::mat &A)
     arma::vec v(size);
     double gamma = arma::max(arma::abs(A.diag()));
     double xi = 0;
-    for(int j=1;j<size;j++) for(int i=0;i<j;i++) xi = std::max(xi, fabs(A(i,j)));  //Maximum over off-diagonal elements of uppers symmetrix matrix
+    for(int j=1;j<size;j++) for(int i=0;i<j;i++) xi = std::max(xi, fabs(A(i,j)));  //Maximum over off-diagonal elements of uppers symmetric matrix
     double epsilon = std::numeric_limits<double>::epsilon();
     double delta = epsilon*std::max(1.,gamma+xi);
     double beta_sq = std::max(epsilon,std::max(gamma, xi / size));
@@ -173,7 +176,7 @@ bool modified_cholesky(arma::mat &A)
             positive_definite=false; 
 //             std::cout<<"Not positive definite!\n";
         }
-        for(int i=j+1;i<size;i++) A(i,j)/=A(j,j); //Renormalize by new diagonal element A(j,j)
+        for(int i=j+1;i<size;i++) A(i,j)/=A(j,j); //Re-normalize by new diagonal element A(j,j)
 //         std::cout<<"A:\n"<<A;
     }
     //zero out upper triangular
@@ -192,7 +195,7 @@ arma::vec cholesky_solve(const arma::mat &C,const arma::vec &b)
     //First solve Lx=b (L is unit lower triangular)
     for(int i=1;i<n;i++) {
         double sum=0;
-        for(int j=0;j<i;j++) sum+= C(i,j)*x(j);  //i=row,j=col i>j (lower trianglular)
+        for(int j=0;j<i;j++) sum+= C(i,j)*x(j);  //i=row,j=col i>j (lower triangular)
         x(i) -= sum;
     }
 //     std::cout<<"x: "<<x.t()<<"\n";
@@ -202,7 +205,7 @@ arma::vec cholesky_solve(const arma::mat &C,const arma::vec &b)
 //     std::cout<<"x: "<<x.t()<<"\n";
     for(int i=n-2;i>=0;i--) {
         double sum=0;
-        for(int j=i+1;j<n;j++) sum+= C(j,i)*x(j);  //j=row,i=col j>i (lower trianglular)
+        for(int j=i+1;j<n;j++) sum+= C(j,i)*x(j);  //j=row,i=col j>i (lower triangular)
         x(i) -= sum;
     }
 //     std::cout<<"x: "<<x.t()<<"\n";

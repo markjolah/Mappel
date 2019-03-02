@@ -2,13 +2,13 @@
 /** @file OMPExceptionCatcher.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
  * @date 2019
- * @brief A lightweight class for managing C++ exception handling strategies for openMP methods.
+ * @copyright See LICENSE file
+ * @brief A lightweight class for managing C++ exception handling strategies for OpenMP methods.
  *
  * OpenMP code must catch any exceptions that may have been thrown before exiting the OpenMP block.
  * This class acts as lightweight wrapper that allows an arbitrary function or lambda expression to be run
  * safely and efficiently in OMP even if it might throw exceptions.  We employ one of 4 possible strategies
  * as determined By the OMPExceptionCatcher::Strategies enum.
- *
  *
  * Strategy's :
  * OMPExceptionCatcher::Strategies::DoNotTry -- Don't even try,  this is a null op to completely disable
