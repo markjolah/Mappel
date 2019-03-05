@@ -8,11 +8,7 @@
 #ifndef MAPPEL_MODEL_METHODS
 #define MAPPEL_MODEL_METHODS
 
-//#include "Mappel/PointEmitterModel.h"
-
 namespace mappel {
-
-#include "Mappel/OMPExceptionCatcher/OMPExceptionCatcher.h"
 
 /** @brief Templated functions for operating on a PointEmitterModel
  * 

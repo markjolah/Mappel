@@ -28,12 +28,14 @@
 #ifndef OMP_EXCEPTION_CATCHER_H
 #define OMP_EXCEPTION_CATCHER_H
 
-#include<exception>
-#include<mutex>
-#include<functional>
-#include<cstdint>
+#include <exception>
+#include <mutex>
+#include <functional>
+#include <cstdint>
 
 namespace omp_exception_catcher {
+
+enum class Strategy {DoNotTry, Continue, Abort, RethrowFirst};
 
 namespace impl_ {
 //IntType is a dummy just to allow everything to be a template and static member initialization
@@ -41,9 +43,6 @@ namespace impl_ {
 template<class IntType=uint32_t>
 class OMPExceptionCatcher
 {
-public:
-    enum class Strategy:IntType {DoNotTry, Continue, Abort, RethrowFirst};
-private:
     static Strategy GlobalDefaultStrategy;
 public:
     static void setGlobalDefaultStrategy(Strategy s) { GlobalDefaultStrategy = s; }
@@ -87,11 +86,13 @@ private:
 
 template<class IntType>
 typename OMPExceptionCatcher<IntType>::Strategy
-OMPExceptionCatcher<IntType>::GlobalDefaultStrategy = OMPExceptionCatcher<IntType>::Strategy::RethrowFirst;
+OMPExceptionCatcher<IntType>::GlobalDefaultStrategy = Strategy::RethrowFirst;
 
 } /* namespace omp_exception_catcher::impl_ */
 
 using OMPExceptionCatcher = impl_::OMPExceptionCatcher<uint32_t>;
+
+enum class Strategy {DoNotTry, Continue, Abort, RethrowFirst};
 
 } /* namespace omp_exception_catcher */
 

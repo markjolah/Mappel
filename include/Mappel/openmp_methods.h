@@ -23,8 +23,11 @@
 #define MAPPEL_OPENMP_METHODS
 
 #include <omp.h>
+#include "Mappel/OMPExceptionCatcher/OMPExceptionCatcher.h"
 #include "Mappel/util.h"
 #include "Mappel/mcmc.h"
+
+using omp_exception_catcher::Strategy;
 
 namespace mappel {
 namespace methods {
@@ -42,7 +45,7 @@ template<class Model>
 void sample_prior_stack(Model &model, ParamVecT<Model> &theta_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
-    omp_exception_catcher::OMPExceptionCatcher catcher;
+    omp_exception_catcher::OMPExceptionCatcher catcher(omp_exception_catcher::Strategy::Continue);
     #pragma omp parallel
     {
         auto &rng = model.get_rng_generator();
