@@ -8,20 +8,20 @@
  * OpenMP code must catch any exceptions that may have been thrown before exiting the OpenMP block.
  * This class acts as lightweight wrapper that allows an arbitrary function or lambda expression to be run
  * safely and efficiently in OMP even if it might throw exceptions.  We employ one of 4 possible strategies
- * as determined By the OMPExceptionCatcher::Strategies enum.
+ * as determined By the omp_exception_catcher::Strategies enum.
  *
  * Strategy's :
- * OMPExceptionCatcher::Strategies::DoNotTry -- Don't even try,  this is a null op to completely disable
+ * omp_exception_catcher::Strategies::DoNotTry -- Don't even try,  this is a null op to completely disable
  *                                              this class's effect.
- * OMPExceptionCatcher::Strategies::Continue -- Catch exceptions and keep going
- * OMPExceptionCatcher::Strategies::Abort    -- Catch exceptions and abort
- * OMPExceptionCatcher::Strategies::RethrowFirst  -- Re-throws first exception thrown by any thread
+ * omp_exception_catcher::Strategies::Continue -- Catch exceptions and keep going
+ * omp_exception_catcher::Strategies::Abort    -- Catch exceptions and abort
+ * omp_exception_catcher::Strategies::RethrowFirst  -- Re-throws first exception thrown by any thread.
  *
  *
- * Example useage:
- * OMPExceptionCatcher catcher(OMPExceptionCatcher<>::Strategies::Continue);
+ * Example usage:
+ * omp_exception_catcher::OMPExceptionCatcher catcher(omp_exception_catcher::Strategies::Continue);
  * #pragma omp parallel for
- * for(int n=0; n < N; n++) catcher.run([&]{ my_ouput(n)=do_my calulations(args(n)); }
+ * for(int n=0; n < N; n++) catcher.run([&]{ my_output(n)=do_my_calculations(args(n)); })
  * catcher.rethrow(); //Required only if you ever might use RethrowFirst strategy
  */
 
@@ -38,20 +38,40 @@ namespace omp_exception_catcher {
 enum class Strategy {DoNotTry, Continue, Abort, RethrowFirst};
 
 namespace impl_ {
-//IntType is a dummy just to allow everything to be a template and static member initialization
-//to be defined in a header-only file
-template<class IntType=uint32_t>
+/** Implementation of OMPExceptionCatcher
+ *
+ * Note: The template variable is a dummy.  It exists solely to allow this class to be a template,
+ * which makes it header-only and allows static member initialization to be defined in the header file.
+ */
+template<class _dummy=void>
 class OMPExceptionCatcher
 {
-    static Strategy GlobalDefaultStrategy;
+    static Strategy GlobalDefaultStrategy; //Strategy::RethrowFirst
 public:
     static void setGlobalDefaultStrategy(Strategy s) { GlobalDefaultStrategy = s; }
+
+    /** Construct a new OMPExceptionCatcher using the GlobalDefaultStrategy
+     */
     OMPExceptionCatcher(): ex(nullptr), strategy(GlobalDefaultStrategy) {}
 
+    /** Construct a new OMPExceptionCatcher using the given strategy
+     */
     OMPExceptionCatcher(Strategy strategy_): ex(nullptr), strategy(strategy_) {}
 
+    /** Rethrow any stored exceptions
+     * Should only be called from single-threaded blocks of code
+     */
     void rethrow() const { if(strategy==Strategy::RethrowFirst && ex) std::rethrow_exception(ex); }
 
+    /** Run a function in parallel code and prevent exceptions escaping.
+     *
+     * Runs any function with any set of parameters and applies the chosen exception catching Strategy
+     * to prevent any exceptions escaping.  This function is thread-safe designed to be called in parallel
+     * code blocks.
+     * @param[in] func function to call
+     * @param[in] params... Possibly empty variadic set of parameters to call.
+     *
+     */
     template<class Function, class... Parameters>
     void run(Function func, Parameters... params) {
         switch(strategy) {
@@ -85,14 +105,13 @@ private:
 };
 
 template<class IntType>
-typename OMPExceptionCatcher<IntType>::Strategy
-OMPExceptionCatcher<IntType>::GlobalDefaultStrategy = Strategy::RethrowFirst;
+Strategy OMPExceptionCatcher<IntType>::GlobalDefaultStrategy = Strategy::RethrowFirst;
 
 } /* namespace omp_exception_catcher::impl_ */
 
-using OMPExceptionCatcher = impl_::OMPExceptionCatcher<uint32_t>;
-
-enum class Strategy {DoNotTry, Continue, Abort, RethrowFirst};
+/** A class to run and catch exceptions in parallel code allowing various exception management strategies
+ */
+using OMPExceptionCatcher = impl_::OMPExceptionCatcher<>;
 
 } /* namespace omp_exception_catcher */
 
