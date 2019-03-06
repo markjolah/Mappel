@@ -4,7 +4,6 @@
 % method run on a single image with a single starting theta.
 
 function guiFig = maximizerInspectorGUI(obj)
-    import('MexIFace.GUIBuilder');
     HasSigmaParam = obj.NumParams > 4; % Boolean if this model has a free sigma parameter or not
 
     gui_name = sprintf('[%s] Maximizer Trajectory Inspector',class(obj));
@@ -101,7 +100,6 @@ function guiFig = maximizerInspectorGUI(obj)
    
 
     function initializeAxes()
-        import('MexIFace.GUIBuilder');
         %Sim Position axes
         xlabel(ax.sim,'X (px)');
         ylabel(ax.sim,'Y (px)');
@@ -198,7 +196,7 @@ function guiFig = maximizerInspectorGUI(obj)
                 'Est. Status:','Num. iter:','Num. backtracks:','Num fun eval:','Num der eval:',};
         values={theta,theta_init,theta_est,sqrt(crlb), [],'Invalid','0','0','0','0'};
         CBs={@setThetaEdit_CB,@setThetaInitEdit_CB,[],[],[],[],[],[],[],[]};
-        handles.edits = MexIFace.GUIBuilder.labeledHEdits(guiFig, panel1_pos, uH, hNames, labels, values, CBs);
+        handles.edits = GUIBuilder.labeledHEdits(guiFig, panel1_pos, uH, hNames, labels, values, CBs);
     end
 
     function createImpointCBs()
@@ -240,9 +238,9 @@ function guiFig = maximizerInspectorGUI(obj)
         end
         set_theta_active=true;
         new_theta = obj.boundTheta(new_theta(:));
-        new_theta_str = MexIFace.arr2str(new_theta);
+        new_theta_str = CellFun.arr2str(new_theta);
         if ~strcmp(new_theta_str,handles.edits.theta.String)
-            handles.edits.theta.String = MexIFace.arr2str(new_theta);
+            handles.edits.theta.String = CellFun.arr2str(new_theta);
         end
         
         theta = new_theta;
@@ -263,9 +261,9 @@ function guiFig = maximizerInspectorGUI(obj)
         end
         set_theta_init_active=true;
         new_theta = new_theta(:);
-        new_theta_str = MexIFace.arr2str(new_theta);
+        new_theta_str = CellFun.arr2str(new_theta);
         if ~strcmp(new_theta_str,handles.edits.thetaInit.String)
-            handles.edits.thetaInit.String = MexIFace.arr2str(new_theta);
+            handles.edits.thetaInit.String = CellFun.arr2str(new_theta);
         end
         theta_init = new_theta;
         if isfield(handles,'init_pos_pt') 
@@ -357,9 +355,9 @@ function guiFig = maximizerInspectorGUI(obj)
     end
 
     function plotEstPhase1()
-        handles.edits.thetaEst.String = MexIFace.arr2str(theta_est);
-        handles.edits.thetaSE.String = MexIFace.arr2str(sqrt(crlb));
-        handles.edits.thetaErr.String = MexIFace.arr2str(abs(theta-theta_est));
+        handles.edits.thetaEst.String = CellFun.arr2str(theta_est);
+        handles.edits.thetaSE.String = CellFun.arr2str(sqrt(crlb));
+        handles.edits.thetaErr.String = CellFun.arr2str(abs(theta-theta_est));
                
         maxc=max(32,max(max(est_im(:)),max(sim(:))));
         axes(ax.est);

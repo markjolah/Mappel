@@ -9,6 +9,7 @@ _gcc4_9*
 _gcc6_5*
 _dist*
 _travis*
+_matlab_dist
 
 .gdb_history
 

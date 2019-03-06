@@ -77,8 +77,17 @@ add_external_dependency(NAME PriorHessian URL ${PriorHessianURL}
                         COMPONENTS ${BLAS_INT_COMPONENT})
 
 if(OPT_MATLAB)
+    #MexIFace - A Cross-Platform C++ / MEX Object-based interface wrapper and CMake build tool.
     set(MexIFaceURL https://github.com/markjolah/MexIFace.git CACHE STRING "URL of MexIFace library dependency")
     add_external_dependency(NAME MexIFace URL ${MexIFaceURL} VARS OPT_INSTALL_TESTING)
+
+    #CellFun - A functional programming oriented library for matlab CellArray manipulation.
+    set(CellFunRL https://github.com/markjolah/CellFun.git CACHE STRING "URL of CellFun library dependency")
+    add_external_dependency(NAME CellFun URL ${CellFunURL})
+
+    #GUIBuilder - A Matlab mixin class, with methods for creating interactive GUIs for objects.
+    set(GUIBuilderRL https://github.com/markjolah/GUIBuilder.git CACHE STRING "URL of GUIBuilder library dependency")
+    add_external_dependency(NAME GUIBuilder URL ${GUIBuilderURL})
 endif()
 
 #Armadillo, BLAS, and LAPACK, using the UncommonCMakeModules Find<PKG>.cmake modules
@@ -123,7 +132,8 @@ endif()
 if(OPT_MATLAB)
     message(STATUS "*** Matlab MEX Modules Enabled ***")
     add_subdirectory(src/MexIFace) #MATLAB Modules
-    mexiface_configure_install(EXPORT_BUILD_TREE "${OPT_EXPORT_BUILD_TREE}") #Matlab code and startupTracker.m configure and install
+    #Matlab code and startupTracker.m configure and install
+    mexiface_configure_install(DEPENDENCY_STARTUP_M_LOCATIONS ${GUIBuilder_MATLAB_STARTUP_M})
 endif()
 
 ### Python pybind11 interface

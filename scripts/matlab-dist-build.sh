@@ -7,8 +7,6 @@
 # and mex code paths and dependencies.
 #  * Testing and documentation are enabled.
 #  * Creates a .zip and .tar.gz archives.
-#  * Has to install each arch to seperate directory before combining because of the possibility of PackageConfig.cmake files
-#    from one arch being detected by another.
 #
 # Args:
 #  <INSTALL_DIR> - path to distribution install directory [Default: ${SRC_PATH}/_dist].
@@ -46,7 +44,7 @@ TAR_FILE=${NAME}-${VERSION}.tbz2
 BUILD_PATH=${SRC_PATH}/_build/dist
 NUM_PROCS=$(grep -c ^processor /proc/cpuinfo)
 
-ARGS=""
+ARGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
 ARGS="${ARGS} -DBUILD_SHARED_LIBS=ON"
 ARGS="${ARGS} -DBUILD_TESTING=On"
 ARGS="${ARGS} -DOPT_INSTALL_TESTING=On"
@@ -55,32 +53,29 @@ ARGS="${ARGS} -DOPT_FIXUP_DEPENDENCIES=On"
 ARGS="${ARGS} -DOPT_FIXUP_DEPENDENCIES_BUILD_TREE=Off"
 ARGS="${ARGS} -DOPT_FIXUP_DEPENDENCIES_COPY_GCC_LIBS=Off"
 ARGS="${ARGS} -DOPT_MexIFace_INSTALL_DISTRIBUTION_STARTUP=On" #Copy startupPackage.m to root for distribution
+ARGS="${ARGS} -DCMAKE_FIND_PACKAGE_NO_PACKAGE_REGISTRY=On" #Disable user package registry for distribution builds
 ARGS="${ARGS} -DOPT_MATLAB=On"
 
 set -ex
 rm -rf $BUILD_PATH
 rm -rf $INSTALL_PATH
 
-cmake -H${SRC_PATH} -B$BUILD_PATH/LinuxRelease -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH/Linux -DCMAKE_TOOLCHAIN_FILE=$LINUX_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Release -DOPT_DOC=On ${ARGS} ${@:2}
+cmake -H${SRC_PATH} -B$BUILD_PATH/LinuxRelease -DCMAKE_TOOLCHAIN_FILE=$LINUX_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Release -DOPT_DOC=On ${ARGS} ${@:2}
 cmake --build $BUILD_PATH/LinuxRelease --target doc -- -j${NUM_PROCS}
 cmake --build $BUILD_PATH/LinuxRelease --target pdf -- -j${NUM_PROCS}
 cmake --build $BUILD_PATH/LinuxRelease --target install -- -j${NUM_PROCS}
 
-cmake -H${SRC_PATH} -B$BUILD_PATH/W64Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH/Win64 -DCMAKE_TOOLCHAIN_FILE=$W64_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Release ${ARGS} ${@:2}
+cmake -H${SRC_PATH} -B$BUILD_PATH/W64Release -DCMAKE_TOOLCHAIN_FILE=$W64_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Release ${ARGS} ${@:2}
 cmake --build $BUILD_PATH/W64Release --target install -- -j${NUM_PROCS}
 
 if [ -n ${OPT_DEBUG} ]; then
-    cmake -H${SRC_PATH} -B$BUILD_PATH/LinuxDebug -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH/Linux -DCMAKE_TOOLCHAIN_FILE=$LINUX_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Debug ${ARGS} ${@:2}
+    cmake -H${SRC_PATH} -B$BUILD_PATH/LinuxDebug -DCMAKE_TOOLCHAIN_FILE=$LINUX_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Debug ${ARGS} ${@:2}
     cmake --build $BUILD_PATH/LinuxDebug --target install -- -j${NUM_PROCS}
 
-    cmake -H${SRC_PATH} -B$BUILD_PATH/W64Debug -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH/Win64 -DCMAKE_TOOLCHAIN_FILE=$W64_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Debug ${ARGS} ${@:2}
+    cmake -H${SRC_PATH} -B$BUILD_PATH/W64Debug -DCMAKE_TOOLCHAIN_FILE=$W64_TOOLCHAIN_FILE -DCMAKE_BUILD_TYPE=Debug ${ARGS} ${@:2}
     cmake --build $BUILD_PATH/W64Debug --target install -- -j${NUM_PROCS}
 fi
 
-cd $INSTALL_PATH
-cp -a $INSTALL_PATH/Linux/* .
-cp -a $INSTALL_PATH/Win64/* .
-rm -rf ./Linux ./Win64
-cd ..
+cd $INSTALL_PATH/..
 zip -rq $ZIP_FILE $DIST_DIR_NAME
 tar cjf $TAR_FILE $DIST_DIR_NAME
