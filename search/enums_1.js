@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['strategy',['Strategy',['../classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher.html#ab73d40c948b8be83af2f416075e47a45',1,'omp_exception_catcher::impl_::OMPExceptionCatcher']]]
+  ['strategy',['Strategy',['../namespaceomp__exception__catcher.html#a70d1436a7f1714534deeb94daeee3517',1,'omp_exception_catcher']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exitcode',['ExitCode',['../classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edc',1,'mappel::Estimator']]]
+  ['exitcode',['ExitCode',['../namespacemappel_1_1estimator.html#ae49999202b8a1968bc308aa30ac24e6c',1,'mappel::estimator']]]
 ];

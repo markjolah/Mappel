@@ -1,0 +1,358 @@
+\hypertarget{namespacemappel_1_1estimator}{}\subsection{mappel\+:\+:estimator Namespace Reference}
+\label{namespacemappel_1_1estimator}\index{mappel\+::estimator@{mappel\+::estimator}}
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel_1_1estimator_1_1subroutine}{subroutine}
+\end{DoxyCompactItemize}
+\subsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1CGaussHeuristicEstimator}{C\+Gauss\+Heuristic\+Estimator}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1CGaussMLE}{C\+Gauss\+M\+LE}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1Estimator}{Estimator}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1HeuristicEstimator}{Heuristic\+Estimator}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1IterativeMaximizer}{Iterative\+Maximizer}
+\item 
+struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data}
+\item 
+struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{M\+L\+E\+Data\+Stack}
+\item 
+struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1NewtonDiagonalMaximizer}{Newton\+Diagonal\+Maximizer}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1NewtonMaximizer}{Newton\+Maximizer}
+\item 
+struct \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData}{Profile\+Bounds\+Data}
+\item 
+struct \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsDataStack}{Profile\+Bounds\+Data\+Stack}
+\item 
+struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{Profile\+Bounds\+Debug\+Data}
+\item 
+struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileLikelihoodData}{Profile\+Likelihood\+Data}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1QuasiNewtonMaximizer}{Quasi\+Newton\+Maximizer}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer}{Simulated\+Annealing\+Maximizer}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator}{Threaded\+Estimator}
+\item 
+class \hyperlink{classmappel_1_1estimator_1_1TrustRegionMaximizer}{Trust\+Region\+Maximizer}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Model $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_1_1estimator_a8267d0998b3d27a8c40bf1fe9227113d}{operator$<$$<$} (std\+::ostream \&out, \hyperlink{classmappel_1_1estimator_1_1Estimator}{Estimator}$<$ Model $>$ \&estimator)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6c}{Exit\+Code} \+: IdxT \{ \\*
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6caadd208e6fbd6ef5ab84a287f259c3b81}{Exit\+Code\+::\+Trust\+Region\+Radius} = 9, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9b80f9b9e1c1cf4247c1d5d6edc7c3f8}{Exit\+Code\+::\+Model\+Improvement} = 8, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca8d0cc41d71102a7952fefe3c63244fd4}{Exit\+Code\+::\+Grad\+Ratio} = 7, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca400823530aeaf00ddf2b69458acdc235}{Exit\+Code\+::\+Function\+Value} = 6, 
+\\*
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca071449462d0c247e47313eb8c3129dd0}{Exit\+Code\+::\+Step\+Size} = 5, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca505a83f220c02df2f85c3810cd9ceb38}{Exit\+Code\+::\+Success} = 4, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9e5d3183756d69b44432394db6b6fd86}{Exit\+Code\+::\+Max\+Backtracks} = 3, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6cabbf52264f7a6e91c48a242f95aeed3db}{Exit\+Code\+::\+Max\+Iter} = 2, 
+\\*
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca3476bf9c3af766198bfbd4f065a51e69}{Exit\+Code\+::\+Unassigned} = 1, 
+\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca902b0d55fddef6f8d651fe1035b7d4bd}{Exit\+Code\+::\+Error} = 0
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Class Documentation}
+\index{mappel\+::estimator\+::\+M\+L\+E\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Data}}\label{structmappel_1_1estimator_1_1MLEData}
+\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{}
+\paragraph{struct mappel\+:\+:estimator\+:\+:M\+L\+E\+Data}
+Data reporting structures A maximum-\/likelihood estimate for a single image. A container to group the necessary information at an M\+L\+Estimate 
+
+Definition at line 40 of file estimator.\+h.
+
+\begin{DoxyFields}{Class Members}
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_af7233cac905a2e7b6e3aa04ed8e10704}{}\label{namespacemappel_1_1estimator_af7233cac905a2e7b6e3aa04ed8e10704}
+&
+obsI&
+Observed Fisher information matrix at theta. \\
+\hline
+
+double\hypertarget{namespacemappel_1_1estimator_a0785477579e8ab6b63ab45b4633b1092}{}\label{namespacemappel_1_1estimator_a0785477579e8ab6b63ab45b4633b1092}
+&
+rllh&
+R\+L\+LH at theta. \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_addec61571297c6dbadc300dfcabe9c05}{}\label{namespacemappel_1_1estimator_addec61571297c6dbadc300dfcabe9c05}
+&
+theta&
+Theta estimate. \\
+\hline
+
+\end{DoxyFields}
+\index{mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack@{mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack}}\label{structmappel_1_1estimator_1_1MLEDataStack}
+\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{}
+\paragraph{struct mappel\+:\+:estimator\+:\+:M\+L\+E\+Data\+Stack}
+A stack of maximum-\/likelihood estimates for a stack of images A container to group the necessary information at an M\+L\+Estimate 
+
+Definition at line 63 of file estimator.\+h.
+
+\begin{DoxyFields}{Class Members}
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a7b3a27ef73e2603b2832e007899eb81e}{}\label{namespacemappel_1_1estimator_a7b3a27ef73e2603b2832e007899eb81e}
+&
+Ndata&
+Number of data estimates. \\
+\hline
+
+\hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT}\hypertarget{namespacemappel_1_1estimator_a4a38be2455df942ae6b9d4c7b42db3cf}{}\label{namespacemappel_1_1estimator_a4a38be2455df942ae6b9d4c7b42db3cf}
+&
+obsI&
+Observed Fisher information matrix stack. size\+:\mbox{[}Nparams,Nparams,Ndata\mbox{]}. \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a70057c57635872bf7edefd7926f49f5e}{}\label{namespacemappel_1_1estimator_a70057c57635872bf7edefd7926f49f5e}
+&
+rllh&
+R\+L\+LH stack. size\+:\mbox{[}Ndata\mbox{]}. \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a076aeb06b77af53997525f146739069d}{}\label{namespacemappel_1_1estimator_a076aeb06b77af53997525f146739069d}
+&
+theta&
+Theta estimate stack. size\+:\mbox{[}Nparams,Ndata\mbox{]}. \\
+\hline
+
+\end{DoxyFields}
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}\label{structmappel_1_1estimator_1_1MLEDebugData}
+\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{}
+\paragraph{struct mappel\+:\+:estimator\+:\+:M\+L\+E\+Debug\+Data}
+A maximum-\/likelihood estimate for a single image with debugging information. A container to group the necessary information at an M\+L\+Estimate 
+
+Definition at line 50 of file estimator.\+h.
+
+\begin{DoxyFields}{Class Members}
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a303db3c63b3d285760e814aea82af3a0}{}\label{namespacemappel_1_1estimator_a303db3c63b3d285760e814aea82af3a0}
+&
+Nseq&
+Number of points evaluated including theta\+\_\+init and theta\+\_\+mle. \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a6fadb423b602a1f671c8d6f211663fcc}{}\label{namespacemappel_1_1estimator_a6fadb423b602a1f671c8d6f211663fcc}
+&
+obsI&
+Observed Fisher information matrix at theta. \\
+\hline
+
+double\hypertarget{namespacemappel_1_1estimator_a6dea52884caeb6e2957d4242ea568e77}{}\label{namespacemappel_1_1estimator_a6dea52884caeb6e2957d4242ea568e77}
+&
+rllh&
+R\+L\+LH at theta. \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a4419c4ee9559999be39df4a7469a47fa}{}\label{namespacemappel_1_1estimator_a4419c4ee9559999be39df4a7469a47fa}
+&
+sequence&
+Sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle. \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a4e8b3ce8d1925480aadd942d34505568}{}\label{namespacemappel_1_1estimator_a4e8b3ce8d1925480aadd942d34505568}
+&
+sequence\+\_\+rllh&
+R\+L\+LH at each point in sequence. \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a9f62b8797034f80b369117f77ba39725}{}\label{namespacemappel_1_1estimator_a9f62b8797034f80b369117f77ba39725}
+&
+theta&
+Theta estimate. \\
+\hline
+
+\end{DoxyFields}
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data}}\label{structmappel_1_1estimator_1_1ProfileBoundsDebugData}
+\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{}
+\paragraph{struct mappel\+:\+:estimator\+:\+:Profile\+Bounds\+Debug\+Data}
+Data for debugging of estimation of profile bounds for a single parameter of a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
+
+Definition at line 113 of file estimator.\+h.
+
+\begin{DoxyFields}{Class Members}
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_aae656c5dcf7ceedd1a35dcb0163446c0}{}\label{namespacemappel_1_1estimator_aae656c5dcf7ceedd1a35dcb0163446c0}
+&
+estimated\+\_\+idx&
+Index of single parameter to estimate for. \\
+\hline
+
+\hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data}\hypertarget{namespacemappel_1_1estimator_a78f5375e6d29abb17573d1089af37b41}{}\label{namespacemappel_1_1estimator_a78f5375e6d29abb17573d1089af37b41}
+&
+mle&
+Theta maximum-\/likelihood estimate, rllh, and ObsI. \\
+\hline
+
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a6182fae879fca8e9b8b931215663c9b6}{}\label{namespacemappel_1_1estimator_a6182fae879fca8e9b8b931215663c9b6}
+&
+Nseq\+\_\+lb&
+Number of points in sequence\+\_\+lb. \\
+\hline
+
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a09d2bfc282a0586c3984a461959f9c21}{}\label{namespacemappel_1_1estimator_a09d2bfc282a0586c3984a461959f9c21}
+&
+Nseq\+\_\+ub&
+Number of points in sequence\+\_\+ub. \\
+\hline
+
+double\hypertarget{namespacemappel_1_1estimator_aaa7b7e1fc33c0b4c8ae4cc841c8bb80c}{}\label{namespacemappel_1_1estimator_aaa7b7e1fc33c0b4c8ae4cc841c8bb80c}
+&
+profile\+\_\+lb&
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Lower bound estimated for estimated\+\_\+idx. \\
+\hline
+
+double\hypertarget{namespacemappel_1_1estimator_a8b5ba18fc88bfe59ee0ae0b77198fc5f}{}\label{namespacemappel_1_1estimator_a8b5ba18fc88bfe59ee0ae0b77198fc5f}
+&
+profile\+\_\+ub&
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Upper bound estimated for estimated\+\_\+idx. \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a23115e11954d82b571430eb8e15281f2}{}\label{namespacemappel_1_1estimator_a23115e11954d82b571430eb8e15281f2}
+&
+sequence\+\_\+lb&
+size\+:\mbox{[}Num\+Params,Nseq\+\_\+lb\mbox{]} Sequence of evaluated points for lb estimate (including theta mle as initial point) \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a494ce70c7c79260ba82816f28c67659b}{}\label{namespacemappel_1_1estimator_a494ce70c7c79260ba82816f28c67659b}
+&
+sequence\+\_\+lb\+\_\+rllh&
+size\+:\mbox{[}Nseq\+\_\+lb\mbox{]} R\+L\+LH at each of the sequence\+\_\+lb points \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a228d934c7ce4448d22d93dd3cf3843d5}{}\label{namespacemappel_1_1estimator_a228d934c7ce4448d22d93dd3cf3843d5}
+&
+sequence\+\_\+ub&
+size\+:\mbox{[}Num\+Params,Nseq\+\_\+ub\mbox{]} Sequence of evaluated points for ub estimate (including theta mle as initial point) \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_ace894418986139f62b6d0c267db852b5}{}\label{namespacemappel_1_1estimator_ace894418986139f62b6d0c267db852b5}
+&
+sequence\+\_\+ub\+\_\+rllh&
+size\+:\mbox{[}Nseq\+\_\+ub\mbox{]} R\+L\+LH at each of the sequence\+\_\+ub points \\
+\hline
+
+double\hypertarget{namespacemappel_1_1estimator_aaceb78a7bb02e7d5bf776d908f0051f9}{}\label{namespacemappel_1_1estimator_aaceb78a7bb02e7d5bf776d908f0051f9}
+&
+target\+\_\+rllh\+\_\+delta&
+Targeted rllh change in value from M\+LE ( -\/chi2inv(confidence,1)/2 ) \\
+\hline
+
+\end{DoxyFields}
+\index{mappel\+::estimator\+::\+Profile\+Likelihood\+Data@{mappel\+::estimator\+::\+Profile\+Likelihood\+Data}}\label{structmappel_1_1estimator_1_1ProfileLikelihoodData}
+\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileLikelihoodData}{}
+\paragraph{struct mappel\+:\+:estimator\+:\+:Profile\+Likelihood\+Data}
+Container for profile liklihood estimator data Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
+
+Definition at line 74 of file estimator.\+h.
+
+\begin{DoxyFields}{Class Members}
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT}\hypertarget{namespacemappel_1_1estimator_a3ed4bf975a26a6e847e33e2a0e2be6ff}{}\label{namespacemappel_1_1estimator_a3ed4bf975a26a6e847e33e2a0e2be6ff}
+&
+fixed\+\_\+idxs&
+Indexes of fixed parameters. \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a32fc54cfe37b35e56489e2ae395ef2c5}{}\label{namespacemappel_1_1estimator_a32fc54cfe37b35e56489e2ae395ef2c5}
+&
+fixed\+\_\+values&
+Vector values for each fixed parameter size\+:\mbox{[}Nfixed,Nvalues\mbox{]};. \\
+\hline
+
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a87eb5e69b82d15f2b923c7ce9b00a8f9}{}\label{namespacemappel_1_1estimator_a87eb5e69b82d15f2b923c7ce9b00a8f9}
+&
+Nfixed&
+Number of fixed parameters. \\
+\hline
+
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a2fb7609aa391e1f18d6afaa211709865}{}\label{namespacemappel_1_1estimator_a2fb7609aa391e1f18d6afaa211709865}
+&
+Nvalues&
+Number of values of fixed parameters evaluated. \\
+\hline
+
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_ab21589458be6326b2e5640b56b89461e}{}\label{namespacemappel_1_1estimator_ab21589458be6326b2e5640b56b89461e}
+&
+profile\+\_\+likelihood&
+profile likelhood for each column of fixed parameter values \\
+\hline
+
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_ac3e402678de2606098f6f4f7204214c3}{}\label{namespacemappel_1_1estimator_ac3e402678de2606098f6f4f7204214c3}
+&
+profile\+\_\+parameters&
+Points at which the profile liklihood maximum was obtained. \\
+\hline
+
+\end{DoxyFields}
+
+
+\subsubsection{Enumeration Type Documentation}
+\index{mappel\+::estimator@{mappel\+::estimator}!Exit\+Code@{Exit\+Code}}
+\index{Exit\+Code@{Exit\+Code}!mappel\+::estimator@{mappel\+::estimator}}
+\paragraph[{\texorpdfstring{Exit\+Code}{ExitCode}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf mappel\+::estimator\+::\+Exit\+Code} \+: {\bf IdxT}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6c}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6c}
+Enumerated exit codes for estimation methods
+\begin{DoxyItemize}
+\item Error\+: A Numerical Error was caught. Did not converge.
+\item Unassigned\+: Logical error if this is still set
+\item Max\+Iter\+: Max iterations exceeded. Did not converge.
+\item Max\+Backtracks\+: Backtracking failed. Did not converge successfully.
+\item Success\+: Successful completion
+\item Step\+Size\+: Relative Step size was less than epsilon. Converged successfully.
+\item Function\+Value\+: Function value change was less than epsilon. Converged successfully.
+\item Grad\+Ratio\+: Grad ratio was less than epsilon. Converged successfully.
+\item Model\+Improvement\+: Model predicted improvement is less than epsilon. Converged Successfully
+\item Trust\+Region\+Radius\+: Trust region size was less than epsilon. Converged successfully. 
+\end{DoxyItemize}\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Trust\+Region\+Radius@{Trust\+Region\+Radius}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Trust\+Region\+Radius@{Trust\+Region\+Radius}}\item[{\em 
+Trust\+Region\+Radius\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6caadd208e6fbd6ef5ab84a287f259c3b81}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6caadd208e6fbd6ef5ab84a287f259c3b81}
+}]\index{Model\+Improvement@{Model\+Improvement}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Model\+Improvement@{Model\+Improvement}}\item[{\em 
+Model\+Improvement\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9b80f9b9e1c1cf4247c1d5d6edc7c3f8}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9b80f9b9e1c1cf4247c1d5d6edc7c3f8}
+}]\index{Grad\+Ratio@{Grad\+Ratio}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Grad\+Ratio@{Grad\+Ratio}}\item[{\em 
+Grad\+Ratio\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca8d0cc41d71102a7952fefe3c63244fd4}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca8d0cc41d71102a7952fefe3c63244fd4}
+}]\index{Function\+Value@{Function\+Value}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Function\+Value@{Function\+Value}}\item[{\em 
+Function\+Value\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca400823530aeaf00ddf2b69458acdc235}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca400823530aeaf00ddf2b69458acdc235}
+}]\index{Step\+Size@{Step\+Size}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Step\+Size@{Step\+Size}}\item[{\em 
+Step\+Size\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca071449462d0c247e47313eb8c3129dd0}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca071449462d0c247e47313eb8c3129dd0}
+}]\index{Success@{Success}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Success@{Success}}\item[{\em 
+Success\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca505a83f220c02df2f85c3810cd9ceb38}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca505a83f220c02df2f85c3810cd9ceb38}
+}]\index{Max\+Backtracks@{Max\+Backtracks}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Max\+Backtracks@{Max\+Backtracks}}\item[{\em 
+Max\+Backtracks\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9e5d3183756d69b44432394db6b6fd86}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca9e5d3183756d69b44432394db6b6fd86}
+}]\index{Max\+Iter@{Max\+Iter}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Max\+Iter@{Max\+Iter}}\item[{\em 
+Max\+Iter\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6cabbf52264f7a6e91c48a242f95aeed3db}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6cabbf52264f7a6e91c48a242f95aeed3db}
+}]\index{Unassigned@{Unassigned}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Unassigned@{Unassigned}}\item[{\em 
+Unassigned\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca3476bf9c3af766198bfbd4f065a51e69}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca3476bf9c3af766198bfbd4f065a51e69}
+}]\index{Error@{Error}!mappel\+::estimator@{mappel\+::estimator}}\index{mappel\+::estimator@{mappel\+::estimator}!Error@{Error}}\item[{\em 
+Error\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca902b0d55fddef6f8d651fe1035b7d4bd}{}\label{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6ca902b0d55fddef6f8d651fe1035b7d4bd}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 172 of file estimator.\+h.
+
+
+
+\subsubsection{Function Documentation}
+\index{mappel\+::estimator@{mappel\+::estimator}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!mappel\+::estimator@{mappel\+::estimator}}
+\paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, Estimator$<$ Model $>$ \&estimator)}{operator<<(std::ostream &out, Estimator< Model > &estimator)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::ostream\& mappel\+::estimator\+::operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{{\bf Estimator}$<$ Model $>$ \&}]{estimator}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_a8267d0998b3d27a8c40bf1fe9227113d}{}\label{namespacemappel_1_1estimator_a8267d0998b3d27a8c40bf1fe9227113d}
+
+
+Definition at line 351 of file estimator\+\_\+impl.\+h.
+

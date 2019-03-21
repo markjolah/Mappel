@@ -8,6 +8,5 @@ var searchData=
   ['fill_5fg_5fstencil',['fill_G_stencil',['../namespacemappel.html#a5ca82edc201e8605107a991493ad0d5e',1,'mappel']]],
   ['fill_5fgaussian_5fstencil',['fill_gaussian_stencil',['../namespacemappel.html#a09a770c2a4eaa7c083abbac26ec70ff3',1,'mappel']]],
   ['fill_5fx_5fstencil',['fill_X_stencil',['../namespacemappel.html#ab6a11cd06ff348138cb04635b03a6de2',1,'mappel']]],
-  ['fisher_5finformation',['fisher_information',['../PoissonGaussianNoise2DObjective_8h.html#a8469a5ad4b663de4d482d8d58ec53721',1,'PoissonGaussianNoise2DObjective.h']]],
-  ['fisher_5finformation_5fstack',['fisher_information_stack',['../namespacemappel.html#a77bdeb8e88ba5b04e736ff55ab9a33fd',1,'mappel']]]
+  ['fisher_5finformation',['fisher_information',['../PoissonGaussianNoise2DObjective_8h.html#a8469a5ad4b663de4d482d8d58ec53721',1,'PoissonGaussianNoise2DObjective.h']]]
 ];

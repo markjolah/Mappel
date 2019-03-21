@@ -1,0 +1,239 @@
+\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData}{}\subsection{mappel\+:\+:estimator\+:\+:Profile\+Bounds\+Data Struct Reference}
+\label{structmappel_1_1estimator_1_1ProfileBoundsData}\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/estimator.\+h$>$}
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a5dbbab414cdb55bc5637deb195db6cf6}{initialize\+\_\+arrays} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nparams)
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a04704405afc4353671f67cee0f221f6b}{estimated\+\_\+idxs}
+\begin{DoxyCompactList}\small\item\em List of indexs for computed parameters. Empty to compute all parameters. \end{DoxyCompactList}\item 
+double \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a7c56b494bd5c2af6fcf6f8b40416a203}{confidence} =-\/1
+\begin{DoxyCompactList}\small\item\em Confidence level. If invalid, use default value. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a719ed1845a32b5e7af3f7e2fdd18149d}{mle}
+\begin{DoxyCompactList}\small\item\em Theta maximum-\/likelihood estimate, rllh, and ObsI. \end{DoxyCompactList}\item 
+double \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a524173c1125ec843b904feb119fb182b}{target\+\_\+rllh\+\_\+delta} =-\/I\+N\+F\+I\+N\+I\+TY
+\begin{DoxyCompactList}\small\item\em Targeted rllh change in value from M\+LE ( -\/chi2inv(confidence,1)/2 ) \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a5dd4b18893235445bca9608d5746c6c2}{Nparams\+\_\+est} =0
+\begin{DoxyCompactList}\small\item\em number of parameters estimated =estimated\+\_\+param\+\_\+idxs.\+n\+\_\+elem. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a0bc6ca65076892186f02bea98aa88268}{profile\+\_\+lb}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Lower bound estimated at each estimated\+\_\+idx. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a8c7233892f731a927d21ec086eaca33f}{profile\+\_\+ub}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Upper bound estimated at each estimated\+\_\+idx. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_ad6746d8a2946cba52c8c207fc0f57ef7}{profile\+\_\+points\+\_\+lb}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each lower bound estimate for each estimated\+\_\+idx. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a51335985679f314252bac9a681e5ee4d}{profile\+\_\+points\+\_\+ub}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each upper bound estimate for each estimated\+\_\+idx. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a1b60b8277319ad91eeb193d76c40e8e2}{profile\+\_\+points\+\_\+lb\+\_\+rllh}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+points\+\_\+lb \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_abaf20418fe819719e7958936e429682e}{profile\+\_\+points\+\_\+ub\+\_\+rllh}
+\begin{DoxyCompactList}\small\item\em size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+points\+\_\+lb \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Data related to a profile bounds estimation for a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
+
+Definition at line 90 of file estimator.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!initialize\+\_\+arrays@{initialize\+\_\+arrays}}
+\index{initialize\+\_\+arrays@{initialize\+\_\+arrays}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{initialize\+\_\+arrays(\+Idx\+T Nparams)}{initialize_arrays(IdxT Nparams)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::initialize\+\_\+arrays (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{Nparams}
+\end{DoxyParamCaption}
+)}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a5dbbab414cdb55bc5637deb195db6cf6}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a5dbbab414cdb55bc5637deb195db6cf6}
+
+
+Definition at line 18 of file estimator.\+cpp.
+
+
+
+References estimated\+\_\+idxs, Nparams\+\_\+est, profile\+\_\+lb, profile\+\_\+points\+\_\+lb, profile\+\_\+points\+\_\+lb\+\_\+rllh, profile\+\_\+points\+\_\+ub, profile\+\_\+points\+\_\+ub\+\_\+rllh, and profile\+\_\+ub.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!confidence@{confidence}}
+\index{confidence@{confidence}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{confidence}{confidence}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::confidence =-\/1}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a7c56b494bd5c2af6fcf6f8b40416a203}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a7c56b494bd5c2af6fcf6f8b40416a203}
+
+
+Confidence level. If invalid, use default value. 
+
+
+
+Definition at line 94 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), and mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!estimated\+\_\+idxs@{estimated\+\_\+idxs}}
+\index{estimated\+\_\+idxs@{estimated\+\_\+idxs}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{estimated\+\_\+idxs}{estimated_idxs}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Idx\+VecT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::estimated\+\_\+idxs}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a04704405afc4353671f67cee0f221f6b}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a04704405afc4353671f67cee0f221f6b}
+
+
+List of indexs for computed parameters. Empty to compute all parameters. 
+
+
+
+Definition at line 93 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!mle@{mle}}
+\index{mle@{mle}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{mle}{mle}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+E\+Data} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::mle}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a719ed1845a32b5e7af3f7e2fdd18149d}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a719ed1845a32b5e7af3f7e2fdd18149d}
+
+
+Theta maximum-\/likelihood estimate, rllh, and ObsI. 
+
+
+
+Definition at line 95 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!Nparams\+\_\+est@{Nparams\+\_\+est}}
+\index{Nparams\+\_\+est@{Nparams\+\_\+est}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{Nparams\+\_\+est}{Nparams_est}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::\+Nparams\+\_\+est =0}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a5dd4b18893235445bca9608d5746c6c2}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a5dd4b18893235445bca9608d5746c6c2}
+
+
+number of parameters estimated =estimated\+\_\+param\+\_\+idxs.\+n\+\_\+elem. 
+
+
+
+Definition at line 99 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+lb@{profile\+\_\+lb}}
+\index{profile\+\_\+lb@{profile\+\_\+lb}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+lb}{profile_lb}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+lb}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a0bc6ca65076892186f02bea98aa88268}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a0bc6ca65076892186f02bea98aa88268}
+
+
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Lower bound estimated at each estimated\+\_\+idx. 
+
+
+
+Definition at line 100 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+lb@{profile\+\_\+points\+\_\+lb}}
+\index{profile\+\_\+points\+\_\+lb@{profile\+\_\+points\+\_\+lb}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+points\+\_\+lb}{profile_points_lb}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_ad6746d8a2946cba52c8c207fc0f57ef7}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_ad6746d8a2946cba52c8c207fc0f57ef7}
+
+
+size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each lower bound estimate for each estimated\+\_\+idx. 
+
+
+
+Definition at line 102 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+lb\+\_\+rllh@{profile\+\_\+points\+\_\+lb\+\_\+rllh}}
+\index{profile\+\_\+points\+\_\+lb\+\_\+rllh@{profile\+\_\+points\+\_\+lb\+\_\+rllh}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+points\+\_\+lb\+\_\+rllh}{profile_points_lb_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb\+\_\+rllh}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a1b60b8277319ad91eeb193d76c40e8e2}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a1b60b8277319ad91eeb193d76c40e8e2}
+
+
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+points\+\_\+lb 
+
+
+
+Definition at line 104 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+ub@{profile\+\_\+points\+\_\+ub}}
+\index{profile\+\_\+points\+\_\+ub@{profile\+\_\+points\+\_\+ub}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+points\+\_\+ub}{profile_points_ub}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+ub}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a51335985679f314252bac9a681e5ee4d}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a51335985679f314252bac9a681e5ee4d}
+
+
+size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each upper bound estimate for each estimated\+\_\+idx. 
+
+
+
+Definition at line 103 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+ub\+\_\+rllh@{profile\+\_\+points\+\_\+ub\+\_\+rllh}}
+\index{profile\+\_\+points\+\_\+ub\+\_\+rllh@{profile\+\_\+points\+\_\+ub\+\_\+rllh}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+points\+\_\+ub\+\_\+rllh}{profile_points_ub_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+ub\+\_\+rllh}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_abaf20418fe819719e7958936e429682e}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_abaf20418fe819719e7958936e429682e}
+
+
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+points\+\_\+lb 
+
+
+
+Definition at line 105 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+ub@{profile\+\_\+ub}}
+\index{profile\+\_\+ub@{profile\+\_\+ub}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{profile\+\_\+ub}{profile_ub}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+ub}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a8c7233892f731a927d21ec086eaca33f}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a8c7233892f731a927d21ec086eaca33f}
+
+
+size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Upper bound estimated at each estimated\+\_\+idx. 
+
+
+
+Definition at line 101 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+
+\index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!target\+\_\+rllh\+\_\+delta@{target\+\_\+rllh\+\_\+delta}}
+\index{target\+\_\+rllh\+\_\+delta@{target\+\_\+rllh\+\_\+delta}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
+\paragraph[{\texorpdfstring{target\+\_\+rllh\+\_\+delta}{target_rllh_delta}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::target\+\_\+rllh\+\_\+delta =-\/I\+N\+F\+I\+N\+I\+TY}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a524173c1125ec843b904feb119fb182b}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a524173c1125ec843b904feb119fb182b}
+
+
+Targeted rllh change in value from M\+LE ( -\/chi2inv(confidence,1)/2 ) 
+
+
+
+Definition at line 98 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{estimator_8h}{estimator.\+h}\item 
+\hyperlink{estimator_8cpp}{estimator.\+cpp}\end{DoxyCompactItemize}

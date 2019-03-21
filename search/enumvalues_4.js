@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['functionchange',['FunctionChange',['../classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338',1,'mappel::Estimator']]]
+  ['functionvalue',['FunctionValue',['../namespacemappel_1_1estimator.html#ae49999202b8a1968bc308aa30ac24e6ca400823530aeaf00ddf2b69458acdc235',1,'mappel::estimator']]]
 ];

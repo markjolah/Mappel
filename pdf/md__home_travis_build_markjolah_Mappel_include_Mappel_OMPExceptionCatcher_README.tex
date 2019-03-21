@@ -1,0 +1,47 @@
+A lightweight class for managing C++ exception handling strategies in Open\+MP code.
+
+\subsubsection*{Motivation}
+
+Open\+MP code must catch any exceptions that may have been thrown before exiting the Open\+MP block. This class acts as lightweight wrapper that allows an arbitrary function or lambda expression to be run safely and efficiently in O\+MP even if it might throw exceptions. We employ one of 4 possible strategies as determined By the O\+M\+P\+Exception\+Catcher\+::\+Strategies enum.
+
+\subsubsection*{Excepton Catching Strategy\textquotesingle{}s}
+
+
+\begin{DoxyItemize}
+\item {\ttfamily O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Do\+Not\+Try} -- Don\textquotesingle{}t even try, this is a null op to completely disable this class\textquotesingle{}s effect.
+\item {\ttfamily O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Continue} -- Catch exceptions and keep going
+\item {\ttfamily O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Abort} -- Catch exceptions and abort
+\item {\ttfamily O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Rethrow\+First} -- Re-\/throws first exception thrown by any thread
+\end{DoxyItemize}
+
+\subsubsection*{Including O\+M\+P\+Exception\+Catcher in your Open\+MP project}
+
+Since O\+M\+P\+Exception\+Catcher is header-\/only, he easiest way to use it is via the \href{https://github.com/ingydotnet/git-subrepo}{\tt git subrepo} plugin. Unlike the traditional {\ttfamily git submodule} command, {\ttfamily git subrepo} is transparent to other users of your repository, and solves many of the irksome issues prevalent with the submodule approach. Follow the \href{https://github.com/ingydotnet/git-subrepo#installation-instructions}{\tt git subrepo install guide} to install on your development machine.
+
+Then to add O\+M\+P\+Exception\+Catcher, 
+\begin{DoxyCode}
+1 > cd $MY\_REPOS
+2 > git subrepo pull https://github.com/markjolah/OMPExceptionCatcher include/where/ever/OMPExceptionCactcher
+\end{DoxyCode}
+
+
+\#\# Example useage\+: 
+\begin{DoxyCode}
+\textcolor{preprocessor}{#include <\hyperlink{OMPExceptionCatcher_8h}{OMPExceptionCatcher/OMPExceptionCatcher.h}>}
+\hyperlink{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}{OMPExceptionCatcher} catcher(OMPExceptionCatcher<>::Strategies::Continue);
+\textcolor{preprocessor}{#pragma omp parallel for}
+\textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} n=0; n < N; n++) 
+    catcher.run([&]\{ my\_ouput(n)=do\_my calulations(args(n)); \}
+catcher.rethrow(); \textcolor{comment}{//Required only if you ever might use RethrowFirst strategy}
+\end{DoxyCode}
+
+
+\subsection*{License}
+
+
+\begin{DoxyItemize}
+\item Author\+: Mark J. Olah
+\item Email\+: (\href{mailto:mjo@cs.unm}{\tt mjo@cs.\+unm} D\+OT edu)
+\item Copyright\+: 2019
+\item L\+I\+C\+E\+N\+SE\+: Apache 2.\+0. See \href{https://github.com/markjolah/OMPExceptionCatcher/blob/master/LICENSE}{\tt L\+I\+C\+E\+N\+SE} file. 
+\end{DoxyItemize}

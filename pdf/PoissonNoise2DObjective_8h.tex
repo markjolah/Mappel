@@ -11,7 +11,7 @@ The class declaration and inline and templated functions for Poisson\+Noise2\+D\
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classmappel_1_1PoissonNoise2DObjective}{mappel\+::\+Poisson\+Noise2\+D\+Objective}
-\begin{DoxyCompactList}\small\item\em A base class for 2D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A base class for 2D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of photons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
@@ -32,7 +32,7 @@ class \hyperlink{classmappel_1_1PoissonNoise2DObjective}{mappel\+::\+Poisson\+No
 \begin{DoxyCompactList}\small\item\em Simulate an image at a given theta stencil, by generating Poisson noise Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
 {\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ MatT, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_abc7bb2a867d157f3adbb71abdd3680d2}{mappel\+::methods\+::expected\+\_\+information} (const Model \&model, const StencilT$<$ Model $>$ \&s)
 \begin{DoxyCompactList}\small\item\em Compute the expected information (Fisher information at theta). Note\+: Expected information is an average quantity and is independent of the data. Enabled for \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ std\+::unique\+\_\+ptr$<$ Estimator$<$ Model $>$ $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_acf60639ee5928d3a6eb44a017e57f2ec}{mappel\+::methods\+::make\+\_\+estimator} (Model \&model, std\+::string ename)
+{\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ std\+::unique\+\_\+ptr$<$ estimator\+::\+Estimator$<$ Model $>$ $>$, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_ad4cc5932e93e2c4c5218b1f7939a25ef}{mappel\+::methods\+::make\+\_\+estimator} (Model \&model, std\+::string ename)
 \item 
 {\footnotesize template$<$class Model $>$ }\\Return\+If\+SubclassT$<$ double, Model, Poisson\+Noise2\+D\+Objective $>$ \hyperlink{namespacemappel_1_1methods_1_1likelihood_a134b4c6ce6807f342f33464e99512dc6}{mappel\+::methods\+::likelihood\+::llh} (const Model \&model, const Model\+DataT$<$ Model $>$ \&data\+\_\+im, const StencilT$<$ Model $>$ \&s)
 \item 

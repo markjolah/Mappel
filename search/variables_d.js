@@ -1,13 +1,22 @@
 var searchData=
 [
-  ['s0',['s0',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a1a3b8f9693e769eded9fe76751fa49c1',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['s1',['s1',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a3c0f6ec4ba531dfefe8e4b73f537192d',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['save_5fseq',['save_seq',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af13babebeb16147883db7af0b4875b53',1,'mappel::IterativeMaximizer::MaximizerData']]],
+  ['s0',['s0',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#a10660729fb16b8b8ab4f719562e5b87c',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['s1',['s1',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#afbda1c2de786b3784fb278c4fbd56c3f',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['sample',['sample',['../structmappel_1_1mcmc_1_1MCMCData.html#a3e13858482ca8f898684eed95b9bf7f1',1,'mappel::mcmc::MCMCData::sample()'],['../structmappel_1_1mcmc_1_1MCMCDebugData.html#ad6dd0a8a4ee0b8a532e0c041b8cde1d9',1,'mappel::mcmc::MCMCDebugData::sample()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a3bac937763a2fa1a54378440b76c2531',1,'mappel::mcmc::MCMCDataStack::sample()']]],
+  ['sample_5fcov',['sample_cov',['../structmappel_1_1mcmc_1_1MCMCData.html#a1703e010b2e55dd1c2e43886022dd311',1,'mappel::mcmc::MCMCData::sample_cov()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a4ef06af1c29a482bf5fdc8dc68e3e8b4',1,'mappel::mcmc::MCMCDataStack::sample_cov()']]],
+  ['sample_5fmean',['sample_mean',['../structmappel_1_1mcmc_1_1MCMCData.html#a89c09929c6a2a7695e5360559bc72b83',1,'mappel::mcmc::MCMCData::sample_mean()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a2818767f68b1269c34bdd18c31122d24',1,'mappel::mcmc::MCMCDataStack::sample_mean()']]],
+  ['sample_5frllh',['sample_rllh',['../structmappel_1_1mcmc_1_1MCMCData.html#a253ec198d03bf713be355ca38371558d',1,'mappel::mcmc::MCMCData::sample_rllh()'],['../structmappel_1_1mcmc_1_1MCMCDebugData.html#a02b5c1388b6fa43c9aee01c63cda8111',1,'mappel::mcmc::MCMCDebugData::sample_rllh()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a53720538daea5b14876e85f0979feebe',1,'mappel::mcmc::MCMCDataStack::sample_rllh()']]],
   ['sensor_5fbg_5fmap',['sensor_bg_map',['../classPoissonGaussianNoise2DObjective.html#a84c763dc1db0d927cc1f8bcecdb3b663',1,'PoissonGaussianNoise2DObjective']]],
   ['sensor_5fgain_5fmap',['sensor_gain_map',['../classPoissonGaussianNoise2DObjective.html#aa28337c212470a6a5a152e691bcb7d45',1,'PoissonGaussianNoise2DObjective']]],
-  ['seq_5flen',['seq_len',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a78a56d5ffe0cad0de474e244816748a6',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['seq_5frllh',['seq_rllh',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aaf6e3749e8bf4e8714bac4a48902a4cb',1,'mappel::IterativeMaximizer::MaximizerData']]],
+  ['seq_5flen',['seq_len',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#a13c682174ed62ae2b55e4c22ca4ad57b',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['seq_5frllh',['seq_rllh',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#ae51783c964589222eb1f88487ba843a1',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['sequence',['sequence',['../namespacemappel_1_1estimator.html#a4419c4ee9559999be39df4a7469a47fa',1,'mappel::estimator::MLEDebugData']]],
+  ['sequence_5flb',['sequence_lb',['../namespacemappel_1_1estimator.html#a23115e11954d82b571430eb8e15281f2',1,'mappel::estimator::ProfileBoundsDebugData']]],
+  ['sequence_5flb_5frllh',['sequence_lb_rllh',['../namespacemappel_1_1estimator.html#a494ce70c7c79260ba82816f28c67659b',1,'mappel::estimator::ProfileBoundsDebugData']]],
+  ['sequence_5frllh',['sequence_rllh',['../namespacemappel_1_1estimator.html#a4e8b3ce8d1925480aadd942d34505568',1,'mappel::estimator::MLEDebugData']]],
+  ['sequence_5fub',['sequence_ub',['../namespacemappel_1_1estimator.html#a228d934c7ce4448d22d93dd3cf3843d5',1,'mappel::estimator::ProfileBoundsDebugData']]],
+  ['sequence_5fub_5frllh',['sequence_ub_rllh',['../namespacemappel_1_1estimator.html#ace894418986139f62b6d0c267db852b5',1,'mappel::estimator::ProfileBoundsDebugData']]],
   ['sigma_5fscale',['sigma_scale',['../classmappel_1_1MCMCAdaptorBase.html#a76312f7d589bf3f3e754beca174b884b',1,'mappel::MCMCAdaptorBase']]],
   ['size',['size',['../classmappel_1_1ImageFormat1DBase.html#a8941b4d028e4dd881146a7c1b9039bb1',1,'mappel::ImageFormat1DBase::size()'],['../classmappel_1_1ImageFormat2DBase.html#a3be77d2aa6ec9f3815322732950c2a60',1,'mappel::ImageFormat2DBase::size()']]],
-  ['step',['step',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#af592d029ed46c5ec9bedd2291db12920',1,'mappel::IterativeMaximizer::MaximizerData']]]
+  ['step',['step',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#abca4cc72bc3cbf7326c5d4ad040e3821',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]]
 ];

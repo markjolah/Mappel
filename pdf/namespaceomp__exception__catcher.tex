@@ -8,15 +8,47 @@
 \subsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-using \hyperlink{namespaceomp__exception__catcher_aed0913d080b088280707d30970f82129}{O\+M\+P\+Exception\+Catcher} = \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$ uint32\+\_\+t $>$
+using \hyperlink{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}{O\+M\+P\+Exception\+Catcher} = \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$$>$
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517}{Strategy} \{ \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a7b2e9a6112ae937175819b661a4c0c67}{Strategy\+::\+Do\+Not\+Try}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517aa0bfb8e59e6c13fc8d990781f77694fe}{Strategy\+::\+Continue}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a727b63583e01fa2b3952dab580c84dc2}{Strategy\+::\+Abort}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a10308abc2313a8ec42d67a45a0122860}{Strategy\+::\+Rethrow\+First}
+ \}
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Typedef Documentation}
 \index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}}
 \index{O\+M\+P\+Exception\+Catcher@{O\+M\+P\+Exception\+Catcher}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}
-\paragraph[{\texorpdfstring{O\+M\+P\+Exception\+Catcher}{OMPExceptionCatcher}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf omp\+\_\+exception\+\_\+catcher\+::\+O\+M\+P\+Exception\+Catcher} = typedef {\bf impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$uint32\+\_\+t$>$}\hypertarget{namespaceomp__exception__catcher_aed0913d080b088280707d30970f82129}{}\label{namespaceomp__exception__catcher_aed0913d080b088280707d30970f82129}
+\paragraph[{\texorpdfstring{O\+M\+P\+Exception\+Catcher}{OMPExceptionCatcher}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf omp\+\_\+exception\+\_\+catcher\+::\+O\+M\+P\+Exception\+Catcher} = typedef {\bf impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher}$<$$>$}\hypertarget{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}{}\label{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}
+A class to run and catch exceptions in parallel code allowing various exception management strategies 
+
+Definition at line 114 of file O\+M\+P\+Exception\+Catcher.\+h.
 
 
-Definition at line 94 of file O\+M\+P\+Exception\+Catcher.\+h.
+
+\subsubsection{Enumeration Type Documentation}
+\index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!Strategy@{Strategy}}
+\index{Strategy@{Strategy}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}
+\paragraph[{\texorpdfstring{Strategy}{Strategy}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf omp\+\_\+exception\+\_\+catcher\+::\+Strategy}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517}{}\label{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{Do\+Not\+Try@{Do\+Not\+Try}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}\index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!Do\+Not\+Try@{Do\+Not\+Try}}\item[{\em 
+Do\+Not\+Try\hypertarget{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a7b2e9a6112ae937175819b661a4c0c67}{}\label{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a7b2e9a6112ae937175819b661a4c0c67}
+}]\index{Continue@{Continue}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}\index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!Continue@{Continue}}\item[{\em 
+Continue\hypertarget{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517aa0bfb8e59e6c13fc8d990781f77694fe}{}\label{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517aa0bfb8e59e6c13fc8d990781f77694fe}
+}]\index{Abort@{Abort}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}\index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!Abort@{Abort}}\item[{\em 
+Abort\hypertarget{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a727b63583e01fa2b3952dab580c84dc2}{}\label{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a727b63583e01fa2b3952dab580c84dc2}
+}]\index{Rethrow\+First@{Rethrow\+First}!omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}}\index{omp\+\_\+exception\+\_\+catcher@{omp\+\_\+exception\+\_\+catcher}!Rethrow\+First@{Rethrow\+First}}\item[{\em 
+Rethrow\+First\hypertarget{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a10308abc2313a8ec42d67a45a0122860}{}\label{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a10308abc2313a8ec42d67a45a0122860}
+}]\end{description}
+\end{Desc}
+
+
+Definition at line 38 of file O\+M\+P\+Exception\+Catcher.\+h.
 

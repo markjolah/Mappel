@@ -3,96 +3,72 @@
 \subsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_af29a5642fbbd2e5d8d2c5708679ceccf}{estimate\+\_\+max\+\_\+debug} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+est, double \&rllh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sequence, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sequence\+\_\+rllh, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a38de1b4f98bfb724874fec99b53a8554}{estimate\+\_\+max\+\_\+debug} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{estimator\+::\+M\+L\+E\+Debug\+Data} \&mle, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
 \item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a6a5604069f158badd94b0efadc3e0e7c}{estimate\+\_\+max\+\_\+debug} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const std\+::string \&method, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+est, double \&rllh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sequence, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sequence\+\_\+rllh, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a3fc6147e9b38e7b8328eb421be81a200}{error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{estimator\+::\+Profile\+Bounds\+Debug\+Data} \&bounds, \hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \&stats)
 \item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a7c94ce5d92872076693974f3abfa831b}{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&candidates, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&candidates\+\_\+rllh)
-\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_ab463288fab7e102729d075d60d9e15e0}{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug} (Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nsample, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&sample, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&sample\+\_\+rllh, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&candidates, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&candidates\+\_\+rllh)
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1methods_1_1debug_a5d84632af17af6d244b5a82b9d55f2ba}{estimate\+\_\+posterior\+\_\+debug} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData}{mcmc\+::\+M\+C\+M\+C\+Debug\+Data} \&mcmc\+\_\+debug\+\_\+sample)
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Function Documentation}
-\index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
-\index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
-\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+debug(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, Param\+T$<$ Model $>$ \&theta\+\_\+est, double \&rllh, Mat\+T \&obs\+I, Mat\+T \&sequence, Vec\+T \&sequence\+\_\+rllh, Stats\+T \&stats)}{estimate_max_debug(Model &model, const ModelDataT< Model > &data, const std::string &method, ParamT< Model > &theta_est, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug (
+\index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug@{error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug}}
+\index{error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug@{error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
+\paragraph[{\texorpdfstring{error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, estimator\+::\+Profile\+Bounds\+Debug\+Data \&bounds, Stats\+T \&stats)}{error_bounds_profile_likelihood_debug(const Model &model, const ModelDataT< Model > &data, estimator::ProfileBoundsDebugData &bounds, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug (
 \begin{DoxyParamCaption}
-\item[{Model \&}]{model, }
+\item[{const Model \&}]{model, }
 \item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
-\item[{const std\+::string \&}]{method, }
-\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+est, }
-\item[{double \&}]{rllh, }
-\item[{{\bf MatT} \&}]{obsI, }
-\item[{{\bf MatT} \&}]{sequence, }
-\item[{{\bf VecT} \&}]{sequence\+\_\+rllh, }
+\item[{{\bf estimator\+::\+Profile\+Bounds\+Debug\+Data} \&}]{bounds, }
 \item[{{\bf StatsT} \&}]{stats}
 \end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_1_1methods_1_1debug_af29a5642fbbd2e5d8d2c5708679ceccf}{}\label{namespacemappel_1_1methods_1_1debug_af29a5642fbbd2e5d8d2c5708679ceccf}
+)}\hypertarget{namespacemappel_1_1methods_1_1debug_a3fc6147e9b38e7b8328eb421be81a200}{}\label{namespacemappel_1_1methods_1_1debug_a3fc6147e9b38e7b8328eb421be81a200}
 
 
-Definition at line 483 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 461 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+debug(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
 
 \index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
 \index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
-\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+debug(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Param\+T$<$ Model $>$ \&theta\+\_\+est, double \&rllh, Mat\+T \&obs\+I, Mat\+T \&sequence, Vec\+T \&sequence\+\_\+rllh, Stats\+T \&stats)}{estimate_max_debug(Model &model, const ModelDataT< Model > &data, const std::string &method, const ParamT< Model > &theta_init, ParamT< Model > &theta_est, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug (
+\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+debug(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const std\+::string \&method, const Param\+T$<$ Model $>$ \&theta\+\_\+init, estimator\+::\+M\+L\+E\+Debug\+Data \&mle, Stats\+T \&stats)}{estimate_max_debug(const Model &model, const ModelDataT< Model > &data, const std::string &method, const ParamT< Model > &theta_init, estimator::MLEDebugData &mle, StatsT &stats)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+max\+\_\+debug (
 \begin{DoxyParamCaption}
-\item[{Model \&}]{model, }
+\item[{const Model \&}]{model, }
 \item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
 \item[{const std\+::string \&}]{method, }
 \item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
-\item[{{\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+est, }
-\item[{double \&}]{rllh, }
-\item[{{\bf MatT} \&}]{obsI, }
-\item[{{\bf MatT} \&}]{sequence, }
-\item[{{\bf VecT} \&}]{sequence\+\_\+rllh, }
+\item[{{\bf estimator\+::\+M\+L\+E\+Debug\+Data} \&}]{mle, }
 \item[{{\bf StatsT} \&}]{stats}
 \end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_1_1methods_1_1debug_a6a5604069f158badd94b0efadc3e0e7c}{}\label{namespacemappel_1_1methods_1_1debug_a6a5604069f158badd94b0efadc3e0e7c}
+)}\hypertarget{namespacemappel_1_1methods_1_1debug_a38de1b4f98bfb724874fec99b53a8554}{}\label{namespacemappel_1_1methods_1_1debug_a38de1b4f98bfb724874fec99b53a8554}
 
 
-Definition at line 491 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 452 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
 References mappel\+::methods\+::make\+\_\+estimator().
 
-\index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!estimate\+\_\+mcmc\+\_\+sample\+\_\+debug@{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug}}
-\index{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug@{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
-\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, Idx\+T Nsample, Mat\+T \&sample, Vec\+T \&sample\+\_\+rllh, Mat\+T \&candidates, Vec\+T \&candidates\+\_\+rllh)}{estimate_mcmc_sample_debug(Model &model, const ModelDataT< Model > &data, IdxT Nsample, MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+debug (
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+
+\index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!estimate\+\_\+posterior\+\_\+debug@{estimate\+\_\+posterior\+\_\+debug}}
+\index{estimate\+\_\+posterior\+\_\+debug@{estimate\+\_\+posterior\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
+\paragraph[{\texorpdfstring{estimate\+\_\+posterior\+\_\+debug(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, mcmc\+::\+M\+C\+M\+C\+Debug\+Data \&mcmc\+\_\+debug\+\_\+sample)}{estimate_posterior_debug(const Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_init, mcmc::MCMCDebugData &mcmc_debug_sample)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug (
 \begin{DoxyParamCaption}
-\item[{Model \&}]{model, }
-\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
-\item[{{\bf IdxT}}]{Nsample, }
-\item[{{\bf MatT} \&}]{sample, }
-\item[{{\bf VecT} \&}]{sample\+\_\+rllh, }
-\item[{{\bf MatT} \&}]{candidates, }
-\item[{{\bf VecT} \&}]{candidates\+\_\+rllh}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_1_1methods_1_1debug_a7c94ce5d92872076693974f3abfa831b}{}\label{namespacemappel_1_1methods_1_1debug_a7c94ce5d92872076693974f3abfa831b}
-
-
-Definition at line 504 of file model\+\_\+methods\+\_\+impl.\+h.
-
-\index{mappel\+::methods\+::debug@{mappel\+::methods\+::debug}!estimate\+\_\+mcmc\+\_\+sample\+\_\+debug@{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug}}
-\index{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug@{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug}!mappel\+::methods\+::debug@{mappel\+::methods\+::debug}}
-\paragraph[{\texorpdfstring{estimate\+\_\+mcmc\+\_\+sample\+\_\+debug(\+Model \&model, const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, Idx\+T Nsample, Mat\+T \&sample, Vec\+T \&sample\+\_\+rllh, Mat\+T \&candidates, Vec\+T \&candidates\+\_\+rllh)}{estimate_mcmc_sample_debug(Model &model, const ModelDataT< Model > &data, const ParamT< Model > &theta_init, IdxT Nsample, MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::methods\+::debug\+::estimate\+\_\+mcmc\+\_\+sample\+\_\+debug (
-\begin{DoxyParamCaption}
-\item[{Model \&}]{model, }
+\item[{const Model \&}]{model, }
 \item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
 \item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
-\item[{{\bf IdxT}}]{Nsample, }
-\item[{{\bf MatT} \&}]{sample, }
-\item[{{\bf VecT} \&}]{sample\+\_\+rllh, }
-\item[{{\bf MatT} \&}]{candidates, }
-\item[{{\bf VecT} \&}]{candidates\+\_\+rllh}
+\item[{{\bf mcmc\+::\+M\+C\+M\+C\+Debug\+Data} \&}]{mcmc\+\_\+debug\+\_\+sample}
 \end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_1_1methods_1_1debug_ab463288fab7e102729d075d60d9e15e0}{}\label{namespacemappel_1_1methods_1_1debug_ab463288fab7e102729d075d60d9e15e0}
+)}\hypertarget{namespacemappel_1_1methods_1_1debug_a5d84632af17af6d244b5a82b9d55f2ba}{}\label{namespacemappel_1_1methods_1_1debug_a5d84632af17af6d244b5a82b9d55f2ba}
 
 
-Definition at line 513 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 470 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
-References mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug().
+References mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::candidate, mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::candidate\+\_\+rllh, mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::initialize\+\_\+arrays(), mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::\+Nsample, mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::sample, mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug(), and mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::sample\+\_\+rllh.
 

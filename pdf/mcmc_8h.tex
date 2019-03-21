@@ -6,6 +6,7 @@ Templated M\+C\+MC methods for posterior estimation.
 
 
 {\ttfamily \#include $<$cmath$>$}\\*
+{\ttfamily \#include \char`\"{}Mappel/mcmc\+\_\+data.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Mappel/rng.\+h\char`\"{}}\\*
 {\ttfamily \#include $<$trng/uniform01\+\_\+dist.\+hpp$>$}\\*
@@ -27,9 +28,11 @@ void \hyperlink{namespacemappel_1_1mcmc_a9e20794d8718ad2230529af28855e542}{mappe
 \item 
 void \hyperlink{namespacemappel_1_1mcmc_a5bcba6b4606530ab7c6b03e91accc735}{mappel\+::mcmc\+::estimate\+\_\+sample\+\_\+posterior} (const MatT \&sample, VecT \&theta\+\_\+posterior\+\_\+mean, MatT \&theta\+\_\+posterior\+\_\+cov)
 \item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a788cb1c156fa3b03724c3a44fe9e83ce}{mappel\+::mcmc\+::sample\+\_\+posterior} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh)
+{\footnotesize template$<$class Mat , class Vec $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_af656d2f4b6ea3614f944d4f189da7d88}{mappel\+::mcmc\+::compute\+\_\+posterior\+\_\+credible} (const Mat \&sample, double confidence, Vec \&lb, Vec \&ub)
 \item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a7a9a1f1f24f538f594992438a9cea159}{mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug} (Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh, MatT \&candidate, VecT \&candidate\+\_\+rllh)
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_ac2874bf0ff795dd25f90407c851499eb}{mappel\+::mcmc\+::sample\+\_\+posterior} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh)
+\item 
+{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_1_1mcmc_a511e84ec5060d1ff0fc6ca9d6d7bbb13}{mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug} (const Model \&model, const Model\+DataT$<$ Model $>$ \&im, const StencilT$<$ Model $>$ \&theta\+\_\+init, MatT \&sample, VecT \&sample\+\_\+rllh, MatT \&candidate, VecT \&candidate\+\_\+rllh)
 \end{DoxyCompactItemize}
 
 

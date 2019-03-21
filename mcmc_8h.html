@@ -98,6 +98,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Templated MCMC methods for posterior estimation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;<a class="el" href="mcmc__data_8h_source.html">Mappel/mcmc_data.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="util_8h_source.html">Mappel/util.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="rng_8h_source.html">Mappel/rng.h</a>&quot;</code><br />
 <code>#include &lt;trng/uniform01_dist.hpp&gt;</code><br />
@@ -121,12 +122,15 @@ Functions</h2></td></tr>
 <tr class="separator:a9e20794d8718ad2230529af28855e542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bcba6b4606530ab7c6b03e91accc735"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#a5bcba6b4606530ab7c6b03e91accc735">mappel::mcmc::estimate_sample_posterior</a> (const MatT &amp;sample, VecT &amp;theta_posterior_mean, MatT &amp;theta_posterior_cov)</td></tr>
 <tr class="separator:a5bcba6b4606530ab7c6b03e91accc735"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a788cb1c156fa3b03724c3a44fe9e83ce"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
-<tr class="memitem:a788cb1c156fa3b03724c3a44fe9e83ce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#a788cb1c156fa3b03724c3a44fe9e83ce">mappel::mcmc::sample_posterior</a> (Model &amp;model, const ModelDataT&lt; Model &gt; &amp;im, const StencilT&lt; Model &gt; &amp;theta_init, MatT &amp;sample, VecT &amp;sample_rllh)</td></tr>
-<tr class="separator:a788cb1c156fa3b03724c3a44fe9e83ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a9a1f1f24f538f594992438a9cea159"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
-<tr class="memitem:a7a9a1f1f24f538f594992438a9cea159"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#a7a9a1f1f24f538f594992438a9cea159">mappel::mcmc::sample_posterior_debug</a> (Model &amp;model, const ModelDataT&lt; Model &gt; &amp;im, const StencilT&lt; Model &gt; &amp;theta_init, MatT &amp;sample, VecT &amp;sample_rllh, MatT &amp;candidate, VecT &amp;candidate_rllh)</td></tr>
-<tr class="separator:a7a9a1f1f24f538f594992438a9cea159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af656d2f4b6ea3614f944d4f189da7d88"><td class="memTemplParams" colspan="2">template&lt;class Mat , class Vec &gt; </td></tr>
+<tr class="memitem:af656d2f4b6ea3614f944d4f189da7d88"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#af656d2f4b6ea3614f944d4f189da7d88">mappel::mcmc::compute_posterior_credible</a> (const Mat &amp;sample, double confidence, Vec &amp;lb, Vec &amp;ub)</td></tr>
+<tr class="separator:af656d2f4b6ea3614f944d4f189da7d88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2874bf0ff795dd25f90407c851499eb"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
+<tr class="memitem:ac2874bf0ff795dd25f90407c851499eb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#ac2874bf0ff795dd25f90407c851499eb">mappel::mcmc::sample_posterior</a> (const Model &amp;model, const ModelDataT&lt; Model &gt; &amp;im, const StencilT&lt; Model &gt; &amp;theta_init, MatT &amp;sample, VecT &amp;sample_rllh)</td></tr>
+<tr class="separator:ac2874bf0ff795dd25f90407c851499eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a511e84ec5060d1ff0fc6ca9d6d7bbb13"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
+<tr class="memitem:a511e84ec5060d1ff0fc6ca9d6d7bbb13"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1mcmc.html#a511e84ec5060d1ff0fc6ca9d6d7bbb13">mappel::mcmc::sample_posterior_debug</a> (const Model &amp;model, const ModelDataT&lt; Model &gt; &amp;im, const StencilT&lt; Model &gt; &amp;theta_init, MatT &amp;sample, VecT &amp;sample_rllh, MatT &amp;candidate, VecT &amp;candidate_rllh)</td></tr>
+<tr class="separator:a511e84ec5060d1ff0fc6ca9d6d7bbb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Templated MCMC methods for posterior estimation. </p>

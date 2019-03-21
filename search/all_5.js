@@ -9,8 +9,8 @@ var searchData=
   ['fill_5fgaussian_5fstencil',['fill_gaussian_stencil',['../namespacemappel.html#a09a770c2a4eaa7c083abbac26ec70ff3',1,'mappel']]],
   ['fill_5fx_5fstencil',['fill_X_stencil',['../namespacemappel.html#ab6a11cd06ff348138cb04635b03a6de2',1,'mappel']]],
   ['fisher_5finformation',['fisher_information',['../PoissonGaussianNoise2DObjective_8h.html#a8469a5ad4b663de4d482d8d58ec53721',1,'PoissonGaussianNoise2DObjective.h']]],
-  ['fisher_5finformation_5fstack',['fisher_information_stack',['../namespacemappel.html#a77bdeb8e88ba5b04e736ff55ab9a33fd',1,'mappel']]],
-  ['fixed_5fidxs',['fixed_idxs',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#aad1b023a8f0902b41d2454d4a3a16e89',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['free_5fparameters',['free_parameters',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a840b35e492c842d50244736971d7bb9e',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['functionchange',['FunctionChange',['../classmappel_1_1Estimator.html#a6d599915907ba4d0607fcb958d231edca8d75b053f108781c02ac7c22facc4338',1,'mappel::Estimator']]]
+  ['fixed_5fidxs',['fixed_idxs',['../namespacemappel_1_1estimator.html#a3ed4bf975a26a6e847e33e2a0e2be6ff',1,'mappel::estimator::ProfileLikelihoodData::fixed_idxs()'],['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#abb0d471c64f4f29335972f119efb6ef8',1,'mappel::estimator::IterativeMaximizer::MaximizerData::fixed_idxs()']]],
+  ['fixed_5fvalues',['fixed_values',['../namespacemappel_1_1estimator.html#a32fc54cfe37b35e56489e2ae395ef2c5',1,'mappel::estimator::ProfileLikelihoodData']]],
+  ['free_5fidxs',['free_idxs',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#a96fb9ed6b5c603ab2380b9dd24723bca',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['functionvalue',['FunctionValue',['../namespacemappel_1_1estimator.html#ae49999202b8a1968bc308aa30ac24e6ca400823530aeaf00ddf2b69458acdc235',1,'mappel::estimator']]]
 ];

@@ -98,6 +98,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>The stencils for pixel based computations.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;sstream&gt;</code><br />
+<code>#include &lt;boost/math/special_functions/erf.hpp&gt;</code><br />
+<code>#include &lt;boost/math/distributions/chi_squared.hpp&gt;</code><br />
 <code>#include &quot;<a class="el" href="util_8h_source.html">Mappel/util.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="stencil_8h_source.html">Mappel/stencil.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="display_8h_source.html">Mappel/display.h</a>&quot;</code><br />
@@ -115,6 +117,10 @@ Functions</h2></td></tr>
 <tr class="separator:a69b8109164dc63d76f99ad0d9c149148"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cf2f920819c8899c4f01d25072412db"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel.html#a7cf2f920819c8899c4f01d25072412db">mappel::normal_quantile_onesided</a> (double confidence)</td></tr>
 <tr class="separator:a7cf2f920819c8899c4f01d25072412db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb714ee724b676c059233ddf224eb786"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel.html#adb714ee724b676c059233ddf224eb786">mappel::chisq_quantile</a> (double confidence, int dof)</td></tr>
+<tr class="separator:adb714ee724b676c059233ddf224eb786"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b85a513735680d7c4eb551fe28857a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel.html#ad7b85a513735680d7c4eb551fe28857a">mappel::chisq_quantile</a> (double confidence)</td></tr>
+<tr class="separator:ad7b85a513735680d7c4eb551fe28857a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09a770c2a4eaa7c083abbac26ec70ff3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel.html#a09a770c2a4eaa7c083abbac26ec70ff3">mappel::fill_gaussian_stencil</a> (int size, double stencil[], double sigma)</td></tr>
 <tr class="separator:a09a770c2a4eaa7c083abbac26ec70ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93917141391e8f1ac5b4b5b0712cd29c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel.html#a93917141391e8f1ac5b4b5b0712cd29c">mappel::gaussian_convolution</a> (int x, int y, const MatT &amp;data, const VecT &amp;Xstencil, const VecT &amp;Ystencil)</td></tr>
@@ -140,8 +146,9 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The stencils for pixel based computations. </p>
+<p>General utilities and helpers for Mappel.</p>
 <dl class="section author"><dt>Author</dt><dd>Mark J. Olah (mjo@cs.unm DOT edu) </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>03-22-2014 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2014-2019 </dd></dl>
 
 <p>Definition in file <a class="el" href="stencil_8cpp_source.html">stencil.cpp</a>.</p>
 </div></div><!-- contents -->

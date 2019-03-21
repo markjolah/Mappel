@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['t_5finit',['T_init',['../classmappel_1_1SimulatedAnnealingMaximizer.html#a5a697acb3663ef6aad85157cce00080e',1,'mappel::SimulatedAnnealingMaximizer']]],
+  ['target_5frllh_5fdelta',['target_rllh_delta',['../structmappel_1_1estimator_1_1ProfileBoundsData.html#a524173c1125ec843b904feb119fb182b',1,'mappel::estimator::ProfileBoundsData::target_rllh_delta()'],['../namespacemappel_1_1estimator.html#aaceb78a7bb02e7d5bf776d908f0051f9',1,'mappel::estimator::ProfileBoundsDebugData::target_rllh_delta()'],['../structmappel_1_1estimator_1_1ProfileBoundsDataStack.html#a05d506b252e3e6ddc1a5036b60e8e854',1,'mappel::estimator::ProfileBoundsDataStack::target_rllh_delta()']]],
   ['term_5fblack',['TERM_BLACK',['../namespacemappel.html#a448ca8ea08b3b9cdf522884ac004d901',1,'mappel']]],
   ['term_5fblue',['TERM_BLUE',['../namespacemappel.html#a04365b9f87e9c572c79e2da4ff4a0378',1,'mappel']]],
   ['term_5fcyan',['TERM_CYAN',['../namespacemappel.html#ad7696c53e61084d23f8532598b261c36',1,'mappel']]],
@@ -17,11 +17,15 @@ var searchData=
   ['term_5fred',['TERM_RED',['../namespacemappel.html#ab22998f4999661d300fe1f1e2bc615a2',1,'mappel']]],
   ['term_5fwhite',['TERM_WHITE',['../namespacemappel.html#aa0d4a391df8c98076fb8d02fe34ce24c',1,'mappel']]],
   ['term_5fyellow',['TERM_YELLOW',['../namespacemappel.html#ae85ff1ec27541515a29ca8b7301866dd',1,'mappel']]],
-  ['theta',['theta',['../classmappel_1_1Gauss1DModel_1_1Stencil.html#a2428fa45a83396cad7861fbeea44a86a',1,'mappel::Gauss1DModel::Stencil::theta()'],['../classmappel_1_1Gauss1DsModel_1_1Stencil.html#ab1acb6728b521c0ba62d06bc9a92ae79',1,'mappel::Gauss1DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DModel_1_1Stencil.html#ac9ce60b33fe2235ebbb80dd9d90a49ad',1,'mappel::Gauss2DModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsModel_1_1Stencil.html#af3639dad603ce4b9ed94bfcd25f95cab',1,'mappel::Gauss2DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a73791bb1fd46a0af05bd477ca8455ed3',1,'mappel::Gauss2DsxyModel::Stencil::theta()']]],
-  ['theta_5fseq',['theta_seq',['../classmappel_1_1IterativeMaximizer_1_1MaximizerData.html#a2c8a2c8724b6f507cd8d4a2b6310324f',1,'mappel::IterativeMaximizer::MaximizerData']]],
-  ['total_5fbacktracks',['total_backtracks',['../classmappel_1_1IterativeMaximizer.html#a752717a4e69ba7cd44a6167d0cbdb242',1,'mappel::IterativeMaximizer']]],
-  ['total_5fder_5fevals',['total_der_evals',['../classmappel_1_1IterativeMaximizer.html#a76de3653a5f2c200ad6865372eb9c154',1,'mappel::IterativeMaximizer']]],
-  ['total_5ffun_5fevals',['total_fun_evals',['../classmappel_1_1IterativeMaximizer.html#afbb76db27b845efa8e958611dd3c8d3c',1,'mappel::IterativeMaximizer']]],
-  ['total_5fiterations',['total_iterations',['../classmappel_1_1IterativeMaximizer.html#a8d344b09841e61cc726dc430d8451044',1,'mappel::IterativeMaximizer']]],
-  ['total_5fwalltime',['total_walltime',['../classmappel_1_1Estimator.html#a5a408458a111c5222193871fa6bb6644',1,'mappel::Estimator']]]
+  ['theta',['theta',['../namespacemappel_1_1estimator.html#addec61571297c6dbadc300dfcabe9c05',1,'mappel::estimator::MLEData::theta()'],['../namespacemappel_1_1estimator.html#a9f62b8797034f80b369117f77ba39725',1,'mappel::estimator::MLEDebugData::theta()'],['../namespacemappel_1_1estimator.html#a076aeb06b77af53997525f146739069d',1,'mappel::estimator::MLEDataStack::theta()'],['../classmappel_1_1Gauss1DModel_1_1Stencil.html#a2428fa45a83396cad7861fbeea44a86a',1,'mappel::Gauss1DModel::Stencil::theta()'],['../classmappel_1_1Gauss1DsModel_1_1Stencil.html#ab1acb6728b521c0ba62d06bc9a92ae79',1,'mappel::Gauss1DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DModel_1_1Stencil.html#ac9ce60b33fe2235ebbb80dd9d90a49ad',1,'mappel::Gauss2DModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsModel_1_1Stencil.html#af3639dad603ce4b9ed94bfcd25f95cab',1,'mappel::Gauss2DsModel::Stencil::theta()'],['../classmappel_1_1Gauss2DsxyModel_1_1Stencil.html#a73791bb1fd46a0af05bd477ca8455ed3',1,'mappel::Gauss2DsxyModel::Stencil::theta()']]],
+  ['theta_5fseq',['theta_seq',['../classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData.html#a7fd34d49221c35e0e5977b8349c543c5',1,'mappel::estimator::IterativeMaximizer::MaximizerData']]],
+  ['thin',['thin',['../structmappel_1_1mcmc_1_1MCMCData.html#a07822492904641403d2ede5eac1f1279',1,'mappel::mcmc::MCMCData::thin()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a94c6756290701c909e3fa9fb3fb43f27',1,'mappel::mcmc::MCMCDataStack::thin()']]],
+  ['total_5fbacktracks',['total_backtracks',['../classmappel_1_1estimator_1_1IterativeMaximizer.html#a1e081c237c989c530bb101bfb4791073',1,'mappel::estimator::IterativeMaximizer']]],
+  ['total_5fder_5fevals',['total_der_evals',['../classmappel_1_1estimator_1_1IterativeMaximizer.html#a79461b74a026ab06f9d1b4a9f96bdaa0',1,'mappel::estimator::IterativeMaximizer']]],
+  ['total_5ffun_5fevals',['total_fun_evals',['../classmappel_1_1estimator_1_1IterativeMaximizer.html#aa4f49112ff3b145fa1096a7ac4d48af7',1,'mappel::estimator::IterativeMaximizer']]],
+  ['total_5fiterations',['total_iterations',['../classmappel_1_1estimator_1_1IterativeMaximizer.html#a14a3683e595e1db79b9cbc49b0d8688e',1,'mappel::estimator::IterativeMaximizer']]],
+  ['total_5fwalltime',['total_walltime',['../classmappel_1_1estimator_1_1Estimator.html#a98ad459e850aeb2c42c10fd06c3b9fbc',1,'mappel::estimator::Estimator']]],
+  ['trust_5fradius_5fdecrease',['trust_radius_decrease',['../classmappel_1_1estimator_1_1TrustRegionMaximizer.html#aa96d97d1e10a98270d7de5bbb7131c33',1,'mappel::estimator::TrustRegionMaximizer']]],
+  ['trust_5fradius_5fdecrease_5fmin',['trust_radius_decrease_min',['../classmappel_1_1estimator_1_1TrustRegionMaximizer.html#a0b90cfb34a88617378caa32312f0ad3b',1,'mappel::estimator::TrustRegionMaximizer']]],
+  ['trust_5fradius_5fincrease',['trust_radius_increase',['../classmappel_1_1estimator_1_1TrustRegionMaximizer.html#a8a75c91757ab34a01d0eaed90987e023',1,'mappel::estimator::TrustRegionMaximizer']]]
 ];

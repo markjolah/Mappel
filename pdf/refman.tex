@@ -139,6 +139,10 @@
 \label{Install}
 \hypertarget{Install}{}
 \input{Install}
+\section{O\+M\+P\+Exception\+Catcher}
+\label{md__home_travis_build_markjolah_Mappel_include_Mappel_OMPExceptionCatcher_README}
+\hypertarget{md__home_travis_build_markjolah_Mappel_include_Mappel_OMPExceptionCatcher_README}{}
+\input{md__home_travis_build_markjolah_Mappel_include_Mappel_OMPExceptionCatcher_README}
 \section{Namespace Index}
 \input{namespaces}
 \section{Hierarchical Index}
@@ -149,6 +153,8 @@
 \input{files}
 \section{Namespace Documentation}
 \input{namespacemappel}
+\input{namespacemappel_1_1estimator}
+\input{namespacemappel_1_1estimator_1_1subroutine}
 \input{namespacemappel_1_1mcmc}
 \input{namespacemappel_1_1methods}
 \input{namespacemappel_1_1methods_1_1debug}
@@ -163,9 +169,9 @@
 \section{Class Documentation}
 \input{structmappel_1_1ArrayShapeError}
 \input{structmappel_1_1ArraySizeError}
-\input{classmappel_1_1CGaussHeuristicEstimator}
-\input{classmappel_1_1CGaussMLE}
-\input{classmappel_1_1Estimator}
+\input{classmappel_1_1estimator_1_1CGaussHeuristicEstimator}
+\input{classmappel_1_1estimator_1_1CGaussMLE}
+\input{classmappel_1_1estimator_1_1Estimator}
 \input{classmappel_1_1Gauss1DMAP}
 \input{classmappel_1_1Gauss1DMLE}
 \input{classmappel_1_1Gauss1DModel}
@@ -180,22 +186,25 @@
 \input{classmappel_1_1Gauss2DsModel}
 \input{classmappel_1_1Gauss2DsxyMAP}
 \input{classmappel_1_1Gauss2DsxyModel}
-\input{classmappel_1_1HeuristicEstimator}
+\input{classmappel_1_1estimator_1_1HeuristicEstimator}
 \input{classmappel_1_1ImageFormat1DBase}
 \input{classmappel_1_1ImageFormat2DBase}
-\input{classmappel_1_1IterativeMaximizer}
+\input{classmappel_1_1estimator_1_1IterativeMaximizer}
 \input{structmappel_1_1LogicalError}
 \input{classmappel_1_1MAPEstimator}
-\input{classmappel_1_1IterativeMaximizer_1_1MaximizerData}
+\input{classmappel_1_1estimator_1_1IterativeMaximizer_1_1MaximizerData}
 \input{classmappel_1_1MCMCAdaptor1D}
 \input{classmappel_1_1MCMCAdaptor1Ds}
 \input{classmappel_1_1MCMCAdaptor2D}
 \input{classmappel_1_1MCMCAdaptor2Ds}
 \input{classmappel_1_1MCMCAdaptorBase}
+\input{structmappel_1_1mcmc_1_1MCMCData}
+\input{structmappel_1_1mcmc_1_1MCMCDataStack}
+\input{structmappel_1_1mcmc_1_1MCMCDebugData}
 \input{classmappel_1_1MLEstimator}
 \input{structmappel_1_1ModelBoundsError}
-\input{classmappel_1_1NewtonDiagonalMaximizer}
-\input{classmappel_1_1NewtonMaximizer}
+\input{classmappel_1_1estimator_1_1NewtonDiagonalMaximizer}
+\input{classmappel_1_1estimator_1_1NewtonMaximizer}
 \input{structmappel_1_1NotImplementedError}
 \input{structmappel_1_1NumericalError}
 \input{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}
@@ -204,20 +213,23 @@
 \input{classPoissonGaussianNoise2DObjective}
 \input{classmappel_1_1PoissonNoise1DObjective}
 \input{classmappel_1_1PoissonNoise2DObjective}
-\input{classmappel_1_1PriorMAP1DObjective}
-\input{classmappel_1_1QuasiNewtonMaximizer}
-\input{classmappel_1_1SimulatedAnnealingMaximizer}
-\input{classmappel_1_1Gauss1DModel_1_1Stencil}
-\input{classmappel_1_1Gauss1DsModel_1_1Stencil}
+\input{structmappel_1_1estimator_1_1ProfileBoundsData}
+\input{structmappel_1_1estimator_1_1ProfileBoundsDataStack}
+\input{classmappel_1_1estimator_1_1QuasiNewtonMaximizer}
+\input{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer}
 \input{classmappel_1_1Gauss2DsxyModel_1_1Stencil}
-\input{classmappel_1_1Gauss2DsModel_1_1Stencil}
+\input{classmappel_1_1Gauss1DsModel_1_1Stencil}
 \input{classmappel_1_1Gauss2DModel_1_1Stencil}
-\input{classmappel_1_1ThreadedEstimator}
-\input{classmappel_1_1TrustRegionMaximizer}
+\input{classmappel_1_1Gauss2DsModel_1_1Stencil}
+\input{classmappel_1_1Gauss1DModel_1_1Stencil}
+\input{classmappel_1_1estimator_1_1ThreadedEstimator}
+\input{classmappel_1_1estimator_1_1TrustRegionMaximizer}
 \section{File Documentation}
 \input{display_8cpp}
 \input{display_8h}
+\input{estimator_8cpp}
 \input{estimator_8h}
+\input{estimator__helpers_8h}
 \input{estimator__impl_8h}
 \input{estimator__statics_8cpp}
 \input{Gauss1DMAP_8cpp}
@@ -254,6 +266,7 @@
 \input{MAPEstimator_8h}
 \input{mcmc_8cpp}
 \input{mcmc_8h}
+\input{mcmc__data_8h}
 \input{MCMCAdaptor1D_8cpp}
 \input{MCMCAdaptor1D_8h}
 \input{MCMCAdaptor1Ds_8cpp}
@@ -279,11 +292,10 @@
 \input{PoissonNoise1DObjective_8h}
 \input{PoissonNoise2DObjective_8cpp}
 \input{PoissonNoise2DObjective_8h}
-\input{PriorMAP1DObjective_8h}
 \input{README_8md}
+\input{include_2Mappel_2OMPExceptionCatcher_2README_8md}
 \input{rng_8cpp}
 \input{rng_8h}
-\input{stackcomp_8h}
 \input{stencil_8cpp}
 \input{stencil_8h}
 \input{util_8cpp}

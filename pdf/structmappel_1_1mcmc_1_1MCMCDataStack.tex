@@ -1,0 +1,167 @@
+\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack}{}\subsection{mappel\+:\+:mcmc\+:\+:M\+C\+M\+C\+Data\+Stack Struct Reference}
+\label{structmappel_1_1mcmc_1_1MCMCDataStack}\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/mcmc\+\_\+data.\+h$>$}
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_ab0699a869938cbf728f3e901328e4104}{initialize\+\_\+arrays} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nparams)
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a6a16373d9b85da2bf07f5e225419838d}{Nsample} =0
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a4a3aa4a67be9322e19c2e4c649cbdf8e}{Nburnin} =0
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a94c6756290701c909e3fa9fb3fb43f27}{thin} =0
+\item 
+double \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a664569d1071a89e5578e9caf90fb04d5}{confidence} =-\/I\+N\+F\+I\+N\+I\+TY
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a2bcf8c7db4bf1df3c40c8d4b34db90d3}{Ndata} =0
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a2818767f68b1269c34bdd18c31122d24}{sample\+\_\+mean}
+\item 
+\hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a4ef06af1c29a482bf5fdc8dc68e3e8b4}{sample\+\_\+cov}
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_aea5d186cffe2ecf57918ef42e975211b}{credible\+\_\+lb}
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a57d33342ed7a3fb6fdf7b55a99254369}{credible\+\_\+ub}
+\item 
+\hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a3bac937763a2fa1a54378440b76c2531}{sample}
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDataStack_a53720538daea5b14876e85f0979feebe}{sample\+\_\+rllh}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Data and controlling parameters for an M\+C\+MC posterior sampling for stack of single data. 
+
+Definition at line 53 of file mcmc\+\_\+data.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!initialize\+\_\+arrays@{initialize\+\_\+arrays}}
+\index{initialize\+\_\+arrays@{initialize\+\_\+arrays}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{initialize\+\_\+arrays(\+Idx\+T Nparams)}{initialize_arrays(IdxT Nparams)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::initialize\+\_\+arrays (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{Nparams}
+\end{DoxyParamCaption}
+)}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_ab0699a869938cbf728f3e901328e4104}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_ab0699a869938cbf728f3e901328e4104}
+
+
+Definition at line 30 of file mcmc.\+cpp.
+
+
+
+References mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::credible\+\_\+lb, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::credible\+\_\+ub, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::\+Nsample, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample\+\_\+cov, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample\+\_\+mean, and mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample\+\_\+rllh.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::estimate\+\_\+posterior\+\_\+stack().
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!confidence@{confidence}}
+\index{confidence@{confidence}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{confidence}{confidence}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::confidence =-\/I\+N\+F\+I\+N\+I\+TY}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a664569d1071a89e5578e9caf90fb04d5}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a664569d1071a89e5578e9caf90fb04d5}
+
+
+Definition at line 58 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!credible\+\_\+lb@{credible\+\_\+lb}}
+\index{credible\+\_\+lb@{credible\+\_\+lb}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{credible\+\_\+lb}{credible_lb}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::credible\+\_\+lb}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_aea5d186cffe2ecf57918ef42e975211b}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_aea5d186cffe2ecf57918ef42e975211b}
+
+
+Definition at line 64 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!credible\+\_\+ub@{credible\+\_\+ub}}
+\index{credible\+\_\+ub@{credible\+\_\+ub}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{credible\+\_\+ub}{credible_ub}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::credible\+\_\+ub}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a57d33342ed7a3fb6fdf7b55a99254369}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a57d33342ed7a3fb6fdf7b55a99254369}
+
+
+Definition at line 65 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!Nburnin@{Nburnin}}
+\index{Nburnin@{Nburnin}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{Nburnin}{Nburnin}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::\+Nburnin =0}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a4a3aa4a67be9322e19c2e4c649cbdf8e}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a4a3aa4a67be9322e19c2e4c649cbdf8e}
+
+
+Definition at line 56 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::estimate\+\_\+posterior\+\_\+stack().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!Ndata@{Ndata}}
+\index{Ndata@{Ndata}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{Ndata}{Ndata}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::\+Ndata =0}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a2bcf8c7db4bf1df3c40c8d4b34db90d3}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a2bcf8c7db4bf1df3c40c8d4b34db90d3}
+
+
+Definition at line 61 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::estimate\+\_\+posterior\+\_\+stack().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!Nsample@{Nsample}}
+\index{Nsample@{Nsample}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{Nsample}{Nsample}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::\+Nsample =0}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a6a16373d9b85da2bf07f5e225419838d}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a6a16373d9b85da2bf07f5e225419838d}
+
+
+Definition at line 55 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::estimate\+\_\+posterior\+\_\+stack().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!sample@{sample}}
+\index{sample@{sample}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{sample}{sample}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CubeT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::sample}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a3bac937763a2fa1a54378440b76c2531}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a3bac937763a2fa1a54378440b76c2531}
+
+
+Definition at line 66 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!sample\+\_\+cov@{sample\+\_\+cov}}
+\index{sample\+\_\+cov@{sample\+\_\+cov}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{sample\+\_\+cov}{sample_cov}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf CubeT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::sample\+\_\+cov}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a4ef06af1c29a482bf5fdc8dc68e3e8b4}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a4ef06af1c29a482bf5fdc8dc68e3e8b4}
+
+
+Definition at line 63 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!sample\+\_\+mean@{sample\+\_\+mean}}
+\index{sample\+\_\+mean@{sample\+\_\+mean}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{sample\+\_\+mean}{sample_mean}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::sample\+\_\+mean}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a2818767f68b1269c34bdd18c31122d24}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a2818767f68b1269c34bdd18c31122d24}
+
+
+Definition at line 62 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!sample\+\_\+rllh@{sample\+\_\+rllh}}
+\index{sample\+\_\+rllh@{sample\+\_\+rllh}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{sample\+\_\+rllh}{sample_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::sample\+\_\+rllh}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a53720538daea5b14876e85f0979feebe}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a53720538daea5b14876e85f0979feebe}
+
+
+Definition at line 67 of file mcmc\+\_\+data.\+h.
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}!thin@{thin}}
+\index{thin@{thin}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack}}
+\paragraph[{\texorpdfstring{thin}{thin}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+Stack\+::thin =0}\hypertarget{structmappel_1_1mcmc_1_1MCMCDataStack_a94c6756290701c909e3fa9fb3fb43f27}{}\label{structmappel_1_1mcmc_1_1MCMCDataStack_a94c6756290701c909e3fa9fb3fb43f27}
+
+
+Definition at line 57 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::estimate\+\_\+posterior\+\_\+stack().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{mcmc__data_8h}{mcmc\+\_\+data.\+h}\item 
+\hyperlink{mcmc_8cpp}{mcmc.\+cpp}\end{DoxyCompactItemize}

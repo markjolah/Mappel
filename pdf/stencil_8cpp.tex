@@ -6,6 +6,8 @@ The stencils for pixel based computations.
 
 
 {\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$boost/math/special\+\_\+functions/erf.\+hpp$>$}\\*
+{\ttfamily \#include $<$boost/math/distributions/chi\+\_\+squared.\+hpp$>$}\\*
 {\ttfamily \#include \char`\"{}Mappel/util.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Mappel/stencil.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Mappel/display.\+h\char`\"{}}\\*
@@ -20,6 +22,10 @@ The stencils for pixel based computations.
 double \hyperlink{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}{mappel\+::normal\+\_\+quantile\+\_\+twosided} (double confidence)
 \item 
 double \hyperlink{namespacemappel_a7cf2f920819c8899c4f01d25072412db}{mappel\+::normal\+\_\+quantile\+\_\+onesided} (double confidence)
+\item 
+double \hyperlink{namespacemappel_adb714ee724b676c059233ddf224eb786}{mappel\+::chisq\+\_\+quantile} (double confidence, int dof)
+\item 
+double \hyperlink{namespacemappel_ad7b85a513735680d7c4eb551fe28857a}{mappel\+::chisq\+\_\+quantile} (double confidence)
 \item 
 void \hyperlink{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}{mappel\+::fill\+\_\+gaussian\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, double sigma)
 \item 
@@ -48,9 +54,11 @@ double \hyperlink{namespacemappel_a2d00c518aa213c069f09c666c25b026a}{mappel\+::e
 \subsubsection{Detailed Description}
 The stencils for pixel based computations. 
 
+General utilities and helpers for Mappel.
+
 \begin{DoxyAuthor}{Author}
 Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-03-\/22-\/2014 
+2014-\/2019 
 \end{DoxyDate}

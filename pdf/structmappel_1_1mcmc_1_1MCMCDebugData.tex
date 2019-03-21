@@ -1,0 +1,117 @@
+\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData}{}\subsection{mappel\+:\+:mcmc\+:\+:M\+C\+M\+C\+Debug\+Data Struct Reference}
+\label{structmappel_1_1mcmc_1_1MCMCDebugData}\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/mcmc\+\_\+data.\+h$>$}
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_ac8a3717b4ea2fce71fe79b85ddc657a6}{initialize\+\_\+arrays} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} Nparams)
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_ad001804f5adce124355dbd6ded691d7f}{Nsample} =0
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_ad6dd0a8a4ee0b8a532e0c041b8cde1d9}{sample}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_a02b5c1388b6fa43c9aee01c63cda8111}{sample\+\_\+rllh}
+\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_a62424ee51a10b39b9245945743761c27}{candidate}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1mcmc_1_1MCMCDebugData_a554ee027879c8bad30bcc637ec88b113}{candidate\+\_\+rllh}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Debugging Data and controlling parameters for an M\+C\+MC posterior sampling for a single data. No burnin or thinning is performed when debugging 
+
+Definition at line 40 of file mcmc\+\_\+data.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!initialize\+\_\+arrays@{initialize\+\_\+arrays}}
+\index{initialize\+\_\+arrays@{initialize\+\_\+arrays}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{initialize\+\_\+arrays(\+Idx\+T Nparams)}{initialize_arrays(IdxT Nparams)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::initialize\+\_\+arrays (
+\begin{DoxyParamCaption}
+\item[{{\bf IdxT}}]{Nparams}
+\end{DoxyParamCaption}
+)}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_ac8a3717b4ea2fce71fe79b85ddc657a6}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_ac8a3717b4ea2fce71fe79b85ddc657a6}
+
+
+Definition at line 22 of file mcmc.\+cpp.
+
+
+
+References mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::\+Nsample, mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample, and mappel\+::mcmc\+::\+M\+C\+M\+C\+Data\+::sample\+\_\+rllh.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!candidate@{candidate}}
+\index{candidate@{candidate}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{candidate}{candidate}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::candidate}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_a62424ee51a10b39b9245945743761c27}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_a62424ee51a10b39b9245945743761c27}
+
+
+Definition at line 46 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!candidate\+\_\+rllh@{candidate\+\_\+rllh}}
+\index{candidate\+\_\+rllh@{candidate\+\_\+rllh}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{candidate\+\_\+rllh}{candidate_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::candidate\+\_\+rllh}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_a554ee027879c8bad30bcc637ec88b113}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_a554ee027879c8bad30bcc637ec88b113}
+
+
+Definition at line 47 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!Nsample@{Nsample}}
+\index{Nsample@{Nsample}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{Nsample}{Nsample}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::\+Nsample =0}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_ad001804f5adce124355dbd6ded691d7f}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_ad001804f5adce124355dbd6ded691d7f}
+
+
+Definition at line 42 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!sample@{sample}}
+\index{sample@{sample}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{sample}{sample}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::sample}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_ad6dd0a8a4ee0b8a532e0c041b8cde1d9}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_ad6dd0a8a4ee0b8a532e0c041b8cde1d9}
+
+
+Definition at line 44 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+\index{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}!sample\+\_\+rllh@{sample\+\_\+rllh}}
+\index{sample\+\_\+rllh@{sample\+\_\+rllh}!mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data@{mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data}}
+\paragraph[{\texorpdfstring{sample\+\_\+rllh}{sample_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::mcmc\+::\+M\+C\+M\+C\+Debug\+Data\+::sample\+\_\+rllh}\hypertarget{structmappel_1_1mcmc_1_1MCMCDebugData_a02b5c1388b6fa43c9aee01c63cda8111}{}\label{structmappel_1_1mcmc_1_1MCMCDebugData_a02b5c1388b6fa43c9aee01c63cda8111}
+
+
+Definition at line 45 of file mcmc\+\_\+data.\+h.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::estimate\+\_\+posterior\+\_\+debug().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{mcmc__data_8h}{mcmc\+\_\+data.\+h}\item 
+\hyperlink{mcmc_8cpp}{mcmc.\+cpp}\end{DoxyCompactItemize}

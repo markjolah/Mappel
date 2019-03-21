@@ -1,0 +1,796 @@
+\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer}{}\subsection{mappel\+:\+:estimator\+:\+:Simulated\+Annealing\+Maximizer$<$ Model $>$ Class Template Reference}
+\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer}\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/estimator.\+h$>$}
+
+Inheritance diagram for mappel\+:\+:estimator\+:\+:Simulated\+Annealing\+Maximizer$<$ Model $>$\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer}
+\end{center}
+\end{figure}
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a8d6f6ece08067e27a78587dddde35fdb}{Simulated\+Annealing\+Maximizer} (const Model \&\hyperlink{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}{model}, int num\+\_\+iterations\+\_\+=\hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a4d1975ae51c9cc7d38b6be65ccc49f2c}{Default\+Num\+Iterations}, double T\+\_\+init\+\_\+=\hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_af70f6d99d234c42df5525217be31e688}{Default\+\_\+\+T\+\_\+\+Init}, double cooling\+\_\+rate\+\_\+=\hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a265b898081999002c7567e2237d26c25}{Default\+Cooling\+Rate})
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a917b38007cc5b345ec687c95de73d9c0}{get\+\_\+stats} ()
+\item 
+\hyperlink{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{StatsT} \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_ad359aa57dc52450d6999626fc6ddc886}{get\+\_\+debug\+\_\+stats} ()
+\item 
+std\+::string \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_aa0a443f0e547025c9f220d04d444f7a1}{name} () const 
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a797b6479fbab450a42099cfdb07e900f}{estimate\+\_\+max\+\_\+stack} (const \hyperlink{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{Model\+Data\+StackT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{M\+L\+E\+Data\+Stack} \&mle\+\_\+data\+\_\+stack) override
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a16ce4964abd0e18da2f9ec7e8bd5b4ee}{estimate\+\_\+profile\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileLikelihoodData}{Profile\+Likelihood\+Data} \&profile) override
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a518454a427336c48a83d145b917ec3f7}{estimate\+\_\+profile\+\_\+bounds\+\_\+parallel} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData}{Profile\+Bounds\+Data} \&bounds\+\_\+est) override
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a3701a1dcbe15b6b8c35c15c929d7429a}{estimate\+\_\+profile\+\_\+bounds\+\_\+stack} (const \hyperlink{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{Model\+Data\+StackT}$<$ Model $>$ \&data, \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsDataStack}{Profile\+Bounds\+Data\+Stack} \&bounds\+\_\+est\+\_\+stack) override
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a63d49f8a3c965709ba45dc9e043651f1}{clear\+\_\+stats} ()
+\item 
+const Model \& \hyperlink{classmappel_1_1estimator_1_1Estimator_a076f485dfe0a925e01520c173f6fffe4}{get\+\_\+model} ()
+\end{DoxyCompactItemize}
+{\bf }\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_aba9d96880ade861e4086b5c2cbde46b1}{estimate\+\_\+max\+\_\+stack} (const \hyperlink{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{Model\+Data\+StackT}$<$ Model $>$ \&data\+\_\+stack, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{M\+L\+E\+Data\+Stack} \&mle\+\_\+data\+\_\+stack)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a14b53d2ddc3d74a5653f71e4b5a97968}{estimate\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \&mle\+\_\+data, \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&mle\+\_\+stencil)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a8e1ea0bf9ef92871618c44a4cb770cb8}{estimate\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \&mle\+\_\+data)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a8785a4f0e2d96fb4d30a533dc7541342}{estimate\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \&mle\+\_\+data)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data, \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&mle\+\_\+stencil)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a2cb11ee4a6b01c38064b03d761840838}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data)
+\end{DoxyCompactItemize}
+
+{\bf }\par
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classmappel_1_1estimator_1_1Estimator_aaadd90fa484e5becd980d2c3e268c97b}{estimate\+\_\+profile\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \&fixed\+\_\+idxs, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&fixed\+\_\+theta\+\_\+init, \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&theta\+\_\+max)
+\end{DoxyCompactItemize}
+
+{\bf }\par
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a9efcc3adb2fd64ab75c8954ab29687fc}{estimate\+\_\+profile\+\_\+bounds} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData}{Profile\+Bounds\+Data} \&bounds\+\_\+est)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a67b7910edb97973def5636ed01c3be5f}{estimate\+\_\+profile\+\_\+bounds\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{Profile\+Bounds\+Debug\+Data} \&bounds\+\_\+est)
+\end{DoxyCompactItemize}
+
+{\bf }\par
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1estimator_1_1Estimator_adde56d397f57f6f4f2d4f10fc59f7a08}{get\+\_\+exit\+\_\+counts} () const 
+\end{DoxyCompactItemize}
+
+\subsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static const int \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a4d1975ae51c9cc7d38b6be65ccc49f2c}{Default\+Num\+Iterations} = 500
+\begin{DoxyCompactList}\small\item\em Default number of SA iterations. \end{DoxyCompactList}\item 
+static const double \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_af70f6d99d234c42df5525217be31e688}{Default\+\_\+\+T\+\_\+\+Init} = 100.
+\begin{DoxyCompactList}\small\item\em Default SA initial temperature. \end{DoxyCompactList}\item 
+static const double \hyperlink{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a265b898081999002c7567e2237d26c25}{Default\+Cooling\+Rate} = 1.\+02
+\begin{DoxyCompactList}\small\item\em Default SA cooling rate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_ae5fe99504a34bfd854915a2156ed462c}{record\+\_\+exit\+\_\+code} (\hyperlink{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6c}{Exit\+Code} code) override
+\item 
+virtual void \hyperlink{classmappel_1_1estimator_1_1Estimator_a83f877d399368dee1f10cc905d833a85}{compute\+\_\+profile\+\_\+bound} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData}{Profile\+Bounds\+Data} \&est, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&init\+\_\+step, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} param\+\_\+idx, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} which\+\_\+bound)
+\item 
+virtual void \hyperlink{classmappel_1_1estimator_1_1Estimator_a75c8db8e3151aa5bb2ce3190a613c05c}{compute\+\_\+profile\+\_\+bound\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{Profile\+Bounds\+Debug\+Data} \&est)
+\item 
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a864a87d5dc2937e1d67e6bcffb0b5234}{record\+\_\+walltime} (Clock\+T\+::time\+\_\+point start\+\_\+walltime, int \hyperlink{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}{num\+\_\+estimations})
+\end{DoxyCompactItemize}
+\subsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_ab4c55ecff71dff47c0584ce20fe7f077}{max\+\_\+threads}
+\item 
+int \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_af746a83929a7217b4084d0e10f850bc3}{num\+\_\+threads}
+\item 
+std\+::mutex \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_af78695378590ff8e822dffe2b1b3f242}{mtx}
+\item 
+const Model \& \hyperlink{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}{model}
+\item 
+int \hyperlink{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}{num\+\_\+estimations} = 0
+\item 
+double \hyperlink{classmappel_1_1estimator_1_1Estimator_a98ad459e850aeb2c42c10fd06c3b9fbc}{total\+\_\+walltime} = 0.
+\item 
+\hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT} \hyperlink{classmappel_1_1estimator_1_1Estimator_aa946d9789a1299d684f83a822a10caa7}{exit\+\_\+counts}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+\subsubsection*{template$<$class Model$>$\\*
+class mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$}
+
+
+
+Definition at line 384 of file estimator.\+h.
+
+
+
+\subsubsection{Constructor \& Destructor Documentation}
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!Simulated\+Annealing\+Maximizer@{Simulated\+Annealing\+Maximizer}}
+\index{Simulated\+Annealing\+Maximizer@{Simulated\+Annealing\+Maximizer}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{Simulated\+Annealing\+Maximizer(const Model \&model, int num\+\_\+iterations\+\_\+=\+Default\+Num\+Iterations, double T\+\_\+init\+\_\+=\+Default\+\_\+\+T\+\_\+\+Init, double cooling\+\_\+rate\+\_\+=\+Default\+Cooling\+Rate)}{SimulatedAnnealingMaximizer(const Model &model, int num_iterations_=DefaultNumIterations, double T_init_=Default_T_Init, double cooling_rate_=DefaultCoolingRate)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::{\bf Simulated\+Annealing\+Maximizer} (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{int}]{num\+\_\+iterations\+\_\+ = {\ttfamily {\bf Default\+Num\+Iterations}}, }
+\item[{double}]{T\+\_\+init\+\_\+ = {\ttfamily {\bf Default\+\_\+\+T\+\_\+\+Init}}, }
+\item[{double}]{cooling\+\_\+rate\+\_\+ = {\ttfamily {\bf Default\+Cooling\+Rate}}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a8d6f6ece08067e27a78587dddde35fdb}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a8d6f6ece08067e27a78587dddde35fdb}
+
+
+Definition at line 392 of file estimator.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!clear\+\_\+stats@{clear\+\_\+stats}}
+\index{clear\+\_\+stats@{clear\+\_\+stats}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{clear\+\_\+stats()}{clear_stats()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::clear\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_a63d49f8a3c965709ba45dc9e043651f1}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_a63d49f8a3c965709ba45dc9e043651f1}
+Run statistics. 
+
+Reimplemented from \hyperlink{classmappel_1_1estimator_1_1Estimator_aa59f7b50317d4a32fcffe87979e0de63}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Reimplemented in \hyperlink{classmappel_1_1estimator_1_1IterativeMaximizer_a9c41aae7db286746e72e3d0ff8af1d13}{mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$}.
+
+
+
+Definition at line 570 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!compute\+\_\+profile\+\_\+bound@{compute\+\_\+profile\+\_\+bound}}
+\index{compute\+\_\+profile\+\_\+bound@{compute\+\_\+profile\+\_\+bound}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{compute\+\_\+profile\+\_\+bound(const Model\+Data\+T$<$ Model $>$ \&data, Profile\+Bounds\+Data \&est, const Vec\+T \&init\+\_\+step, Idx\+T param\+\_\+idx, Idx\+T which\+\_\+bound)}{compute_profile_bound(const ModelDataT< Model > &data, ProfileBoundsData &est, const VecT &init_step, IdxT param_idx, IdxT which_bound)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf Profile\+Bounds\+Data} \&}]{est, }
+\item[{const {\bf VecT} \&}]{init\+\_\+step, }
+\item[{{\bf IdxT}}]{param\+\_\+idx, }
+\item[{{\bf IdxT}}]{which\+\_\+bound}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a83f877d399368dee1f10cc905d833a85}{}\label{classmappel_1_1estimator_1_1Estimator_a83f877d399368dee1f10cc905d833a85}
+
+
+Reimplemented in \hyperlink{classmappel_1_1estimator_1_1IterativeMaximizer_a8766f0cae208568af9bee6aa05f8e773}{mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$}.
+
+
+
+Definition at line 309 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!compute\+\_\+profile\+\_\+bound\+\_\+debug@{compute\+\_\+profile\+\_\+bound\+\_\+debug}}
+\index{compute\+\_\+profile\+\_\+bound\+\_\+debug@{compute\+\_\+profile\+\_\+bound\+\_\+debug}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{compute\+\_\+profile\+\_\+bound\+\_\+debug(const Model\+Data\+T$<$ Model $>$ \&data, Profile\+Bounds\+Debug\+Data \&est)}{compute_profile_bound_debug(const ModelDataT< Model > &data, ProfileBoundsDebugData &est)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound\+\_\+debug (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf Profile\+Bounds\+Debug\+Data} \&}]{est}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a75c8db8e3151aa5bb2ce3190a613c05c}{}\label{classmappel_1_1estimator_1_1Estimator_a75c8db8e3151aa5bb2ce3190a613c05c}
+
+
+Reimplemented in \hyperlink{classmappel_1_1estimator_1_1IterativeMaximizer_a94b9ba4469f0a32d9f8b7628a252b9e5}{mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$}.
+
+
+
+Definition at line 318 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+debug().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, M\+L\+E\+Data \&mle\+\_\+data, Stencil\+T$<$ Model $>$ \&mle\+\_\+stencil)}{estimate_max(const ModelDataT< Model > &data, const ParamT< Model > &theta_init, MLEData &mle_data, StencilT< Model > &mle_stencil)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf M\+L\+E\+Data} \&}]{mle\+\_\+data, }
+\item[{{\bf StencilT}$<$ Model $>$ \&}]{mle\+\_\+stencil}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a14b53d2ddc3d74a5653f71e4b5a97968}{}\label{classmappel_1_1estimator_1_1Estimator_a14b53d2ddc3d74a5653f71e4b5a97968}
+Maximum likelihood point estimators Estimate for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} struct with the estimated parameter, R\+L\+LH, and observed information. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}Optional\mbox{]} Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 128 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh, and mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, M\+L\+E\+Data \&mle\+\_\+data)}{estimate_max(const ModelDataT< Model > &data, const ParamT< Model > &theta_init, MLEData &mle_data)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf M\+L\+E\+Data} \&}]{mle\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a8e1ea0bf9ef92871618c44a4cb770cb8}{}\label{classmappel_1_1estimator_1_1Estimator_a8e1ea0bf9ef92871618c44a4cb770cb8}
+Maximum likelihood point estimators Estimate for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} struct with the estimated parameter, R\+L\+LH, and observed information. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}Optional\mbox{]} Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 121 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max@{estimate\+\_\+max}}
+\index{estimate\+\_\+max@{estimate\+\_\+max}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max(const Model\+Data\+T$<$ Model $>$ \&data, M\+L\+E\+Data \&mle\+\_\+data)}{estimate_max(const ModelDataT< Model > &data, MLEData &mle_data)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf M\+L\+E\+Data} \&}]{mle\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a8785a4f0e2d96fb4d30a533dc7541342}{}\label{classmappel_1_1estimator_1_1Estimator_a8785a4f0e2d96fb4d30a533dc7541342}
+Maximum likelihood point estimators Estimate for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} struct with the estimated parameter, R\+L\+LH, and observed information. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}Optional\mbox{]} Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 112 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
+\index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+debug(const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, M\+L\+E\+Debug\+Data \&mle\+\_\+data, Stencil\+T$<$ Model $>$ \&mle\+\_\+stencil)}{estimate_max_debug(const ModelDataT< Model > &data, const ParamT< Model > &theta_init, MLEDebugData &mle_data, StencilT< Model > &mle_stencil)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf M\+L\+E\+Debug\+Data} \&}]{mle\+\_\+data, }
+\item[{{\bf StencilT}$<$ Model $>$ \&}]{mle\+\_\+stencil}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}{}\label{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}
+Debug estimation for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct with data including the sequence of evaluated points. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The sequence and sequence\+\_\+rllh parameters of the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct record the entire sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle, which should be first and last respectively.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}}
+\index{estimate\+\_\+max\+\_\+debug@{estimate\+\_\+max\+\_\+debug}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+debug(const Model\+Data\+T$<$ Model $>$ \&data, const Param\+T$<$ Model $>$ \&theta\+\_\+init, M\+L\+E\+Debug\+Data \&mle\+\_\+data)}{estimate_max_debug(const ModelDataT< Model > &data, const ParamT< Model > &theta_init, MLEDebugData &mle_data)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta\+\_\+init, }
+\item[{{\bf M\+L\+E\+Debug\+Data} \&}]{mle\+\_\+data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a2cb11ee4a6b01c38064b03d761840838}{}\label{classmappel_1_1estimator_1_1Estimator_a2cb11ee4a6b01c38064b03d761840838}
+Maximum likelihood point estimators Estimate for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} struct with the estimated parameter, R\+L\+LH, and observed information. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}Optional\mbox{]} Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 157 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::rllh, and mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::theta.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}}
+\index{estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+stack(const Model\+Data\+Stack\+T$<$ Model $>$ \&data\+\_\+stack, M\+L\+E\+Data\+Stack \&mle\+\_\+data\+\_\+stack)}{estimate_max_stack(const ModelDataStackT< Model > &data_stack, MLEDataStack &mle_data_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Data\+StackT}$<$ Model $>$ \&}]{data\+\_\+stack, }
+\item[{{\bf M\+L\+E\+Data\+Stack} \&}]{mle\+\_\+data\+\_\+stack}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aba9d96880ade861e4086b5c2cbde46b1}{}\label{classmappel_1_1estimator_1_1Estimator_aba9d96880ade861e4086b5c2cbde46b1}
+Maximum likelihood point estimators Estimate for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} struct with the estimated parameter, R\+L\+LH, and observed information. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+
+The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}Optional\mbox{]} Initial theta value. \\
+\hline
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} recording the maximum likelihood estimate and relevant data. \\
+\hline
+\mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 183 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}}
+\index{estimate\+\_\+max\+\_\+stack@{estimate\+\_\+max\+\_\+stack}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+max\+\_\+stack(const Model\+Data\+Stack\+T$<$ Model $>$ \&data, const Param\+Vec\+T$<$ Model $>$ \&theta\+\_\+init\+\_\+stack, M\+L\+E\+Data\+Stack \&mle\+\_\+data\+\_\+stack) override}{estimate_max_stack(const ModelDataStackT< Model > &data, const ParamVecT< Model > &theta_init_stack, MLEDataStack &mle_data_stack) override}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Data\+StackT}$<$ Model $>$ \&}]{data\+\_\+stack, }
+\item[{const {\bf Param\+VecT}$<$ Model $>$ \&}]{theta\+\_\+init\+\_\+stack, }
+\item[{{\bf M\+L\+E\+Data\+Stack} \&}]{mle\+\_\+data\+\_\+stack}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_a797b6479fbab450a42099cfdb07e900f}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_a797b6479fbab450a42099cfdb07e900f}
+Estimate for a stack of data and fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{M\+L\+E\+Data\+Stack} struct with the estimated parameter, R\+L\+LH, and observed information for each data in parallel. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em data} & Model data to estimate for \\
+\hline
+\mbox{\tt in}  & {\em theta\+\_\+init} & \mbox{[}optional\mbox{]} Initial theta value for each image. \\
+\hline
+\mbox{\tt out}  & {\em mle} & M\+L\+E\+Stack\+Data records the maximum likelihood estimate, R\+L\+LH, and Observed information for each data \\
+\hline
+\end{DoxyParams}
+
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_af7afea557c4090fcd3fe848df984653e}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 377 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::\+Ndata, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh, mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::rllh, mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta, and mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::theta.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+bounds@{estimate\+\_\+profile\+\_\+bounds}}
+\index{estimate\+\_\+profile\+\_\+bounds@{estimate\+\_\+profile\+\_\+bounds}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+bounds(const Model\+Data\+T$<$ Model $>$ \&data, Profile\+Bounds\+Data \&bounds\+\_\+est)}{estimate_profile_bounds(const ModelDataT< Model > &data, ProfileBoundsData &bounds_est)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf Profile\+Bounds\+Data} \&}]{bounds\+\_\+est}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a9efcc3adb2fd64ab75c8954ab29687fc}{}\label{classmappel_1_1estimator_1_1Estimator_a9efcc3adb2fd64ab75c8954ab29687fc}
+Profile likelihood bounds computations with VM algorithm 
+
+Definition at line 220 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::estimated\+\_\+idxs, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::initialize\+\_\+arrays(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::mle, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::\+Nparams\+\_\+est, mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb\+\_\+rllh, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+ub, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+ub, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::target\+\_\+rllh\+\_\+delta, and mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta.
+
+
+
+Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+bounds\+\_\+debug@{estimate\+\_\+profile\+\_\+bounds\+\_\+debug}}
+\index{estimate\+\_\+profile\+\_\+bounds\+\_\+debug@{estimate\+\_\+profile\+\_\+bounds\+\_\+debug}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+bounds\+\_\+debug(const Model\+Data\+T$<$ Model $>$ \&data, Profile\+Bounds\+Debug\+Data \&bounds\+\_\+est)}{estimate_profile_bounds_debug(const ModelDataT< Model > &data, ProfileBoundsDebugData &bounds_est)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+debug (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf Profile\+Bounds\+Debug\+Data} \&}]{bounds\+\_\+est}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a67b7910edb97973def5636ed01c3be5f}{}\label{classmappel_1_1estimator_1_1Estimator_a67b7910edb97973def5636ed01c3be5f}
+Profile likelihood bounds computations with VM algorithm 
+
+Definition at line 258 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound\+\_\+debug(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data\+::estimated\+\_\+idx, mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data\+::mle, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data\+::target\+\_\+rllh\+\_\+delta, and mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta.
+
+
+
+Referenced by mappel\+::methods\+::debug\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+debug().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+bounds\+\_\+parallel@{estimate\+\_\+profile\+\_\+bounds\+\_\+parallel}}
+\index{estimate\+\_\+profile\+\_\+bounds\+\_\+parallel@{estimate\+\_\+profile\+\_\+bounds\+\_\+parallel}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(const Model\+Data\+T$<$ Model $>$ \&data, Profile\+Bounds\+Data \&bounds\+\_\+est) override}{estimate_profile_bounds_parallel(const ModelDataT< Model > &data, ProfileBoundsData &bounds_est) override}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{{\bf Profile\+Bounds\+Data} \&}]{bounds\+\_\+est}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_a518454a427336c48a83d145b917ec3f7}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_a518454a427336c48a83d145b917ec3f7}
+Profile likelihood bounds computations with VM algorithm 
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_a6d68d18f228f610b02bbffbe4c7441e6}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 464 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::estimated\+\_\+idxs, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::initialize\+\_\+arrays(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::mle, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::\+Nparams\+\_\+est, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::target\+\_\+rllh\+\_\+delta, and mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+bounds\+\_\+stack@{estimate\+\_\+profile\+\_\+bounds\+\_\+stack}}
+\index{estimate\+\_\+profile\+\_\+bounds\+\_\+stack@{estimate\+\_\+profile\+\_\+bounds\+\_\+stack}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+bounds\+\_\+stack(const Model\+Data\+Stack\+T$<$ Model $>$ \&data, Profile\+Bounds\+Data\+Stack \&bounds\+\_\+est\+\_\+stack) override}{estimate_profile_bounds_stack(const ModelDataStackT< Model > &data, ProfileBoundsDataStack &bounds_est_stack) override}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+Data\+StackT}$<$ Model $>$ \&}]{data\+\_\+stack, }
+\item[{{\bf Profile\+Bounds\+Data\+Stack} \&}]{bounds\+\_\+est}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_a3701a1dcbe15b6b8c35c15c929d7429a}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_a3701a1dcbe15b6b8c35c15c929d7429a}
+Profile likelihood bounds computations with VM algorithm 
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_a9c779bf059a6e93362c8aff55d225646}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 500 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::estimated\+\_\+idxs, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::estimated\+\_\+idxs, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::initialize\+\_\+arrays(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::mle, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::mle, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::\+Ndata, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::\+Nparams\+\_\+est, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::obsI, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+points\+\_\+lb, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+lb\+\_\+rllh, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+points\+\_\+lb\+\_\+rllh, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+ub, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+points\+\_\+ub, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+points\+\_\+ub\+\_\+rllh, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+points\+\_\+ub\+\_\+rllh, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::profile\+\_\+ub, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::profile\+\_\+ub, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh, mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::rllh, mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step(), mappel\+::estimator\+::\+Profile\+Bounds\+Data\+::target\+\_\+rllh\+\_\+delta, mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::target\+\_\+rllh\+\_\+delta, mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta, and mappel\+::estimator\+::\+M\+L\+E\+Data\+Stack\+::theta.
+
+
+
+Referenced by mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+stack().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+max@{estimate\+\_\+profile\+\_\+max}}
+\index{estimate\+\_\+profile\+\_\+max@{estimate\+\_\+profile\+\_\+max}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+max(const Model\+Data\+T$<$ Model $>$ \&data, const Idx\+Vec\+T \&fixed\+\_\+idxs, const Param\+T$<$ Model $>$ \&fixed\+\_\+theta\+\_\+init, Stencil\+T$<$ Model $>$ \&theta\+\_\+max)}{estimate_profile_max(const ModelDataT< Model > &data, const IdxVecT &fixed_idxs, const ParamT< Model > &fixed_theta_init, StencilT< Model > &theta_max)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf Idx\+VecT} \&}]{fixed\+\_\+idxs, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{fixed\+\_\+theta\+\_\+init, }
+\item[{{\bf StencilT}$<$ Model $>$ \&}]{theta\+\_\+max}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aaadd90fa484e5becd980d2c3e268c97b}{}\label{classmappel_1_1estimator_1_1Estimator_aaadd90fa484e5becd980d2c3e268c97b}
+Profile likelihood estimation methods 
+
+Definition at line 190 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::estimator\+::\+Error, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime(), and mappel\+::methods\+::objective\+::rllh().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!estimate\+\_\+profile\+\_\+max@{estimate\+\_\+profile\+\_\+max}}
+\index{estimate\+\_\+profile\+\_\+max@{estimate\+\_\+profile\+\_\+max}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{estimate\+\_\+profile\+\_\+max(const Model\+Data\+T$<$ Model $>$ \&data, const Param\+Vec\+T$<$ Model $>$ \&theta\+\_\+init, Profile\+Likelihood\+Data \&profile) override}{estimate_profile_max(const ModelDataT< Model > &data, const ParamVecT< Model > &theta_init, ProfileLikelihoodData &profile) override}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max (
+\begin{DoxyParamCaption}
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data, }
+\item[{const {\bf Param\+VecT}$<$ Model $>$ \&}]{fixed\+\_\+theta\+\_\+init, }
+\item[{{\bf Profile\+Likelihood\+Data} \&}]{profile}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_a16ce4964abd0e18da2f9ec7e8bd5b4ee}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_a16ce4964abd0e18da2f9ec7e8bd5b4ee}
+Profile likelihood estimation methods 
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_aebcf83a1264fa41f6608a77fa239a60c}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 418 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::estimator\+::\+Error, mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::fixed\+\_\+idxs, mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::fixed\+\_\+values, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::\+Nfixed, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::num\+\_\+threads, mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::\+Nvalues, mappel\+::print\+\_\+text\+\_\+image(), mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::profile\+\_\+likelihood, mappel\+::estimator\+::\+Profile\+Likelihood\+Data\+::profile\+\_\+parameters, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}}
+\index{get\+\_\+debug\+\_\+stats@{get\+\_\+debug\+\_\+stats}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{get\+\_\+debug\+\_\+stats()}{get_debug_stats()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StatsT} {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::get\+\_\+debug\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_ad359aa57dc52450d6999626fc6ddc886}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_ad359aa57dc52450d6999626fc6ddc886}
+Run statistics. 
+
+Reimplemented from \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_a280e0d733ce96a990878c497d5b971f5}{mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 1764 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!get\+\_\+exit\+\_\+counts@{get\+\_\+exit\+\_\+counts}}
+\index{get\+\_\+exit\+\_\+counts@{get\+\_\+exit\+\_\+counts}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{get\+\_\+exit\+\_\+counts() const }{get_exit_counts() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::get\+\_\+exit\+\_\+counts (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_adde56d397f57f6f4f2d4f10fc59f7a08}{}\label{classmappel_1_1estimator_1_1Estimator_adde56d397f57f6f4f2d4f10fc59f7a08}
+Run statistics. 
+
+Definition at line 274 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!get\+\_\+model@{get\+\_\+model}}
+\index{get\+\_\+model@{get\+\_\+model}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{get\+\_\+model()}{get_model()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const Model \& {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::get\+\_\+model (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a076f485dfe0a925e01520c173f6fffe4}{}\label{classmappel_1_1estimator_1_1Estimator_a076f485dfe0a925e01520c173f6fffe4}
+
+
+Definition at line 108 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!get\+\_\+stats@{get\+\_\+stats}}
+\index{get\+\_\+stats@{get\+\_\+stats}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{get\+\_\+stats()}{get_stats()}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf StatsT} {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::get\+\_\+stats (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a917b38007cc5b345ec687c95de73d9c0}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a917b38007cc5b345ec687c95de73d9c0}
+Run statistics. 
+
+Reimplemented from \hyperlink{classmappel_1_1estimator_1_1ThreadedEstimator_ac7f85c8561541d03477580dca165df7d}{mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 1744 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+der\+\_\+evals, mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+fun\+\_\+evals, and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::total\+\_\+iterations.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!name@{name}}
+\index{name@{name}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{name() const }{name() const }}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::string {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_aa0a443f0e547025c9f220d04d444f7a1}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_aa0a443f0e547025c9f220d04d444f7a1}
+
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_a9f156286a85938814b9eb0261c7e46ce}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 401 of file estimator.\+h.
+
+
+
+References mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}}
+\index{record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{record\+\_\+exit\+\_\+code(\+Exit\+Code code) override}{record_exit_code(ExitCode code) override}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::record\+\_\+exit\+\_\+code (
+\begin{DoxyParamCaption}
+\item[{{\bf Exit\+Code}}]{code}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_ae5fe99504a34bfd854915a2156ed462c}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_ae5fe99504a34bfd854915a2156ed462c}
+
+
+Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_a2fefff348f9c25d7ae2cce9c12b7ec4e}{mappel\+::estimator\+::\+Estimator$<$ Model $>$}.
+
+
+
+Definition at line 578 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::exit\+\_\+counts, mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::model, mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::mtx, mappel\+::methods\+::observed\+\_\+information(), mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh, mappel\+::methods\+::objective\+::rllh(), mappel\+::estimator\+::\+Success, and mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test\+\_\+grad\+\_\+ratio(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test\+\_\+step\+\_\+size(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!record\+\_\+walltime@{record\+\_\+walltime}}
+\index{record\+\_\+walltime@{record\+\_\+walltime}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{record\+\_\+walltime(\+Clock\+T\+::time\+\_\+point start\+\_\+walltime, int num\+\_\+estimations)}{record_walltime(ClockT::time_point start_walltime, int num_estimations)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::record\+\_\+walltime (
+\begin{DoxyParamCaption}
+\item[{Clock\+T\+::time\+\_\+point}]{start\+\_\+walltime, }
+\item[{int}]{num\+\_\+estimations}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a864a87d5dc2937e1d67e6bcffb0b5234}{}\label{classmappel_1_1estimator_1_1Estimator_a864a87d5dc2937e1d67e6bcffb0b5234}
+
+
+Definition at line 360 of file estimator\+\_\+impl.\+h.
+
+
+
+References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::num\+\_\+estimations, and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::total\+\_\+walltime.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+debug(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max().
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!Default\+\_\+\+T\+\_\+\+Init@{Default\+\_\+\+T\+\_\+\+Init}}
+\index{Default\+\_\+\+T\+\_\+\+Init@{Default\+\_\+\+T\+\_\+\+Init}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{Default\+\_\+\+T\+\_\+\+Init}{Default_T_Init}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const double {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::Default\+\_\+\+T\+\_\+\+Init = 100.\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_af70f6d99d234c42df5525217be31e688}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_af70f6d99d234c42df5525217be31e688}
+
+
+Default SA initial temperature. 
+
+
+
+Definition at line 389 of file estimator.\+h.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!Default\+Cooling\+Rate@{Default\+Cooling\+Rate}}
+\index{Default\+Cooling\+Rate@{Default\+Cooling\+Rate}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{Default\+Cooling\+Rate}{DefaultCoolingRate}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const double {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::Default\+Cooling\+Rate = 1.\+02\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a265b898081999002c7567e2237d26c25}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a265b898081999002c7567e2237d26c25}
+
+
+Default SA cooling rate. 
+
+
+
+Definition at line 390 of file estimator.\+h.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!Default\+Num\+Iterations@{Default\+Num\+Iterations}}
+\index{Default\+Num\+Iterations@{Default\+Num\+Iterations}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{Default\+Num\+Iterations}{DefaultNumIterations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const int {\bf mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}$<$ Model $>$\+::Default\+Num\+Iterations = 500\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a4d1975ae51c9cc7d38b6be65ccc49f2c}{}\label{classmappel_1_1estimator_1_1SimulatedAnnealingMaximizer_a4d1975ae51c9cc7d38b6be65ccc49f2c}
+
+
+Default number of SA iterations. 
+
+
+
+Definition at line 388 of file estimator.\+h.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!exit\+\_\+counts@{exit\+\_\+counts}}
+\index{exit\+\_\+counts@{exit\+\_\+counts}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{exit\+\_\+counts}{exit_counts}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::exit\+\_\+counts\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aa946d9789a1299d684f83a822a10caa7}{}\label{classmappel_1_1estimator_1_1Estimator_aa946d9789a1299d684f83a822a10caa7}
+
+
+Definition at line 299 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!max\+\_\+threads@{max\+\_\+threads}}
+\index{max\+\_\+threads@{max\+\_\+threads}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{max\+\_\+threads}{max_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::max\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_ab4c55ecff71dff47c0584ce20fe7f077}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_ab4c55ecff71dff47c0584ce20fe7f077}
+
+
+Definition at line 324 of file estimator.\+h.
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!model@{model}}
+\index{model@{model}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{model}{model}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const Model\& {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::model\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}{}\label{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}
+
+
+Definition at line 294 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+estimate(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::get\+\_\+model(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!mtx@{mtx}}
+\index{mtx@{mtx}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{mtx}{mtx}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::mutex {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::mtx\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_af78695378590ff8e822dffe2b1b3f242}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_af78695378590ff8e822dffe2b1b3f242}
+
+
+Definition at line 326 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::record\+\_\+run\+\_\+statistics().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!num\+\_\+estimations@{num\+\_\+estimations}}
+\index{num\+\_\+estimations@{num\+\_\+estimations}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{num\+\_\+estimations}{num_estimations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::num\+\_\+estimations = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}{}\label{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}
+
+
+Definition at line 297 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!num\+\_\+threads@{num\+\_\+threads}}
+\index{num\+\_\+threads@{num\+\_\+threads}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{num\+\_\+threads}{num_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::num\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_af746a83929a7217b4084d0e10f850bc3}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_af746a83929a7217b4084d0e10f850bc3}
+
+
+Definition at line 325 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats().
+
+\index{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}!total\+\_\+walltime@{total\+\_\+walltime}}
+\index{total\+\_\+walltime@{total\+\_\+walltime}!mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer@{mappel\+::estimator\+::\+Simulated\+Annealing\+Maximizer}}
+\paragraph[{\texorpdfstring{total\+\_\+walltime}{total_walltime}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::total\+\_\+walltime = 0.\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a98ad459e850aeb2c42c10fd06c3b9fbc}{}\label{classmappel_1_1estimator_1_1Estimator_a98ad459e850aeb2c42c10fd06c3b9fbc}
+
+
+Definition at line 298 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stats(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::get\+\_\+stats(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::get\+\_\+stats(), and mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::record\+\_\+walltime().
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{estimator_8h}{estimator.\+h}\item 
+\hyperlink{estimator__impl_8h}{estimator\+\_\+impl.\+h}\end{DoxyCompactItemize}

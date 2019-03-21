@@ -1,0 +1,274 @@
+\hypertarget{namespacemappel_1_1estimator_1_1subroutine}{}\subsection{mappel\+:\+:estimator\+:\+:subroutine Namespace Reference}
+\label{namespacemappel_1_1estimator_1_1subroutine}\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a002586a416b03776ab8d2d3e846370c7}{solve\+\_\+profile\+\_\+initial\+\_\+step} (const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&obsI, \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} fixed\+\_\+idx, double llh\+\_\+delta)
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_abc13a3e704d5a6b0f061b0b16c2d7f2c}{bound\+\_\+step} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&step, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&theta, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&lbound, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&ubound)
+\item 
+void \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a1673ca9f6b96264e3919797433c36c9e}{compute\+\_\+bound\+\_\+scaling\+\_\+vec} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&theta, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&lbound, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&ubound, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&v, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&Jv)
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a182a266dac3ad7cd931263861b36d00e}{compute\+\_\+\+D\+\_\+scale} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&old\+Dscale, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&grad2)
+\item 
+void \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a12cda60151ce1285a6ae8c82b61d484b}{compute\+\_\+scaled\+\_\+problem} (const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&H, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&Dinv, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&Jv, \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&Hhat, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&ghat)
+\item 
+double \hyperlink{namespacemappel_1_1estimator_1_1subroutine_adc2b09806f8f22cf797e00840d310734}{compute\+\_\+initial\+\_\+trust\+\_\+radius} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&ghat)
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a44afae701c4ebfa4ecc6fbb8e43e117c}{compute\+\_\+cauchy\+\_\+point} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&H, double delta)
+\item 
+double \hyperlink{namespacemappel_1_1estimator_1_1subroutine_aad294d44d135403caf44869b9c72c529}{compute\+\_\+quadratic\+\_\+model\+\_\+value} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&s, const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&H)
+\begin{DoxyCompactList}\small\item\em Quadratic model value at given step Compute a quadratic model. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a253df60d2e10693221da3dad4f279165}{solve\+\_\+\+T\+R\+\_\+subproblem} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&H, double delta)
+\begin{DoxyCompactList}\small\item\em Exact solver the TR sub-\/problem even for non-\/positive definite H. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{namespacemappel_1_1estimator_1_1subroutine_aeec8d62491c9680e306592dde26d9189}{solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&g, const \hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \&H, double delta, double lambda\+\_\+lb, double lambda\+\_\+ub)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Estimation subroutines common to several estimators and independent of the Model
+
+Common subroutines shared between estimators.
+
+These methods are model agnostic. 
+
+\subsubsection{Function Documentation}
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!bound\+\_\+step@{bound\+\_\+step}}
+\index{bound\+\_\+step@{bound\+\_\+step}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{bound\+\_\+step(const Vec\+T \&step, const Vec\+T \&theta, const Vec\+T \&lbound, const Vec\+T \&ubound)}{bound_step(const VecT &step, const VecT &theta, const VecT &lbound, const VecT &ubound)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::bound\+\_\+step (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{step, }
+\item[{const {\bf VecT} \&}]{theta, }
+\item[{const {\bf VecT} \&}]{lbound, }
+\item[{const {\bf VecT} \&}]{ubound}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_abc13a3e704d5a6b0f061b0b16c2d7f2c}{}\label{namespacemappel_1_1estimator_1_1subroutine_abc13a3e704d5a6b0f061b0b16c2d7f2c}
+Return a new step that is guaranteed to keep theta in the interior of the feasible region. Uses a relative backtracking technique to step away from the boundary into the interior. 
+\begin{DoxyParams}{Parameters}
+{\em step} & proposed step \\
+\hline
+{\em theta} & current theta \\
+\hline
+{\em lbound} & lower bounds \\
+\hline
+{\em ubound} & upper bounds \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bounded step 
+\end{DoxyReturn}
+
+
+Definition at line 82 of file estimator.\+cpp.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+bound\+\_\+scaling\+\_\+vec@{compute\+\_\+bound\+\_\+scaling\+\_\+vec}}
+\index{compute\+\_\+bound\+\_\+scaling\+\_\+vec@{compute\+\_\+bound\+\_\+scaling\+\_\+vec}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+bound\+\_\+scaling\+\_\+vec(const Vec\+T \&theta, const Vec\+T \&g, const Vec\+T \&lbound, const Vec\+T \&ubound, Vec\+T \&v, Vec\+T \&\+Jv)}{compute_bound_scaling_vec(const VecT &theta, const VecT &g, const VecT &lbound, const VecT &ubound, VecT &v, VecT &Jv)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::estimator\+::subroutine\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{theta, }
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf VecT} \&}]{lbound, }
+\item[{const {\bf VecT} \&}]{ubound, }
+\item[{{\bf VecT} \&}]{v, }
+\item[{{\bf VecT} \&}]{Jv}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a1673ca9f6b96264e3919797433c36c9e}{}\label{namespacemappel_1_1estimator_1_1subroutine_a1673ca9f6b96264e3919797433c36c9e}
+Bounds scaling vector for affine scaling of bounds constrained optimization problems. This v is from Coleman\&Li (1996). It represents a scaling factor for bound constrained problems. For unconstrained problems v = sgn(grad); 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em theta} & current theta \\
+\hline
+\mbox{\tt in}  & {\em g} & gradient \\
+\hline
+\mbox{\tt in}  & {\em lbound} & lower bound \\
+\hline
+\mbox{\tt in}  & {\em ubound} & upper bound \\
+\hline
+\mbox{\tt out}  & {\em v} & Scaling vector \\
+\hline
+\mbox{\tt out}  & {\em Jv} & Jacobian \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 132 of file estimator.\+cpp.
+
+
+
+References mappel\+::sgn().
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+cauchy\+\_\+point@{compute\+\_\+cauchy\+\_\+point}}
+\index{compute\+\_\+cauchy\+\_\+point@{compute\+\_\+cauchy\+\_\+point}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+cauchy\+\_\+point(const Vec\+T \&g, const Mat\+T \&\+H, double delta)}{compute_cauchy_point(const VecT &g, const MatT &H, double delta)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::compute\+\_\+cauchy\+\_\+point (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf MatT} \&}]{H, }
+\item[{double}]{delta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a44afae701c4ebfa4ecc6fbb8e43e117c}{}\label{namespacemappel_1_1estimator_1_1subroutine_a44afae701c4ebfa4ecc6fbb8e43e117c}
+
+
+Definition at line 175 of file estimator.\+cpp.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+\+D\+\_\+scale@{compute\+\_\+\+D\+\_\+scale}}
+\index{compute\+\_\+\+D\+\_\+scale@{compute\+\_\+\+D\+\_\+scale}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+\+D\+\_\+scale(const Vec\+T \&old\+Dscale, const Vec\+T \&grad2)}{compute_D_scale(const VecT &oldDscale, const VecT &grad2)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::compute\+\_\+\+D\+\_\+scale (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{old\+Dscale, }
+\item[{const {\bf VecT} \&}]{grad2}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a182a266dac3ad7cd931263861b36d00e}{}\label{namespacemappel_1_1estimator_1_1subroutine_a182a266dac3ad7cd931263861b36d00e}
+Compute an affine scaling diagonal matrix to scale problem away from boundaries. This works for either minimization or maximization. sign(grad2) is not important 
+\begin{DoxyParams}{Parameters}
+{\em old\+Dscale} & Last D scaling matrix \\
+\hline
+{\em grad2} & Diagonal of hessian matrix \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Diagonal scaling matrix as a vector. 
+\end{DoxyReturn}
+
+
+Definition at line 159 of file estimator.\+cpp.
+
+
+
+References mappel\+::clamp().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+initial\+\_\+trust\+\_\+radius@{compute\+\_\+initial\+\_\+trust\+\_\+radius}}
+\index{compute\+\_\+initial\+\_\+trust\+\_\+radius@{compute\+\_\+initial\+\_\+trust\+\_\+radius}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+initial\+\_\+trust\+\_\+radius(const Vec\+T \&ghat)}{compute_initial_trust_radius(const VecT &ghat)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::estimator\+::subroutine\+::compute\+\_\+initial\+\_\+trust\+\_\+radius (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{ghat}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_adc2b09806f8f22cf797e00840d310734}{}\label{namespacemappel_1_1estimator_1_1subroutine_adc2b09806f8f22cf797e00840d310734}
+
+
+Definition at line 170 of file estimator.\+cpp.
+
+
+
+References mappel\+::clamp().
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+quadratic\+\_\+model\+\_\+value@{compute\+\_\+quadratic\+\_\+model\+\_\+value}}
+\index{compute\+\_\+quadratic\+\_\+model\+\_\+value@{compute\+\_\+quadratic\+\_\+model\+\_\+value}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+quadratic\+\_\+model\+\_\+value(const Vec\+T \&s, const Vec\+T \&g, const Mat\+T \&\+H)}{compute_quadratic_model_value(const VecT &s, const VecT &g, const MatT &H)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::estimator\+::subroutine\+::compute\+\_\+quadratic\+\_\+model\+\_\+value (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{s, }
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf MatT} \&}]{H}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_aad294d44d135403caf44869b9c72c529}{}\label{namespacemappel_1_1estimator_1_1subroutine_aad294d44d135403caf44869b9c72c529}
+
+
+Quadratic model value at given step Compute a quadratic model. 
+
+
+
+Definition at line 183 of file estimator.\+cpp.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!compute\+\_\+scaled\+\_\+problem@{compute\+\_\+scaled\+\_\+problem}}
+\index{compute\+\_\+scaled\+\_\+problem@{compute\+\_\+scaled\+\_\+problem}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{compute\+\_\+scaled\+\_\+problem(const Mat\+T \&\+H, const Vec\+T \&g, const Vec\+T \&\+Dinv, const Vec\+T \&\+Jv, Mat\+T \&\+Hhat, Vec\+T \&ghat)}{compute_scaled_problem(const MatT &H, const VecT &g, const VecT &Dinv, const VecT &Jv, MatT &Hhat, VecT &ghat)}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::estimator\+::subroutine\+::compute\+\_\+scaled\+\_\+problem (
+\begin{DoxyParamCaption}
+\item[{const {\bf MatT} \&}]{H, }
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf VecT} \&}]{Dinv, }
+\item[{const {\bf VecT} \&}]{Jv, }
+\item[{{\bf MatT} \&}]{Hhat, }
+\item[{{\bf VecT} \&}]{ghat}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a12cda60151ce1285a6ae8c82b61d484b}{}\label{namespacemappel_1_1estimator_1_1subroutine_a12cda60151ce1285a6ae8c82b61d484b}
+
+
+Definition at line 164 of file estimator.\+cpp.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!solve\+\_\+profile\+\_\+initial\+\_\+step@{solve\+\_\+profile\+\_\+initial\+\_\+step}}
+\index{solve\+\_\+profile\+\_\+initial\+\_\+step@{solve\+\_\+profile\+\_\+initial\+\_\+step}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{solve\+\_\+profile\+\_\+initial\+\_\+step(const Mat\+T \&obs\+I, Idx\+T fixed\+\_\+idx, double llh\+\_\+delta)}{solve_profile_initial_step(const MatT &obsI, IdxT fixed_idx, double llh_delta)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step (
+\begin{DoxyParamCaption}
+\item[{const {\bf MatT} \&}]{obsI, }
+\item[{{\bf IdxT}}]{fixed\+\_\+idx, }
+\item[{double}]{llh\+\_\+delta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a002586a416b03776ab8d2d3e846370c7}{}\label{namespacemappel_1_1estimator_1_1subroutine_a002586a416b03776ab8d2d3e846370c7}
+Find initial step lengths in profile bounds estimation VM algorithm 
+
+Definition at line 52 of file estimator.\+cpp.
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton@{solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton}}
+\index{solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton@{solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(const Vec\+T \&g, const Mat\+T \&\+H, double delta, double lambda\+\_\+lb, double lambda\+\_\+ub)}{solve_restricted_step_length_newton(const VecT &g, const MatT &H, double delta, double lambda_lb, double lambda_ub)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf MatT} \&}]{H, }
+\item[{double}]{delta, }
+\item[{double}]{lambda\+\_\+lb, }
+\item[{double}]{lambda\+\_\+ub}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_aeec8d62491c9680e306592dde26d9189}{}\label{namespacemappel_1_1estimator_1_1subroutine_aeec8d62491c9680e306592dde26d9189}
+
+
+Definition at line 256 of file estimator.\+cpp.
+
+
+
+References mappel\+::cholesky(), mappel\+::cholesky\+\_\+convert\+\_\+lower\+\_\+triangular(), mappel\+::cholesky\+\_\+solve(), and mappel\+::clamp().
+
+
+
+Referenced by solve\+\_\+\+T\+R\+\_\+subproblem().
+
+\index{mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}!solve\+\_\+\+T\+R\+\_\+subproblem@{solve\+\_\+\+T\+R\+\_\+subproblem}}
+\index{solve\+\_\+\+T\+R\+\_\+subproblem@{solve\+\_\+\+T\+R\+\_\+subproblem}!mappel\+::estimator\+::subroutine@{mappel\+::estimator\+::subroutine}}
+\paragraph[{\texorpdfstring{solve\+\_\+\+T\+R\+\_\+subproblem(const Vec\+T \&g, const Mat\+T \&\+H, double delta)}{solve_TR_subproblem(const VecT &g, const MatT &H, double delta)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::subroutine\+::solve\+\_\+\+T\+R\+\_\+subproblem (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{g, }
+\item[{const {\bf MatT} \&}]{H, }
+\item[{double}]{delta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1estimator_1_1subroutine_a253df60d2e10693221da3dad4f279165}{}\label{namespacemappel_1_1estimator_1_1subroutine_a253df60d2e10693221da3dad4f279165}
+
+
+Exact solver the TR sub-\/problem even for non-\/positive definite H. 
+
+This method is a hybrid technique mixing ideas from Geyer (2013) and the \char`\"{}trust\char`\"{} R-\/package Nocetal and Wright (2000) More and Sorensen (1981) 
+
+Definition at line 189 of file estimator.\+cpp.
+
+
+
+References mappel\+::cholesky(), mappel\+::cholesky\+\_\+solve(), and solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+

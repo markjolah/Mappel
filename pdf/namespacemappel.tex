@@ -3,6 +3,8 @@
 \subsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
+ \hyperlink{namespacemappel_1_1estimator}{estimator}
+\item 
  \hyperlink{namespacemappel_1_1mcmc}{mcmc}
 \item 
  \hyperlink{namespacemappel_1_1methods}{methods}
@@ -14,12 +16,6 @@ struct \hyperlink{structmappel_1_1ArrayShapeError}{Array\+Shape\+Error}
 \begin{DoxyCompactList}\small\item\em Array is not of the right dimensionality. \end{DoxyCompactList}\item 
 struct \hyperlink{structmappel_1_1ArraySizeError}{Array\+Size\+Error}
 \begin{DoxyCompactList}\small\item\em Array is not of the right size. \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1CGaussHeuristicEstimator}{C\+Gauss\+Heuristic\+Estimator}
-\item 
-class \hyperlink{classmappel_1_1CGaussMLE}{C\+Gauss\+M\+LE}
-\item 
-class \hyperlink{classmappel_1_1Estimator}{Estimator}
-\item 
 class \hyperlink{classmappel_1_1Gauss1DMAP}{Gauss1\+D\+M\+AP}
 \begin{DoxyCompactList}\small\item\em A 1D Gaussian with fixed P\+SF under an Poisson Read Noise assumption and M\+AP Objective. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1Gauss1DMLE}{Gauss1\+D\+M\+LE}
@@ -48,14 +44,10 @@ class \hyperlink{classmappel_1_1Gauss2DsxyMAP}{Gauss2\+Dsxy\+M\+AP}
 \begin{DoxyCompactList}\small\item\em A 1D Gaussian with fixed P\+SF under an Poisson Read Noise assumption and M\+AP Objective. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1Gauss2DsxyModel}{Gauss2\+Dsxy\+Model}
 \begin{DoxyCompactList}\small\item\em A base class for 2D Gaussian P\+SF with axis-\/aligned gaussian with free parameters for both sigma\+\_\+x and sigma\+\_\+y. Gaussian sigma parameters sigma\+\_\+x and sigma\+\_\+y are measured in units of pixels. The model has 6 parameters, \mbox{[}x,y,I,bg,sigma\+\_\+x,sigma\+\_\+y\mbox{]}. \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1HeuristicEstimator}{Heuristic\+Estimator}
-\item 
 class \hyperlink{classmappel_1_1ImageFormat1DBase}{Image\+Format1\+D\+Base}
 \begin{DoxyCompactList}\small\item\em A virtual base class for 2D image localization objectives. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1ImageFormat2DBase}{Image\+Format2\+D\+Base}
 \begin{DoxyCompactList}\small\item\em A virtual base class for 2D image localization objectives. \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1IterativeMaximizer}{Iterative\+Maximizer}
-\item 
 struct \hyperlink{structmappel_1_1LogicalError}{Logical\+Error}
 \begin{DoxyCompactList}\small\item\em Failure of code or algorithm logic. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1MAPEstimator}{M\+A\+P\+Estimator}
@@ -74,10 +66,6 @@ class \hyperlink{classmappel_1_1MLEstimator}{M\+L\+Estimator}
 \begin{DoxyCompactList}\small\item\em A Mixin class to configure a for M\+LE estimation (null prior). \end{DoxyCompactList}\item 
 struct \hyperlink{structmappel_1_1ModelBoundsError}{Model\+Bounds\+Error}
 \begin{DoxyCompactList}\small\item\em Access outside the model bounds is attempted. \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1NewtonDiagonalMaximizer}{Newton\+Diagonal\+Maximizer}
-\item 
-class \hyperlink{classmappel_1_1NewtonMaximizer}{Newton\+Maximizer}
-\item 
 struct \hyperlink{structmappel_1_1NotImplementedError}{Not\+Implemented\+Error}
 \begin{DoxyCompactList}\small\item\em Feature not yet implemented. \end{DoxyCompactList}\item 
 struct \hyperlink{structmappel_1_1NumericalError}{Numerical\+Error}
@@ -87,19 +75,9 @@ struct \hyperlink{structmappel_1_1ParameterValueError}{Parameter\+Value\+Error}
 class \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model}
 \begin{DoxyCompactList}\small\item\em A virtual Base type for point emitter localization models. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1PoissonNoise1DObjective}{Poisson\+Noise1\+D\+Objective}
-\begin{DoxyCompactList}\small\item\em A base class for 1D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em A base class for 1D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of photons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\item 
 class \hyperlink{classmappel_1_1PoissonNoise2DObjective}{Poisson\+Noise2\+D\+Objective}
-\begin{DoxyCompactList}\small\item\em A base class for 2D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1PriorMAP1DObjective}{Prior\+M\+A\+P1\+D\+Objective}
-\begin{DoxyCompactList}\small\item\em A Mixin class to configure a \hyperlink{classmappel_1_1Gauss1DModel}{Gauss1\+D\+Model} for M\+AP estimation (default 1D prior). \end{DoxyCompactList}\item 
-class \hyperlink{classmappel_1_1QuasiNewtonMaximizer}{Quasi\+Newton\+Maximizer}
-\item 
-class \hyperlink{classmappel_1_1SimulatedAnnealingMaximizer}{Simulated\+Annealing\+Maximizer}
-\item 
-class \hyperlink{classmappel_1_1ThreadedEstimator}{Threaded\+Estimator}
-\item 
-class \hyperlink{classmappel_1_1TrustRegionMaximizer}{Trust\+Region\+Maximizer}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em A base class for 2D objectives with Poisson read noise. This objective function and its subclasses are for models where the only source of noise is the \char`\"{}shot\char`\"{} or \char`\"{}counting\char`\"{} or Poisson noise inherent to a discrete capture of photons given a certain mean rate of incidence on each pixel. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
@@ -172,6 +150,10 @@ ostream \& \hyperlink{namespacemappel_ab2dadb64b79f80c01086ce2c3d42e642}{print\+
 \item 
 {\footnotesize template$<$$>$ }\\std\+::ostream \& \hyperlink{namespacemappel_ad8730f7a4e2aadfd329c74692ea62504}{print\+\_\+image} (std\+::ostream \&out, const arma\+::mat \&im)
 \item 
+{\footnotesize template$<$$>$ }\\std\+::ostream \& \hyperlink{namespacemappel_ab76cda908032f732529b5a5ef9af6fe2}{print\+\_\+text\+\_\+image} (std\+::ostream \&out, const arma\+::vec \&im)
+\item 
+{\footnotesize template$<$$>$ }\\std\+::ostream \& \hyperlink{namespacemappel_aeb4866d8a7ed74d646c235f4c2bcb2ce}{print\+\_\+text\+\_\+image} (std\+::ostream \&out, const arma\+::mat \&im)
+\item 
 {\footnotesize template$<$$>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a5c439f824ab91a6e426685d74ee90a33}{print\+\_\+image} (std\+::ostream \&out, const arma\+::cube \&im)
 \item 
 std\+::ostream \& \hyperlink{namespacemappel_ade30cb844a141741b110c52cdc433e69}{operator$<$$<$} (std\+::ostream \&out, const \hyperlink{classmappel_1_1Gauss1DModel_1_1Stencil}{Gauss1\+D\+Model\+::\+Stencil} \&s)
@@ -208,9 +190,15 @@ bool \hyperlink{namespacemappel_a5b0ad6d46ef0173ae9e44a0ff9af7f0b}{modified\+\_\
 \item 
 arma\+::vec \hyperlink{namespacemappel_a83b18a0a288ca81106d44e26d830d6d5}{cholesky\+\_\+solve} (const arma\+::mat \&C, const arma\+::vec \&b)
 \item 
+double \hyperlink{namespacemappel_ab7fcefff8e308b8770181d592c390e09}{norm\+\_\+sq} (const \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&v)
+\item 
 double \hyperlink{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}{normal\+\_\+quantile\+\_\+twosided} (double confidence)
 \item 
 double \hyperlink{namespacemappel_a7cf2f920819c8899c4f01d25072412db}{normal\+\_\+quantile\+\_\+onesided} (double confidence)
+\item 
+double \hyperlink{namespacemappel_adb714ee724b676c059233ddf224eb786}{chisq\+\_\+quantile} (double confidence, int dof)
+\item 
+double \hyperlink{namespacemappel_ad7b85a513735680d7c4eb551fe28857a}{chisq\+\_\+quantile} (double confidence)
 \item 
 void \hyperlink{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}{fill\+\_\+gaussian\+\_\+stencil} (int size, double stencil\mbox{[}$\,$\mbox{]}, double sigma)
 \item 
@@ -248,9 +236,9 @@ std\+::ostream \& \hyperlink{namespacemappel_ac61f8d2289377a38008fb499003a3893}{
 \item 
 {\footnotesize template$<$class ImageT $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a3294759903a1265559b35bc4b487b75b}{print\+\_\+image} (std\+::ostream \&out, const \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT} \&im)
 \item 
-{\footnotesize template$<$class Vec $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_adb38bc84f5b9500d9019091e80e7ada8}{print\+\_\+vec\+\_\+row} (std\+::ostream \&out, const Vec \&vec, const char $\ast$header, int header\+\_\+width, const char $\ast$color=nullptr)
+{\footnotesize template$<$class ImageT $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a7001581f62e18f70a49f9b3e76bd0ac9}{print\+\_\+text\+\_\+image} (std\+::ostream \&out, const \hyperlink{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{ImageT} \&im)
 \item 
-{\footnotesize template$<$class Model $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}{operator$<$$<$} (std\+::ostream \&out, \hyperlink{classmappel_1_1Estimator}{Estimator}$<$ Model $>$ \&estimator)
+{\footnotesize template$<$class Vec $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_adb38bc84f5b9500d9019091e80e7ada8}{print\+\_\+vec\+\_\+row} (std\+::ostream \&out, const Vec \&vec, const char $\ast$header, int header\+\_\+width, const char $\ast$color=nullptr)
 \item 
 {\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classmappel_1_1Gauss2DModel}{Gauss2\+D\+Model}, Model $>$\+::value, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_a4f99d21dc5c7c014dfafa98883ce287b}{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&im, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init)
 \item 
@@ -270,33 +258,15 @@ std\+::ostream \& \hyperlink{namespacemappel_ac61f8d2289377a38008fb499003a3893}{
 \item 
 {\footnotesize template$<$class Model $>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+base\+\_\+of$<$ \hyperlink{classmappel_1_1Gauss2DsxyModel}{Gauss2\+Dsxy\+Model}, Model $>$\+::value, \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ $>$\+::type \hyperlink{namespacemappel_ae11a3f8db8843240c8fc2d823479cc23}{cgauss\+\_\+compute\+\_\+estimate\+\_\+debug} (const Model \&model, const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&im, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, int max\+\_\+iterations, \hyperlink{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{Param\+VecT}$<$ Model $>$ \&sequence)
 \item 
+{\footnotesize template$<$class FloatT $>$ }\\FloatT \hyperlink{namespacemappel_a32bfb3832cd151b3b17601f6a8449ed6}{clamp} (FloatT val, FloatT min\+\_\+val, FloatT max\+\_\+val)
+\item 
 {\footnotesize template$<$class Model , typename  = Enable\+If\+Subclass\+T$<$\+Model,\+Point\+Emitter\+Model$>$$>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a6e0c0a729adcdd75dcf8f7f504884fbb}{operator$<$$<$} (std\+::ostream \&out, const Model \&model)
 \item 
 {\footnotesize template$<$class RngT $>$ }\\\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{namespacemappel_af5deeb186fbcfbd0f449064cc70e8a86}{generate\+\_\+poisson\+\_\+small} (RngT \&rng, double mu)
-\begin{DoxyCompactList}\small\item\em Genrates a single poisson disributed int from distribution with mean mu. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Generates a single Poisson distributed int from distribution with mean mu. \end{DoxyCompactList}\item 
 {\footnotesize template$<$class RngT $>$ }\\\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{namespacemappel_ae776a0d92c466702788b7405a4a166e0}{generate\+\_\+poisson\+\_\+large} (RngT \&rng, double mu)
 \item 
 {\footnotesize template$<$class RngT $>$ }\\double \hyperlink{namespacemappel_adc1e3a6c0fd4804406d162c48d805d44}{generate\+\_\+poisson} (RngT \&rng, double mu)
-\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_afc24dba55dd63a1628388626bb7a7304}{sample\+\_\+prior\+\_\+stack} (Model \&model, typename Model\+::\+Param\+VecT \&theta\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel sampling of the model prior. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_ac0a6248ecc5b41b2d7fe10231dcc00cb}{model\+\_\+image\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Image\+StackT \&image\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel computation of the model image. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a79ac0dd997da8729f9610aab0fdbb347}{simulate\+\_\+image\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Image\+StackT \&image\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel simulation of images from one or more theta. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_ac37bf1175da6d4a80cd4cb147bfb68e2}{log\+\_\+likelihood\+\_\+stack} (const Model \&model, const typename Model\+::\+ImageT \&image, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&llh\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a single image. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_aa57494d2d4d7461509dfc3f657cea340}{log\+\_\+likelihood\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, \hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \&llh\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel log\+\_\+likelihood calculations for a stack of images. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a053f2ea8e88ce464bb0c41657fac50ef}{model\+\_\+grad\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Param\+VecT \&grad\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel model gradient calculations for a stack of images. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a74564859e87b485dda106ce035b9157b}{model\+\_\+hessian\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, \hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \&hessian\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel model Hessian calculations for a stack of images. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a2e223ad253e6d02bcc65056de3af6c24}{model\+\_\+positive\+\_\+hessian\+\_\+stack} (const Model \&model, const typename Model\+::\+Image\+StackT \&image\+\_\+stack, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, \hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \&hessian\+\_\+stack)
-\begin{DoxyCompactList}\small\item\em Parallel model positive-\/definite Hessian approximation calculations for a stack of images. \end{DoxyCompactList}\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_af7a80413a48625a3d97079177d8f959b}{cr\+\_\+lower\+\_\+bound\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, typename Model\+::\+Param\+VecT \&crlb\+\_\+stack)
-\item 
-{\footnotesize template$<$class Model $>$ }\\void \hyperlink{namespacemappel_a77bdeb8e88ba5b04e736ff55ab9a33fd}{fisher\+\_\+information\+\_\+stack} (const Model \&model, const typename Model\+::\+Param\+VecT \&theta\+\_\+stack, \hyperlink{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{CubeT} \&fisher\+I\+\_\+stack)
 \item 
 double \hyperlink{namespacemappel_afdf826a9bc6ea906415c89f1e7087f1a}{gauss\+\_\+norm} (double sigma)
 \item 
@@ -434,11 +404,11 @@ const char $\ast$ \hyperlink{namespacemappel_a15d16c02d9b595b272213768978e691b}{
 
 
 \subsubsection{Detailed Description}
-All models will call for maximization through this virtual function. All non-\/\+G\+PU based maximizers will use this version which spawns threads using a non-\/virual entry point member function Maximizer\+::thread\+\_\+entry. G\+P\+U-\/based maximizers will want to do something custom, so they will declare their own virtual maximize\+\_\+stack.
+All models will call for maximization through this virtual function. All non-\/\+G\+PU based maximizers will use this version which spawns threads using a non-\/virtual entry point member function Maximizer\+::thread\+\_\+entry. G\+P\+U-\/based maximizers will want to do something custom, so they will declare their own virtual maximize\+\_\+stack.
 
-It is also because of the G\+P\+U-\/based mamixmizers that we are putting initilization, and C\+R\+L\+B/\+L\+LH calculations in here even though the Model knows how to do them.
+It is also because of the G\+P\+U-\/based mamixmizers that we are putting initialization, and C\+R\+L\+B/\+L\+LH calculations in here even though the Model knows how to do them.
 
-We expect that those methods will need to also be paralellized and the G\+PU will need custom code, and the threaded C\+PU versions will want to also compute those in parallel, so in order to have a consitent call interface to the Maximizer classes, we put the C\+R\+L\+B/\+L\+LH and initialization work within the the maximize\+\_\+stack method. 
+We expect that those methods will need to also be paralellized and the G\+PU will need custom code, and the threaded C\+PU versions will want to also compute those in parallel, so in order to have a consistent call interface to the Maximizer classes, we put the C\+R\+L\+B/\+L\+LH and initialization work within the the maximize\+\_\+stack method. 
 
 \subsubsection{Typedef Documentation}
 \index{mappel@{mappel}!BoolT@{BoolT}}
@@ -446,105 +416,105 @@ We expect that those methods will need to also be paralellized and the G\+PU wil
 \paragraph[{\texorpdfstring{BoolT}{BoolT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+BoolT} = typedef uint16\+\_\+t}\hypertarget{namespacemappel_a74f3ebfb073cdde8b57926847deb4daa}{}\label{namespacemappel_a74f3ebfb073cdde8b57926847deb4daa}
 
 
-Definition at line 19 of file util.\+h.
+Definition at line 23 of file util.\+h.
 
 \index{mappel@{mappel}!Bool\+VecT@{Bool\+VecT}}
 \index{Bool\+VecT@{Bool\+VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Bool\+VecT}{BoolVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Bool\+VecT} = typedef arma\+::\+Col$<$uint16\+\_\+t$>$}\hypertarget{namespacemappel_a167d761ecce3cafb6f98c00c16bdb523}{}\label{namespacemappel_a167d761ecce3cafb6f98c00c16bdb523}
 
 
-Definition at line 20 of file util.\+h.
+Definition at line 24 of file util.\+h.
 
 \index{mappel@{mappel}!CubeT@{CubeT}}
 \index{CubeT@{CubeT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{CubeT}{CubeT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+CubeT} = typedef arma\+::cube}\hypertarget{namespacemappel_ab2afab4e6c8805e83946670d882768c2}{}\label{namespacemappel_ab2afab4e6c8805e83946670d882768c2}
 A type to represent floating-\/point data cubes 
 
-Definition at line 26 of file util.\+h.
+Definition at line 30 of file util.\+h.
 
 \index{mappel@{mappel}!Enable\+If\+SubclassT@{Enable\+If\+SubclassT}}
 \index{Enable\+If\+SubclassT@{Enable\+If\+SubclassT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Enable\+If\+SubclassT}{EnableIfSubclassT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ModelT , class Model\+BaseT $>$ using {\bf mappel\+::\+Enable\+If\+SubclassT} = typedef typename std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<$Model\+BaseT,ModelT$>$\+::value,void$>$\+::type}\hypertarget{namespacemappel_a5ee1448a35c267ee0bc4b8f1a2e09615}{}\label{namespacemappel_a5ee1448a35c267ee0bc4b8f1a2e09615}
 
 
-Definition at line 33 of file util.\+h.
+Definition at line 37 of file util.\+h.
 
 \index{mappel@{mappel}!Idx\+MatT@{Idx\+MatT}}
 \index{Idx\+MatT@{Idx\+MatT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Idx\+MatT}{IdxMatT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Idx\+MatT} = typedef arma\+::\+Mat$<${\bf IdxT}$>$}\hypertarget{namespacemappel_a08989eafa9aeb1a4c3ec773614297d0d}{}\label{namespacemappel_a08989eafa9aeb1a4c3ec773614297d0d}
 A type to represent integer data arrays 
 
-Definition at line 23 of file util.\+h.
+Definition at line 27 of file util.\+h.
 
 \index{mappel@{mappel}!IdxT@{IdxT}}
 \index{IdxT@{IdxT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{IdxT}{IdxT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+IdxT} = typedef arma\+::uword}\hypertarget{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{}\label{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}
 
 
-Definition at line 21 of file util.\+h.
+Definition at line 25 of file util.\+h.
 
 \index{mappel@{mappel}!Idx\+VecT@{Idx\+VecT}}
 \index{Idx\+VecT@{Idx\+VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Idx\+VecT}{IdxVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Idx\+VecT} = typedef arma\+::\+Col$<${\bf IdxT}$>$}\hypertarget{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{}\label{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}
 A type to represent integer data arrays 
 
-Definition at line 22 of file util.\+h.
+Definition at line 26 of file util.\+h.
 
 \index{mappel@{mappel}!Image\+CoordT@{Image\+CoordT}}
 \index{Image\+CoordT@{Image\+CoordT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Image\+CoordT}{ImageCoordT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Image\+CoordT} = typedef typename Model\+::\+Image\+CoordT}\hypertarget{namespacemappel_a3ca6340183a2876d6bb6da936f1b667d}{}\label{namespacemappel_a3ca6340183a2876d6bb6da936f1b667d}
 
 
-Definition at line 38 of file util.\+h.
+Definition at line 42 of file util.\+h.
 
 \index{mappel@{mappel}!Image\+PixelT@{Image\+PixelT}}
 \index{Image\+PixelT@{Image\+PixelT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Image\+PixelT}{ImagePixelT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Image\+PixelT} = typedef typename Model\+::\+Image\+PixelT}\hypertarget{namespacemappel_a0b957a712590555ab00a1d0617a7f66f}{}\label{namespacemappel_a0b957a712590555ab00a1d0617a7f66f}
 
 
-Definition at line 39 of file util.\+h.
+Definition at line 43 of file util.\+h.
 
 \index{mappel@{mappel}!Image\+StackT@{Image\+StackT}}
 \index{Image\+StackT@{Image\+StackT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Image\+StackT}{ImageStackT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Image\+StackT} = typedef typename Model\+::\+Image\+StackT}\hypertarget{namespacemappel_a636dbe5b195c267a5f6a65cd48ff94a6}{}\label{namespacemappel_a636dbe5b195c267a5f6a65cd48ff94a6}
 
 
-Definition at line 47 of file util.\+h.
+Definition at line 51 of file util.\+h.
 
 \index{mappel@{mappel}!ImageT@{ImageT}}
 \index{ImageT@{ImageT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{ImageT}{ImageT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+ImageT} = typedef typename Model\+::\+ImageT}\hypertarget{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}{}\label{namespacemappel_a14658186b77757f3c35a69cb1be6cf4b}
 
 
-Definition at line 43 of file util.\+h.
+Definition at line 47 of file util.\+h.
 
 \index{mappel@{mappel}!Mappel\+Error@{Mappel\+Error}}
 \index{Mappel\+Error@{Mappel\+Error}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Mappel\+Error}{MappelError}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Mappel\+Error} = typedef backtrace\+\_\+exception\+::\+Backtrace\+Exception}\hypertarget{namespacemappel_a9a55f6aee1523ba336066874a36dc29c}{}\label{namespacemappel_a9a55f6aee1523ba336066874a36dc29c}
 
 
-Definition at line 60 of file util.\+h.
+Definition at line 64 of file util.\+h.
 
 \index{mappel@{mappel}!MatT@{MatT}}
 \index{MatT@{MatT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{MatT}{MatT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+MatT} = typedef arma\+::mat}\hypertarget{namespacemappel_a7091ab87c528041f7e2027195fad8915}{}\label{namespacemappel_a7091ab87c528041f7e2027195fad8915}
-A type to represent floating-\/point data matricies 
+A type to represent floating-\/point data matrices 
 
-Definition at line 25 of file util.\+h.
+Definition at line 29 of file util.\+h.
 
 \index{mappel@{mappel}!Model\+Data\+StackT@{Model\+Data\+StackT}}
 \index{Model\+Data\+StackT@{Model\+Data\+StackT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Model\+Data\+StackT}{ModelDataStackT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Model\+Data\+StackT} = typedef typename Model\+::\+Model\+Data\+StackT}\hypertarget{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}{}\label{namespacemappel_aaeb6665bc57476dd93c2df6ad8bc4768}
 
 
-Definition at line 48 of file util.\+h.
+Definition at line 52 of file util.\+h.
 
 \index{mappel@{mappel}!Model\+DataT@{Model\+DataT}}
 \index{Model\+DataT@{Model\+DataT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Model\+DataT}{ModelDataT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Model\+DataT} = typedef typename Model\+::\+Model\+DataT}\hypertarget{namespacemappel_a97f050df953605381ae9c901c3b125f1}{}\label{namespacemappel_a97f050df953605381ae9c901c3b125f1}
 
 
-Definition at line 44 of file util.\+h.
+Definition at line 48 of file util.\+h.
 
 \index{mappel@{mappel}!Parallel\+Rng\+GeneratorT@{Parallel\+Rng\+GeneratorT}}
 \index{Parallel\+Rng\+GeneratorT@{Parallel\+Rng\+GeneratorT}!mappel@{mappel}}
@@ -565,21 +535,21 @@ Definition at line 22 of file rng.\+h.
 \paragraph[{\texorpdfstring{ParamT}{ParamT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+ParamT} = typedef typename Model\+::\+ParamT}\hypertarget{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{}\label{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}
 
 
-Definition at line 41 of file util.\+h.
+Definition at line 45 of file util.\+h.
 
 \index{mappel@{mappel}!Param\+VecT@{Param\+VecT}}
 \index{Param\+VecT@{Param\+VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Param\+VecT}{ParamVecT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Param\+VecT} = typedef typename Model\+::\+Param\+VecT}\hypertarget{namespacemappel_a0f86d3153e4e27b095012f140eea58de}{}\label{namespacemappel_a0f86d3153e4e27b095012f140eea58de}
 
 
-Definition at line 42 of file util.\+h.
+Definition at line 46 of file util.\+h.
 
 \index{mappel@{mappel}!Return\+If\+SubclassT@{Return\+If\+SubclassT}}
 \index{Return\+If\+SubclassT@{Return\+If\+SubclassT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Return\+If\+SubclassT}{ReturnIfSubclassT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ReturnT , class ModelT , class Model\+BaseT $>$ using {\bf mappel\+::\+Return\+If\+SubclassT} = typedef typename std\+::enable\+\_\+if$<$std\+::is\+\_\+base\+\_\+of$<$Model\+BaseT,ModelT$>$\+::value,ReturnT$>$\+::type}\hypertarget{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}{}\label{namespacemappel_a3b77d227658ba3ba9e16fea6fa6e626d}
 
 
-Definition at line 36 of file util.\+h.
+Definition at line 40 of file util.\+h.
 
 \index{mappel@{mappel}!Rng\+SeedT@{Rng\+SeedT}}
 \index{Rng\+SeedT@{Rng\+SeedT}!mappel@{mappel}}
@@ -591,30 +561,30 @@ Definition at line 23 of file rng.\+h.
 \index{mappel@{mappel}!StatsT@{StatsT}}
 \index{StatsT@{StatsT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{StatsT}{StatsT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+StatsT} = typedef std\+::map$<$std\+::string,double$>$}\hypertarget{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}{}\label{namespacemappel_a04ab395b0cf82c4ce68a36b2212649a5}
-A convenient form for reporting dictionaries of named FP data to matlab 
+A convenient form for reporting dictionaries of named FP data to Matlab 
 
-Definition at line 28 of file util.\+h.
+Definition at line 32 of file util.\+h.
 
 \index{mappel@{mappel}!StencilT@{StencilT}}
 \index{StencilT@{StencilT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{StencilT}{StencilT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+StencilT} = typedef typename Model\+::\+Stencil}\hypertarget{namespacemappel_a3a06598240007876f8c4bf834ad86197}{}\label{namespacemappel_a3a06598240007876f8c4bf834ad86197}
 
 
-Definition at line 45 of file util.\+h.
+Definition at line 49 of file util.\+h.
 
 \index{mappel@{mappel}!Stencil\+VecT@{Stencil\+VecT}}
 \index{Stencil\+VecT@{Stencil\+VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{Stencil\+VecT}{StencilVecT}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ using {\bf mappel\+::\+Stencil\+VecT} = typedef typename Model\+::\+Stencil\+VecT}\hypertarget{namespacemappel_a62f73447ef1973cca188b1b801864f7e}{}\label{namespacemappel_a62f73447ef1973cca188b1b801864f7e}
 
 
-Definition at line 49 of file util.\+h.
+Definition at line 53 of file util.\+h.
 
 \index{mappel@{mappel}!String\+VecT@{String\+VecT}}
 \index{String\+VecT@{String\+VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{String\+VecT}{StringVecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+String\+VecT} = typedef std\+::vector$<$std\+::string$>$}\hypertarget{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}{}\label{namespacemappel_aae88cf18bccfbb789a6019bcfbbfca68}
 
 
-Definition at line 29 of file util.\+h.
+Definition at line 33 of file util.\+h.
 
 \index{mappel@{mappel}!Uniform\+DistT@{Uniform\+DistT}}
 \index{Uniform\+DistT@{Uniform\+DistT}!mappel@{mappel}}
@@ -628,14 +598,14 @@ Definition at line 24 of file rng.\+h.
 \paragraph[{\texorpdfstring{Vec\+FieldT}{VecFieldT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+Vec\+FieldT} = typedef arma\+::field$<${\bf VecT}$>$}\hypertarget{namespacemappel_a834ec4f32487f07c0ca1e22d4928d1f8}{}\label{namespacemappel_a834ec4f32487f07c0ca1e22d4928d1f8}
 
 
-Definition at line 27 of file util.\+h.
+Definition at line 31 of file util.\+h.
 
 \index{mappel@{mappel}!VecT@{VecT}}
 \index{VecT@{VecT}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{VecT}{VecT}}]{\setlength{\rightskip}{0pt plus 5cm}using {\bf mappel\+::\+VecT} = typedef arma\+::vec}\hypertarget{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{}\label{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}
 A type to represent floating-\/point data arrays 
 
-Definition at line 24 of file util.\+h.
+Definition at line 28 of file util.\+h.
 
 
 
@@ -653,7 +623,7 @@ Definition at line 24 of file util.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a2b820140eb5c93d7d256a30fc6137ef8}{}\label{namespacemappel_a2b820140eb5c93d7d256a30fc6137ef8}
 
 
-Definition at line 314 of file stencil.\+h.
+Definition at line 316 of file stencil.\+h.
 
 \index{mappel@{mappel}!beta2\+\_\+prior\+\_\+grad2@{beta2\+\_\+prior\+\_\+grad2}}
 \index{beta2\+\_\+prior\+\_\+grad2@{beta2\+\_\+prior\+\_\+grad2}!mappel@{mappel}}
@@ -668,7 +638,7 @@ Definition at line 314 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_af516b8782a35f0983f0184d8d907df5e}{}\label{namespacemappel_af516b8782a35f0983f0184d8d907df5e}
 
 
-Definition at line 347 of file stencil.\+h.
+Definition at line 349 of file stencil.\+h.
 
 \index{mappel@{mappel}!beta\+\_\+prior\+\_\+grad@{beta\+\_\+prior\+\_\+grad}}
 \index{beta\+\_\+prior\+\_\+grad@{beta\+\_\+prior\+\_\+grad}!mappel@{mappel}}
@@ -682,11 +652,7 @@ Definition at line 347 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a077bd23f694399652e8e3a3be5758688}{}\label{namespacemappel_a077bd23f694399652e8e3a3be5758688}
 
 
-Definition at line 307 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad\+\_\+update().
+Definition at line 309 of file stencil.\+h.
 
 \index{mappel@{mappel}!beta\+\_\+prior\+\_\+grad2@{beta\+\_\+prior\+\_\+grad2}}
 \index{beta\+\_\+prior\+\_\+grad2@{beta\+\_\+prior\+\_\+grad2}!mappel@{mappel}}
@@ -700,11 +666,7 @@ Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad\+\_\+
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a6a36b8a34be04643747e178a8358251c}{}\label{namespacemappel_a6a36b8a34be04643747e178a8358251c}
 
 
-Definition at line 339 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad2\+\_\+update(), and mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+hess\+\_\+update().
+Definition at line 341 of file stencil.\+h.
 
 \index{mappel@{mappel}!cgauss\+\_\+compute\+\_\+estimate@{cgauss\+\_\+compute\+\_\+estimate}}
 \index{cgauss\+\_\+compute\+\_\+estimate@{cgauss\+\_\+compute\+\_\+estimate}!mappel@{mappel}}
@@ -726,7 +688,7 @@ References mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, and mappel\+::\+Image
 
 
 
-Referenced by mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate().
+Referenced by mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
 
 \index{mappel@{mappel}!cgauss\+\_\+compute\+\_\+estimate@{cgauss\+\_\+compute\+\_\+estimate}}
 \index{cgauss\+\_\+compute\+\_\+estimate@{cgauss\+\_\+compute\+\_\+estimate}!mappel@{mappel}}
@@ -785,7 +747,7 @@ References mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, and mappel\+::\+Image
 
 
 
-Referenced by mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug().
+Referenced by mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
 
 \index{mappel@{mappel}!cgauss\+\_\+compute\+\_\+estimate\+\_\+debug@{cgauss\+\_\+compute\+\_\+estimate\+\_\+debug}}
 \index{cgauss\+\_\+compute\+\_\+estimate\+\_\+debug@{cgauss\+\_\+compute\+\_\+estimate\+\_\+debug}!mappel@{mappel}}
@@ -844,7 +806,7 @@ References mappel\+::\+Gauss2\+D\+Model\+::psf\+\_\+sigma, and mappel\+::\+Image
 
 
 
-Referenced by mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), and mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
+Referenced by mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), and mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats().
 
 \index{mappel@{mappel}!cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate@{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate}}
 \index{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate@{cgauss\+\_\+heuristic\+\_\+compute\+\_\+estimate}!mappel@{mappel}}
@@ -907,28 +869,56 @@ References mappel\+::\+Image\+Format2\+D\+Base\+::size.
 \item[{double}]{hyperprior\+\_\+epsilon = {\ttfamily 1E-\/6}}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_af170ce3945b79af54277394ff3f62843}{}\label{namespacemappel_af170ce3945b79af54277394ff3f62843}
+\index{mappel@{mappel}!chisq\+\_\+quantile@{chisq\+\_\+quantile}}
+\index{chisq\+\_\+quantile@{chisq\+\_\+quantile}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{chisq\+\_\+quantile(double confidence, int dof)}{chisq_quantile(double confidence, int dof)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::chisq\+\_\+quantile (
+\begin{DoxyParamCaption}
+\item[{double}]{confidence, }
+\item[{int}]{dof}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_adb714ee724b676c059233ddf224eb786}{}\label{namespacemappel_adb714ee724b676c059233ddf224eb786}
+
+
+Definition at line 43 of file stencil.\+cpp.
+
+
+
+Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel(), and mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+stack().
+
+\index{mappel@{mappel}!chisq\+\_\+quantile@{chisq\+\_\+quantile}}
+\index{chisq\+\_\+quantile@{chisq\+\_\+quantile}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{chisq\+\_\+quantile(double confidence)}{chisq_quantile(double confidence)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::chisq\+\_\+quantile (
+\begin{DoxyParamCaption}
+\item[{double}]{confidence}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_ad7b85a513735680d7c4eb551fe28857a}{}\label{namespacemappel_ad7b85a513735680d7c4eb551fe28857a}
+
+
+Definition at line 50 of file stencil.\+cpp.
+
 \index{mappel@{mappel}!cholesky@{cholesky}}
 \index{cholesky@{cholesky}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{cholesky(arma\+::mat \&\+A)}{cholesky(arma::mat &A)}}]{\setlength{\rightskip}{0pt plus 5cm}bool mappel\+::cholesky (
 \begin{DoxyParamCaption}
-\item[{arma\+::mat \&}]{usym}
+\item[{arma\+::mat \&}]{A}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_abc3956f093388acda04ee4455d01b515}{}\label{namespacemappel_abc3956f093388acda04ee4455d01b515}
+Convert full or upper-\/triangular symmetric matrix to lower-\/triangular Cholesky decomposition in-\/place
 
-\begin{DoxyParams}{Parameters}
-{\em usym} & An upper triangular symmetric matrix stored in a full matrix format. This matrix will be overwritten with the upper triangle and diagonal elements of the modified cholesky decomposition. \\
+No error checking is performed
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em } & \\
 \hline
 \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-true if usym was positive semi-\/definite. If false then Usym is left in arbitrary corrupted state. 
-\end{DoxyReturn}
 
 
-Definition at line 97 of file numerical.\+cpp.
+Definition at line 102 of file numerical.\+cpp.
 
 
 
-Referenced by is\+\_\+positive\+\_\+definite(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
+Referenced by is\+\_\+positive\+\_\+definite(), mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::estimator\+::subroutine\+::solve\+\_\+\+T\+R\+\_\+subproblem().
 
 \index{mappel@{mappel}!cholesky\+\_\+convert\+\_\+full\+\_\+matrix@{cholesky\+\_\+convert\+\_\+full\+\_\+matrix}}
 \index{cholesky\+\_\+convert\+\_\+full\+\_\+matrix@{cholesky\+\_\+convert\+\_\+full\+\_\+matrix}!mappel@{mappel}}
@@ -937,7 +927,7 @@ Referenced by is\+\_\+positive\+\_\+definite(), mappel\+::\+Trust\+Region\+Maxim
 \item[{arma\+::mat \&}]{chol}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_a2f4256e721d1f22f2d72817ba3d2540d}{}\label{namespacemappel_a2f4256e721d1f22f2d72817ba3d2540d}
-Convert matrix in internal cholesky format into a full matrix M = L$\ast$L\textquotesingle{} 
+Convert matrix in internal Cholesky format into a full matrix M = L$\ast$L\textquotesingle{} 
 
 Definition at line 82 of file numerical.\+cpp.
 
@@ -947,7 +937,7 @@ References copy\+\_\+\+Usym\+\_\+mat().
 
 
 
-Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+make\+\_\+positive\+\_\+definite(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), and cholesky\+\_\+make\+\_\+positive\+\_\+definite().
 
 \index{mappel@{mappel}!cholesky\+\_\+convert\+\_\+lower\+\_\+triangular@{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular}}
 \index{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular@{cholesky\+\_\+convert\+\_\+lower\+\_\+triangular}!mappel@{mappel}}
@@ -956,13 +946,13 @@ Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+ma
 \item[{arma\+::mat \&}]{chol}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_ab5ab3a874402fccd700e6c7afbbd3e15}{}\label{namespacemappel_ab5ab3a874402fccd700e6c7afbbd3e15}
-Convert matrix in internal cholesky format into a lower triangular matrix L where M = L$\ast$L\textquotesingle{} 
+Convert matrix in internal Cholesky format into a lower triangular matrix L where M = L$\ast$L\textquotesingle{} 
 
 Definition at line 71 of file numerical.\+cpp.
 
 
 
-Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
+Referenced by mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
 
 \index{mappel@{mappel}!cholesky\+\_\+make\+\_\+negative\+\_\+definite@{cholesky\+\_\+make\+\_\+negative\+\_\+definite}}
 \index{cholesky\+\_\+make\+\_\+negative\+\_\+definite@{cholesky\+\_\+make\+\_\+negative\+\_\+definite}!mappel@{mappel}}
@@ -971,7 +961,7 @@ Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+re
 \item[{arma\+::mat \&}]{m}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_af0d85d0ac01f8397a555efb5912fc2ea}{}\label{namespacemappel_af0d85d0ac01f8397a555efb5912fc2ea}
-Modify m inplace using modfied choslesky decomposition to ensure m is negative definite 
+Modify m in-\/place using modified Cholesky decomposition to ensure m is negative definite 
 
 Definition at line 38 of file numerical.\+cpp.
 
@@ -990,7 +980,7 @@ Referenced by mappel\+::methods\+::objective\+::negative\+\_\+definite\+\_\+hess
 \item[{arma\+::mat \&}]{m}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_af22fb1e606ca14f8b46ffde3b8833a9f}{}\label{namespacemappel_af22fb1e606ca14f8b46ffde3b8833a9f}
-Modify m inplace using modfied choslesky decomposition to ensure m is positive definite 
+Modify m in-\/place using modified Cholesky decomposition to ensure m is positive definite 
 
 Definition at line 46 of file numerical.\+cpp.
 
@@ -1006,9 +996,9 @@ References cholesky\+\_\+convert\+\_\+full\+\_\+matrix(), and modified\+\_\+chol
 \item[{const arma\+::vec \&}]{b}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_a83b18a0a288ca81106d44e26d830d6d5}{}\label{namespacemappel_a83b18a0a288ca81106d44e26d830d6d5}
-Given a matrix in modified cholesky format and a vector solve the linear system C x = b. 
+Given a matrix in modified Cholesky format and a vector solve the linear system C x = b. 
 \begin{DoxyParams}{Parameters}
-{\em C} & A matrix in lower modified cholesky format \\
+{\em C} & A matrix in lower modified Cholesky format \\
 \hline
 {\em b} & A vector representing the right hand side of the linear system. \\
 \hline
@@ -1018,11 +1008,32 @@ x -\/ the solution to the linear system
 \end{DoxyReturn}
 
 
-Definition at line 184 of file numerical.\+cpp.
+Definition at line 186 of file numerical.\+cpp.
 
 
 
-Referenced by mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::solve\+\_\+\+T\+R\+\_\+subproblem().
+Referenced by mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton(), and mappel\+::estimator\+::subroutine\+::solve\+\_\+\+T\+R\+\_\+subproblem().
+
+\index{mappel@{mappel}!clamp@{clamp}}
+\index{clamp@{clamp}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{clamp(\+Float\+T val, Float\+T min\+\_\+val, Float\+T max\+\_\+val)}{clamp(FloatT val, FloatT min_val, FloatT max_val)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class FloatT $>$ FloatT mappel\+::clamp (
+\begin{DoxyParamCaption}
+\item[{FloatT}]{val, }
+\item[{FloatT}]{min\+\_\+val, }
+\item[{FloatT}]{max\+\_\+val}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_a32bfb3832cd151b3b17601f6a8449ed6}{}\label{namespacemappel_a32bfb3832cd151b3b17601f6a8449ed6}
+
+
+Definition at line 103 of file numerical.\+h.
+
+
+
+References norm\+\_\+sq().
+
+
+
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::estimator\+::subroutine\+::compute\+\_\+\+D\+\_\+scale(), mappel\+::estimator\+::subroutine\+::compute\+\_\+initial\+\_\+trust\+\_\+radius(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack(), and mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton().
 
 \index{mappel@{mappel}!copy\+\_\+\+Lsym\+\_\+mat@{copy\+\_\+\+Lsym\+\_\+mat}}
 \index{copy\+\_\+\+Lsym\+\_\+mat@{copy\+\_\+\+Lsym\+\_\+mat}!mappel@{mappel}}
@@ -1031,7 +1042,7 @@ Referenced by mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+
 \item[{arma\+::mat \&}]{lsym}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_a32086cdd1ef53eaff6ed9449d9fd8c1a}{}\label{namespacemappel_a32086cdd1ef53eaff6ed9449d9fd8c1a}
-Convert symmetric matrix stored as lower triangular to full Matrix Assuming lsym is the main diagonal and lower triangle of a symmertic matrix, fill in the upper triangle by copying the lowerr triangle. This operation modifies the matrix. 
+Convert symmetric matrix stored as lower triangular to full Matrix Assuming lsym is the main diagonal and lower triangle of a symmetric matrix, fill in the upper triangle by copying the lower triangle. This operation modifies the matrix. 
 
 Definition at line 30 of file numerical.\+cpp.
 
@@ -1042,13 +1053,13 @@ Definition at line 30 of file numerical.\+cpp.
 \item[{arma\+::mat \&}]{usym}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_a7332bb151bb9ea23be4af80743009954}{}\label{namespacemappel_a7332bb151bb9ea23be4af80743009954}
-Convert symmetric matrix stored as upper triangular to full Matrix Assuming usym is the main diagonal and upper triangle of a symmertic matrix, fill in the lower triangle by copying the upper triangle. This operation modifies the matrix. 
+Convert symmetric matrix stored as upper triangular to full Matrix Assuming usym is the main diagonal and upper triangle of a symmetric matrix, fill in the lower triangle by copying the upper triangle. This operation modifies the matrix. 
 
 Definition at line 13 of file numerical.\+cpp.
 
 
 
-Referenced by cholesky\+\_\+convert\+\_\+full\+\_\+matrix(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by cholesky\+\_\+convert\+\_\+full\+\_\+matrix().
 
 \index{mappel@{mappel}!copy\+\_\+\+Usym\+\_\+mat\+\_\+stack@{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack}}
 \index{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack@{copy\+\_\+\+Usym\+\_\+mat\+\_\+stack}!mappel@{mappel}}
@@ -1061,23 +1072,6 @@ Referenced by cholesky\+\_\+convert\+\_\+full\+\_\+matrix(), and mappel\+::\+New
 
 Definition at line 20 of file numerical.\+cpp.
 
-\index{mappel@{mappel}!cr\+\_\+lower\+\_\+bound\+\_\+stack@{cr\+\_\+lower\+\_\+bound\+\_\+stack}}
-\index{cr\+\_\+lower\+\_\+bound\+\_\+stack@{cr\+\_\+lower\+\_\+bound\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{cr\+\_\+lower\+\_\+bound\+\_\+stack(const Model \&model, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, typename Model\+::\+Param\+Vec\+T \&crlb\+\_\+stack)}{cr_lower_bound_stack(const Model &model, const typename Model::ParamVecT &theta_stack, typename Model::ParamVecT &crlb_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::cr\+\_\+lower\+\_\+bound\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{typename Model\+::\+Param\+VecT \&}]{crlb\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_af7a80413a48625a3d97079177d8f959b}{}\label{namespacemappel_af7a80413a48625a3d97079177d8f959b}
-
-
-Definition at line 304 of file stackcomp.\+h.
-
-
-
-References mappel\+::methods\+::cr\+\_\+lower\+\_\+bound().
-
 \index{mappel@{mappel}!enable\+\_\+all\+\_\+cpus@{enable\+\_\+all\+\_\+cpus}}
 \index{enable\+\_\+all\+\_\+cpus@{enable\+\_\+all\+\_\+cpus}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{enable\+\_\+all\+\_\+cpus()}{enable_all_cpus()}}]{\setlength{\rightskip}{0pt plus 5cm}void mappel\+::enable\+\_\+all\+\_\+cpus (
@@ -1087,7 +1081,7 @@ References mappel\+::methods\+::cr\+\_\+lower\+\_\+bound().
 )}\hypertarget{namespacemappel_aba8aaabfad30754642d7d5ba791e4e37}{}\label{namespacemappel_aba8aaabfad30754642d7d5ba791e4e37}
 
 
-Definition at line 10 of file util.\+cpp.
+Definition at line 16 of file util.\+cpp.
 
 \index{mappel@{mappel}!estimate\+\_\+background@{estimate\+\_\+background}}
 \index{estimate\+\_\+background@{estimate\+\_\+background}!mappel@{mappel}}
@@ -1100,7 +1094,7 @@ Definition at line 10 of file util.\+cpp.
 )}\hypertarget{namespacemappel_ae4735b28fdcd3dafd492d565357f7641}{}\label{namespacemappel_ae4735b28fdcd3dafd492d565357f7641}
 
 
-Definition at line 263 of file stencil.\+cpp.
+Definition at line 280 of file stencil.\+cpp.
 
 \index{mappel@{mappel}!estimate\+\_\+background@{estimate\+\_\+background}}
 \index{estimate\+\_\+background@{estimate\+\_\+background}!mappel@{mappel}}
@@ -1112,7 +1106,7 @@ Definition at line 263 of file stencil.\+cpp.
 )}\hypertarget{namespacemappel_a5066b92cf654828129635a6ca61aaca4}{}\label{namespacemappel_a5066b92cf654828129635a6ca61aaca4}
 
 
-Definition at line 282 of file stencil.\+cpp.
+Definition at line 299 of file stencil.\+cpp.
 
 \index{mappel@{mappel}!estimate\+\_\+gaussian\+\_\+2\+Dmax@{estimate\+\_\+gaussian\+\_\+2\+Dmax}}
 \index{estimate\+\_\+gaussian\+\_\+2\+Dmax@{estimate\+\_\+gaussian\+\_\+2\+Dmax}!mappel@{mappel}}
@@ -1127,7 +1121,7 @@ Definition at line 282 of file stencil.\+cpp.
 )}\hypertarget{namespacemappel_a3b80821e227772c7480e6d5d27090593}{}\label{namespacemappel_a3b80821e227772c7480e6d5d27090593}
 
 
-Definition at line 141 of file stencil.\+cpp.
+Definition at line 158 of file stencil.\+cpp.
 
 
 
@@ -1145,7 +1139,7 @@ References gaussian\+\_\+convolution().
 )}\hypertarget{namespacemappel_a2d597c426bd6287ad1a506511a68c9c2}{}\label{namespacemappel_a2d597c426bd6287ad1a506511a68c9c2}
 
 
-Definition at line 205 of file stencil.\+cpp.
+Definition at line 222 of file stencil.\+cpp.
 
 
 
@@ -1162,7 +1156,7 @@ References gaussian\+\_\+3\+D\+\_\+convolution().
 )}\hypertarget{namespacemappel_acc51debd218d0e3181f7ddf32576f739}{}\label{namespacemappel_acc51debd218d0e3181f7ddf32576f739}
 
 
-Definition at line 277 of file stencil.\+cpp.
+Definition at line 294 of file stencil.\+cpp.
 
 \index{mappel@{mappel}!estimate\+\_\+intensity@{estimate\+\_\+intensity}}
 \index{estimate\+\_\+intensity@{estimate\+\_\+intensity}!mappel@{mappel}}
@@ -1175,7 +1169,7 @@ Definition at line 277 of file stencil.\+cpp.
 )}\hypertarget{namespacemappel_a2d00c518aa213c069f09c666c25b026a}{}\label{namespacemappel_a2d00c518aa213c069f09c666c25b026a}
 
 
-Definition at line 292 of file stencil.\+cpp.
+Definition at line 309 of file stencil.\+cpp.
 
 \index{mappel@{mappel}!fill\+\_\+d\+\_\+stencil@{fill\+\_\+d\+\_\+stencil}}
 \index{fill\+\_\+d\+\_\+stencil@{fill\+\_\+d\+\_\+stencil}!mappel@{mappel}}
@@ -1188,7 +1182,7 @@ Definition at line 292 of file stencil.\+cpp.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a0bd2fc62ed44e755a6777d1209fe6bac}{}\label{namespacemappel_a0bd2fc62ed44e755a6777d1209fe6bac}
 
 
-Definition at line 151 of file stencil.\+h.
+Definition at line 153 of file stencil.\+h.
 
 
 
@@ -1206,7 +1200,7 @@ Referenced by make\+\_\+d\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ad2dd4330fc626fa673a3acf691d6b9a7}{}\label{namespacemappel_ad2dd4330fc626fa673a3acf691d6b9a7}
 
 
-Definition at line 176 of file stencil.\+h.
+Definition at line 178 of file stencil.\+h.
 
 
 
@@ -1226,7 +1220,7 @@ Referenced by make\+\_\+\+D\+X\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a445e83c8273da9b3a50cc10d038ed612}{}\label{namespacemappel_a445e83c8273da9b3a50cc10d038ed612}
 
 
-Definition at line 190 of file stencil.\+h.
+Definition at line 192 of file stencil.\+h.
 
 
 
@@ -1245,7 +1239,7 @@ Referenced by make\+\_\+\+D\+X\+S2\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ab0cb62f6dcecae5ff19468d87a283e7a}{}\label{namespacemappel_ab0cb62f6dcecae5ff19468d87a283e7a}
 
 
-Definition at line 183 of file stencil.\+h.
+Definition at line 185 of file stencil.\+h.
 
 
 
@@ -1269,7 +1263,7 @@ Referenced by make\+\_\+\+D\+X\+S\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ad3a6553e54dc90232fc04c93731fc69c}{}\label{namespacemappel_ad3a6553e54dc90232fc04c93731fc69c}
 
 
-Definition at line 203 of file stencil.\+h.
+Definition at line 205 of file stencil.\+h.
 
 
 
@@ -1287,7 +1281,7 @@ Referenced by make\+\_\+\+D\+X\+S\+X\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a5ca82edc201e8605107a991493ad0d5e}{}\label{namespacemappel_a5ca82edc201e8605107a991493ad0d5e}
 
 
-Definition at line 157 of file stencil.\+h.
+Definition at line 159 of file stencil.\+h.
 
 
 
@@ -1308,7 +1302,7 @@ Referenced by make\+\_\+\+G\+\_\+stencil().
 )}\hypertarget{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}{}\label{namespacemappel_a09a770c2a4eaa7c083abbac26ec70ff3}
 
 
-Definition at line 40 of file stencil.\+cpp.
+Definition at line 57 of file stencil.\+cpp.
 
 
 
@@ -1330,28 +1324,11 @@ Referenced by make\+\_\+gaussian\+\_\+stencil().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ab6a11cd06ff348138cb04635b03a6de2}{}\label{namespacemappel_ab6a11cd06ff348138cb04635b03a6de2}
 
 
-Definition at line 164 of file stencil.\+h.
+Definition at line 166 of file stencil.\+h.
 
 
 
 Referenced by make\+\_\+\+X\+\_\+stencil().
-
-\index{mappel@{mappel}!fisher\+\_\+information\+\_\+stack@{fisher\+\_\+information\+\_\+stack}}
-\index{fisher\+\_\+information\+\_\+stack@{fisher\+\_\+information\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{fisher\+\_\+information\+\_\+stack(const Model \&model, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, Cube\+T \&fisher\+I\+\_\+stack)}{fisher_information_stack(const Model &model, const typename Model::ParamVecT &theta_stack, CubeT &fisherI_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::fisher\+\_\+information\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{{\bf CubeT} \&}]{fisher\+I\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a77bdeb8e88ba5b04e736ff55ab9a33fd}{}\label{namespacemappel_a77bdeb8e88ba5b04e736ff55ab9a33fd}
-
-
-Definition at line 315 of file stackcomp.\+h.
-
-
-
-References fisher\+\_\+information().
 
 \index{mappel@{mappel}!gamma\+\_\+prior\+\_\+grad@{gamma\+\_\+prior\+\_\+grad}}
 \index{gamma\+\_\+prior\+\_\+grad@{gamma\+\_\+prior\+\_\+grad}!mappel@{mappel}}
@@ -1364,11 +1341,7 @@ References fisher\+\_\+information().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a0f4c641d9784a4688faa26c126e28fa2}{}\label{namespacemappel_a0f4c641d9784a4688faa26c126e28fa2}
 
 
-Definition at line 320 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad\+\_\+update().
+Definition at line 322 of file stencil.\+h.
 
 \index{mappel@{mappel}!gamma\+\_\+prior\+\_\+grad2@{gamma\+\_\+prior\+\_\+grad2}}
 \index{gamma\+\_\+prior\+\_\+grad2@{gamma\+\_\+prior\+\_\+grad2}!mappel@{mappel}}
@@ -1380,11 +1353,7 @@ Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad\+\_\+
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a09f684e270fef9279b5eabff96e54edb}{}\label{namespacemappel_a09f684e270fef9279b5eabff96e54edb}
 
 
-Definition at line 356 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad2\+\_\+update(), and mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+hess\+\_\+update().
+Definition at line 358 of file stencil.\+h.
 
 \index{mappel@{mappel}!gauss\+\_\+norm@{gauss\+\_\+norm}}
 \index{gauss\+\_\+norm@{gauss\+\_\+norm}!mappel@{mappel}}
@@ -1395,7 +1364,7 @@ Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad2\+\_\
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_afdf826a9bc6ea906415c89f1e7087f1a}{}\label{namespacemappel_afdf826a9bc6ea906415c89f1e7087f1a}
 
 
-Definition at line 92 of file stencil.\+h.
+Definition at line 94 of file stencil.\+h.
 
 
 
@@ -1414,7 +1383,7 @@ Referenced by fill\+\_\+gaussian\+\_\+stencil().
 )}\hypertarget{namespacemappel_af7eb6e00596bd775bfefa5b8d826241d}{}\label{namespacemappel_af7eb6e00596bd775bfefa5b8d826241d}
 
 
-Definition at line 184 of file stencil.\+cpp.
+Definition at line 201 of file stencil.\+cpp.
 
 
 
@@ -1433,7 +1402,7 @@ Referenced by estimate\+\_\+gaussian\+\_\+3\+Dmax(), and refine\+\_\+gaussian\+\
 )}\hypertarget{namespacemappel_a93917141391e8f1ac5b4b5b0712cd29c}{}\label{namespacemappel_a93917141391e8f1ac5b4b5b0712cd29c}
 
 
-Definition at line 127 of file stencil.\+cpp.
+Definition at line 144 of file stencil.\+cpp.
 
 
 
@@ -1485,16 +1454,16 @@ Referenced by generate\+\_\+poisson().
 )}\hypertarget{namespacemappel_af5deeb186fbcfbd0f449064cc70e8a86}{}\label{namespacemappel_af5deeb186fbcfbd0f449064cc70e8a86}
 
 
-Genrates a single poisson disributed int from distribution with mean mu. 
+Generates a single Poisson distributed int from distribution with mean mu. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em mu} & -\/ mean of poisson distribution \\
+{\em mu} & -\/ mean of Poisson distribution \\
 \hline
 {\em sfmt} & -\/ A pointer to the S\+F\+MT rng state.\\
 \hline
 \end{DoxyParams}
-Knuth method circa 1969. Trasformed to work ing log space. This is linear in mu. Works ok for small counts. 
+Knuth method circa 1969. Transformed to work in log space. This is linear in mu. Works ok for small counts. 
 
 Definition at line 43 of file rng.\+h.
 
@@ -1512,7 +1481,7 @@ Referenced by generate\+\_\+poisson().
 )}\hypertarget{namespacemappel_aadd3347168b25dd7a097676d342e3ef8}{}\label{namespacemappel_aadd3347168b25dd7a097676d342e3ef8}
 
 
-Definition at line 39 of file util.\+cpp.
+Definition at line 45 of file util.\+cpp.
 
 \index{mappel@{mappel}!is\+\_\+negative\+\_\+definite@{is\+\_\+negative\+\_\+definite}}
 \index{is\+\_\+negative\+\_\+definite@{is\+\_\+negative\+\_\+definite}!mappel@{mappel}}
@@ -1562,7 +1531,7 @@ References cholesky().
 
 
 
-Referenced by is\+\_\+negative\+\_\+definite(), and mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by is\+\_\+negative\+\_\+definite(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
 
 \index{mappel@{mappel}!is\+\_\+symmetric@{is\+\_\+symmetric}}
 \index{is\+\_\+symmetric@{is\+\_\+symmetric}!mappel@{mappel}}
@@ -1571,7 +1540,7 @@ Referenced by is\+\_\+negative\+\_\+definite(), and mappel\+::\+Quasi\+Newton\+M
 \item[{const arma\+::mat \&}]{A}
 \end{DoxyParamCaption}
 )}\hypertarget{namespacemappel_ac4b4d6a93b8b227b0a845693ba842e61}{}\label{namespacemappel_ac4b4d6a93b8b227b0a845693ba842e61}
-Check that full 2D matrix A is symmetric and can thus be treated as either upper or lower triangular symmetric representation. This will obviously not work with matricies that are already implicitly stored as symmetric triangular format since those matricies won\textquotesingle{}t have the other triangle of elements filled in correctly. 
+Check that full 2D matrix A is symmetric and can thus be treated as either upper or lower triangular symmetric representation. This will obviously not work with matrices that are already implicitly stored as symmetric triangular format since those matrices won\textquotesingle{}t have the other triangle of elements filled in correctly. 
 
 Definition at line 63 of file numerical.\+cpp.
 
@@ -1585,7 +1554,7 @@ Definition at line 63 of file numerical.\+cpp.
 )}\hypertarget{namespacemappel_a610296a93ba507763bc770d39049f323}{}\label{namespacemappel_a610296a93ba507763bc770d39049f323}
 
 
-Definition at line 21 of file util.\+cpp.
+Definition at line 27 of file util.\+cpp.
 
 
 
@@ -1601,7 +1570,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior(), m
 )}\hypertarget{namespacemappel_ab9264c8a764d4c5f4e3dd4343055d7d3}{}\label{namespacemappel_ab9264c8a764d4c5f4e3dd4343055d7d3}
 
 
-Definition at line 29 of file util.\+cpp.
+Definition at line 35 of file util.\+cpp.
 
 \index{mappel@{mappel}!lambda\+\_\+term\+\_\+color@{lambda\+\_\+term\+\_\+color}}
 \index{lambda\+\_\+term\+\_\+color@{lambda\+\_\+term\+\_\+color}!mappel@{mappel}}
@@ -1623,86 +1592,6 @@ References T\+E\+R\+M\+\_\+\+B\+L\+UE, T\+E\+R\+M\+\_\+\+C\+Y\+AN, T\+E\+R\+M\+\
 
 Referenced by print\+\_\+image().
 
-\index{mappel@{mappel}!log\+\_\+likelihood\+\_\+stack@{log\+\_\+likelihood\+\_\+stack}}
-\index{log\+\_\+likelihood\+\_\+stack@{log\+\_\+likelihood\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{log\+\_\+likelihood\+\_\+stack(const Model \&model, const typename Model\+::\+Image\+T \&image, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, Vec\+T \&llh\+\_\+stack)}{log_likelihood_stack(const Model &model, const typename Model::ImageT &image, const typename Model::ParamVecT &theta_stack, VecT &llh_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::log\+\_\+likelihood\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+ImageT \&}]{image, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{{\bf VecT} \&}]{llh\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_ac37bf1175da6d4a80cd4cb147bfb68e2}{}\label{namespacemappel_ac37bf1175da6d4a80cd4cb147bfb68e2}
-
-
-Parallel log\+\_\+likelihood calculations for a single image. 
-
-Compute log-\/likelihood for multiple thetas using the same image
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em image} & An image. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em llh\+\_\+stack} & Sequence of llh values computed. \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 128 of file stackcomp.\+h.
-
-
-
-References mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack(), and log\+\_\+likelihood().
-
-\index{mappel@{mappel}!log\+\_\+likelihood\+\_\+stack@{log\+\_\+likelihood\+\_\+stack}}
-\index{log\+\_\+likelihood\+\_\+stack@{log\+\_\+likelihood\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{log\+\_\+likelihood\+\_\+stack(const Model \&model, const typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, Vec\+T \&llh\+\_\+stack)}{log_likelihood_stack(const Model &model, const typename Model::ImageStackT &image_stack, const typename Model::ParamVecT &theta_stack, VecT &llh_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::log\+\_\+likelihood\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{{\bf VecT} \&}]{llh\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_aa57494d2d4d7461509dfc3f657cea340}{}\label{namespacemappel_aa57494d2d4d7461509dfc3f657cea340}
-
-
-Parallel log\+\_\+likelihood calculations for a stack of images. 
-
-Compute log-\/likelihood for multiple image, theta pairs.
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em image\+\_\+stack} & Sequence of images. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em llh\+\_\+stack} & Sequence of llh values computed. Size\+: \mbox{[}n\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 151 of file stackcomp.\+h.
-
-
-
-References mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack(), and log\+\_\+likelihood().
-
 \index{mappel@{mappel}!log\+\_\+prior\+\_\+beta2\+\_\+const@{log\+\_\+prior\+\_\+beta2\+\_\+const}}
 \index{log\+\_\+prior\+\_\+beta2\+\_\+const@{log\+\_\+prior\+\_\+beta2\+\_\+const}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{log\+\_\+prior\+\_\+beta2\+\_\+const(double beta0, double beta1)}{log_prior_beta2_const(double beta0, double beta1)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::log\+\_\+prior\+\_\+beta2\+\_\+const (
@@ -1713,7 +1602,7 @@ References mappel\+::methods\+::objective\+::openmp\+::llh\+\_\+stack(), and log
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_aa76d20f90640303c9be2fd56a064aa56}{}\label{namespacemappel_aa76d20f90640303c9be2fd56a064aa56}
 
 
-Definition at line 248 of file stencil.\+h.
+Definition at line 250 of file stencil.\+h.
 
 \index{mappel@{mappel}!log\+\_\+prior\+\_\+beta\+\_\+const@{log\+\_\+prior\+\_\+beta\+\_\+const}}
 \index{log\+\_\+prior\+\_\+beta\+\_\+const@{log\+\_\+prior\+\_\+beta\+\_\+const}!mappel@{mappel}}
@@ -1724,7 +1613,7 @@ Definition at line 248 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a9ca8f4d711a32790757590f2c60fa4cb}{}\label{namespacemappel_a9ca8f4d711a32790757590f2c60fa4cb}
 
 
-Definition at line 242 of file stencil.\+h.
+Definition at line 244 of file stencil.\+h.
 
 \index{mappel@{mappel}!log\+\_\+prior\+\_\+gamma\+\_\+const@{log\+\_\+prior\+\_\+gamma\+\_\+const}}
 \index{log\+\_\+prior\+\_\+gamma\+\_\+const@{log\+\_\+prior\+\_\+gamma\+\_\+const}!mappel@{mappel}}
@@ -1736,7 +1625,7 @@ Definition at line 242 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a0485d74207be2d753c06a572693dd365}{}\label{namespacemappel_a0485d74207be2d753c06a572693dd365}
 
 
-Definition at line 255 of file stencil.\+h.
+Definition at line 257 of file stencil.\+h.
 
 \index{mappel@{mappel}!log\+\_\+prior\+\_\+normal\+\_\+const@{log\+\_\+prior\+\_\+normal\+\_\+const}}
 \index{log\+\_\+prior\+\_\+normal\+\_\+const@{log\+\_\+prior\+\_\+normal\+\_\+const}!mappel@{mappel}}
@@ -1747,7 +1636,7 @@ Definition at line 255 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a514175d403ab15aa5bd58d0f96d8f79d}{}\label{namespacemappel_a514175d403ab15aa5bd58d0f96d8f79d}
 
 
-Definition at line 267 of file stencil.\+h.
+Definition at line 269 of file stencil.\+h.
 
 \index{mappel@{mappel}!log\+\_\+prior\+\_\+pareto\+\_\+const@{log\+\_\+prior\+\_\+pareto\+\_\+const}}
 \index{log\+\_\+prior\+\_\+pareto\+\_\+const@{log\+\_\+prior\+\_\+pareto\+\_\+const}!mappel@{mappel}}
@@ -1759,7 +1648,7 @@ Definition at line 267 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ac21a7ae00d6e2d4baf30cbccc07ba70e}{}\label{namespacemappel_ac21a7ae00d6e2d4baf30cbccc07ba70e}
 
 
-Definition at line 261 of file stencil.\+h.
+Definition at line 263 of file stencil.\+h.
 
 \index{mappel@{mappel}!make\+\_\+d\+\_\+stencil@{make\+\_\+d\+\_\+stencil}}
 \index{make\+\_\+d\+\_\+stencil@{make\+\_\+d\+\_\+stencil}!mappel@{mappel}}
@@ -1771,7 +1660,7 @@ Definition at line 261 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ac9d449b0121b33962da2c9c13cbb593c}{}\label{namespacemappel_ac9d449b0121b33962da2c9c13cbb593c}
 
 
-Definition at line 97 of file stencil.\+h.
+Definition at line 99 of file stencil.\+h.
 
 
 
@@ -1792,7 +1681,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+Stencil(), mappel\
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a8da88490d6ff7d5886b96b66c1bab369}{}\label{namespacemappel_a8da88490d6ff7d5886b96b66c1bab369}
 
 
-Definition at line 118 of file stencil.\+h.
+Definition at line 120 of file stencil.\+h.
 
 
 
@@ -1815,7 +1704,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivat
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_aef14b765af6f9b85d93f42ab8b84311b}{}\label{namespacemappel_aef14b765af6f9b85d93f42ab8b84311b}
 
 
-Definition at line 133 of file stencil.\+h.
+Definition at line 135 of file stencil.\+h.
 
 
 
@@ -1837,7 +1726,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivat
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_af7636db506977133c8b30d108fede711}{}\label{namespacemappel_af7636db506977133c8b30d108fede711}
 
 
-Definition at line 125 of file stencil.\+h.
+Definition at line 127 of file stencil.\+h.
 
 
 
@@ -1860,7 +1749,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivat
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_abccec04f04b0b10940779c9bbae0e570}{}\label{namespacemappel_abccec04f04b0b10940779c9bbae0e570}
 
 
-Definition at line 141 of file stencil.\+h.
+Definition at line 143 of file stencil.\+h.
 
 
 
@@ -1881,7 +1770,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivat
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_aa5c2f294298c875605ee1e9876b7d116}{}\label{namespacemappel_aa5c2f294298c875605ee1e9876b7d116}
 
 
-Definition at line 104 of file stencil.\+h.
+Definition at line 106 of file stencil.\+h.
 
 
 
@@ -1901,7 +1790,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::compute\+\_\+derivat
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ae7764483ad8e545319cacd2e91a1a849}{}\label{namespacemappel_ae7764483ad8e545319cacd2e91a1a849}
 
 
-Definition at line 216 of file stencil.\+h.
+Definition at line 218 of file stencil.\+h.
 
 
 
@@ -1916,7 +1805,7 @@ References fill\+\_\+gaussian\+\_\+stencil().
 )}\hypertarget{namespacemappel_a965a7374aa364331ed67aae33205aa9c}{}\label{namespacemappel_a965a7374aa364331ed67aae33205aa9c}
 
 
-Definition at line 130 of file util.\+h.
+Definition at line 134 of file util.\+h.
 
 
 
@@ -1933,7 +1822,7 @@ References operator$<$$<$().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a7b50d0a17c085d9b25b91c2b17ecb1cc}{}\label{namespacemappel_a7b50d0a17c085d9b25b91c2b17ecb1cc}
 
 
-Definition at line 111 of file stencil.\+h.
+Definition at line 113 of file stencil.\+h.
 
 
 
@@ -1952,162 +1841,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::\+Stencil(), mappel\
 )}\hypertarget{namespacemappel_abd020db8cce0baee03e09251e1a78e78}{}\label{namespacemappel_abd020db8cce0baee03e09251e1a78e78}
 
 
-Definition at line 55 of file util.\+cpp.
-
-\index{mappel@{mappel}!model\+\_\+grad\+\_\+stack@{model\+\_\+grad\+\_\+stack}}
-\index{model\+\_\+grad\+\_\+stack@{model\+\_\+grad\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{model\+\_\+grad\+\_\+stack(const Model \&model, const typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, typename Model\+::\+Param\+Vec\+T \&grad\+\_\+stack)}{model_grad_stack(const Model &model, const typename Model::ImageStackT &image_stack, const typename Model::ParamVecT &theta_stack, typename Model::ParamVecT &grad_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::model\+\_\+grad\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{typename Model\+::\+Param\+VecT \&}]{grad\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a053f2ea8e88ce464bb0c41657fac50ef}{}\label{namespacemappel_a053f2ea8e88ce464bb0c41657fac50ef}
-
-
-Parallel model gradient calculations for a stack of images. 
-
-Compute gradient of log-\/likelihood for multiple image, theta pairs.
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model gradients. 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em image\+\_\+stack} & Sequence of images. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas. \\
-\hline
-\mbox{\tt out}  & {\em grad\+\_\+stack} & Sequence of grad vectors values computed. Size\+: \mbox{[}model.\+num\+\_\+params, n\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 188 of file stackcomp.\+h.
-
-
-
-References mappel\+::methods\+::objective\+::grad(), and model\+\_\+grad().
-
-\index{mappel@{mappel}!model\+\_\+hessian\+\_\+stack@{model\+\_\+hessian\+\_\+stack}}
-\index{model\+\_\+hessian\+\_\+stack@{model\+\_\+hessian\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{model\+\_\+hessian\+\_\+stack(const Model \&model, const typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, Cube\+T \&hessian\+\_\+stack)}{model_hessian_stack(const Model &model, const typename Model::ImageStackT &image_stack, const typename Model::ParamVecT &theta_stack, CubeT &hessian_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::model\+\_\+hessian\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{{\bf CubeT} \&}]{hessian\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a74564859e87b485dda106ce035b9157b}{}\label{namespacemappel_a74564859e87b485dda106ce035b9157b}
-
-
-Parallel model Hessian calculations for a stack of images. 
-
-Compute Hessian of log-\/likelihood for multiple image, theta pairs.
-
-Use\+: model.\+make\+\_\+param\+\_\+mat\+\_\+stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian. 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em image\+\_\+stack} & Sequence of images. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em hess\+\_\+stack} & Sequence of Hessian matrices computed. Size\+: \mbox{[}model.\+num\+\_\+params, model.\+num\+\_\+params, n\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 231 of file stackcomp.\+h.
-
-
-
-References mappel\+::methods\+::objective\+::grad(), and model\+\_\+hessian().
-
-\index{mappel@{mappel}!model\+\_\+image\+\_\+stack@{model\+\_\+image\+\_\+stack}}
-\index{model\+\_\+image\+\_\+stack@{model\+\_\+image\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{model\+\_\+image\+\_\+stack(const Model \&model, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack)}{model_image_stack(const Model &model, const typename Model::ParamVecT &theta_stack, typename Model::ImageStackT &image_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::model\+\_\+image\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_ac0a6248ecc5b41b2d7fe10231dcc00cb}{}\label{namespacemappel_ac0a6248ecc5b41b2d7fe10231dcc00cb}
-
-
-Parallel computation of the model image. 
-
-The model image is the expected photon count at each pixel under parameter theta.
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model Use\+: model.\+make\+\_\+image\+\_\+stack() to make an image stack of appropriate dimensions for the model
-
-
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas for which to generate images. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em image\+\_\+stack} & Sequence of model images generated. \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 62 of file stackcomp.\+h.
-
-
-
-References model\+\_\+image().
-
-\index{mappel@{mappel}!model\+\_\+positive\+\_\+hessian\+\_\+stack@{model\+\_\+positive\+\_\+hessian\+\_\+stack}}
-\index{model\+\_\+positive\+\_\+hessian\+\_\+stack@{model\+\_\+positive\+\_\+hessian\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{model\+\_\+positive\+\_\+hessian\+\_\+stack(const Model \&model, const typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, Cube\+T \&hessian\+\_\+stack)}{model_positive_hessian_stack(const Model &model, const typename Model::ImageStackT &image_stack, const typename Model::ParamVecT &theta_stack, CubeT &hessian_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::model\+\_\+positive\+\_\+hessian\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{{\bf CubeT} \&}]{hessian\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a2e223ad253e6d02bcc65056de3af6c24}{}\label{namespacemappel_a2e223ad253e6d02bcc65056de3af6c24}
-
-
-Parallel model positive-\/definite Hessian approximation calculations for a stack of images. 
-
-Compute Hessian a positive-\/definite Hessian using a modified cholesky decompositions. Computes for multiple image, theta pairs.
-
-Use\+: model.\+make\+\_\+param\+\_\+mat\+\_\+stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian. 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em image\+\_\+stack} & Sequence of images. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Sequence of thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em hess\+\_\+stack} & Sequence of approximate Hessian matrices computed. Size\+: \mbox{[}model.\+num\+\_\+params, model.\+num\+\_\+params, n\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 276 of file stackcomp.\+h.
+Definition at line 61 of file util.\+cpp.
 
 \index{mappel@{mappel}!modified\+\_\+cholesky@{modified\+\_\+cholesky}}
 \index{modified\+\_\+cholesky@{modified\+\_\+cholesky}!mappel@{mappel}}
@@ -2118,19 +1852,38 @@ Definition at line 276 of file stackcomp.\+h.
 )}\hypertarget{namespacemappel_a5b0ad6d46ef0173ae9e44a0ff9af7f0b}{}\label{namespacemappel_a5b0ad6d46ef0173ae9e44a0ff9af7f0b}
 
 \begin{DoxyParams}{Parameters}
-{\em usym} & An upper triangular symmetric matrix stored in a full matrix format. This matrix will be overwritten with the upper triangle and diagonal elements of the modified cholesky decomposition. \\
+{\em usym} & An upper triangular symmetric matrix stored in a full matrix format. This matrix will be overwritten with the upper triangle and diagonal elements of the modified Cholesky decomposition. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-true if usym was positive semi-\/definite (no cholesky modification required). If false we made a modification 
+true if usym was positive semi-\/definite (no Cholesky modification required). If false we made a modification 
 \end{DoxyReturn}
 
 
-Definition at line 127 of file numerical.\+cpp.
+Definition at line 128 of file numerical.\+cpp.
 
 
 
-Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+make\+\_\+positive\+\_\+definite(), and mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize().
+Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), and cholesky\+\_\+make\+\_\+positive\+\_\+definite().
+
+\index{mappel@{mappel}!norm\+\_\+sq@{norm\+\_\+sq}}
+\index{norm\+\_\+sq@{norm\+\_\+sq}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{norm\+\_\+sq(const Vec\+T \&v)}{norm_sq(const VecT &v)}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::norm\+\_\+sq (
+\begin{DoxyParamCaption}
+\item[{const {\bf VecT} \&}]{v}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_ab7fcefff8e308b8770181d592c390e09}{}\label{namespacemappel_ab7fcefff8e308b8770181d592c390e09}
+
+
+Definition at line 210 of file numerical.\+cpp.
+
+
+
+References square().
+
+
+
+Referenced by clamp(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test\+\_\+grad\+\_\+ratio(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test\+\_\+step\+\_\+size(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack().
 
 \index{mappel@{mappel}!normal\+\_\+prior\+\_\+grad@{normal\+\_\+prior\+\_\+grad}}
 \index{normal\+\_\+prior\+\_\+grad@{normal\+\_\+prior\+\_\+grad}!mappel@{mappel}}
@@ -2158,7 +1911,7 @@ Referenced by cholesky\+\_\+make\+\_\+negative\+\_\+definite(), cholesky\+\_\+ma
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a217d463069e4893cbae3574a7b91e68b}{}\label{namespacemappel_a217d463069e4893cbae3574a7b91e68b}
 
 
-Definition at line 332 of file stencil.\+h.
+Definition at line 334 of file stencil.\+h.
 
 \index{mappel@{mappel}!normal\+\_\+prior\+\_\+grad2@{normal\+\_\+prior\+\_\+grad2}}
 \index{normal\+\_\+prior\+\_\+grad2@{normal\+\_\+prior\+\_\+grad2}!mappel@{mappel}}
@@ -2169,7 +1922,7 @@ Definition at line 332 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_af0854db4bba8cd5c5a782405867ada59}{}\label{namespacemappel_af0854db4bba8cd5c5a782405867ada59}
 
 
-Definition at line 368 of file stencil.\+h.
+Definition at line 370 of file stencil.\+h.
 
 \index{mappel@{mappel}!normal\+\_\+quantile\+\_\+onesided@{normal\+\_\+quantile\+\_\+onesided}}
 \index{normal\+\_\+quantile\+\_\+onesided@{normal\+\_\+quantile\+\_\+onesided}!mappel@{mappel}}
@@ -2180,7 +1933,7 @@ Definition at line 368 of file stencil.\+h.
 )}\hypertarget{namespacemappel_a7cf2f920819c8899c4f01d25072412db}{}\label{namespacemappel_a7cf2f920819c8899c4f01d25072412db}
 
 
-Definition at line 29 of file stencil.\+cpp.
+Definition at line 33 of file stencil.\+cpp.
 
 \index{mappel@{mappel}!normal\+\_\+quantile\+\_\+twosided@{normal\+\_\+quantile\+\_\+twosided}}
 \index{normal\+\_\+quantile\+\_\+twosided@{normal\+\_\+quantile\+\_\+twosided}!mappel@{mappel}}
@@ -2191,11 +1944,11 @@ Definition at line 29 of file stencil.\+cpp.
 )}\hypertarget{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}{}\label{namespacemappel_a69b8109164dc63d76f99ad0d9c149148}
 
 
-Definition at line 18 of file stencil.\+cpp.
+Definition at line 22 of file stencil.\+cpp.
 
 
 
-Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+expected(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+expected\+\_\+stack(), and mappel\+::methods\+::error\+\_\+bounds\+\_\+observed().
+Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+expected(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+expected\+\_\+stack(), mappel\+::methods\+::error\+\_\+bounds\+\_\+observed(), and mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+observed\+\_\+stack().
 
 \index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
@@ -2207,7 +1960,7 @@ Referenced by mappel\+::methods\+::error\+\_\+bounds\+\_\+expected(), mappel\+::
 )}\hypertarget{namespacemappel_ac61f8d2289377a38008fb499003a3893}{}\label{namespacemappel_ac61f8d2289377a38008fb499003a3893}
 
 
-Definition at line 68 of file util.\+cpp.
+Definition at line 74 of file util.\+cpp.
 
 \index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
@@ -2259,18 +2012,6 @@ References mappel\+::\+Gauss1\+Ds\+Model\+::\+Stencil\+::derivatives\+\_\+comput
 
 \index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, Estimator$<$ Model $>$ \&estimator)}{operator<<(std::ostream &out, Estimator< Model > &estimator)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::ostream\& mappel\+::operator$<$$<$ (
-\begin{DoxyParamCaption}
-\item[{std\+::ostream \&}]{out, }
-\item[{{\bf Estimator}$<$ Model $>$ \&}]{estimator}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}{}\label{namespacemappel_a4d47cff4f8160c609b643f7a0b021ddd}
-
-
-Definition at line 226 of file estimator\+\_\+impl.\+h.
-
-\index{mappel@{mappel}!operator$<$$<$@{operator$<$$<$}}
-\index{operator$<$$<$@{operator$<$$<$}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{operator$<$$<$(std\+::ostream \&out, const Gauss2\+D\+Model\+::\+Stencil \&s)}{operator<<(std::ostream &out, const Gauss2DModel::Stencil &s)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& mappel\+::operator$<$$<$ (
 \begin{DoxyParamCaption}
 \item[{std\+::ostream \&}]{out, }
@@ -2295,7 +2036,7 @@ References mappel\+::\+Gauss2\+D\+Model\+::\+Stencil\+::derivatives\+\_\+compute
 )}\hypertarget{namespacemappel_a90e45f1983acf5114399c7ef0918b125}{}\label{namespacemappel_a90e45f1983acf5114399c7ef0918b125}
 
 
-Definition at line 318 of file Gauss2\+Ds\+Model.\+cpp.
+Definition at line 314 of file Gauss2\+Ds\+Model.\+cpp.
 
 
 
@@ -2311,7 +2052,7 @@ References mappel\+::\+Gauss2\+Ds\+Model\+::\+Stencil\+::derivatives\+\_\+comput
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a39593a3b69416194cd751ce9d14c6ac3}{}\label{namespacemappel_a39593a3b69416194cd751ce9d14c6ac3}
 
 
-Definition at line 326 of file stencil.\+h.
+Definition at line 328 of file stencil.\+h.
 
 \index{mappel@{mappel}!pareto\+\_\+prior\+\_\+grad2@{pareto\+\_\+prior\+\_\+grad2}}
 \index{pareto\+\_\+prior\+\_\+grad2@{pareto\+\_\+prior\+\_\+grad2}!mappel@{mappel}}
@@ -2323,7 +2064,7 @@ Definition at line 326 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ada81641eef9ad6a8741e8919ad5c13b9}{}\label{namespacemappel_ada81641eef9ad6a8741e8919ad5c13b9}
 
 
-Definition at line 362 of file stencil.\+h.
+Definition at line 364 of file stencil.\+h.
 
 \index{mappel@{mappel}!poisson\+\_\+log\+\_\+likelihood@{poisson\+\_\+log\+\_\+likelihood}}
 \index{poisson\+\_\+log\+\_\+likelihood@{poisson\+\_\+log\+\_\+likelihood}!mappel@{mappel}}
@@ -2335,7 +2076,7 @@ Definition at line 362 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ad6479b1e317a5f3bd2b92bfb562938d5}{}\label{namespacemappel_ad6479b1e317a5f3bd2b92bfb562938d5}
 
 
-Definition at line 224 of file stencil.\+h.
+Definition at line 226 of file stencil.\+h.
 
 
 
@@ -2383,10 +2124,6 @@ Definition at line 139 of file display.\+cpp.
 
 References print\+\_\+labeled\+\_\+image().
 
-
-
-Referenced by mappel\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), and mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+stack().
-
 \index{mappel@{mappel}!print\+\_\+image@{print\+\_\+image}}
 \index{print\+\_\+image@{print\+\_\+image}!mappel@{mappel}}
 \paragraph[{\texorpdfstring{print\+\_\+image(std\+::ostream \&out, const arma\+::mat \&im)}{print_image(std::ostream &out, const arma::mat &im)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$$>$ std\+::ostream\& mappel\+::print\+\_\+image (
@@ -2413,7 +2150,7 @@ References print\+\_\+labeled\+\_\+image().
 )}\hypertarget{namespacemappel_a5c439f824ab91a6e426685d74ee90a33}{}\label{namespacemappel_a5c439f824ab91a6e426685d74ee90a33}
 
 
-Definition at line 154 of file display.\+cpp.
+Definition at line 167 of file display.\+cpp.
 
 
 
@@ -2439,7 +2176,51 @@ References print\+\_\+centered\+\_\+title().
 
 
 
-Referenced by print\+\_\+image().
+Referenced by print\+\_\+image(), and print\+\_\+text\+\_\+image().
+
+\index{mappel@{mappel}!print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}}
+\index{print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{print\+\_\+text\+\_\+image(std\+::ostream \&out, const Image\+T \&im)}{print_text_image(std::ostream &out, const ImageT &im)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class ImageT $>$ std\+::ostream\& mappel\+::print\+\_\+text\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const {\bf ImageT} \&}]{im}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_a7001581f62e18f70a49f9b3e76bd0ac9}{}\label{namespacemappel_a7001581f62e18f70a49f9b3e76bd0ac9}
+\index{mappel@{mappel}!print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}}
+\index{print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{print\+\_\+text\+\_\+image(std\+::ostream \&out, const arma\+::vec \&im)}{print_text_image(std::ostream &out, const arma::vec &im)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$$>$ std\+::ostream\& mappel\+::print\+\_\+text\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const arma\+::vec \&}]{im}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_ab76cda908032f732529b5a5ef9af6fe2}{}\label{namespacemappel_ab76cda908032f732529b5a5ef9af6fe2}
+
+
+Definition at line 153 of file display.\+cpp.
+
+
+
+References print\+\_\+labeled\+\_\+image().
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+stack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+debug(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max().
+
+\index{mappel@{mappel}!print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}}
+\index{print\+\_\+text\+\_\+image@{print\+\_\+text\+\_\+image}!mappel@{mappel}}
+\paragraph[{\texorpdfstring{print\+\_\+text\+\_\+image(std\+::ostream \&out, const arma\+::mat \&im)}{print_text_image(std::ostream &out, const arma::mat &im)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$$>$ std\+::ostream\& mappel\+::print\+\_\+text\+\_\+image (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{out, }
+\item[{const arma\+::mat \&}]{im}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_aeb4866d8a7ed74d646c235f4c2bcb2ce}{}\label{namespacemappel_aeb4866d8a7ed74d646c235f4c2bcb2ce}
+
+
+Definition at line 160 of file display.\+cpp.
+
+
+
+References print\+\_\+labeled\+\_\+image().
 
 \index{mappel@{mappel}!print\+\_\+vec\+\_\+row@{print\+\_\+vec\+\_\+row}}
 \index{print\+\_\+vec\+\_\+row@{print\+\_\+vec\+\_\+row}!mappel@{mappel}}
@@ -2472,7 +2253,7 @@ Referenced by operator$<$$<$().
 )}\hypertarget{namespacemappel_ae0365a07ea08b7deae147915077091c8}{}\label{namespacemappel_ae0365a07ea08b7deae147915077091c8}
 
 
-Definition at line 157 of file stencil.\+cpp.
+Definition at line 174 of file stencil.\+cpp.
 
 
 
@@ -2489,7 +2270,7 @@ References gaussian\+\_\+convolution().
 )}\hypertarget{namespacemappel_ab65cc5c100590b4b5246984162e3e678}{}\label{namespacemappel_ab65cc5c100590b4b5246984162e3e678}
 
 
-Definition at line 225 of file stencil.\+cpp.
+Definition at line 242 of file stencil.\+cpp.
 
 
 
@@ -2505,7 +2286,7 @@ References gaussian\+\_\+3\+D\+\_\+convolution().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a6e36ec38eee9f05906f51d4db8767b9e}{}\label{namespacemappel_a6e36ec38eee9f05906f51d4db8767b9e}
 
 
-Definition at line 233 of file stencil.\+h.
+Definition at line 235 of file stencil.\+h.
 
 
 
@@ -2522,7 +2303,7 @@ Referenced by relative\+\_\+log\+\_\+likelihood(), mappel\+::methods\+::likeliho
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a8f4c92d0dd53d394b53df80013d8d730}{}\label{namespacemappel_a8f4c92d0dd53d394b53df80013d8d730}
 
 
-Definition at line 123 of file util.\+h.
+Definition at line 127 of file util.\+h.
 
 \index{mappel@{mappel}!rllh\+\_\+beta2\+\_\+prior@{rllh\+\_\+beta2\+\_\+prior}}
 \index{rllh\+\_\+beta2\+\_\+prior@{rllh\+\_\+beta2\+\_\+prior}!mappel@{mappel}}
@@ -2537,7 +2318,7 @@ Definition at line 123 of file util.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_aaf6a672122290a7cb20a0d1c65661db7}{}\label{namespacemappel_aaf6a672122290a7cb20a0d1c65661db7}
 
 
-Definition at line 280 of file stencil.\+h.
+Definition at line 282 of file stencil.\+h.
 
 \index{mappel@{mappel}!rllh\+\_\+beta\+\_\+prior@{rllh\+\_\+beta\+\_\+prior}}
 \index{rllh\+\_\+beta\+\_\+prior@{rllh\+\_\+beta\+\_\+prior}!mappel@{mappel}}
@@ -2551,11 +2332,7 @@ Definition at line 280 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_aba911d3a1a1a486fd6f6dfdfad37d90a}{}\label{namespacemappel_aba911d3a1a1a486fd6f6dfdfad37d90a}
 
 
-Definition at line 273 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+relative\+\_\+log\+\_\+likelihood().
+Definition at line 275 of file stencil.\+h.
 
 \index{mappel@{mappel}!rllh\+\_\+gamma\+\_\+prior@{rllh\+\_\+gamma\+\_\+prior}}
 \index{rllh\+\_\+gamma\+\_\+prior@{rllh\+\_\+gamma\+\_\+prior}!mappel@{mappel}}
@@ -2568,11 +2345,7 @@ Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+relative\+
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_ac76807de851d24f1b720629ad9062cb2}{}\label{namespacemappel_ac76807de851d24f1b720629ad9062cb2}
 
 
-Definition at line 287 of file stencil.\+h.
-
-
-
-Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+relative\+\_\+log\+\_\+likelihood().
+Definition at line 289 of file stencil.\+h.
 
 \index{mappel@{mappel}!rllh\+\_\+normal\+\_\+prior@{rllh\+\_\+normal\+\_\+prior}}
 \index{rllh\+\_\+normal\+\_\+prior@{rllh\+\_\+normal\+\_\+prior}!mappel@{mappel}}
@@ -2593,7 +2366,7 @@ Referenced by mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+relative\+
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_acf463f0ab903ab18560ce6c1a94be694}{}\label{namespacemappel_acf463f0ab903ab18560ce6c1a94be694}
 
 
-Definition at line 299 of file stencil.\+h.
+Definition at line 301 of file stencil.\+h.
 
 \index{mappel@{mappel}!rllh\+\_\+pareto\+\_\+prior@{rllh\+\_\+pareto\+\_\+prior}}
 \index{rllh\+\_\+pareto\+\_\+prior@{rllh\+\_\+pareto\+\_\+prior}!mappel@{mappel}}
@@ -2605,41 +2378,7 @@ Definition at line 299 of file stencil.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{namespacemappel_a2a07cb3a2c6ccd588241807747f3bd56}{}\label{namespacemappel_a2a07cb3a2c6ccd588241807747f3bd56}
 
 
-Definition at line 293 of file stencil.\+h.
-
-\index{mappel@{mappel}!sample\+\_\+prior\+\_\+stack@{sample\+\_\+prior\+\_\+stack}}
-\index{sample\+\_\+prior\+\_\+stack@{sample\+\_\+prior\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{sample\+\_\+prior\+\_\+stack(\+Model \&model, typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack)}{sample_prior_stack(Model &model, typename Model::ParamVecT &theta_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::sample\+\_\+prior\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{Model \&}]{model, }
-\item[{typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_afc24dba55dd63a1628388626bb7a7304}{}\label{namespacemappel_afc24dba55dd63a1628388626bb7a7304}
-
-
-Parallel sampling of the model prior. 
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model
-
-
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model,A} & \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt out}  & {\em theta\+\_\+stack,A} & sequence of sampled thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Samples\mbox{]} \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 36 of file stackcomp.\+h.
-
-
-
-References rng\+\_\+manager.
+Definition at line 295 of file stencil.\+h.
 
 \index{mappel@{mappel}!sgn@{sgn}}
 \index{sgn@{sgn}!mappel@{mappel}}
@@ -2654,48 +2393,11 @@ sign (signum) function\+: -\/1/0/1
 
 
 
-Definition at line 116 of file util.\+h.
+Definition at line 120 of file util.\+h.
 
 
 
-Referenced by mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec().
-
-\index{mappel@{mappel}!simulate\+\_\+image\+\_\+stack@{simulate\+\_\+image\+\_\+stack}}
-\index{simulate\+\_\+image\+\_\+stack@{simulate\+\_\+image\+\_\+stack}!mappel@{mappel}}
-\paragraph[{\texorpdfstring{simulate\+\_\+image\+\_\+stack(const Model \&model, const typename Model\+::\+Param\+Vec\+T \&theta\+\_\+stack, typename Model\+::\+Image\+Stack\+T \&image\+\_\+stack)}{simulate_image_stack(const Model &model, const typename Model::ParamVecT &theta_stack, typename Model::ImageStackT &image_stack)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ void mappel\+::simulate\+\_\+image\+\_\+stack (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const typename Model\+::\+Param\+VecT \&}]{theta\+\_\+stack, }
-\item[{typename Model\+::\+Image\+StackT \&}]{image\+\_\+stack}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_a79ac0dd997da8729f9610aab0fdbb347}{}\label{namespacemappel_a79ac0dd997da8729f9610aab0fdbb347}
-
-
-Parallel simulation of images from one or more theta. 
-
-This accepts either a single theta and a stack of images, or a stack of thetas and a stack of images.
-
-Use\+: model.\+make\+\_\+param\+\_\+stack() to make a parameter stack of appropriate dimensions for the model Use\+: model.\+make\+\_\+image\+\_\+stack() to make an image stack of appropriate dimensions for the model 
-\begin{DoxyTemplParams}{Template Parameters}
-{\em Model} & A concrete subclass of \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} \\
-\hline
-\end{DoxyTemplParams}
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em model} & A \hyperlink{classmappel_1_1PointEmitterModel}{Point\+Emitter\+Model} object. \\
-\hline
-\mbox{\tt in}  & {\em theta\+\_\+stack} & Single theta or a sequence of thetas. Size\+: \mbox{[}model.\+num\+\_\+params, n\+Thetas\mbox{]} \\
-\hline
-\mbox{\tt out}  & {\em image\+\_\+stack} & Sequence of model images generated. \\
-\hline
-\end{DoxyParams}
-
-
-Definition at line 87 of file stackcomp.\+h.
-
-
-
-References model\+\_\+image(), rng\+\_\+manager, mappel\+::methods\+::simulate\+\_\+image(), and mappel\+::methods\+::simulate\+\_\+image\+\_\+from\+\_\+model().
+Referenced by mappel\+::estimator\+::subroutine\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec().
 
 \index{mappel@{mappel}!square@{square}}
 \index{square@{square}!mappel@{mappel}}
@@ -2706,11 +2408,11 @@ References model\+\_\+image(), rng\+\_\+manager, mappel\+::methods\+::simulate\+
 )}\hypertarget{namespacemappel_a8475cdb3edacceb0ae215c3ebd1f33c1}{}\label{namespacemappel_a8475cdb3edacceb0ae215c3ebd1f33c1}
 
 
-Definition at line 121 of file util.\+h.
+Definition at line 125 of file util.\+h.
 
 
 
-Referenced by fill\+\_\+\+D\+X\+S\+\_\+stencil(), and fill\+\_\+\+G\+\_\+stencil().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::convergence\+\_\+test\+\_\+grad\+\_\+ratio(), fill\+\_\+\+D\+X\+S\+\_\+stencil(), fill\+\_\+\+G\+\_\+stencil(), norm\+\_\+sq(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack().
 
 
 
@@ -2720,11 +2422,11 @@ Referenced by fill\+\_\+\+D\+X\+S\+\_\+stencil(), and fill\+\_\+\+G\+\_\+stencil
 \paragraph[{\texorpdfstring{rng\+\_\+manager}{rng_manager}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Parallel\+Rng\+ManagerT} mappel\+::rng\+\_\+manager}\hypertarget{namespacemappel_abe2a4321a80f2384995f3c288131d4c0}{}\label{namespacemappel_abe2a4321a80f2384995f3c288131d4c0}
 
 
-Definition at line 6 of file rng.\+cpp.
+Definition at line 11 of file rng.\+cpp.
 
 
 
-Referenced by mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+generator(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+manager(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+Point\+Emitter\+Model\+::sample\+\_\+prior(), sample\+\_\+prior\+\_\+stack(), mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+rng\+\_\+seed(), and simulate\+\_\+image\+\_\+stack().
+Referenced by mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+generator(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+rng\+\_\+manager(), mappel\+::\+Point\+Emitter\+Model\+::get\+\_\+stats(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+Ds\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor2\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::sample\+\_\+mcmc\+\_\+candidate(), mappel\+::\+Point\+Emitter\+Model\+::sample\+\_\+prior(), and mappel\+::\+Point\+Emitter\+Model\+::set\+\_\+rng\+\_\+seed().
 
 \index{mappel@{mappel}!T\+E\+R\+M\+\_\+\+B\+L\+A\+CK@{T\+E\+R\+M\+\_\+\+B\+L\+A\+CK}}
 \index{T\+E\+R\+M\+\_\+\+B\+L\+A\+CK@{T\+E\+R\+M\+\_\+\+B\+L\+A\+CK}!mappel@{mappel}}

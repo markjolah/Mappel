@@ -16,11 +16,8 @@ var searchData=
   ['print_5fcentered_5ftitle',['print_centered_title',['../namespacemappel.html#a88fc8fe46dcf69cc0e0861d2f6f28a4e',1,'mappel']]],
   ['print_5fimage',['print_image',['../namespacemappel.html#a846ffe01da2a5333d847cbb7845861e8',1,'mappel::print_image(std::ostream &amp;out, const arma::vec &amp;im)'],['../namespacemappel.html#ad8730f7a4e2aadfd329c74692ea62504',1,'mappel::print_image(std::ostream &amp;out, const arma::mat &amp;im)'],['../namespacemappel.html#a5c439f824ab91a6e426685d74ee90a33',1,'mappel::print_image(std::ostream &amp;out, const arma::cube &amp;im)'],['../namespacemappel.html#a3294759903a1265559b35bc4b487b75b',1,'mappel::print_image(std::ostream &amp;out, const ImageT &amp;im)']]],
   ['print_5flabeled_5fimage',['print_labeled_image',['../namespacemappel.html#ab2dadb64b79f80c01086ce2c3d42e642',1,'mappel']]],
+  ['print_5ftext_5fimage',['print_text_image',['../namespacemappel.html#ab76cda908032f732529b5a5ef9af6fe2',1,'mappel::print_text_image(std::ostream &amp;out, const arma::vec &amp;im)'],['../namespacemappel.html#aeb4866d8a7ed74d646c235f4c2bcb2ce',1,'mappel::print_text_image(std::ostream &amp;out, const arma::mat &amp;im)'],['../namespacemappel.html#a7001581f62e18f70a49f9b3e76bd0ac9',1,'mappel::print_text_image(std::ostream &amp;out, const ImageT &amp;im)']]],
   ['print_5fvec_5frow',['print_vec_row',['../namespacemappel.html#adb38bc84f5b9500d9019091e80e7ada8',1,'mappel']]],
-  ['prior_5fgrad2_5fupdate',['prior_grad2_update',['../classmappel_1_1PriorMAP1DObjective.html#af21177beb6afa9a865289f4d49362d55',1,'mappel::PriorMAP1DObjective']]],
-  ['prior_5fgrad_5fupdate',['prior_grad_update',['../classmappel_1_1PriorMAP1DObjective.html#ae12cf228193e345f3382bc916e3c60ee',1,'mappel::PriorMAP1DObjective']]],
-  ['prior_5fhess_5fupdate',['prior_hess_update',['../classmappel_1_1PriorMAP1DObjective.html#af7dd7f0d9c0ccb34b988e63bd356dcfb',1,'mappel::PriorMAP1DObjective']]],
-  ['prior_5flog_5flikelihood',['prior_log_likelihood',['../classmappel_1_1PriorMAP1DObjective.html#a3cb80b4c435d260e1a62ba666fbbb787',1,'mappel::PriorMAP1DObjective']]],
   ['prior_5fobjective',['prior_objective',['../namespacemappel_1_1methods.html#a275f2b0364c48bfc7e6f88e866d593bd',1,'mappel::methods']]],
-  ['prior_5frelative_5flog_5flikelihood',['prior_relative_log_likelihood',['../classmappel_1_1PriorMAP1DObjective.html#a08683df7a96febdeca35291129291b6d',1,'mappel::PriorMAP1DObjective']]]
+  ['profile_5fbound_5fbacktrack',['profile_bound_backtrack',['../classmappel_1_1estimator_1_1IterativeMaximizer.html#ae9ea3c4a5fbfb9edac5c1c0f7bc070ae',1,'mappel::estimator::IterativeMaximizer']]]
 ];

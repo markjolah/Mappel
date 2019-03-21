@@ -1,5 +1,10 @@
 \hypertarget{display_8h}{}\subsection{display.\+h File Reference}
 \label{display_8h}\index{display.\+h@{display.\+h}}
+
+
+Textual image display with colors.  
+
+
 {\ttfamily \#include $<$iostream$>$}\\*
 {\ttfamily \#include $<$iomanip$>$}\\*
 {\ttfamily \#include $<$armadillo$>$}\\*
@@ -13,14 +18,18 @@
 \item 
 {\footnotesize template$<$class ImageT $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a3294759903a1265559b35bc4b487b75b}{mappel\+::print\+\_\+image} (std\+::ostream \&out, const ImageT \&im)
 \item 
+{\footnotesize template$<$class ImageT $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_a7001581f62e18f70a49f9b3e76bd0ac9}{mappel\+::print\+\_\+text\+\_\+image} (std\+::ostream \&out, const ImageT \&im)
+\item 
 {\footnotesize template$<$class Vec $>$ }\\std\+::ostream \& \hyperlink{namespacemappel_adb38bc84f5b9500d9019091e80e7ada8}{mappel\+::print\+\_\+vec\+\_\+row} (std\+::ostream \&out, const Vec \&vec, const char $\ast$header, int header\+\_\+width, const char $\ast$color=nullptr)
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
+Textual image display with colors. 
+
 \begin{DoxyAuthor}{Author}
 Mark J. Olah (\href{mailto:mjo@cs.unm}{\tt mjo@cs.\+unm} D\+OT edu) 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-03-\/23-\/2014 
+2014-\/2019 
 \end{DoxyDate}

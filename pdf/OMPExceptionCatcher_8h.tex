@@ -2,7 +2,7 @@
 \label{OMPExceptionCatcher_8h}\index{O\+M\+P\+Exception\+Catcher.\+h@{O\+M\+P\+Exception\+Catcher.\+h}}
 
 
-A lightweight class for managing C++ exception handling strategies for open\+MP methods.  
+A lightweight class for managing C++ exception handling strategies for Open\+MP methods.  
 
 
 {\ttfamily \#include $<$exception$>$}\\*
@@ -12,7 +12,7 @@ A lightweight class for managing C++ exception handling strategies for open\+MP 
 \subsubsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-class \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ Int\+Type $>$}
+class \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{omp\+\_\+exception\+\_\+catcher\+::impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ \+\_\+dummy $>$}
 \end{DoxyCompactItemize}
 \subsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
@@ -24,19 +24,31 @@ class \hyperlink{classomp__exception__catcher_1_1impl___1_1OMPExceptionCatcher}{
 \subsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-using \hyperlink{namespaceomp__exception__catcher_aed0913d080b088280707d30970f82129}{omp\+\_\+exception\+\_\+catcher\+::\+O\+M\+P\+Exception\+Catcher} = impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$ uint32\+\_\+t $>$
+using \hyperlink{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}{omp\+\_\+exception\+\_\+catcher\+::\+O\+M\+P\+Exception\+Catcher} = impl\+\_\+\+::\+O\+M\+P\+Exception\+Catcher$<$$>$
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517}{omp\+\_\+exception\+\_\+catcher\+::\+Strategy} \{ \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a7b2e9a6112ae937175819b661a4c0c67}{omp\+\_\+exception\+\_\+catcher\+::\+Strategy\+::\+Do\+Not\+Try}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517aa0bfb8e59e6c13fc8d990781f77694fe}{omp\+\_\+exception\+\_\+catcher\+::\+Strategy\+::\+Continue}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a727b63583e01fa2b3952dab580c84dc2}{omp\+\_\+exception\+\_\+catcher\+::\+Strategy\+::\+Abort}, 
+\hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a10308abc2313a8ec42d67a45a0122860}{omp\+\_\+exception\+\_\+catcher\+::\+Strategy\+::\+Rethrow\+First}
+ \}
 \end{DoxyCompactItemize}
 
 
 \subsubsection{Detailed Description}
-A lightweight class for managing C++ exception handling strategies for open\+MP methods. 
+A lightweight class for managing C++ exception handling strategies for Open\+MP methods. 
 
 \begin{DoxyAuthor}{Author}
 Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
 \end{DoxyAuthor}
 \begin{DoxyDate}{Date}
-2019 Open\+MP code must catch any exceptions that may have been thrown before exiting the Open\+MP block. This class acts as lightweight wrapper that allows an arbitrary function or lambda expression to be run safely and efficiently in O\+MP even if it might throw exceptions. We employ one of 4 possible strategies as determined By the O\+M\+P\+Exception\+Catcher\+::\+Strategies enum.
+2019 
 \end{DoxyDate}
-Strategy\textquotesingle{}s \+: O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Do\+Not\+Try -- Don\textquotesingle{}t even try, this is a null op to completely disable this class\textquotesingle{}s effect. O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Continue -- Catch exceptions and keep going O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Abort -- Catch exceptions and abort O\+M\+P\+Exception\+Catcher\+::\+Strategies\+::\+Rethrow\+First -- Re-\/throws first exception thrown by any thread
+\begin{DoxyCopyright}{Copyright}
+See L\+I\+C\+E\+N\+SE file Open\+MP code must catch any exceptions that may have been thrown before exiting the Open\+MP block. This class acts as lightweight wrapper that allows an arbitrary function or lambda expression to be run safely and efficiently in O\+MP even if it might throw exceptions. We employ one of 4 possible strategies as determined By the omp\+\_\+exception\+\_\+catcher\+::\+Strategies enum.
+\end{DoxyCopyright}
+Strategy\textquotesingle{}s \+: \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a7b2e9a6112ae937175819b661a4c0c67}{omp\+\_\+exception\+\_\+catcher\+::\+Strategies\+::\+Do\+Not\+Try} -- Don\textquotesingle{}t even try, this is a null op to completely disable this class\textquotesingle{}s effect. \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517aa0bfb8e59e6c13fc8d990781f77694fe}{omp\+\_\+exception\+\_\+catcher\+::\+Strategies\+::\+Continue} -- Catch exceptions and keep going \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a727b63583e01fa2b3952dab580c84dc2}{omp\+\_\+exception\+\_\+catcher\+::\+Strategies\+::\+Abort} -- Catch exceptions and abort \hyperlink{namespaceomp__exception__catcher_a70d1436a7f1714534deeb94daeee3517a10308abc2313a8ec42d67a45a0122860}{omp\+\_\+exception\+\_\+catcher\+::\+Strategies\+::\+Rethrow\+First} -- Re-\/throws first exception thrown by any thread.
 
-Example useage\+: O\+M\+P\+Exception\+Catcher catcher(\+O\+M\+P\+Exception\+Catcher$<$$>$\+::\+Strategies\+::\+Continue); \#pragma omp parallel for for(int n=0; n $<$ N; n++) catcher.\+run(\mbox{[}\&\mbox{]}\{ my\+\_\+ouput(n)=do\+\_\+my calulations(args(n)); \} catcher.\+rethrow(); //\+Required only if you ever might use Rethrow\+First strategy 
+Example usage\+: \hyperlink{namespaceomp__exception__catcher_ad61d95729373b0e8ffbabdfcde3ecb61}{omp\+\_\+exception\+\_\+catcher\+::\+O\+M\+P\+Exception\+Catcher} catcher(omp\+\_\+exception\+\_\+catcher\+::\+Strategies\+::\+Continue); \#pragma omp parallel for for(int n=0; n $<$ N; n++) catcher.\+run(\mbox{[}\&\mbox{]}\{ my\+\_\+output(n)=do\+\_\+my\+\_\+calculations(args(n)); \}) catcher.\+rethrow(); //\+Required only if you ever might use Rethrow\+First strategy 

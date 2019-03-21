@@ -87,7 +87,7 @@ Definition at line 55 of file M\+A\+P\+Estimator.\+h.
 
 
 
-Referenced by mappel\+::methods\+::aposteriori\+\_\+objective(), grad(), mappel\+::methods\+::objective\+::openmp\+::grad\+\_\+stack(), hessian(), mappel\+::methods\+::likelihood\+\_\+objective(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::model\+\_\+grad\+\_\+stack(), mappel\+::model\+\_\+hessian\+\_\+stack(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::name(), negative\+\_\+definite\+\_\+hessian(), mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad\+\_\+update(), and mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::set\+\_\+hyperparameters().
+Referenced by mappel\+::methods\+::aposteriori\+\_\+objective(), grad(), mappel\+::methods\+::objective\+::openmp\+::grad\+\_\+stack(), hessian(), mappel\+::methods\+::likelihood\+\_\+objective(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), negative\+\_\+definite\+\_\+hessian(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack().
 
 \index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!grad@{grad}}
 \index{grad@{grad}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
@@ -100,7 +100,7 @@ Referenced by mappel\+::methods\+::aposteriori\+\_\+objective(), grad(), mappel\
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a7adc23453a6c075227b8bd4d3e7a494b}{}\label{namespacemappel_1_1methods_1_1objective_a7adc23453a6c075227b8bd4d3e7a494b}
 
 
-Definition at line 66 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 65 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -138,7 +138,7 @@ Definition at line 64 of file M\+A\+P\+Estimator.\+h.
 
 
 
-Referenced by grad2(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::name(), mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+grad2\+\_\+update(), and mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::set\+\_\+hyperparameters().
+Referenced by grad2(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
 
 \index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!grad2@{grad2}}
 \index{grad2@{grad2}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
@@ -151,7 +151,7 @@ Referenced by grad2(), mappel\+::\+Newton\+Diagonal\+Maximizer$<$ Model $>$\+::m
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a5a6ea0d3fa967fa2ade437fceb717af6}{}\label{namespacemappel_1_1methods_1_1objective_a5a6ea0d3fa967fa2ade437fceb717af6}
 
 
-Definition at line 78 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 77 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -170,7 +170,7 @@ References grad2().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_ab437033475ac0491ae1dd3a2900a5c44}{}\label{namespacemappel_1_1methods_1_1objective_ab437033475ac0491ae1dd3a2900a5c44}
 
 
-Definition at line 93 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 92 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -193,6 +193,23 @@ Definition at line 65 of file M\+L\+Estimator.\+h.
 
 \index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!hessian@{hessian}}
 \index{hessian@{hessian}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
+\paragraph[{\texorpdfstring{hessian(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Param\+T$<$ Model $>$ \&theta)}{hessian(const Model &model, const ModelDataT< Model > &data_im, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::objective\+::hessian (
+\begin{DoxyParamCaption}
+\item[{const Model \&}]{model, }
+\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
+\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
+\end{DoxyParamCaption}
+)}\hypertarget{namespacemappel_1_1methods_1_1objective_aff0530b529e752a4c9039a8aef0eac20}{}\label{namespacemappel_1_1methods_1_1objective_aff0530b529e752a4c9039a8aef0eac20}
+
+
+Definition at line 100 of file model\+\_\+methods\+\_\+impl.\+h.
+
+
+
+References hessian().
+
+\index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!hessian@{hessian}}
+\index{hessian@{hessian}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
 \paragraph[{\texorpdfstring{hessian(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Stencil\+T$<$ Model $>$ \&s, Param\+T$<$ Model $>$ \&grad, Mat\+T \&hess)}{hessian(const Model &model, const ModelDataT< Model > &data_im, const StencilT< Model > &s, ParamT< Model > &grad, MatT &hess)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Return\+If\+SubclassT}$<$void,Model,{\bf M\+A\+P\+Estimator}$>$ mappel\+::methods\+::objective\+::hessian (
 \begin{DoxyParamCaption}
 \item[{const Model \&}]{model, }
@@ -208,24 +225,7 @@ Definition at line 72 of file M\+A\+P\+Estimator.\+h.
 
 
 
-Referenced by hessian(), mappel\+::methods\+::objective\+::openmp\+::hessian\+\_\+stack(), mappel\+::\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Quasi\+Newton\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), negative\+\_\+definite\+\_\+hessian(), and mappel\+::methods\+::observed\+\_\+information().
-
-\index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!hessian@{hessian}}
-\index{hessian@{hessian}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
-\paragraph[{\texorpdfstring{hessian(const Model \&model, const Model\+Data\+T$<$ Model $>$ \&data\+\_\+im, const Param\+T$<$ Model $>$ \&theta)}{hessian(const Model &model, const ModelDataT< Model > &data_im, const ParamT< Model > &theta)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf MatT} mappel\+::methods\+::objective\+::hessian (
-\begin{DoxyParamCaption}
-\item[{const Model \&}]{model, }
-\item[{const {\bf Model\+DataT}$<$ Model $>$ \&}]{data\+\_\+im, }
-\item[{const {\bf ParamT}$<$ Model $>$ \&}]{theta}
-\end{DoxyParamCaption}
-)}\hypertarget{namespacemappel_1_1methods_1_1objective_aff0530b529e752a4c9039a8aef0eac20}{}\label{namespacemappel_1_1methods_1_1objective_aff0530b529e752a4c9039a8aef0eac20}
-
-
-Definition at line 101 of file model\+\_\+methods\+\_\+impl.\+h.
-
-
-
-References hessian().
+Referenced by hessian(), mappel\+::methods\+::objective\+::openmp\+::hessian\+\_\+stack(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), negative\+\_\+definite\+\_\+hessian(), and mappel\+::methods\+::observed\+\_\+information().
 
 \index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!hessian@{hessian}}
 \index{hessian@{hessian}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
@@ -238,7 +238,7 @@ References hessian().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a21e579dfc19a06952bf98bd9d684fbdc}{}\label{namespacemappel_1_1methods_1_1objective_a21e579dfc19a06952bf98bd9d684fbdc}
 
 
-Definition at line 113 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 112 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -257,7 +257,7 @@ References grad(), and hessian().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a5c451515f6ec9eae7ffd321b9b8f95f1}{}\label{namespacemappel_1_1methods_1_1objective_a5c451515f6ec9eae7ffd321b9b8f95f1}
 
 
-Definition at line 123 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 122 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -275,7 +275,7 @@ References grad(), and hessian().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a0c7b3cd5fa4327c8f75e56937b2e616d}{}\label{namespacemappel_1_1methods_1_1objective_a0c7b3cd5fa4327c8f75e56937b2e616d}
 
 
-Definition at line 135 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 134 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -322,7 +322,7 @@ Definition at line 37 of file M\+L\+Estimator.\+h.
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a6f6dafac3df60b7d1c1dfa1eb7491eb8}{}\label{namespacemappel_1_1methods_1_1objective_a6f6dafac3df60b7d1c1dfa1eb7491eb8}
 
 
-Definition at line 50 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 49 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -339,7 +339,7 @@ References llh().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a1ea67c58d320c1634d8c69f834359029}{}\label{namespacemappel_1_1methods_1_1objective_a1ea67c58d320c1634d8c69f834359029}
 
 
-Definition at line 143 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 142 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -356,7 +356,7 @@ Referenced by negative\+\_\+definite\+\_\+hessian(), and mappel\+::methods\+::ob
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_aff95eac9143ee05d2611aa0c5b605f4c}{}\label{namespacemappel_1_1methods_1_1objective_aff95eac9143ee05d2611aa0c5b605f4c}
 
 
-Definition at line 155 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 154 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -375,7 +375,7 @@ References grad(), and negative\+\_\+definite\+\_\+hessian().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a5f339b29348c61937b1ae42ef963b592}{}\label{namespacemappel_1_1methods_1_1objective_a5f339b29348c61937b1ae42ef963b592}
 
 
-Definition at line 165 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 164 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -394,7 +394,7 @@ References grad(), and negative\+\_\+definite\+\_\+hessian().
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_a8c40861cc75e4165606b495a6c04c62a}{}\label{namespacemappel_1_1methods_1_1objective_a8c40861cc75e4165606b495a6c04c62a}
 
 
-Definition at line 178 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 177 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 
@@ -428,7 +428,7 @@ Definition at line 48 of file M\+A\+P\+Estimator.\+h.
 
 
 
-Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal(), mappel\+::methods\+::aposteriori\+\_\+objective(), mappel\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::compute\+\_\+estimate(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(), mappel\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::methods\+::likelihood\+\_\+objective(), mappel\+::\+Trust\+Region\+Maximizer$<$ Model $>$\+::maximize(), mappel\+::\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+Heuristic\+Estimator$<$ Model $>$\+::name(), mappel\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::name(), mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::name(), mappel\+::\+Prior\+M\+A\+P1\+D\+Objective\+::prior\+\_\+log\+\_\+likelihood(), mappel\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), relative\+\_\+log\+\_\+likelihood(), rllh(), mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack(), mappel\+::mcmc\+::sample\+\_\+posterior(), mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug(), and mappel\+::\+Estimator$<$ Model $>$\+::$\sim$\+Estimator().
+Referenced by mappel\+::methods\+::aposteriori\+\_\+objective(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::backtrack(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+max(), mappel\+::estimator\+::\+Heuristic\+Estimator$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::methods\+::likelihood\+\_\+objective(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::\+Maximizer\+Data\+::\+Maximizer\+Data(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::profile\+\_\+bound\+\_\+backtrack(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::record\+\_\+exit\+\_\+code(), relative\+\_\+log\+\_\+likelihood(), rllh(), mappel\+::methods\+::objective\+::openmp\+::rllh\+\_\+stack(), mappel\+::mcmc\+::sample\+\_\+posterior(), and mappel\+::mcmc\+::sample\+\_\+posterior\+\_\+debug().
 
 \index{mappel\+::methods\+::objective@{mappel\+::methods\+::objective}!rllh@{rllh}}
 \index{rllh@{rllh}!mappel\+::methods\+::objective@{mappel\+::methods\+::objective}}
@@ -441,7 +441,7 @@ Referenced by mappel\+::\+Simulated\+Annealing\+Maximizer$<$ Model $>$\+::anneal
 )}\hypertarget{namespacemappel_1_1methods_1_1objective_ae5d28913a8f6ce2c042edd810cb17e13}{}\label{namespacemappel_1_1methods_1_1objective_ae5d28913a8f6ce2c042edd810cb17e13}
 
 
-Definition at line 58 of file model\+\_\+methods\+\_\+impl.\+h.
+Definition at line 57 of file model\+\_\+methods\+\_\+impl.\+h.
 
 
 

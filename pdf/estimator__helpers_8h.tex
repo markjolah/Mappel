@@ -1,0 +1,50 @@
+\hypertarget{estimator__helpers_8h}{}\subsection{estimator\+\_\+helpers.\+h File Reference}
+\label{estimator__helpers_8h}\index{estimator\+\_\+helpers.\+h@{estimator\+\_\+helpers.\+h}}
+
+
+Estimator helper subroutines.  
+
+
+\subsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \hyperlink{namespacemappel}{mappel}
+\item 
+ \hyperlink{namespacemappel_1_1estimator}{mappel\+::estimator}
+\item 
+ \hyperlink{namespacemappel_1_1estimator_1_1subroutine}{mappel\+::estimator\+::subroutine}
+\end{DoxyCompactItemize}
+\subsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_abc13a3e704d5a6b0f061b0b16c2d7f2c}{mappel\+::estimator\+::subroutine\+::bound\+\_\+step} (const VecT \&step, const VecT \&theta, const VecT \&lbound, const VecT \&ubound)
+\item 
+void \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a1673ca9f6b96264e3919797433c36c9e}{mappel\+::estimator\+::subroutine\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec} (const VecT \&theta, const VecT \&g, const VecT \&lbound, const VecT \&ubound, VecT \&v, VecT \&Jv)
+\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a182a266dac3ad7cd931263861b36d00e}{mappel\+::estimator\+::subroutine\+::compute\+\_\+\+D\+\_\+scale} (const VecT \&old\+Dscale, const VecT \&grad2)
+\item 
+void \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a12cda60151ce1285a6ae8c82b61d484b}{mappel\+::estimator\+::subroutine\+::compute\+\_\+scaled\+\_\+problem} (const MatT \&H, const VecT \&g, const VecT \&Dinv, const VecT \&Jv, MatT \&Hhat, VecT \&ghat)
+\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a002586a416b03776ab8d2d3e846370c7}{mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step} (const MatT \&obsI, IdxT fixed\+\_\+idx, double llh\+\_\+delta)
+\item 
+double \hyperlink{namespacemappel_1_1estimator_1_1subroutine_adc2b09806f8f22cf797e00840d310734}{mappel\+::estimator\+::subroutine\+::compute\+\_\+initial\+\_\+trust\+\_\+radius} (const VecT \&ghat)
+\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a44afae701c4ebfa4ecc6fbb8e43e117c}{mappel\+::estimator\+::subroutine\+::compute\+\_\+cauchy\+\_\+point} (const VecT \&g, const MatT \&H, double delta)
+\item 
+double \hyperlink{namespacemappel_1_1estimator_1_1subroutine_aad294d44d135403caf44869b9c72c529}{mappel\+::estimator\+::subroutine\+::compute\+\_\+quadratic\+\_\+model\+\_\+value} (const VecT \&s, const VecT \&g, const MatT \&H)
+\begin{DoxyCompactList}\small\item\em Quadratic model value at given step Compute a quadratic model. \end{DoxyCompactList}\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_a253df60d2e10693221da3dad4f279165}{mappel\+::estimator\+::subroutine\+::solve\+\_\+\+T\+R\+\_\+subproblem} (const VecT \&g, const MatT \&H, double delta)
+\begin{DoxyCompactList}\small\item\em Exact solver the TR sub-\/problem even for non-\/positive definite H. \end{DoxyCompactList}\item 
+VecT \hyperlink{namespacemappel_1_1estimator_1_1subroutine_aeec8d62491c9680e306592dde26d9189}{mappel\+::estimator\+::subroutine\+::solve\+\_\+restricted\+\_\+step\+\_\+length\+\_\+newton} (const VecT \&g, const MatT \&H, double delta, double lambda\+\_\+lb, double lambda\+\_\+ub)
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+Estimator helper subroutines. 
+
+\begin{DoxyAuthor}{Author}
+Mark J. Olah (mjo@cs.\+unm D\+OT edu) 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2014-\/2019 
+\end{DoxyDate}
