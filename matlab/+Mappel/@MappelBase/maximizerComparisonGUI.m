@@ -4,7 +4,6 @@
 % Optionally a theta_init can be specified.  If unset, the butilin theta initialization will be used.
 
 function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
-    import('MexIFace.GUIBuilder');
     gui_name = sprintf('[%s] Maximizer Algorithm Comparison',class(obj));
     fig_sz = [1600 900]; %figure size
     uH = 25;
@@ -35,6 +34,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
     colors.Heuristic = [.8,.8,.8];
     colors.CGauss = [.2, .2, 1];
     colors.TrustRegion = [0,1,0];
+    colors.matlabtrust = [0,1,1];
     mainFontSz =10;
     boarder = 5;
     sp = 2;
@@ -54,9 +54,9 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
     handles.accYTab=uitab('Parent',handles.accTabs, 'Title','Y Pos.');
     handles.accITab=uitab('Parent',handles.accTabs, 'Title','Intensity');
     handles.accBgTab=uitab('Parent',handles.accTabs, 'Title','Background');
-    if obj.nParams==5
+    if obj.NumParams==5
         handles.accSigmaTab=uitab('Parent',handles.accTabs, 'Title','PSF Sigma');
-    elseif obj.nParams==6
+    elseif obj.NumParams==6
         handles.accSigmaXTab=uitab('Parent',handles.accTabs, 'Title','PSF SigmaX');
         handles.accSigmaYTab=uitab('Parent',handles.accTabs, 'Title','PSF SigmaY');
     end
@@ -82,7 +82,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         labels={'#Samples','Theta','Theta Init','Theta SE (CRLB):'};
         values={nSamples, theta,theta_init,sqrt(crlb) };
         CBs={@setNSamplesEdit_CB,@setThetaEdit_CB,@setThetaInitEdit_CB,[]};
-        handles.edits = MexIFace.GUIBuilder.labeledHEdits(handles.paramPan, panel1_pos, uH, hNames, labels, values, CBs);
+        handles.edits = GUIBuilder.labeledHEdits(handles.paramPan, panel1_pos, uH, hNames, labels, values, CBs);
         useInit_toggle_pos = [sp, paramPan_sz(2)-control_h-uH, 80, uH];
         handles.useInitToggle = uicontrol('Parent',handles.paramPan,'Style','checkbox','Position',useInit_toggle_pos,'String',...
                                       'Use Init','Selected','off','Callback',@setUseInit_CB);
@@ -116,7 +116,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
                 theta_init = mean(obj.estimate(ims,'Heuristic'),2);
             end
         end
-        handles.edits.thetaInit.String = MexIFace.arr2str(theta_init(:)');
+        handles.edits.thetaInit.String = CellFun.arr2str(theta_init(:)');
     end
 
     function initializeAxes()
@@ -127,7 +127,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         title(ax.model,'Model Image');
         colormap(ax.model,hot());
         colorbar(ax.model);
-        MexIFace.GUIBuilder.positionImageAxes(ax.model,obj.imsize,model_fig_pos,[00 00 40 00]);
+        GUIBuilder.positionImageAxes(ax.model,double(obj.ImageSize),model_fig_pos,[00 00 40 00]);
         %Sample image
         xlabel(ax.sample,'X (px)');
         ylabel(ax.sample,'Y (px)');
@@ -135,7 +135,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         title(ax.sample,'Sample Image');
         colormap(ax.sample,hot());
         colorbar(ax.sample);
-        MexIFace.GUIBuilder.positionImageAxes(ax.sample,obj.imsize,sample_fig_pos,[00 00 40 00]);
+        GUIBuilder.positionImageAxes(ax.sample,double(obj.ImageSize),sample_fig_pos,[00 00 40 00]);
     end
 
 
@@ -158,24 +158,24 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
     end
 
     function setThetaInit(new_theta_init)
-        if numel(new_theta_init)~=obj.nParams
+        if numel(new_theta_init)~=obj.NumParams
             error('MappelBase:maximizerComparisonGUI','bad theta_init size');
         end
         theta_init = new_theta_init;
-        handles.edits.theta_init.String = MexIFace.arr2str(theta_init(:)');
+        handles.edits.theta_init.String = CellFun.arr2str(theta_init(:)');
         handles.theta_init_pt = impoint(ax.model,theta_init(1),theta_init(2));
         clearResults();
     end
 
     function setTheta(new_theta)
-        if numel(new_theta)~=obj.nParams
+        if numel(new_theta)~=obj.NumParams
             error('MappelBase:maximizerComparisonGUI','bad theta size');
         end
         theta = new_theta(:);
         model_im = obj.modelImage(theta);
         crlb = obj.CRLB(theta);
-        handles.edits.thetaCRLB.String = MexIFace.arr2str(crlb(:)');
-        handles.edits.theta.String = MexIFace.arr2str(theta(:)');
+        handles.edits.thetaCRLB.String = CellFun.arr2str(crlb(:)');
+        handles.edits.theta.String = CellFun.arr2str(theta(:)');
         ims = obj.simulateImage(theta,nSamples);
         max_val = max([max(model_im(:)),max(max(ims(:,:,1)))]);
 
@@ -199,7 +199,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
 
     function evaluateMaximizers()
         
-        llh_ims = obj.LLH(ims,theta);
+        llh_ims = obj.modelRLLH(ims,theta);
         for name_idx = Es
             name = name_idx{1};
             if useThetaInit
@@ -240,7 +240,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         plot(theta([1,1]),yl([1,2]),tls,'LineWidth',tlw,'DisplayName',sprintf('true x=%.6f crlbSE=%.4f', theta(1), sqrt(crlb(1))));
         xl=xlim();
         xl(1)=max(xl(1),0);
-        xl(2)=min(xl(2),obj.imsize(1));
+        xl(2)=min(xl(2),obj.ImageSize(1));
         xlim(xl);
         title('X-distribution');
         h=legend('location','best');
@@ -265,7 +265,7 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         plot(theta([2,2]),yl([1,2]),tls,'LineWidth',tlw,'DisplayName',sprintf('true y=%.6f crlbSE=%.4f', theta(2), sqrt(crlb(2))));
         xl=xlim();
         xl(1)=max(xl(1),0);
-        xl(2)=min(xl(2),obj.imsize(2));
+        xl(2)=min(xl(2),obj.ImageSize(2));
         xlim(xl);
         title('Y-distribution');
         h=legend('location','best');
@@ -313,11 +313,11 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         h=legend('location','best');
         h.Interpreter='latex';
 
-        if obj.nParams==5
+        if obj.NumParams==5
             handles.plots.accbias=subplot(3,2,5,'Parent',handles.accSigmaTab);
             cla(handles.plots.accbias,'reset');
             hold('on');
-            bar_data = zeros(obj.nParams, nEs);
+            bar_data = zeros(obj.NumParams, nEs);
             for n=1:nEs
                 name = Es{n};
                 bar_data(:,n)= mean(run.(Es{n}).est_errors ./ run.(name).est_theta,2);

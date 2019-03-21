@@ -301,7 +301,7 @@ void Gauss2DModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_r
 
 Gauss2DModel::Stencil
 Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init, 
-                                               const std::string &estimator_method)
+                                               const std::string &estimator_method) const
 {
     double x_pos = 0;
     double y_pos = 0;
@@ -316,8 +316,9 @@ Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init,
     }
     Gauss2DModel::ImageT x_im = arma::sum(im,0).t();
     Gauss2DModel::ImageT y_im = arma::sum(im,1);
-    auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
-    auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
+    estimator::MLEData x_est, y_est;
+    methods::estimate_max(x_model,x_im,estimator_method,x_est);
+    methods::estimate_max(y_model,y_im,estimator_method,y_est);
     
     if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) x_pos = x_est.theta(0);
     if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) y_pos = y_est.theta(0);

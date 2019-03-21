@@ -1,6 +1,9 @@
 % Gauss2DMAP.m
+% Mark J. Olah (mjo@cs.unm DOT edu)
+% 2014 - 2019
+% COPYRIGHT: See: LICENCE
 %
-% A Mappel point emitter model iterface for:
+% A Mappel point emitter model interface for:
 %  * Model: Gauss2DModel a 2D Gaussian PSF with fixed psf_sigma [sigmaX, sigmaY]
 %  * Objective: PoissonNoise2DObjective - Assumes Poisson noise model.
 %  * Estimator: MAPEstimator - Maximum a-posteriori likelihood function, that incorporates prior information.
@@ -10,11 +13,7 @@
 %      * All image data should be calibrated to ensure the Poisson noise assumption holds [at least approximately].
 %
 % Methods and Properties:
-% See also Mappel.MappelBase
-
-% Mark J. Olah (mjo@cs.unm DOT edu)
-% 2014 - 2019
-% COPYRIGHT: See: LICENCE
+% See: Mappel.MappelBase
 
 classdef Gauss2DMAP < Mappel.MappelBase
     properties (Constant=true)
@@ -31,20 +30,23 @@ classdef Gauss2DMAP < Mappel.MappelBase
         DefaultGPUGaussMLEFitType=1; %Fitting mode used for gpugaussmle estimator comparison
     end % protected constant properties
 
+    properties (Access=public)
+        GPUGaussMLE_Iterations
+    end
+    
     methods (Access=public)
         function obj = Gauss2DMAP(imsize, psf_sigma)
-            % obj = Gauss2DMAP(imsize,psf_sigma) - Make a new Gauss2DMAP
-            % (in) imsize: int size:[2] - size of image in pixels on each side [X, Y] note 
-            %                               - X is image horizontal width in pixels (#cols)
-            %                               - Y is image vertical height in pixels (#rows)
-            % (in) psf_sigma: ouble size:[2] - Gaussian PSF sigma in pixels: [sigmaX,sigmaY].
+            % obj = Gauss2DMAP(imsize,psf_sigma) - Make a new Gauss2DMAP for
+            % point localization in 2D with a fixed PSF.
+            % (in) imsize: scalar int - size of image in pixels on each side (min: obj.MinSize)
+            % (in) psf_sigma: scalar double>0 - size of PSF in pixels
             % (out) obj - A new object      
             obj@Mappel.MappelBase(@Gauss2DMAP_IFace, imsize, psf_sigma);
             % set defaults
             obj.ParamUnits = obj.DefaultParamUnits;
             obj.ParamDescription = obj.DefaultParamDescription;
             obj.GPUGaussMLEFitType = obj.DefaultGPUGaussMLEFitType;
+            obj.GPUGaussMLE_Iterations = obj.DefaultGPUGaussMLE_Iterations;
         end
     end %public methods
 end % classdef
-

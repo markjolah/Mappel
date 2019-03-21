@@ -21,22 +21,25 @@ function mapEstimatorAccuracyCompare(obj,estimators, paramNames, gridsize, nTria
         estimators={estimators};
     end
     Nestimators=length(estimators);
+    [grid, samples] = obj.makeThetaGridSamples(mask,gridsize,nTrials);
+    
+    
     f=figure('PaperSize',[11 8.5]);
     
-    sz=double(obj.imsize(1));
-    ticks=linspace(1,gridsize,sz);
-    ticks_labels=linspace(1,sz,sz);
+    sz = double(obj.ImageSize(1));
+    ticks = linspace(1,gridsize,sz);
+    ticks_labels = linspace(1,sz,sz);
     set(f,'Colormap',jet());
     set(f,'PaperType','usletter', 'PaperOrientation', 'landscape', 'PaperPositionMode', 'manual');
     set(f,'PaperPosition',[0.5 0.5 10.5,8.0]);
-    grids=cell(1,Nestimators);
+    vals=cell(1,Nestimators);
     gmax=0;
     for i=1:Nestimators
         estimator=estimators{i};
         fprintf('Mapping estimator accuracy: %s\n',estimator);
-        grid=obj.mapEstimatorAccuracy(estimator, mask, gridsize, nTrials, intensity);
-        gmax=max(gmax,max(grid(:)));
-        grids{i}=grid;
+        val = obj.mapEstimatorAccuracy(estimator, samples);
+        gmax=max(gmax,max(val(:)));
+        vals{i}=val;
     end
     for i=1:Nestimators
         if Nestimators>3
@@ -44,7 +47,7 @@ function mapEstimatorAccuracyCompare(obj,estimators, paramNames, gridsize, nTria
         else
             subplot(Nestimators,1,i);
         end
-        imagesc(grids{i},[0,gmax]);
+        imagesc(vals{i},[0,gmax]);
         set(gca,'XTick',ticks);
         set(gca,'XTickLabel',ticks_labels);
         set(gca,'YTick',ticks);

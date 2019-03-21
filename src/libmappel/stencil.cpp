@@ -1,10 +1,14 @@
 
 /** @file stencil.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 03-22-2014
+ * @date 2014-2019
  * @brief The stencils for pixel based computations
  */
 #include <sstream>
+
+#include <boost/math/special_functions/erf.hpp>
+#include <boost/math/distributions/chi_squared.hpp>
+
 #include "Mappel/util.h"
 #include "Mappel/stencil.h"
 #include "Mappel/display.h"
@@ -23,7 +27,7 @@ double normal_quantile_twosided(double confidence)
         throw ParameterValueError(msg.str());
     }
     double p = 1 - (1-confidence)/2.;
-    return sqrt2*erf(2*p-1);
+    return sqrt2*boost::math::erf_inv(2*p-1);
 }
 
 double normal_quantile_onesided(double confidence)
@@ -33,7 +37,20 @@ double normal_quantile_onesided(double confidence)
         msg<<"Got bad confidence:"<<confidence<<" should be in (0,1).";
         throw ParameterValueError(msg.str());
     }
-    return sqrt2*erf(2*confidence-1);
+    return sqrt2*boost::math::erf_inv(2*confidence-1);
+}
+
+double chisq_quantile(double confidence, int dof)
+{
+    boost::math::chi_squared_distribution<double> chi2_dist(dof);
+    return boost::math::quantile(chi2_dist,confidence);
+}
+
+
+double chisq_quantile(double confidence)
+{
+    static boost::math::chi_squared_distribution<double> chi2_dist(1);
+    return boost::math::quantile(chi2_dist,confidence);
 }
 
 

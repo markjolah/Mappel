@@ -293,7 +293,6 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
     return btheta;
 }
 
-
 BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 {
     check_param_shape(theta);
@@ -322,6 +321,5 @@ PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
     for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));
     return new_theta;
 }
-
 
 } /* namespace mappel */

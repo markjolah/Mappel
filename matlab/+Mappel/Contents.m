@@ -2,7 +2,7 @@
 % Maximum a posteriori Point Emitter Localzatization
 % Author: Mark J. Olah
 % 2014-2019
-% LICENSE: Apache-2.0.  See LICENSE file.
+% LICENSE: GPL-v3  See LICENSE file.
 %
 % Mappel is object-oriented.  Each fitting problem type has a specific class that is used to estimate
 % parameters for its particular data and psf model.  The models include three primary components:

@@ -307,7 +307,9 @@ function guiFig = maximizerInspectorGUI(obj)
         new_theta=theta_init;
         new_theta(2) = hObj(2);
         new_theta(1) = hObj(1);
-        setThetaInit(new_theta);
+        if ~set_theta_init_active
+            setThetaInit(new_theta);
+        end
     end
 
     function generateImage()
@@ -454,7 +456,13 @@ function guiFig = maximizerInspectorGUI(obj)
 
         xlim([1,seq_len]);
         yl = ylim();
-        ylim([min(min(theta(1:2)),0.8*yl(1)) min(1.2*yl(2),max(obj.ImageSize))]);
+        yl_min=min([yl, min(theta_est(1:2)),min(theta(1:2)),min(plot_seq(1,:)),min(plot_seq(2,:))]);
+        yl_max=max([yl, max(theta_est(1:2)),max(theta(1:2)),max(plot_seq(1,:)),max(plot_seq(2,:))]);
+        if(backtrack_theta)
+            yl_min=min([yl_min, min(backtrack_theta(1,:)), min(backtrack_theta(2,:))]);
+            yl_max=max([yl_max, max(backtrack_theta(1,:)), max(backtrack_theta(2,:))]);
+        end
+        ylim([yl_min,yl_max]);
         title('Position Seq.')
         xlabel('Iteration')
         
@@ -561,6 +569,8 @@ function guiFig = maximizerInspectorGUI(obj)
         yl = ylim();
         ylim([0.8*min(yl) 1.2*max(yl)]);
         legend('location','best');
+        xlabel('Iteration')
+        ylabel('llh')
         title('LLH Seq.')
     end
 
@@ -634,7 +644,7 @@ function guiFig = maximizerInspectorGUI(obj)
         end
         if isfield(estimator_stats,'num_exit_error') && estimator_stats.num_exit_error
             handles.edits.exit.String = 'Error';
-        elseif isfield(estimator_stats,'num_exit_function_value_change') && estimator_stats.num_exit_function_value_change
+        elseif isfield(estimator_stats,'num_exit_function_value') && estimator_stats.num_exit_function_value
             handles.edits.exit.String = 'OK: Function value change.';
         elseif isfield(estimator_stats,'num_exit_grad_ratio') && estimator_stats.num_exit_grad_ratio
             handles.edits.exit.String = 'OK: Grad ratio.';
@@ -642,10 +652,12 @@ function guiFig = maximizerInspectorGUI(obj)
             handles.edits.exit.String = '?: Max backtracks.';
         elseif isfield(estimator_stats,'num_exit_max_iter') && estimator_stats.num_exit_max_iter
             handles.edits.exit.String = '?: Max Iter.';
-        elseif isfield(estimator_stats,'num_exit_step_size_ratio') && estimator_stats.num_exit_step_size_ratio
+        elseif isfield(estimator_stats,'num_exit_step_size') && estimator_stats.num_exit_step_size
             handles.edits.exit.String = 'OK: Step size ratio.';
         elseif isfield(estimator_stats,'num_exit_trust_region_radius') && estimator_stats.num_exit_trust_region_radius
             handles.edits.exit.String = 'OK: Trust region radius.';
+        elseif isfield(estimator_stats,'num_exit_model_improvement') && estimator_stats.num_exit_model_improvement
+            handles.edits.exit.String = 'OK: Predicted Model Improvement.';
         elseif isfield(estimator_stats,'num_exit_success') && estimator_stats.num_exit_success
             handles.edits.exit.String = 'OK: Success.';
         else

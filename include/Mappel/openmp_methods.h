@@ -42,7 +42,7 @@ inline namespace openmp {
  * @param[out] theta_stack, A sequence of sampled thetas.  Size: [model.num_params, nSamples]
  */
 template<class Model>
-void sample_prior_stack(Model &model, ParamVecT<Model> &theta_stack)
+void sample_prior_stack(const Model &model, ParamVecT<Model> &theta_stack)
 {
     int nthetas = static_cast<int>(theta_stack.n_cols);
     omp_exception_catcher::OMPExceptionCatcher catcher(omp_exception_catcher::Strategy::Continue);
@@ -97,7 +97,7 @@ void model_image_stack(const Model &model,
  * @param[out] image_stack   Sequence of model images generated.
  */
 template<class Model>
-void simulate_image_stack(Model &model,
+void simulate_image_stack(const Model &model,
                     const ParamVecT<Model> &theta_stack,
                     ImageStackT<Model> &image_stack)
 {
@@ -165,226 +165,185 @@ void expected_information_stack(const Model &model,
 }
 
 template<class Model>
-void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
-                        ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack)
+void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
+                        estimator::MLEDataStack &mle_data_stack)
 {
     auto estimator = make_estimator(model,method);
-    estimator->estimate_max_stack(data_stack, theta_max_stack, theta_max_rllh, obsI_stack);
+    auto theta_init=model.make_param_vec(model.get_size_image_stack(data_stack));
+    theta_init.zeros();
+    estimator->estimate_max_stack(data_stack, theta_init, mle_data_stack);
 }
 
 template<class Model>
-void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
-                        ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack, StatsT &stats)
+void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack,  const std::string &method,
+                        ParamVecT<Model> &theta_init_stack, estimator::MLEDataStack &mle_data_stack)
 {
     auto estimator = make_estimator(model,method);
-    estimator->estimate_max_stack(data_stack, theta_max_stack, theta_max_rllh, obsI_stack);
+    estimator->estimate_max_stack(data_stack, theta_init_stack, mle_data_stack);
+}
+
+
+template<class Model>
+void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
+                        ParamVecT<Model> &theta_init_stack, estimator::MLEDataStack &mle_data_stack, StatsT &stats)
+{
+    auto estimator = make_estimator(model,method);
+    estimator->estimate_max_stack(data_stack, theta_init_stack, mle_data_stack);
     stats = estimator->get_stats();
 }
 
+
 template<class Model>
-void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
-                        ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack)
+void estimate_profile_likelihood_stack(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                       const ParamVecT<Model> &fixed_theta_init,
+                                       estimator::ProfileLikelihoodData &est)
 {
     auto estimator = make_estimator(model,method);
-    estimator->estimate_max_stack(data_stack, theta_init_stack, theta_max_stack, theta_max_rllh, obsI_stack);
+    estimator->estimate_profile_max(data, fixed_theta_init, est);
 }
 
 template<class Model>
-void estimate_max_stack(Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method, ParamVecT<Model> &theta_init_stack,
-                        ParamVecT<Model> &theta_max_stack, VecT &theta_max_rllh, CubeT &obsI_stack, StatsT &stats)
+void estimate_profile_likelihood_stack(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                    const ParamVecT<Model> &fixed_theta_init, estimator::ProfileLikelihoodData &est, StatsT &stats)
 {
     auto estimator = make_estimator(model,method);
-    estimator->estimate_max_stack(data_stack, theta_init_stack, theta_max_stack, theta_max_rllh, obsI_stack);
+    estimator->estimate_profile_max(data, fixed_theta_init, est);
     stats = estimator->get_stats();
 }
 
-//default theta_init without stats
-template<class Model>
-void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
-                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters)
-{
-    auto estimator = make_estimator(model,method);
-    auto theta_init = model.make_param_vec(fixed_values.n_elem);
-    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
-}
-
-//default theta_init with stats
-template<class Model>
-void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
-                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters, StatsT &stats)
-{
-    auto estimator = make_estimator(model,method);
-    auto theta_init = model.make_param_vec(fixed_values.n_elem);
-    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
-    stats = estimator->get_stats();
-}
-
-//theta_init without stats
-template<class Model>
-void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
-                                 const ParamVecT<Model> &theta_init,
-                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters)
-{
-    auto estimator = make_estimator(model,method);
-    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
-}
-
-//theta_init with stats
-template<class Model>
-void estimate_profile_likelihood(Model &model, const ModelDataT<Model> &data, const IdxVecT &fixed_parameters, const MatT &fixed_values, const std::string &method,
-                                 const ParamVecT<Model> &theta_init,
-                                 VecT &profile_likelihood, ParamVecT<Model> &profile_parameters, StatsT &stats)
-{
-    auto estimator = make_estimator(model,method);
-    estimator->estimate_profile_stack(data, fixed_parameters, fixed_values, theta_init, profile_likelihood, profile_parameters);
-    stats = estimator->get_stats();
-}
 
 template <class Model>
-void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data_stack, const ParamVecT<Model> &theta_init_stack,
-                                IdxT Nsamples, IdxT Nburnin, IdxT thin, CubeT &sample_stack, MatT &sample_rllh_stack)
+void estimate_posterior_stack(const Model &model, const ModelDataStackT<Model> &data_stack,
+                              const ParamVecT<Model> &theta_init_stack, mcmc::MCMCDataStack &est)
 {
-    IdxT count = model.get_size_image_stack(data_stack);
-    sample_stack.set_size(model.get_num_params(), Nsamples, count);
-    sample_rllh_stack.set_size(Nsamples,count);
+    auto Np = model.get_num_params();
+    est.Ndata = model.get_size_image_stack(data_stack);
+    est.initialize_arrays(Np);
+    auto Noversample = mcmc::num_oversample(est.Nsample,est.Nburnin,est.thin);
     omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel
     {
-        auto sample = model.make_param_stack(Nsamples);
-        VecT sample_rllh(Nsamples);
+        auto oversample = model.make_param_stack(Noversample);
+        VecT oversample_rllh(Noversample);
+        auto sample = model.make_param_stack(est.Nsample);
+        VecT sample_rllh(est.Nsample);
+        auto sample_mean = model.make_param();
+        auto sample_cov = model.make_param_mat();
+        auto credible_lb = model.make_param();
+        auto credible_ub = model.make_param();
         #pragma omp for
-        for(IdxT n=0; n<count; n++)
+        for(IdxT n=0; n<est.Ndata; n++)
             catcher.run([&]{
-                estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n),
-                                 theta_init_stack.col(n), Nsamples, Nburnin, thin, 
-                                 sample, sample_rllh);
-                sample_stack.slice(n) = sample;
-                sample_rllh_stack.col(n) = sample_rllh;
+                auto data = model.get_image_from_stack(data_stack,n);
+                mcmc::sample_posterior(model, data, model.initial_theta_estimate(data, theta_init_stack.col(n)), oversample, oversample_rllh);
+                mcmc::thin_sample(oversample, oversample_rllh, est.Nburnin, est.thin, sample, sample_rllh);
+                mcmc::estimate_sample_posterior(sample, sample_mean, sample_cov);
+                mcmc::compute_posterior_credible(sample, est.confidence, credible_lb, credible_ub);
+                est.credible_lb.col(n) = credible_lb;
+                est.credible_ub.col(n) = credible_ub;
+                est.sample.slice(n) = sample;
+                est.sample_rllh.col(n) = sample_rllh;
+                est.sample_mean.col(n) = sample_mean;
+                est.sample_cov.slice(n) = sample_cov;
             });
     }
     catcher.rethrow();
 }
 
 template <class Model>
-void estimate_mcmc_sample_stack(Model &model, const ModelDataStackT<Model> &data_stack,
-                                IdxT Nsamples, IdxT Nburnin, IdxT thin, CubeT &sample, MatT &sample_rllh)
+void estimate_posterior_stack(const Model &model, const ModelDataStackT<Model> &data_stack, mcmc::MCMCDataStack &est)
 {
     IdxT count = model.get_size_image_stack(data_stack);
     auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
-    estimate_mcmc_sample_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, sample, sample_rllh);
-}
-
-template <class Model>
-void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &data_stack, const ParamVecT<Model> &theta_init_stack,
-                         IdxT Nsamples, IdxT Nburnin, IdxT thin, MatT &theta_mean_stack, CubeT &theta_cov_stack)
-{
-    IdxT count = model.get_size_image_stack(data_stack);
-    theta_mean_stack.set_size(model.get_num_params(), count);
-    theta_cov_stack.set_size(model.get_num_params(),model.get_num_params(),count);
-    omp_exception_catcher::OMPExceptionCatcher catcher;
-    #pragma omp parallel
-    {
-        auto sample = model.make_param_stack(Nsamples);
-        VecT sample_rllh(Nsamples);
-        auto theta_mean = model.make_param();
-        auto theta_cov = model.make_param_mat();
-        #pragma omp for
-        for(IdxT n=0; n<count; n++)
-            catcher.run([&]{
-                estimate_mcmc_sample(model, model.get_image_from_stack(data_stack,n),
-                                 theta_init_stack.col(n), Nsamples, Nburnin, thin, 
-                                 sample, sample_rllh);
-                mcmc::estimate_sample_posterior(sample,theta_mean, theta_cov);
-                theta_mean_stack.col(n) = theta_mean;
-                theta_cov_stack.slice(n) = theta_cov;
-            });
-    }
-    catcher.rethrow();
-}
-
-template <class Model>
-void estimate_mcmc_posterior_stack(Model &model, const ModelDataStackT<Model> &data_stack,
-                         IdxT Nsamples, IdxT Nburnin, IdxT thin, MatT &theta_mean_stack, CubeT &theta_cov_stack)
-{
-    IdxT count = model.get_size_image_stack(data_stack);
-    auto theta_init_stack = model.make_param_stack(count,arma::fill::zeros);
-    estimate_mcmc_posterior_stack(model, data_stack, theta_init_stack, Nsamples, Nburnin, thin, theta_mean_stack, theta_cov_stack);
+    estimate_posterior_stack(model, data_stack, theta_init_stack,est);
 }
 
 template<class Model>
 void error_bounds_expected_stack(const Model &model, const MatT &theta_est_stack, double confidence,
                             MatT &theta_lb_stack, MatT &theta_ub_stack)
 {
-    IdxT count = theta_est_stack.n_cols;
+    auto count = theta_est_stack.n_cols;
     theta_lb_stack.set_size(model.get_num_params(), count);
     theta_ub_stack.set_size(model.get_num_params(), count);
-    auto crlb_stack = model.make_param_stack(count);
-    cr_lower_bound_stack(model, theta_est_stack, crlb_stack);
     double z = normal_quantile_twosided(confidence);
-    auto sqrt_crlb_stack = arma::sqrt(crlb_stack);
-    theta_lb_stack = theta_est_stack - z*sqrt_crlb_stack;
-    theta_ub_stack = theta_est_stack + z*sqrt_crlb_stack;        
+
+    omp_exception_catcher::OMPExceptionCatcher catcher;
+    #pragma omp parallel for
+    for(IdxT n=0; n<count; n++)
+        catcher.run([&]{
+            auto theta_est = theta_est_stack.col(n);
+            VecT bnd = z*arma::sqrt(cr_lower_bound(model, theta_est));
+            theta_lb_stack.col(n) = arma::max(model.get_lbound(), theta_est-bnd);
+            theta_ub_stack.col(n) = arma::min(model.get_ubound(), theta_est+bnd);
+        });
+    catcher.rethrow();
 }
 
 template<class Model>
 void error_bounds_observed_stack(const Model &model, const MatT &theta_est_stack, CubeT &obsI_stack, double confidence,
                            MatT &theta_lb_stack, MatT &theta_ub_stack)
 {
-    IdxT count = theta_est_stack.n_cols;
+    auto count = theta_est_stack.n_cols;
     theta_lb_stack.set_size(model.get_num_params(), count);
     theta_ub_stack.set_size(model.get_num_params(), count);
+    double z = normal_quantile_twosided(confidence);
     if(obsI_stack.n_slices != count) {
         std::ostringstream msg;
         msg<<"Got inconsistent sizes.  Num theta_est:"<<count<<" #obsI:"<<obsI_stack.n_slices;
         ArrayShapeError(msg.str());
     }
+
     omp_exception_catcher::OMPExceptionCatcher catcher;
-    #pragma omp parallel
-    {
-        auto obsI = model.make_param_mat();
-        auto theta_lb = model.make_param();
-        auto theta_ub = model.make_param();
-        #pragma omp  for
-        for(IdxT n=0; n<count; n++)
-            catcher.run([&]{
-                obsI = obsI_stack.slice(n);
-                error_bounds_observed(model, theta_est_stack.col(n), obsI, confidence,
-                                    theta_lb, theta_ub);
-                theta_lb_stack.col(n) = theta_lb;
-                theta_ub_stack.col(n) = theta_ub;
-            });
-    }
+    #pragma omp parallel for
+    for(IdxT n=0; n<count; n++)
+         catcher.run([&]{
+            auto theta_est = theta_est_stack.col(n);
+            VecT bnd = z*arma::sqrt(arma::pinv(obsI_stack.slice(n)).eval().diag());
+            theta_lb_stack.col(n) = arma::max(model.get_lbound(), theta_est-bnd);
+            theta_ub_stack.col(n) = arma::min(model.get_ubound(), theta_est+bnd);
+         });
     catcher.rethrow();
 }
 
+/** Profile likelihood bounds.
+ * Uses the Venzon and Moolgavkar (VM) algorithm for computing each of the bounds of the profile likelihood.
+ */
 template<class Model>
-void error_bounds_posterior_credible_stack(const Model &model, const CubeT &sample_stack, double confidence,
-                                     MatT &theta_mean_stack, MatT &theta_lb_stack, MatT &theta_ub_stack)
+void error_bounds_profile_likelihood_parallel(const Model &model, const ModelDataStackT<Model> &image, estimator::ProfileBoundsData &est, StatsT &stats)
 {
-    IdxT count = sample_stack.n_slices;
-    auto Np = model.get_num_params();
-    theta_mean_stack.set_size(Np, count);
-    theta_lb_stack.set_size(Np, count);
-    theta_ub_stack.set_size(Np, count);
-    omp_exception_catcher::OMPExceptionCatcher catcher;
-    #pragma omp parallel
-    {
-        MatT sample(sample_stack.n_rows,sample_stack.n_cols);
-        auto theta_mean = model.make_param();
-        auto theta_lb = model.make_param();
-        auto theta_ub = model.make_param();
-        #pragma omp for
-        for(IdxT n=0; n<count; n++)
-            catcher.run([&]{
-                sample = sample_stack.slice(n);
-                error_bounds_posterior_credible(model, sample, confidence,
-                                                theta_mean, theta_lb, theta_ub);
-                theta_mean_stack.col(n) = theta_mean;
-                theta_lb_stack.col(n) = theta_lb;
-                theta_ub_stack.col(n) = theta_ub;
-            });
-    }
-    catcher.rethrow();
+    estimator::NewtonMaximizer<Model> estimator(model);
+    if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+    if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace<IdxVecT>(0,model.get_num_params()-1);
+    estimator.estimate_profile_bounds_parallel(image,est);
+    stats = estimator.get_stats();
+}
+
+template<class Model>
+void error_bounds_profile_likelihood_parallel(const Model &model, const ModelDataT<Model> &image, estimator::ProfileBoundsData &est)
+{
+    estimator::NewtonMaximizer<Model> estimator(model);
+    if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+    if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace<IdxVecT>(0,model.get_num_params()-1);
+    estimator.estimate_profile_bounds_parallel(image,est);
+}
+
+template<class Model>
+void error_bounds_profile_likelihood_stack(const Model &model, const ModelDataStackT<Model> &image, estimator::ProfileBoundsDataStack &est, StatsT &stats)
+{
+    estimator::NewtonMaximizer<Model> estimator(model);
+    if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+    if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace<IdxVecT>(0,model.get_num_params()-1);
+    estimator.estimate_profile_bounds_stack(image,est);
+    stats = estimator.get_stats();
+}
+
+template<class Model>
+void error_bounds_profile_likelihood_stack(const Model &model, const ModelDataStackT<Model> &image, estimator::ProfileBoundsDataStack &est)
+{
+    estimator::NewtonMaximizer<Model> estimator(model);
+    if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+    if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace<IdxVecT>(0,model.get_num_params()-1);
+    estimator.estimate_profile_bounds_stack(image,est);
 }
 
 } /* namespace mappel::methods::openmp */
@@ -628,7 +587,7 @@ void hessian_stack(const Model &model, const ImageStackT<Model> &image_stack, co
 
 /** @brief Parallel model negative_definite Hessian approximation calculations for a stack of images.
  * 
- * Compute Hessian a negative_definite Hessian using a modified cholesky decompositions. 
+ * Compute Hessian a negative_definite Hessian using a modified Cholesky decompositions.
  * Computes for multiple image, theta pairs.
  * 
  * Use: model.make_param_mat_stack() to make a parameter matrix stack of appropriate dimensions for the model Hessian.

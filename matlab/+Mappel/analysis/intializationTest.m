@@ -1,10 +1,10 @@
 function intializationTest(theta, method)
     if nargin==1
-        method = 'newton';
+        method = 'TrustRegion';
     end
     sz=[8 8];
     psf=[1 1];
-    g2d=Gauss2DMAP(sz, psf);
+    g2d=Mappel.Gauss2DMAP(sz, psf);
     im=g2d.simulateImage(theta);
     N=1e3;
     im = repmat(im,1,1,N);

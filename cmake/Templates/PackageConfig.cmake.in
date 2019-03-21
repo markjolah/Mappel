@@ -1,6 +1,19 @@
 @PACKAGE_INIT@
 
 # MappelConfig.cmake
+# To enable @PROJECT_NAME@ Matlab support via MexIFace
+#   use: find_package(@PROJECT_NAME@ REQUIRED COMPONENTS MATLAB)
+#   These variables are set:
+#       @PROJECT_NAME@_MATLAB_CODE_DIR - Matlab code directory
+#       @PROJECT_NAME@_MATLAB_STARTUP_M - Matlab startup@PROJECT_NAME@.m
+#
+# Result:
+# The following variables are set to imported interface target names under namespace '@PROJECT_NAME@::'
+#   @PROJECT_NAME@_LIBRARIES  - set to shared target name if available, static otherwise
+#   @PROJECT_NAME@_SHARED_LIBRARIES - shared target name
+#   @PROJECT_NAME@_STATIC_LIBRARIES - static target name
+#   @PROJECT_NAME@_BUILD_TYPES - List of @PROJECT_NAME@ CMAKE_BUILD_TYPE's that
+#                                are built and installed installed in this prefix.
 
 ### Find dependencies
 include(CMakeFindDependencyMacro)
@@ -24,18 +37,10 @@ if(@OPT_MATLAB@ AND MATLAB IN_LIST ${${PROJECT_NAME}_FIND_COMPONENTS})
     unset(${_MEXIFACE_CONFIG_FILE})
 endif()
 
-#Single-library package with eponymous library
-#Sets:
-# @PROJECT_NAME@_LIBRARIES (set to shared libs if available)
-# @PROJECT_NAME@_SHARED_LIBRARIES
-# @PROJECT_NAME@_STATIC_LIBRARIES
-# @PROJECT_NAME@_BUILD_TYPES
-
 #Include targets file.  This will create IMPORTED target @PROJECT_NAME@
 include("${CMAKE_CURRENT_LIST_DIR}/${CMAKE_SYSTEM_NAME}/@EXPORT_TARGETS_NAME@.cmake")
 #Read in variable @PROJECT_NAME@_PROVIDED_COMPONENTS and @PROJECT_NAME@_<COMPONENT_NAME>_FOUND from configured file,
 include("${CMAKE_CURRENT_LIST_DIR}/${CMAKE_SYSTEM_NAME}/@PROJECT_NAME@ConfigProvidedComponents.cmake")  #import @PROJECT_NAME@_PROVIDED_COMPONENTS
-
 
 set(@PROJECT_NAME@_LIBRARIES @PROJECT_NAME@::@PROJECT_NAME@)
 set(@PROJECT_NAME@_SHARED_LIBRARIES)

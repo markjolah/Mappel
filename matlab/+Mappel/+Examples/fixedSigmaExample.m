@@ -34,7 +34,7 @@
 imsize=[8,8];
 psf_sigma=[1,1]; %symmetric PSF 
 
-g2d = Gauss2DsMAP(imsize, psf_sigma);  % Use a model that also fits for the apparent psf sigma size for Out-of-focus emitters
+g2d = Mappel.Gauss2DsMAP(imsize, psf_sigma);  % Use a model that also fits for the apparent psf sigma size for Out-of-focus emitters
 
 %% Sampling thetas and making model images (optional)
 N = 1e4; 

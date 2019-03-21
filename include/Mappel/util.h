@@ -1,4 +1,8 @@
-
+/** @file util.h
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2019
+ * @brief Common utilities and errors.
+ */
 #ifndef MAPPEL_UTIL_H
 #define MAPPEL_UTIL_H
 
@@ -22,10 +26,10 @@ using IdxT = arma::uword;
 using IdxVecT = arma::Col<IdxT>; /**< A type to represent integer data arrays */
 using IdxMatT = arma::Mat<IdxT>; /**< A type to represent integer data arrays */
 using VecT = arma::vec; /**< A type to represent floating-point data arrays */
-using MatT = arma::mat; /**< A type to represent floating-point data matricies */
+using MatT = arma::mat; /**< A type to represent floating-point data matrices */
 using CubeT = arma::cube; /**< A type to represent floating-point data cubes */
 using VecFieldT = arma::field<VecT>;
-using StatsT = std::map<std::string,double>;  /**< A convenient form for reporting dictionaries of named FP data to matlab */
+using StatsT = std::map<std::string,double>;  /**< A convenient form for reporting dictionaries of named FP data to Matlab */
 using StringVecT = std::vector<std::string>;
 
 /* Allow easier enabale_if compilation for subclasses */
@@ -38,8 +42,8 @@ template<class ReturnT, class ModelT,class ModelBaseT>
 template<class Model> using ImageCoordT = typename Model::ImageCoordT; /* Model's image coordinate type */
 template<class Model> using ImagePixelT = typename Model::ImagePixelT; /* Image's pixel data type */
 
-template<class Model> using ParamT = typename Model::ParamT; /* The Model's paramter type (e.g., theta) */
-template<class Model> using ParamVecT = typename Model::ParamVecT; /* The Model's paramter type (e.g., theta) */
+template<class Model> using ParamT = typename Model::ParamT; /* The Model's parameter type (e.g., theta) */
+template<class Model> using ParamVecT = typename Model::ParamVecT; /* The Model's parameter type (e.g., theta) */
 template<class Model> using ImageT = typename Model::ImageT; /* The Model's image type  */
 template<class Model> using ModelDataT = typename Model::ModelDataT; /* Model's data type (for EMCCD same as Model::ImageT) */
 template<class Model> using StencilT = typename Model::Stencil;  /* The Model's theta stencil  */
@@ -135,9 +139,5 @@ std::unique_ptr<T> make_unique( Args&& ...args )
 std::ostream& operator<<(std::ostream &out,const StatsT &stats);
 
 } /* namespace mappel */
-
-/* Statistics Functions */
-
-
 
 #endif /* MAPPEL_UTIL_H */

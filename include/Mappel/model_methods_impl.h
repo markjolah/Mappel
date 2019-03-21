@@ -1,7 +1,6 @@
-
 /** @file model_methoods_impl.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 2017
+ * @date 2017-2019
  * @brief Methods definitions for the model:: namespace which contains the major methods for computing with PointEmitterModels
  */
 
@@ -20,26 +19,26 @@ namespace methods {
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta) 
+    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta)
     {
         //don't compute stencils derivative 
         return simulate_image(model, model.make_stencil(theta,false), model.get_rng_generator());
     }
     
     template<class Model, class RngT>
-    ModelDataT<Model> simulate_image(Model &model, const ParamT<Model> &theta, RngT &rng) 
+    ModelDataT<Model> simulate_image(const Model &model, const ParamT<Model> &theta, RngT &rng)
     {
         return simulate_image(model, model.make_stencil(theta,false), rng); //don't compute derivative stencils
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image(Model &model, const StencilT<Model> &s)
+    ModelDataT<Model> simulate_image(const Model &model, const StencilT<Model> &s)
     {
         return simulate_image(model,s,model.get_rng_generator()); //Make new generator
     }
 
     template<class Model>
-    ModelDataT<Model> simulate_image_from_model(Model &model, const ImageT<Model> &model_im)
+    ModelDataT<Model> simulate_image_from_model(const Model &model, const ImageT<Model> &model_im)
     {
         return simulate_image_from_model(model,model_im,model.get_rng_generator()); //Make new generator
     }
@@ -320,119 +319,85 @@ namespace methods {
 
     /* MAP/MLE Estimation */
     template<class Model>
-    StencilT<Model> estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method)
+    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, estimator::MLEData &mle)
     {
         auto estimator = make_estimator(model,method);
-        return estimator->estimate_max(data);
-    }
-    
-    template<class Model>
-    StencilT<Model> estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
-                                 double &theta_max_llh)
-    {
-        auto estimator = make_estimator(model,method);
-        return estimator->estimate_max(data,theta_init,theta_max_llh);
-    }
-    
-    template<class Model>
-    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
-                      ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
-    {
-        auto estimator = make_estimator(model,method);
-        estimator->estimate_max(data,theta_max,theta_max_llh, obsI);
+        auto theta_init = model.make_param();
+        theta_init.zeros();
+        estimator->estimate_max(data,theta_init,mle);
     }
 
     template<class Model>
-    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, 
-                      ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
+    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, estimator::MLEData &mle)
     {
         auto estimator = make_estimator(model,method);
-        estimator->estimate_max(data,theta_max,theta_max_llh, obsI);
-        stats = estimator.get_stats();
+        estimator->estimate_max(data,theta_init,mle);
     }
 
     template<class Model>
-    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
-                      ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI)
+    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, estimator::MLEData &mle, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
-        estimator->estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
-    }
-
-    template<class Model>
-    void estimate_max(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,
-                      ParamT<Model> &theta_max, double &theta_max_llh, MatT &obsI, StatsT &stats)
-    {
-        auto estimator = make_estimator(model,method);
-        estimator->estimate_max(data,theta_init, theta_max,theta_max_llh, obsI);
+        auto theta_init = model.make_param();
+        theta_init.zeros();
+        estimator->estimate_max(data,theta_init,mle);
         stats = estimator->get_stats();
     }
-    
-    
-//     template<class Model>
-//     StencilT<Model>
-//     estimate_profile_max(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &fixed_theta, const std::string &method)
-//     {
-//     }
-//     
-//     template<class Model>
-//     StencilT<Model>
-//     estimate_profile_max(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &fixed_theta, const std::string &method,  const ParamT<Model> &theta_init)
-//     {
-//     }
-//     
-    /* MCMC posterior sampling likelihood computation */   
+
     template<class Model>
-    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, IdxT Nsample, IdxT Nburnin, IdxT thin)
+    void estimate_max(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, estimator::MLEData &mle, StatsT &stats)
     {
-        auto theta_init = model.make_param(arma::fill::zeros);
-        return estimate_mcmc_sample(model, data, theta_init, Nsample, Nburnin, thin);
+        auto estimator = make_estimator(model,method);
+        estimator->estimate_max(data,theta_init,mle);
+        stats = estimator->get_stats();
+    }
+
+    /* MAP/MLE Profile likelihood computation */
+    template<class Model>
+    double estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method, const IdxVecT &fixed_idxs, const ParamT<Model> &fixed_theta_init)
+    {
+        auto estimator = make_estimator(model,method);
+        StencilT<Model> profile_max;
+        return estimator->estimate_profile_max(data,fixed_idxs,fixed_theta_init,profile_max);
     }
 
     template<class Model>
-    MatT estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
-                              IdxT Nsample, IdxT Nburnin, IdxT thin)
+    double estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method, const IdxVecT &fixed_idxs,
+                                       const ParamT<Model> &fixed_theta_init, StencilT<Model> &profile_max)
     {
-        if(thin == 0) thin = model.get_mcmc_num_phases();
-        IdxT Noversample = mcmc::num_oversample(Nsample,Nburnin,thin);
-        auto sample = model.make_param_stack(Noversample);
-        VecT sample_rllh(Noversample);
-        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init), 
-                               sample, sample_rllh);
-        return mcmc::thin_sample(sample, Nburnin, thin);
+        auto estimator = make_estimator(model,method);
+        return estimator->estimate_profile_max(data,fixed_idxs,fixed_theta_init,profile_max);
     }
-    
+
     template<class Model>
-    void estimate_mcmc_sample(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
-                              IdxT Nsample, IdxT Nburnin, IdxT thin,
-                              MatT &sample, VecT &sample_rllh)
+    double estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method, const IdxVecT &fixed_idxs,
+                                       const ParamT<Model> &fixed_theta_init, StencilT<Model> &profile_max, StatsT &stats)
     {
-        if(thin == 0) thin = model.get_mcmc_num_phases();
-        IdxT Noversample = mcmc::num_oversample(Nsample,Nburnin,thin);
-//         std::cout<<"Noversample: "<<Noversample<<" Nsample:"<<Nsample<<" Nburnin:"<<Nburnin<<" thin:"<<thin<<"\n";
-        sample.set_size(model.get_num_params(), Nsample);
-        sample_rllh.set_size(Nsample);
+        auto estimator = make_estimator(model,method);
+        auto prof_rllh = estimator->estimate_profile_max(data,fixed_idxs,fixed_theta_init,profile_max);
+        stats = estimator->get_stats();
+        return prof_rllh;
+    }
+
+    template<class Model>
+    void estimate_posterior(const Model &model, const ModelDataT<Model> &data, mcmc::MCMCData &est)
+    {
+        auto theta_init = model.make_param();
+        theta_init.zeros();
+        estimate_posterior(model, data, theta_init, est);
+    }
+
+    template<class Model>
+    void estimate_posterior(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, mcmc::MCMCData &est)
+    {
+        if(est.thin == 0) est.thin = model.get_mcmc_num_phases();
+        auto Noversample = mcmc::num_oversample(est.Nsample,est.Nburnin,est.thin);
         auto oversample = model.make_param_stack(Noversample);
         VecT oversample_rllh(Noversample);
-        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init),
-                               oversample, oversample_rllh);
-        mcmc::thin_sample(oversample, oversample_rllh, Nburnin, thin, sample, sample_rllh);
-    }
-
-    template<class Model>
-    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, 
-                                 IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT<Model> &posterior_mean, MatT &posterior_cov)
-    {
-        auto theta_init = model.make_param(arma::fill::zeros);
-        estimate_mcmc_posterior(model,data,theta_init,Nsample, Nburnin, thin, posterior_mean, posterior_cov);
-    }
-
-    template<class Model>
-    void estimate_mcmc_posterior(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
-                                 IdxT Nsample, IdxT Nburnin, IdxT thin, ParamT<Model> &posterior_mean, MatT &posterior_cov)
-    {
-        auto sample = estimate_mcmc_posterior(model,data,theta_init, Nsample, Nburnin, thin);
-        mcmc::estimate_sample_posterior(sample, posterior_mean, posterior_cov); 
+        mcmc::sample_posterior(model, data, model.initial_theta_estimate(data,theta_init), oversample, oversample_rllh);
+        mcmc::thin_sample(oversample, oversample_rllh, est.Nburnin, est.thin, est.sample, est.sample_rllh);
+        mcmc::estimate_sample_posterior(est.sample, est.sample_mean, est.sample_cov);
+        if(0<est.confidence && est.confidence<1) mcmc::compute_posterior_credible(est.sample,est.confidence,est.credible_lb,est.credible_ub);
     }
 
     /* Error bounds computations */    
@@ -443,90 +408,77 @@ namespace methods {
         auto crlb = cr_lower_bound(model, theta_est);
         double z = normal_quantile_twosided(confidence);
         auto sqrt_crlb = arma::sqrt(crlb);
-        theta_lb = theta_est - z*sqrt_crlb;
-        theta_ub = theta_est + z*sqrt_crlb;        
+        theta_lb = arma::max(model.get_lbound(),theta_est - z*sqrt_crlb);
+        theta_ub = arma::min(model.get_ubound(),theta_est + z*sqrt_crlb);
     }
     
     template<class Model>
-    void error_bounds_observed(const Model &model, const ParamT<Model> &theta_est, MatT &obsI, double confidence,
+    void error_bounds_observed(const Model &model, const estimator::MLEData &mle, double confidence,
                                ParamT<Model> &theta_lb, ParamT<Model> &theta_ub)
     {
         double z = normal_quantile_twosided(confidence);
-        VecT bnd = z*arma::sqrt(arma::pinv(obsI).eval().diag());
-        theta_lb = theta_est - bnd;
-        theta_ub = theta_est + bnd;
+        VecT bnd = z*arma::sqrt(arma::pinv(mle.obsI).eval().diag());
+        theta_lb = arma::max(model.get_lbound(),mle.theta - bnd);
+        theta_ub = arma::min(model.get_ubound(),mle.theta + bnd);
     }
 
-//     template<class Model>
-//     void error_bounds_profile(const Model &model, const ModelDataT<Model> &data, const std::string &method, const StencilT<Model> &theta_max, 
-//                               ParamT<Model> &theta_lb, ParamT<Model> &theta_ub)
-//     {
-//     }
+    template<class Model>
+    void error_bounds_profile_likelihood(const Model &model, const ModelDataT<Model> &data, estimator::ProfileBoundsData &est)
+    {
+        estimator::NewtonMaximizer<Model> estimator(model);
+        if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+        if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace(0,model.get_num_params()-1);
+        estimator.estimate_profile_bounds(data,est);
+    }
 
     template<class Model>
-    void error_bounds_posterior_credible(const Model &model, const MatT &sample, double confidence,
-                                         ParamT<Model> &theta_mean, ParamT<Model> &theta_lb, ParamT<Model> &theta_ub)
+    void error_bounds_profile_likelihood(const Model &model, const ModelDataT<Model> &data, estimator::ProfileBoundsData &est, StatsT &stats)
     {
-        IdxT Nsample = sample.n_cols;
-        double p = (1-confidence)/2.;
-        IdxT lb_idx = floor(Nsample*p);
-        IdxT ub_idx = ceil(Nsample*(1-p));
-        auto sorted_sample = arma::sort(sample,"ascend",1).eval();
-        theta_mean = arma::mean(sample,1);
-        theta_lb = sorted_sample.col(lb_idx);
-        theta_ub = sorted_sample.col(ub_idx);
+        estimator::NewtonMaximizer<Model> estimator(model);
+        if(!std::isfinite(est.target_rllh_delta)) est.target_rllh_delta =  -.5*chisq_quantile(est.confidence);
+        if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace(0,model.get_num_params()-1);
+        stats = estimator.get_stats();
+    }
+
+    template<class Model>
+    void error_bounds_posterior_credible(const Model &, const MatT &sample, double confidence, ParamT<Model> &theta_lb, ParamT<Model> &theta_ub)
+    {
+        mcmc::compute_posterior_credible(sample,confidence,theta_lb,theta_ub);
     }
     
 
     inline namespace debug {
-         template<class Model>
-        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, 
-                                ParamT<Model> &theta_max, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
-        {
-            auto theta_init = model.make_param(arma::fill::zeros);
-            estimate_max_debug(model, data, method, theta_init, theta_max, rllh, obsI, sequence, sequence_rllh, stats);
-        }
-        
         template<class Model>
-        void estimate_max_debug(Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, 
-                                ParamT<Model> &theta_max, double &rllh, MatT &obsI, MatT &sequence, VecT &sequence_rllh, StatsT &stats)
+        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                const ParamT<Model> &theta_init, estimator::MLEDebugData &mle, StatsT &stats)
         {
             auto estimator = make_estimator(model,method);
-            estimator->estimate_max_debug(data,theta_init,theta_max,rllh,obsI,sequence,sequence_rllh);
+            estimator->estimate_max_debug(data,theta_init,mle);
             stats = estimator->get_debug_stats();
         }
         
-//         template<class Model>
-//         void estimate_profile_max_debug(const Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, const ParamT<Model> &fixed_theta, const std::string &method, 
-//                                         StencilT<Model> &theta_max, double &rllh, StatsT &stats, MatT &sequence, VecT &sequence_rllh);
-        
-        template <class Model>
-        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data,
-                                        IdxT Nsample, 
-                                        MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)
+        template<class Model>
+        void error_bounds_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data,
+                                                   estimator::ProfileBoundsDebugData &bounds, StatsT &stats)
         {
-            auto theta_init = model.make_param(arma::fill::zeros);
-            estimate_mcmc_sample_debug(model, data, Nsample, sample, sample_rllh, candidates, candidates_rllh);
+            estimator::NewtonMaximizer<Model> estimator(model);
+            estimator.estimate_profile_bounds_debug(data, bounds);
+            stats = estimator.get_stats();
         }
-        
+
         template <class Model>
-        void estimate_mcmc_sample_debug(Model &model, const ModelDataT<Model> &data, const ParamT<Model> &theta_init, 
-                                        IdxT Nsample, 
-                                        MatT &sample, VecT &sample_rllh, MatT &candidates, VecT &candidates_rllh)
+        void estimate_posterior_debug(const Model &model, const ModelDataT<Model> &data,
+                                      const ParamT<Model> &theta_init, mcmc::MCMCDebugData &mcmc_data)
         {
-            sample.set_size(model.get_num_params(), Nsample);
-            sample_rllh.set_size(Nsample);
-            candidates.set_size(model.get_num_params(), Nsample);
-            candidates_rllh.set_size(Nsample);
-            auto stencil = model.initial_theta_estimate(data, theta_init);
-            mcmc::sample_posterior_debug(model, data, stencil, sample, sample_rllh, candidates, candidates_rllh);
+            if(mcmc_data.Nsample<1) throw ParameterValueError("MCMCDebugData.Nsample must be positive.");
+            mcmc_data.initialize_arrays(model.get_num_params());
+            mcmc::sample_posterior_debug(model, data, model.initial_theta_estimate(data, theta_init),
+                                         mcmc_data.sample, mcmc_data.sample_rllh, mcmc_data.candidate, mcmc_data.candidate_rllh);
         }
     }; /* namespace mappel::methods::debug */
 
     
 } /* namespace mappel::methods */
-    
-
 } /* namespace mappel */
 
 #endif /* MAPPEL_MODEL_METHODS_IMPL_H */

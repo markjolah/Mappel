@@ -1,6 +1,6 @@
 /** @file PointEmitterModel.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 03-13-2014
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for PointEmitterModel.
  *
  * The base class for all point emitter localization models
@@ -113,8 +113,8 @@ public:
     StringVecT get_hyperparam_names() const;
     void set_hyperparam_names(const StringVecT &desc);
     
-    template<class RngT> ParamT sample_prior(RngT &rng);
-    ParamT sample_prior(); //Use global ParallelRngManager
+    template<class RngT> ParamT sample_prior(RngT &rng) const;
+    ParamT sample_prior() const; //Use global ParallelRngManager
 
     /** Box-type parameter bounds */
     void set_bounds(const ParamT &lbound, const ParamT &ubound);
@@ -261,11 +261,11 @@ void PointEmitterModel::set_hyperparam_names(const StringVecT &desc)
 { prior.set_param_names(desc); }
 
 template<class RngT>
-PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng)
+PointEmitterModel::ParamT PointEmitterModel::sample_prior(RngT &rng) const
 { return prior.sample(rng); }
 
 inline PointEmitterModel::ParamT
-PointEmitterModel::sample_prior()
+PointEmitterModel::sample_prior() const
 {
     return prior.sample(rng_manager.generic_generator());
 }

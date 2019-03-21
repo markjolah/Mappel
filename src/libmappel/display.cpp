@@ -1,7 +1,7 @@
 
 /** @file display.cpp
  * @author Mark J. Olah (mjo@cs.unm DOT edu)
- * @date 03-23-2014
+ * @date 2014-2019
  * @brief 
  *
  */
@@ -147,6 +147,19 @@ template<>
 std::ostream& print_image(std::ostream &out, const arma::mat &im)
 {
     print_labeled_image(out, im, "IMAGE", TERM_WHITE);
+    return out;
+}
+template<>
+std::ostream& print_text_image(std::ostream &out, const arma::vec &im)
+{
+    print_labeled_image(out, im, "IMAGE", nullptr);
+    return out;
+}
+
+template<>
+std::ostream& print_text_image(std::ostream &out, const arma::mat &im)
+{
+    print_labeled_image(out, im, "IMAGE", nullptr);
     return out;
 }
 

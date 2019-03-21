@@ -82,9 +82,9 @@ public:
                            double dmm_ratio, ParamT &grad, MatT &hess) const;
 
     /** @brief Fast, heuristic estimate of initial theta */
-    Stencil initial_theta_estimate(const ImageT &im);
-    Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init);
-    Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator);
+    Stencil initial_theta_estimate(const ImageT &im) const;
+    Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const;
+    Stencil initial_theta_estimate(const ImageT &im, const ParamT &theta_init, const std::string &estimator) const;
 
     Gauss1DSumModelT debug_internal_sum_model_x() const {return x_model;}
     Gauss1DSumModelT debug_internal_sum_model_y() const {return y_model;}
@@ -191,14 +191,14 @@ Gauss2DModel::pixel_hess(int i, int j, const Stencil &s, MatT &hess) const
 
 inline
 Gauss2DModel::Stencil 
-Gauss2DModel::initial_theta_estimate(const ImageT &im)
+Gauss2DModel::initial_theta_estimate(const ImageT &im) const
 {
     return initial_theta_estimate(im, make_param(arma::fill::zeros), DefaultSeperableInitEstimator);
 }
 
 inline
 Gauss2DModel::Stencil 
-Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init)
+Gauss2DModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init) const
 {
     return initial_theta_estimate(im, theta_init, DefaultSeperableInitEstimator);
 }

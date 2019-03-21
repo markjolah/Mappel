@@ -1,14 +1,14 @@
 /** @file Gauss2DMLE_IFace.cpp
  *  @brief The entry point for Gauss2DMLE_IFace mex module.
- * 
- * Just calls the MappleMexIFace.mexFunction which is the IFace entry point.
- * 
+ *  @date 2015-2019
  */
-#include "Mappel2D_IFace.h"
-#include "Gauss2DMLE.h"
+
+#include "Mappel/Gauss2DMLE.h"
+#include "Mappel_IFace.h"
+
+MappelFixedSigma_IFace<mappel::Gauss2DMLE> iface;  /**< Global iface object provides a iface.mexFunction */
 
 void mexFunction(int nlhs, mxArray *lhs[], int nrhs, const mxArray *rhs[])
 {
-    mappel::Mappel2D_Iface<mappel::Gauss2DMLE> iface("Gauss2DMLE");
     iface.mexFunction(nlhs, lhs, nrhs, rhs);
 }

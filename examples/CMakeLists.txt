@@ -1,8 +1,5 @@
 # Mappel - src/examples/CMakeLists.txt
-# Mark J. Olah [mjo@cs.unm DOT edu] 
-# 2014-2019
-#
-# Example c++ mapple programs
+# Example c++ Mapple programs
 #
 
 file(GLOB EXAMPLES_SRCS mappel_*.cpp)

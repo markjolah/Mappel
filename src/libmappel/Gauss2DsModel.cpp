@@ -225,7 +225,6 @@ Gauss2DsModel::set_prior_variable_names(CompositeDist &pr)
     pr.set_dim_variables(StringVecT{"x","y","I","bg","sigma_ratio"});
 }
 
-
 CompositeDist
 Gauss2DsModel::make_default_prior_beta_position(const ImageSizeT &size, double max_sigma_ratio)
 {
@@ -237,7 +236,6 @@ Gauss2DsModel::make_default_prior_beta_position(const ImageSizeT &size, double m
     set_prior_variable_names(d);
     return d;
 }
-
 
 CompositeDist
 Gauss2DsModel::make_default_prior_normal_position(const ImageSizeT &size, double max_sigma_ratio)
@@ -266,7 +264,6 @@ Gauss2DsModel::make_prior_beta_position(const ImageSizeT &size, double beta_xpos
     return d;
 }
 
-
 CompositeDist
 Gauss2DsModel::make_prior_normal_position(const ImageSizeT &size, double sigma_xpos, double sigma_ypos,
                                        double mean_I, double kappa_I,
@@ -281,7 +278,6 @@ Gauss2DsModel::make_prior_normal_position(const ImageSizeT &size, double sigma_x
     set_prior_variable_names(d);
     return d;
 }
-
 
 Gauss2DsModel::Stencil::Stencil(const Gauss2DsModel &model_, 
                                 const ParamT &theta, 
@@ -383,7 +379,7 @@ void Gauss2DsModel::pixel_hess_update(int i, int j, const Stencil &s, double dm_
 
 Gauss2DsModel::Stencil
 Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init, 
-                                               const std::string &estimator_method)
+                                      const std::string &estimator_method) const
 {
     double x_pos = 0;
     double y_pos = 0;
@@ -400,8 +396,9 @@ Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
     }
     Gauss2DsModel::ImageT x_im = arma::sum(im,0).t();
     Gauss2DsModel::ImageT y_im = arma::sum(im,1);
-    auto x_est = methods::estimate_max(x_model,x_im,estimator_method);
-    auto y_est = methods::estimate_max(y_model,y_im,estimator_method);
+    estimator::MLEData x_est, y_est;
+    methods::estimate_max(x_model,x_im,estimator_method,x_est);
+    methods::estimate_max(y_model,y_im,estimator_method,y_est);
     
     if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) x_pos = x_est.theta(0);
     if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) y_pos = y_est.theta(0);

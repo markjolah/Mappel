@@ -1,6 +1,6 @@
 /** @file Mappel_IFace.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 04-01-2014
+ * @date 2014-2019
  * @brief The class declaration and inline and templated functions for Mappel_IFace.
  */
 
@@ -40,7 +40,6 @@ protected:
     void objGetParamNames();
     void objSetParamNames();
     void objSetImageSize();
-    void objSetPSFSigma();
     void objGetBounds();
     void objSetBounds();
 
@@ -73,12 +72,11 @@ protected:
     void objErrorBoundsObserved();
     void objErrorBoundsExpected();
     void objErrorBoundsProfileLikelihood();
-    void objErrorBoundsPosteriorCredible();
-
 
     /* Degugging */    
     void objEstimateDebug();
     void objEstimatePosteriorDebug();
+    void objErrorBoundsProfileLikelihoodDebug();
     void objModelObjectiveComponents();
     
     /* Static methods */
@@ -89,20 +87,25 @@ protected:
     void staticPositiveDefiniteCholeskyApprox();
 };
 
-
-
 template<class Model>
 class MappelFixedSigma_IFace : public Mappel_IFace<Model>
 {
 public:
+    using MexIFaceHandler<Model>::obj;
+    MappelFixedSigma_IFace();
     void objConstruct() override;
+    void objSetPSFSigma();
 };
 
 template<class Model>
 class MappelVarSigma_IFace : public Mappel_IFace<Model>
 {
 public:
+    using MexIFaceHandler<Model>::obj;
+    MappelVarSigma_IFace();
     void objConstruct() override;
+    void objSetMinSigma();
+    void objSetMaxSigma();
 };
 
 
@@ -140,7 +143,6 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["getParamNames"] = std::bind(&Mappel_IFace::objGetParamNames, this);
     methodmap["setParamNames"] = std::bind(&Mappel_IFace::objSetParamNames, this);
     methodmap["setImageSize"] = std::bind(&Mappel_IFace::objSetImageSize, this);
-    methodmap["setPSFSigma"] = std::bind(&Mappel_IFace::objSetPSFSigma, this);
     methodmap["getBounds"] = std::bind(&Mappel_IFace::objGetBounds, this);
     methodmap["setBounds"] = std::bind(&Mappel_IFace::objSetBounds, this);
 
@@ -175,7 +177,7 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["errorBoundsObserved"] = std::bind(&Mappel_IFace::objErrorBoundsObserved, this);
     methodmap["errorBoundsExpected"] = std::bind(&Mappel_IFace::objErrorBoundsExpected, this);
     methodmap["errorBoundsProfileLikelihood"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihood, this);
-
+    methodmap["errorBoundsProfileLikelihoodDebug"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihoodDebug, this);
     /* Debug */
     methodmap["estimateDebug"] = std::bind(&Mappel_IFace::objEstimateDebug, this);
     methodmap["estimatePosteriorDebug"] = std::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
@@ -187,8 +189,21 @@ Mappel_IFace<Model>::Mappel_IFace()
     staticmethodmap["choleskySolve"] = std::bind(&Mappel_IFace::staticCholeskySolve, this);
     staticmethodmap["positiveDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticPositiveDefiniteCholeskyApprox, this);
     staticmethodmap["negativeDefiniteCholeskyApprox"] = std::bind(&Mappel_IFace::staticNegativeDefiniteCholeskyApprox, this);
-
 }
+
+template<class Model>
+MappelFixedSigma_IFace<Model>::MappelFixedSigma_IFace() : Mappel_IFace<Model>()
+{
+    this->methodmap["setPSFSigma"] = std::bind(&MappelFixedSigma_IFace::objSetPSFSigma, this);
+}
+
+template<class Model>
+MappelVarSigma_IFace<Model>::MappelVarSigma_IFace() : Mappel_IFace<Model>()
+{
+    this->methodmap["setMinSigma"] = std::bind(&MappelVarSigma_IFace::objSetMinSigma, this);
+    this->methodmap["setMaxSigma"] = std::bind(&MappelVarSigma_IFace::objSetMaxSigma, this);
+}
+
 
 template<class Model>
 void Mappel_IFace<Model>::objGetHyperparams()
@@ -237,13 +252,6 @@ void Mappel_IFace<Model>::objSetImageSize()
 {
     checkNumArgs(0,1);
     obj->set_size(getVec<typename Model::ImageCoordT>());
-}
-
-template<class Model>
-void Mappel_IFace<Model>::objSetPSFSigma()
-{
-    checkNumArgs(0,1);
-    obj->set_psf_sigma(getVec());
 }
 
 template<class Model>
@@ -395,7 +403,7 @@ void Mappel_IFace<Model>::objModelRLLH()
 template<class Model>
 void Mappel_IFace<Model>::objModelGrad()
 {
-    // grad = obj.modelGrad(image, theta) - Compute the model gradiant.
+    // grad = obj.modelGrad(image, theta) - Compute the model gradient.
     //
     // This takes in a N images and M thetas.  If M=N=1, 
     // then we return a single Grad.  If there are N=1 images
@@ -427,7 +435,7 @@ void Mappel_IFace<Model>::objModelHessian()
     //
     // (in) image: double size:[imsize... ,N] image stack
     // (in) theta: double size:[NumParams, M] stack of theta values
-    // (out) hess: double size:[NumParams,NumParams,max(M,N)] stack of hessian matricies
+    // (out) hess: double size:[NumParams,NumParams,max(M,N)] stack of hessian matrices
     checkNumArgs(1,2);
     auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_stack = getMat();
@@ -440,7 +448,7 @@ void Mappel_IFace<Model>::objModelHessian()
 template<class Model>
 void Mappel_IFace<Model>::objModelObjective()
 {
-    // [rllh,grad,hess,llh] = obj.modelObjective(image, theta, negate) -
+    // [rllh,grad,hess,definite_hess,llh] = obj.modelObjective(image, theta, negate) -
     //
     // Evaluate the model's objective function and its derivatives
     // Works on a single image, theta and shares the
@@ -477,7 +485,6 @@ void Mappel_IFace<Model>::objModelObjective()
     }
     auto stencil = obj->make_stencil(theta);
     double rllh = negate_scalar*methods::objective::rllh(*obj, image, stencil);
-    if(negate) rllh = -rllh;
     output(rllh);
     if(nlhs==2) {
         //Output grad also
@@ -488,16 +495,15 @@ void Mappel_IFace<Model>::objModelObjective()
         auto hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
         methods::objective::hessian(*obj, image, stencil, grad, hess);
         copy_Usym_mat(hess);
-        grad *= negate_scalar;
-        hess *= negate_scalar;
+        if(negate){
+            grad = -grad;
+            hess = -hess;
+        }
         if(nlhs>=4) {
             auto definite_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
             definite_hess = hess;
-            if(negate) {
-                cholesky_make_positive_definite(definite_hess);
-            } else {
-                cholesky_make_negative_definite(definite_hess);
-            }
+            if(negate) cholesky_make_positive_definite(definite_hess);
+            else cholesky_make_negative_definite(definite_hess);
         }
         if(nlhs==5) output(negate_scalar*methods::objective::llh(*obj, image, stencil)); //ouput optional full llh
     }
@@ -509,7 +515,7 @@ void Mappel_IFace<Model>::objModelObjectiveAPosteriori()
 {
     // [rllh,grad,hess,llh] = obj.modelObjectiveAPosteriori(image, theta, negate) -
     //
-    // Evaluate the aposteriori objective irrepective of the model's MLE/MAP.
+    // Evaluate the a posteriori objective irrespective of the model's MLE/MAP.
     // This is the log-likelihood plus the log-prior-likelihood.
     // Works on a single image, theta and shares the
     // stencil to compute the RLLH,Grad,Hessian as the 3 outputs, with optional outputs
@@ -529,7 +535,6 @@ void Mappel_IFace<Model>::objModelObjectiveAPosteriori()
     auto image = getNumeric<ImageShapeT,ImagePixelT>();
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
-    double negate_scalar = negate ? -1 : 1;
     if(!obj->theta_in_bounds(theta)) {
         output(arma::datum::nan);
         auto grad = makeOutputArray(obj->get_num_params());
@@ -550,20 +555,19 @@ void Mappel_IFace<Model>::objModelObjectiveAPosteriori()
     auto hess = obj->make_param_mat();
     methods::aposteriori_objective(*obj, image, stencil, rllh, grad, hess);
     copy_Usym_mat(hess);
-    rllh *= negate_scalar;
-    grad *= negate_scalar;
-    hess *= negate_scalar;
+    if(negate){
+        rllh = -rllh;
+        grad = -grad;
+        hess = -hess;
+    }
     output(rllh);
     if(nlhs>=2) output(grad);
     if(nlhs>=3) output(hess);
     if(nlhs>=4) {
         auto definite_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
         definite_hess = hess;
-        if(negate) {
-            cholesky_make_positive_definite(definite_hess);
-        } else {
-            cholesky_make_negative_definite(definite_hess);
-        }
+        if(negate) cholesky_make_positive_definite(definite_hess);
+        else cholesky_make_negative_definite(definite_hess);
     }
     if(nlhs>=5) output(methods::likelihood::llh(*obj, image, stencil) + obj->get_prior().llh(theta));
 }
@@ -573,7 +577,7 @@ void Mappel_IFace<Model>::objModelObjectiveLikelihood()
 {
     // [rllh,grad,hess,llh] = obj.modelObjectiveLikelihood(image, theta, negate) -
     //
-    // Evaluate the pure-likelihood based objective irrepective of the model's MLE/MAP.
+    // Evaluate the pure-likelihood based objective irrespective of the model's MLE/MAP.
     // Works on a single image, theta and shares the
     // stencil to compute the RLLH,Grad,Hessian as the 3 outputs, with optional outputs
     // of a (negative/positive) definite corrected hessian and the true LLH with constant terms
@@ -592,7 +596,6 @@ void Mappel_IFace<Model>::objModelObjectiveLikelihood()
     auto image = getNumeric<ImageShapeT,ImagePixelT>();
     auto theta = getVec();
     bool negate = (nrhs==2) ? false : getAsBool();
-    double negate_scalar = negate ? -1 : 1;
     if(!obj->theta_in_bounds(theta)) {
         output(arma::datum::nan);
         auto grad = makeOutputArray(obj->get_num_params());
@@ -613,9 +616,11 @@ void Mappel_IFace<Model>::objModelObjectiveLikelihood()
     auto hess = obj->make_param_mat();
     methods::likelihood_objective(*obj, image, stencil, rllh, grad, hess);
     copy_Usym_mat(hess);
-    rllh *= negate_scalar;
-    grad *= negate_scalar;
-    hess *= negate_scalar;
+    if(negate){
+        rllh = -rllh;
+        grad = -grad;
+        hess = -hess;
+    }
     output(rllh);
     if(nlhs>=2) output(grad);
     if(nlhs>=3) output(hess);
@@ -636,7 +641,7 @@ void Mappel_IFace<Model>::objModelObjectivePrior()
 {
     // [rllh,grad,hess,llh] = obj.modelObjectivePrio(image, theta, negate) -
     //
-    // Evaluate the pure-prior likelihood based objective irrepective of the model's MLE/MAP.
+    // Evaluate the pure-prior likelihood based objective irrespective of the model's MLE/MAP.
     // Works on a single image, theta and shares the
     // stencil to compute the RLLH,Grad,Hessian as the 3 outputs, with optional outputs
     // of a (negative/positive) definite corrected hessian and the true LLH with constant terms
@@ -669,11 +674,9 @@ void Mappel_IFace<Model>::objModelObjectivePrior()
     if(nlhs>=4) {
         auto definite_hess = makeOutputArray(obj->get_num_params(),obj->get_num_params());
         definite_hess = hess;
-        if(negate) {
-            cholesky_make_positive_definite(definite_hess);
-        } else {
-            cholesky_make_negative_definite(definite_hess);
-        }
+        definite_hess = hess;
+        if(negate) cholesky_make_positive_definite(definite_hess);
+        else cholesky_make_negative_definite(definite_hess);
     }
     if(nlhs>=5) output(obj->get_prior().llh(theta));
 }
@@ -684,7 +687,7 @@ void Mappel_IFace<Model>::objExpectedInformation()
     // fisherI = obj.expectedInformation(theta) - Compute the Expected (Fisher) Information matrix
     //    at theta
     // (in) theta: double size:[NumParams, n] stack of theta values
-    // (out) fisherI: double size:[NumParams,nParms, n] stack if symmetric fisher information matricies at each theta
+    // (out) fisherI: double size:[NumParams,nParms, n] stack if symmetric fisher information matrices at each theta
     checkNumArgs(1,1);
     auto theta_stack = getMat();
     auto fisherI_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(),theta_stack.n_cols);
@@ -722,7 +725,7 @@ void Mappel_IFace<Model>::objEstimate()
     // Use maximization algorithm to estimate parameter theta as a Maximum-likelihood or maximum a-posteriori
     // point estimate.
     //
-    // Retuns the observedInformation matrix which can be used to estimate the error 
+    // Returns the observedInformation matrix which can be used to estimate the error
     // Also returns the relative_log_likelihood at each estimate.
     //
     // (in) image: double size:[imsize... ,n] image stack to run estimations on
@@ -740,18 +743,21 @@ void Mappel_IFace<Model>::objEstimate()
     auto image_stack = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto method_name = getString();
     auto theta_init_stack = getMat();
-    int nimages = obj->get_size_image_stack(image_stack);
-    //Make output
-    auto theta_stack = makeOutputArray(obj->get_num_params(),nimages);
-    auto rllh_stack = makeOutputArray(nimages);
-    auto obsI_stack = makeOutputArray(obj->get_num_params(),obj->get_num_params(),nimages);
-    if(nlhs<4) {
-        methods::estimate_max_stack(*obj, image_stack,method_name,theta_init_stack, theta_stack, rllh_stack, obsI_stack);
-    } else {
+    estimator::MLEDataStack mle;
+    mle.Ndata = obj->get_size_image_stack(image_stack);
+    auto Np = obj->get_num_params();
+    mle.theta = makeOutputArray(Np,mle.Ndata);
+    mle.rllh = makeOutputArray(mle.Ndata);
+    mle.obsI = makeOutputArray(Np,Np,mle.Ndata);
+
+    if(nlhs==4){
         StatsT stats;
-        methods::estimate_max_stack(*obj, image_stack,method_name,theta_init_stack, theta_stack, rllh_stack, obsI_stack,stats);
+        methods::estimate_max_stack(*obj, image_stack,method_name,theta_init_stack, mle, stats);
         output(stats);
+    }  else {
+        methods::estimate_max_stack(*obj, image_stack,method_name,theta_init_stack, mle);
     }
+    if(nlhs>=3) copy_Usym_mat_stack(mle.obsI);
 }
 
 template<class Model>
@@ -771,41 +777,37 @@ void Mappel_IFace<Model>::objEstimateDebug()
     // (out) sequence:  double size:[NumParams,n] sequence of evaluated thetas
     // (out) sequence_rllh:  double size:[NumParams,n] sequence of evaluated theta relative_log_likelihood
     // (out) stats:  A 1x1 struct of estimator statistics.
-    checkNumArgs(6,3);
+    checkMinNumArgs(1,3);
+    checkMaxNumArgs(6,3);
     //Get input
     auto image = getNumeric<ImageShapeT,ImagePixelT>();
     auto method_name = getString();
     auto theta_init = getVec();
-
-    auto theta_max = obj->make_param();
-    double max_rllh;
-    auto obsI = obj->make_param_mat();
-    MatT sequence;
-    VecT sequence_rllh;
+    estimator::MLEDebugData mle;
     StatsT stats;
-    methods::estimate_max_debug(*obj, image, method_name, theta_init, theta_max, max_rllh, obsI, sequence, sequence_rllh, stats);
+    auto Np = obj->get_num_params();
+    mle.theta = makeOutputArray(Np);
+    methods::estimate_max_debug(*obj, image, method_name, theta_init, mle, stats);
 
-    //Write output
-    output(theta_max);
-    output(max_rllh);
-    output(obsI);
-    output(sequence);
-    output(sequence_rllh);
-    output(stats); //Get the debug stats which might include more info like backtrack_idxs
+    if(nlhs>=2) output(mle.rllh);
+    if(nlhs>=3) {copy_Usym_mat(mle.obsI); output(mle.obsI); }
+    if(nlhs>=4) output(mle.sequence);
+    if(nlhs>=5) output(mle.sequence_rllh);
+    if(nlhs>=6) output(stats); //Get the debug stats which might include more info like backtrack_idxs
 }
 
 template<class Model>
 void Mappel_IFace<Model>::objEstimateProfileLikelihood()
 {
-    // profile_likelihood, profile_parameters,stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+    // [profile_likelihood, profile_parameters,stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
     //
     // Compute the profile log-likelihood for a single image and single parameter, over a range of values.  For each value, the parameter
     // of interest is fixed and the other parameters are optimized with the estimator_algorithm.
     // Values will be computed in parallel with OpenMP.
     //
     // (in) image: a single images
-    // (in) fixed_parameters: uint64 [NParams,1] 0=free 1=fixed.  At least one paramer must be fixed and at least one parameter must be free.
-    // (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximimize the other (free) parameters at.
+    // (in) fixed_idxs: uint64 [Nfixed,1] List of fixed indexs.  At least one parameter must be fixed and at least one must be free.
+    // (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximize the other (free) parameters at.
     // (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
     // (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
     //                  If only a single parameter [NumParams,1] is given, each profile estimation will use this single theta_init.
@@ -815,23 +817,19 @@ void Mappel_IFace<Model>::objEstimateProfileLikelihood()
     // (out) profile_likelihood: size:[1,N] profile likelihood for the fixed parameter(s) at each value.,
     // (out) profile_parameters: size:[NumParams,N] parameters that achieve the profile likelihood maximum at each value.
     // (out) stats: (optional)  Estimator stats dictionary.
-    checkMinNumArgs(2,5);
+    checkMinNumArgs(1,5);
     checkMaxNumArgs(3,5);
-    auto image = getNumeric<ImageShapeT,ImagePixelT>();
-    auto fixed_parameters = getVec<IdxT>();
-    auto fixed_values = getMat();
+    auto ims = getNumeric<ImageShapeT,ImagePixelT>();
+    estimator::ProfileLikelihoodData prof;
+    prof.fixed_idxs = getVec<IdxT>();
+    prof.fixed_values = getMat();
     auto estimator_algorithm = getString();
     auto theta_init = getMat();
-    auto N = fixed_values.n_cols;
-    auto profile_llh = makeOutputArray(N);
-    auto profile_parameters = makeOutputArray(obj->get_num_params(),N);
-    if(nlhs<3) {
-        methods::estimate_profile_likelihood(*obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init, profile_llh, profile_parameters);
-    } else {
-        StatsT stats;
-        methods::estimate_profile_likelihood(*obj, image, fixed_parameters, fixed_values, estimator_algorithm, theta_init, profile_llh, profile_parameters,stats);
-        output(stats);
-    }
+    StatsT stats;
+    methods::estimate_profile_likelihood_stack(*obj, ims, estimator_algorithm, theta_init,  prof,stats);
+    if(nlhs>=1) output(prof.profile_likelihood);
+    if(nlhs>=2) output(prof.profile_parameters);
+    if(nlhs>=3) output(stats);
 }
 
 template<class Model>
@@ -848,11 +846,11 @@ void Mappel_IFace<Model>::objEstimatePosterior()
     // Confidence sets the confidence interval with for the credible interval lb and ub.  These are per parameter credible intervals.
     //
     // (in) image: a stack of n images to estimate
-    // (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
+    // (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Use empty array to force auto estimation.
     //                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
-    //                   should be auto estimated.
+    //                   should be auto estimated, valid parameter values will be kept even if invalid ones require initialization.
     // (in) confidence: (optional) desired confidence to estimate credible interval at.  Given as 0<confidence<1. [default=obj.DefaultConfidenceLevel]
-    // (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
+    // (in) num_samples: (optional) Number of (post-filtering) posterior samples to acquire. [default=obj.DefaultMCMCNumSamples]
     // (in) burnin: (optional) Number of samples to throw away (burn-in) on initialization [default=obj.DefaultMCMCBurnin]
     // (in) thin: (optional) Keep every # samples. Value of 0 indicates use the model default. This is suggested.
     //                       When thin=1 there is no thinning.  This is also a good option if rejections are rare. [default=obj.DefaultMCMCThin]
@@ -867,35 +865,20 @@ void Mappel_IFace<Model>::objEstimatePosterior()
     //Get input
     auto ims = getNumeric<ImageStackShapeT,ImagePixelT>();
     auto theta_init_stack = getMat(); //Matlab iface code ensures we get proper shaped array even if user passes empty
-    double confidence = getAsFloat();
-    auto num_samples = getAsInt<IdxT>();
-    auto burnin = getAsInt<IdxT>();
-    auto thin = getAsInt<IdxT>();
+    mcmc::MCMCDataStack mcmc;
+    mcmc.Ndata = obj->get_size_image_stack(ims);
+    mcmc.confidence = getAsFloat();
+    mcmc.Nsample = getAsInt<IdxT>();
+    mcmc.Nburnin = getAsInt<IdxT>();
+    mcmc.thin = getAsInt<IdxT>();
 
-    auto Nims = obj->get_size_image_stack(ims);
-    auto Np = obj->get_num_params();//number of model parameters
-
-    CubeT samples;
-    MatT sample_rllh;
-
-    methods::estimate_mcmc_sample_stack(*obj, ims, theta_init_stack, num_samples, burnin, thin, samples, sample_rllh);
-    if(nlhs==1) {
-        output(arma::mean(samples,1).eval()); //posterior mean is mean over each row
-        return;
-    }
-    MatT theta_mean, theta_lb, theta_ub;
-    methods::error_bounds_posterior_credible_stack(*obj, samples, confidence, theta_mean, theta_lb, theta_ub);
-    if(nlhs>=2) output(theta_mean);
-    if(nlhs>=3) output(theta_lb);
-    if(nlhs>=4) {
-        CubeT cov_stack(Np,Np,Nims);
-        for(IdxT i=0; i<Nims; i++) {
-            cov_stack.slice(i) = arma::cov(samples.slice(i).t());
-        }
-        output(cov_stack);
-    }
-    if(nlhs>=5) output(samples);
-    if(nlhs==6) output(sample_rllh);
+    methods::estimate_posterior_stack(*obj, ims, theta_init_stack, mcmc);
+    if(nlhs>=1) output(mcmc.sample_mean);
+    if(nlhs>=2) output(mcmc.credible_lb);
+    if(nlhs>=3) output(mcmc.credible_ub);
+    if(nlhs>=4) output(mcmc.sample_cov);
+    if(nlhs>=5) output(mcmc.sample);
+    if(nlhs>=6) output(mcmc.sample_rllh);
 }
 
 template<class Model>
@@ -906,42 +889,43 @@ void Mappel_IFace<Model>::objEstimatePosteriorDebug()
     // Debugging routine.  Works on a single image.  Get out the exact MCMC sample sequence, as well as the candidate sequence.
     // Does not do burnin or thinning.
     //
-    // (in) image: a sinle images to estimate
+    // (in) image: a single image to estimate
     // (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
     //                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
     //                   should be auto estimated.
-    // (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
+    // (in) num_samples: (optional) Number of (post-filtering) posterior samples to acquire. [default=obj.DefaultMCMCNumSamples]
     // (out) sample: A size:[NumParams,num_samples] array of thetas samples
     // (out) sample_llh: A size:[1,num_samples] array of log likelihoods at each sample theta
     // (out) candidates: (optional) size:[NumParams, num_samples] array of candidate thetas
     // (out) candidate_llh: (optional) A size:[1, num_samples] array of log likelihoods at each candidate theta
-    checkNumArgs(4,3);
+    checkMinNumArgs(1,3);
+    checkMaxNumArgs(4,3);
     //Get input
     auto im = getNumeric<ImageShapeT,ImagePixelT>(); //single image
+    mcmc::MCMCDebugData mcmc;
     auto theta_init = getVec();
-    auto Ns = getAsInt<IdxT>();
-    auto Np = obj->get_num_params();//number of model parameters
-    //Make ouput
-    auto sample = makeOutputArray(Np,Ns);
-    auto sample_llh = makeOutputArray(Ns);
-    auto candidates = makeOutputArray(Np,Ns);
-    auto candidate_llh = makeOutputArray(Ns);
+    mcmc.Nsample = getAsInt<IdxT>();
     //Call method
-    methods::estimate_mcmc_sample_debug(*obj,im,theta_init,Ns,sample,sample_llh,candidates,candidate_llh);
+    methods::estimate_posterior_debug(*obj,im,theta_init,mcmc);
+    output(mcmc.sample);
+    output(mcmc.sample_rllh);
+    output(mcmc.candidate);
+    output(mcmc.candidate_rllh);
 }
 
 
 template<class Model>
 void Mappel_IFace<Model>::objErrorBoundsObserved()
 {
-    // [observed_lb, observed_ub] = obj.errorBoundsObserved(image, theta_mle, confidence)
+    // [observed_lb, observed_ub] = obj.errorBoundsObserved(image, theta_mle, confidence, obsI)
     //
     // Compute the error bounds using the observed information at the MLE estimate theta_mle.
     //
     // (in) image: a single image or a stack of n images
     // (in) theta_mle: the MLE estimated theta size:[NumParams,n]
     // (in) confidence: (optional) desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
-    // (in) obsI: (optional) observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n]
+    // (in) obsI: (optional) observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n].
+    //                       Must be recomputed if not provided.
     // (out) observed_lb: the observed-information-based confidence interval lower bound for parameters, size:[NumParams,n]
     // (out) observed_ub: the observed-information-based confidence interval upper bound for parameters, size:[NumParams,n]
     checkMinNumArgs(2,3);
@@ -957,7 +941,7 @@ void Mappel_IFace<Model>::objErrorBoundsObserved()
     } else {
         obsI.set_size(Np,Np,Nims);
         methods::objective::hessian_stack(*obj,ims,thetas,obsI);
-        obsI*=-1;
+        obsI = -obsI;
     }
     auto observed_lb = makeOutputArray(Np,Nims);
     auto observed_ub = makeOutputArray(Np,Nims);
@@ -989,6 +973,118 @@ void Mappel_IFace<Model>::objErrorBoundsExpected()
 template<class Model>
 void Mappel_IFace<Model>::objErrorBoundsProfileLikelihood()
 {
+    // [profile_lb, profile_ub, profile_points_lb, profile_points_ub, profile_points_lb_rllh, profile_points_ub_rllh, stats]
+    //    = obj.errorBoundsProfileLikelihood(images, theta_mle, confidence, theta_mle_rllh, obsI, estimate_parameters)
+    //
+    // Compute the profile log-likelihood bounds for a stack of images, estimating upper and lower bounds for each requested parameter.
+    // Uses the Venzon and Moolgavkar (1988) algorithm, implemented in OpenMP.
+    //
+    // (in) images: a stack of N images
+    // (in) theta_mle: a stack of N theta_mle estimates corresponding to the image size
+    // (in) confidence: (optional) desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
+    // (in) theta_mle_rllh: [optional] size:[N] relative-log-likelihood at each image's theta_mle.  Otherwise it must be re-computed.
+    // (in) obsI: [optional] observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n].
+    //                      Must be recomputed if not provided.
+    // (in) estimated_idxs: [optional] uint64 indexes of estimated parameters. Empty to compute all parameters.
+    // (out) profile_lb: size [NumParams,N] lower bounds for each parameter to be estimated. NaN if parameter was not estimated
+    // (out) profile_ub: size [NumParams,N] upper bounds for each parameter to be estimated. NaN if parameter was not estimated
+    // (out) profile_points_lb: [optional] size[NumParams,2,NumParams,N] Profile maxima thetas at which
+    //           profile bounds were obtained.  Each [NumParams,2,NumParams] slice are the thetas found defining the
+    //           the lower and upper bound for each parameter in sequence as the 3-rd dimension.
+    //           The 4-th dimension is used if the profile is run on multiple images.  These can
+    //           be useful to test for the quality of the estimated points.
+    // (out) profile_points_ub:
+    // (out) profile_points_lb_rllh: [optional] size [2,NumParams,N], rllh at each returned profile_points_lb.
+    // (out) profile_points_ub_rllh: [optional] size [2,NumParams,N], rllh at each returned profile_points_ub.
+    // (out) stats: struct of fitting statistics.
+    checkMinNumArgs(2,3);
+    checkMaxNumArgs(7,6);
+    auto ims = getNumeric<ImageStackShapeT,ImagePixelT>();
+    auto Ndata = obj->get_size_image_stack(ims);
+    if(Ndata==1) {
+        estimator::ProfileBoundsData prof;
+        prof.mle.theta = getVec();
+        prof.confidence = getAsFloat();
+        if(nrhs>=4) prof.mle.rllh = getAsFloat();
+        if(nrhs>=5) prof.mle.obsI = getMat();
+        if(nrhs==6) prof.estimated_idxs = getVec<IdxT>();
+        StatsT stats;
+        methods::error_bounds_profile_likelihood_parallel(*obj, ims, prof, stats);
+        output(prof.profile_lb);
+        output(prof.profile_ub);
+        if(nlhs>=3) output(prof.profile_points_lb);
+        if(nlhs>=4) output(prof.profile_points_ub);
+        if(nlhs>=5) output(prof.profile_points_lb_rllh);
+        if(nlhs>=6) output(prof.profile_points_ub_rllh);
+        if(nlhs==7) output(stats);
+    } else {
+        estimator::ProfileBoundsDataStack prof;
+        prof.Ndata = obj->get_size_image_stack(ims);
+        prof.mle.theta = getMat();
+        prof.confidence = getAsFloat();
+        if(nrhs>=4) prof.mle.rllh = getVec();
+        if(nrhs>=5) prof.mle.obsI = getCube();
+        if(nrhs==6) prof.estimated_idxs = getVec<IdxT>();
+        StatsT stats;
+        methods::error_bounds_profile_likelihood_stack(*obj, ims, prof, stats);
+        output(prof.profile_lb);
+        output(prof.profile_ub);
+        if(nlhs>=3) output(prof.profile_points_lb);
+        if(nlhs>=4) output(prof.profile_points_ub);
+        if(nlhs>=5) output(prof.profile_points_lb_rllh);
+        if(nlhs>=6) output(prof.profile_points_ub_rllh);
+        if(nlhs==7) output(stats);
+    }
+
+}
+
+template<class Model>
+void Mappel_IFace<Model>::objErrorBoundsProfileLikelihoodDebug()
+{
+    // [profile_lb, profile_ub, seq_lb, seq_ub, seq_lb_rllh, seq_ub_rllh, stats]
+    //      = obj.errorBoundsProfileLikelihoodDebug(image, theta_mle, theta_mle_rllh, obsI, estimate_parameter, llh_delta)
+    //
+    // [DEBUGGING]
+    // Compute the profile log-likelihood bounds for a single images , estimating upper and lower bounds for each requested  parameter.
+    // Uses the Venzon and Moolgavkar (1988) algorithm.
+    //
+    // (in) image: a single images
+    // (in) theta_mle:  theta ML estimate
+    // (in) theta_mle_rllh:  scalar relative-log-likelihood at theta_mle.
+    // (in) obsI: Observed fisher information matrix at theta_mle
+    // (in) estimate_parameter_idx: integer index of parameter to estimate size:[NumParams]
+    // (in) llh_delta:  Negative number, indicating LLH change from maximum at the profile likelihood boundaries.
+    //                  [default: confidence=0.95; llh_delta = -chi2inv(confidence,1)/2;]
+    // (out) profile_lb:  scalar lower bound for parameter
+    // (out) profile_ub:  scalar upper bound for parameter
+    // (out) seq_lb: size:[NumParams,Nseq_lb]  Sequence of Nseq_lb points resulting from VM algorithm for lower bound estimate
+    // (out) seq_ub: size:[NumParams,Nseq_ub]  Sequence of Nseq_ub points resulting from VM algorithm for upper bound estimate
+    // (out) seq_lb_rllh: size:[Nseq_lb]  Sequence of RLLH at each of the seq_lb points
+    // (out) seq_ub_rllh: size:[Nseq_ub]  Sequence of RLLH at each of the seq_ub points
+    // (out) stats: struct of fitting statistics.
+    checkMinNumArgs(2,6);
+    checkMaxNumArgs(7,6);
+    auto im = getNumeric<ImageStackShapeT,ImagePixelT>();
+    estimator::ProfileBoundsDebugData prof;
+    prof.mle.theta = getMat();
+    prof.mle.rllh = getAsFloat();
+    prof.mle.obsI = getMat();
+    prof.estimated_idx = getAsInt<IdxT>();
+    prof.target_rllh_delta = getAsFloat();
+    StatsT stats;
+    if(!std::isfinite(prof.mle.rllh) || prof.mle.obsI.is_empty()) {
+        auto stencil = obj->make_stencil(prof.mle.theta);
+        prof.mle.rllh = methods::objective::rllh(*obj,im,stencil);
+        prof.mle.obsI = methods::observed_information(*obj,im,stencil);
+    }
+    methods::error_bounds_profile_likelihood_debug(*obj, im, prof, stats);
+    output(prof.profile_lb);
+    output(prof.profile_ub);
+    if(nlhs>=3) output(prof.sequence_lb);
+    if(nlhs>=4) output(prof.sequence_ub);
+    if(nlhs>=5) output(prof.sequence_lb_rllh);
+    if(nlhs>=6) output(prof.sequence_ub_rllh);
+    if(nlhs==7) output(stats);
 }
 
 template<class Model>
@@ -1013,7 +1109,7 @@ void Mappel_IFace<Model>::objModelObjectiveComponents()
     auto im = getNumeric<ImageShapeT,ImagePixelT>();
     auto theta = getVec();
     output(methods::objective::rllh_components(*obj,im,theta));
-    if(nlhs>2) output(methods::objective::grad_components(*obj,im,theta));
+    if(nlhs>=2) output(methods::objective::grad_components(*obj,im,theta));
     if(nlhs==3) output(methods::objective::hessian_components(*obj,im,theta));
 }
 
@@ -1085,6 +1181,28 @@ void Mappel_IFace<Model>::staticNegativeDefiniteCholeskyApprox()
     m_definite = m;
     cholesky_make_negative_definite(m_definite);
 }
+
+template<class Model>
+void MappelFixedSigma_IFace<Model>::objSetPSFSigma()
+{
+    this->checkNumArgs(0,1);
+    obj->set_psf_sigma(this->getVec());
+}
+
+template<class Model>
+void MappelVarSigma_IFace<Model>::objSetMinSigma()
+{
+    this->checkNumArgs(0,1);
+    obj->set_min_sigma(this->getVec());
+}
+
+template<class Model>
+void MappelVarSigma_IFace<Model>::objSetMaxSigma()
+{
+    this->checkNumArgs(0,1);
+    obj->set_max_sigma(this->getVec());
+}
+
 
 // } /* namespace mappel */
 

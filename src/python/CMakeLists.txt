@@ -1,7 +1,6 @@
 # Mappel - src/python
 #
-# Python module building.
-# We are using boost::Python
+# Python module building using pybind11
 #
 message(STATUS "*** Python Module Building Enabled ***")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/pybind11/tools")

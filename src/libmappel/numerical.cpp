@@ -1,6 +1,6 @@
 /** @file numerical.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 05-2015
+ * @date 2015-2019
  * @brief Numerical matrix operations
  */
 #include <cassert>
@@ -67,7 +67,7 @@ bool is_symmetric(const arma::mat &A)
     return true;
 }
 
-/* Input in in internal cholesky format with D on diagonal and L in lower triangle */
+/* Input in in internal Cholesky format with D on diagonal and L in lower triangle */
 void cholesky_convert_lower_triangular(arma::mat &chol)
 {
     int size=static_cast<int>(chol.n_rows);
@@ -78,7 +78,7 @@ void cholesky_convert_lower_triangular(arma::mat &chol)
     }
 }
 
-/* Input in in internal cholesky format with D on diagonal and L in lower triangle */
+/* Input in in internal Cholesky format with D on diagonal and L in lower triangle */
 void cholesky_convert_full_matrix(arma::mat &chol)
 {
     int size=static_cast<int>(chol.n_rows);
@@ -93,11 +93,11 @@ void cholesky_convert_full_matrix(arma::mat &chol)
 }
 
 
-/** Convert full or upper-triangular symmetric matrix to lower-triangular cholesky decomposition inplace
+/** Convert full or upper-triangular symmetric matrix to lower-triangular Cholesky decomposition in-place
  *
  * No error checking is performed
  *
- * @param[in,out] Positive definite square symmetric matrix to convert
+ * @param[in,out]A Positive definite square symmetric matrix to convert
  */
 bool cholesky(arma::mat &A)
 {
@@ -112,13 +112,11 @@ bool cholesky(arma::mat &A)
         double dotp=0;
         for(int i=0;i<j;i++) dotp+=A(j,i)*v(i);
         A(j,j) = A(j,j)-dotp;
-//         std::cout<<"J: "<<j<<" dotp:"<<dotp<<" A(j,j)"<<A(j,j)<<"\n";
         if (A(j,j)<=0) return false;
         for(int i=j+1;i<size;i++) {
             double dotp=0;
             for(int k=0;k<j;k++) dotp += A(i,k)*v(k);
             A(i,j)=(A(i,j)-dotp)/A(j,j); //i>j so store to lower triangular
-//             std::cout<<"J: "<<j<<" I:"<<i<<" dotp:"<<dotp<<" A(i,j)"<<A(i,j)<<"\n";
         }
     }
     //zero out upper triangular
@@ -133,7 +131,7 @@ bool modified_cholesky(arma::mat &A)
     //Cholesky decomposition format on output.  This way we keep the original matrix around in
     //the upper triangle while we write the decomposition into the lower triangle.  Cool!
     //We are using the Gill Murray Wright 1981 method although a superior but more complex version
-    //bu Schandel and Eskow 1999 exists too that we should eventually implement.
+    //by Schandel and Eskow 1999 exists too that we should eventually implement.
     assert(A.is_square());
     int size=static_cast<int>(A.n_rows);
     arma::vec v(size);
@@ -169,11 +167,12 @@ bool modified_cholesky(arma::mat &A)
         }
         //determine diagonal element
         A(j,j) = std::max(fabs(v(j)), std::max(theta*theta/beta_sq, delta));
-//         std::cout<<"v("<<j<<")="<<v(j)<<" theta:"<<theta<<" theta^2/beta^2:"<<theta*theta/beta_sq<<" delta:"<<delta<<"\n";
-//         std::cout<<"A("<<j<<","<<j<<")="<<A(j,j)<<"\n";
 //         if(j+1<=size-1) std::cout<<"c: "<<A(arma::span(j+1,size-1),j).t()<<"\n";
         if (A(j,j)!=v(j)) {
-            positive_definite=false; 
+//             std::cout<<"v("<<j<<")="<<v(j)<<" theta:"<<theta<<" theta^2/beta^2:"<<theta*theta/beta_sq<<" delta:"<<delta<<"\n";
+//             std::cout<<"A("<<j<<","<<j<<")="<<A(j,j)<<"\n";
+            positive_definite=false;
+            v(j) = A(j,j);
 //             std::cout<<"Not positive definite!\n";
         }
         for(int i=j+1;i<size;i++) A(i,j)/=A(j,j); //Re-normalize by new diagonal element A(j,j)
@@ -190,7 +189,6 @@ arma::vec cholesky_solve(const arma::mat &C,const arma::vec &b)
     int n=static_cast<int>(C.n_rows);
     arma::vec x(n);
     x=b;
-//     std::cout<<"x: "<<x.t()<<"\n";
     //C is lower triangular with D as the diagonal
     //First solve Lx=b (L is unit lower triangular)
     for(int i=1;i<n;i++) {
@@ -198,19 +196,24 @@ arma::vec cholesky_solve(const arma::mat &C,const arma::vec &b)
         for(int j=0;j<i;j++) sum+= C(i,j)*x(j);  //i=row,j=col i>j (lower triangular)
         x(i) -= sum;
     }
-//     std::cout<<"x: "<<x.t()<<"\n";
     //Now solve for Dx'=x, store x' in x
     for(int i=0;i<n;i++) x(i)/=C(i,i);
     //Now solve for L^T x'' = x' store in x
-//     std::cout<<"x: "<<x.t()<<"\n";
     for(int i=n-2;i>=0;i--) {
         double sum=0;
         for(int j=i+1;j<n;j++) sum+= C(j,i)*x(j);  //j=row,i=col j>i (lower triangular)
         x(i) -= sum;
     }
-//     std::cout<<"x: "<<x.t()<<"\n";
     return x;
 }
+
+double norm_sq(const VecT &v)
+{
+    double s=0;
+    for(IdxT n=0; n<v.n_elem; n++) s+=square(v(n));
+    return s;
+}
+
 
 } /* namespace mappel */
     

@@ -1,8 +1,41 @@
-// #include "Mappel/mcmc.h"
+/** @file mcmc.cpp
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2019
+ * @brief MCMC helper functions
+ */
 #include "Mappel/util.h"
+#include "Mappel/mcmc_data.h"
 
 namespace mappel {
 namespace mcmc {
+
+void MCMCData::initialize_arrays(IdxT Nparams)
+{
+    sample_mean.set_size(Nparams);
+    sample_cov.set_size(Nparams,Nparams);
+    credible_lb.set_size(Nparams);
+    credible_ub.set_size(Nparams);
+    sample.set_size(Nparams,Nsample);
+    sample_rllh.set_size(Nsample);
+}
+
+void MCMCDebugData::initialize_arrays(IdxT Nparams)
+{
+    sample.set_size(Nparams,Nsample);
+    sample_rllh.set_size(Nsample);
+    candidate.set_size(Nparams,Nsample);
+    candidate_rllh.set_size(Nsample);
+}
+
+void MCMCDataStack::initialize_arrays(IdxT Nparams)
+{
+    sample_mean.set_size(Nparams,Ndata);
+    sample_cov.set_size(Nparams,Nparams,Ndata);
+    credible_lb.set_size(Nparams,Ndata);
+    credible_ub.set_size(Nparams,Ndata);
+    sample.set_size(Nparams,Nsample,Ndata);
+    sample_rllh.set_size(Nsample,Ndata);
+}
 
 IdxT num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin)
 {

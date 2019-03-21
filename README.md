@@ -90,4 +90,15 @@ Mappel provides model objects that correspond to different fitting-modes (psf-mo
 
 The Mappel library is designed using static polymorphism (templates), and as such avoids virtual functions for small-grained tasks, and instead uses templates, which allow many small functions to be inlined.  This aggressive inlining by the compiler produces log-likelihood, gradient, and hessian functions that are nearly as fast as hand-coded functions.
 
+
+# License
+
+# LICENSE
+
+* Copyright: 2013-2019
+* Author: Mark J. Olah
+* Email: (mjo@cs.unm DOT edu)
+* LICENSE: GPL-v3  See [LICENSE](https://github.com/markjolah/MexIFace/blob/master/LICENSE) file.
+
+
 [1]: https://iopscience.iop.org/article/10.1088/1367-2630/aa5f74

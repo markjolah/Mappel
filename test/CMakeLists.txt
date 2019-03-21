@@ -1,7 +1,4 @@
 # Mappel - test CMakeLists.txt
-# Mark J. Olah [mjo@cs.unm DOT edu] 
-# 2014-2019
-#
 # Build google-test executable
 #
 # Dependencies

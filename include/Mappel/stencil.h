@@ -1,11 +1,11 @@
 
 /** @file stencil.h
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 03-22-2014
+ * @date 2014-2019
  * @brief The stencils for pixel based computations
  */
-#ifndef _STENCIL_H
-#define _STENCIL_H
+#ifndef MAPPEL_STENCIL_H
+#define MAPPEL_STENCIL_H
 
 #include <cmath>
 #include <climits>
@@ -86,6 +86,8 @@ double normal_prior_grad(double sigma);
 
 double normal_quantile_twosided(double confidence);
 double normal_quantile_onesided(double confidence);
+double chisq_quantile(double confidence, int dof);
+double chisq_quantile(double confidence);
 
 
 /* inline function definitions */
@@ -373,4 +375,4 @@ double normal_prior_grad2(double sigma)
 
 } /* namespace mappel */
 
-#endif /* _STENCIL_H */
+#endif /* MAPPEL_STENCIL_H */

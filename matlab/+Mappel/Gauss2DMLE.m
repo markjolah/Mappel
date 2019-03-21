@@ -1,27 +1,52 @@
-classdef Gauss2DMLE < Mappel.MappelBase
-    properties 
-        Name='Gauss2DMLE';
-        nParams=4;
-        ParamNames={'x', 'y', 'I', 'bg'};
-        ParamUnits={'pixels','pixels','#','#'};
-        ParamDescription={'x-position', 'y-position', 'Intensity', 'background'};
-        nHyperParams=5;
-        HyperParamNames= {'Beta_pos', 'Mean_I', 'Kappa_I', 'Mean_bg', 'Kappa_bg'};
-    end % constant properties
+% Gauss2DMLE.m
+% Mark J. Olah (mjo@cs.unm DOT edu)
+% 2014 - 2019
+% COPYRIGHT: See: LICENCE
+%
+% A Mappel point emitter model interface for:
+%  * Model: Gauss2DModel a 2D Gaussian PSF with fixed psf_sigma [sigmaX, sigmaY]
+%  * Objective: PoissonNoise2DObjective - Assumes Poisson noise model.
+%  * Estimator: MAPEstimator - Maximum a-posteriori likelihood function, that incorporates prior information.
+%
+% Notes: 
+%  * These estimators are designed to work on Poisson distributed data.
+%      * All image data should be calibrated to ensure the Poisson noise assumption holds [at least approximately].
+%
+% Methods and Properties:
+% See: Mappel.MappelBase
 
-    properties (Access=protected)
-        GPUGaussMLEFitType=1;
+classdef Gauss2DMLE < Mappel.MappelBase
+    properties (Constant=true)
+        Name = 'Gauss2DMLE';
+        ImageDim = 2;
+    end% public constant properties
+
+    properties (Access=public, Constant=true)
+        DefaultParamUnits={'pixels','pixels','#','#'};
+        DefaultParamDescription={'x-position', 'y-position', 'Intensity', 'background'};
+    end % public constant properties
+
+    properties (Access=protected, Constant=true)
+        DefaultGPUGaussMLEFitType=1; %Fitting mode used for gpugaussmle estimator comparison
+    end % protected constant properties
+
+    properties (Access=public)
+        GPUGaussMLE_Iterations
     end
     
     methods (Access=public)
-        function obj = Gauss2DMLE(imsize_,psf_sigma_)
+        function obj = Gauss2DMLE(imsize, psf_sigma)
             % obj = Gauss2DMLE(imsize,psf_sigma) - Make a new Gauss2DMLE for
-            % point localization in 2D with a fixes PSF.
+            % point localization in 2D with a fixed PSF.
             % (in) imsize: scalar int - size of image in pixels on each side (min: obj.MinSize)
             % (in) psf_sigma: scalar double>0 - size of PSF in pixels
-            % (out) obj - A new object
-            obj@Mappel.MappelBase(@Mappel.Gauss2DMLE_Iface,imsize_,psf_sigma_);
+            % (out) obj - A new object      
+            obj@Mappel.MappelBase(@Gauss2DMLE_IFace, imsize, psf_sigma);
+            % set defaults
+            obj.ParamUnits = obj.DefaultParamUnits;
+            obj.ParamDescription = obj.DefaultParamDescription;
+            obj.GPUGaussMLEFitType = obj.DefaultGPUGaussMLEFitType;
+            obj.GPUGaussMLE_Iterations = obj.DefaultGPUGaussMLE_Iterations;
         end
- 
     end %public methods
 end % classdef

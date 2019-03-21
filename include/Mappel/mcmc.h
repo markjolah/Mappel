@@ -8,12 +8,12 @@
 #define MAPPEL_MCMC_H
 
 #include <cmath>
+#include "Mappel/mcmc_data.h"
 #include "Mappel/util.h"
 #include "Mappel/rng.h"
 #include <trng/uniform01_dist.hpp>
 
 namespace mappel {
-
 namespace mcmc {
 
 IdxT num_oversample(IdxT Nsample, IdxT Nburnin, IdxT thin);
@@ -28,8 +28,17 @@ void estimate_sample_posterior(const MatT &sample, VecT &theta_posterior_mean, M
     theta_posterior_cov = arma::cov(sample.t());
 }
 
+template<class Mat, class Vec>
+void compute_posterior_credible(const Mat &sample, double confidence, Vec &lb, Vec &ub)
+{
+    double p = (1-confidence)/2.;
+    auto sorted_sample = arma::sort(sample,"ascend",1).eval();
+    lb = sorted_sample.col(floor(sample.n_cols*p));
+    ub = sorted_sample.col(ceil(sample.n_cols*(1-p)));
+}
+
 template <class Model>
-void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
+void sample_posterior(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init,
                       MatT &sample, VecT &sample_rllh)
 {
     auto &rng = model.get_rng_generator();
@@ -61,14 +70,15 @@ void sample_posterior(Model &model, const ModelDataT<Model> &im, const StencilT<
 }
 
 template <class Model>
-void sample_posterior_debug(Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init, 
+void sample_posterior_debug(const Model &model, const ModelDataT<Model> &im, const StencilT<Model> &theta_init,
                             MatT &sample, VecT &sample_rllh, MatT &candidate, VecT &candidate_rllh)
 {
     auto &rng = model.get_rng_generator();
     UniformDistT uniform;
     IdxT Nsamples = sample.n_cols;
+    auto Np = model.get_num_params();
     sample_rllh.set_size(Nsamples);
-    candidate.set_size(model.get_num_params(), Nsamples);
+    candidate.set_size(Np, Nsamples);
     candidate_rllh.set_size(Nsamples);
     sample.col(0) = theta_init.theta;
     sample_rllh(0) = methods::objective::rllh(model, im, theta_init);

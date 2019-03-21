@@ -1,9 +1,10 @@
-# Mapple/src/libmapple
-# Main CMakeLists.txt for Mapple libraries
+# Mappel/src/libmappel
+# Main CMakeLists.txt for Mappel libraries
 
 add_subdirectory(cGaussMLE)
 
 set(MAPPEL_SRCS display.cpp stencil.cpp util.cpp mcmc.cpp numerical.cpp rng.cpp
+                estimator.cpp
                 PointEmitterModel.cpp 
                 ImageFormat1DBase.cpp PoissonNoise1DObjective.cpp  
                 ImageFormat2DBase.cpp PoissonNoise2DObjective.cpp  
@@ -24,7 +25,7 @@ include(AddSharedStaticLibraries)
 # * Sets target_include_directories
 # * Sets target_compile_features and target_link_libraries
 # * Installs target libraries and headers
-# * returns list of created trargets: lib_targets
+# * returns list of created targets: lib_targets
 add_shared_static_libraries(SOURCES ${MAPPEL_SRCS} $<TARGET_OBJECTS:cGaussMLE>
                             COMPILE_FEATURES cxx_std_14
                             PUBLIC_HEADER_DIR ${CMAKE_SOURCE_DIR}/include

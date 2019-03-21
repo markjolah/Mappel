@@ -1,12 +1,12 @@
 
 /** @file display.h
  * @author Mark J. Olah (mjo@cs.unm DOT edu)
- * @date 03-23-2014
- * @brief 
+ * @date 2014-2019
+ * @brief Textual image display with colors.
  *
  */
-#ifndef _DISPLAY_H
-#define _DISPLAY_H
+#ifndef MAPPEL_DISPLAY_H
+#define MAPPEL_DISPLAY_H
 
 #include <iostream>
 #include <iomanip>
@@ -32,11 +32,11 @@ extern const char * TERM_DIM_CYAN;
 extern const char * TERM_DIM_WHITE;
 
 
-// std::ostream& print_labeled_image(std::ostream &out, const arma::mat &im, const char *color=TERM_WHITE);
-
 template<class ImageT>
 std::ostream& print_image(std::ostream &out, const ImageT &im);
 
+template<class ImageT>
+std::ostream& print_text_image(std::ostream &out, const ImageT &im);
 
 template <class Vec>
 std::ostream& print_vec_row(std::ostream &out, const Vec &vec, const char *header, int header_width, const char *color=nullptr)
@@ -54,4 +54,4 @@ std::ostream& print_vec_row(std::ostream &out, const Vec &vec, const char *heade
 
 } /* namespace mappel */
 
-#endif /* _DISPLAY_H */
+#endif /* MAPPEL_DISPLAY_H */

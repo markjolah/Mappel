@@ -2,12 +2,12 @@
  * @file rng.h
  * 
  * @author Mark J. Olah (email mjo\@cs.unm DOT edu )
- * @date 12-12-2013
+ * @date 2013-2019
  * 
  * @brief Random number generation usign sfmt
  */
-#ifndef _RNG_H
-#define _RNG_H
+#ifndef MAPPEL_RNG_H
+#define MAPPEL_RNG_H
 
 #include <random>
 
@@ -28,11 +28,11 @@ using UniformDistT = std::uniform_real_distribution<double>;
 //Single global rng manager
 extern ParallelRngManagerT rng_manager;
 
-/** @brief Genrates a single poisson disributed int from distribution with mean mu.
- * @param mu - mean of poisson distribution
+/** @brief Generates a single Poisson distributed int from distribution with mean mu.
+ * @param mu - mean of Poisson distribution
  * @param sfmt - A pointer to the SFMT rng state.
  * 
- * Knuth method circa 1969.  Trasformed to work ing log space.  This is linear in mu.  Works ok for small
+ * Knuth method circa 1969.  Transformed to work in log space.  This is linear in mu.  Works ok for small
  * counts.
  */
 // template<class RngT>
@@ -126,8 +126,6 @@ double generate_poisson(RngT &rng, double mu)
 //     return q*sigma+mu; //Even iterations compute q&r and return q
 // }
 
-
 } /* namespace mappel */
 
-
-#endif /* _RNG_H */
+#endif /* MAPPEL_RNG_H */

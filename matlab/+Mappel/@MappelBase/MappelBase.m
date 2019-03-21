@@ -6,13 +6,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
     %
     % This base class implements most of the methods for each of the Mappel Models classes.  
     %
-    % 1D Models
-    %
-    %
     % Mappel.MappelBase Properties
     %    ImageSize -  1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
-    %    PSFSigmaMin - Minimum gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
-    %    PSFSigmaMax - Minimum gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+    %    PSFSigmaMin - Minimum Gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
+    %    PSFSigmaMax - Minimum Gaussian point-spread function sigma size in pixels 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
     %    Hyperparams - Vector of hyperparameters. size:[NumHyperparams,1] 
     %    ParamNames - CellArray of model parameter names. size:[NumParams,1] These are the parameters we
     %                 estimate.
@@ -23,10 +20,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
     %
     %
     % Mappel.MappelBase Methods
-    %  * Mappel.MappelBase.samplePrior - Sample typical parameter (theta) values from the prior using Hyperparams
+    %  * Mappel.MappelBase.samplePrior - Sample typical parameter (theta) values from the prior using hyper-parameters
     %  * Mappel.MappelBase.simulateImage - Simulate image with noise given one or more parameter (theta) values.
     %  * Mappel.MappelBase.estimate - Estimate the emitter parameters from a stack of images using maximum-likelihood. 
-    %  * Mappel.MappelBase.estimate - Point estimates of the model parameters from a stack of images [MLE/MAP]. 
     %  * Mappel.MappelBase.estimatePosterior - Posterior sampling estimates for stack of images.
     %
     %   See also Mappel.MappelBase.samplePrior Mappel.MappelBase.simulateImage Mappel.MappelBase.estimate
@@ -41,7 +37,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                            'TrustRegion',...        %[C++(OpenMP)] Trust Region method with full Hessian
                            'QuasiNewton',...        %[C++(OpenMP)] Quasi-Newton (BFGS) method with Hessian approximation
                            'SimulatedAnnealing',... %[C++(OpenMP)] Simulated Annealing global maximization method
-                           'CGauss',...             %[C(OpenMP)] C Diagonal NewtonRaphson implementation from Smith et. al. Nat Methods (2010)
+                           'CGauss',...             %[C(OpenMP)] C Diagonal Hessian Newton implementation from Smith et. al. Nat Methods (2010)
                            'CGaussHeuristic',...    %[C(OpenMP)] C Heuristic starting guesstimate implementation from Smith et. al. Nat Methods (2010)
                            'GPUGauss',...           %[C(CUDA)] CUDA implementation from Smith et.al. Nat Methods (2010)
                            'matlab-fminsearch',...              %[MATLAB (fminsearch)] Single threaded fminsearch Nelder-Mead Simplex (derivative free) optimization from Matlab core
@@ -49,43 +45,56 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                            'matlab-trust-region',...            %[MATLAB (fminunc)] Single threaded trust-region fminunc optimization from Matlab Optimization toolbox
                            'matlab-trust-region-reflective',... %[MATLAB (fmincon)] Single threaded trust-region optimization from Matlab Optimization toolbox
                            'matlab-interior-point'...           %[MATLAB (fmincon)] Single threaded interior-point optimization from Matlab Optimization toolbox
+                           'matlab-sqp'...                      %[MATLAB (fmincon)] Single threaded sqp optimization from Matlab Optimization toolbox
+                           'matlab-active-set'...               %[MATLAB (fmincon)] Single threaded active-set optimization from Matlab Optimization toolbox
                            };
+        
+        %List of valid algorithms for profile bounds estimation.               
+        ProfileBoundsEstimationMethods={'Newton',...  %[C++(OpenMP)] [Default] Venzon and Moolgavkar implemented with Newton's method for solving nonlinear systems.
+                                        'matlab-fzero' %[Matlab/C++] Use Matlab fzero to find zeros of profile likelihood as computed in C++. Single threaded.  For debugging use.
+                                        };
     end
+
     properties (Abstract=true, Constant=true)
         ImageDim; %Dimensionality of images
     end
+
     properties (SetAccess = protected)
-        NumParams; %Number of model params (i.e., model dimensionality)
+        NumParams; %Number of model parameters (i.e., model dimensionality)
         NumHyperparams; %Number of hyper-parameters, (i.e., the parameters to the model's prior)
     end %read-only properties
 
-    % These properties use get and set methods to read and modify C++ object member variables.
-    % Size and type are checked, and cannot be changed.
+    %These properties have C++ storage and are accessed with getter and setter methods.
     properties
         ImageSize; % 1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
         PSFSigmaMin; %1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
         PSFSigmaMax; %1D:[X], 2D:[X Y], or Hyperspectral:[X Y L]
-        Hyperparams; % [NumHyperparams,1] vector of hyperparams.
-        ParamNames;  % [NumParams,1] cellarray of param names
-        HyperparamNames; % [NumHyperparams,1] cellarray of hyperparam names
-        ParamUBound; %Upper bound for each parameter (dimension) inf for unbounded above.  Controls bounded optimization/estimation in C++.
+        Hyperparams; % [NumHyperparams,1] vector of hyper-parameters.
+        ParamNames;  % [NumParams,1] cell array of parameter names
+        HyperparamNames; % [NumHyperparams,1] cell array of hyper-parameter names
+        ParamUBound; %Upper bound for each parameter (dimension) inf for unbounded above. Controls bounded optimization/estimation in C++.
         ParamLBound; %Lower bound for each parameter (dimension) -inf for unbounded below. Controls bounded optimization/estimation in C++.
-    end % accessor properties to MexIFace
+    end
 
     %These properties have no C++ backing, but can be set to control the plotting and presentation of data
     properties
-        ParamUnits; % [NumParams,1] cellarray of param unit types names (as char strings)
-        ParamDescription;  % [NumParams,1] cellarray of param descriptions (as char strings)
+        ParamUnits; % [NumParams,1] cell array of parameter unit types names (as char strings)
+        ParamDescription;  % [NumParams,1] cell array of parameter descriptions (as char strings)
     end
 
-    %Default model settings
+    %Default model settings can be modified by the user to customize automated options. 
     properties 
-        DefaultEstimatorMethod = 'TrustRegion'; %Set this to control the default optimization method for MLE/MAP estimation
+        DefaultEstimatorMethod = 'TrustRegion'; %Default optimization method for MLE/MAP estimation. Valid values are in obj.EstimationMethods.
+        DefaultProfileBoundsEstimatorMethod = 'Newton'; %Default optimization method for profile bounds optimizations.  Valid values are in obj.ProfileBoundsEstimationMethods
         DefaultMCMCNumSamples = 300; % Number of final samples to use in estimation of posterior properties (mean, credible interval, cov, etc.)
         DefaultMCMCBurnin = 10; % Number of samples to throw away (burn-in) on initialization
         DefaultMCMCThin = 0; % Keep every # samples. [Value of 0 indicates use the model default. This is suggested.]
         DefaultConfidenceLevel = 0.95; % Default level at which to estimate confidence intervals must be in range (0,1).
-        DefauktGPUGaussMLE_Iterations = 15; %GPUGaussMLE is supported for Win64 only.
+        
+        DefaultGPUGaussMLE_Iterations = 30; %GPUGaussMLE is supported for Win64 only.
+        DefaultMatlabOptimizerTolerance = 1e-8; % Optimzer convergence tolerances for matlab optimization routines
+        DefaultMatlabFminsearchMaxIter = 5000; % Maximum iterations for matlab fminsearch optimization routine
+        DefaultMatlabToolboxMaxIter = 500; % Maximum iterations for matlab toolbox optimization routines (fminunc, fmincon)
     end
 
     properties (Access=protected)
@@ -97,7 +106,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % fixed-sigma models: obj = MappelBase(iface, imsize, psf_sigma)
             %  free-sigma models: obj = MappelBase(iface, imsize, psf_sigma_min, psf_sigma_max)
             %
-            % (in) iface: The iface object mex object nemae
+            % (in) iface: The iface object MEX object name
             % (in) imsize: uint32 size:[ImageDim, 1] - size of image in pixels on each side (min: obj.MinSize)
             %
             % Further arguments depend on the model type.
@@ -134,7 +143,20 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                 obj.PSFSigmaMin = psf_sigma_min;
                 obj.PSFSigmaMax = psf_sigma_min;
             else
-                psf_sigma_max = double(psf_sigma_max(:)');
+                if isscalar(psf_sigma_max)
+                    if psf_sigma_max<=1
+                        error('MappelBase:MappelBase','Got scalar psf_sigma_max <=1. Got: %f',psf_sigma_max);
+                    end
+                    psf_sigma_max = psf_sigma_max * psf_sigma_min;
+                else
+                    if ~all(psf_sigma_max>psf_sigma_min)
+                        error('MappelBase:MappelBase','Got psf_sigma_max: %s must be greater than psf_sigma_min:%s',...
+                            mat2str(psf_sigma_max), mat2str(psd_sigma_min));
+                    end
+                    psf_sigma_max = double(psf_sigma_max(:)');
+                end
+                    
+                    
                 initialized = obj.openIFace(imsize, psf_sigma_min, psf_sigma_max);
                 obj.PSFSigmaMin = psf_sigma_min;
                 obj.PSFSigmaMax = psf_sigma_max;
@@ -163,9 +185,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function val = getHyperparamValue(obj, name)
             % val = obj.getHyperparamValue(name)
             %
-            % Convenience method to get a hyperparameter value by name
+            % Convenience method to get a hyper-parameter value by name
             %
-            % (in) name: name of hyperparam (case insensitive)
+            % (in) name: name of hyper-parameter (case insensitive)
             % (out) val: scalar value if found.
             % Throws MappelBase:HyperparamNotFound error if cannot find hyperparameter
             found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first');
@@ -178,9 +200,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function val = setHyperparamValue(obj, name, val)
             % obj.setHyperparamValue(name, val)
             %
-            % Convenience method to set a hyperparameter value by name
+            % Convenience method to set a hyper-parameter value by name
             %
-            % (in) name: name of hyperparam (case insensitive)
+            % (in) name: name of hyper-parameter (case insensitive)
             % (in) val: new scalar value.
             % Throws MappelBase:HyperparamNotFound error if cannot find hyperparameter
             found = find(~cellfun(@isempty,regexpi(obj.HyperparamNames,name)),1,'first');
@@ -195,10 +217,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function bounded_theta = boundTheta(obj, theta)
             % bounded_theta = obj.boundTheta(theta)
             %
-            % May also bound theta away from edge by epsilon.
+            % Modify thetas to esnure they remain within the interrior of the optimization domain.
             %
-            % (in) theta - A theta to correct to ensure it is in bounds
-            % (out) bounded_theta - A corrected theta that is now in-bounds
+            % (in) theta - size:[NumParams,N] A stack of thetas bound
+            % (out) bounded_theta - size:[NumParams,N] A corrected stack of thetas that are now in-bounds
             if size(theta,1) ~= obj.NumParams
                 if length(theta) == obj.NumParams
                     theta = theta';
@@ -214,8 +236,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % check if theta is in bounds
             %
-            % (in) theta - A theta to check if it is valid
-            % (out) ibounds - logical: True if the theta is valid
+            % (in) theta - size:[NumParams,N] A stack of thetas to check if they are in bounds
+            % (out) inbounds - logical: size:[N] True for each valid theta
             if size(theta,1) ~= obj.NumParams
                 if length(theta) == obj.NumParams
                     theta=theta';
@@ -266,12 +288,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % If theta is size:[NumParams,1] then count images with that theta are
             % simulated.  Default count is 1.  If theta is size:[NumParams, n] with n>1
-            % then n images are simulated, each with a seperate theta, and count is ignored.
+            % then n images are simulated, each with a separate theta, and count is ignored.
             % The noise model of the Model class is used to add noise to the sampled model images.
             %
             % (in) theta: size:[NumParams, 1] or [NumParams, n] double theta value.
-            % (in) count: (optional) the number of independant images to generate. Only used if theta is a single parameter.
-            % (out) image: a stack of n images, all sampled with params theta.
+            % (in) count: [optional] the number of independent images to generate. Only used if theta is a single parameter.
+            % (out) image: a stack of n images, all sampled with parameters theta.
             theta=obj.checkTheta(theta);
             if nargin==2
                 count = 1;
@@ -292,9 +314,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % image so that x goes from left to right, and returns a DIP image (or image sequence.)
             %
             % (in) theta: size:[NumParams, 1] or [NumParams, n] double theta value.
-            % (in) count: (optional) the number of independent images to generate. 
+            % (in) count: [optional] the number of independent images to generate. 
             %             Only used if theta is a single parameter.
-            % (out) image: a dim_images object holding a stack of n images all sampled with params theta
+            % (out) image: a dim_images object holding a stack of n images all sampled with parameters theta
             image = dip_image(obj.simulateImage(varargin{:}));
         end
 
@@ -309,7 +331,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
-            % (out) llh: size:[1,max(M,N)] double of log_likelihoods
+            % (out) llh: size:[1,max(M,N)] double of log-likelihoods
             theta = obj.checkTheta(theta);
             image = obj.checkImage(image);
             if size(image,obj.ImageDim+1) ~= size(theta,2) && size(theta,2)~=1 && ~ismatrix(image)
@@ -339,7 +361,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         end
         
         function grad = modelGrad(obj, image, theta)
-            % grad = obj.modelGrad(image, theta) - Compute the model gradiant.
+            % grad = obj.modelGrad(image, theta) - Compute the model gradient.
             %
             % This takes in a N images and M thetas.  If M=N=1, then we return a single Grad.  If there
             % are N=1 images and M>1 thetas, we return M Grads of the same image with each of the thetas.
@@ -348,7 +370,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
-            % (out) grad: a (NumParams X max(M,N)) double of gradiant vectors
+            % (out) grad: a (NumParams X max(M,N)) double of gradient vectors
             theta = obj.checkTheta(theta);
             image = obj.checkImage(image);
             if size(image,obj.ImageDim+1) ~= size(theta,2)  && size(theta,2)~=1 && ~ismatrix(image)
@@ -367,7 +389,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
-            % (out) hess: a (NumParams X NumParams X max(M,N)) double of hessian matricies
+            % (out) hess: a (NumParams X NumParams X max(M,N)) double of hessian matrices
             theta = obj.checkTheta(theta);
             image = obj.checkImage(image);
             if size(image,obj.ImageDim+1) ~= size(theta,2)  && size(theta,2)~=1 && ~ismatrix(image)
@@ -387,13 +409,13 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: An image stack of N images.  For 2D images this is size:[SizeY, SizeX, N]
             % (in) theta: A size:[NumParams, M] stack of theta values
-            % (out) hess: a (NumParams X NumParams X max(M,N)) double of hessian matricies
+            % (out) hess: a (NumParams X NumParams X max(M,N)) double of hessian matrices
             definite_hess = obj.modelHessian(image,theta);
             definite_hess = obj.callstatic('negativeDefiniteCholeskyApprox', definite_hess);
         end
 
         function varargout = modelObjective(obj, image, theta, negate)
-            % [rllh,grad,hess,definite_hess,llh] = obj.modelObjective(image, theta, negate)
+            % [rllh, grad, hess, definite_hess, llh] = obj.modelObjective(image, theta, negate)
             %
             % The model objective is simply the log-likelihood for MLE models, and the sum of the
             % log-likelihood an log-prior for MAP models.
@@ -417,9 +439,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (in) negate: optional) boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
             % (out) rllh: relative log likelihood scalar double
-            % (out) grad: (optional) grad of log likelihood scalar double size:[NumParams,1]
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
-            % (out) definite_hess: (optional) negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) grad: [optional] grad of log likelihood scalar double size:[NumParams,1]
+            % (out) hess: [optional] hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) definite_hess: [optional] negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
             if nargin<4
                 negate = false;
@@ -448,12 +470,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
-            % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
+            % (in) negate: [optional] boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
             % (out) rllh: relative log likelihood scalar double
-            % (out) grad: (optional) grad of log likelihood scalar double size:[NumParams,1]
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
-            % (out) definite_hess: (optional)  negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) grad: [optional] grad of log likelihood scalar double size:[NumParams,1]
+            % (out) hess: [optional] hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) definite_hess: [optional]  negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
             if nargin<4
                 negate = false;
@@ -483,12 +505,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
-            % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
+            % (in) negate: [optional] boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
             % (out) rllh: relative log likelihood scalar double
-            % (out) grad: (optional) grad of log likelihood scalar double size:[NumParams,1]
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
-            % (out) definite_hess: (optional) negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) grad: [optional] grad of log likelihood scalar double size:[NumParams,1]
+            % (out) hess: [optional] hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) definite_hess: [optional] negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
             if nargin<4
                 negate = false;
@@ -517,12 +539,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % flag.  This flag also affects weather the 4th argument is negative- or positive-definite.
             %
             % (in) theta: a parameter value size:[NumParams,1] double of theta
-            % (in) negate: (optional) boolean. true if objective should be negated, as is the case with
+            % (in) negate: [optional] boolean. true if objective should be negated, as is the case with
             %                 matlab minimization routines
             % (out) rllh:  relative log likelihood scalar double
-            % (out) grad: (optional) grad of log likelihood scalar double size:[NumParams,1]
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams]
-            % (out) definite_hess: (optional) negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) grad: [optional] grad of log likelihood scalar double size:[NumParams,1]
+            % (out) hess: [optional] hessian of log likelihood double size:[NumParams,NumParams]
+            % (out) definite_hess: [optional] negative(positive)-definite hessian of log likelihood double size:[NumParams,NumParams]
             % (out) llh:  full log likelihood with constant terms as a scalar double
             if nargin<3
                 negate = false;
@@ -545,9 +567,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (in) image: an image, double size:[flip(ImageSize)]
             % (in) theta: a parameter value size:[NumParams,1] double of theta
             % (out) llh: log likelihood components size:[1,NumComponents]
-            % (out) grad: (optional) components of grad of log likelihood size:[NumParams,NumComponents*]  
+            % (out) grad: [optional] components of grad of log likelihood size:[NumParams,NumComponents*]  
             %             * there is only a single extra grad component added for prior in MAP models.
-            % (out) hess: (optional) hessian of log likelihood double size:[NumParams,NumParams,NumComponents*] 
+            % (out) hess: [optional] hessian of log likelihood double size:[NumParams,NumParams,NumComponents*] 
             %             * there is only a single extra hess component added for prior in MAP models.
             [varargout{1:nargout}] = obj.call('modelObjectiveComponents', image, theta);
         end
@@ -580,7 +602,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % Should only be called at theta=theta_mle, i.e., at the maximum (mode) of the distribution.
             % ObsI should be positive definite at the mode.
-            % This is equivalent to the negative hessian of the llh.
+            % This is equivalent to the negative hessian of the log-likelihood.
             %
             % (in) image: a single image or a stack of images
             % (in) theta_mle: an estimated  MLE theta size:[NumParams,N].  One theta_mle per image.
@@ -590,15 +612,15 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             obsI = -obj.call('modelHessian',image, theta_mle);
         end
 
-        function [Observed_lb, observed_ub] = errorBoundsObserved(obj, image, theta_mle, confidence, obsI)
+        function [observed_lb, observed_ub] = errorBoundsObserved(obj, image, theta_mle, confidence, obsI)
             % [observed_lb, observed_ub] = obj.errorBoundsObserved(image, theta_mle, confidence, obsI)
             %
             % Compute the error bounds using the observed information at the MLE estimate theta_mle.
             %
             % (in) image: a single image or a stack of n images
             % (in) theta_mle: the MLE estimated theta size:[NumParams,n]
-            % (in) confidence: (optional) desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
-            % (in) obsI: (optional) observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n]
+            % (in) confidence: [optional] desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
+            % (in) obsI: [optional] observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n]
             % (out) observed_lb: the observed-information-based confidence interval lower bound for parameters, size:[NumParams,n]
             % (out) observed_ub: the observed-information-based confidence interval upper bound for parameters, size:[NumParams,n]
             image = obj.checkImage(image);
@@ -607,9 +629,9 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                 confidence = obj.DefaultConfidenceLevel;
             end
             if nargin<5
-                [Observed_lb, observed_ub] = obj.call('errorBoundsObserved',image, theta_mle, confidence);
+                [observed_lb, observed_ub] = obj.call('errorBoundsObserved',image, theta_mle, confidence);
             else
-                [Observed_lb, observed_ub] = obj.call('errorBoundsObserved',image, theta_mle, confidence, obsI);
+                [observed_lb, observed_ub] = obj.call('errorBoundsObserved',image, theta_mle, confidence, obsI);
             end
         end
 
@@ -620,7 +642,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % is independent of the image, assuming Gaussian error with variance given by CRLB.
             %
             % (in) theta_mle: the theta MLE's to estimate error bounds for. size:[NumParams,N]
-            % (in) confidence: (optional)  desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
+            % (in) confidence: [optional]  desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
             % (out) expected_lb: the expected-information-based confidence interval lower bound for parameters for each theta, size:[NumParams,N]
             % (out) expected_ub: the expected-information-based confidence interval upper bound for parameters for each theta, size:[NumParams,N]
             theta_mle = obj.checkTheta(theta_mle);
@@ -630,55 +652,157 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             [expected_lb, expected_ub] = obj.call('errorBoundsExpected', theta_mle, confidence);
         end
 
-        function [profile_lb, profile_ub, theta_mle_out] = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, estimator_algorithm, params_to_estimate)
-            % [profile_lb, profile_ub, theta_mle_out] = obj.errorBoundsProfileLikelihood(image, theta_mle, confidence, estimator_algorithm, params_to_estimate)
+        function varargout = errorBoundsProfileLikelihood(obj, image, theta_mle, confidence, theta_mle_rllh, obsI, algorithm, estimated_idxs)
+            % [profile_lb, profile_ub, stats]
+            %    = obj.errorBoundsProfileLikelihood(images, theta_mle, confidence, theta_mle_rllh, obsI, estimate_parameters, algorithm)
             %
-            % Compute the error bounds using the profile-likelihood-based interval,
+            % Compute the profile log-likelihood bounds for a stack of images, estimating upper and lower bounds for each requested parameter.
+            % Uses the Venzon and Moolgavkar (1988) algorithm, implemented in OpenMP.
             %
-            % (in) image: a stack of N images
-            % (in) theta_mle: (optional) a stack of MLE/MAP estimated thetas size:[NumParams,N].  If not provided or set to invalid values the, it will be estimated first.
-            % (in) confidence: (optional)  desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
-            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
-            % (in) params_to_estimate: (optional) boolean vector size:[NumParams,1], true if this parameter should have it's error estimated.
-            %                                     This allows disable estimation of parameters that are not of interest.
-            % (out) profile_lb: the profile-likelihood-based confidence interval lower bound for parameters, size:[NumParams,N]
-            % (out) profile_ub: the profile-likelihood-based confidence interval upper bound for parameters, size:[NumParams,N]
-            % (out) theta_mle: (optional) the theta_mle estimate, if not already produced. size:[NumParams,N]
-
+            % (in) images: a stack of N images
+            % (in) theta_mle: a stack of N theta_mle estimates corresponding to the image size
+            % (in) confidence: [optional] desired confidence as 0<p<1.  [default=obj.DefaultConfidenceLevel]
+            % (in) theta_mle_rllh: [optional] size:[N] relative-log-likelihood at each image's theta_mle.  Otherwise it must be re-computed. 
+            % (in) theta_rllh: [optional] 
+            % (in) obsI: [optional] observed information, at each theta_mle, as returned by obj.estimate size:[NumParams,NumParams,n].
+            %                      Must be recomputed if not provided or provided as empty array.
+            % (in) algorithm: [optional] [Default = obj.DefaultProfileBoundsEstimatorMethod] 
+            %                             Valid methods are in obj.ProfileBoundsEstimationMethods
+            % (in) estimated_idxs: [optional] indexs of estimated parameters.  Empty array (defulat) indicates
+            %                       estimate all parameters.
+            % (out) profile_lb: size [NumParams,N] lower bounds for each parameter to be estimated. NaN if parameter was not estimated
+            % (out) profile_ub: size [NumParams,N] upper bounds for each parameter to be estimated. NaN if parameter was not estimated
+            % (out) profile_points: [optional] size[NumParams,2,NumParams,N] Profile maxima thetas at which
+            %           profile bounds were obtained.  Each [NumParams,2,NumParams] slice are the thetas found defining the 
+            %           the lower and upper bound for each parameter in sequence as the 3-rd dimension.
+            %           The 4-th dimension is used if the profile is run on multiple images.  These can
+            %           be useful to test for the quality of the estimated points.
+            % (out) profile_points_rllh: [optional] size [2,NumParams,N], rllh at each returne profile_point.
+            % (out) stats: [optional] struct of fitting statistics.
             image = obj.checkImage(image);
-            theta_mle = obj.checkTheta(theta_mle);
+            if nargin<3
+                [theta_mle, theta_mle_rllh, obsI] = obj.estimate(image);
+            else
+                theta_mle = obj.checkTheta(theta_mle);
+                if nargin<5
+                    theta_mle_rllh=[];
+                end
+                if nargin<6
+                    obsI=[];
+                end
+            end
             if nargin<4
                 confidence = obj.DefaultConfidenceLevel;
             end
-            if nargin<5
-                estimator_algorithm = obj.DefaultEstimatorMethod;
+            if nargin<7
+                algorithm = obj.DefaultProfileBoundsEstimatorMethod;
             end
-            if nargin<6
-                params_to_estimate = ones(obj.NumParams,1);
+            if nargin<8
+                estimated_idxs = uint64(1:obj.NumParams);
+            elseif numel(unique(estimated_idxs))~=numel(estimated_idxs)
+                error('Mappel:errorBoundsProfileLikelihood','estimated_idxs must be unique.  Got: %s',mat2str(estimated_idxs))
+            elseif any(estimated_idxs<1) || any(estimated_idxs>obj.NumParams)
+                error('Mappel:errorBoundsProfileLikelihood','estimated_idxs must be between 1 and obj.NumParams.  Got: %s',mat2str(estimated_idxs))    
+            else
+                estimated_idxs = uint64(sort(estimated_idxs));
             end
-            [profile_lb, profile_ub, theta_mle_out] = obj.call('errorBoundsProfileLikelihood',image, theta_mle, confidence, estimator_algorithm, params_to_estimate);
+                
+            switch lower(algorithm)
+                case {'n','newt','newton'}
+                    [varargout{1:nargout}] = obj.call('errorBoundsProfileLikelihood',image, theta_mle, confidence, theta_mle_rllh, obsI, estimated_idxs-1);
+                case {'matlab-fzero','fzero'}
+                    [varargout{1:nargout}] = obj.errorBoundsProfileLikelihood_matlab_fzero(obj, image, theta_mle, confidence, theta_mle_rllh, obsI, estimated_idxs);
+                case {'matlab-fsolve','fsolve'}
+                    [varargout{1:nargout}] = obj.errorBoundsProfileLikelihood_matlab_fsolve(obj, image, theta_mle, confidence, theta_mle_rllh, obsI, estimated_idxs);
+                otherwise
+                    error('Mappel:errorBoundsProfileLikelihood','Unknown algorithm %s',algorithm);
+            end
         end
 
-        function varargout = errorBoundsPosteriorCredible(obj, image, theta_mle, confidence, num_samples, burnin, thin)
-            % [credible_lb, credible_ub, posterior_sample] = obj.errorBoundsPosteriorCredible(image, theta_mle, confidence, max_samples)
+        function varargout = errorBoundsProfileLikelihoodDebug(obj, image, theta_mle, theta_mle_rllh, obsI, estimate_parameter, llh_delta, algorithm)
+            % [profile_lb, profile_ub, seq_lb, seq_ub, seq_lb_rllh, seq_ub_rllh, stats]
+            %    = obj.errorBoundsProfileLikelihoodDebug(image, estimate_parameter, theta_mle, theta_mle_rllh, obsI, llh_delta)
             %
-            % Compute the error bounds using the posterior credible interval, estimated with an mcmc sampling, using at most max_samples
+            % [DEBUGGING]
+            % Compute the profile log-likelihood bounds for a single images , estimating upper and lower bounds for each requested  parameter.
+            % Uses the Venzon and Moolgavkar (1988) algorithm.
+            %
+            % (in) image: a single images
+            % (in) theta_mle:  theta ML estimate
+            % (in) theta_mle_rllh: relative-log-likelihood at image.
+            % (in) obsI: a observed fisher information matrix at theta_mle
+            % (in) estimate_parameter: integer index of parameter to estimate size:[NumParams]
+            % (in) llh_delta: [optional] Negative number, indicating LLH change from maximum at the profile likelihood boundaries.
+            %                  [default: confidence=0.95; llh_delta = -chi2inv(confidence,1)/2;]
+            % (out) profile_lb:  scalar lower bound for parameter
+            % (out) profile_ub:  scalar upper bound for parameter
+            % (out) seq_lb: size:[NumParams,Nseq_lb]  Sequence of Nseq_lb points resulting from VM algorithm for lower bound estimate
+            % (out) seq_ub: size:[NumParams,Nseq_ub]  Sequence of Nseq_ub points resulting from VM algorithm for upper bound estimate
+            % (out) seq_lb_rllh: size:[Nseq_lb]  Sequence of RLLH at each of the seq_lb points
+            % (out) seq_ub_rllh: size:[Nseq_ub]  Sequence of RLLH at each of the seq_ub points
+            % (out) stats: struct of fitting statistics.
+            image = obj.checkImage(image);
+            if nargin<3
+                [theta_mle, theta_mle_rllh, obsI] = obj.estimate(image);
+            else
+                theta_mle = obj.checkTheta(theta_mle);
+                if nargin<5 || isempty(theta_mle_rllh)
+                    theta_mle_rllh=-inf;
+                end
+                if nargin<6
+                    obsI=[];
+                end
+            end
+            if nargin<6
+                estimate_parameter=1;
+            elseif ~isscalar(estimate_parameter)
+                error('Mappel:errorBoundsProfileLikelihoodDebug','estimate_parameter must be scalar');                
+            elseif ~(estimate_parameter>=1 && estimate_parameter<=obj.NumParams)
+                error('Mappel:errorBoundsProfileLikelihoodDebug','estimate_parameter must be between 1 and obj.NumParams.  Got: %i',estimate_parameter);
+            end
+            if nargin<7
+                llh_delta = -chi2inv(obj.DefaultConfidenceLevel,1)/2;
+            elseif llh_delta>=0
+                error('Mappel:errorBoundsProfileLikelihoodDebug','llh_delta should be negative got: %f',llh_delta);
+            end
+            if nargin<8
+                algorithm = obj.DefaultProfileBoundsEstimatorMethod;
+            end
+            switch lower(algorithm)
+                case {'n','newt','newton'}
+                    [varargout{1:nargout}] = obj.call('errorBoundsProfileLikelihoodDebug',image, theta_mle, theta_mle_rllh, obsI, uint64(estimate_parameter)-1, llh_delta);
+                case {'matlab-fzero','fzero'}
+                    [varargout{1:nargout}] = obj.errorBoundsProfileLikelihoodDebug_matlab_fzero(obj, image, theta_mle_rllh, obsI, estimated_parameter-1, confidence, theta_mle_rllh, obsI, estimate_parameters);
+                otherwise
+                    error('Mappel:errorBoundsProfileLikelihood','Unknown algorithm %s',algorithm);
+            end
+            
+        end
+
+        function varargout = errorBoundsPosteriorCredible(obj, image, theta_mle_approx, confidence, num_samples, burnin, thin)
+            % [credible_lb, credible_ub, posterior_sample] = obj.errorBoundsPosteriorCredible(image, theta_mle_approx, confidence, max_samples)
+            %
+            % Compute the error bounds using the posterior credible interval, estimated with an MCMC sampling, using at most max_samples
             %
             % (in) image: a stack of n images to estimate
-            % (in) theta_mle: (optional) Initial theta guesses as the MLE estimate size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
+            % (in) theta_mle_approx: [optional] Initial guesses for the MLE.  This is just used to
+            %                   initialize the chain, and need not be precise.
+            %                   size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
-            %                   should be auto estimated.
-            % (in) confidence: (optional) desired confidence to estimate credible interval at.  Given as 0<confidence<1. [default=obj.DefaultConfidenceLevel]
-            % (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
-            % (in) burnin: (optional) Number of samples to throw away (burn-in) on initialization [default=obj.DefaultMCMCBurnin]
-            % (in) thin: (optional) Keep every # samples. Value of 0 indicates use the model default. This is suggested.
+            %                   should be auto estimated, valid parameter values will be kept even if invalid ones require initialization.
+            % (in) confidence: [optional] desired confidence to estimate credible interval at.  Given as 0<confidence<1. [default=obj.DefaultConfidenceLevel]
+            % (in) num_samples: [optional] Number of (post-filtering) posterior samples to acquire. [default=obj.DefaultMCMCNumSamples]
+            % (in) burnin: [optional] Number of samples to throw away (burn-in) on initialization [default=obj.DefaultMCMCBurnin]
+            % (in) thin: [optional] Keep every # samples. Value of 0 indicates use the model default. This is suggested.
             %                       When thin=1 there is no thinning.  This is also a good option if rejections are rare. [default=obj.DefaultMCMCThin]
-            % (out) posterior_mean: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
-            % (out) credible_lb: (optional) size:[NumParams,n] posterior credible interval lower bounds for each parameter for each image
-            % (out) credible_ub: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
+            % (out) posterior_mean: [optional] size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
+            % (out) credible_lb: [optional] size:[NumParams,n] posterior credible interval lower bounds for each parameter for each image
+            % (out) credible_ub: [optional] size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
             [varargout{1:nargout}] = obj.estimatePosterior(image, theta_mle, confidence, num_samples, burnin, thin);
         end
 
+%         function  coverageProbability(obj, theta, Nsamples, 
+        
         function [theta, varargout] = estimate(obj, image, estimator_algorithm, theta_init)
             % [theta, obsI, llh, stats] = obj.estimate(image, estimator_algorithm, theta_init)
             %
@@ -687,16 +811,16 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %
             % This is the maximum-likelihood estimate for 'MLE' models and the maximum a posteriori estimate for 'MAP' models.
             %
-            % 'Newton' or 'TrustRegion' are suggested as the most robust estimators.
+            % 'TrustRegion' is suggested as the most robust estimator.
             %
             % (in) image: a stack of N images
-            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
-            % (in) theta_init: (optional) Initial theta guesses size:[NumParams, N].  Values of 0 indicate
+            % (in) estimator_algorithm: [optional] name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
+            % (in) theta_init: [optional] Initial theta guesses size:[NumParams, N].  Values of 0 indicate
             %            that we have no initial guess and the estimator should form its own guess.
             % (out) theta: size:[NumParams, N] estimated theta maximum for each image.
-            % (out) rllh: (optional) size:[1,N] double of the relative log likelihood at each theta estimate.
-            % (out) obsI: (optional) size:[NumParams,NumParams, N] the observed information at the MLE for each image.
-            % (out) stats: (optional) A 1x1 struct of fitting statistics.
+            % (out) rllh: [optional] size:[1,N] double of the relative log likelihood at each theta estimate.
+            % (out) obsI: [optional] size:[NumParams,NumParams, N] the observed information at the MLE for each image.
+            % (out) stats: [optional] A 1x1 struct of fitting statistics.
             image = obj.checkImage(image);
             if nargin<3
                 estimator_algorithm = obj.DefaultEstimatorMethod;
@@ -713,13 +837,23 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             if ~ischar(estimator_algorithm)
                 error('MappelBase:estimate', 'Invalid estimation method name');
             end
-            switch estimator_algorithm
-                case 'GPUGauss'
+            switch lower(estimator_algorithm)
+                case 'gpugauss'
                     [theta, varargout{1:nargout-1}] = obj.estimate_GPUGaussMLE(image);
-                case 'matlab-fminsearch'
+                case {'fminsearch', 'matlab-fminsearch'}
                     [theta, varargout{1:nargout-1}] = obj.estimate_fminsearch(image, theta_init);
-                case {'matlab-quasi-newton','matlab-trust-region-reflective','matlab-trust-region','matlab-interior-point'}
-                    [theta, varargout{1:nargout-1}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm);
+                case {'matlab-quasi-newton','matlab-quasi','matlab-reflective','matlab-trust-region-reflective','matlab-trust','matlab-trust-region','matlab-interior-point','matlab-interior','matlab-active-set','matlab-sqp'}
+                    [theta, varargout{1:nargout-1}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm(8:end));
+                case {'matlabquasinewton','matlabquasi','matlabreflective','matlabtrustregionreflective','matlabtrust','matlabtrustregion','matlabinteriorpoint','matlabinterior','matlabsqp','matlabactiveset'}
+                    [theta, varargout{1:nargout-1}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm(7:end));
+                case {'trust','tr'}
+                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'TrustRegion', theta_init);
+                case {'newt','n'}
+                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'Newton', theta_init);
+                case {'qn','quasi','bfgs'}
+                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'QuasiNewton', theta_init);
+                case {'nd','diag','diagonal'}
+                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'NewtonDiagonal', theta_init);
                 otherwise
                     [theta, varargout{1:nargout-1}] = obj.call('estimate',image, estimator_algorithm, theta_init);
             end
@@ -732,16 +866,21 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % values.  For each value, the parameter of interest is fixed and the other parameters are
             % optimized with the estimator_algorithm in parallel with OpenMP.
             %
+            % At least one parameter must be fixed and at least one parameter must be free.
+            %
             % (in) image: a single images
-            % (in) fixed_parameters: uint64 [NParams,1] 0=free 1=fixed.  At least one paramer must be fixed and at least one parameter must be free.
-            % (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximimize the other (free) parameters at.
-            % (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
-            % (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
-            %                  If only a single parameter [NumParams,1] is given, each profile estimation will use this single theta_init.
+            % (in) fixed_parameters: uint64 size:[NParams,1] mask 0=free 1=fixed.  
+            %                  [or] if numel(fixed_parameters)<NParams, it is treated as a vector of
+            %                        indexes of fixed parameters (uses matlab 1-based indexing).
+            % (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximize the other (free) parameters at.
+            % (in) estimator_algorithm: [optional] name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
+            % (in) theta_init: [optional] Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
+            %                   If only a single parameter [NumParams,1] is given, each profile estimation will use this single theta_init.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
+            %                   should be auto estimated, valid parameter values will be kept even if invalid ones require initialization.
             % (out) profile_likelihood: size:[N,1] profile likelihood for the parameter at each value.,
-            % (out) profile_parameters: (optional) size:[NumParams,N] parameters that achieve the profile likelihood maximum at each value.
-            % (out) stats: (optional) Estimator stats dictionary.
+            % (out) profile_parameters: [optional] size:[NumParams,N] parameters that achieve the profile likelihood maximum at each value.
+            % (out) stats: [optional] Estimator stats dictionary.
             image = obj.checkImage(image);
             if nargin<5
                 estimator_algorithm = obj.DefaultEstimatorMethod;
@@ -749,10 +888,23 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             if nargin<6
                 theta_init = [];
             end
-            fixed_parameters = uint64(fixed_parameters~=0);
-            Nfixed = sum(fixed_parameters);
+            if isempty(fixed_parameters)
+                error('MappelBase:estimateProfileLikelihood','No fixed parameters given.');
+            elseif numel(fixed_parameters)==obj.NumParams
+                fixed_idxs = uint64(find(fixed_parameters));
+            else
+                fixed_idxs = uint64(fixed_parameters);
+            end
+            Nfixed = numel(fixed_idxs);
             if Nfixed<1 || Nfixed>obj.NumParams
                 error('MappelBase:InvalidValue','fixed_parameters should have at least one fixed and at least one free parameter');
+            end
+            if isvector(fixed_values)
+                if Nfixed==1
+                    fixed_values = fixed_values(:)';
+                else
+                    fixed_values = fixed_values(:);
+                end
             end
             fixed_values_sz = size(fixed_values);
             if fixed_values_sz(1) ~= Nfixed
@@ -760,21 +912,22 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             end
             theta_init = obj.checkThetaInit(theta_init, fixed_values_sz(2)); %expand theta_init to size:[NumParams,n]
 
-            [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_parameters, fixed_values, estimator_algorithm, theta_init);
+            [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_idxs-1, fixed_values, estimator_algorithm, theta_init);
         end
 
         function varargout = estimateDebug(obj, image, estimator_algorithm, theta_init)
             % [theta, obsI, llh, stats, sample, sample_rllh] = estimatedebug(image, estimator_algorithm, theta_init)
             %
-            % Debugging routine.  Works for a single image.  Returns entire sequence of evaluated points and their llh.
+            % DEBUGGING]
+            % Estimate for a single image.  Returns entire sequence of evaluated points and their LLH.
             % The first entry of the evaluated_seq is theta_init.  The last entry may or may not be
-            % theta_est.  It is strictly a sequence of evaluated thetas so that the lenght of the
+            % theta_est.  It is strictly a sequence of evaluated thetas so that the length of the
             % evaluated_seq is the same as the number of RLLH evaluations performed by the maximization
             % algorithm.
             %
             % (in) image: a size:[flip(ImageSize)] image
-            % (in) estimator_algorithm: (optional) name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
-            % (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
+            % (in) estimator_algorithm: [optional] name from obj.EstimationMethods.  The optimization method. [default=DefaultEstimatorMethod]
+            % (in) theta_init: [optional] Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
             %                   should be auto estimated.
             % (out) theta: size:[NumParams,1] estimated theta value
@@ -800,10 +953,20 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             switch estimator_algorithm
                 case 'GPUGauss'
                     [varargout{1:nargout}] = obj.estimateDebug_GPUGaussMLE(image);
-                case 'matlab-fminsearch'
+                case {'fminsearch', 'matlab-fminsearch'}
                     [varargout{1:nargout}] = obj.estimateDebug_fminsearch(image, theta_init);
-                case {'matlab-quasi-newton','matlab-trust-region-reflective','matlab-trust-region','matlab-interior-point'}
+                case {'matlab-quasi-newton','matlab-quasi','matlab-reflective','matlab-trust-region-reflective','matlab-trust','matlab-trust-region','matlab-interior-point','matlab-interior','matlab-active-set','matlab-sqp'}
                     [varargout{1:nargout}] = obj.estimateDebug_toolbox(image, theta_init, estimator_algorithm(8:end));
+                case {'matlabquasinewton','matlabquasi','matlabreflective','matlabtrustregionreflective','matlabtrust','matlabtrustregion','matlabinteriorpoint','matlabinterior','matlabsqp','matlabactiveset'}
+                    [varargout{1:nargout}] = obj.estimateDebug_toolbox(image, theta_init, estimator_algorithm(7:end));
+                case {'trust','tr'}
+                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'TrustRegion', theta_init);
+                case {'newt','n'}
+                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'Newton', theta_init);
+                case {'qn','quasi','bfgs'}
+                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'QuasiNewton', theta_init);
+                case {'nd','diag','diagonal'}
+                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'NewtonDiagonal', theta_init);
                 otherwise
                     [varargout{1:nargout}] = obj.call('estimateDebug',image, estimator_algorithm, theta_init);
             end
@@ -819,10 +982,10 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % Use MCMC sampling to sample from the posterior distribution and estimate the posterior
             % mean, a credible interval for upper and lower bounds on each parameter, and posterior
             % covariance. Optionally also returns the entire mcmc-posterior sample for further
-            % post-processing, along with the rllh at each sample.  Optional arguments are only computed
+            % post-processing, along with the RLLH at each sample.  Optional arguments are only computed
             % if required.
             %
-            % MCMC sampling can be controlled with the optional num_samples, burnin, and thin arguments.
+            % MCMC sampling can be controlled with the optional num_samples, burn-in, and thin arguments.
             %
             % The confidence parameter sets the confidence-level for the credible interval bounds.  The
             % credible intervals bounds are per-parameter, i.e, each parameter at index i is individually
@@ -830,20 +993,20 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % out the other parameters.
             %
             % (in) image: a stack of n images to estimate
-            % (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
+            % (in) theta_init: [optional] Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
             %                   should be auto estimated.
-            % (in) confidence: (optional) desired confidence to estimate credible interval at.  Given as 0<confidence<1. [default=obj.DefaultConfidenceLevel]
-            % (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
-            % (in) burnin: (optional) Number of samples to throw away (burn-in) on initialization [default=obj.DefaultMCMCBurnin]
-            % (in) thin: (optional) Keep every # samples. Value of 0 indicates use the model default. This is suggested.
+            % (in) confidence: [optional] desired confidence to estimate credible interval at.  Given as 0<confidence<1. [default=obj.DefaultConfidenceLevel]
+            % (in) num_samples: [optional] Number of (post-filtering) posterior samples to acquire. [default=obj.DefaultMCMCNumSamples]
+            % (in) burnin: [optional] Number of samples to throw away (burn-in) on initialization [default=obj.DefaultMCMCBurnin]
+            % (in) thin: [optional] Keep every # samples. Value of 0 indicates use the model default. This is suggested.
             %                       When thin=1 there is no thinning.  This is also a good option if rejections are rare. [default=obj.DefaultMCMCThin]
             % (out) posterior_mean: size:[NumParams,n] posterior mean for each image
-            % (out) credible_lb: (optional) size:[NumParams,n] posterior credible interval lower bounds for each parameter for each image
-            % (out) credible_ub: (optional) size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
-            % (out) posterior_cov: (optional) size:[NumParams,NumParams,n] posterior covariance matrices for each image
-            % (out) mcmc_samples: (optional) size:[NumParams,max_samples,n] complete sequence of posterior samples generated by MCMC for each image
-            % (out) mcmc_samples_rllh: (optional) size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC. Each column corresponds to an image.
+            % (out) credible_lb: [optional] size:[NumParams,n] posterior credible interval lower bounds for each parameter for each image
+            % (out) credible_ub: [optional] size:[NumParams,n] posterior credible interval upper bounds for each parameter for each image
+            % (out) posterior_cov: [optional] size:[NumParams,NumParams,n] posterior covariance matrices for each image
+            % (out) mcmc_samples: [optional] size:[NumParams,max_samples,n] complete sequence of posterior samples generated by MCMC for each image
+            % (out) mcmc_samples_rllh: [optional] size:[max_samples,n] relative log likelihood of sequence of posterior samples generated by MCMC. Each column corresponds to an image.
 
             image = obj.checkImage(image);
             nIms = size(image, obj.ImageDim+1);
@@ -874,24 +1037,24 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % [sample, sample_rllh, candidates, candidate_rllh] = obj.estimatePosteriorDebug(image, theta_init, num_samples)
             %
             % Debugging routine.  Works on a single image.  Get out the exact MCMC sample sequence, as
-            % well as the candidate sequence. Does not do burnin or thinning.
+            % well as the candidate sequence. Does not do burn-in or thinning.
             %
-            % (in) image: a sinle images to estimate
-            % (in) theta_init: (optional) Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
+            % (in) image: a single image to estimate
+            % (in) theta_init: [optional] Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
             %                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
             %                   should be auto estimated.
-            % (in) num_samples: (optional) Number of (post-filtering) posterior samples to aquire. [default=obj.DefaultMCMCNumSamples]
+            % (in) num_samples: [optional] Number of (post-filtering) posterior samples to acquire. [default=obj.DefaultMCMCNumSamples]
             % (out) sample: A size:[NumParams,num_samples] array of thetas samples
             % (out) sample_rllh: A size:[1,num_samples] array of relative log likelihoods at each sample theta
-            % (out) candidates: (optional) size:[NumParams, num_samples] array of candidate thetas
-            % (out) candidate_rllh: (optional) A size:[1, num_samples] array of relative log likelihoods at each candidate theta
+            % (out) candidates: [optional] size:[NumParams, num_samples] array of candidate thetas
+            % (out) candidate_rllh: [optional] A size:[1, num_samples] array of relative log likelihoods at each candidate theta
             image=obj.checkImage(image);
             if nargin<3
                 theta_init = [];
             end
             theta_init = obj.checkThetaInit(theta_init, 1);
             if nargin<4 || isempty(num_samples) || num_samples<=1
-                num_samples = obj.DefaultMCMCMaxSamples;
+                num_samples = obj.DefaultMCMCNumSamples;
             end
              [varargout{1:nargout}] = obj.call('estimatePosteriorDebug', image, theta_init, num_samples);
         end
@@ -1015,13 +1178,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             obj.ParamLBound = new_bound; % Set local property
         end
 
-        %%Model Testing
         function [llh, theta_bg_mle] = uniformBackgroundModelLLH(obj, ims)
             % Test the model fit of a 1-parameter constant background model to the stack of images.
-            % The mle estimate for a 1-parameter baground parameter is just the mean of the image.
+            % The MLE estimate for a 1-parameter background parameter is just the mean of the image.
             % The log-likelihood is calculated at this MLE estimate.
             % (in) ims: a double size:[flip(ImageSize), n] image stack
-            % (out) llh: a length N vector of the LLH for each image for the consant-background model
+            % (out) llh: a length N vector of the LLH for each image for the constant-background model
             % (out) theta_bg_mle: a length N vector of the estimated MLE constant background.
             npixels = prod(obj.ImageSize);
             ims = reshape(ims,npixels,[]);
@@ -1031,7 +1193,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
 
         function [pass, LLRstat] = modelComparisonUniform(obj, alpha, ims, theta_mle)
             % Do a LLH ratio test to compare the emitter model to a single parameter constant background model
-            % The images are provided along with the estimated theta mle values for the emitter model.
+            % The images are provided along with the estimated theta MLE values for the emitter model.
             % The LLH ratio test for nested models can be used and we compute the test statistice
             % LLRstat = -2*llh_const_bg_model + 2*llh_emitter_model.  This should be chisq distributed
             % with number of degrees of freedom given by obj.NumParams-1 since the const bg model has 1
@@ -1039,14 +1201,14 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % (in) alpha: 0<=alpha<1 - the certainty with which we should be sure to accept an emitter fit
             %                          vs. the uniform background model.  Values close to 1 reject more
             %                          fits.  Those close to 0 accept most fits.  At 0 only models where
-            %                          the constant bg is more likely (even though it has only 1 free parametet)
+            %                          the constant bg is more likely (even though it has only 1 free parameter)
             %                          will be rejected.  These arguably should always be rejected.  It
             %                          indicates an almost certainly bad fit.
             % (in) ims: a double size:[flip(ImageSize), n] image stack
             % (in) theta_mle: a double size:[NumParams, n] sequence of theta MLE values for each image in
             %                 ims
             % (out) pass: a boolean length N vector which is true if the emitter model passes for this test.
-            %             in otherwords it is true for images with good fits that should be kept.  Images
+            %             in other words it is true for images with good fits that should be kept.  Images
             %             that fail could just as easily have been just random noise.
             % (out) LLRstat: -2*log(null_model_LH / emitter_model_LH);
             assert(0<=alpha && alpha<1);
@@ -1062,11 +1224,11 @@ classdef MappelBase < MexIFace.MexIFaceMixin
 
         function llh = noiseBackgroundModelLLH(obj, ims)
             % Test the model fit of an npixels-parameter all noise background model to the stack of images.
-            % In this model each pixel has its own parameter and that pixels mle will of course be the
+            % In this model each pixel has its own parameter and that pixels MLE will of course be the
             % value of the pixel itself.  Unlike the constant bg model there is no point to return the
-            % mle values themselves since they are just the images.
+            % MLE values themselves since they are just the images.
             % (in) ims: a double size:[flip(ImageSize), n] image stack
-            % (out) llh: a length N vector of the LLH for each image for the consant-background model
+            % (out) llh: a length N vector of the LLH for each image for the constant-background model
             npixels = prod(obj.ImageSize);
             ims = reshape(ims,npixels,[]);
             llh = sum(ims.*log(ims)-ims-gammaln(ims+1))';
@@ -1103,7 +1265,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             
             if strncmpi(estimator,'posterior',9)
                 count = str2double(estimator(10:end));
-                theta_est=obj.estimatePosterior(ims,count,theta_init);
+                confidence = 0.95;
+                theta_est=obj.estimatePosterior(ims,theta_init,confidence,count);
             else
                 theta_est=obj.estimate(ims,estimator, theta_init);
             end
@@ -1112,23 +1275,27 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             stddev = std(error,0,1);
         end
 
-        function [theta_est, obsI]=evaluateEstimatorOn(obj, estimator, images)
+        function [theta_est,rmse,covariance] = evaluateEstimatorOn(obj, estimator, images, theta)
             %Evaluate this 2D estimator at a particular theta using the given samples which may have
             % been generated using different models or parameters.
             %
             % (in) estimator - String. Estimator name.  Can be any of the MAP estimator names or 'Posterior N' where N is a count
             % (in) images - size[flip(ImageSize),N] -  An array of sample images to test on
+            % (in) theta - size:[NumParams] - true theta values for images.
             % (out) theta_est - size:[NumParams,N]: the estimated thetas
-            % (out) est_var - size:[NumParams,N]: the estimated variance of the estimate at each theta
+            % (out) rmse - size:[NumParams] root mean squared error at theta
             if strncmpi(estimator,'posterior',9)
                 count = str2double(estimator(10:end));
-                [theta_est,est_cov]=obj.estimatePosterior(images,count);
-                est_var=zeros(obj.NumParams,size(est_cov,3));
-                for i=1:size(est_cov,3)
-                    est_var(:,i)=diag(est_cov(:,:,i));
-                end
+                theta_init=[];
+                confidence=0.95;
+                theta_est = obj.estimatePosterior(images,theta_init,confidence,count);
             else
-                [theta_est,est_var]=obj.estimate(images,estimator);
+                theta_est = obj.estimate(images,estimator);
+            end
+            if nargin>3
+                [~,Nims] = size(theta_est);
+                rmse = sqrt(mean((theta_est-repmat(theta(:),1,Nims)).^2,2));
+                covariance = cov((theta_est-repmat(theta(:),1,Nims))');
             end
         end
       
@@ -1163,7 +1330,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % mapEstimatorAccuacy().
             %
             % (in) theta - A theta to test over a spatial grid.  The x an y
-            % are irrelevent as they will be modified for each grid point.
+            % are irrelevant as they will be modified for each grid point.
             % (in) gridsize - [X Y] The size of the grid of test locations.
             %                   suggest: [30 30]
             % (out) theta_grid - size:[obj.NumParams, nTrials,gridsize(1),gridsize(2)]
@@ -1194,14 +1361,14 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         
         function srim=superResolutionModel(obj, theta, theta_err, res_factor)
             % Generate a super-res image showing the estimated location and
-            % error as a gaussian
+            % error as a Gaussian
             % (in) theta - The parameter value to visualize
-            % (in) theta_err - (optional) The RMSE error or sqrt(CRLB) that represents
+            % (in) theta_err - [optional] The RMSE error or sqrt(CRLB) that represents
             %                   the localization error. [default = run a simulation to estimate error] 
-            % (in) res_factor - [optinal] integer>1 - the factor to blow up the image
+            % (in) res_factor - [optional] integer>1 - the factor to blow up the image
             %                   [default = 100]
             % (out) srim - double size:[sizeY*res_factor,sizeX*res_factor]
-            %             A super-res rendering of the emitter fit postion.  
+            %             A super-res rendering of the emitter fit position.
             if nargin<4
                 res_factor=100;
             end
@@ -1231,7 +1398,7 @@ classdef MappelBase < MexIFace.MexIFaceMixin
 
     end% public methods
 
-    methods (Access = public)
+    methods (Access = protected)
         function [theta, llh, obsI, stats]=estimate_GPUGaussMLE(obj, image)
             if ~ispc()
                 error('MappelBase:estimateGPUGaussMLE','Unable to run GPUGaussMLE on this archetecture');
@@ -1282,109 +1449,117 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             sequence_llh=LL;
         end
 
-        function [theta,  llh, obsI, stats]=estimate_fminsearch(obj, image, theta_init)
+        function [theta, llh, obsI, stats]=estimate_fminsearch(obj, image, theta_init)
             %
             % Uses matlab's fminsearch (Simplex Algorithm) to maximize the LLH for a stack of images.
             % This is available in the core Matlab and does not require the optimization toolbox
             %
             % Uses LLH function evaluation calculations from C++ interface.
             % (in) image - a stack of N double images size:[flip(ImageSize), n]
-            % (in) theta_init: (optional) Initial theta guesses size (NumParams x n).  Values of 0 indicate
+            % (in) theta_init: [optional] Initial theta guesses size (NumParams x n).  Values of 0 indicate
             %            that we have no initial guess and the estimator should form its own guess.
             % (out) theta: size:[NumParams, N] double of estimated theta values
-            % (out) llh: (optional) a size:[1, N] double of the log likelihood at each theta estimate.
-            % (out) obsI: (optional) size:[NumParams, NumParams, N] estimate of the CRLB for each parameter estimate.
+            % (out) llh: [optional] a size:[1, N] double of the log likelihood at each theta estimate.
+            % (out) obsI: [optional] size:[NumParams, NumParams, N] estimate of the CRLB for each parameter estimate.
             %             This gives the approximate variance in the theta parameters
-            % (out) stats: (optional) A 1x1 struct of fitting statistics.
-            max_iter=5000;
-            N = size(image,3);
-            if nargin<3 || isempty(theta_init)
+            % (out) stats: [optional] A 1x1 struct of fitting statistics.
+            N = size(image,obj.ImageDim+1);
+            if nargin<3 || isempty(theta_init) || ~all(obj.thetaInBounds(theta_init))
                 theta_init = obj.estimate(image,'Heuristic');
             elseif isvector(theta_init)
                 theta_init = repmat(theta_init',1,N);
             end
-            opts = optimset('fminsearch');
-            opts.MaxIter = max_iter;
-            opts.Diagnostics = 'on';
-            opts.Display = 'off';
-            problem.solver = 'fminsearch';
-            problem.options = opts;
-            theta = zeros(obj.NumParams, N);
-            llh = zeros(1,N);
-            iterations = zeros(1,N);
-            fevals = zeros(1,N);
-            
-            
-            function val = callback(x)
-                if any(x-obj.ParamLBound<1e-6) || any(obj.ParamUBound-x<1e-6)
-                    %Method 1 - Inf
-                    %val = inf;
-                    %Method 2 - bound
-                    eps = 1e-6;
-                    x = min(max(obj.ParamLBound+eps,x),obj.ParamUBound-eps);
-                    val = -obj.modelLLH(im,x);
-                else
-                    val = -obj.modelLLH(im,x);
-                end
-            end
-            
-            for n=1:N
-                im = image(:,:,n);
-                problem.objective = @callback;
-                problem.x0 = theta_init(:,n);
-                [theta(:,n), llh_opt, flag, out] = fminsearch(problem);
-                llh(n) = -llh_opt;
-                fevals(n) = out.funcCount;
-                iterations(n) = out.iterations;
-            end
-            obsI = obj.observedInformation(image,theta);
-            stats.method = out.algorithm;
-            stats.iterations = out.iterations;
-            stats.flag = flag;
-            stats.iterations = iterations;
-            stats.fevals = fevals;
+            [theta, llh, obsI, stats] = obj.estimate_fminsearch_core(image, theta_init);
         end
 
-        function [theta, obsI, llh, sequence, sequence_llh,stats] = estimateDebug_fminsearch(obj, image, theta_init)
-            max_iter=5000;
-            sequence=zeros(obj.NumParams, max_iter);
-            function stop = output(theta, opt, state)
-                sequence(:,opt.iteration+1)=theta;
+        function [theta, llh, obsI, sequence, sequence_llh,stats] = estimateDebug_fminsearch(obj, image, theta_init)
+            max_iter = obj.DefaultMatlabFminsearchMaxIter;
+            sequence = zeros(obj.NumParams, max_iter);
+            nseq = 0;
+            function stop = output(theta, ~, state)
+                nseq = nseq+1;
+                sequence(:,nseq)=theta;
                 stop = strcmp(state,'done');
             end
-            if isempty(theta_init)
-                theta_init = obj.estimate(image,'Heuristic', theta_init);
+            if nargin<3 || isempty(theta_init) || ~obj.thetaInBounds(theta_init)
+                theta_init = obj.estimate(image,'Heuristic');
             end
-            opts = optimset('fminsearch');
-            opts.MaxIter = max_iter;
-            opts.Diagnostics = 'on';
-            opts.Display='final-detailed';
             opts.OutputFcn = @output;
+            opts.MaxIter=max_iter;
+            [theta, llh, obsI, stats] = obj.estimate_fminsearch_core(image, theta_init, opts);
+            sequence = sequence(:,1:nseq);
+            in_bounds = find(obj.thetaInBounds(sequence));
+            sequence_llh=-inf(nseq,1);
+            rllh = obj.modelRLLH(image, sequence(:,in_bounds));
+            sequence_llh(in_bounds)=rllh;
+            stats.sequenceLen = size(sequence,2);
+        end
+        
+        function [theta, llh, obsI, stats] = estimate_fminsearch_core(obj, image, theta_init, extra_opts)
+            Nims = size(theta_init,2);
+            Np = obj.NumParams;
+            
+            opts = optimset('fminsearch');
+            opts.MaxIter = obj.DefaultMatlabFminsearchMaxIter;
+            opts.Diagnostics = 'off';
+            opts.Display='off';
+            opts.TolX = obj.DefaultMatlabOptimizerTolerance;
+            opts.TolFun = obj.DefaultMatlabOptimizerTolerance;
+
+            if nargin==4
+                for name = fieldnames(extra_opts) 
+                    opts.(name{1}) = extra_opts.(name{1});
+                end
+            end
             problem.solver = 'fminsearch';
             problem.options = opts;
-            
-            function val = callback(x)
+            function val = callback(im,x)
                 if any(x-obj.ParamLBound<1e-6) || any(obj.ParamUBound-x<1e-6)
                     val = inf;
                 else
-                    val = -obj.modelLLH(image,x);
+                    val = -obj.modelLLH(im,x);
                 end
             end
+            llh=zeros(Nims,1);
+            obsI=zeros(Np,Np,Nims);
+            theta=zeros(Np,Nims);
+            stats.flags = zeros(Nims,1);
             
-            problem.objective = @callback;
-            problem.x0 = theta_init(:);
-            [theta, fval, flag, out] = fminsearch(problem);
-            obsI = obj.observedInformation(image, theta);
-            llh = -fval;
-            stats.method = out.algorithm;
-            stats.iterations = out.iterations;
-            stats.flag = flag;
-            sequence = sequence(:,1:out.iterations);
-            in_bounds = obj.thetaInBounds(sequence);
-            sequence_llh(in_bounds) = obj.modelRLLH(image, sequence(:,in_bounds));
-            sequence_llh(~in_bounds) = -inf;
-            stats.sequenceLen = size(sequence,2);
+            stats.num_exit_error = 0;
+            stats.num_exit_success = 0;
+            stats.num_exit_max_iter = 0;
+            stats.total_iterations = 0;
+            stats.total_backtracks = 0;
+            stats.total_fun_evals = 0;
+            stats.total_der_evals = 0;
+            stats.algorithm = 'fminsearch';
+            stats.num_estimations = Nims;
+            stats.TolX = opts.TolX;
+            stats.TolFun = opts.TolFun;
+            stats.MaxIter = opts.MaxIter;
+            for n=1:Nims
+                im=image(:,:,n);
+                problem.objective = @(x) callback(im,x);
+                problem.x0 = theta_init(:,n);
+                [theta(:,n), fval, stats.flags(n), out] = fminsearch(problem);
+                obsI(:,:,n) = obj.observedInformation(im, theta(:,n));
+                llh(n) = -fval;
+                
+                switch stats.flags(n)
+                    case 1
+                        stats.num_exit_success = stats.num_exit_success+1;
+                    case 0
+                        stats.num_exit_max_iter = stats.num_exit_max_iter+1;
+                    case -1
+                        stats.num_exit_error = stats.num_exit_error+1;
+                end
+                stats.total_iterations = stats.total_iterations + out.iterations;
+                stats.total_fun_evals = stats.total_fun_evals + out.funcCount;
+                stats.total_der_evals = stats.total_der_evals + 1;
+            end
+            
         end
+        
 
         function [theta, llh, obsI, stats]=estimate_toolbox(obj, image, theta_init, algorithm)
             %
@@ -1397,80 +1572,30 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % 'quasi-newton', and 'trust-region' algorithms use fminunc and perform unconstrained
             % optimizations.  
             % All methods use the full hessian except for 'quasi-newton'.  All methods also use the full
-            % gradieant values.
+            % gradient values.
             %
             % (in) image - A stack of N images. type: double size:[flip(ImageSize), N]
-            % (in) theta_init - (optional) size:[NumParams, N] array giving initial theta value for each image
+            % (in) theta_init - [optional] size:[NumParams, N] array giving initial theta value for each image
             %                   Default: Use Heuristic.
-            % (in) algorithm - (optional) string: The algorithm to choose.
+            % (in) algorithm - [optional] string: The algorithm to choose.
             %                    ['quasi-newton', 'interior-point', 'trust-region', 'trust-region-reflective']
             %                    [default: 'trust-region']
             % (out) theta - size:[NumParams, N]. Optimal theta value for each image
             % (out) llh - size:[NumParams, N]. LLH value at optimal theta for each image
             % (out) obsI - size:[NumParams, N]. CRLB value at each theta value.
             % (out) stats - statistics of fitting algorithm's performance.
-            if nargin==3
+            if nargin<4
                 algorithm = 'trust-region';
             end
-            if nargin==2 || isempty(theta_init)
-                theta_init = obj.estimate(image,'Heuristic', theta_init);
+            N = size(image,obj.ImageDim+1);
+            if nargin<3 || isempty(theta_init) || ~all(obj.thetaInBounds(theta_init))
+                theta_init = obj.estimate(image,'Heuristic');
+            elseif isvector(theta_init)
+                theta_init = repmat(theta_init',1,N);
             end
-            switch algorithm
-                case 'quasi-newton'
-                    solver = @fminunc;
-                case 'trust-region'
-                    solver = @fminunc;
-                case 'interior-point'
-                    solver = @fmincon;
-                case 'trust-region-reflective'
-                    solver = @fmincon;
-                otherwise
-                    error('MappelBase:estimateDebug_fmincon','Unknown maximization method: "%s"', algorithm);
-            end
-            problem.solver = func2str(solver);
-            opts = optimoptions(problem.solver);
-            opts.Algorithm = algorithm;
-            opts.SpecifyObjectiveGradient = true;
-            opts.Diagnostics = 'on';
-            opts.Display = 'iter-detailed';
-            opts.MaxIterations = 500;
-            switch algorithm
-                case 'quasi-newton'
-                    %Cannot supply hessian for quasi-newton
-                    opts.HessUpdate = 'bfgs'; %Method to choose search direction. ['bfgs', 'steepdesc', 'dfp']
-                    objective = @(im,theta) deal(-obj.LLH(im,theta), -obj.modelGrad(im,theta)); % 2 arg (obj,grad)
-                case {'trust-region','trust-region-reflective'}
-                    opts.HessianFcn = 'objective'; %Third arg in objective function.
-                    opts.SubproblemAlgorithm = 'factorization'; % vs. 'cg' 
-                    objective = @(im,theta) deal(-obj.LLH(im,theta), -obj.modelGrad(im,theta), -obj.modelHessian(im,theta));% 3 arg (obj,grad,hess)
-                case 'interior-point'
-                    objective = @(im,theta) deal(-obj.LLH(im,theta), -obj.modelGrad(im,theta)); % 2 arg (obj,grad)
-            end
-            problem.options = opts;
-            nIms = size(image, obj.ImageDim+1); %number of images to process
-            theta = zeros(obj.NumParams, nIms);
-            llh = zeros(nIms,1);
-            niters = zeros(nIms,1);
-            flags = zeros(nIms,1);
-            obsI = zeros(obj.NumParams,obj.NumParms,nIms);
-            for n=1:nIms
-                im = image(:,:,n);
-                problem.x0 = theta_init(:,n);
-                problem.objective = @(theta) objective(im,theta);
-                switch algorithm
-                    case 'interior-point'
-                        problem.options.HessianFcn = @(theta, ~) -obj.modelHessian(im,theta);
-                end
-                [theta(:,n), llh(n), flags(n), out] = solver(problem);
-                niters(n) = out.iterations;
-                obsI(:,:,n) = obj.observedInformation(im,theta(:,n));
-            end
-            llh = -llh; %Flip llh objective values back to standard units
-            stats.algorithm = algorithm;
-            stats.iterations = niters;
-            stats.flags = flags;
+            [theta, llh, obsI, stats] = obj.estimate_toolbox_core(image, theta_init, algorithm);
         end
-
+            
         function [theta, llh, obsI, sequence, sequence_llh, stats] = estimateDebug_toolbox(obj, image, theta_init, algorithm)
             %
             % Requires: matlab optimization toolbox
@@ -1482,12 +1607,12 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             % 'quasi-newton', and 'trust-region' algorithms use fminunc and perform unconstrained
             % optimizations.  
             % All methods use the full hessian except for 'quasi-newton'.  All methods also use the full
-            % gradieant values.
+            % gradient values.
             %
             % (in) image - A single image. type: double size:[flip(ImageSize)]
-            % (in) theta_init - (optional) size:[NumParams, 1] initial theta value for image
+            % (in) theta_init - [optional] size:[NumParams, 1] initial theta value for image
             %                   Default: Use Heuristic.
-            % (in) algorithm - (optional) string: The algorithm to choose.
+            % (in) algorithm - [optional] string: The algorithm to choose.
             %                    ['quasi-newton', 'interior-point', 'trust-region', 'trust-region-reflective']
             %                    [default: 'trust-region']
             % (out) theta - size:[NumParams, 1]. Optimal theta value for image
@@ -1498,20 +1623,51 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             %                                   evaluated the objective function at.
             % (out) sequece_llh - size[1, K]. For K steps, return each intermediate theta llh value we
             %                                 evaluated.
-            if nargin==3
+            if nargin<4
                 algorithm = 'trust-region';
             end
-            if nargin==2 || isempty(theta_init)
-                theta_init = obj.estimate(image,'Heuristic', theta_init);
+            max_iter=obj.DefaultMatlabToolboxMaxIter;
+            sequence=zeros(obj.NumParams, max_iter);
+            nseq=0;
+            function stop = output(theta, ~, state)
+                nseq = nseq+1;
+                sequence(:,nseq)=theta;
+                stop = strcmp(state,'done');
             end
+            if nargin<3 || isempty(theta_init) || ~obj.thetaInBounds(theta_init)
+                theta_init = obj.estimate(image,'Heuristic');
+            end
+            opts.OutputFcn = @output;
+            opts.MaxIter=max_iter;
+            [theta, llh, obsI, stats] = obj.estimate_toolbox_core(image, theta_init, algorithm, opts);
+            sequence = sequence(:,1:nseq);
+            in_bounds = find(obj.thetaInBounds(sequence));
+            sequence_llh=-inf(nseq,1);
+            rllh = obj.modelRLLH(image, sequence(:,in_bounds));
+            sequence_llh(in_bounds)=rllh;
+            stats.sequenceLen = size(sequence,2);
+        end
+        
+        
+        function [theta, llh, obsI, stats] = estimate_toolbox_core(obj, image, theta_init, algorithm, extra_opts)
             switch algorithm
-                case 'quasi-newton'
+                case {'quasi','quasi-newton','quasi-newton'}
+                    algorithm = 'quasi-newton';
                     solver = @fminunc;
-                case 'trust-region'
+                case {'trust','trust-region','trustregion'}
+                    algorithm = 'trust-region';
                     solver = @fminunc;
-                case 'interior-point'
+                case {'interior', 'interior-point', 'interiorpoint'}
+                    algorithm = 'interior-point';
                     solver = @fmincon;
-                case 'trust-region-reflective'
+                case {'reflective','trust-region-reflective','trustregionreflective'}
+                    algorithm = 'trust-region-reflective';
+                    solver = @fmincon;
+                case {'sqp'}
+                    algorithm = 'sqp';
+                    solver = @fmincon;
+                case {'active-set','activeset'}
+                    algorithm = 'active-set';
                     solver = @fmincon;
                 otherwise
                     error('MappelBase:estimateDebug_fmincon','Unknown maximization method: "%s"', algorithm);
@@ -1520,60 +1676,193 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             opts = optimoptions(problem.solver);
             opts.Algorithm = algorithm;
             opts.SpecifyObjectiveGradient = true;
-            opts.Diagnostics='on';
-            opts.Display='final-detailed';
-            
-            max_iter=5000;
-            sequence=zeros(obj.NumParams, max_iter);
-            opts.MaxIterations = max_iter;
-            function stop = output_func(theta, opt, state)
-                sequence(:,opt.iteration+1)=theta;
-                stop = strcmp(state,'done');
+            opts.Diagnostics = 'off';
+            %opts.Display = 'iter-detailed';
+%             opts.Diagnostics = 'off';
+            opts.Display = 'off';
+            opts.MaxIterations = obj.DefaultMatlabToolboxMaxIter;
+            opts.FunctionTolerance = obj.DefaultMatlabOptimizerTolerance;
+            opts.StepTolerance = obj.DefaultMatlabOptimizerTolerance;
+            opts.OptimalityTolerance = obj.DefaultMatlabOptimizerTolerance;
+            function varargout = objective(im,theta)
+                if ~obj.thetaInBounds(theta)
+                    varargout{1}=inf;
+                    if nargout>1
+                        varargout{2}=zeros(numel(theta),1);
+                        if nargout>2
+                            varargout{3}=zeros(numel(theta));
+                        end
+                    end
+                    return
+                end
+                [varargout{1:nargout}] = obj.modelObjective(im,theta,1);
             end
-            opts.OutputFcn = @output_func;
-            
+            function hess = hessFunc(im,theta)
+                if ~obj.thetaInBounds(theta)
+                    hess = zeros(numel(theta));
+                else
+                    hess = -obj.modelHessian(im,theta);
+                end
+            end
+            %Algorithm sepecifc opts
             switch algorithm
                 case 'quasi-newton'
                     %Cannot supply hessian for quasi-newton
-                    opts.HessUpdate = 'bfgs'; %Method to choose search direction. ['bfgs', 'steepdesc', 'dfp']
-%                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta)); % 2 arg (obj,grad)
-                case {'trust-region','trust-region-reflective'}
+                    opts.HessUpdate = 'bfgs'; %Method to choose search direction. ['bfgs', 'steepdesc', 'dfp']                    
+                case 'trust-region'                   
                     opts.HessianFcn = 'objective'; %Third arg in objective function.
-                    opts.SubproblemAlgorithm = 'factorization'; % vs. 'cg' 
-%                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta), -obj.modelHessian(image,theta));% 3 arg (obj,grad,hess)
+                    opts.SubproblemAlgorithm = 'factorization'; % more accurate step
+                case 'trust-region-reflective'                   
+                    opts.HessianFcn = 'objective'; %Third arg in objective function.
+                    opts.SubproblemAlgorithm = 'factorization'; % more accurate step
                 case 'interior-point'
-                    opts.HessianFcn = @(theta, ~) -obj.modelHessian(image,obj.boundTheta(theta));
-%                     problem.objective = @(theta) deal(-obj.LLH(image,theta), -obj.modelGrad(image,theta)); % 2 arg (obj,grad)
+                    opts.SubproblemAlgorithm = 'factorization'; % more accurate step
             end
-            function varargout = objective(x)
-                if obj.thetaInBounds(x)
-                    [varargout{1:nargout}] = obj.modelObjective(image,x,true);
-                else
-                    varargout{1}=inf;
-                    if nargout>1
-                        %TODO: figure out how to make derivatives smooth
-                        [~,grad,hess] = obj.modelObjective(image,obj.boundTheta(x),true); % Negation true
-                        fprintf('Theta out of bounds; %s', x)
-                        varargout{2}=grad;
-                        if nargout==3
-                            varargout{3}=hess;
-                        end
-                    end
+            % Merge in extra_opts
+            if nargin>=5
+                for name = fieldnames(extra_opts) 
+                    opts.(name{1}) = extra_opts.(name{1});
                 end
             end
-            a=objective(theta_init);
-            problem.objective = @objective;
+            
             problem.options = opts;
-            problem.x0 = theta_init;
-            [theta, llh, stats.flag, stats.out] = solver(problem);
-            obsI = obj.observedInformation(image, theta);
-            llh = -llh; %Flip llh objective values back to standard units
+            
+            Nims = size(image, obj.ImageDim+1); %number of images to process
+            theta = zeros(obj.NumParams, Nims);
+            llh = zeros(Nims,1);
+            flags = zeros(Nims,1);
+            obsI = zeros(obj.NumParams,obj.NumParams,Nims);
+            
+            %Prepare stats
+            stats.flags = zeros(Nims,1);
+            stats.step_norms = zeros(Nims,1);
+            stats.firstorderopt = zeros(Nims,1);
+            
+            stats.num_exit_error = 0;
+            stats.num_exit_grad_ratio = 0;
+            stats.num_exit_step_size = 0;
+            stats.num_exit_function_value = 0;
+            stats.num_exit_model_improvement = 0;
+            stats.num_exit_max_iter = 0;
+            stats.total_iterations = 0;
+            stats.total_backtracks = 0;
+            stats.total_fun_evals = 0;
+            stats.total_der_evals = 0;
+            stats.FunctionTolerance = opts.FunctionTolerance;
+            stats.StepTolerance = opts.StepTolerance;
+            stats.OptimalityTolerance = opts.OptimalityTolerance;
+            switch algorithm
+                case 'trust-region'
+                    stats.total_cgiterations = 0;
+            end
+            
+            tic();
+            for n=1:Nims
+                im = image(:,:,n);
+                problem.x0 = theta_init(:,n);
+                problem.objective = @(theta,~) objective(im,theta);
+                switch algorithm
+                    case 'interior-point'
+                        problem.options.HessianFcn = @(t,~) hessFunc(im,t);
+                end
+                [theta(:,n), fval, stats.flags(n), out] = solver(problem);
+                llh(n)=-fval;
+                obsI(:,:,n) = obj.observedInformation(im,theta(:,n));
+                switch stats.flags(n)
+                    case 5
+                        stats.num_exit_model_improvement = stats.num_exit_model_improvement+1;
+                    case 3
+                        stats.num_exit_function_value = stats.num_exit_function_value+1;
+                    case 2
+                        stats.num_exit_step_size = stats.num_exit_step_size+1;
+                    case 1
+                        stats.num_exit_grad_ratio = stats.num_exit_grad_ratio+1;
+                    case 0
+                        stats.num_exit_max_iter = stats.num_exit_max_iter+1;
+                    case {-1,-3}
+                        stats.num_exit_error = stats.num_exit_error+1;
+                end
+                stats.step_norms(n) = norm(out.stepsize);
+                stats.firstorderopt(n) = out.firstorderopt;
+                stats.total_iterations = stats.total_iterations + out.iterations;
+                stats.total_fun_evals = stats.total_fun_evals + out.funcCount;
+                stats.total_der_evals = stats.total_der_evals + out.funcCount;
+                switch algorithm
+                    case 'trust-region'
+                        stats.total_cgiterations = stats.total_cgiterations + out.cgiterations;
+                end
+            end
+            stats.total_walltime = toc();
+            stats.mean_walltime = stats.total_walltime/Nims;
             stats.algorithm = algorithm;
-            stats.iterations = stats.out.iterations;
-            sequence(:,stats.iterations+1:end)=[];
-            sequence_llh = obj.modelRLLH(image,sequence);
+            stats.flags = flags;
+            stats.num_estimations = Nims;
+            stats.num_threads=1;            
         end
 
+%         function varargout = errorBoundsProfileLikelihood_fzero_debug(obj, image, estimate_parameter, theta_mle, theta_mle_rllh, obsI, llh_delta)
+%             % [profile_lb, profile_ub, seq_lb, seq_ub, seq_lb_rllh, seq_ub_rllh, stats]
+%             %    = obj.errorBoundsProfileLikelihood_fzero_debug(image, estimate_parameter, theta_mle, theta_mle_rllh, obsI, llh_delta)
+%             %
+%             % [DEBUGGING]
+%             % Compute the profile log-likelihood bounds for a single images , estimating upper and lower bounds for each requested  parameter.
+%             % Uses the Venzon and Moolgavkar (1988) algorithm.
+%             %
+%             % (in) image: a single images
+%             % (in) theta_mle:  theta ML estimate
+%             % (in) theta_mle_rllh: relative-log-likelihood at image.
+%             % (in) obsI: a observed fisher information matrix at theta_mle
+%             % (in) estimate_parameter: integer index of parameter to estimate size:[NumParams]
+%             % (in) llh_delta: [optional] Negative number, indicating LLH change from maximum at the profile likelihood boundaries.
+%             %                  [default: confidence=0.95; llh_delta = -chi2inv(confidence,1)/2;]
+%             % (out) profile_lb:  scalar lower bound for parameter
+%             % (out) profile_ub:  scalar upper bound for parameter
+%             % (out) seq_lb: size:[NumParams,Nseq_lb]  Sequence of Nseq_lb points resulting from VM algorithm for lower bound estimate
+%             % (out) seq_ub: size:[NumParams,Nseq_ub]  Sequence of Nseq_ub points resulting from VM algorithm for upper bound estimate
+%             % (out) seq_lb_rllh: size:[Nseq_lb]  Sequence of RLLH at each of the seq_lb points
+%             % (out) seq_ub_rllh: size:[Nseq_ub]  Sequence of RLLH at each of the seq_ub points
+%             % (out) stats: struct of fitting statistics.
+%             image = obj.checkImage(image);
+%             if nargin<3
+%                 estimate_parameter = 1;
+%             end
+%             if nargin<4
+%                 [theta_mle, theta_mle_rllh, obsI] = obj.estimate(image);
+%             else
+%                 theta_mle = obj.checkTheta(theta_mle);
+%             end
+%             if nargin<7
+%                 llh_delta = -chi2inv(obj.DefaultConfidenceLevel,1)/2;
+%             end
+%             [varargout{1:nargout}] = obj.call('errorBoundsProfileLikelihoodDebug',image, theta_mle, theta_mle_rllh, obsI, uint64(estimate_parameter)-1, llh_delta);
+%         end
+%         
+%     function v=profile_delta(x,fixed_p)
+%         fixed_parameters=zeros(1,obj.NumParams);
+%         fixed_parameters(fixed_p)=1;
+%         prllh = obj.estimateProfileLikelihood(im,fixed_parameters,x,'TrustRegion',theta_mle);
+%         v=prllh-(mle_rllh+c);
+%     end
+%     prof_lb=zeros(obj.NumParams,1);
+%     prof_ub=zeros(obj.NumParams,1);
+%     for i=1:obj.NumParams
+%         epsilon=1e-8;
+%         if(profile_delta(obj.ParamLBound(i)+epsilon,i)>0)
+%             prof_lb(i) = obj.ParamLBound(i)+epsilon;
+%         else
+%             prof_lb(i) = fzero(@(x) profile_delta(x,i),[obj.ParamLBound(i)+epsilon,theta_mle(i)]); 
+%         end
+%         if isfinite(obj.ParamUBound(i))
+%             if(profile_delta(obj.ParamUBound(i)-epsilon,i)>0)
+%                 prof_ub(i) = obj.ParamUBound(i)-epsilon;
+%             else
+%                 prof_ub(i) = fzero(@(x) profile_delta(x,i),[theta_mle(i),obj.ParamUBound(i)-epsilon]); 
+%             end
+%         else
+%             prof_ub(i) = fzero(@(x) profile_delta(x,i),[theta_mle(i),theta_mle(i)*20]); 
+%         end
+%     end
+        
 
     end % protected methods
     
@@ -1604,8 +1893,6 @@ classdef MappelBase < MexIFace.MexIFaceMixin
         function definiteM = choleskyMakeNegativeDefinite(M)
             definiteM = MappelBase.callstatic('negativeDefiniteCholeskyApprox',M);
         end
-
-        
 
         function fig = viewDipImage(image, fig)
             if nargin==1
@@ -1686,5 +1973,4 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             end
         end
     end % protected methods
-
 end %classdef

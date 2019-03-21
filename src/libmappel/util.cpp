@@ -1,3 +1,9 @@
+/** @file stencil.cpp
+ * @author Mark J. Olah (mjo\@cs.unm DOT edu)
+ * @date 2014-2019
+ * @brief General utilities and helpers for Mappel.
+ */
+
 #ifndef WIN32
     #include <sched.h>
 #endif

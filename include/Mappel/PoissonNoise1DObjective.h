@@ -15,7 +15,7 @@ namespace mappel {
 
 /** @brief A base class for 1D objectives with Poisson read noise.
  * This objective function and its subclasses are for models where the only source of noise is the "shot" or 
- * "counting" or Poisson noise inherent to a discrete capture of phontons given a certain mean rate of 
+ * "counting" or Poisson noise inherent to a discrete capture of photons given a certain mean rate of
  * incidence on each pixel.
  * 
  */
@@ -91,22 +91,22 @@ expected_information(const Model &model, const StencilT<Model> &s)
 }
 
 template<class Model>    
-ReturnIfSubclassT<std::unique_ptr<Estimator<Model>>, Model, PoissonNoise1DObjective>
+ReturnIfSubclassT<std::unique_ptr<estimator::Estimator<Model>>, Model, PoissonNoise1DObjective>
 make_estimator(Model &model, std::string ename)
 {
     auto name = ename.c_str();
     if (istarts_with(name,"Heuristic")) {
-        return make_unique<HeuristicEstimator<Model>>(model);
+        return make_unique<estimator::HeuristicEstimator<Model>>(model);
     } else if (istarts_with(name,"NewtonDiagonal")) {
-        return make_unique<NewtonDiagonalMaximizer<Model>>(model);
+        return make_unique<estimator::NewtonDiagonalMaximizer<Model>>(model);
     } else if (istarts_with(name,"QuasiNewton")) {
-        return make_unique<QuasiNewtonMaximizer<Model>>(model);
+        return make_unique<estimator::QuasiNewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"Newton")) {
-        return make_unique<NewtonMaximizer<Model>>(model);
+        return make_unique<estimator::NewtonMaximizer<Model>>(model);
     } else if (istarts_with(name,"TrustRegion")) {
-        return make_unique<TrustRegionMaximizer<Model>>(model);
+        return make_unique<estimator::TrustRegionMaximizer<Model>>(model);
     } else if (istarts_with(name,"SimulatedAnnealing")) {
-        return make_unique<SimulatedAnnealingMaximizer<Model>>(model);
+        return make_unique<estimator::SimulatedAnnealingMaximizer<Model>>(model);
     } else {
         std::ostringstream msg;
         msg<<"Unknown estimator name: "<<name;

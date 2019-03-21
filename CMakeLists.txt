@@ -5,12 +5,11 @@
 #
 # Mark J. Olah (mjo@cs.unm DOT edu)
 # Copyright 2014-2019
-# Licensed under the Apache License, Version 2.0
-# https://www.apache.org/licenses/LICENSE-2.0
+# Licensed under GPL-v3
 # See: LICENSE file
 
 cmake_minimum_required( VERSION 3.9 )
-project(Mappel VERSION 0.0.3 LANGUAGES CXX)
+project(Mappel VERSION 0.0.9 LANGUAGES CXX)
 
 # Enable Matlab Support via MexIFace
 option(BUILD_SHARED_LIBS "Build shared libraries" ON)

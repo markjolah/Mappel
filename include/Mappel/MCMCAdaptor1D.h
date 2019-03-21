@@ -15,7 +15,8 @@ namespace mappel {
 class MCMCAdaptor1D : public virtual PointEmitterModel, public MCMCAdaptorBase
 {
 public:
-    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0);
+    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0) const;
+    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, const IdxVecT &fixed_parameters_mask, double step_scale=1.0) const;
     void set_intensity_mcmc_sampling(double eta_I=-1);
     void set_background_mcmc_sampling(double eta_bg=-1);
 protected:

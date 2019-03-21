@@ -14,7 +14,8 @@ namespace mappel {
 class MCMCAdaptor1Ds : public MCMCAdaptor1D
 {
 public:
-    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0);
+    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, double step_scale=1.0) const;
+    void sample_mcmc_candidate(IdxT sample_index, ParamT &candidate, const IdxVecT &fixed_parameters_mask, double step_scale=1.0) const;
 protected:
     MCMCAdaptor1Ds();
     explicit MCMCAdaptor1Ds(double sigma_scale);
