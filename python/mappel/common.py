@@ -1,8 +1,6 @@
 # mapple.common
 #
-# common defitions for internal use.
+# common definitions for internal use.
 
 
-
-DefaultEstimatorMethod = "Newton"
-#DefaultEstimatorMethod = "TrustRegion"
+DefaultEstimatorMethod = "TrustRegion"

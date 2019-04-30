@@ -1,7 +1,7 @@
 # mappel/methods.py
 #
 # Mark J. Olah (mjo\@cs.unm DOT edu)
-# 2018
+# 2018-2019
 #
 # Map the C++ StatsT str->double datatype to a more structured representation in Python
 # process_debug_stats also extracts the backtrack_idxs.

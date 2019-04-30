@@ -4,7 +4,7 @@ Mappel is an object-oriented image processing library for high-performance [supe
 * Mappel uses CMake and builds cross-platform for Linux  and Windows 64-bit.
 * Mappel provides object-oriented interfaces for C++, Python, and Matlab.
 * Mappel uses OpenMP to parallelize operations over vectors of images or parameters
-* Mappel is free-as-in-beer and free-as-in-speech! ([Apache-2.0](LICENSE))
+* Mappel is free-as-in-beer and free-as-in-speech! ([GPL-v3](LICENSE))
 
 ## Documentation
 The Mappel Doxygen documentation can be build with the `OPT_DOC` CMake option and is also available on online:
@@ -93,12 +93,10 @@ The Mappel library is designed using static polymorphism (templates), and as suc
 
 # License
 
-# LICENSE
-
 * Copyright: 2013-2019
 * Author: Mark J. Olah
 * Email: (mjo@cs.unm DOT edu)
-* LICENSE: GPL-v3  See [LICENSE](https://github.com/markjolah/MexIFace/blob/master/LICENSE) file.
+* LICENSE: GPL-v3  See [LICENSE](https://github.com/markjolah/Mappel/blob/master/LICENSE) file.
 
 
 [1]: https://iopscience.iop.org/article/10.1088/1367-2630/aa5f74

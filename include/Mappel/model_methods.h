@@ -207,7 +207,8 @@ namespace methods {
     inline namespace debug {
         /* model::xxx_components - per-pixel and per-prior-component contributions */
         template<class Model>
-        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init, estimator::MLEDebugData &mle, StatsT &stats);
+        void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                const ParamT<Model> &theta_init, estimator::MLEDebugData &mle, StatsT &stats);
         
         template<class Model>
         void error_bounds_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data, estimator::ProfileBoundsDebugData &bounds, StatsT &stats);

@@ -15,6 +15,15 @@
 namespace mappel {
 namespace estimator {
 
+MLEData MLEDebugData::makeMLEData() const
+{
+    MLEData est;
+    est.theta = theta;
+    est.rllh = rllh;
+    est.obsI = obsI;
+    return est;
+}
+
 void ProfileBoundsData::initialize_arrays(IdxT Nparams)
 {
     Nparams_est = estimated_idxs.n_elem;
@@ -81,52 +90,53 @@ VecT solve_profile_initial_step(const MatT &obsI, IdxT fixed_idx, double llh_del
 
 VecT bound_step(const VecT &step, const VecT &theta, const VecT &lbound, const VecT &ubound)
 {
-    VecT step_ratio = theta/step;
-    double alpha = arma::min( VecT(arma::max(lbound/step, ubound/step)-step_ratio) );
-    double kappa_min = 0.9;
-    if(alpha>1){ //step is feasible.  accept it
-        VecT full_step = theta + step;
-        if(arma::all(full_step > lbound) && arma::all(full_step < ubound)) return step;
+    VecT new_step;
+    IdxT N = step.n_elem;
+    double alpha=INFINITY;
+    const double kappa = 0.9; //Back-up ratio
+    for(IdxT i=0; i<N; i++) {
+        if(step[i]<0) alpha = std::min(alpha,(lbound[i]-theta[i])/step[i]);
+        else alpha = std::min(alpha,(ubound[i]-theta[i])/step[i]);
     }
-    //backtrack a little bit from alpha to remain feasible
-    double kappa = boundary_stepback_min_kappa;
-    VecT full_step = theta + kappa*std::min(alpha,1.)*step;
-    while(!arma::all(full_step > lbound) || !arma::all(full_step < ubound)){
-        kappa*=boundary_stepback_min_kappa;
-        full_step = theta + kappa*std::min(alpha,1.)*step;
-        std::cout<<"Kappa stepped back to: "<<kappa<<std::endl;
-        if(kappa<kappa_min){
-            std::cout<<std::setprecision(16);
-            std::cout<<"alpha:"<<alpha<<" kappa:"<<kappa<<std::endl;
-            step.t().raw_print(std::cout,"step:");
-            theta.t().raw_print(std::cout,"theta:");
-            full_step.t().raw_print(std::cout,"fullstep:");
-            lbound.t().raw_print(std::cout,"lbound:");
-            ubound.t().raw_print(std::cout,"ubound:");
-            throw NumericalError("Kappa backing up did not correct bad step.");
+    if(alpha > 1) return step;
+    //Backup-if necessary
+    bool is_valid = true;
+    new_step = step*alpha;
+    for(IdxT i=0; i<N; i++) {
+        double new_val = theta[i]+new_step[i];
+        if( new_val <= lbound[i] || new_val >= ubound[i]) {
+            is_valid = false;
+            break;
         }
     }
-    if(!arma::all(full_step > lbound)) {
-        std::cout<<std::setprecision(16);
-        std::cout<<"alpha:"<<alpha<<" kappa:"<<kappa<<std::endl;
-        step.t().raw_print(std::cout,"step:");
-        theta.t().raw_print(std::cout,"theta:");
-        full_step.t().raw_print(std::cout,"fullstep:");
-        lbound.t().raw_print(std::cout,"lbound:");
-        ubound.t().raw_print(std::cout,"ubound:");
-        throw NumericalError("bound_step: Infeasible Bounding failed lower bounds");
+    if(is_valid) return new_step;
+    std::cout<<std::setprecision(16);
+    std::cout<<"Kappa Backing up. alpha:"<<alpha<<" new_alpha:"<<kappa*alpha<<std::endl;
+
+    step.t().raw_print(std::cout,"step:");
+    theta.t().raw_print(std::cout,"theta:");
+    std::cout<<std::endl;
+    //Zero-out step components that still violate the constraints after backing-up
+    alpha*=kappa;
+    is_valid = true;
+    new_step = step*alpha;
+    new_step.t().raw_print(std::cout,"new_step:");
+    lbound.t().raw_print(std::cout,"lbound:");
+    ubound.t().raw_print(std::cout,"ubound:");
+    for(IdxT i=0; i<N; i++) {
+        double new_val = theta[i]+new_step[i];
+        if(new_val <= lbound[i] || new_val >= ubound[i]) {
+            new_step[i] = 0;
+            std::cout<<"Zeroing persistantly bad component: i:"<<i<<std::endl;
+            step.t().raw_print(std::cout,"step:");
+            theta.t().raw_print(std::cout,"theta:");
+            new_step.t().raw_print(std::cout,"new_step:");
+            lbound.t().raw_print(std::cout,"lbound:");
+            ubound.t().raw_print(std::cout,"ubound:");
+            std::cout<<std::endl;
+        }
     }
-    if(!arma::all(full_step < ubound)) {
-        std::cout<<std::setprecision(16);
-        std::cout<<"alpha:"<<alpha<<" kappa:"<<kappa<<std::endl;
-        step.t().raw_print(std::cout,"step:");
-        theta.t().raw_print(std::cout,"theta:");
-        full_step.t().raw_print(std::cout,"fullstep:");
-        lbound.t().raw_print(std::cout,"lbound:");
-        ubound.t().raw_print(std::cout,"ubound:");
-        throw NumericalError("bound_step: Infeasible Bounding failed upper bounds");
-    }
-    return kappa*alpha*step;
+    return new_step;
 }
 
 void compute_bound_scaling_vec(const VecT &theta, const VecT &g, const VecT &lbound, const VecT &ubound,

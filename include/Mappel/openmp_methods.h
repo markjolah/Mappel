@@ -169,9 +169,20 @@ void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_s
                         estimator::MLEDataStack &mle_data_stack)
 {
     auto estimator = make_estimator(model,method);
-    auto theta_init=model.make_param_vec(model.get_size_image_stack(data_stack));
+    auto theta_init=model.make_param_stack(model.get_size_image_stack(data_stack));
     theta_init.zeros();
     estimator->estimate_max_stack(data_stack, theta_init, mle_data_stack);
+}
+
+template<class Model>
+void estimate_max_stack(const Model &model, const ModelDataStackT<Model> &data_stack, const std::string &method,
+                        estimator::MLEDataStack &mle_data_stack, StatsT &stats)
+{
+    auto estimator = make_estimator(model,method);
+    auto theta_init=model.make_param_stack(model.get_size_image_stack(data_stack));
+    theta_init.zeros();
+    estimator->estimate_max_stack(data_stack, theta_init, mle_data_stack);
+    stats = estimator->get_stats();
 }
 
 template<class Model>

@@ -81,7 +81,7 @@ Gauss1DModel::make_default_prior_beta_position(IdxT size)
 {
     CompositeDist d(make_prior_component_position_beta(size),
                     make_prior_component_intensity(),
-                    make_prior_component_intensity(default_pixel_mean_bg*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_intensity(DefaultPriorPixelMeanBG*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
     set_prior_variable_names(d);
     return d;
 }
@@ -91,7 +91,7 @@ Gauss1DModel::make_default_prior_normal_position(IdxT size)
 {
     CompositeDist d(make_prior_component_position_normal(size),
                     make_prior_component_intensity(),
-                    make_prior_component_intensity(default_pixel_mean_bg*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
+                    make_prior_component_intensity(DefaultPriorPixelMeanBG*size)); //bg is summed over the other dimension leading to larger mean per 1D 'pixel'
     set_prior_variable_names(d);
     return d;
 }

@@ -70,7 +70,7 @@ void MCMCAdaptor1D::set_intensity_mcmc_sampling(double new_eta_I)
             mean_I = get_hyperparam_value("intensity_scale")*get_hyperparam_value("intensity_shape");
         } catch (ParameterValueError&) {
             //use defaults
-            mean_I = default_mean_I;
+            mean_I = DefaultPriorMeanI;
         }
         eta_I = mean_I*sigma_scale;
     } else {
@@ -87,7 +87,7 @@ void MCMCAdaptor1D::set_background_mcmc_sampling(double new_eta_bg)
         } catch (ParameterValueError&) {
             //use defaults
             double xsize = get_ubound()(0) - get_lbound()(0);
-            mean_bg = default_pixel_mean_bg * xsize; //Adjust for 1D summation over pixels
+            mean_bg = DefaultPriorPixelMeanBG * xsize; //Adjust for 1D summation over pixels
         }
         eta_bg = mean_bg*sigma_scale;
     } else {

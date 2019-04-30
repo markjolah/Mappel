@@ -46,26 +46,33 @@ public:
     /* Internal Types */    
     using ParamT = arma::vec; /**< Parameter vector */
     using ParamVecT = arma::mat; /**< Vector of parameter vectors */
-    static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D separable initializations */
-    
+
     /* Static data members */
+    static const std::string DefaultEstimatorMethod; ///<Default optimization method for MLE/MAP estimation.
+    static const std::string DefaultProfileBoundsEstimatorMethod; ///<Default optimization method for profile bounds optimizations.
+    static const std::string DefaultSeperableInitEstimator; /**< Estimator name to use in 1D separable initializations */
+    static const IdxT DefaultMCMCNumSamples; ///< Number of final samples to use in estimation of posterior properties (mean, credible interval, cov, etc.)
+    static const IdxT DefaultMCMCBurnin; ///< Number of samples to throw away (burn-in) on initialization
+    static const IdxT DefaultMCMCThin; ///< Keep every # samples. [Value of 0 indicates use the model default. This is suggested.]
+    static const double DefaultConfidenceLevel; ///< Default level at which to estimate confidence intervals must be in range (0,1).
+
+    static const double DefaultPriorBetaPos;// = 3; /**< Default position parameter in symmetric beta-distributions */
+    static const double DefaultPriorSigmaPos;// = 1; /**< Default position parameter in symmetric beta-distributions */
+    static const double DefaultPriorMeanI;// = 300; /**< Default emitter intensity mean*/
+    static const double DefaultPriorMaxI;// = infinity; /**< Default emitter intensity mean*/
+    static const double DefaultPriorIntensityKappa;// = 2;  /**< Default shape for intensity gamma distributions */
+    static const double DefaultPriorPixelMeanBG;// = 4; /**< Default per-pixel mean background counts */
+    static const double DefaultPriorPSFSigmaAlpha;// = 2; /**< Default per-pixel background gamma distribution shape */
+
     static const double bounds_epsilon;// = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
     static const double global_min_psf_sigma;// = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
     static const double global_max_psf_sigma;// = 1E2; /**< Global maximum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */
-    
-    static const double default_beta_pos;// = 3; /**< Default position parameter in symmetric beta-distributions */
-    static const double default_sigma_pos;// = 1; /**< Default position parameter in symmetric beta-distributions */
-    static const double default_mean_I;// = 300; /**< Default emitter intensity mean*/
-    static const double default_max_I;// = infinity; /**< Default emitter intensity mean*/
-    static const double default_intensity_kappa;// = 2;  /**< Default shape for intensity gamma distributions */
-    static const double default_pixel_mean_bg;// = 4; /**< Default per-pixel mean background counts */
-    static const double default_alpha_sigma;// = 2; /**< Default per-pixel background gamma distribution shape */
-    
+
     /* prior building functions.  These generate individual prior elements and can be used by subclasses to easily make a prior  */
-    static prior_hessian::TruncatedNormalDist make_prior_component_position_normal(IdxT size, double pos_sigma=default_sigma_pos);
-    static prior_hessian::ScaledSymmetricBetaDist make_prior_component_position_beta(IdxT size, double pos_beta=default_beta_pos);
-    static prior_hessian::TruncatedGammaDist make_prior_component_intensity(double mean=default_mean_I, double kappa=default_intensity_kappa);
-    static prior_hessian::TruncatedParetoDist make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=default_alpha_sigma);
+    static prior_hessian::TruncatedNormalDist make_prior_component_position_normal(IdxT size, double pos_sigma=DefaultPriorSigmaPos);
+    static prior_hessian::ScaledSymmetricBetaDist make_prior_component_position_beta(IdxT size, double pos_beta=DefaultPriorBetaPos);
+    static prior_hessian::TruncatedGammaDist make_prior_component_intensity(double mean=DefaultPriorMeanI, double kappa=DefaultPriorIntensityKappa);
+    static prior_hessian::TruncatedParetoDist make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=DefaultPriorPSFSigmaAlpha);
     
     static void set_rng_seed(RngSeedT seed);
     static ParallelRngManagerT& get_rng_manager();

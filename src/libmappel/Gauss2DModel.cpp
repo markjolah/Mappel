@@ -173,7 +173,7 @@ Gauss2DModel::make_default_prior_beta_position(const ImageSizeT &size)
     CompositeDist d(make_prior_component_position_beta(size(0)),
                     make_prior_component_position_beta(size(1)),
                     make_prior_component_intensity(),
-                    make_prior_component_intensity(default_pixel_mean_bg));
+                    make_prior_component_intensity(DefaultPriorPixelMeanBG));
     set_prior_variable_names(d);
     return d;
 }
@@ -184,7 +184,7 @@ Gauss2DModel::make_default_prior_normal_position(const ImageSizeT &size)
     CompositeDist d(make_prior_component_position_normal(size(0)),
                     make_prior_component_position_normal(size(1)),
                     make_prior_component_intensity(),
-                    make_prior_component_intensity(default_pixel_mean_bg));
+                    make_prior_component_intensity(DefaultPriorPixelMeanBG));
     set_prior_variable_names(d);
     return d;
 }

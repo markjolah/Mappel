@@ -65,7 +65,7 @@ protected:
     void objExpectedInformation();
     void objCRLB();
 
-    void objEstimate();
+    void objEstimateMax();
     void objEstimateProfileLikelihood();
     void objEstimatePosterior();
 
@@ -74,7 +74,7 @@ protected:
     void objErrorBoundsProfileLikelihood();
 
     /* Degugging */    
-    void objEstimateDebug();
+    void objEstimateMaxDebug();
     void objEstimatePosteriorDebug();
     void objErrorBoundsProfileLikelihoodDebug();
     void objModelObjectiveComponents();
@@ -170,7 +170,7 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["expectedInformation"] = std::bind(&Mappel_IFace::objExpectedInformation, this);
     methodmap["CRLB"] = std::bind(&Mappel_IFace::objCRLB, this);
 
-    methodmap["estimate"] = std::bind(&Mappel_IFace::objEstimate, this);
+    methodmap["estimateMax"] = std::bind(&Mappel_IFace::objEstimateMax, this);
     methodmap["estimateProfileLikelihood"] = std::bind(&Mappel_IFace::objEstimateProfileLikelihood, this);
     methodmap["estimatePosterior"] = std::bind(&Mappel_IFace::objEstimatePosterior, this);
 
@@ -179,7 +179,7 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["errorBoundsProfileLikelihood"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihood, this);
     methodmap["errorBoundsProfileLikelihoodDebug"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihoodDebug, this);
     /* Debug */
-    methodmap["estimateDebug"] = std::bind(&Mappel_IFace::objEstimateDebug, this);
+    methodmap["estimateMaxDebug"] = std::bind(&Mappel_IFace::objEstimateMaxDebug, this);
     methodmap["estimatePosteriorDebug"] = std::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
     methodmap["modelObjectiveComponents"] = std::bind(&Mappel_IFace::objModelObjectiveComponents, this);
 
@@ -718,9 +718,9 @@ void Mappel_IFace<Model>::objCRLB()
 
 
 template<class Model>
-void Mappel_IFace<Model>::objEstimate()
+void Mappel_IFace<Model>::objEstimateMax()
 {
-    // [theta_est, rllh, obsI, stats] = obj.estimate(image, name, theta_init) 
+    // [theta_est, rllh, obsI, stats] = obj.estimateMax(image, name, theta_init)
     //
     // Use maximization algorithm to estimate parameter theta as a Maximum-likelihood or maximum a-posteriori
     // point estimate.
@@ -761,9 +761,9 @@ void Mappel_IFace<Model>::objEstimate()
 }
 
 template<class Model>
-void Mappel_IFace<Model>::objEstimateDebug()
+void Mappel_IFace<Model>::objEstimateMaxDebug()
 {
-    // [theta_est, rllh, obsI, stats, seqence, sequence_rllh] = obj.estimate(image, name, theta_init) 
+    // [theta_est, rllh, obsI, seqence, sequence_rllh, stats] = obj.estimateMaxDebug(image, name, theta_init)
     //
     //  Debug the estimation on a single image, returning the sequence of evaluated points and their rllh
     //
@@ -799,14 +799,14 @@ void Mappel_IFace<Model>::objEstimateDebug()
 template<class Model>
 void Mappel_IFace<Model>::objEstimateProfileLikelihood()
 {
-    // [profile_likelihood, profile_parameters,stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+    // [profile_likelihood, profile_parameters, stats]  = obj.estimateProfileLikelihood(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
     //
     // Compute the profile log-likelihood for a single image and single parameter, over a range of values.  For each value, the parameter
     // of interest is fixed and the other parameters are optimized with the estimator_algorithm.
     // Values will be computed in parallel with OpenMP.
     //
-    // (in) image: a single images
-    // (in) fixed_idxs: uint64 [Nfixed,1] List of fixed indexs.  At least one parameter must be fixed and at least one must be free.
+    // (in) image: a single image
+    // (in) fixed_idxs: uint64 [Nfixed,1] List of fixed indexes.  At least one parameter must be fixed and at least one must be free.
     // (in) fixed_values: size:[NumFixedParams,N], a vector of N values for each of the fixed parameters at which to maximize the other (free) parameters at.
     // (in) estimator_algorithm: (optional) name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
     // (in) theta_init: (optional) Initial theta guesses size:[NumParams,n]. [default: [] ] Empty array to force auto estimation.

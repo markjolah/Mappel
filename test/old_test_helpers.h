@@ -116,17 +116,15 @@ void estimate_stack(Model &model, std::string method, int count)
     methods::sample_prior_stack(model,theta_stack);
     auto im_stack = model.make_image_stack(count);
     methods::simulate_image_stack(model,theta_stack,im_stack);
-    auto theta_est_stack = model.make_param_stack(count);
-    auto obsI_stack = model.make_param_mat_stack(count);
-    VecT rllh_stack(count);
+    estimator::MLEDataStack est;
     StatsT stats;
-    methods::estimate_max_stack(model, im_stack,method,theta_est_stack,rllh_stack,obsI_stack,stats);
+    methods::estimate_max_stack(model, im_stack,method,est,stats);
     VecT true_rllh_stack(count);
     methods::objective::rllh_stack(model, im_stack,theta_stack, true_rllh_stack);
     
-    double mean_rllh_delta = arma::mean(rllh_stack - true_rllh_stack);
+    double mean_rllh_delta = arma::mean(est.rllh - true_rllh_stack);
     
-    MatT error = theta_est_stack - theta_stack;
+    MatT error = est.theta - theta_stack;
     VecT rmserror = arma::sqrt(arma::mean(error%error,1));
     
     cout<<std::setw(64)<<""<<"\033["<<TERM_WHITE<<"m"<<"Model:"<<model.name
@@ -150,27 +148,24 @@ void estimate_stack_posterior(Model &model, int count, int Nsample)
     methods::sample_prior_stack(model,theta_stack);
     auto im_stack = model.make_image_stack(count);
     methods::simulate_image_stack(model,theta_stack,im_stack);
-    CubeT sample_stack(model.get_num_params(),Nsample, count);
-    MatT sample_rllh_stack(Nsample, count);
+    mcmc::MCMCDataStack est;
+    est.Nsample = count;
+    est.Nburnin = 100;
+    est.thin = 0;
+    est.confidence = 0.95;
     
     auto rllh_theta_mean = VecT(count);
     auto rllh_theta_true = VecT(count);
-    IdxT Nburnin = 100;
-    IdxT thin = 0;
-    double confidence = 0.95;
-    methods::estimate_mcmc_sample_stack(model, im_stack, Nsample, Nburnin, thin, sample_stack, sample_rllh_stack);
-    auto theta_mean_stack = model.make_param_stack(count);
-    auto theta_lb_stack = model.make_param_stack(count);
-    auto theta_ub_stack = model.make_param_stack(count);
-    methods::error_bounds_posterior_credible_stack(model, sample_stack, confidence, theta_mean_stack, theta_lb_stack, theta_ub_stack);
-    methods::objective::rllh_stack(model,im_stack, theta_mean_stack, rllh_theta_mean);
+
+    methods::estimate_posterior_stack(model, im_stack, est);
+    methods::objective::rllh_stack(model,im_stack, est.sample_mean, rllh_theta_mean);
     methods::objective::rllh_stack(model,im_stack, theta_stack, rllh_theta_true);
-    MatT error = theta_stack-theta_mean_stack;
+    MatT error = theta_stack-est.sample_mean;
     VecT rmserror = arma::sqrt(arma::mean(error%error,1));
     double mean_rllh_delta = arma::mean(rllh_theta_mean - rllh_theta_true);
     
     cout<<std::setw(64)<<""<<"\033["<<TERM_WHITE<<"m"<<"Model:"<<model.name
-        <<" Estimator:Posterior Nsample:"<<Nsample<<" Nburnin:"<<Nburnin<<" thin:"<<thin<<"\033[0m"<<endl;
+        <<" Estimator:Posterior Nsample:"<<est.Nsample<<" Nburnin:"<<est.Nburnin<<" thin:"<<est.thin<<"\033[0m"<<endl;
 
     snprintf(str, s, "<LLHDelta>:%g RMSE:",mean_rllh_delta);
     print_vec_row(cout,rmserror,str,s,TERM_MAGENTA);
@@ -194,19 +189,17 @@ void evaluate_single(Model &model, std::string method, const ParamT<Model> &thet
     
     double theta_llh = methods::objective::llh(model, im, stencil);
 
-    auto theta_max = model.make_param();
-    auto obsI = model.make_param_mat();
-    MatT sequence;
-    VecT sequence_rllh;
+    estimator::MLEDebugData dbg_est;
     StatsT stats;
     auto init_stencil = model.initial_theta_estimate(im);
-    double theta_max_rllh;
-    methods::estimate_max_debug(model, im, method, init_stencil.theta, theta_max, theta_max_rllh, obsI, sequence, sequence_rllh, stats);
+    methods::estimate_max_debug(model, im, method, init_stencil.theta, dbg_est, stats);
+    std::cout<<"Estimator Stats: "<<stats<<std::endl;
+
     auto theta_lb = model.make_param();
     auto theta_ub = model.make_param();
     double confidence = 0.95;
-    methods::error_bounds_observed(model, theta_max, obsI, confidence, theta_lb, theta_ub);
-    std::cout<<"Estimator Stats: "<<stats<<std::endl;
+    auto est = dbg_est.makeMLEData();
+    methods::error_bounds_observed(model, est, confidence, theta_lb, theta_ub);
     
     snprintf(str, s, "RLLH:%g TrueTheta:",theta_llh);
     print_vec_row(cout, theta, str, s, TERM_MAGENTA);
@@ -215,48 +208,41 @@ void evaluate_single(Model &model, std::string method, const ParamT<Model> &thet
     snprintf(str, s, "RLLH:%g ThetaInit:",theta_init_rllh );
     print_vec_row(cout, init_stencil.theta, str, s, TERM_GREEN);
     
-    snprintf(str, s, "RLLH:%.9g ETheta[%s]:",theta_max_rllh , method.c_str());
-    print_vec_row(cout, theta_max, str, s, TERM_YELLOW);
+    snprintf(str, s, "RLLH:%.9g ETheta[%s]:",est.rllh , method.c_str());
+    print_vec_row(cout, est.theta, str, s, TERM_YELLOW);
     snprintf(str, s, "Error[%s]:", method.c_str());
-    print_vec_row(cout, theta-theta_max, str, s, TERM_RED);
-    print_vec_row(cout, theta_lb, "ThetaLB:", s, TERM_CYAN);
-    print_vec_row(cout, theta_ub, "ThetaUB:", s, TERM_CYAN);
+    print_vec_row(cout, theta-est.theta, str, s, TERM_RED);
+    print_vec_row(cout, theta_lb, "ObsThetaLB:", s, TERM_CYAN);
+    print_vec_row(cout, theta_ub, "ObsThetaUB:", s, TERM_CYAN);
     
     auto crlb = methods::cr_lower_bound(model, theta);
     print_vec_row(cout, arma::sqrt(crlb), "sqrtCRLB:", s, TERM_BLUE);
     
 
-    IdxT Nsamples=4000;
+    mcmc::MCMCDebugData mcmc_est;
+    mcmc_est.Nsample = 4000;
    
-    auto posterior_mean=model.make_param();
-    auto posterior_cov=model.make_param_mat();
-    auto sample = model.make_param_stack(Nsamples);
-    VecT sample_rllh(Nsamples);
-    auto candidates = model.make_param_stack(Nsamples);
-    VecT candidates_rllh(Nsamples);
 
-    methods::estimate_mcmc_sample_debug(model, im, init_stencil.theta, Nsamples,
-                                        sample, sample_rllh, candidates, candidates_rllh);
-    auto post_mean = model.make_param();
+    methods::estimate_posterior_debug(model, im, init_stencil.theta, mcmc_est);
+    auto post_mean=model.make_param();
+    auto post_cov=model.make_param_mat();
+    mcmc::estimate_sample_posterior(mcmc_est.sample, post_mean, post_cov);
     auto post_lb = model.make_param();
     auto post_ub = model.make_param();
-    methods::error_bounds_posterior_credible(model, sample, confidence, post_mean, post_lb, post_ub);
-    auto post_cov = model.make_param_mat();
-    mcmc::estimate_sample_posterior(sample, post_mean, post_cov);
+    methods::error_bounds_posterior_credible(model, mcmc_est.sample, confidence, post_lb, post_ub);
     
     auto post_mean_llh = methods::objective::llh(model, im, post_mean);
     VecT post_se = arma::sqrt(post_cov.diag());
     snprintf(str, s, "RLLH:%.9g EstPMean:",post_mean_llh);
     print_vec_row(cout, post_mean, str, s, TERM_DIM_YELLOW);
-    print_vec_row(cout, theta-posterior_mean, "Error[PostMean]:", s, TERM_DIM_RED);
+    print_vec_row(cout, theta-post_mean, "Error[PostMean]:", s, TERM_DIM_RED);
     print_vec_row(cout, post_se, "PostSE:", s, TERM_DIM_WHITE);
     print_vec_row(cout, post_lb, "PostLB:", s, TERM_DIM_CYAN);
     print_vec_row(cout, post_ub, "PostUB:", s, TERM_DIM_CYAN);
 
-    IdxT Nseq = sequence.n_cols;
-    for(IdxT i=0; i<Nseq; i++){
-        snprintf(str, s, "RLLH:%.9g Seq[%s](%llu):",sequence_rllh(i),method.c_str(), i);
-        print_vec_row(cout, sequence.col(i), str, s, TERM_DIM_MAGENTA);
+    for(IdxT i=0; i<mcmc_est.Nsample; i++){
+        snprintf(str, s, "RLLH:%.9g Seq[%s](%llu):",mcmc_est.sample_rllh(i),method.c_str(), i);
+        print_vec_row(cout, mcmc_est.sample.col(i), str, s, TERM_DIM_MAGENTA);
     }    
 }
 
@@ -311,7 +297,7 @@ void compare_estimators_single(Model &model, const typename Model::ParamT &theta
     snprintf(str, s, "LLH:%g Theta:",llh);
     print_vec_row(cout, theta, str, s, TERM_WHITE);
     print_vec_row(cout, crlb, "CRLB", s, TERM_CYAN);
-    std::vector<std::unique_ptr<Estimator<Model>>> estimators;
+    std::vector<std::unique_ptr<estimator::Estimator<Model>>> estimators;
     for(auto name: model.estimator_names) {
         try {
             estimators.emplace_back(methods::make_estimator(model, name));

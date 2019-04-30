@@ -1361,7 +1361,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
             //Enforce that we are moving in an assent direction
             for(IdxT n=0; n<data.step.n_elem;n++) data.step(n) = std::copysign(data.step(n), data.grad(n));
         }
-//         data.step = subroutine::bound_step(data.step, data.theta(), lb, ub);
+        data.step = subroutine::bound_step(data.step, data.theta(), lb, ub);
         // Do reflective backtracking line search for next point; also check for termination
         if(this->backtrack(data)) return;
     }

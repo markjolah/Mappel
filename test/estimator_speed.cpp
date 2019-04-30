@@ -16,13 +16,11 @@ int main(int argc, char** argv){
     methods::simulate_image_stack(model,thetas,ims);
     std::string method = "NewtonDiagonal";
     auto theta_init = model.make_param_stack(Nsample);
-    auto theta_max = model.make_param_stack(Nsample);
     theta_init.zeros();
-    VecT llh(Nsample);
-    auto obsI = model.make_param_mat_stack(Nsample);
+    estimator::MLEDataStack est;
     StatsT stats;
     std::cout<<"Running "<<Nsample<<" samples."<<std::endl;
-    methods::estimate_max_stack(model,ims,method,theta_init,theta_max,llh,obsI,stats);
+    methods::estimate_max_stack(model,ims,method,theta_init,est,stats);
     std::cout<<"[[[ Stats ]]]\n";
     for(auto& s: stats) std::cout<<s.first<<": "<<s.second<<std::endl;
     

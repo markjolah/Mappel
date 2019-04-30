@@ -1,6 +1,6 @@
 /** @file PointEmitterModel.cpp
  * @author Mark J. Olah (mjo\@cs.unm DOT edu)
- * @date 03-13-2014
+ * @date 2014-2017
  * @brief The class definition and template Specializations for PointEmitterModel
  */
 #include <cmath>
@@ -13,19 +13,26 @@
 
 namespace mappel {
     
+const std::string PointEmitterModel::DefaultEstimatorMethod = "TrustRegion"; ///<Default optimization method for MLE/MAP estimation.
+const std::string PointEmitterModel::DefaultProfileBoundsEstimatorMethod = "Newton"; ///<Default optimization method for profile bounds optimizations.
 const std::string PointEmitterModel::DefaultSeperableInitEstimator = "TrustRegion";
+const IdxT PointEmitterModel::DefaultMCMCNumSamples = 300; ///< Number of final samples to use in estimation of posterior properties (mean, credible interval, cov, etc.)
+const IdxT PointEmitterModel::DefaultMCMCBurnin = 10; ///< Number of samples to throw away (burn-in) on initialization
+const IdxT PointEmitterModel::DefaultMCMCThin = 0; ///< Keep every # samples. [Value of 0 indicates use the model default. This is suggested.]
+const double PointEmitterModel::DefaultConfidenceLevel = 0.95; ///< Default level at which to estimate confidence intervals must be in range (0,1).
+
+const double PointEmitterModel::DefaultPriorBetaPos = 3; /**< Default position parameter in symmetric beta-distributions */
+const double PointEmitterModel::DefaultPriorSigmaPos = 1; /**< Default position parameter in symmetric beta-distributions */
+const double PointEmitterModel::DefaultPriorMeanI = 300; /**< Default emitter intensity mean*/
+const double PointEmitterModel::DefaultPriorMaxI = INFINITY; /**< Default maximum emitter intensity*/
+const double PointEmitterModel::DefaultPriorIntensityKappa = 2;  /**< Default shape for intensity gamma distributions */
+const double PointEmitterModel::DefaultPriorPixelMeanBG = 4; /**< Default per-pixel mean background counts */
+const double PointEmitterModel::DefaultPriorPSFSigmaAlpha = 2; /**< Default per-pixel background gamma distribution shape */
+
 const double PointEmitterModel::bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
 const double PointEmitterModel::global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
 const double PointEmitterModel::global_max_psf_sigma = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
 
-const double PointEmitterModel::default_beta_pos = 3; /**< Default position parameter in symmetric beta-distributions */
-const double PointEmitterModel::default_sigma_pos = 1; /**< Default position parameter in symmetric beta-distributions */
-const double PointEmitterModel::default_mean_I = 300; /**< Default emitter intensity mean*/
-// const double PointEmitterModel::default_min_I = 1; /**< Default minimum emitter intensity (I=0 is non-finite) */
-const double PointEmitterModel::default_max_I = INFINITY; /**< Default maximum emitter intensity*/
-const double PointEmitterModel::default_intensity_kappa = 2;  /**< Default shape for intensity gamma distributions */
-const double PointEmitterModel::default_pixel_mean_bg = 4; /**< Default per-pixel mean background counts */
-const double PointEmitterModel::default_alpha_sigma = 2; /**< Default per-pixel background gamma distribution shape */
 
 /* Constructors and assignment operators */
 PointEmitterModel::PointEmitterModel()
@@ -97,7 +104,7 @@ PointEmitterModel::make_prior_component_position_beta(IdxT size, double pos_beta
 prior_hessian::TruncatedGammaDist
 PointEmitterModel::make_prior_component_intensity(double mean, double kappa)
 {
-    return prior_hessian::make_bounded_gamma_dist(mean/kappa,kappa,std::make_pair(0.,default_max_I));
+    return prior_hessian::make_bounded_gamma_dist(mean/kappa,kappa,std::make_pair(0.,DefaultPriorMaxI));
 }
 
 prior_hessian::TruncatedParetoDist

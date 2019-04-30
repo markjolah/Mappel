@@ -55,6 +55,8 @@ struct MLEDebugData
     IdxT Nseq; ///< Number of points evaluated including theta_init and theta_mle.
     MatT sequence; ///< Sequence of evaluated points including theta_init and theta_mle.
     VecT sequence_rllh; ///< RLLH at each point in sequence
+
+    MLEData makeMLEData() const;
 };
 
 /** A stack of maximum-likelihood estimates for a stack of images

@@ -803,8 +803,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
 
 %         function  coverageProbability(obj, theta, Nsamples, 
         
-        function [theta, varargout] = estimate(obj, image, estimator_algorithm, theta_init)
-            % [theta, obsI, llh, stats] = obj.estimate(image, estimator_algorithm, theta_init)
+        function [theta, varargout] = estimateMax(obj, image, estimator_algorithm, theta_init)
+            % [theta, obsI, llh, stats] = obj.estimateMax(image, estimator_algorithm, theta_init)
             %
             % Use a multivariate constrained optimization algorithm to estimate the model parameter theta for each of
             % a stack of n images.  Returns observed information and log-likelihood as optional parameters.
@@ -847,15 +847,15 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                 case {'matlabquasinewton','matlabquasi','matlabreflective','matlabtrustregionreflective','matlabtrust','matlabtrustregion','matlabinteriorpoint','matlabinterior','matlabsqp','matlabactiveset'}
                     [theta, varargout{1:nargout-1}] = obj.estimate_toolbox(image, theta_init, estimator_algorithm(7:end));
                 case {'trust','tr'}
-                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'TrustRegion', theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimateMax',image, 'TrustRegion', theta_init);
                 case {'newt','n'}
-                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'Newton', theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimateMax',image, 'Newton', theta_init);
                 case {'qn','quasi','bfgs'}
-                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'QuasiNewton', theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimateMax',image, 'QuasiNewton', theta_init);
                 case {'nd','diag','diagonal'}
-                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, 'NewtonDiagonal', theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimateMax',image, 'NewtonDiagonal', theta_init);
                 otherwise
-                    [theta, varargout{1:nargout-1}] = obj.call('estimate',image, estimator_algorithm, theta_init);
+                    [theta, varargout{1:nargout-1}] = obj.call('estimateMax',image, estimator_algorithm, theta_init);
             end
         end
 
@@ -915,8 +915,8 @@ classdef MappelBase < MexIFace.MexIFaceMixin
             [varargout{1:nargout}] = obj.call('estimateProfileLikelihood',image, fixed_idxs-1, fixed_values, estimator_algorithm, theta_init);
         end
 
-        function varargout = estimateDebug(obj, image, estimator_algorithm, theta_init)
-            % [theta, obsI, llh, stats, sample, sample_rllh] = estimatedebug(image, estimator_algorithm, theta_init)
+        function varargout = estimateMaxDebug(obj, image, estimator_algorithm, theta_init)
+            % [theta, obsI, llh, sample, sample_rllh, stats] = obj.estimateMaxDebug(image, estimator_algorithm, theta_init)
             %
             % DEBUGGING]
             % Estimate for a single image.  Returns entire sequence of evaluated points and their LLH.
@@ -960,15 +960,15 @@ classdef MappelBase < MexIFace.MexIFaceMixin
                 case {'matlabquasinewton','matlabquasi','matlabreflective','matlabtrustregionreflective','matlabtrust','matlabtrustregion','matlabinteriorpoint','matlabinterior','matlabsqp','matlabactiveset'}
                     [varargout{1:nargout}] = obj.estimateDebug_toolbox(image, theta_init, estimator_algorithm(7:end));
                 case {'trust','tr'}
-                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'TrustRegion', theta_init);
+                    [varargout{1:nargout}] = obj.call('estimateMaxDebug',image, 'TrustRegion', theta_init);
                 case {'newt','n'}
-                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'Newton', theta_init);
+                    [varargout{1:nargout}] = obj.call('estimateMaxDebug',image, 'Newton', theta_init);
                 case {'qn','quasi','bfgs'}
-                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'QuasiNewton', theta_init);
+                    [varargout{1:nargout}] = obj.call('estimateMaxDebug',image, 'QuasiNewton', theta_init);
                 case {'nd','diag','diagonal'}
-                    [varargout{1:nargout}] = obj.call('estimateDebug',image, 'NewtonDiagonal', theta_init);
+                    [varargout{1:nargout}] = obj.call('estimateMaxDebug',image, 'NewtonDiagonal', theta_init);
                 otherwise
-                    [varargout{1:nargout}] = obj.call('estimateDebug',image, estimator_algorithm, theta_init);
+                    [varargout{1:nargout}] = obj.call('estimateMaxDebug',image, estimator_algorithm, theta_init);
             end
             if nargout==6
                 varargout{6} = MexIFace.MexIFaceMixin.convertStatsToStructs(varargout{6});

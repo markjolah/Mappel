@@ -29,7 +29,7 @@ constexpr static int ColumnMajorOrder = pybind11::array::f_style;
 template<class ElemT, int Order=ColumnMajorOrder> using ArrayT = pybind11::array_t<ElemT,Order>;
 using ArrayBoolT = pybind11::array_t<bool, pybind11::array::f_style>;
 using ArrayDoubleT = pybind11::array_t<double, pybind11::array::f_style>;
-using ArrayUint64T = pybind11::array_t<IdxT, pybind11::array::f_style>;
+using ArrayIdxT = pybind11::array_t<IdxT, pybind11::array::f_style>;
 using ArrayUnsignedT = pybind11::array_t<IdxT, pybind11::array::f_style>;
 using ArraySignedT = pybind11::array_t<int64_t, pybind11::array::f_style>;
 
