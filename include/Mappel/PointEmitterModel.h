@@ -81,8 +81,8 @@ public:
     StatsT get_stats() const;
     
     IdxT get_num_params() const;
-    void check_param_shape(const ParamT &theta) const;
-    void check_param_shape(const ParamVecT &theta) const;
+    void assert_valid_param_shape(const ParamT &theta) const;
+    void assert_valid_param_shape(const ParamVecT &theta) const;
     void check_psf_sigma(double psf_sigma) const;
     void check_psf_sigma(const VecT &psf_sigma) const;
     

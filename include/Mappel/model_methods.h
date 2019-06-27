@@ -180,6 +180,9 @@ namespace methods {
     template<class Model>
     void estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodData &profile_data);
 
+    template<class Model>
+    void estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method, const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodData &profile_data, StatsT &stats);
+
     /* MCMC posterior sampling likelihood computation */
     template<class Model>
     void estimate_posterior(const Model &model, const ModelDataT<Model> &data, mcmc::MCMCData &mcmc_est);
@@ -210,6 +213,10 @@ namespace methods {
         void estimate_max_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,
                                 const ParamT<Model> &theta_init, estimator::MLEDebugData &mle, StatsT &stats);
         
+        template<class Model>
+        void estimate_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                               const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodDebugData &profile_data, StatsT &stats);
+
         template<class Model>
         void error_bounds_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data, estimator::ProfileBoundsDebugData &bounds, StatsT &stats);
 

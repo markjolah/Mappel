@@ -283,9 +283,9 @@ namespace methods {
     ParamT<Model> cr_lower_bound(const Model &model, const typename Model::Stencil &s)
     {
         auto FI = expected_information(model,s);
-        try{
+        try {
             return arma::pinv(arma::symmatu(FI)).eval().diag();
-        } catch ( std::runtime_error E) {
+        } catch (std::runtime_error &E) {
             std::cout<<"Got bad fisher_information!!\n"<<"theta:"<<s.theta.t()<<"\n FI: "<<FI<<'\n';
             return model.make_param(arma::fill::zeros);
         }
@@ -374,9 +374,26 @@ namespace methods {
                                        const ParamT<Model> &fixed_theta_init, StencilT<Model> &profile_max, StatsT &stats)
     {
         auto estimator = make_estimator(model,method);
-        auto prof_rllh = estimator->estimate_profile_max(data,fixed_idxs,fixed_theta_init,profile_max);
+        auto prof_rllh = estimator->estimate_profile_max(data,fixed_theta_init,profile_max);
         stats = estimator->get_stats();
         return prof_rllh;
+    }
+
+    template<class Model>
+    void estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                     const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodData &profile_data)
+    {
+        auto estimator = make_estimator(model,method);
+        auto prof_rllh = estimator->estimate_profile_max(data,theta_init,profile_data);
+    }
+
+    template<class Model>
+    void estimate_profile_likelihood(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                     const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodData &profile_data, StatsT &stats)
+    {
+        auto estimator = make_estimator(model,method);
+        auto prof_rllh = estimator->estimate_profile_max(data,theta_init,profile_data);
+        stats = estimator->get_stats();
     }
 
     template<class Model>
@@ -456,7 +473,16 @@ namespace methods {
             estimator->estimate_max_debug(data,theta_init,mle);
             stats = estimator->get_debug_stats();
         }
-        
+
+        template<class Model>
+        void estimate_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data, const std::string &method,
+                                               const ParamT<Model> &theta_init,  estimator::ProfileLikelihoodDebugData &profile_data, StatsT &stats)
+        {
+            auto estimator = make_estimator(model,method);
+            estimator->estimate_profile_max_debug(data,theta_init,profile_data);
+            stats = estimator->get_stats();
+        }
+
         template<class Model>
         void error_bounds_profile_likelihood_debug(const Model &model, const ModelDataT<Model> &data,
                                                    estimator::ProfileBoundsDebugData &bounds, StatsT &stats)

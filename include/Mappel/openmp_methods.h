@@ -405,8 +405,8 @@ void llh_stack(const Model &model, const ImageStackT<Model> &image_stack, const 
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image_stack);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image_stack);
     llh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         llh_stack(0) = objective::llh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -452,8 +452,8 @@ void rllh_stack(const Model &model, const ImageStackT<Model> &image_stack, const
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image_stack);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image_stack);
     rllh_stack.set_size(std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         rllh_stack(0) = objective::rllh(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -487,8 +487,8 @@ template<class Model>
 void rllh_stack(const Model &model, const ImageT<Model> &image, const ParamVecT<Model> &theta_stack, VecT &rllh_stack)
 {
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image);
     rllh_stack.set_size(nthetas);
     omp_exception_catcher::OMPExceptionCatcher catcher;
     #pragma omp parallel for
@@ -517,8 +517,8 @@ void grad_stack(const Model &model, const ImageStackT<Model> &image_stack, const
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image_stack);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image_stack);
     grad_stack.set_size(model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         grad_stack.col(0) = objective::grad(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -565,8 +565,8 @@ void hessian_stack(const Model &model, const ImageStackT<Model> &image_stack, co
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image_stack);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image_stack);
     hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));
@@ -614,8 +614,8 @@ void negative_definite_hessian_stack(const Model &model, const ImageStackT<Model
 {
     IdxT nimages = model.get_size_image_stack(image_stack);
     IdxT nthetas = theta_stack.n_cols;
-    model.check_param_shape(theta_stack);
-    model.check_image_shape(image_stack);
+    model.assert_valid_param_shape(theta_stack);
+    model.assert_valid_image_shape(image_stack);
     hessian_stack.set_size(model.get_num_params(),model.get_num_params(),std::max(nthetas,nimages));
     if (nimages==1 && nthetas==1) {
         hessian_stack.slice(0) = objective::negative_definite_hessian(model, model.get_image_from_stack(image_stack,0), theta_stack.col(0));

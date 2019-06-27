@@ -76,6 +76,7 @@ protected:
     /* Degugging */    
     void objEstimateMaxDebug();
     void objEstimatePosteriorDebug();
+    void objEstimateProfileLikelihoodDebug();
     void objErrorBoundsProfileLikelihoodDebug();
     void objModelObjectiveComponents();
     
@@ -177,10 +178,12 @@ Mappel_IFace<Model>::Mappel_IFace()
     methodmap["errorBoundsObserved"] = std::bind(&Mappel_IFace::objErrorBoundsObserved, this);
     methodmap["errorBoundsExpected"] = std::bind(&Mappel_IFace::objErrorBoundsExpected, this);
     methodmap["errorBoundsProfileLikelihood"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihood, this);
-    methodmap["errorBoundsProfileLikelihoodDebug"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihoodDebug, this);
+
     /* Debug */
     methodmap["estimateMaxDebug"] = std::bind(&Mappel_IFace::objEstimateMaxDebug, this);
     methodmap["estimatePosteriorDebug"] = std::bind(&Mappel_IFace::objEstimatePosteriorDebug, this);
+    methodmap["estimateProfileLikelihoodDebug"] = std::bind(&Mappel_IFace::objEstimateProfileLikelihoodDebug, this);
+    methodmap["errorBoundsProfileLikelihoodDebug"] = std::bind(&Mappel_IFace::objErrorBoundsProfileLikelihoodDebug, this);
     methodmap["modelObjectiveComponents"] = std::bind(&Mappel_IFace::objModelObjectiveComponents, this);
 
     /* Static debug */
@@ -832,6 +835,55 @@ void Mappel_IFace<Model>::objEstimateProfileLikelihood()
     if(nlhs>=3) output(stats);
 }
 
+
+template<class Model>
+void Mappel_IFace<Model>::objEstimateProfileLikelihoodDebug()
+{
+    // [profile_likelihood, profile_parameters, grad, obsI, evaluated_seq, evauluated_rllh, stats]
+    //   = obj.estimateProfileLikelihoodDebug(image, fixed_parameters, fixed_values, estimator_algorithm, theta_init)
+    //
+    // Compute the profile likelihood for a single image and single parameter, at a single fixed
+    // value.  Collect and report debugging information.
+    //
+    // At least one parameter must be fixed and at least one parameter must be free.
+    //
+    // (in) image: a single image
+    // (in) fixed_parameters: uint64 size:[NParams,1] mask 0=free 1=fixed.
+    //                  [or] if numel(fixed_parameters)<NParams, it is treated as a vector of
+    //                        indexes of fixed parameters (uses matlab 1-based indexing).
+    // (in) fixed_value: size:[NumFixedParams,1], a vector of values for each of the fixed parameters.
+    // (in) estimator_algorithm: [optional] name for the optimization method. (default = 'TrustRegion') [see: obj.EstimationMethods]
+    // (in) theta_init: [optional] Initial theta guesses size:[NumParams,1]. [default: [] ] Empty array to force auto estimation.
+    //                   Values of 0 for any individual parameter indicate that we have no initial guess for that parameter and it
+    //                   should be auto estimated, valid parameter values will be kept even if invalid ones require initialization.
+    // (out) profile_likelihood: scalar profile likelihood for the parameter(s) at the fixed value(s).
+    // (out) profile_parameters: size:[NumParams,1] parameter that achieves the profile likelihood maximum.
+    // (out) grad:  size:[NumParams,1] the grad of the log-likelihood at the profile likelihood maximum
+    // (out) obsI:  size:[NumParams,NumParams] the hessian of the log-likelihood at the profile likelihood maximum
+    // (out) evaluated_seq: A [NumParams,K] sequence of parameter values at which the model was
+    //                      evaluated in the course of the maximization algorithm.
+    // (out) evaluated_seq_rllh: A [K,1] array of relative log likelihoods at each evaluated theta
+    // (out) stats: [optional] Estimator stats dictionary.
+    checkMinNumArgs(1,5);
+    checkMaxNumArgs(7,5);
+    auto ims = getNumeric<ImageShapeT,ImagePixelT>();
+    estimator::ProfileLikelihoodDebugData prof;
+    prof.fixed_idxs = getVec<IdxT>();
+    prof.fixed_values = getMat();
+    auto estimator_algorithm = getString();
+    auto theta_init = getMat();
+    StatsT stats;
+    methods::estimate_profile_likelihood_debug(*obj, ims, estimator_algorithm, theta_init,  prof, stats);
+    if(nlhs>=1) output(prof.profile_likelihood);
+    if(nlhs>=2) output(prof.profile_parameters);
+    if(nlhs>=3) output(prof.profile_grad);
+    if(nlhs>=4) output(prof.profile_hess);
+    if(nlhs>=5) output(prof.sequence);
+    if(nlhs>=6) output(prof.sequence_rllh);
+    if(nlhs>=7) output(stats);
+}
+
+
 template<class Model>
 void Mappel_IFace<Model>::objEstimatePosterior()
 {
@@ -974,7 +1026,7 @@ template<class Model>
 void Mappel_IFace<Model>::objErrorBoundsProfileLikelihood()
 {
     // [profile_lb, profile_ub, profile_points_lb, profile_points_ub, profile_points_lb_rllh, profile_points_ub_rllh, stats]
-    //    = obj.errorBoundsProfileLikelihood(images, theta_mle, confidence, theta_mle_rllh, obsI, estimate_parameters)
+    //    = obj.errorBoundsProfileLikelihood(images, theta_mle, confidence, theta_mle_rllh, obsI, estimated_idxs)
     //
     // Compute the profile log-likelihood bounds for a stack of images, estimating upper and lower bounds for each requested parameter.
     // Uses the Venzon and Moolgavkar (1988) algorithm, implemented in OpenMP.
@@ -988,14 +1040,14 @@ void Mappel_IFace<Model>::objErrorBoundsProfileLikelihood()
     // (in) estimated_idxs: [optional] uint64 indexes of estimated parameters. Empty to compute all parameters.
     // (out) profile_lb: size [NumParams,N] lower bounds for each parameter to be estimated. NaN if parameter was not estimated
     // (out) profile_ub: size [NumParams,N] upper bounds for each parameter to be estimated. NaN if parameter was not estimated
-    // (out) profile_points_lb: [optional] size[NumParams,2,NumParams,N] Profile maxima thetas at which
-    //           profile bounds were obtained.  Each [NumParams,2,NumParams] slice are the thetas found defining the
-    //           the lower and upper bound for each parameter in sequence as the 3-rd dimension.
-    //           The 4-th dimension is used if the profile is run on multiple images.  These can
-    //           be useful to test for the quality of the estimated points.
-    // (out) profile_points_ub:
-    // (out) profile_points_lb_rllh: [optional] size [2,NumParams,N], rllh at each returned profile_points_lb.
-    // (out) profile_points_ub_rllh: [optional] size [2,NumParams,N], rllh at each returned profile_points_ub.
+    // (out) profile_points_lb: [optional] size[NumParams,NumParams,N] Profile maxima thetas at which
+    //           profile bounds lower bounds were obtained.  Each column k of an [NumParams,NumParams] slice is the theta
+    //           found while searching for the k-th parameter's lower bound.
+    // (out) profile_points_lb: [optional] size[NumParams,NumParams,N] Profile maxima thetas at which
+    //           profile bounds upper bounds were obtained.  Each column k of an [NumParams,NumParams] slice is the theta
+    //           found while searching for the k-th parameter's upper bound.
+    // (out) profile_points_lb_rllh: [optional] size [NumParams,N], each row is the rllh at each returned profile_points_lb column for slice N.
+    // (out) profile_points_ub_rllh: [optional] size [NumParams,N], each row is the rllh at each returned profile_points_ub column for slice N.
     // (out) stats: struct of fitting statistics.
     checkMinNumArgs(2,3);
     checkMaxNumArgs(7,6);

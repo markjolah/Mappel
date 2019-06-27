@@ -6,8 +6,10 @@
 
 #include <cmath>
 #include <iomanip>
+#include <sstream>
 #include <armadillo>
 #include "Mappel/util.h"
+#include "Mappel/stencil.h"
 #include "Mappel/numerical.h"
 #include "Mappel/estimator.h"
 #include "Mappel/estimator_helpers.h"
@@ -15,6 +17,10 @@
 namespace mappel {
 namespace estimator {
 
+/** Return a non-debug MLEData for use with other interfaces
+ *
+ *
+ */
 MLEData MLEDebugData::makeMLEData() const
 {
     MLEData est;
@@ -22,6 +28,13 @@ MLEData MLEDebugData::makeMLEData() const
     est.rllh = rllh;
     est.obsI = obsI;
     return est;
+}
+
+void MLEDataStack::initialize_arrays(IdxT Nparams)
+{
+    theta.set_size(Nparams,Ndata);
+    rllh.set_size(Ndata);
+    obsI.set_size(Nparams,Nparams,Ndata);
 }
 
 void ProfileBoundsData::initialize_arrays(IdxT Nparams)
@@ -58,45 +71,69 @@ static const double min_scaling = 1.0e-5;///<Minimum for problem scaling via Dsc
 static const double max_scaling = 1.0e5;///<Maximum for problem scaling via Dscale(i)
 static const double tr_subproblem_newton_epsilon = 1.0e-4;  ///< Convergence epsilon for newton's method usage in solve_restricted_step_length_newton()
 
+
 VecT solve_profile_initial_step(const MatT &obsI, IdxT fixed_idx, double llh_delta)
 {
-    auto Np = obsI.n_rows;
-    MatT free_hess(Np-1,Np-1);
-    VecT fixed_grad2(Np-1);
-    //obsI and free_hess are in symmetric upper-triangular format
-    for(IdxT j=0,jj=0; j<Np; j++) {
-        if(j!=fixed_idx) {
-            for(IdxT i=0,ii=0;i<=j;i++) {
-                if(i!=fixed_idx)
-                    free_hess(ii++,jj) = -obsI(i,j);
-            }
-            jj++;
-        } else {
-            for(IdxT i=0,ii=0;i<Np;i++) {
-                if(i!=fixed_idx)
-                    fixed_grad2(ii++) = (i<j) ? -obsI(i,j) : -obsI(j,i);
-            }
-        }
-    }
-
-    VecT tangent = arma::solve(arma::symmatu(free_hess),-fixed_grad2);
-    double denom = obsI(fixed_idx,fixed_idx)+arma::dot(fixed_grad2,tangent);
-    double h = -sqrt(fabs(llh_delta/denom));
-
-    VecT step(Np);
-    for(IdxT i=0,ii=0; i<Np; i++) step(i) = (i==fixed_idx) ? h : h*tangent(ii++);
+    VecT step(obsI.n_rows);
+    step.zeros();
+    step(fixed_idx)=1.0;
+    step%=-mappel::normal_quantile_twosided(0.999)*arma::sqrt(arma::abs(arma::pinv(obsI).eval().diag()));
     return step;
 }
 
+// VecT solve_profile_initial_step(const MatT &obsI, IdxT fixed_idx, double llh_delta)
+// {
+//     auto Np = obsI.n_rows;
+//     MatT free_hess(Np-1,Np-1);
+//     VecT fixed_grad2(Np-1);
+//     //obsI and free_hess are in symmetric upper-triangular format
+//     for(IdxT j=0,jj=0; j<Np; j++) {
+//         if(j!=fixed_idx) {
+//             for(IdxT i=0,ii=0;i<=j;i++) {
+//                 if(i!=fixed_idx)
+//                     free_hess(ii++,jj) = -obsI(i,j);
+//             }
+//             jj++;
+//         } else {
+//             for(IdxT i=0,ii=0;i<Np;i++) {
+//                 if(i!=fixed_idx)
+//                     fixed_grad2(ii++) = (i<j) ? -obsI(i,j) : -obsI(j,i);
+//             }
+//         }
+//     }
+//
+//     VecT tangent = arma::solve(arma::symmatu(free_hess),-fixed_grad2);
+//     double denom = obsI(fixed_idx,fixed_idx)+arma::dot(fixed_grad2,tangent);
+//     double h = -sqrt(fabs(llh_delta/denom));
+//
+//     VecT step(Np);
+//     for(IdxT i=0,ii=0; i<Np; i++) step(i) = (i==fixed_idx) ? h : h*tangent(ii++);
+//     return step;
+// }
+
 VecT bound_step(const VecT &step, const VecT &theta, const VecT &lbound, const VecT &ubound)
 {
+    const double bounding_step_epsilon=1e-12;
     VecT new_step;
     IdxT N = step.n_elem;
     double alpha=INFINITY;
     const double kappa = 0.9; //Back-up ratio
     for(IdxT i=0; i<N; i++) {
-        if(step[i]<0) alpha = std::min(alpha,(lbound[i]-theta[i])/step[i]);
-        else alpha = std::min(alpha,(ubound[i]-theta[i])/step[i]);
+        alpha = std::min(alpha,std::max((lbound[i]-theta[i])/step[i],(ubound[i]-theta[i])/step[i]));
+        if(alpha<0) {
+            std::cout<<"Negative alpha: "<<alpha<<" i:"<<i<<" val: "<<std::max((lbound[i]-theta[i])/step[i],(ubound[i]-theta[i])/step[i])<<std::endl;
+            std::cout<<"lbound: "<<lbound[i]<<" theta: "<<theta[i]<<" ubound:"<<ubound[i]<<" step:"<<step[i]<<std::endl;
+            std::cout<<"lbound alpha: "<<(lbound[i]-theta[i])/step[i]<<std::endl;
+            std::cout<<"ubound alpha: "<<(ubound[i]-theta[i])/step[i]<<std::endl;
+            std::cout<<std::setprecision(16);
+            lbound.t().raw_print(std::cout,"lbound:");
+            ubound.t().raw_print(std::cout,"ubound:");
+            step.t().raw_print(std::cout,"step:");
+            theta.t().raw_print(std::cout,"theta:");
+            std::ostringstream msg;
+            msg<<"Negative alpha: "<<alpha;
+            throw NumericalError(msg.str());
+        }
     }
     if(alpha > 1) return step;
     //Backup-if necessary
@@ -111,32 +148,39 @@ VecT bound_step(const VecT &step, const VecT &theta, const VecT &lbound, const V
     }
     if(is_valid) return new_step;
     std::cout<<std::setprecision(16);
-    std::cout<<"Kappa Backing up. alpha:"<<alpha<<" new_alpha:"<<kappa*alpha<<std::endl;
+//     std::cout<<"\nKappa Backing up. alpha:"<<alpha<<" new_alpha:"<<kappa*alpha<<std::endl;
+//     step.t().raw_print(std::cout,"step:");
+//     theta.t().raw_print(std::cout,"theta:");
 
-    step.t().raw_print(std::cout,"step:");
-    theta.t().raw_print(std::cout,"theta:");
-    std::cout<<std::endl;
     //Zero-out step components that still violate the constraints after backing-up
     alpha*=kappa;
     is_valid = true;
     new_step = step*alpha;
-    new_step.t().raw_print(std::cout,"new_step:");
-    lbound.t().raw_print(std::cout,"lbound:");
-    ubound.t().raw_print(std::cout,"ubound:");
+//     (theta+new_step).eval().t().raw_print(std::cout,"theta+new_step:");
+//     new_step.t().raw_print(std::cout,"new_step:");
+//     lbound.t().raw_print(std::cout,"lbound:");
+//     ubound.t().raw_print(std::cout,"ubound:");
+    bool modified=false;
     for(IdxT i=0; i<N; i++) {
         double new_val = theta[i]+new_step[i];
-        if(new_val <= lbound[i] || new_val >= ubound[i]) {
+        if(new_step[i]!=0 && (new_val <= lbound[i]+bounding_step_epsilon || new_val >= ubound[i]-bounding_step_epsilon)) {
             new_step[i] = 0;
-            std::cout<<"Zeroing persistantly bad component: i:"<<i<<std::endl;
-            step.t().raw_print(std::cout,"step:");
-            theta.t().raw_print(std::cout,"theta:");
-            new_step.t().raw_print(std::cout,"new_step:");
-            lbound.t().raw_print(std::cout,"lbound:");
-            ubound.t().raw_print(std::cout,"ubound:");
-            std::cout<<std::endl;
+            modified=true;
+//             std::cout<<"Zeroing persistantly bad component: i:"<<i<<std::endl;
+//             step.t().raw_print(std::cout,"step:");
+//             theta.t().raw_print(std::cout,"theta:");
+//             new_step.t().raw_print(std::cout,"new_step:");
+//             lbound.t().raw_print(std::cout,"lbound:");
+//             ubound.t().raw_print(std::cout,"ubound:");
+//             std::cout<<std::endl;
         }
     }
-    return new_step;
+    if(modified) {
+        new_step/=alpha;
+        return bound_step(new_step,theta,lbound,ubound);
+    } else {
+        return new_step;
+    }
 }
 
 void compute_bound_scaling_vec(const VecT &theta, const VecT &g, const VecT &lbound, const VecT &ubound,

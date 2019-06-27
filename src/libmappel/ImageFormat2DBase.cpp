@@ -77,11 +77,11 @@ void ImageFormat2DBase::check_size(const ImageSizeT &size_)
 /** @brief Check the shape of a single images is correct for model size
  * 
  */
-void ImageFormat2DBase::check_image_shape(const ImageT &im) const
+void ImageFormat2DBase::assert_valid_image_shape(const ImageT &im) const
 {
     if(im.n_rows != size(1) || im.n_cols != size(0)) {
         std::ostringstream msg;
-        msg<<"ImageFormat2DBase::check_image_shape: Got bad image Size= ["<<im.n_rows<<","<<im.n_cols
+        msg<<"ImageFormat2DBase::assert_valid_image_shape: Got bad image Size= ["<<im.n_rows<<","<<im.n_cols
            <<"] Expected size=["<<size(1)<<","<<size(0)<<"]";
         throw ArrayShapeError(msg.str());
     }
@@ -90,11 +90,11 @@ void ImageFormat2DBase::check_image_shape(const ImageT &im) const
 /** @brief Check the shape of a stack of images is correct for model size
  * 
  */
-void ImageFormat2DBase::check_image_shape(const ImageStackT &ims) const
+void ImageFormat2DBase::assert_valid_image_shape(const ImageStackT &ims) const
 {
     if(ims.n_rows != size(1) || ims.n_cols != size(0)) {
         std::ostringstream msg;
-        msg<<"ImageFormat2DBase::check_image_shape: Got bad image Size=["<<ims.n_rows<<","<<ims.n_cols<<","<<ims.n_slices
+        msg<<"ImageFormat2DBase::assert_valid_image_shape: Got bad image Size=["<<ims.n_rows<<","<<ims.n_cols<<","<<ims.n_slices
            <<"] Expected size=["<<size(1)<<","<<size(0)<<",...]";
         throw ArrayShapeError(msg.str());
     }

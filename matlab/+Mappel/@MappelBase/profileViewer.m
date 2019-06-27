@@ -1,5 +1,10 @@
 
 function fig = profileViewer(obj, theta, im, param_idx)
+    if nargin<2
+        theta = obj.samplePrior();
+    else
+        theta = obj.boundTheta(theta);
+    end
     if nargin<3 || isempty(im)
         im = obj.simulateImage(theta);
     end
@@ -41,9 +46,9 @@ function fig = profileViewer(obj, theta, im, param_idx)
     
     c = -chi2inv(confidence,1)/2;
     theta_rllh = obj.modelRLLH(im,theta);
-    theta_init = obj.estimate(im,'Heuristic');
+    theta_init = obj.estimateMax(im,'Heuristic');
     init_rllh = obj.modelRLLH(im,theta_init);
-    [theta_mle,mle_rllh,obsI,mle_stats] = obj.estimate(im,'TrustRegion',theta_init);
+    [theta_mle,mle_rllh,obsI,mle_stats] = obj.estimateMax(im,'TrustRegion',theta_init);
     fisherI = obj.expectedInformation(theta_mle);
     [exp_lb,exp_ub]=obj.errorBoundsExpected(theta_mle,confidence);
     [obs_lb,obs_ub]=obj.errorBoundsObserved(im,theta_mle,confidence,obsI);

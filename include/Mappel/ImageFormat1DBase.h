@@ -54,8 +54,8 @@ public:
     ImageCoordT get_num_pixels() const;
     void set_size(const ImageSizeT &size_);
     void set_size(const arma::Col<ImageCoordT> &sz);
-    void check_image_shape(const ImageT &im) const;
-    void check_image_shape(const ImageStackT &ims) const;
+    void assert_valid_image_shape(const ImageT &im) const;
+    void assert_valid_image_shape(const ImageStackT &ims) const;
     static void check_size(const ImageSizeT &size_);
 protected:
     ImageFormat1DBase()=default; //For virtual inheritance simplification

@@ -132,6 +132,13 @@ void Estimator<Model>::estimate_max(const ModelDataT<Model> &data, const ParamT<
         compute_estimate(data, theta_init, mle, mle_stencil);
         record_walltime(start_walltime, 1);
         return;
+    } catch(MappelError &err) {
+        #ifdef DEBUG
+            std::cout<<"MappelError: "<<err.what()<<std::endl;
+            std::cout<<"Theta init: "<<theta_init.t();
+            print_text_image(std::cout,data);
+        #endif
+        record_exit_code(ExitCode::Error);
     } catch(std::exception &err) {
         #ifdef DEBUG
             std::cout<<"std::exception: "<<err.what()<<std::endl;
@@ -186,34 +193,59 @@ void Estimator<Model>::estimate_max_stack(const ModelDataStackT<Model> &data_sta
     estimate_max_stack(data_stack, theta_init, mle_data_stack);
 }
 
+// template<class Model>
+// double Estimator<Model>::estimate_profile_max(const ModelDataT<Model> &data, const ParamT<Model> &fixed_theta_init,
+//                                               ProfileLikelihoodData &profile, MLEDebugData &mle_data, StencilT<Model> &mle_stencil)
+// {
+//     try {
+//         double rllh;
+//         auto start_walltime = ClockT::now();
+//         rllh = compute_profile_estimate(data,fixed_theta_init,fixed_idxs,stencil_max);
+//         record_walltime(start_walltime, 1);
+//         return rllh;
+//     } catch(std::exception &err) {
+//         #ifdef DEBUG
+//             std::cout<<"std::exception: "<<err.what()<<std::endl;
+//             std::cout<<"Theta init: "<<fixed_theta_init.t();
+//             print_text_image(std::cout,data);
+//         #endif
+//         record_exit_code(ExitCode::Error);
+//     } catch(...) {
+//         #ifdef DEBUG
+//             std::cout<<"Unknown exception"<<std::endl;
+//             std::cout<<"Theta init: "<<fixed_theta_init.t();
+//             print_text_image(std::cout,data);
+//         #endif
+//         record_exit_code(ExitCode::Error);
+//     }
+//     //Error
+//     return -INFINITY;
+// }
+
 template<class Model>
-double Estimator<Model>::estimate_profile_max(const ModelDataT<Model> &data, const IdxVecT &fixed_idxs,
-                                              const ParamT<Model> &fixed_theta_init, StencilT<Model> &stencil_max)
+void Estimator<Model>::estimate_profile_max_debug(const ModelDataT<Model> &data, const ParamT<Model> &theta_init,
+                                                  ProfileLikelihoodDebugData &profile)
 {
-    try {
-        double rllh;
+   try {
         auto start_walltime = ClockT::now();
-        rllh = compute_profile_estimate(data,fixed_theta_init,fixed_idxs,stencil_max);
+        StencilT<Model> stencil_max;
+        compute_profile_estimate_debug(data,theta_init,profile,stencil_max);
         record_walltime(start_walltime, 1);
-        return rllh;
-    } catch(std::exception &err) {
-        #ifdef DEBUG
-            std::cout<<"std::exception: "<<err.what()<<std::endl;
-            std::cout<<"Theta init: "<<fixed_theta_init.t();
-            print_text_image(std::cout,data);
-        #endif
-        record_exit_code(ExitCode::Error);
+        return;
+   } catch(std::exception &err) {
+        std::cout<<"std::exception: "<<err.what()<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_text_image(std::cout,data);
+        this->record_exit_code(ExitCode::Error);
     } catch(...) {
-        #ifdef DEBUG
-            std::cout<<"Unknown exception"<<std::endl;
-            std::cout<<"Theta init: "<<fixed_theta_init.t();
-            print_text_image(std::cout,data);
-        #endif
-        record_exit_code(ExitCode::Error);
+        std::cout<<"Unknown exception"<<std::endl;
+        std::cout<<"Theta init: "<<theta_init.t();
+        print_text_image(std::cout,data);
+        this->record_exit_code(ExitCode::Error);
     }
-    //Error
-    return -INFINITY;
+    //Error. Ignore cleanup
 }
+
 
 template<class Model>
 void
@@ -306,6 +338,15 @@ double Estimator<Model>::compute_profile_estimate(const ModelDataT<Model> &data,
 }
 
 template<class Model>
+void Estimator<Model>::compute_profile_estimate_debug(const ModelDataT<Model> &data, const ParamT<Model> &theta_init,
+                                                        ProfileLikelihoodDebugData &profile, StencilT<Model> &max_stencil)
+{
+    std::ostringstream msg;
+    msg<<"Profile likelihood not implemented for this estimator on model: "<<model.name;
+    throw NotImplementedError(msg.str());
+}
+
+template<class Model>
 void Estimator<Model>::compute_profile_bound(const ModelDataT<Model> &data, ProfileBoundsData &est,
                                              const VecT &init_step, IdxT param_idx, IdxT which_bound)
 {
@@ -379,6 +420,7 @@ void ThreadedEstimator<Model>::estimate_max_stack(const ModelDataStackT<Model> &
 {
     auto start_walltime=ClockT::now();
     mle_stack.Ndata = model.get_size_image_stack(data_stack);
+    mle_stack.initialize_arrays(model.get_num_params());
     #pragma omp parallel
     {
         if(omp_get_thread_num()==0) num_threads = omp_get_num_threads();
@@ -467,10 +509,10 @@ void ThreadedEstimator<Model>::estimate_profile_bounds_parallel(const ModelDataT
     auto Np = model.get_num_params();
     if(est.estimated_idxs.is_empty()) est.estimated_idxs = arma::regspace<IdxVecT>(0,Np-1);
     est.initialize_arrays(model.get_num_params());
-    #pragma omp parallel
+//     #pragma omp parallel
     {
         if(omp_get_thread_num()==0) num_threads = omp_get_num_threads();
-        #pragma omp for
+//         #pragma omp for
         for(IdxT n=0; n<est.Nparams_est; n++) {
             try {
                 auto step = subroutine::solve_profile_initial_step(est.mle.obsI, est.estimated_idxs(n), est.target_rllh_delta);
@@ -743,7 +785,8 @@ IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, cons
 template<class Model>
 IterativeMaximizer<Model>::MaximizerData::MaximizerData(const Model &model, const ModelDataT<Model> &im,
                                                 const StencilT<Model> &s, double rllh_, bool save_seq)
-    : im(im),
+    : model(model),
+      im(im),
       grad(model.make_param()),
       rllh(rllh_),
       num_params(model.get_num_params()),
@@ -805,6 +848,19 @@ void IterativeMaximizer<Model>::MaximizerData::set_fixed_parameters(const IdxVec
         free_parameters_mask(fixed_idxs).zeros();
         free_idxs = arma::find(free_parameters_mask);
     }
+}
+
+template<class Model>
+void IterativeMaximizer<Model>::MaximizerData::set_stencil(const StencilT<Model> &s)
+{
+    if(!model.theta_in_bounds(s.theta)) {
+        std::ostringstream msg;
+        msg<<"set_stencil: Theta not in bounds:"<<std::setprecision(15);
+        s.theta.raw_print(msg,"theta:");
+        throw ModelBoundsError(msg.str());
+    }
+    if(current_stencil) s0=s;
+    else s1=s;
 }
 
 template<class Model>
@@ -880,7 +936,7 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
     if(arma::dot(data.grad, data.step)<=0){
         //We are maximizing so we should be moving in direction of gradient not away
         std::ostringstream msg;
-        msg<<"Backtrack with Negative Gradient. grad:"<<data.grad.t()<<" step:"<<data.step.t()<<" <grad, step>: "<<arma::dot(data.grad, data.step);
+        msg<<"Backtrack persistantly Negative Gradient. grad:"<<data.grad.t()<<" step:"<<data.step.t()<<" <grad, step>: "<<arma::dot(data.grad, data.step);
         throw NumericalError(msg.str());
     }
 
@@ -897,6 +953,12 @@ bool IterativeMaximizer<Model>::backtrack(MaximizerData &data)
         }
         //Take new step
         auto new_theta = model.bounded_theta(model.reflected_theta(data.saved_theta() + lambda*data.step));
+        if(!model.theta_in_bounds(new_theta)){
+            std::ostringstream msg;
+            msg<<"Backtrack: Theta is not in bounds: ";
+            new_theta.raw_print(msg);
+            throw NumericalError(msg.str());
+        }
         data.set_stencil(model.make_stencil(new_theta,false)); //false=Don't compute derivatives yet.
         double can_rllh = methods::objective::rllh(model, data.im, data.stencil()); //candidate point rllh
 //         std::cout<<"\n [Backtrack:"<<n<<"]\n";
@@ -1085,10 +1147,29 @@ double IterativeMaximizer<Model>::compute_profile_estimate(const ModelDataT<Mode
 }
 
 template<class Model>
+void IterativeMaximizer<Model>::compute_profile_estimate_debug(const ModelDataT<Model> &im, const ParamT<Model> &theta_init,
+                                                            ProfileLikelihoodDebugData& profile, StencilT<Model> &max_stencil)
+{
+    auto theta_init_stencil = this->model.initial_theta_estimate(im, theta_init);
+    if(!theta_init_stencil.derivatives_computed)  throw LogicalError("Stencil has no computed derivatives");
+    MaximizerData data(model, im, theta_init_stencil);
+    data.set_fixed_parameters(profile.fixed_idxs);
+    maximize(data);
+    max_stencil = data.stencil();
+    profile.profile_parameters=data.theta();
+    profile.profile_grad = data.grad;
+    profile.profile_hess = methods::objective::hessian(model, im, max_stencil);
+    profile.sequence = data.get_theta_sequence();
+    profile.sequence_rllh = data.get_theta_sequence_rllh();
+    record_run_statistics(data);
+}
+
+
+template<class Model>
 void IterativeMaximizer<Model>::compute_profile_bound(const ModelDataT<Model> &im, ProfileBoundsData &est,
                                                       const VecT &init_step, IdxT param_idx, IdxT which_bound)
 {
-    MaximizerData data(model, im, model.make_stencil(est.mle.theta+init_step));
+    MaximizerData data(model, im, model.make_stencil(model.bounded_theta(est.mle.theta+init_step)));
     solve_profile_bound(data, est.mle, est.target_rllh_delta, param_idx, which_bound);
     IdxT k=0;
     bool found=false;
@@ -1194,9 +1275,17 @@ void NewtonDiagonalMaximizer<Model>::maximize(MaximizerData &data)
         methods::objective::grad2(model, data.im, data.stencil(), data.grad, grad2); //compute grad and diagonal hessian
         if(data.has_fixed_parameters()) data.grad(data.fixed_idxs).zeros(); //Zero-out grad for fixed parameters.
         //Check for convergence in grad ratio
+        std::cout<<"NewtonDiagonal iter#:"<<n<<std::endl;
+        if(data.has_fixed_parameters()) std::cout<<"fixed idxs:"<<data.fixed_idxs;
+        std::cout<<std::setprecision(15);
+        data.grad.t().raw_print(std::cout,"grad:");
         if(this->convergence_test_grad_ratio(data.grad,data.rllh)) return;
         //Solve for newton step maintaining a descent direction if grad2 is indefinite
         data.step = data.grad/arma::abs(grad2);
+        data.theta().t().raw_print(std::cout,"theta:");
+        data.step.t().raw_print(std::cout,"step:");
+//         data.step = subroutine::bound_step(data.step, data.theta(), model.get_lbound(), model.get_ubound());
+//         data.step.t().raw_print(std::cout,"bounded_step:");
         // Do reflective backtracking line search for next point; also check for termination
         if(this->backtrack(data)) return; // Do reflective backtracking line search and check for termination
     }
@@ -1222,15 +1311,16 @@ void NewtonMaximizer<Model>::solve_profile_bound(MaximizerData &data, MLEData &m
         fixed_param_ubound = mle.theta(fixed_idx);
     }
     auto hess = model.make_param_mat();
-//     std::cout<<"\n\n{{{Solve Profile Bound}}}}\n";
-//     std::cout<<"mle_rllh:"<<mle.rllh<<" llh_delta:"<<llh_delta<<" target_rllh:"<<target_rllh<<std::endl;
-//     std::cout<<"theta_mle:"<<mle.theta.t();
-//     std::cout<<"fixed_idx: "<<fixed_idx<<std::endl;
-//     std::cout<<"which_bound:"<<which_bound<<std::endl;
-//     std::cout<<"theta_init:"<<data.theta().t();
-//     std::cout<<"fixed_param_lbound:"<<fixed_param_lbound<<"\n";
-//     std::cout<<"fixed_param_ubound:"<<fixed_param_ubound<<"\n";
-    for(int n=0; n<this->max_iterations; n++) { //Main optimization loop
+    std::cout<<"\n\n{{{Solve Profile Bound}}}}\n";
+    std::setprecision(15);
+    std::cout<<"mle_rllh:"<<mle.rllh<<" llh_delta:"<<llh_delta<<" target_rllh:"<<target_rllh<<std::endl;
+    mle.theta.t().raw_print(std::cout,"theta_mle:");
+    std::cout<<"fixed_idx: "<<fixed_idx<<std::endl;
+    std::cout<<"which_bound:"<<which_bound<<std::endl;
+    data.theta().t().raw_print(std::cout,"theta_init:");
+    std::cout<<"fixed_param_lbound:"<<fixed_param_lbound<<"\n";
+    std::cout<<"fixed_param_ubound:"<<fixed_param_ubound<<"\n";
+    for(int n=0; n<5; n++) { //Main optimization loop
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
         MatT J = arma::symmatu(hess);
         VecT fvec = data.grad;//Function fvec(theta) is the function we are solving for 0.
@@ -1239,15 +1329,17 @@ void NewtonMaximizer<Model>::solve_profile_bound(MaximizerData &data, MLEData &m
         //Compute objective fval and objective gradient fgrad
         double fval = .5*arma::dot(fvec,fvec); // f=.5*<fvec|fvec> objective function
         VecT fgrad = J*fvec; //Gradient for the f=.5*<fvec|fvec> objective function
-//         std::cout<<"theta:"<<data.theta().t();
-//         std::cout<<"grad:"<<data.grad.t();
-//         std::cout<<"rllh:"<<data.rllh<<"\n";
-//         std::cout<<"rllh_delta:"<<data.rllh-target_rllh<<"\n";
-//         std::cout<<"hess:\n"<<hess;
-//         std::cout<<"J:\n"<<J;
-//         std::cout<<"fvec:"<<fvec.t();
-//         std::cout<<"fval:"<<.5*arma::dot(fvec,fvec)<<"\n";
-//         std::cout<<"fgrad: "<<fgrad.t()<<"\n";
+        std::setprecision(15);
+        std::cout<<"### Iter:"<<n<<std::endl;
+        data.theta().t().raw_print(std::cout,"theta:");
+        data.grad.t().raw_print(std::cout,"grad:");
+        std::cout<<"rllh:"<<data.rllh<<"\n";
+        std::cout<<"rllh_delta:"<<data.rllh-target_rllh<<"\n";
+        hess.raw_print(std::cout,"hess:");
+        J.raw_print(std::cout,"J:");
+        fvec.t().raw_print(std::cout,"fvec:");
+        std::cout<<"fval:"<<.5*arma::dot(fvec,fvec)<<"\n";
+        fgrad.t().raw_print(std::cout,"fgrad:");
         //Check for convergence
         if(this->convergence_test_grad_ratio(fgrad,fval)) return;
 
@@ -1255,21 +1347,24 @@ void NewtonMaximizer<Model>::solve_profile_bound(MaximizerData &data, MLEData &m
         MatT Jinv = arma::inv(J);
         VecT newton_step = -Jinv*fvec;
 
-//         std::cout<<"newton_step:"<<newton_step.t();
+        newton_step.t().raw_print(std::cout,"newton_step:");
         double fixed_param_step = newton_step(fixed_idx);
         double fixed_param_val = data.theta()(fixed_idx);
         if(fixed_param_step+fixed_param_val<=fixed_param_lbound){
             std::cout<<"$$$ Lbound failure! fixed_param_val:"<<fixed_param_val<<" fixed_param_step:"<<fixed_param_step<<" fixed_param_bounds:["<<fixed_param_lbound<<","<<fixed_param_ubound<<"]\n";
             std::cout<<"param_idx:"<<fixed_idx<<" which_bound:"<<which_bound<<std::endl;
-            std::cout<<"newton step:"<<newton_step<<std::endl;
+            newton_step.t().raw_print(std::cout,"newton step:");
             double rho = (fixed_param_lbound-fixed_param_val)/(2*fixed_param_step);
             newton_step*=rho;
             std::cout<<"rho: "<<rho<<" new newton step:"<<newton_step.t();
         }
         if(fixed_param_step+fixed_param_val >=fixed_param_ubound){
             std::cout<<"$$$ Ubound failure! fixed_param_val:"<<fixed_param_val<<" fixed_param_step:"<<fixed_param_step<<" fixed_param_bounds:["<<fixed_param_lbound<<","<<fixed_param_ubound<<"]\n";
+            std::cout<<"param_idx:"<<fixed_idx<<" which_bound:"<<which_bound<<std::endl;
+            newton_step.t().raw_print(std::cout,"newton step:");
             double rho = (fixed_param_ubound-fixed_param_val)/(2*fixed_param_step);
             newton_step*=rho;
+            std::cout<<"rho: "<<rho<<" new newton step:"<<newton_step.t();
         }
 
         //Compute 2nd order corrections VM Eq.8.
@@ -1308,12 +1403,15 @@ void NewtonMaximizer<Model>::solve_profile_bound(MaximizerData &data, MLEData &m
 //         std::cout<<"fvec:"<<fvec.t();
 //         std::cout<<"fval:"<<.5*arma::dot(fvec,fvec)<<"\n";
 //         std::cout<<"fgrad: "<<fgrad.t()<<"\n";
-//         std::cout<<"data.step: "<<data.step.t();
-//         std::cout<<"new_theta: "<<(data.theta()+data.step).t();
-//         std::cout<<"direction: "<<arma::dot(data.step,fgrad)<<"\n";
+           data.step.t().raw_print(std::cout,"data.step:");
+           (data.theta()+data.step).t().raw_print(std::cout,"new_theta:");
+           std::cout<<"direction: "<<arma::dot(data.step,fgrad)<<"\n";
         if(arma::dot(fgrad, data.step)>=0){
             for(IdxT i=0;i<data.grad.n_elem;i++) data.step(i)=std::copysign(data.step(i),-fgrad(i));
         }
+//         data.step = subroutine::bound_step(data.step, data.theta(), model.get_lbound(), model.get_ubound());
+//         data.step.t().raw_print(std::cout,"bounded data.step:");
+//         (data.theta()+data.step).t().raw_print(std::cout,"new_bounded_theta:");
 
         // Do reflective backtracking line search and check for step size termination
         if(this->profile_bound_backtrack(data,fixed_idx,target_rllh,fval,fgrad)) return;
@@ -1330,13 +1428,12 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
     data.step.zeros();
     MatT Hhat;
     VecT ghat;
-    VecT lb, ub;
-    if(data.has_fixed_parameters()) {
-        lb = model.get_lbound()(data.free_idxs);
-        ub = model.get_ubound()(data.free_idxs);
-    } else {
-        lb = model.get_lbound();
-        ub = model.get_ubound();
+    if(!model.theta_in_bounds(data.theta())) {
+        std::ostringstream msg;
+        msg<<"Newton Maximize: Theta is not in bounds: ";
+        msg<<std::setprecision(15);
+        data.theta().raw_print(msg);
+        throw NumericalError(msg.str());
     }
     for(int n=0; n < this->max_iterations; n++) { //Main optimization loop
         methods::objective::hessian(model, data.im, data.stencil(), data.grad, hess);
@@ -1351,7 +1448,7 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
 
         //Solve for new step
         if(data.has_fixed_parameters()) {
-            data.step(data.free_idxs) = Dinv(data.free_idxs)%arma::solve(arma::symmatu(hess(data.free_idxs,data.free_idxs)), -data.grad(data.free_idxs));
+            data.step(data.free_idxs) = Dinv(data.free_idxs)%arma::solve(arma::symmatu(Hhat(data.free_idxs,data.free_idxs)), -ghat(data.free_idxs));
         } else {
             //data.step = arma::solve(arma::symmatu(hess), -data.grad);
             data.step = Dinv%arma::solve(arma::symmatu(Hhat), -ghat);
@@ -1359,9 +1456,26 @@ void NewtonMaximizer<Model>::maximize(MaximizerData &data)
         //Confirm new step is in an ascent direction
         if(arma::dot(data.step,data.grad)<=0) {
             //Enforce that we are moving in an assent direction
+            std::cout<<"Not an assent direction. Iter:["<<n<<"]";
+            data.theta().t().raw_print(std::cout,"theta:");
+            data.step.t().raw_print(std::cout,"step:");
+            data.grad.t().raw_print(std::cout,"grad:");
+            (data.step%data.grad).t().raw_print(std::cout,"step*grad:");
+            VecT direct_step=model.make_param();
+            direct_step.zeros();
+            if(data.has_fixed_parameters()) {
+                direct_step = arma::solve(arma::symmatu(hess), -data.grad);
+            } else {
+                direct_step(data.free_idxs) = arma::solve(arma::symmatu(hess(data.free_idxs,data.free_idxs)), -data.grad(data.free_idxs));
+            }
+            direct_step.t().raw_print(std::cout,"direct_step:");
             for(IdxT n=0; n<data.step.n_elem;n++) data.step(n) = std::copysign(data.step(n), data.grad(n));
+            data.step.t().raw_print(std::cout,"new_step:");
         }
-        data.step = subroutine::bound_step(data.step, data.theta(), lb, ub);
+//         std::cout<<std::setprecision(15);
+//         data.theta().raw_print(std::cout,"THETA: ");
+//         std::cout<<"Free idxs: "<<data.free_idxs<<std::endl;
+//         data.step = subroutine::bound_step(data.step, data.theta(), model.get_lbound(), model.get_ubound());
         // Do reflective backtracking line search for next point; also check for termination
         if(this->backtrack(data)) return;
     }
@@ -1580,7 +1694,7 @@ void TrustRegionMaximizer<Model>::maximize(MaximizerData &data)
         if(data.has_fixed_parameters()) {
             for(IdxT k=0; k<data.num_fixed_parameters(); k++) s_hat.insert_rows(data.fixed_idxs(k),1);
         }
-        data.set_stencil(model.make_stencil(data.saved_theta() + Dinv % s_hat));
+        data.set_stencil(model.make_stencil(model.bounded_theta(data.saved_theta() + Dinv % s_hat)));
         double old_rllh = data.rllh;
         double can_rllh = methods::objective::rllh(model, data.im, data.stencil());
         double obj_improvement = can_rllh - old_rllh; // the "improvement" in the model.  should be positive

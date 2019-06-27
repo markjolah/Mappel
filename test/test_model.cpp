@@ -231,5 +231,14 @@ TYPED_TEST(TestModel, lbound_ubound_ordering) {
     EXPECT_TRUE(arma::all(lbound < ubound));
 }
 
+TYPED_TEST(TestModel, model_image) {
+    TypeParam &model = this->model;
+    auto theta = model.sample_prior();
+    auto image = mappel::methods::model_image(model, theta);
+//     EXPECT_TRUE(model.check_image_shape(image));
+    EXPECT_TRUE( arma::all(arma::vectorise(image) >= 0 ));
+    EXPECT_TRUE( arma::all(arma::vectorise(image) < 1 ));
+}
+
 
 

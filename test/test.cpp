@@ -622,7 +622,7 @@ int main(int argc, const char *argv[]){
             }
         } catch (MappelError &e) {
             std::cout<<"Caught MappelError: Condition:"<<e.condition()
-                <<" What:"<<e.what()<<"\n"<<"Backtrace:\n"<<e.backtrace()<<"\n"; 
+                <<" Message:"<<e.message()<<"\n"<<"Backtrace:\n"<<e.backtrace()<<"\n";
             return -1;
         } catch (std::exception &e) {
             std::cout<<"Caught Unhandled std::exception What:"<<e.what()<<"\n";

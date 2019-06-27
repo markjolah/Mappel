@@ -216,6 +216,7 @@ makeImageStackArray(arma::Col<IntT> size, IdxT count)
                 default:
                     break;
             }
+            break;
         default:
             switch(size.n_elem) {
                 case 1:
@@ -1044,7 +1045,7 @@ ModelWrapper<Model>::estimate_max(Model &model, ArrayDoubleT &images_arr, std::s
         theta_init_stack.zeros();
     } else {
         theta_init_stack = thetaStackAsArma(theta_init_arr);
-        model.check_param_shape(theta_init_stack);
+        model.assert_valid_param_shape(theta_init_stack);
         if(theta_init_stack.n_cols != count) {
             std::ostringstream msg;
             msg<<"Got inconsistent counts: #images="<<count<<" #theta_inits="<<theta_init_stack.n_cols;
@@ -1099,7 +1100,7 @@ ModelWrapper<Model>::estimate_profile_likelihood(Model &model, ArrayDoubleT &im_
         theta_init.zeros();
     } else {
         theta_init = thetaAsArma(theta_init_arr);
-        model.check_param_shape(theta_init);
+        model.assert_valid_param_shape(theta_init);
     }
 
     if(return_stats) {
@@ -1134,7 +1135,7 @@ ModelWrapper<Model>::estimate_posterior(Model &model, ArrayDoubleT &image_arr, I
         theta_init_stack.zeros();
     } else {
         theta_init_stack = thetaStackAsArma(theta_init_arr);
-        model.check_param_shape(theta_init_stack);
+        model.assert_valid_param_shape(theta_init_stack);
         if(theta_init_stack.n_cols != count) {
             std::ostringstream msg;
             msg<<"Got inconsistent counts: #images="<<count<<" #theta_inits="<<theta_init_stack.n_cols;

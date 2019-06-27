@@ -51,6 +51,7 @@ struct MLEDebugData
 {
     VecT theta; ///< Theta estimate
     double rllh; ///< RLLH at theta
+    VecT grad; ///< Observed Gradient at theta
     MatT obsI; ///< Observed Fisher information matrix at theta
     IdxT Nseq; ///< Number of points evaluated including theta_init and theta_mle.
     MatT sequence; ///< Sequence of evaluated points including theta_init and theta_mle.
@@ -58,6 +59,7 @@ struct MLEDebugData
 
     MLEData makeMLEData() const;
 };
+
 
 /** A stack of maximum-likelihood estimates for a stack of images
  * A container to group the necessary information at an MLEstimate
@@ -68,10 +70,12 @@ struct MLEDataStack
     MatT theta; ///< Theta estimate stack. size:[Nparams,Ndata]
     VecT rllh; ///< RLLH stack. size:[Ndata]
     CubeT obsI;///< Observed Fisher information matrix stack. size:[Nparams,Nparams,Ndata]
+
+    void initialize_arrays(IdxT Nparams);
 };
 
-/** Container for profile liklihood estimator data
- * Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context.
+/** Container for profile likelihood estimator data
+ * Includes both controlling (input) parameters as well as reporting (output) parameters to give output parameters context.
  */
 struct ProfileLikelihoodData
 {
@@ -82,17 +86,36 @@ struct ProfileLikelihoodData
     /* Output parameters */
     IdxT Nfixed=0; ///< Number of fixed parameters
     IdxT Nvalues=0; ///< Number of values of fixed parameters evaluated
-    VecT profile_likelihood; ///< profile likelhood for each column of fixed parameter values
-    MatT profile_parameters; ///< Points at which the profile liklihood maximum was obtained.
+    VecT profile_likelihood; ///< profile likelihood for each column of fixed parameter values
+    MatT profile_parameters; ///< Points at which the profile likelihood maximum was obtained.
+};
+
+/** Container for profile likelihood estimator debugging data
+ * Includes both controlling (input) parameters as well as reporting (output) parameters to give output parameters context.
+ */
+struct ProfileLikelihoodDebugData
+{
+    /* Input parameters */
+    IdxVecT fixed_idxs; ///< Indexes of fixed parameters
+    VecT fixed_values; ///< Vector values of fixed parameters size:[Nfixed,1];
+
+    /* Output parameters */
+    IdxT Nfixed=0; ///< Number of fixed parameters
+    double profile_likelihood; ///< profile likelihood for each column of fixed parameter values
+    VecT profile_parameters; ///< Points at which the profile likelihood maximum was obtained.
+    VecT profile_grad; ///< Gradient of log-likelihood at profile maximum
+    MatT profile_hess; ///< Hessian of log-likelihood at profile maximum
+    MatT sequence; ///< Sequence of evaluated thetas in optimization
+    VecT sequence_rllh; ///< Sequence of relative_log_likelihood at each evaluated theta.
 };
 
 /** Data related to a profile bounds estimation for a single image
- * Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context.
+ * Includes both controlling (input) parameters as well as reporting (output) parameters to give output parameters context.
  */
 struct ProfileBoundsData {
 
     /* input parameters */
-    IdxVecT estimated_idxs; ///< List of indexs for computed parameters.  Empty to compute all parameters.
+    IdxVecT estimated_idxs; ///< List of indexes for computed parameters.  Empty to compute all parameters.
     double confidence=-1; ///< Confidence level.  If invalid, use default value.
     MLEData mle; ///< Theta maximum-likelihood estimate, rllh, and ObsI
 
@@ -149,6 +172,7 @@ struct ProfileBoundsDataStack {
     CubeT profile_points_ub; ///< size:[Nparams,Nparams_est,Ndata] Optimal theta found at each upper bound estimate for each estimated_idx.
     MatT profile_points_lb_rllh; ///< size:[Nparams_est,Ndata] RLLH at each of the profile_points_lb
     MatT profile_points_ub_rllh; ///< size:[Nparams_est,Ndata] RLLH at each of the profile_points_ub
+
     void initialize_arrays(IdxT Nparams);
 };
 ///@}
@@ -253,9 +277,10 @@ public:
     /** Profile likelihood estimation methods
      */
     ///@{
-    double estimate_profile_max(const ModelDataT<Model> &data, const IdxVecT &fixed_idxs,
-                                const ParamT<Model> &fixed_theta_init, StencilT<Model> &theta_max);
+//     double estimate_profile_max(const ModelDataT<Model> &data, const IdxVecT &fixed_idxs,
+//                                 const ParamT<Model> &fixed_theta_init, StencilT<Model> &theta_max);
     virtual void estimate_profile_max(const ModelDataT<Model> &data, const ParamVecT<Model> &fixed_theta_init, ProfileLikelihoodData &profile) = 0;
+    void estimate_profile_max_debug(const ModelDataT<Model> &data, const ParamT<Model> &fixed_theta_init, ProfileLikelihoodDebugData &profile);
     ///@}
 
 
@@ -264,8 +289,8 @@ public:
     ///@{
     void estimate_profile_bounds(const ModelDataT<Model> &data, ProfileBoundsData &bounds_est);
     virtual void estimate_profile_bounds_parallel(const ModelDataT<Model> &data, ProfileBoundsData &bounds_est) = 0;
-    void estimate_profile_bounds_debug(const ModelDataT<Model> &data, ProfileBoundsDebugData &bounds_est);
     virtual void estimate_profile_bounds_stack(const ModelDataStackT<Model> &data_stack, ProfileBoundsDataStack &bounds_est) = 0;
+    void estimate_profile_bounds_debug(const ModelDataT<Model> &data, ProfileBoundsDebugData &bounds_est);
     ///@}
 
     /** Run statistics. */
@@ -287,6 +312,8 @@ protected:
                                         MLEDebugData &mle_data, StencilT<Model> &mle_stencil);
     virtual double compute_profile_estimate(const ModelDataT<Model> &data, const ParamT<Model> &theta_init,
                                             const IdxVecT &fixed_idxs, StencilT<Model> &max_stencil);
+    virtual void compute_profile_estimate_debug(const ModelDataT<Model> &data, const ParamT<Model> &theta_init,
+                                                  ProfileLikelihoodDebugData &profile, StencilT<Model> &max_stencil);
     virtual void compute_profile_bound(const ModelDataT<Model> &data, ProfileBoundsData &est, const VecT &init_step, IdxT param_idx, IdxT which_bound);
     virtual void compute_profile_bound_debug(const ModelDataT<Model> &data, ProfileBoundsDebugData &est);
 
@@ -478,6 +505,7 @@ protected:
 
     class MaximizerData {
     public:
+        const Model &model;
         const ModelDataT<Model> &im;
         ParamT<Model> grad;
         ParamT<Model> step;
@@ -508,7 +536,7 @@ protected:
 
         /** @brief Get the current stencil  */
         StencilT<Model>& stencil() {return current_stencil ? s0 : s1;}
-        void set_stencil(const StencilT<Model> &s) {if(current_stencil) s0=s;  else s1=s; }
+        void set_stencil(const StencilT<Model> &s);
         /** @brief Save the current stencil to the single reserve spot.  
          * Overwrites any previously saved stencil.
          * This is used  to save a stencil when backtracking.
@@ -530,7 +558,7 @@ protected:
         bool has_fixed_parameters() const { return !fixed_idxs.is_empty(); }
         IdxT num_fixed_parameters() const { return fixed_idxs.n_elem; }
     protected:
-        static const int DefaultMaxSeqLength; ///< Default maximum length of sequence to perpare to save if debugging.
+        static const int DefaultMaxSeqLength; ///< Default maximum length of sequence to prepare to save if debugging.
         const IdxT num_params;
         StencilT<Model> s0,s1; //These two stencils will be alternated as the current and old stencil points
         bool current_stencil; //This alternates to indicated weather s0 or s1 is the current stencil
@@ -550,6 +578,7 @@ protected:
     void compute_estimate(const ModelDataT<Model> &data, const ParamT<Model> &theta_init, MLEData &mle_data, StencilT<Model> &mle_stencil) override;
     void compute_estimate_debug(const ModelDataT<Model> &data, const ParamT<Model> &theta_init, MLEDebugData &mle_data, StencilT<Model> &mle_stencil) override;
     double compute_profile_estimate(const ModelDataT<Model> &data, const ParamT<Model> &theta_init, const IdxVecT &fixed_idxs, StencilT<Model> &theta_max) override;
+    void compute_profile_estimate_debug(const ModelDataT<Model> &data, const ParamT<Model> &theta_init, ProfileLikelihoodDebugData &profile, StencilT<Model> &max_stencil) override;
     void compute_profile_bound(const ModelDataT<Model> &data, ProfileBoundsData &est, const VecT &init_step, IdxT param_idx, IdxT which_bound) override;
     void compute_profile_bound_debug(const ModelDataT<Model> &data, ProfileBoundsDebugData &bounds) override;
 

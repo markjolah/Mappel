@@ -399,6 +399,21 @@ Gauss2DsModel::initial_theta_estimate(const ImageT &im, const ParamT &theta_init
     estimator::MLEData x_est, y_est;
     methods::estimate_max(x_model,x_im,estimator_method,x_est);
     methods::estimate_max(y_model,y_im,estimator_method,y_est);
+    if(!x_model.theta_in_bounds(x_est.theta)){
+        std::ostringstream msg;
+        msg<<"initial_theta_estimate: x_model Theta is not in bounds: ";
+        msg<<std::setprecision(15);
+        x_est.theta.raw_print(msg);
+        throw NumericalError(msg.str());
+    }
+    if(!y_model.theta_in_bounds(y_est.theta)){
+        std::ostringstream msg;
+        msg<<std::setprecision(15);
+        msg<<"initial_theta_estimate: y_model Theta is not in bounds: ";
+        y_est.theta.raw_print(msg);
+        throw NumericalError(msg.str());
+    }
+
     
     if(x_pos <= lbound(0) || x_pos >= ubound(0) || !std::isfinite(x_pos)) x_pos = x_est.theta(0);
     if(y_pos <= lbound(1) || y_pos >= ubound(1) || !std::isfinite(y_pos)) y_pos = y_est.theta(0);

@@ -317,7 +317,7 @@ function guiFig = maximizerInspectorGUI(obj)
 %         sim_stack = obj.simulateImage(theta, Nstack);        
         plotSimFig();
         if ~handles.fixToggle.Value
-            theta_init = obj.estimate(sim,'Heuristic');
+            theta_init = obj.estimateMax(sim,'Heuristic');
             setThetaInit(theta_init);
         else
             runEstimator()
@@ -522,25 +522,24 @@ function guiFig = maximizerInspectorGUI(obj)
         xlabel('Iteration')
         ylabel('Intensity')
 
-% 
-%         %Plot sigma sequence
-%         if obj.NumParams > 4
-%             axes(ax.est_sigma)
-%             plot(xs,plot_seq(5,:),'b-','DisplayName','Est Sigma');
-%             hold('on');
-%             yl = ylim();
-%             ylim([0 1.2*yl(2)]);
-%             plot([0, seq_len-1],[theta(5) theta(5)], 'k--','DisplayName','True Sigma');
-%             if ~isempty(backtrackPlotIdxs)
-%                 plot(backtrackPlotIdxs, backtrack_theta(5,:), '*','MarkerSize',btrack_ms,'MarkerEdgeColor',[0,0,0],'MarkerFaceColor',[0,0,1],'DisplayName','Backtracks (sigma)');
-%             end
-%             legend('location','best');
-%             xticks([xs,seq_len]);
-%             xlim([0,seq_len]);
-%             hold('off');
-%             title('Sigma Seq.')
-%         end
-% 
+
+        %Plot sigma sequence
+        if obj.NumParams > 4
+            axes(ax.est_sigma)
+            plot(xs,plot_seq(5,:),'b-','DisplayName','Est Sigma');
+            hold('on');
+            yl = ylim();
+            ylim([0 1.2*yl(2)]);
+            plot([0, seq_len-1],[theta(5) theta(5)], 'k--','DisplayName','True Sigma');
+            if ~isempty(backtrackPlotIdxs)
+                plot(backtrackPlotIdxs, backtrack_theta(5,:), '*','MarkerSize',btrack_ms,'MarkerEdgeColor',[0,0,0],'MarkerFaceColor',[0,0,1],'DisplayName','Backtracks (sigma)');
+            end
+            legend('location','best');
+            xlim([1,seq_len]);
+            hold('off');
+            title('Sigma Seq.')
+        end
+
         %Plot LLH sequence
         axes(ax.est_llh)
         hold('off');
@@ -585,13 +584,13 @@ function guiFig = maximizerInspectorGUI(obj)
             estimator_stats.total_der_evals = 0;
         else
 %             if handles.fixToggle.Value
-                [theta_est, theta_est_rllh, obsI, evaluated_seq, evaluated_seq_rllh,estimator_stats] = obj.estimateDebug(sim,method,theta_init);
+                [theta_est, theta_est_rllh, obsI, evaluated_seq, evaluated_seq_rllh,estimator_stats] = obj.estimateMaxDebug(sim,method,theta_init);
 %             else
-%                 [theta_est, theta_est_rllh, obsI, evaluated_seq, evaluated_seq_rllh,estimator_stats] = obj.estimateDebug(sim,method);
+%                 [theta_est, theta_est_rllh, obsI, evaluated_seq, evaluated_seq_rllh,estimator_stats] = obj.estimateMaxDebug(sim,method);
 %             end
         end
         crlb = obj.CRLB(theta_est);
-%         theta_est_stack = obj.estimate(sim_stack,method,theta_init);
+%         theta_est_stack = obj.estimateMax(sim_stack,method,theta_init);
         if isfield(estimator_stats,'total_iterations')
             nIter = estimator_stats.total_iterations;
         elseif isfield(estimator_stats,'num_iterations')

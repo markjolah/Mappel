@@ -1,5 +1,10 @@
 
 function fig = profileViewer2D(obj, theta, im, method, fixedI)
+    if nargin<2
+        theta = obj.samplePrior();
+    else
+        theta = obj.boundTheta(theta);
+    end
     if nargin<3 || isempty(im)
         im = obj.simulateImage(theta);
     end

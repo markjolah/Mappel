@@ -42,18 +42,18 @@ function quick_test(model_names,estimator_names,Nsample)
 
             for estimator_cell = estimator_names
                 estimator = estimator_cell{1};
-                est = M.estimate(im);
-                est = M.estimate(im,estimator);
-                est = M.estimate(im_stack,estimator);
+                est = M.estimateMax(im);
+                est = M.estimateMax(im,estimator);
+                est = M.estimateMax(im_stack,estimator);
 
-                [est, llh] = M.estimate(im,estimator);
-                [est, llh, obsI] = M.estimate(im,estimator);
-                [est, llh, obsI, stats] = M.estimate(im,estimator);
-                [est, llh, obsI, stats] = M.estimate(im_thetas,estimator);
+                [est, llh] = M.estimateMax(im,estimator);
+                [est, llh, obsI] = M.estimateMax(im,estimator);
+                [est, llh, obsI, stats] = M.estimateMax(im,estimator);
+                [est, llh, obsI, stats] = M.estimateMax(im_thetas,estimator);
 
-                [est, llh, obsI, stats] = M.estimate(im, estimator, theta);
-                [est, llh, obsI, stats] = M.estimate(im_stack, estimator,theta);
-                [est, llh, obsI, stats] = M.estimate(im_thetas, estimator,thetas);
+                [est, llh, obsI, stats] = M.estimateMax(im, estimator, theta);
+                [est, llh, obsI, stats] = M.estimateMax(im_stack, estimator,theta);
+                [est, llh, obsI, stats] = M.estimateMax(im_thetas, estimator,thetas);
 
             end
         end

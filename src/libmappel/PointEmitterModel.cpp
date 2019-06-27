@@ -29,7 +29,7 @@ const double PointEmitterModel::DefaultPriorIntensityKappa = 2;  /**< Default sh
 const double PointEmitterModel::DefaultPriorPixelMeanBG = 4; /**< Default per-pixel mean background counts */
 const double PointEmitterModel::DefaultPriorPSFSigmaAlpha = 2; /**< Default per-pixel background gamma distribution shape */
 
-const double PointEmitterModel::bounds_epsilon = 1.0E-6; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
+const double PointEmitterModel::bounds_epsilon = 1.0E-8; /**< Distance from the boundary to constrain in bound_theta and bounded_theta methods */
 const double PointEmitterModel::global_min_psf_sigma = 1E-1; /**< Global minimum for any psf_sigma.  Sizes below this value are invalid, and nowhere near useful for practical point emitter localization */ 
 const double PointEmitterModel::global_max_psf_sigma = 1E2; /**< Global maxmimum for any psf_sigma.  Sizes above this value are invalid, and nowhere near useful for practical point emitter localization */ 
 
@@ -171,7 +171,7 @@ void PointEmitterModel::set_prior(CompositeDist&& prior_)
     ubound = prior.ubound();
 }
 
-void PointEmitterModel::check_param_shape(const ParamT &theta) const
+void PointEmitterModel::assert_valid_param_shape(const ParamT &theta) const
 {
     if(theta.n_elem != num_params) {
         std::ostringstream msg;
@@ -180,7 +180,7 @@ void PointEmitterModel::check_param_shape(const ParamT &theta) const
     }
 }
 
-void PointEmitterModel::check_param_shape(const ParamVecT &theta) const
+void PointEmitterModel::assert_valid_param_shape(const ParamVecT &theta) const
 {
     if(theta.n_rows != num_params) {
         std::ostringstream msg;
@@ -254,7 +254,7 @@ void PointEmitterModel::set_ubound(const ParamT &ubound_)
 
 void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) <= lbound(n)) theta(n)=lbound(n)+epsilon;
         if(theta(n) >= ubound(n)) theta(n)=ubound(n)-epsilon;
@@ -263,7 +263,7 @@ void PointEmitterModel::bound_theta(ParamT &theta, double epsilon) const
 
 bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     for(IdxT n=0; n<num_params; n++) 
         if(lbound(n) >= theta(n) || theta(n) >= ubound(n)) return false;
     return true;
@@ -271,7 +271,7 @@ bool PointEmitterModel::theta_in_bounds(const ParamT &theta) const
 
 PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, double epsilon) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(theta(n) <= lbound(n)) btheta(n)=lbound(n)+epsilon;
@@ -282,7 +282,7 @@ PointEmitterModel::ParamT PointEmitterModel::bounded_theta(const ParamT &theta, 
 
 PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     ParamT btheta = theta;
     for(IdxT n=0;n<num_params;n++) {
         if(std::isfinite(lbound(n))) {
@@ -302,7 +302,7 @@ PointEmitterModel::ParamT PointEmitterModel::reflected_theta(const ParamT &theta
 
 BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     IdxT N = theta.n_cols;
     BoolVecT in_bounds(N);
     for(IdxT n=0; n<N; n++) in_bounds(n) = theta_in_bounds(theta.col(n));
@@ -312,7 +312,7 @@ BoolVecT PointEmitterModel::theta_stack_in_bounds(const ParamVecT &theta) const
 PointEmitterModel::ParamVecT 
 PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     IdxT N = theta.n_cols;
     auto new_theta = make_param_stack(N);
     for(IdxT n=0; n<N; n++) new_theta.col(n) = bounded_theta(theta.col(n),epsilon);
@@ -322,7 +322,7 @@ PointEmitterModel::bounded_theta_stack(const ParamVecT &theta, double epsilon) c
 PointEmitterModel::ParamVecT 
 PointEmitterModel::reflected_theta_stack(const ParamVecT &theta) const
 {
-    check_param_shape(theta);
+    assert_valid_param_shape(theta);
     IdxT N = theta.n_cols;
     auto new_theta = make_param_stack(N);
     for(IdxT n=0; n<N; n++) new_theta.col(n) = reflected_theta(theta.col(n));

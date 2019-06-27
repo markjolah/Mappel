@@ -4,7 +4,7 @@
 ## Source Files ##
 # set(IFACE_TARGETS Gauss2DMLE_Iface Gauss2DMAP_Iface Gauss2DsMLE_Iface Gauss2DsMAP_Iface)
 
-set(IFACE_TARGETS Gauss1DMAP_IFace Gauss2DMAP_IFace Gauss2DMLE_IFace Gauss2DsMAP_IFace)
+set(IFACE_TARGETS Gauss1DMAP_IFace Gauss1DsMAP_IFace Gauss2DMAP_IFace Gauss2DMLE_IFace Gauss2DsMAP_IFace)
 
 # if(OPT_HYPERSPECTRAL)
 #     set(IFACE_TARGETS ${IFACE_TARGETS} hyperspectral/GaussHSMAP_IFace hyperspectral/GaussHSsMAP_IFace

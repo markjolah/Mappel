@@ -111,9 +111,9 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         end
         if isempty(theta_init)
             if isempty(ims)
-                theta_init = obj.estimate(obj.simulateImage(theta,1),'Heuristic');
+                theta_init = obj.estimateMax(obj.simulateImage(theta,1),'Heuristic');
             else
-                theta_init = mean(obj.estimate(ims,'Heuristic'),2);
+                theta_init = mean(obj.estimateMax(ims,'Heuristic'),2);
             end
         end
         handles.edits.thetaInit.String = CellFun.arr2str(theta_init(:)');
@@ -203,9 +203,9 @@ function guiFig = maximizerComparisonGUI(obj, theta, theta_init)
         for name_idx = Es
             name = name_idx{1};
             if useThetaInit
-                [run.(name).est_theta, ~, ~, run.(name).stats] = obj.estimate(ims,name,theta_init);
+                [run.(name).est_theta, ~, ~, run.(name).stats] = obj.estimateMax(ims,name,theta_init);
             else
-                [run.(name).est_theta, ~, ~, run.(name).stats] = obj.estimate(ims,name);
+                [run.(name).est_theta, ~, ~, run.(name).stats] = obj.estimateMax(ims,name);
             end
             run.(name).est_errors = run.(name).est_theta - repmat(theta,1,nSamples);
             run.(name).est_error_std = std(run.(name).est_errors,[],2);
