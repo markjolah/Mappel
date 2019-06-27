@@ -12,7 +12,7 @@ var searchData=
   ['mcmcdebugdata',['MCMCDebugData',['../structmappel_1_1mcmc_1_1MCMCDebugData.html',1,'mappel::mcmc']]],
   ['mledata',['MLEData',['../namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEData',1,'mappel::estimator']]],
   ['mledatastack',['MLEDataStack',['../namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack',1,'mappel::estimator']]],
-  ['mledebugdata',['MLEDebugData',['../namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDebugData',1,'mappel::estimator']]],
+  ['mledebugdata',['MLEDebugData',['../structmappel_1_1estimator_1_1MLEDebugData.html',1,'mappel::estimator']]],
   ['mlestimator',['MLEstimator',['../classmappel_1_1MLEstimator.html',1,'mappel']]],
   ['modelboundserror',['ModelBoundsError',['../structmappel_1_1ModelBoundsError.html',1,'mappel']]]
 ];

@@ -1,0 +1,146 @@
+\hypertarget{structmappel_1_1estimator_1_1MLEDebugData}{}\subsection{mappel\+:\+:estimator\+:\+:M\+L\+E\+Debug\+Data Struct Reference}
+\label{structmappel_1_1estimator_1_1MLEDebugData}\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+
+
+{\ttfamily \#include $<$/home/travis/build/markjolah/\+Mappel/include/\+Mappel/estimator.\+h$>$}
+
+\subsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a785288e45bd2d04af927552c01c70159}{make\+M\+L\+E\+Data} () const 
+\end{DoxyCompactItemize}
+\subsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a9f62b8797034f80b369117f77ba39725}{theta}
+\begin{DoxyCompactList}\small\item\em Theta estimate. \end{DoxyCompactList}\item 
+double \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a6dea52884caeb6e2957d4242ea568e77}{rllh}
+\begin{DoxyCompactList}\small\item\em R\+L\+LH at theta. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a6fadb423b602a1f671c8d6f211663fcc}{obsI}
+\begin{DoxyCompactList}\small\item\em Observed Fisher information matrix at theta. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a303db3c63b3d285760e814aea82af3a0}{Nseq}
+\begin{DoxyCompactList}\small\item\em Number of points evaluated including theta\+\_\+init and theta\+\_\+mle. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a4419c4ee9559999be39df4a7469a47fa}{sequence}
+\begin{DoxyCompactList}\small\item\em Sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle. \end{DoxyCompactList}\item 
+\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT} \hyperlink{structmappel_1_1estimator_1_1MLEDebugData_a4e8b3ce8d1925480aadd942d34505568}{sequence\+\_\+rllh}
+\begin{DoxyCompactList}\small\item\em R\+L\+LH at each point in sequence. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detailed Description}
+A maximum-\/likelihood estimate for a single image with debugging information. A container to group the necessary information at an M\+L\+Estimate 
+
+Definition at line 50 of file estimator.\+h.
+
+
+
+\subsubsection{Member Function Documentation}
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!make\+M\+L\+E\+Data@{make\+M\+L\+E\+Data}}
+\index{make\+M\+L\+E\+Data@{make\+M\+L\+E\+Data}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{make\+M\+L\+E\+Data() const }{makeMLEData() const }}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+L\+E\+Data} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::make\+M\+L\+E\+Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a785288e45bd2d04af927552c01c70159}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a785288e45bd2d04af927552c01c70159}
+
+
+Definition at line 18 of file estimator.\+cpp.
+
+
+
+References mappel\+::estimator\+::\+M\+L\+E\+Data\+::obsI, obsI, mappel\+::estimator\+::\+M\+L\+E\+Data\+::rllh, rllh, mappel\+::estimator\+::\+M\+L\+E\+Data\+::theta, and theta.
+
+
+
+\subsubsection{Member Data Documentation}
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!Nseq@{Nseq}}
+\index{Nseq@{Nseq}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{Nseq}{Nseq}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::\+Nseq}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a303db3c63b3d285760e814aea82af3a0}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a303db3c63b3d285760e814aea82af3a0}
+
+
+Number of points evaluated including theta\+\_\+init and theta\+\_\+mle. 
+
+
+
+Definition at line 55 of file estimator.\+h.
+
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!obsI@{obsI}}
+\index{obsI@{obsI}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{obsI}{obsI}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::obsI}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a6fadb423b602a1f671c8d6f211663fcc}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a6fadb423b602a1f671c8d6f211663fcc}
+
+
+Observed Fisher information matrix at theta. 
+
+
+
+Definition at line 54 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), make\+M\+L\+E\+Data(), and mappel\+::estimator\+::subroutine\+::solve\+\_\+profile\+\_\+initial\+\_\+step().
+
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!rllh@{rllh}}
+\index{rllh@{rllh}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{rllh}{rllh}}]{\setlength{\rightskip}{0pt plus 5cm}double mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::rllh}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a6dea52884caeb6e2957d4242ea568e77}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a6dea52884caeb6e2957d4242ea568e77}
+
+
+R\+L\+LH at theta. 
+
+
+
+Definition at line 53 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), and make\+M\+L\+E\+Data().
+
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!sequence@{sequence}}
+\index{sequence@{sequence}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{sequence}{sequence}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf MatT} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::sequence}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a4419c4ee9559999be39df4a7469a47fa}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a4419c4ee9559999be39df4a7469a47fa}
+
+
+Sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle. 
+
+
+
+Definition at line 56 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!sequence\+\_\+rllh@{sequence\+\_\+rllh}}
+\index{sequence\+\_\+rllh@{sequence\+\_\+rllh}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{sequence\+\_\+rllh}{sequence_rllh}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::sequence\+\_\+rllh}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a4e8b3ce8d1925480aadd942d34505568}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a4e8b3ce8d1925480aadd942d34505568}
+
+
+R\+L\+LH at each point in sequence. 
+
+
+
+Definition at line 57 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), and mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize().
+
+\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}!theta@{theta}}
+\index{theta@{theta}!mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}
+\paragraph[{\texorpdfstring{theta}{theta}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf VecT} mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data\+::theta}\hypertarget{structmappel_1_1estimator_1_1MLEDebugData_a9f62b8797034f80b369117f77ba39725}{}\label{structmappel_1_1estimator_1_1MLEDebugData_a9f62b8797034f80b369117f77ba39725}
+
+
+Theta estimate. 
+
+
+
+Definition at line 52 of file estimator.\+h.
+
+
+
+Referenced by mappel\+::estimator\+::subroutine\+::compute\+\_\+bound\+\_\+scaling\+\_\+vec(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+estimate\+\_\+debug(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max\+\_\+debug(), mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$\+::get\+\_\+debug\+\_\+stats(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+maximize(), mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::local\+\_\+profile\+\_\+maximize(), and make\+M\+L\+E\+Data().
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{estimator_8h}{estimator.\+h}\item 
+\hyperlink{estimator_8cpp}{estimator.\+cpp}\end{DoxyCompactItemize}

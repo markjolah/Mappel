@@ -22,7 +22,7 @@ struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLED
 \item 
 struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDataStack}{M\+L\+E\+Data\+Stack}
 \item 
-struct \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data}
+struct \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data}
 \item 
 class \hyperlink{classmappel_1_1estimator_1_1NewtonDiagonalMaximizer}{Newton\+Diagonal\+Maximizer}
 \item 
@@ -101,7 +101,7 @@ Theta estimate. \\
 \paragraph{struct mappel\+:\+:estimator\+:\+:M\+L\+E\+Data\+Stack}
 A stack of maximum-\/likelihood estimates for a stack of images A container to group the necessary information at an M\+L\+Estimate 
 
-Definition at line 63 of file estimator.\+h.
+Definition at line 65 of file estimator.\+h.
 
 \begin{DoxyFields}{Class Members}
 \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a7b3a27ef73e2603b2832e007899eb81e}{}\label{namespacemappel_1_1estimator_a7b3a27ef73e2603b2832e007899eb81e}
@@ -129,57 +129,12 @@ Theta estimate stack. size\+:\mbox{[}Nparams,Ndata\mbox{]}. \\
 \hline
 
 \end{DoxyFields}
-\index{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data@{mappel\+::estimator\+::\+M\+L\+E\+Debug\+Data}}\label{structmappel_1_1estimator_1_1MLEDebugData}
-\hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{}
-\paragraph{struct mappel\+:\+:estimator\+:\+:M\+L\+E\+Debug\+Data}
-A maximum-\/likelihood estimate for a single image with debugging information. A container to group the necessary information at an M\+L\+Estimate 
-
-Definition at line 50 of file estimator.\+h.
-
-\begin{DoxyFields}{Class Members}
-\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_a303db3c63b3d285760e814aea82af3a0}{}\label{namespacemappel_1_1estimator_a303db3c63b3d285760e814aea82af3a0}
-&
-Nseq&
-Number of points evaluated including theta\+\_\+init and theta\+\_\+mle. \\
-\hline
-
-\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a6fadb423b602a1f671c8d6f211663fcc}{}\label{namespacemappel_1_1estimator_a6fadb423b602a1f671c8d6f211663fcc}
-&
-obsI&
-Observed Fisher information matrix at theta. \\
-\hline
-
-double\hypertarget{namespacemappel_1_1estimator_a6dea52884caeb6e2957d4242ea568e77}{}\label{namespacemappel_1_1estimator_a6dea52884caeb6e2957d4242ea568e77}
-&
-rllh&
-R\+L\+LH at theta. \\
-\hline
-
-\hyperlink{namespacemappel_a7091ab87c528041f7e2027195fad8915}{MatT}\hypertarget{namespacemappel_1_1estimator_a4419c4ee9559999be39df4a7469a47fa}{}\label{namespacemappel_1_1estimator_a4419c4ee9559999be39df4a7469a47fa}
-&
-sequence&
-Sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle. \\
-\hline
-
-\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a4e8b3ce8d1925480aadd942d34505568}{}\label{namespacemappel_1_1estimator_a4e8b3ce8d1925480aadd942d34505568}
-&
-sequence\+\_\+rllh&
-R\+L\+LH at each point in sequence. \\
-\hline
-
-\hyperlink{namespacemappel_a2225ad69f358daa3f4f99282a35b9a3a}{VecT}\hypertarget{namespacemappel_1_1estimator_a9f62b8797034f80b369117f77ba39725}{}\label{namespacemappel_1_1estimator_a9f62b8797034f80b369117f77ba39725}
-&
-theta&
-Theta estimate. \\
-\hline
-
-\end{DoxyFields}
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Debug\+Data}}\label{structmappel_1_1estimator_1_1ProfileBoundsDebugData}
 \hypertarget{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1ProfileBoundsDebugData}{}
 \paragraph{struct mappel\+:\+:estimator\+:\+:Profile\+Bounds\+Debug\+Data}
 Data for debugging of estimation of profile bounds for a single parameter of a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
 
-Definition at line 113 of file estimator.\+h.
+Definition at line 115 of file estimator.\+h.
 
 \begin{DoxyFields}{Class Members}
 \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT}\hypertarget{namespacemappel_1_1estimator_aae656c5dcf7ceedd1a35dcb0163446c0}{}\label{namespacemappel_1_1estimator_aae656c5dcf7ceedd1a35dcb0163446c0}
@@ -254,7 +209,7 @@ Targeted rllh change in value from M\+LE ( -\/chi2inv(confidence,1)/2 ) \\
 \paragraph{struct mappel\+:\+:estimator\+:\+:Profile\+Likelihood\+Data}
 Container for profile liklihood estimator data Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
 
-Definition at line 74 of file estimator.\+h.
+Definition at line 76 of file estimator.\+h.
 
 \begin{DoxyFields}{Class Members}
 \hyperlink{namespacemappel_ac63743dcd42180127307cd0e4ecdd784}{Idx\+VecT}\hypertarget{namespacemappel_1_1estimator_a3ed4bf975a26a6e847e33e2a0e2be6ff}{}\label{namespacemappel_1_1estimator_a3ed4bf975a26a6e847e33e2a0e2be6ff}
@@ -339,7 +294,7 @@ Error\hypertarget{namespacemappel_1_1estimator_ae49999202b8a1968bc308aa30ac24e6c
 \end{Desc}
 
 
-Definition at line 172 of file estimator.\+h.
+Definition at line 174 of file estimator.\+h.
 
 
 

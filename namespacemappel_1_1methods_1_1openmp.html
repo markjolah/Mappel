@@ -117,6 +117,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2bbaebf7c6b7b0ed3ee4f0f7402ffc4f"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
 <tr class="memitem:a2bbaebf7c6b7b0ed3ee4f0f7402ffc4f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1methods_1_1openmp.html#a2bbaebf7c6b7b0ed3ee4f0f7402ffc4f">estimate_max_stack</a> (const Model &amp;model, const <a class="el" href="namespacemappel.html#aaeb6665bc57476dd93c2df6ad8bc4768">ModelDataStackT</a>&lt; Model &gt; &amp;data_stack, const std::string &amp;method, <a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack">estimator::MLEDataStack</a> &amp;mle_data_stack)</td></tr>
 <tr class="separator:a2bbaebf7c6b7b0ed3ee4f0f7402ffc4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af63cdb807bd28497c32e3191e83181"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
+<tr class="memitem:a0af63cdb807bd28497c32e3191e83181"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1methods_1_1openmp.html#a0af63cdb807bd28497c32e3191e83181">estimate_max_stack</a> (const Model &amp;model, const <a class="el" href="namespacemappel.html#aaeb6665bc57476dd93c2df6ad8bc4768">ModelDataStackT</a>&lt; Model &gt; &amp;data_stack, const std::string &amp;method, <a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack">estimator::MLEDataStack</a> &amp;mle_data_stack, <a class="el" href="namespacemappel.html#a04ab395b0cf82c4ce68a36b2212649a5">StatsT</a> &amp;stats)</td></tr>
+<tr class="separator:a0af63cdb807bd28497c32e3191e83181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a70dc7b79d0b63bb604e670a7cd075c56"><td class="memTemplParams" colspan="2">template&lt;class Model &gt; </td></tr>
 <tr class="memitem:a70dc7b79d0b63bb604e670a7cd075c56"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1methods_1_1openmp.html#a70dc7b79d0b63bb604e670a7cd075c56">estimate_max_stack</a> (const Model &amp;model, const <a class="el" href="namespacemappel.html#aaeb6665bc57476dd93c2df6ad8bc4768">ModelDataStackT</a>&lt; Model &gt; &amp;data_stack, const std::string &amp;method, <a class="el" href="namespacemappel.html#a0f86d3153e4e27b095012f140eea58de">ParamVecT</a>&lt; Model &gt; &amp;theta_init_stack, <a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack">estimator::MLEDataStack</a> &amp;mle_data_stack)</td></tr>
 <tr class="separator:a70dc7b79d0b63bb604e670a7cd075c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,7 +240,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00262">262</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00273">273</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="stencil_8cpp_source.html#l00022">mappel::normal_quantile_twosided()</a>, <a class="el" href="OMPExceptionCatcher_8h_source.html#l00064">omp_exception_catcher::impl_::OMPExceptionCatcher&lt; _dummy &gt;::rethrow()</a>, and <a class="el" href="OMPExceptionCatcher_8h_source.html#l00076">omp_exception_catcher::impl_::OMPExceptionCatcher&lt; _dummy &gt;::run()</a>.</p>
 
@@ -293,7 +296,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00283">283</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00294">294</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="stencil_8cpp_source.html#l00022">mappel::normal_quantile_twosided()</a>, and <a class="el" href="OMPExceptionCatcher_8h_source.html#l00076">omp_exception_catcher::impl_::OMPExceptionCatcher&lt; _dummy &gt;::run()</a>.</p>
 
@@ -338,9 +341,9 @@ template&lt;class Model &gt; </div>
 </div><div class="memdoc">
 <p>Profile likelihood bounds. Uses the Venzon and Moolgavkar (VM) algorithm for computing each of the bounds of the profile likelihood. </p>
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00312">312</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00323">323</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
-<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00094">mappel::estimator::ProfileBoundsData::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator_8h_source.html#l00093">mappel::estimator::ProfileBoundsData::estimated_idxs</a>, <a class="el" href="estimator__impl_8h_source.html#l00811">mappel::estimator::IterativeMaximizer&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00098">mappel::estimator::ProfileBoundsData::target_rllh_delta</a>.</p>
+<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00096">mappel::estimator::ProfileBoundsData::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator_8h_source.html#l00095">mappel::estimator::ProfileBoundsData::estimated_idxs</a>, <a class="el" href="estimator__impl_8h_source.html#l00811">mappel::estimator::IterativeMaximizer&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00100">mappel::estimator::ProfileBoundsData::target_rllh_delta</a>.</p>
 
 </div>
 </div>
@@ -376,9 +379,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00322">322</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00333">333</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
-<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00094">mappel::estimator::ProfileBoundsData::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator_8h_source.html#l00093">mappel::estimator::ProfileBoundsData::estimated_idxs</a>, and <a class="el" href="estimator_8h_source.html#l00098">mappel::estimator::ProfileBoundsData::target_rllh_delta</a>.</p>
+<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00096">mappel::estimator::ProfileBoundsData::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator_8h_source.html#l00095">mappel::estimator::ProfileBoundsData::estimated_idxs</a>, and <a class="el" href="estimator_8h_source.html#l00100">mappel::estimator::ProfileBoundsData::target_rllh_delta</a>.</p>
 
 </div>
 </div>
@@ -420,9 +423,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00331">331</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00342">342</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
-<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00137">mappel::estimator::ProfileBoundsDataStack::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8h_source.html#l00136">mappel::estimator::ProfileBoundsDataStack::estimated_idxs</a>, <a class="el" href="estimator__impl_8h_source.html#l00811">mappel::estimator::IterativeMaximizer&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00143">mappel::estimator::ProfileBoundsDataStack::target_rllh_delta</a>.</p>
+<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00139">mappel::estimator::ProfileBoundsDataStack::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8h_source.html#l00138">mappel::estimator::ProfileBoundsDataStack::estimated_idxs</a>, <a class="el" href="estimator__impl_8h_source.html#l00811">mappel::estimator::IterativeMaximizer&lt; Model &gt;::get_stats()</a>, and <a class="el" href="estimator_8h_source.html#l00145">mappel::estimator::ProfileBoundsDataStack::target_rllh_delta</a>.</p>
 
 </div>
 </div>
@@ -458,9 +461,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00341">341</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00352">352</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
-<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00137">mappel::estimator::ProfileBoundsDataStack::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8h_source.html#l00136">mappel::estimator::ProfileBoundsDataStack::estimated_idxs</a>, and <a class="el" href="estimator_8h_source.html#l00143">mappel::estimator::ProfileBoundsDataStack::target_rllh_delta</a>.</p>
+<p>References <a class="el" href="stencil_8cpp_source.html#l00043">mappel::chisq_quantile()</a>, <a class="el" href="estimator_8h_source.html#l00139">mappel::estimator::ProfileBoundsDataStack::confidence</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8h_source.html#l00138">mappel::estimator::ProfileBoundsDataStack::estimated_idxs</a>, and <a class="el" href="estimator_8h_source.html#l00145">mappel::estimator::ProfileBoundsDataStack::target_rllh_delta</a>.</p>
 
 </div>
 </div>
@@ -506,7 +509,57 @@ template&lt;class Model &gt; </div>
 
 <p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8h_source.html#l00197">mappel::estimator::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8h_source.html#l00199">mappel::estimator::Estimator&lt; Model &gt;::~Estimator()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0af63cdb807bd28497c32e3191e83181"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Model &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void mappel::methods::openmp::estimate_max_stack </td>
+          <td>(</td>
+          <td class="paramtype">const Model &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacemappel.html#aaeb6665bc57476dd93c2df6ad8bc4768">ModelDataStackT</a>&lt; Model &gt; &amp;&#160;</td>
+          <td class="paramname"><em>data_stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack">estimator::MLEDataStack</a> &amp;&#160;</td>
+          <td class="paramname"><em>mle_data_stack</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacemappel.html#a04ab395b0cf82c4ce68a36b2212649a5">StatsT</a> &amp;&#160;</td>
+          <td class="paramname"><em>stats</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00178">178</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+
+<p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 
 </div>
 </div>
@@ -554,7 +607,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00178">178</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00189">189</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 
@@ -610,7 +663,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00187">187</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00198">198</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 
@@ -654,11 +707,11 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00216">216</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00227">227</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="mcmc_8cpp_source.html#l00030">mappel::mcmc::MCMCDataStack::initialize_arrays()</a>, <a class="el" href="mcmc__data_8h_source.html#l00056">mappel::mcmc::MCMCDataStack::Nburnin</a>, <a class="el" href="mcmc__data_8h_source.html#l00061">mappel::mcmc::MCMCDataStack::Ndata</a>, <a class="el" href="mcmc__data_8h_source.html#l00055">mappel::mcmc::MCMCDataStack::Nsample</a>, <a class="el" href="mcmc_8cpp_source.html#l00040">mappel::mcmc::num_oversample()</a>, <a class="el" href="OMPExceptionCatcher_8h_source.html#l00064">omp_exception_catcher::impl_::OMPExceptionCatcher&lt; _dummy &gt;::rethrow()</a>, <a class="el" href="OMPExceptionCatcher_8h_source.html#l00076">omp_exception_catcher::impl_::OMPExceptionCatcher&lt; _dummy &gt;::run()</a>, and <a class="el" href="mcmc__data_8h_source.html#l00057">mappel::mcmc::MCMCDataStack::thin</a>.</p>
 
-<p>Referenced by <a class="el" href="openmp__methods_8h_source.html#l00254">estimate_posterior_stack()</a>.</p>
+<p>Referenced by <a class="el" href="openmp__methods_8h_source.html#l00265">estimate_posterior_stack()</a>.</p>
 
 </div>
 </div>
@@ -694,9 +747,9 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00254">254</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00265">265</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
-<p>References <a class="el" href="openmp__methods_8h_source.html#l00216">estimate_posterior_stack()</a>.</p>
+<p>References <a class="el" href="openmp__methods_8h_source.html#l00227">estimate_posterior_stack()</a>.</p>
 
 </div>
 </div>
@@ -744,7 +797,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00197">197</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00208">208</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 
@@ -800,7 +853,7 @@ template&lt;class Model &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00206">206</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
+<p>Definition at line <a class="el" href="openmp__methods_8h_source.html#l00217">217</a> of file <a class="el" href="openmp__methods_8h_source.html">openmp_methods.h</a>.</p>
 
 <p>References <a class="el" href="PoissonNoise1DObjective_8h_source.html#l00095">mappel::methods::make_estimator()</a>.</p>
 

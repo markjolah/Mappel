@@ -144,7 +144,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Data related to a profile bounds estimation for a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00090">90</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00092">92</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a5dbbab414cdb55bc5637deb195db6cf6"></a>
 <div class="memitem">
@@ -160,9 +160,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00018">18</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
-
-<p>References <a class="el" href="estimator_8h_source.html#l00093">estimated_idxs</a>, <a class="el" href="estimator_8h_source.html#l00099">Nparams_est</a>, <a class="el" href="estimator_8h_source.html#l00100">profile_lb</a>, <a class="el" href="estimator_8h_source.html#l00102">profile_points_lb</a>, <a class="el" href="estimator_8h_source.html#l00104">profile_points_lb_rllh</a>, <a class="el" href="estimator_8h_source.html#l00103">profile_points_ub</a>, <a class="el" href="estimator_8h_source.html#l00105">profile_points_ub_rllh</a>, and <a class="el" href="estimator_8h_source.html#l00101">profile_ub</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00027">27</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
@@ -181,9 +179,9 @@ Public Attributes</h2></td></tr>
 
 <p>Confidence level. If invalid, use default value. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00094">94</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00096">96</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, and <a class="el" href="openmp__methods_8h_source.html#l00312">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>.</p>
+<p>Referenced by <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, and <a class="el" href="openmp__methods_8h_source.html#l00323">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>.</p>
 
 </div>
 </div>
@@ -199,9 +197,9 @@ Public Attributes</h2></td></tr>
 
 <p>List of indexs for computed parameters. Empty to compute all parameters. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00093">93</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00095">95</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, <a class="el" href="openmp__methods_8h_source.html#l00312">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, <a class="el" href="openmp__methods_8h_source.html#l00323">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -217,7 +215,7 @@ Public Attributes</h2></td></tr>
 
 <p>Theta maximum-likelihood estimate, rllh, and ObsI. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00095">95</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00097">97</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
@@ -235,9 +233,9 @@ Public Attributes</h2></td></tr>
 
 <p>number of parameters estimated =estimated_param_idxs.n_elem. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00099">99</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00101">101</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>.</p>
 
 </div>
 </div>
@@ -253,9 +251,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[Nparams_est] Lower bound estimated at each estimated_idx. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00100">100</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00102">102</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -271,9 +269,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[NumParams,Nparams_est] Optimal theta found at each lower bound estimate for each estimated_idx. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00102">102</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00104">104</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -289,9 +287,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[Nparams_est] RLLH at each of the profile_points_lb </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00104">104</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00106">106</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -307,9 +305,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[NumParams,Nparams_est] Optimal theta found at each upper bound estimate for each estimated_idx. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00103">103</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00105">105</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -325,9 +323,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[Nparams_est] RLLH at each of the profile_points_lb </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00105">105</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00107">107</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -343,9 +341,9 @@ Public Attributes</h2></td></tr>
 
 <p>size:[Nparams_est] Upper bound estimated at each estimated_idx. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00101">101</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00103">103</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>, <a class="el" href="estimator_8cpp_source.html#l00018">initialize_arrays()</a>, and <a class="el" href="estimator_8cpp_source.html#l00029">mappel::estimator::ProfileBoundsDataStack::initialize_arrays()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>
@@ -361,9 +359,9 @@ Public Attributes</h2></td></tr>
 
 <p>Targeted rllh change in value from MLE ( -chi2inv(confidence,1)/2 ) </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00098">98</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00100">100</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, <a class="el" href="openmp__methods_8h_source.html#l00312">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
+<p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01088">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound()</a>, <a class="el" href="model__methods__impl_8h_source.html#l00426">mappel::methods::error_bounds_profile_likelihood()</a>, <a class="el" href="openmp__methods_8h_source.html#l00323">mappel::methods::openmp::error_bounds_profile_likelihood_parallel()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
 </div>
 </div>

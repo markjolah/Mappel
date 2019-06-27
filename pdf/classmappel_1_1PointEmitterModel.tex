@@ -116,13 +116,13 @@ void \hyperlink{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade
 \subsubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist \hyperlink{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} size, double pos\+\_\+sigma=\hyperlink{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{default\+\_\+sigma\+\_\+pos})
+static prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a70b1a5c81d227dce0ffb5910ffbf7387}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} size, double pos\+\_\+sigma=\hyperlink{classmappel_1_1PointEmitterModel_a38b73a91eaae7b5fd0977b88ea844280}{Default\+Prior\+Sigma\+Pos})
 \item 
-static prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist \hyperlink{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} size, double pos\+\_\+beta=\hyperlink{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{default\+\_\+beta\+\_\+pos})
+static prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a1f6f12bdf0e6fc374bf217172fc0ccef}{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta} (\hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} size, double pos\+\_\+beta=\hyperlink{classmappel_1_1PointEmitterModel_a2771dc4415f351862619cd9671b5310d}{Default\+Prior\+Beta\+Pos})
 \item 
-static prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}{make\+\_\+prior\+\_\+component\+\_\+intensity} (double mean=\hyperlink{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{default\+\_\+mean\+\_\+I}, double kappa=\hyperlink{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{default\+\_\+intensity\+\_\+kappa})
+static prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a41deeb728d8fae68ca474e97ea73d429}{make\+\_\+prior\+\_\+component\+\_\+intensity} (double mean=\hyperlink{classmappel_1_1PointEmitterModel_a607fcdea787b0cc3c6ac8804d378d1b1}{Default\+Prior\+MeanI}, double kappa=\hyperlink{classmappel_1_1PointEmitterModel_a03d9f90c130df2d42d0d31c9337e914c}{Default\+Prior\+Intensity\+Kappa})
 \item 
-static prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}{make\+\_\+prior\+\_\+component\+\_\+sigma} (double min\+\_\+sigma, double max\+\_\+sigma, double alpha=\hyperlink{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{default\+\_\+alpha\+\_\+sigma})
+static prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist \hyperlink{classmappel_1_1PointEmitterModel_a7506af8d9e430e63a56972eb64709fca}{make\+\_\+prior\+\_\+component\+\_\+sigma} (double min\+\_\+sigma, double max\+\_\+sigma, double alpha=\hyperlink{classmappel_1_1PointEmitterModel_a2b06111eaa1ff284851c2e67a3827220}{Default\+Prior\+P\+S\+F\+Sigma\+Alpha})
 \item 
 static void \hyperlink{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}{set\+\_\+rng\+\_\+seed} (\hyperlink{namespacemappel_a318bca259a7add5979160939a3f4e60b}{Rng\+SeedT} seed)
 \item 
@@ -133,27 +133,39 @@ static \hyperlink{namespacemappel_ad1e99b214465229065d30f881a89d1cc}{Parallel\+R
 \subsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
+static const std\+::string \hyperlink{classmappel_1_1PointEmitterModel_aa90f02cfd2af6acf4d8ba3bbfbe906e5}{Default\+Estimator\+Method} = \char`\"{}Trust\+Region\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default optimization method for M\+L\+E/\+M\+AP estimation. \end{DoxyCompactList}\item 
+static const std\+::string \hyperlink{classmappel_1_1PointEmitterModel_a5240568f2d7c7bad84e900d283b299dc}{Default\+Profile\+Bounds\+Estimator\+Method} = \char`\"{}Newton\char`\"{}
+\begin{DoxyCompactList}\small\item\em Default optimization method for profile bounds optimizations. \end{DoxyCompactList}\item 
 static const std\+::string \hyperlink{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}{Default\+Seperable\+Init\+Estimator} = \char`\"{}Trust\+Region\char`\"{}
+\item 
+static const \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_a9bbed2f2e91f1e5f0f4f9389cd2de333}{Default\+M\+C\+M\+C\+Num\+Samples} = 300
+\begin{DoxyCompactList}\small\item\em Number of final samples to use in estimation of posterior properties (mean, credible interval, cov, etc.) \end{DoxyCompactList}\item 
+static const \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_a6fc96e398771a33d5586c2af10a2e6d8}{Default\+M\+C\+M\+C\+Burnin} = 10
+\begin{DoxyCompactList}\small\item\em Number of samples to throw away (burn-\/in) on initialization. \end{DoxyCompactList}\item 
+static const \hyperlink{namespacemappel_ab17ec0f30b61ece292439d7ece81d3a8}{IdxT} \hyperlink{classmappel_1_1PointEmitterModel_aac243ab7c6862c3d9ce3af8ca8a17e6c}{Default\+M\+C\+M\+C\+Thin} = 0
+\begin{DoxyCompactList}\small\item\em Keep every \# samples. \mbox{[}Value of 0 indicates use the model default. This is suggested.\mbox{]}. \end{DoxyCompactList}\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_ac57f7550589dcdbf3b6281e91d3e24ff}{Default\+Confidence\+Level} = 0.\+95
+\begin{DoxyCompactList}\small\item\em Default level at which to estimate confidence intervals must be in range (0,1). \end{DoxyCompactList}\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a2771dc4415f351862619cd9671b5310d}{Default\+Prior\+Beta\+Pos} = 3
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a38b73a91eaae7b5fd0977b88ea844280}{Default\+Prior\+Sigma\+Pos} = 1
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a607fcdea787b0cc3c6ac8804d378d1b1}{Default\+Prior\+MeanI} = 300
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a4ad3422744bdac162e905d5615bf5b66}{Default\+Prior\+MaxI} = I\+N\+F\+I\+N\+I\+TY
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a03d9f90c130df2d42d0d31c9337e914c}{Default\+Prior\+Intensity\+Kappa} = 2
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a72efb3ee01fa548683d510288266fea5}{Default\+Prior\+Pixel\+Mean\+BG} = 4
+\item 
+static const double \hyperlink{classmappel_1_1PointEmitterModel_a2b06111eaa1ff284851c2e67a3827220}{Default\+Prior\+P\+S\+F\+Sigma\+Alpha} = 2
 \item 
 static const double \hyperlink{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{bounds\+\_\+epsilon} = 1.\+0\+E-\/6
 \item 
 static const double \hyperlink{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}{global\+\_\+min\+\_\+psf\+\_\+sigma} = 1\+E-\/1
 \item 
 static const double \hyperlink{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}{global\+\_\+max\+\_\+psf\+\_\+sigma} = 1\+E2
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{default\+\_\+beta\+\_\+pos} = 3
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{default\+\_\+sigma\+\_\+pos} = 1
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{default\+\_\+mean\+\_\+I} = 300
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}{default\+\_\+max\+\_\+I} = I\+N\+F\+I\+N\+I\+TY
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{default\+\_\+intensity\+\_\+kappa} = 2
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}{default\+\_\+pixel\+\_\+mean\+\_\+bg} = 4
-\item 
-static const double \hyperlink{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{default\+\_\+alpha\+\_\+sigma} = 2
 \end{DoxyCompactItemize}
 \subsubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -227,7 +239,7 @@ Definition at line 48 of file Point\+Emitter\+Model.\+h.
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_acadafd9406fb9665411e97434110d82a}{}\label{classmappel_1_1PointEmitterModel_acadafd9406fb9665411e97434110d82a}
 
 
-Definition at line 31 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 38 of file Point\+Emitter\+Model.\+cpp.
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Point\+Emitter\+Model@{Point\+Emitter\+Model}}
 \index{Point\+Emitter\+Model@{Point\+Emitter\+Model}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
@@ -238,7 +250,7 @@ Definition at line 31 of file Point\+Emitter\+Model.\+cpp.
 )\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a53475e41a4c44fdd7bee35cdc0346d7a}{}\label{classmappel_1_1PointEmitterModel_a53475e41a4c44fdd7bee35cdc0346d7a}
 
 
-Definition at line 43 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 50 of file Point\+Emitter\+Model.\+cpp.
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Point\+Emitter\+Model@{Point\+Emitter\+Model}}
 \index{Point\+Emitter\+Model@{Point\+Emitter\+Model}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
@@ -249,7 +261,7 @@ Definition at line 43 of file Point\+Emitter\+Model.\+cpp.
 )\hspace{0.3cm}{\ttfamily [explicit]}, {\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_ae372edefb28de33a2b91a33eaa6e293f}{}\label{classmappel_1_1PointEmitterModel_ae372edefb28de33a2b91a33eaa6e293f}
 
 
-Definition at line 37 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 44 of file Point\+Emitter\+Model.\+cpp.
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Point\+Emitter\+Model@{Point\+Emitter\+Model}}
 \index{Point\+Emitter\+Model@{Point\+Emitter\+Model}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
@@ -260,7 +272,7 @@ Definition at line 37 of file Point\+Emitter\+Model.\+cpp.
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a54f69c0912ae267edd5fc7be89bfb3d8}{}\label{classmappel_1_1PointEmitterModel_a54f69c0912ae267edd5fc7be89bfb3d8}
 
 
-Definition at line 49 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 56 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -275,7 +287,7 @@ References prior.
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a394453f959abac7f85b650756df5880a}{}\label{classmappel_1_1PointEmitterModel_a394453f959abac7f85b650756df5880a}
 
 
-Definition at line 55 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 62 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -290,7 +302,7 @@ Definition at line 55 of file Point\+Emitter\+Model.\+cpp.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85}{}\label{classmappel_1_1PointEmitterModel_a789dfcc9ea1df17a0282fca5705ade85}
 
 
-Definition at line 248 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 255 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -306,7 +318,7 @@ References check\+\_\+param\+\_\+shape(), lbound, num\+\_\+params, and ubound.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06}{}\label{classmappel_1_1PointEmitterModel_ac342b21db8970dfa0b2809ffe5e73d06}
 
 
-Definition at line 265 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 272 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -326,7 +338,7 @@ Referenced by bounded\+\_\+theta\+\_\+stack().
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe}{}\label{classmappel_1_1PointEmitterModel_a6671c06d391ae9a09dd5de78dcc636fe}
 
 
-Definition at line 306 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 313 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -341,7 +353,7 @@ References bounded\+\_\+theta(), check\+\_\+param\+\_\+shape(), and make\+\_\+pa
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771}{}\label{classmappel_1_1PointEmitterModel_a97a868e842302f670ed9f9bd49416771}
 
 
-Definition at line 167 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 174 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -360,7 +372,7 @@ Referenced by bound\+\_\+theta(), bounded\+\_\+theta(), bounded\+\_\+theta\+\_\+
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a54b341a9bc0e32e2c8bbfe4ec0d8c9a1}{}\label{classmappel_1_1PointEmitterModel_a54b341a9bc0e32e2c8bbfe4ec0d8c9a1}
 
 
-Definition at line 176 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 183 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -375,7 +387,7 @@ References num\+\_\+params.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b}{}\label{classmappel_1_1PointEmitterModel_a01ce8d6358acbd2575be519dff1df89b}
 
 
-Definition at line 185 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 192 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -394,7 +406,7 @@ Referenced by mappel\+::\+Gauss1\+D\+Model\+::\+Gauss1\+D\+Model(), mappel\+::\+
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a85780ca544a5ef5e0a62e74005081677}{}\label{classmappel_1_1PointEmitterModel_a85780ca544a5ef5e0a62e74005081677}
 
 
-Definition at line 197 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 204 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -409,7 +421,7 @@ References global\+\_\+max\+\_\+psf\+\_\+sigma, and global\+\_\+min\+\_\+psf\+\_
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_ae13aa99689266d870b659d1045d595f1}{}\label{classmappel_1_1PointEmitterModel_ae13aa99689266d870b659d1045d595f1}
 
 
-Definition at line 236 of file Point\+Emitter\+Model.\+h.
+Definition at line 243 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -424,7 +436,7 @@ References prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a1b8bbd4bdddfb8f5236e8e50fe546c36}{}\label{classmappel_1_1PointEmitterModel_a1b8bbd4bdddfb8f5236e8e50fe546c36}
 
 
-Definition at line 256 of file Point\+Emitter\+Model.\+h.
+Definition at line 263 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -439,7 +451,7 @@ References prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705}{}\label{classmappel_1_1PointEmitterModel_a3282cc59d5c6010a51f671ba72997705}
 
 
-Definition at line 232 of file Point\+Emitter\+Model.\+h.
+Definition at line 239 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -458,7 +470,7 @@ Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mc
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a4085ade54f4b039c647bc9bf7804e007}{}\label{classmappel_1_1PointEmitterModel_a4085ade54f4b039c647bc9bf7804e007}
 
 
-Definition at line 224 of file Point\+Emitter\+Model.\+h.
+Definition at line 231 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -473,7 +485,7 @@ References prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848}{}\label{classmappel_1_1PointEmitterModel_aeb486e8f6f6fa694e3746e84eebcf848}
 
 
-Definition at line 212 of file Point\+Emitter\+Model.\+h.
+Definition at line 219 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -492,7 +504,7 @@ Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::\+M\+C\+M\+C\+Adaptor1\+D()
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a442522cdaaa76be15b00a4f25110d7ec}{}\label{classmappel_1_1PointEmitterModel_a442522cdaaa76be15b00a4f25110d7ec}
 
 
-Definition at line 208 of file Point\+Emitter\+Model.\+h.
+Definition at line 215 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -507,7 +519,7 @@ References num\+\_\+hyperparams.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a6fe8129bd24ab5c6620b3ab106b6c91a}{}\label{classmappel_1_1PointEmitterModel_a6fe8129bd24ab5c6620b3ab106b6c91a}
 
 
-Definition at line 160 of file Point\+Emitter\+Model.\+h.
+Definition at line 167 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -522,7 +534,7 @@ References num\+\_\+params.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_aa910d1137d808041c0601f2dd3db96f0}{}\label{classmappel_1_1PointEmitterModel_aa910d1137d808041c0601f2dd3db96f0}
 
 
-Definition at line 248 of file Point\+Emitter\+Model.\+h.
+Definition at line 255 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -537,7 +549,7 @@ References prior.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9}{}\label{classmappel_1_1PointEmitterModel_a2182c250c15d590b582e76594e5f06b9}
 
 
-Definition at line 200 of file Point\+Emitter\+Model.\+h.
+Definition at line 207 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -556,7 +568,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::update\+\_\+internal\+\_\+1\+Dsum\
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a239826b8e6b914c0cdaa293f1f5ddfd4}{}\label{classmappel_1_1PointEmitterModel_a239826b8e6b914c0cdaa293f1f5ddfd4}
 
 
-Definition at line 204 of file Point\+Emitter\+Model.\+h.
+Definition at line 211 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -571,7 +583,7 @@ References prior.
 )\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_af9f6630e9d496bb83e151f00522ecc2d}{}\label{classmappel_1_1PointEmitterModel_af9f6630e9d496bb83e151f00522ecc2d}
 
 
-Definition at line 120 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 127 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -586,7 +598,7 @@ References mappel\+::rng\+\_\+manager.
 )\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ae876f0fa81613161a064452973bfb558}{}\label{classmappel_1_1PointEmitterModel_ae876f0fa81613161a064452973bfb558}
 
 
-Definition at line 115 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 122 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -601,7 +613,7 @@ References mappel\+::rng\+\_\+manager.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a7fd2b4b01b10bb6a493a39eb72d480cb}{}\label{classmappel_1_1PointEmitterModel_a7fd2b4b01b10bb6a493a39eb72d480cb}
 
 
-Definition at line 125 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 132 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -620,7 +632,7 @@ Referenced by mappel\+::\+Gauss1\+D\+Model\+::get\+\_\+stats(), mappel\+::\+Gaus
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55}{}\label{classmappel_1_1PointEmitterModel_a0dfb473c48d177a4540d328abb03cd55}
 
 
-Definition at line 216 of file Point\+Emitter\+Model.\+h.
+Definition at line 223 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -639,7 +651,7 @@ Referenced by mappel\+::\+Gauss2\+Dsxy\+Model\+::get\+\_\+max\+\_\+sigma\+\_\+ra
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_afba2b17a81a506b0acd41616c8604412}{}\label{classmappel_1_1PointEmitterModel_afba2b17a81a506b0acd41616c8604412}
 
 
-Definition at line 228 of file Point\+Emitter\+Model.\+h.
+Definition at line 235 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -654,7 +666,7 @@ References prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749}{}\label{classmappel_1_1PointEmitterModel_a1cd8ff64ce4132b6eaa8655696885749}
 
 
-Definition at line 164 of file Point\+Emitter\+Model.\+h.
+Definition at line 171 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -673,7 +685,7 @@ Referenced by mappel\+::\+Gauss1\+D\+Model\+::initial\+\_\+theta\+\_\+estimate()
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a5638e3df26cf84d7cf0f23112132682e}{}\label{classmappel_1_1PointEmitterModel_a5638e3df26cf84d7cf0f23112132682e}
 
 
-Definition at line 181 of file Point\+Emitter\+Model.\+h.
+Definition at line 188 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -688,7 +700,7 @@ References num\+\_\+params.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a8ede9fe8e3b6a3e621c2da72e23c7f9d}{}\label{classmappel_1_1PointEmitterModel_a8ede9fe8e3b6a3e621c2da72e23c7f9d}
 
 
-Definition at line 172 of file Point\+Emitter\+Model.\+h.
+Definition at line 179 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -703,7 +715,7 @@ References num\+\_\+params.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a68a9c537f2f2725eb8fb9d3e250dd84b}{}\label{classmappel_1_1PointEmitterModel_a68a9c537f2f2725eb8fb9d3e250dd84b}
 
 
-Definition at line 191 of file Point\+Emitter\+Model.\+h.
+Definition at line 198 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -718,7 +730,7 @@ References num\+\_\+params.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a57b98d5f8b2b5ed2c455bbf76b632f87}{}\label{classmappel_1_1PointEmitterModel_a57b98d5f8b2b5ed2c455bbf76b632f87}
 
 
-Definition at line 176 of file Point\+Emitter\+Model.\+h.
+Definition at line 183 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -734,7 +746,7 @@ References num\+\_\+params.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a2c11fa045187c7ea9ba382141b5d53c1}{}\label{classmappel_1_1PointEmitterModel_a2c11fa045187c7ea9ba382141b5d53c1}
 
 
-Definition at line 196 of file Point\+Emitter\+Model.\+h.
+Definition at line 203 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -749,7 +761,7 @@ References num\+\_\+params.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a6c7edc7f2549058df66472cd7647cf9b}{}\label{classmappel_1_1PointEmitterModel_a6c7edc7f2549058df66472cd7647cf9b}
 
 
-Definition at line 168 of file Point\+Emitter\+Model.\+h.
+Definition at line 175 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -769,7 +781,7 @@ Referenced by bounded\+\_\+theta\+\_\+stack(), and reflected\+\_\+theta\+\_\+sta
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_abab975b04e09e6336a930b6d8fd8c267}{}\label{classmappel_1_1PointEmitterModel_abab975b04e09e6336a930b6d8fd8c267}
 
 
-Definition at line 186 of file Point\+Emitter\+Model.\+h.
+Definition at line 193 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -777,19 +789,19 @@ References num\+\_\+params.
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}}
 \index{make\+\_\+prior\+\_\+component\+\_\+intensity@{make\+\_\+prior\+\_\+component\+\_\+intensity}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+intensity(double mean=default\+\_\+mean\+\_\+\+I, double kappa=default\+\_\+intensity\+\_\+kappa)}{make_prior_component_intensity(double mean=default_mean_I, double kappa=default_intensity_kappa)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity (
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+intensity(double mean=\+Default\+Prior\+Mean\+I, double kappa=\+Default\+Prior\+Intensity\+Kappa)}{make_prior_component_intensity(double mean=DefaultPriorMeanI, double kappa=DefaultPriorIntensityKappa)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Gamma\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+intensity (
 \begin{DoxyParamCaption}
-\item[{double}]{mean = {\ttfamily {\bf default\+\_\+mean\+\_\+I}}, }
-\item[{double}]{kappa = {\ttfamily {\bf default\+\_\+intensity\+\_\+kappa}}}
+\item[{double}]{mean = {\ttfamily {\bf Default\+Prior\+MeanI}}, }
+\item[{double}]{kappa = {\ttfamily {\bf Default\+Prior\+Intensity\+Kappa}}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}{}\label{classmappel_1_1PointEmitterModel_a4517e887a22007bd2e03650dcb853c92}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a41deeb728d8fae68ca474e97ea73d429}{}\label{classmappel_1_1PointEmitterModel_a41deeb728d8fae68ca474e97ea73d429}
 
 
-Definition at line 98 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 105 of file Point\+Emitter\+Model.\+cpp.
 
 
 
-References default\+\_\+max\+\_\+I.
+References Default\+Prior\+MaxI.
 
 
 
@@ -797,15 +809,15 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}}
 \index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta(\+Idx\+T size, double pos\+\_\+beta=default\+\_\+beta\+\_\+pos)}{make_prior_component_position_beta(IdxT size, double pos_beta=default_beta_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta (
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta(\+Idx\+T size, double pos\+\_\+beta=\+Default\+Prior\+Beta\+Pos)}{make_prior_component_position_beta(IdxT size, double pos_beta=DefaultPriorBetaPos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Scaled\+Symmetric\+Beta\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+beta (
 \begin{DoxyParamCaption}
 \item[{{\bf IdxT}}]{size, }
-\item[{double}]{pos\+\_\+beta = {\ttfamily {\bf default\+\_\+beta\+\_\+pos}}}
+\item[{double}]{pos\+\_\+beta = {\ttfamily {\bf Default\+Prior\+Beta\+Pos}}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}{}\label{classmappel_1_1PointEmitterModel_ad4d563dd11df8c3daf83890374807185}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a1f6f12bdf0e6fc374bf217172fc0ccef}{}\label{classmappel_1_1PointEmitterModel_a1f6f12bdf0e6fc374bf217172fc0ccef}
 
 
-Definition at line 92 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 99 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -813,15 +825,15 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}}
 \index{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal@{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal(\+Idx\+T size, double pos\+\_\+sigma=default\+\_\+sigma\+\_\+pos)}{make_prior_component_position_normal(IdxT size, double pos_sigma=default_sigma_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal (
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal(\+Idx\+T size, double pos\+\_\+sigma=\+Default\+Prior\+Sigma\+Pos)}{make_prior_component_position_normal(IdxT size, double pos_sigma=DefaultPriorSigmaPos)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Normal\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+position\+\_\+normal (
 \begin{DoxyParamCaption}
 \item[{{\bf IdxT}}]{size, }
-\item[{double}]{pos\+\_\+sigma = {\ttfamily {\bf default\+\_\+sigma\+\_\+pos}}}
+\item[{double}]{pos\+\_\+sigma = {\ttfamily {\bf Default\+Prior\+Sigma\+Pos}}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}{}\label{classmappel_1_1PointEmitterModel_ab99350cf74097c558f7a93b79e7a44c3}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a70b1a5c81d227dce0ffb5910ffbf7387}{}\label{classmappel_1_1PointEmitterModel_a70b1a5c81d227dce0ffb5910ffbf7387}
 
 
-Definition at line 85 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 92 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -829,16 +841,16 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}}
 \index{make\+\_\+prior\+\_\+component\+\_\+sigma@{make\+\_\+prior\+\_\+component\+\_\+sigma}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+sigma(double min\+\_\+sigma, double max\+\_\+sigma, double alpha=default\+\_\+alpha\+\_\+sigma)}{make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=default_alpha_sigma)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+sigma (
+\paragraph[{\texorpdfstring{make\+\_\+prior\+\_\+component\+\_\+sigma(double min\+\_\+sigma, double max\+\_\+sigma, double alpha=\+Default\+Prior\+P\+S\+F\+Sigma\+Alpha)}{make_prior_component_sigma(double min_sigma, double max_sigma, double alpha=DefaultPriorPSFSigmaAlpha)}}]{\setlength{\rightskip}{0pt plus 5cm}prior\+\_\+hessian\+::\+Truncated\+Pareto\+Dist mappel\+::\+Point\+Emitter\+Model\+::make\+\_\+prior\+\_\+component\+\_\+sigma (
 \begin{DoxyParamCaption}
 \item[{double}]{min\+\_\+sigma, }
 \item[{double}]{max\+\_\+sigma, }
-\item[{double}]{alpha = {\ttfamily {\bf default\+\_\+alpha\+\_\+sigma}}}
+\item[{double}]{alpha = {\ttfamily {\bf Default\+Prior\+P\+S\+F\+Sigma\+Alpha}}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}{}\label{classmappel_1_1PointEmitterModel_a6fa9641db2d58329c5225e76427e3219}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a7506af8d9e430e63a56972eb64709fca}{}\label{classmappel_1_1PointEmitterModel_a7506af8d9e430e63a56972eb64709fca}
 
 
-Definition at line 104 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 111 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -853,7 +865,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_aa84b896a736bca3cab2f07e2ccda5489}{}\label{classmappel_1_1PointEmitterModel_aa84b896a736bca3cab2f07e2ccda5489}
 
 
-Definition at line 61 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 68 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -872,7 +884,7 @@ Referenced by mappel\+::\+Gauss1\+D\+M\+A\+P\+::operator=(), mappel\+::\+Gauss1\
 )\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a218b094c6620ec5d36a869375f1aa59a}{}\label{classmappel_1_1PointEmitterModel_a218b094c6620ec5d36a869375f1aa59a}
 
 
-Definition at line 68 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 75 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -887,7 +899,7 @@ References lbound, num\+\_\+hyperparams, num\+\_\+params, prior, and ubound.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3}{}\label{classmappel_1_1PointEmitterModel_a7dd386776870462e8f20c646b6fed1e3}
 
 
-Definition at line 276 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 283 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -906,7 +918,7 @@ Referenced by reflected\+\_\+theta\+\_\+stack().
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f}{}\label{classmappel_1_1PointEmitterModel_ae24c17017ff5e37e1dd9ea9a1aeefa7f}
 
 
-Definition at line 316 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 323 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -922,7 +934,7 @@ References check\+\_\+param\+\_\+shape(), make\+\_\+param\+\_\+stack(), and refl
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a447c83f0769e6dea2bfad68d957287d0}{}\label{classmappel_1_1PointEmitterModel_a447c83f0769e6dea2bfad68d957287d0}
 
 
-Definition at line 244 of file Point\+Emitter\+Model.\+h.
+Definition at line 251 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -937,7 +949,7 @@ References prior.
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_ae69bf3df2c94b351015bbf81e52dfe03}{}\label{classmappel_1_1PointEmitterModel_ae69bf3df2c94b351015bbf81e52dfe03}
 
 
-Definition at line 264 of file Point\+Emitter\+Model.\+h.
+Definition at line 271 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -952,7 +964,7 @@ References prior.
 ) const\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_abd9d2923ca9a838897a9b26bfb3ce073}{}\label{classmappel_1_1PointEmitterModel_abd9d2923ca9a838897a9b26bfb3ce073}
 
 
-Definition at line 268 of file Point\+Emitter\+Model.\+h.
+Definition at line 275 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -970,7 +982,7 @@ Box-\/type parameter bounds
 
 Modifies the prior bounds to prevent sampling outside the valid box-\/constraints. 
 
-Definition at line 213 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 220 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -985,7 +997,7 @@ References bounds\+\_\+epsilon, lbound, num\+\_\+params, prior, and ubound.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a6cdba258bda50cff162dc16a49383bb0}{}\label{classmappel_1_1PointEmitterModel_a6cdba258bda50cff162dc16a49383bb0}
 
 
-Definition at line 260 of file Point\+Emitter\+Model.\+h.
+Definition at line 267 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1001,7 +1013,7 @@ References prior.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_ade3e56cc00c43e9b7a521d8c4778d3b7}{}\label{classmappel_1_1PointEmitterModel_ade3e56cc00c43e9b7a521d8c4778d3b7}
 
 
-Definition at line 240 of file Point\+Emitter\+Model.\+h.
+Definition at line 247 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1016,7 +1028,7 @@ References prior.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b}{}\label{classmappel_1_1PointEmitterModel_ac603a33d83a32f5e4dd826399521a28b}
 
 
-Definition at line 220 of file Point\+Emitter\+Model.\+h.
+Definition at line 227 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1035,7 +1047,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+hyperparams(), and mappel
 )}\hypertarget{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541}{}\label{classmappel_1_1PointEmitterModel_a737fa5857415b9830fa2e5ccdff48541}
 
 
-Definition at line 226 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 233 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1054,7 +1066,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+min\+\_\+sigma().
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1PointEmitterModel_a2abccbca47fc60700d73244e6c4dbe30}{}\label{classmappel_1_1PointEmitterModel_a2abccbca47fc60700d73244e6c4dbe30}
 
 
-Definition at line 252 of file Point\+Emitter\+Model.\+h.
+Definition at line 259 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1069,7 +1081,7 @@ References prior.
 )}\hypertarget{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7}{}\label{classmappel_1_1PointEmitterModel_a8ee7d3d5b4c1ae4500f802170a958ed7}
 
 
-Definition at line 158 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 165 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1088,7 +1100,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::set\+\_\+prior(), and mappel\+::\+
 )}\hypertarget{classmappel_1_1PointEmitterModel_acf37c5f28dc0c66197162b3408a6b815}{}\label{classmappel_1_1PointEmitterModel_acf37c5f28dc0c66197162b3408a6b815}
 
 
-Definition at line 149 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 156 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1103,7 +1115,7 @@ References lbound, num\+\_\+hyperparams, num\+\_\+params, prior, and ubound.
 )\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}{}\label{classmappel_1_1PointEmitterModel_a046d5bd901c8dfde61f082c2634beec0}
 
 
-Definition at line 110 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 117 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1118,7 +1130,7 @@ References mappel\+::rng\+\_\+manager.
 )}\hypertarget{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6}{}\label{classmappel_1_1PointEmitterModel_a7363961cc405e585b39e81a7ad85c8d6}
 
 
-Definition at line 237 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 244 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1137,7 +1149,7 @@ Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::set\+\_\+max\+\_\+sigma(), and ma
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d}{}\label{classmappel_1_1PointEmitterModel_ad50dfc29b6e7167fb4caf8683353079d}
 
 
-Definition at line 257 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 264 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1156,7 +1168,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate()
 ) const}\hypertarget{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8}{}\label{classmappel_1_1PointEmitterModel_a7b6a59b4bc796b440025cffb7a6159f8}
 
 
-Definition at line 296 of file Point\+Emitter\+Model.\+cpp.
+Definition at line 303 of file Point\+Emitter\+Model.\+cpp.
 
 
 
@@ -1170,79 +1182,145 @@ References check\+\_\+param\+\_\+shape(), and theta\+\_\+in\+\_\+bounds().
 \paragraph[{\texorpdfstring{bounds\+\_\+epsilon}{bounds_epsilon}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::bounds\+\_\+epsilon = 1.\+0\+E-\/6\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}{}\label{classmappel_1_1PointEmitterModel_ac987a119137b85a27704b1c40e3fab8c}
 Distance from the boundary to constrain in bound\+\_\+theta and bounded\+\_\+theta methods 
 
-Definition at line 52 of file Point\+Emitter\+Model.\+h.
+Definition at line 67 of file Point\+Emitter\+Model.\+h.
 
 
 
 Referenced by set\+\_\+bounds(), set\+\_\+lbound(), mappel\+::\+Gauss2\+Ds\+Model\+::set\+\_\+max\+\_\+sigma\+\_\+ratio(), and set\+\_\+ubound().
 
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+alpha\+\_\+sigma@{default\+\_\+alpha\+\_\+sigma}}
-\index{default\+\_\+alpha\+\_\+sigma@{default\+\_\+alpha\+\_\+sigma}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+alpha\+\_\+sigma}{default_alpha_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+alpha\+\_\+sigma = 2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}{}\label{classmappel_1_1PointEmitterModel_a0d9f2c5438940f329e75708987e8b343}
-Default per-\/pixel background gamma distribution shape 
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Confidence\+Level@{Default\+Confidence\+Level}}
+\index{Default\+Confidence\+Level@{Default\+Confidence\+Level}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Confidence\+Level}{DefaultConfidenceLevel}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Confidence\+Level = 0.\+95\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ac57f7550589dcdbf3b6281e91d3e24ff}{}\label{classmappel_1_1PointEmitterModel_ac57f7550589dcdbf3b6281e91d3e24ff}
 
-Definition at line 62 of file Point\+Emitter\+Model.\+h.
 
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+beta\+\_\+pos@{default\+\_\+beta\+\_\+pos}}
-\index{default\+\_\+beta\+\_\+pos@{default\+\_\+beta\+\_\+pos}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+beta\+\_\+pos}{default_beta_pos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+beta\+\_\+pos = 3\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}{}\label{classmappel_1_1PointEmitterModel_a9b64c3b4b97ac2805340c0779c71398c}
-Default position parameter in symmetric beta-\/distributions 
+Default level at which to estimate confidence intervals must be in range (0,1). 
+
+
+
+Definition at line 57 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Estimator\+Method@{Default\+Estimator\+Method}}
+\index{Default\+Estimator\+Method@{Default\+Estimator\+Method}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Estimator\+Method}{DefaultEstimatorMethod}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Estimator\+Method = \char`\"{}Trust\+Region\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_aa90f02cfd2af6acf4d8ba3bbfbe906e5}{}\label{classmappel_1_1PointEmitterModel_aa90f02cfd2af6acf4d8ba3bbfbe906e5}
+
+
+Default optimization method for M\+L\+E/\+M\+AP estimation. 
+
+
+
+Definition at line 51 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+M\+C\+M\+C\+Burnin@{Default\+M\+C\+M\+C\+Burnin}}
+\index{Default\+M\+C\+M\+C\+Burnin@{Default\+M\+C\+M\+C\+Burnin}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+M\+C\+M\+C\+Burnin}{DefaultMCMCBurnin}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::\+Default\+M\+C\+M\+C\+Burnin = 10\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a6fc96e398771a33d5586c2af10a2e6d8}{}\label{classmappel_1_1PointEmitterModel_a6fc96e398771a33d5586c2af10a2e6d8}
+
+
+Number of samples to throw away (burn-\/in) on initialization. 
+
+
+
+Definition at line 55 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+M\+C\+M\+C\+Num\+Samples@{Default\+M\+C\+M\+C\+Num\+Samples}}
+\index{Default\+M\+C\+M\+C\+Num\+Samples@{Default\+M\+C\+M\+C\+Num\+Samples}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+M\+C\+M\+C\+Num\+Samples}{DefaultMCMCNumSamples}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::\+Default\+M\+C\+M\+C\+Num\+Samples = 300\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a9bbed2f2e91f1e5f0f4f9389cd2de333}{}\label{classmappel_1_1PointEmitterModel_a9bbed2f2e91f1e5f0f4f9389cd2de333}
+
+
+Number of final samples to use in estimation of posterior properties (mean, credible interval, cov, etc.) 
+
+
+
+Definition at line 54 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+M\+C\+M\+C\+Thin@{Default\+M\+C\+M\+C\+Thin}}
+\index{Default\+M\+C\+M\+C\+Thin@{Default\+M\+C\+M\+C\+Thin}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+M\+C\+M\+C\+Thin}{DefaultMCMCThin}}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::\+Default\+M\+C\+M\+C\+Thin = 0\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_aac243ab7c6862c3d9ce3af8ca8a17e6c}{}\label{classmappel_1_1PointEmitterModel_aac243ab7c6862c3d9ce3af8ca8a17e6c}
+
+
+Keep every \# samples. \mbox{[}Value of 0 indicates use the model default. This is suggested.\mbox{]}. 
+
+
 
 Definition at line 56 of file Point\+Emitter\+Model.\+h.
 
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+intensity\+\_\+kappa@{default\+\_\+intensity\+\_\+kappa}}
-\index{default\+\_\+intensity\+\_\+kappa@{default\+\_\+intensity\+\_\+kappa}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+intensity\+\_\+kappa}{default_intensity_kappa}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+intensity\+\_\+kappa = 2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}{}\label{classmappel_1_1PointEmitterModel_ad1f21ed3be543deed3c78a0494cb2984}
-Default shape for intensity gamma distributions 
-
-Definition at line 60 of file Point\+Emitter\+Model.\+h.
-
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+max\+\_\+I@{default\+\_\+max\+\_\+I}}
-\index{default\+\_\+max\+\_\+I@{default\+\_\+max\+\_\+I}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+max\+\_\+I}{default_max_I}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+max\+\_\+I = I\+N\+F\+I\+N\+I\+TY\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}{}\label{classmappel_1_1PointEmitterModel_acca80757a9a285a9e6eedea167d038c7}
-Default maximum emitter intensity 
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+Beta\+Pos@{Default\+Prior\+Beta\+Pos}}
+\index{Default\+Prior\+Beta\+Pos@{Default\+Prior\+Beta\+Pos}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+Beta\+Pos}{DefaultPriorBetaPos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+Beta\+Pos = 3\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a2771dc4415f351862619cd9671b5310d}{}\label{classmappel_1_1PointEmitterModel_a2771dc4415f351862619cd9671b5310d}
+Default position parameter in symmetric beta-\/distributions 
 
 Definition at line 59 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+Intensity\+Kappa@{Default\+Prior\+Intensity\+Kappa}}
+\index{Default\+Prior\+Intensity\+Kappa@{Default\+Prior\+Intensity\+Kappa}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+Intensity\+Kappa}{DefaultPriorIntensityKappa}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+Intensity\+Kappa = 2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a03d9f90c130df2d42d0d31c9337e914c}{}\label{classmappel_1_1PointEmitterModel_a03d9f90c130df2d42d0d31c9337e914c}
+Default shape for intensity gamma distributions 
+
+Definition at line 63 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+MaxI@{Default\+Prior\+MaxI}}
+\index{Default\+Prior\+MaxI@{Default\+Prior\+MaxI}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+MaxI}{DefaultPriorMaxI}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+MaxI = I\+N\+F\+I\+N\+I\+TY\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a4ad3422744bdac162e905d5615bf5b66}{}\label{classmappel_1_1PointEmitterModel_a4ad3422744bdac162e905d5615bf5b66}
+Default maximum emitter intensity 
+
+Definition at line 62 of file Point\+Emitter\+Model.\+h.
 
 
 
 Referenced by make\+\_\+prior\+\_\+component\+\_\+intensity().
 
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+mean\+\_\+I@{default\+\_\+mean\+\_\+I}}
-\index{default\+\_\+mean\+\_\+I@{default\+\_\+mean\+\_\+I}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+mean\+\_\+I}{default_mean_I}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+mean\+\_\+I = 300\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}{}\label{classmappel_1_1PointEmitterModel_a575dd30a0afb886db82ac725c8cc8df3}
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+MeanI@{Default\+Prior\+MeanI}}
+\index{Default\+Prior\+MeanI@{Default\+Prior\+MeanI}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+MeanI}{DefaultPriorMeanI}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+MeanI = 300\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a607fcdea787b0cc3c6ac8804d378d1b1}{}\label{classmappel_1_1PointEmitterModel_a607fcdea787b0cc3c6ac8804d378d1b1}
 Default emitter intensity mean 
-
-Definition at line 58 of file Point\+Emitter\+Model.\+h.
-
-
-
-Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
-
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+pixel\+\_\+mean\+\_\+bg@{default\+\_\+pixel\+\_\+mean\+\_\+bg}}
-\index{default\+\_\+pixel\+\_\+mean\+\_\+bg@{default\+\_\+pixel\+\_\+mean\+\_\+bg}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+pixel\+\_\+mean\+\_\+bg}{default_pixel_mean_bg}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+pixel\+\_\+mean\+\_\+bg = 4\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}{}\label{classmappel_1_1PointEmitterModel_abe82d75be8586234657a61e2f137a6c8}
-Default per-\/pixel mean background counts 
 
 Definition at line 61 of file Point\+Emitter\+Model.\+h.
 
 
 
+Referenced by mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+intensity\+\_\+mcmc\+\_\+sampling().
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+Pixel\+Mean\+BG@{Default\+Prior\+Pixel\+Mean\+BG}}
+\index{Default\+Prior\+Pixel\+Mean\+BG@{Default\+Prior\+Pixel\+Mean\+BG}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+Pixel\+Mean\+BG}{DefaultPriorPixelMeanBG}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+Pixel\+Mean\+BG = 4\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a72efb3ee01fa548683d510288266fea5}{}\label{classmappel_1_1PointEmitterModel_a72efb3ee01fa548683d510288266fea5}
+Default per-\/pixel mean background counts 
+
+Definition at line 64 of file Point\+Emitter\+Model.\+h.
+
+
+
 Referenced by mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+beta\+\_\+position(), mappel\+::\+Gauss1\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss1\+D\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), mappel\+::\+Gauss2\+Ds\+Model\+::make\+\_\+default\+\_\+prior\+\_\+normal\+\_\+position(), and mappel\+::\+M\+C\+M\+C\+Adaptor1\+D\+::set\+\_\+background\+\_\+mcmc\+\_\+sampling().
 
-\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!default\+\_\+sigma\+\_\+pos@{default\+\_\+sigma\+\_\+pos}}
-\index{default\+\_\+sigma\+\_\+pos@{default\+\_\+sigma\+\_\+pos}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
-\paragraph[{\texorpdfstring{default\+\_\+sigma\+\_\+pos}{default_sigma_pos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::default\+\_\+sigma\+\_\+pos = 1\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}{}\label{classmappel_1_1PointEmitterModel_aa98a73b9e3937c00b07596d3928df3ca}
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+P\+S\+F\+Sigma\+Alpha@{Default\+Prior\+P\+S\+F\+Sigma\+Alpha}}
+\index{Default\+Prior\+P\+S\+F\+Sigma\+Alpha@{Default\+Prior\+P\+S\+F\+Sigma\+Alpha}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+P\+S\+F\+Sigma\+Alpha}{DefaultPriorPSFSigmaAlpha}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+P\+S\+F\+Sigma\+Alpha = 2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a2b06111eaa1ff284851c2e67a3827220}{}\label{classmappel_1_1PointEmitterModel_a2b06111eaa1ff284851c2e67a3827220}
+Default per-\/pixel background gamma distribution shape 
+
+Definition at line 65 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Prior\+Sigma\+Pos@{Default\+Prior\+Sigma\+Pos}}
+\index{Default\+Prior\+Sigma\+Pos@{Default\+Prior\+Sigma\+Pos}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Prior\+Sigma\+Pos}{DefaultPriorSigmaPos}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Prior\+Sigma\+Pos = 1\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a38b73a91eaae7b5fd0977b88ea844280}{}\label{classmappel_1_1PointEmitterModel_a38b73a91eaae7b5fd0977b88ea844280}
 Default position parameter in symmetric beta-\/distributions 
 
-Definition at line 57 of file Point\+Emitter\+Model.\+h.
+Definition at line 60 of file Point\+Emitter\+Model.\+h.
+
+\index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Profile\+Bounds\+Estimator\+Method@{Default\+Profile\+Bounds\+Estimator\+Method}}
+\index{Default\+Profile\+Bounds\+Estimator\+Method@{Default\+Profile\+Bounds\+Estimator\+Method}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
+\paragraph[{\texorpdfstring{Default\+Profile\+Bounds\+Estimator\+Method}{DefaultProfileBoundsEstimatorMethod}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Profile\+Bounds\+Estimator\+Method = \char`\"{}Newton\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a5240568f2d7c7bad84e900d283b299dc}{}\label{classmappel_1_1PointEmitterModel_a5240568f2d7c7bad84e900d283b299dc}
+
+
+Default optimization method for profile bounds optimizations. 
+
+
+
+Definition at line 52 of file Point\+Emitter\+Model.\+h.
 
 \index{mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}!Default\+Seperable\+Init\+Estimator@{Default\+Seperable\+Init\+Estimator}}
 \index{Default\+Seperable\+Init\+Estimator@{Default\+Seperable\+Init\+Estimator}!mappel\+::\+Point\+Emitter\+Model@{mappel\+::\+Point\+Emitter\+Model}}
 \paragraph[{\texorpdfstring{Default\+Seperable\+Init\+Estimator}{DefaultSeperableInitEstimator}}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::string mappel\+::\+Point\+Emitter\+Model\+::\+Default\+Seperable\+Init\+Estimator = \char`\"{}Trust\+Region\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}{}\label{classmappel_1_1PointEmitterModel_ad8c3dc629d75d22f25855a5f1ba8729f}
 Estimator name to use in 1D separable initializations 
 
-Definition at line 49 of file Point\+Emitter\+Model.\+h.
+Definition at line 53 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1253,7 +1331,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::initial\+\_\+theta\+\_\+estimate()
 \paragraph[{\texorpdfstring{global\+\_\+max\+\_\+psf\+\_\+sigma}{global_max_psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+max\+\_\+psf\+\_\+sigma = 1\+E2\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}{}\label{classmappel_1_1PointEmitterModel_a5e79dba8966c25c4e9c675cd1a2cab70}
 Global maxmimum for any psf\+\_\+sigma. Sizes above this value are invalid, and nowhere near useful for practical point emitter localization 
 
-Definition at line 54 of file Point\+Emitter\+Model.\+h.
+Definition at line 69 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1264,7 +1342,7 @@ Referenced by check\+\_\+psf\+\_\+sigma().
 \paragraph[{\texorpdfstring{global\+\_\+min\+\_\+psf\+\_\+sigma}{global_min_psf_sigma}}]{\setlength{\rightskip}{0pt plus 5cm}const double mappel\+::\+Point\+Emitter\+Model\+::global\+\_\+min\+\_\+psf\+\_\+sigma = 1\+E-\/1\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}{}\label{classmappel_1_1PointEmitterModel_a77d0ca98d77cb8b94117ece2a5b182a4}
 Global minimum for any psf\+\_\+sigma. Sizes below this value are invalid, and nowhere near useful for practical point emitter localization 
 
-Definition at line 53 of file Point\+Emitter\+Model.\+h.
+Definition at line 68 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1275,7 +1353,7 @@ Referenced by check\+\_\+psf\+\_\+sigma().
 \paragraph[{\texorpdfstring{lbound}{lbound}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ParamT} mappel\+::\+Point\+Emitter\+Model\+::lbound\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}{}\label{classmappel_1_1PointEmitterModel_a889bc82f74cfa654da121e5770296ab2}
 
 
-Definition at line 148 of file Point\+Emitter\+Model.\+h.
+Definition at line 155 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1286,7 +1364,7 @@ Referenced by bound\+\_\+theta(), bounded\+\_\+theta(), get\+\_\+lbound(), get\+
 \paragraph[{\texorpdfstring{num\+\_\+hyperparams}{num_hyperparams}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+hyperparams\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_ab2423214fdd81c8212118770b5b17b1f}{}\label{classmappel_1_1PointEmitterModel_ab2423214fdd81c8212118770b5b17b1f}
 
 
-Definition at line 147 of file Point\+Emitter\+Model.\+h.
+Definition at line 154 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1297,7 +1375,7 @@ Referenced by get\+\_\+num\+\_\+hyperparams(), get\+\_\+stats(), operator=(), an
 \paragraph[{\texorpdfstring{num\+\_\+params}{num_params}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IdxT} mappel\+::\+Point\+Emitter\+Model\+::num\+\_\+params\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a9af0484391bd6021ddc04ac666ab49ad}{}\label{classmappel_1_1PointEmitterModel_a9af0484391bd6021ddc04ac666ab49ad}
 
 
-Definition at line 146 of file Point\+Emitter\+Model.\+h.
+Definition at line 153 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1308,7 +1386,7 @@ Referenced by bound\+\_\+theta(), bounded\+\_\+theta(), check\+\_\+param\+\_\+sh
 \paragraph[{\texorpdfstring{prior}{prior}}]{\setlength{\rightskip}{0pt plus 5cm}Composite\+Dist mappel\+::\+Point\+Emitter\+Model\+::prior\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a393839f8eb1dd3d61c9369377742ba0e}{}\label{classmappel_1_1PointEmitterModel_a393839f8eb1dd3d61c9369377742ba0e}
 
 
-Definition at line 145 of file Point\+Emitter\+Model.\+h.
+Definition at line 152 of file Point\+Emitter\+Model.\+h.
 
 
 
@@ -1319,7 +1397,7 @@ Referenced by mappel\+::\+Gauss2\+D\+Model\+::debug\+\_\+internal\+\_\+sum\+\_\+
 \paragraph[{\texorpdfstring{ubound}{ubound}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf ParamT} mappel\+::\+Point\+Emitter\+Model\+::ubound\hspace{0.3cm}{\ttfamily [protected]}}\hypertarget{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}{}\label{classmappel_1_1PointEmitterModel_a35b883e84b6a2e0093bdf482c623beef}
 
 
-Definition at line 148 of file Point\+Emitter\+Model.\+h.
+Definition at line 155 of file Point\+Emitter\+Model.\+h.
 
 
 

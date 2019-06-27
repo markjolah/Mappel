@@ -21,7 +21,7 @@ var searchData=
   ['notimplementederror',['NotImplementedError',['../structmappel_1_1NotImplementedError.html#a84e2fc0ea1dec71a8968da9563787118',1,'mappel::NotImplementedError']]],
   ['nparams_5fest',['Nparams_est',['../structmappel_1_1estimator_1_1ProfileBoundsData.html#a5dd4b18893235445bca9608d5746c6c2',1,'mappel::estimator::ProfileBoundsData::Nparams_est()'],['../structmappel_1_1estimator_1_1ProfileBoundsDataStack.html#ae99f72e8d82cabed72b22fd6200c7322',1,'mappel::estimator::ProfileBoundsDataStack::Nparams_est()']]],
   ['nsample',['Nsample',['../structmappel_1_1mcmc_1_1MCMCData.html#a601995701dceecb6350533f97067c379',1,'mappel::mcmc::MCMCData::Nsample()'],['../structmappel_1_1mcmc_1_1MCMCDebugData.html#ad001804f5adce124355dbd6ded691d7f',1,'mappel::mcmc::MCMCDebugData::Nsample()'],['../structmappel_1_1mcmc_1_1MCMCDataStack.html#a6a16373d9b85da2bf07f5e225419838d',1,'mappel::mcmc::MCMCDataStack::Nsample()']]],
-  ['nseq',['Nseq',['../namespacemappel_1_1estimator.html#a303db3c63b3d285760e814aea82af3a0',1,'mappel::estimator::MLEDebugData']]],
+  ['nseq',['Nseq',['../structmappel_1_1estimator_1_1MLEDebugData.html#a303db3c63b3d285760e814aea82af3a0',1,'mappel::estimator::MLEDebugData']]],
   ['nseq_5flb',['Nseq_lb',['../namespacemappel_1_1estimator.html#a6182fae879fca8e9b8b931215663c9b6',1,'mappel::estimator::ProfileBoundsDebugData']]],
   ['nseq_5fub',['Nseq_ub',['../namespacemappel_1_1estimator.html#a09d2bfc282a0586c3984a461959f9c21',1,'mappel::estimator::ProfileBoundsDebugData']]],
   ['num_5fdim',['num_dim',['../classmappel_1_1ImageFormat1DBase.html#af81159de9010c3618d2f69349c1f2368',1,'mappel::ImageFormat1DBase::num_dim()'],['../classmappel_1_1ImageFormat2DBase.html#a9c29fcaf30faffc77b41ba556ebb0127',1,'mappel::ImageFormat2DBase::num_dim()']]],

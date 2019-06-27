@@ -44,9 +44,9 @@ void \hyperlink{classmappel_1_1estimator_1_1Estimator_a8e1ea0bf9ef92871618c44a4c
 \item 
 void \hyperlink{classmappel_1_1estimator_1_1Estimator_a8785a4f0e2d96fb4d30a533dc7541342}{estimate\+\_\+max} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEData}{M\+L\+E\+Data} \&mle\+\_\+data)
 \item 
-void \hyperlink{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data, \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&mle\+\_\+stencil)
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data, \hyperlink{namespacemappel_a3a06598240007876f8c4bf834ad86197}{StencilT}$<$ Model $>$ \&mle\+\_\+stencil)
 \item 
-void \hyperlink{classmappel_1_1estimator_1_1Estimator_a2cb11ee4a6b01c38064b03d761840838}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data)
+void \hyperlink{classmappel_1_1estimator_1_1Estimator_a2cb11ee4a6b01c38064b03d761840838}{estimate\+\_\+max\+\_\+debug} (const \hyperlink{namespacemappel_a97f050df953605381ae9c901c3b125f1}{Model\+DataT}$<$ Model $>$ \&data, const \hyperlink{namespacemappel_a667925cb0d6c0e49f2f035cc5a9a6857}{ParamT}$<$ Model $>$ \&theta\+\_\+init, \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} \&mle\+\_\+data)
 \end{DoxyCompactItemize}
 
 {\bf }\par
@@ -112,7 +112,7 @@ class mappel\+::estimator\+::\+C\+Gauss\+M\+L\+E$<$ Model $>$}
 
 
 
-Definition at line 361 of file estimator.\+h.
+Definition at line 363 of file estimator.\+h.
 
 
 
@@ -127,7 +127,7 @@ Definition at line 361 of file estimator.\+h.
 )\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classmappel_1_1estimator_1_1CGaussMLE_ad0a1244a13b85ae55967ed87d1feea87}{}\label{classmappel_1_1estimator_1_1CGaussMLE_ad0a1244a13b85ae55967ed87d1feea87}
 
 
-Definition at line 366 of file estimator.\+h.
+Definition at line 368 of file estimator.\+h.
 
 
 
@@ -340,9 +340,9 @@ References mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+max(
 \item[{{\bf StencilT}$<$ Model $>$ \&}]{mle\+\_\+stencil}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}{}\label{classmappel_1_1estimator_1_1Estimator_aca8f7fcc8d2754f55092e1dc33cff8a9}
-Debug estimation for a single data starting at theta\+\_\+init, fill in the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct with data including the sequence of evaluated points. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
+Debug estimation for a single data starting at theta\+\_\+init, fill in the \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct with data including the sequence of evaluated points. Estimation is initialized with theta\+\_\+init, theta\+\_\+init is empty, it is estimated with the Heuristic estimator. If any individual parameters are infinite or are not in the interior of the feasible region, they will be estimated with the Heuristic method. Valid parameters of theta\+\_\+init will not be modified in the initialization process.
 
-The sequence and sequence\+\_\+rllh parameters of the \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct record the entire sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle, which should be first and last respectively.
+The sequence and sequence\+\_\+rllh parameters of the \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} struct record the entire sequence of evaluated points including theta\+\_\+init and theta\+\_\+mle, which should be first and last respectively.
 
 The stencil at the M\+LE is also returned but can be ignored if not needed as it is available at no extra cost. 
 \begin{DoxyParams}[1]{Parameters}
@@ -350,7 +350,7 @@ The stencil at the M\+LE is also returned but can be ignored if not needed as it
 \hline
 \mbox{\tt in}  & {\em theta\+\_\+init} & Initial theta value. \\
 \hline
-\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{namespacemappel_1_1estimator_structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} recording the maximum likelihood estimate and relevant data. \\
+\mbox{\tt out}  & {\em mle\+\_\+data} & \hyperlink{structmappel_1_1estimator_1_1MLEDebugData}{M\+L\+E\+Debug\+Data} recording the maximum likelihood estimate and relevant data. \\
 \hline
 \mbox{\tt out}  & {\em stencil} & \mbox{[}Optional\mbox{]} StencilT at the M\+LE value. \\
 \hline
@@ -599,7 +599,7 @@ References mappel\+::cgauss\+\_\+compute\+\_\+estimate(), mappel\+::cgauss\+\_\+
 ) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_adde56d397f57f6f4f2d4f10fc59f7a08}{}\label{classmappel_1_1estimator_1_1Estimator_adde56d397f57f6f4f2d4f10fc59f7a08}
 Run statistics. 
 
-Definition at line 274 of file estimator.\+h.
+Definition at line 276 of file estimator.\+h.
 
 
 
@@ -652,7 +652,7 @@ Implements \hyperlink{classmappel_1_1estimator_1_1Estimator_a9f156286a85938814b9
 
 
 
-Definition at line 371 of file estimator.\+h.
+Definition at line 373 of file estimator.\+h.
 
 \index{mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}!record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}}
 \index{record\+\_\+exit\+\_\+code@{record\+\_\+exit\+\_\+code}!mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}}
@@ -705,14 +705,14 @@ Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+m
 \paragraph[{\texorpdfstring{Default\+Iterations}{DefaultIterations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const int {\bf mappel\+::estimator\+::\+C\+Gauss\+M\+LE}$<$ Model $>$\+::Default\+Iterations =50\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classmappel_1_1estimator_1_1CGaussMLE_a93c953643e49bb69d21a5f94e68157a7}{}\label{classmappel_1_1estimator_1_1CGaussMLE_a93c953643e49bb69d21a5f94e68157a7}
 
 
-Definition at line 364 of file estimator.\+h.
+Definition at line 366 of file estimator.\+h.
 
 \index{mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}!exit\+\_\+counts@{exit\+\_\+counts}}
 \index{exit\+\_\+counts@{exit\+\_\+counts}!mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}}
 \paragraph[{\texorpdfstring{exit\+\_\+counts}{exit_counts}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ {\bf Idx\+VecT} {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::exit\+\_\+counts\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_aa946d9789a1299d684f83a822a10caa7}{}\label{classmappel_1_1estimator_1_1Estimator_aa946d9789a1299d684f83a822a10caa7}
 
 
-Definition at line 299 of file estimator.\+h.
+Definition at line 301 of file estimator.\+h.
 
 
 
@@ -723,14 +723,14 @@ Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stat
 \paragraph[{\texorpdfstring{max\+\_\+threads}{max_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::max\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_ab4c55ecff71dff47c0584ce20fe7f077}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_ab4c55ecff71dff47c0584ce20fe7f077}
 
 
-Definition at line 324 of file estimator.\+h.
+Definition at line 326 of file estimator.\+h.
 
 \index{mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}!model@{model}}
 \index{model@{model}!mappel\+::estimator\+::\+C\+Gauss\+M\+LE@{mappel\+::estimator\+::\+C\+Gauss\+M\+LE}}
 \paragraph[{\texorpdfstring{model}{model}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ const Model\& {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::model\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}{}\label{classmappel_1_1estimator_1_1Estimator_a2f157410771fb79a20d4d54e505750d0}
 
 
-Definition at line 294 of file estimator.\+h.
+Definition at line 296 of file estimator.\+h.
 
 
 
@@ -741,7 +741,7 @@ Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::back
 \paragraph[{\texorpdfstring{mtx}{mtx}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ std\+::mutex {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::mtx\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_af78695378590ff8e822dffe2b1b3f242}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_af78695378590ff8e822dffe2b1b3f242}
 
 
-Definition at line 326 of file estimator.\+h.
+Definition at line 328 of file estimator.\+h.
 
 
 
@@ -752,7 +752,7 @@ Referenced by mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::clear
 \paragraph[{\texorpdfstring{num\+\_\+estimations}{num_estimations}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::num\+\_\+estimations = 0\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}{}\label{classmappel_1_1estimator_1_1Estimator_a9f5390f0ac3ee127ddcd90dc6f4fd889}
 
 
-Definition at line 297 of file estimator.\+h.
+Definition at line 299 of file estimator.\+h.
 
 
 
@@ -763,7 +763,7 @@ Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::clear\+\_\+stat
 \paragraph[{\texorpdfstring{num\+\_\+threads}{num_threads}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ int {\bf mappel\+::estimator\+::\+Threaded\+Estimator}$<$ Model $>$\+::num\+\_\+threads\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1ThreadedEstimator_af746a83929a7217b4084d0e10f850bc3}{}\label{classmappel_1_1estimator_1_1ThreadedEstimator_af746a83929a7217b4084d0e10f850bc3}
 
 
-Definition at line 325 of file estimator.\+h.
+Definition at line 327 of file estimator.\+h.
 
 
 
@@ -774,7 +774,7 @@ Referenced by mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::clear
 \paragraph[{\texorpdfstring{total\+\_\+walltime}{total_walltime}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$class Model $>$ double {\bf mappel\+::estimator\+::\+Estimator}$<$ Model $>$\+::total\+\_\+walltime = 0.\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [inherited]}}\hypertarget{classmappel_1_1estimator_1_1Estimator_a98ad459e850aeb2c42c10fd06c3b9fbc}{}\label{classmappel_1_1estimator_1_1Estimator_a98ad459e850aeb2c42c10fd06c3b9fbc}
 
 
-Definition at line 298 of file estimator.\+h.
+Definition at line 300 of file estimator.\+h.
 
 
 

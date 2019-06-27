@@ -39,7 +39,7 @@ double \hyperlink{structmappel_1_1estimator_1_1ProfileBoundsData_a524173c1125ec8
 \subsubsection{Detailed Description}
 Data related to a profile bounds estimation for a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. 
 
-Definition at line 90 of file estimator.\+h.
+Definition at line 92 of file estimator.\+h.
 
 
 
@@ -53,11 +53,7 @@ Definition at line 90 of file estimator.\+h.
 )}\hypertarget{structmappel_1_1estimator_1_1ProfileBoundsData_a5dbbab414cdb55bc5637deb195db6cf6}{}\label{structmappel_1_1estimator_1_1ProfileBoundsData_a5dbbab414cdb55bc5637deb195db6cf6}
 
 
-Definition at line 18 of file estimator.\+cpp.
-
-
-
-References estimated\+\_\+idxs, Nparams\+\_\+est, profile\+\_\+lb, profile\+\_\+points\+\_\+lb, profile\+\_\+points\+\_\+lb\+\_\+rllh, profile\+\_\+points\+\_\+ub, profile\+\_\+points\+\_\+ub\+\_\+rllh, and profile\+\_\+ub.
+Definition at line 27 of file estimator.\+cpp.
 
 
 
@@ -75,7 +71,7 @@ Confidence level. If invalid, use default value.
 
 
 
-Definition at line 94 of file estimator.\+h.
+Definition at line 96 of file estimator.\+h.
 
 
 
@@ -90,11 +86,11 @@ List of indexs for computed parameters. Empty to compute all parameters.
 
 
 
-Definition at line 93 of file estimator.\+h.
+Definition at line 95 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::methods\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood(), mappel\+::methods\+::openmp\+::error\+\_\+bounds\+\_\+profile\+\_\+likelihood\+\_\+parallel(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!mle@{mle}}
 \index{mle@{mle}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -105,7 +101,7 @@ Theta maximum-\/likelihood estimate, rllh, and ObsI.
 
 
 
-Definition at line 95 of file estimator.\+h.
+Definition at line 97 of file estimator.\+h.
 
 
 
@@ -120,11 +116,11 @@ number of parameters estimated =estimated\+\_\+param\+\_\+idxs.\+n\+\_\+elem.
 
 
 
-Definition at line 99 of file estimator.\+h.
+Definition at line 101 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+parallel().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+lb@{profile\+\_\+lb}}
 \index{profile\+\_\+lb@{profile\+\_\+lb}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -135,11 +131,11 @@ size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Lower bound estimated at each estimated\
 
 
 
-Definition at line 100 of file estimator.\+h.
+Definition at line 102 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+lb@{profile\+\_\+points\+\_\+lb}}
 \index{profile\+\_\+points\+\_\+lb@{profile\+\_\+points\+\_\+lb}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -150,11 +146,11 @@ size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each 
 
 
 
-Definition at line 102 of file estimator.\+h.
+Definition at line 104 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+lb\+\_\+rllh@{profile\+\_\+points\+\_\+lb\+\_\+rllh}}
 \index{profile\+\_\+points\+\_\+lb\+\_\+rllh@{profile\+\_\+points\+\_\+lb\+\_\+rllh}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -165,11 +161,11 @@ size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+poi
 
 
 
-Definition at line 104 of file estimator.\+h.
+Definition at line 106 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+ub@{profile\+\_\+points\+\_\+ub}}
 \index{profile\+\_\+points\+\_\+ub@{profile\+\_\+points\+\_\+ub}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -180,11 +176,11 @@ size\+:\mbox{[}Num\+Params,Nparams\+\_\+est\mbox{]} Optimal theta found at each 
 
 
 
-Definition at line 103 of file estimator.\+h.
+Definition at line 105 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+points\+\_\+ub\+\_\+rllh@{profile\+\_\+points\+\_\+ub\+\_\+rllh}}
 \index{profile\+\_\+points\+\_\+ub\+\_\+rllh@{profile\+\_\+points\+\_\+ub\+\_\+rllh}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -195,11 +191,11 @@ size\+:\mbox{[}Nparams\+\_\+est\mbox{]} R\+L\+LH at each of the profile\+\_\+poi
 
 
 
-Definition at line 105 of file estimator.\+h.
+Definition at line 107 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!profile\+\_\+ub@{profile\+\_\+ub}}
 \index{profile\+\_\+ub@{profile\+\_\+ub}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -210,11 +206,11 @@ size\+:\mbox{[}Nparams\+\_\+est\mbox{]} Upper bound estimated at each estimated\
 
 
 
-Definition at line 101 of file estimator.\+h.
+Definition at line 103 of file estimator.\+h.
 
 
 
-Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack(), initialize\+\_\+arrays(), and mappel\+::estimator\+::\+Profile\+Bounds\+Data\+Stack\+::initialize\+\_\+arrays().
+Referenced by mappel\+::estimator\+::\+Iterative\+Maximizer$<$ Model $>$\+::compute\+\_\+profile\+\_\+bound(), mappel\+::estimator\+::\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds(), and mappel\+::estimator\+::\+Threaded\+Estimator$<$ Model $>$\+::estimate\+\_\+profile\+\_\+bounds\+\_\+stack().
 
 \index{mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}!target\+\_\+rllh\+\_\+delta@{target\+\_\+rllh\+\_\+delta}}
 \index{target\+\_\+rllh\+\_\+delta@{target\+\_\+rllh\+\_\+delta}!mappel\+::estimator\+::\+Profile\+Bounds\+Data@{mappel\+::estimator\+::\+Profile\+Bounds\+Data}}
@@ -225,7 +221,7 @@ Targeted rllh change in value from M\+LE ( -\/chi2inv(confidence,1)/2 )
 
 
 
-Definition at line 98 of file estimator.\+h.
+Definition at line 100 of file estimator.\+h.
 
 
 

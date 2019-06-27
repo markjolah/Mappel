@@ -116,8 +116,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Classes</h2></td></tr>
 <tr class="memitem:structmappel_1_1estimator_1_1MLEData"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEData">mappel::estimator::MLEData</a></td></tr>
 <tr class="separator:structmappel_1_1estimator_1_1MLEData"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:structmappel_1_1estimator_1_1MLEDebugData"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDebugData">mappel::estimator::MLEDebugData</a></td></tr>
-<tr class="separator:structmappel_1_1estimator_1_1MLEDebugData"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmappel_1_1estimator_1_1MLEDebugData.html">mappel::estimator::MLEDebugData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmappel_1_1estimator_1_1MLEDataStack"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1MLEDataStack">mappel::estimator::MLEDataStack</a></td></tr>
 <tr class="separator:structmappel_1_1estimator_1_1MLEDataStack"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structmappel_1_1estimator_1_1ProfileLikelihoodData"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemappel_1_1estimator.html#structmappel_1_1estimator_1_1ProfileLikelihoodData">mappel::estimator::ProfileLikelihoodData</a></td></tr>
@@ -224,60 +224,6 @@ Theta estimate. </td></tr>
 
 </div>
 </div>
-<a name="structmappel_1_1estimator_1_1MLEDebugData" id="structmappel_1_1estimator_1_1MLEDebugData"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct mappel::estimator::MLEDebugData</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<div class="textblock"><p>A maximum-likelihood estimate for a single image with debugging information. A container to group the necessary information at an MLEstimate </p>
-
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00050">50</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
-</div><table class="fieldtable">
-<tr><th colspan="3">Class Members</th></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a303db3c63b3d285760e814aea82af3a0"></a><a class="el" href="namespacemappel.html#ab17ec0f30b61ece292439d7ece81d3a8">IdxT</a></td>
-<td class="fieldname">
-Nseq</td>
-<td class="fielddoc">
-Number of points evaluated including theta_init and theta_mle. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a6fadb423b602a1f671c8d6f211663fcc"></a><a class="el" href="namespacemappel.html#a7091ab87c528041f7e2027195fad8915">MatT</a></td>
-<td class="fieldname">
-obsI</td>
-<td class="fielddoc">
-Observed Fisher information matrix at theta. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a6dea52884caeb6e2957d4242ea568e77"></a>double</td>
-<td class="fieldname">
-rllh</td>
-<td class="fielddoc">
-RLLH at theta. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a4419c4ee9559999be39df4a7469a47fa"></a><a class="el" href="namespacemappel.html#a7091ab87c528041f7e2027195fad8915">MatT</a></td>
-<td class="fieldname">
-sequence</td>
-<td class="fielddoc">
-Sequence of evaluated points including theta_init and theta_mle. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a4e8b3ce8d1925480aadd942d34505568"></a><a class="el" href="namespacemappel.html#a2225ad69f358daa3f4f99282a35b9a3a">VecT</a></td>
-<td class="fieldname">
-sequence_rllh</td>
-<td class="fielddoc">
-RLLH at each point in sequence. </td></tr>
-<tr><td class="fieldtype">
-<a class="anchor" id="a9f62b8797034f80b369117f77ba39725"></a><a class="el" href="namespacemappel.html#a2225ad69f358daa3f4f99282a35b9a3a">VecT</a></td>
-<td class="fieldname">
-theta</td>
-<td class="fielddoc">
-Theta estimate. </td></tr>
-</table>
-
-</div>
-</div>
 <a name="structmappel_1_1estimator_1_1MLEDataStack" id="structmappel_1_1estimator_1_1MLEDataStack"></a>
 <div class="memitem">
 <div class="memproto">
@@ -289,7 +235,7 @@ Theta estimate. </td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>A stack of maximum-likelihood estimates for a stack of images A container to group the necessary information at an MLEstimate </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00063">63</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00065">65</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -331,7 +277,7 @@ Theta estimate stack. size:[Nparams,Ndata]. </td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>Container for profile liklihood estimator data Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00074">74</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00076">76</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">
@@ -385,7 +331,7 @@ Points at which the profile liklihood maximum was obtained. </td></tr>
 </div><div class="memdoc">
 <div class="textblock"><p>Data for debugging of estimation of profile bounds for a single parameter of a single image Includes both controlling (input) parameters as well as reporting (ouptut) parameters to give output parameters context. </p>
 
-<p>Definition at line <a class="el" href="estimator_8h_source.html#l00113">113</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8h_source.html#l00115">115</a> of file <a class="el" href="estimator_8h_source.html">estimator.h</a>.</p>
 </div><table class="fieldtable">
 <tr><th colspan="3">Class Members</th></tr>
 <tr><td class="fieldtype">

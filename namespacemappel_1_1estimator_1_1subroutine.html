@@ -170,7 +170,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bounded step </dd></dl>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00082">82</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00091">91</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
@@ -235,9 +235,9 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00132">132</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00142">142</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
-<p>References <a class="el" href="util_8h_source.html#l00120">mappel::sgn()</a>.</p>
+<p>References <a class="el" href="util_8h_source.html#l00120">mappel::sgn()</a>, and <a class="el" href="estimator_8h_source.html#l00052">mappel::estimator::MLEDebugData::theta</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
@@ -273,7 +273,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00175">175</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00185">185</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
@@ -311,7 +311,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Diagonal scaling matrix as a vector. </dd></dl>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00159">159</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00169">169</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>References <a class="el" href="numerical_8h_source.html#l00103">mappel::clamp()</a>.</p>
 
@@ -331,7 +331,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00170">170</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00180">180</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>References <a class="el" href="numerical_8h_source.html#l00103">mappel::clamp()</a>.</p>
 
@@ -371,7 +371,7 @@ Functions</h2></td></tr>
 
 <p>Quadratic model value at given step Compute a quadratic model. </p>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00183">183</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00193">193</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
@@ -425,7 +425,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00164">164</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00174">174</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
@@ -462,7 +462,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p>Find initial step lengths in profile bounds estimation VM algorithm </p>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00052">52</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00061">61</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+
+<p>References <a class="el" href="estimator_8h_source.html#l00054">mappel::estimator::MLEDebugData::obsI</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01114">mappel::estimator::IterativeMaximizer&lt; Model &gt;::compute_profile_bound_debug()</a>, <a class="el" href="estimator__impl_8h_source.html#l00220">mappel::estimator::Estimator&lt; Model &gt;::estimate_profile_bounds()</a>, <a class="el" href="estimator__impl_8h_source.html#l00464">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_parallel()</a>, and <a class="el" href="estimator__impl_8h_source.html#l00500">mappel::estimator::ThreadedEstimator&lt; Model &gt;::estimate_profile_bounds_stack()</a>.</p>
 
@@ -510,11 +512,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00256">256</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00266">266</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
 <p>References <a class="el" href="numerical_8cpp_source.html#l00102">mappel::cholesky()</a>, <a class="el" href="numerical_8cpp_source.html#l00071">mappel::cholesky_convert_lower_triangular()</a>, <a class="el" href="numerical_8cpp_source.html#l00186">mappel::cholesky_solve()</a>, and <a class="el" href="numerical_8h_source.html#l00103">mappel::clamp()</a>.</p>
 
-<p>Referenced by <a class="el" href="estimator_8cpp_source.html#l00189">solve_TR_subproblem()</a>.</p>
+<p>Referenced by <a class="el" href="estimator_8cpp_source.html#l00199">solve_TR_subproblem()</a>.</p>
 
 </div>
 </div>
@@ -551,9 +553,9 @@ Functions</h2></td></tr>
 <p>Exact solver the TR sub-problem even for non-positive definite H. </p>
 <p>This method is a hybrid technique mixing ideas from Geyer (2013) and the "trust" R-package Nocetal and Wright (2000) More and Sorensen (1981) </p>
 
-<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00189">189</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
+<p>Definition at line <a class="el" href="estimator_8cpp_source.html#l00199">199</a> of file <a class="el" href="estimator_8cpp_source.html">estimator.cpp</a>.</p>
 
-<p>References <a class="el" href="numerical_8cpp_source.html#l00102">mappel::cholesky()</a>, <a class="el" href="numerical_8cpp_source.html#l00186">mappel::cholesky_solve()</a>, and <a class="el" href="estimator_8cpp_source.html#l00256">solve_restricted_step_length_newton()</a>.</p>
+<p>References <a class="el" href="numerical_8cpp_source.html#l00102">mappel::cholesky()</a>, <a class="el" href="numerical_8cpp_source.html#l00186">mappel::cholesky_solve()</a>, and <a class="el" href="estimator_8cpp_source.html#l00266">solve_restricted_step_length_newton()</a>.</p>
 
 <p>Referenced by <a class="el" href="estimator__impl_8h_source.html#l01173">mappel::estimator::IterativeMaximizer&lt; Model &gt;::local_profile_maximize()</a>.</p>
 
